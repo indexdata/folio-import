@@ -1,0 +1,6 @@
+config.js
+node_modules
+data
+bash/.okapi
+bash/login-*
+test/Batch*
