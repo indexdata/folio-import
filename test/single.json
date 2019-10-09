@@ -1,0 +1,461 @@
+{
+	"leader":"01318cam a2200361 i 4500",
+	"fields":
+	[
+		{
+			"001":"18852885"
+		},
+		{
+			"005":"20170330192740.0"
+		},
+		{
+			"008":"151110s2016    nyu      b    000 0aeng  "
+		},
+		{
+			"906":
+			{
+				"subfields":
+				[
+					{
+						"a":"7"
+					},
+					{
+						"b":"cbc"
+					},
+					{
+						"c":"orignew"
+					},
+					{
+						"d":"1"
+					},
+					{
+						"e":"ecip"
+					},
+					{
+						"f":"20"
+					},
+					{
+						"g":"y-gencatlg"
+					}
+				],
+				"ind1":" ",
+				"ind2":" "
+			}
+
+		},
+		{
+			"925":
+			{
+				"subfields":
+				[
+					{
+						"a":"acquire"
+					},
+					{
+						"b":"1 shelf copy"
+					},
+					{
+						"x":"policy default"
+					}
+				],
+				"ind1":"0",
+				"ind2":" "
+			}
+
+		},
+		{
+			"955":
+			{
+				"subfields":
+				[
+					{
+						"b":"rl05 2015-11-10"
+					},
+					{
+						"i":"rl05 2015-11-10 to Dewey"
+					},
+					{
+						"w":"xl05 2015-11-13 (telework)"
+					},
+					{
+						"a":"rl03 2016-04-07, added geo. code"
+					},
+					{
+						"f":"rl02 2016-04-15 to CALM"
+					},
+					{
+						"a":"rl11 2016-11-14 2 copies to CALM"
+					},
+					{
+						"w":"xm08 2016-12-02 (telework)"
+					},
+					{
+						"t":"xk06 2017-03-30 x-copy to CALM"
+					}
+				],
+				"ind1":" ",
+				"ind2":" "
+			}
+
+		},
+		{
+			"010":
+			{
+				"subfields":
+				[
+					{
+						"a":"  2015024305"
+					}
+				],
+				"ind1":" ",
+				"ind2":" "
+			}
+
+		},
+		{
+			"020":
+			{
+				"subfields":
+				[
+					{
+						"a":"9781101874936 (hardcover : alk. paper)"
+					}
+				],
+				"ind1":" ",
+				"ind2":" "
+			}
+
+		},
+		{
+			"020":
+			{
+				"subfields":
+				[
+					{
+						"a":"9781101873724 (paperback : acid-free paper)"
+					}
+				],
+				"ind1":" ",
+				"ind2":" "
+			}
+
+		},
+		{
+			"020":
+			{
+				"subfields":
+				[
+					{
+						"z":"9781101874943 (ebook)"
+					}
+				],
+				"ind1":" ",
+				"ind2":" "
+			}
+
+		},
+		{
+			"040":
+			{
+				"subfields":
+				[
+					{
+						"a":"DLC"
+					},
+					{
+						"b":"eng"
+					},
+					{
+						"e":"rda"
+					},
+					{
+						"c":"DLC"
+					}
+				],
+				"ind1":" ",
+				"ind2":" "
+			}
+
+		},
+		{
+			"042":
+			{
+				"subfields":
+				[
+					{
+						"a":"pcc"
+					}
+				],
+				"ind1":" ",
+				"ind2":" "
+			}
+
+		},
+		{
+			"043":
+			{
+				"subfields":
+				[
+					{
+						"a":"n-us---"
+					}
+				],
+				"ind1":" ",
+				"ind2":" "
+			}
+
+		},
+		{
+			"050":
+			{
+				"subfields":
+				[
+					{
+						"a":"QH31.J344"
+					},
+					{
+						"b":"A3 2016"
+					}
+				],
+				"ind1":"0",
+				"ind2":"0"
+			}
+
+		},
+		{
+			"082":
+			{
+				"subfields":
+				[
+					{
+						"a":"580.92"
+					},
+					{
+						"a":"B"
+					},
+					{
+						"2":"23"
+					}
+				],
+				"ind1":"0",
+				"ind2":"0"
+			}
+
+		},
+		{
+			"100":
+			{
+				"subfields":
+				[
+					{
+						"a":"Jahren, Hope."
+					}
+				],
+				"ind1":"1",
+				"ind2":" "
+			}
+
+		},
+		{
+			"245":
+			{
+				"subfields":
+				[
+					{
+						"a":"Lab girl /"
+					},
+					{
+						"c":"Hope Jahren."
+					}
+				],
+				"ind1":"1",
+				"ind2":"0"
+			}
+
+		},
+		{
+			"250":
+			{
+				"subfields":
+				[
+					{
+						"a":"First edition."
+					}
+				],
+				"ind1":" ",
+				"ind2":" "
+			}
+
+		},
+		{
+			"264":
+			{
+				"subfields":
+				[
+					{
+						"a":"New York :"
+					},
+					{
+						"b":"Alfred A. Knopf,"
+					},
+					{
+						"c":"2016."
+					}
+				],
+				"ind1":" ",
+				"ind2":"1"
+			}
+
+		},
+		{
+			"300":
+			{
+				"subfields":
+				[
+					{
+						"a":"290 pages ;"
+					},
+					{
+						"c":"25 cm"
+					}
+				],
+				"ind1":" ",
+				"ind2":" "
+			}
+
+		},
+		{
+			"336":
+			{
+				"subfields":
+				[
+					{
+						"a":"text"
+					},
+					{
+						"2":"rdacontent"
+					}
+				],
+				"ind1":" ",
+				"ind2":" "
+			}
+
+		},
+		{
+			"337":
+			{
+				"subfields":
+				[
+					{
+						"a":"unmediated"
+					},
+					{
+						"2":"rdamedia"
+					}
+				],
+				"ind1":" ",
+				"ind2":" "
+			}
+
+		},
+		{
+			"338":
+			{
+				"subfields":
+				[
+					{
+						"a":"volume"
+					},
+					{
+						"2":"rdacarrier"
+					}
+				],
+				"ind1":" ",
+				"ind2":" "
+			}
+
+		},
+		{
+			"500":
+			{
+				"subfields":
+				[
+					{
+						"a":"\"A Borzoi Book.\""
+					}
+				],
+				"ind1":" ",
+				"ind2":" "
+			}
+
+		},
+		{
+			"504":
+			{
+				"subfields":
+				[
+					{
+						"a":"Includes bibliographical references."
+					}
+				],
+				"ind1":" ",
+				"ind2":" "
+			}
+
+		},
+		{
+			"600":
+			{
+				"subfields":
+				[
+					{
+						"a":"Jahren, Hope."
+					}
+				],
+				"ind1":"1",
+				"ind2":"0"
+			}
+
+		},
+		{
+			"650":
+			{
+				"subfields":
+				[
+					{
+						"a":"Biologists"
+					},
+					{
+						"z":"United States"
+					},
+					{
+						"v":"Biography."
+					}
+				],
+				"ind1":" ",
+				"ind2":"0"
+			}
+
+		},
+		{
+			"650":
+			{
+				"subfields":
+				[
+					{
+						"a":"Geobiology"
+					},
+					{
+						"x":"Research"
+					},
+					{
+						"v":"Anecdotes."
+					}
+				],
+				"ind1":" ",
+				"ind2":"0"
+			}
+
+		}
+	]
+}

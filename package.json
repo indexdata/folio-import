@@ -1,0 +1,13 @@
+{
+  "name": "folio-user-import",
+  "version": "0.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:indexdata/folio-user-import.git",
+  "author": "Charles Ledvina <charles@indexdata.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "superagent": "^5.1.0",
+    "uuid": "^3.3.3",
+    "winston": "^3.2.1"
+  }
+}
