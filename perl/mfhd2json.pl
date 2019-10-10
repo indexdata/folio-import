@@ -12,14 +12,26 @@ binmode STDOUT, ":utf8";
 
 my $refpath = '../data/WITREF';
 
-my $infile = shift or die "Usage: ./mfhd2json.pl <raw_marc_mfhd_collection> [<limit>]\n";
+my $ctrl_file = shift;
+my $infile = shift or die "Usage: ./mfhd2json.pl <uuid_map_file> <raw_marc_mfhd_collection>\n";
 if (! -e $infile) {
-  die "Can't find input file!\n"
+  die "Can't find mfhd file!\n"
+}
+if (! -e $ctrl_file) {
+  die "Can't find id to uuid map file\n";
 }
 my $limit = shift || 1000000;
 my $filename = $infile;
 $filename =~ s/^(.+\/)?(.+)\..+$/$2/;
 my $batch_path = $1;
+
+sub getIds {
+  local $/ = '';
+  open IDS, $ctrl_file or die "Can't open $ctrl_file\n";
+  my $jsonstr = <IDS>;
+  my $json = decode_json($jsonstr);
+  return $json;
+}
 
 sub get_ref_data {
   my $path = shift;
@@ -36,10 +48,17 @@ sub get_ref_data {
   return $ret;
 }
 
+my $id_map = getIds();
+print Dumper($id_map);
+
+exit;
+
 # load folio reference data 
 my $folio_locs = get_ref_data('locations.json', 'locations');
 my $folio_hnotes = get_ref_data('holdings-note-types.json', 'holdingsNoteTypes');
 # my $folio_rel = get_ref_data('electronic-access-relationships.json', 'electronicAccessRelationships');
+
+
 
 my $voyager_locs = {};
 open VLOCS, "$refpath/locations.tsv" or die "Can't find locations.tsv!\n";
@@ -184,4 +203,4 @@ print HLD $hcollection;
 print $hcollection;
 close HLD;
 
-print "\nHoldings: $hcount";
+print "\nHoldings: $hcount\n";
