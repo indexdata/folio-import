@@ -178,7 +178,7 @@ while (<RAW>) {
 
 $hcoll->{totalRecords} = $hcount;
 my $hcollection = JSON->new->pretty->encode($hcoll);
-my $holdings_file = "$batch_path/${filename}_holdings.json";
+my $holdings_file = "$batch_path/${filename}.json";
 open HLD, ">:encoding(UTF-8)", $holdings_file;
 print HLD $hcollection;
 print $hcollection;
