@@ -61,7 +61,10 @@ const fileNames = process.argv.slice(2);
     for (let x = 0; x < fileNames.length; x++) {
       let fn = fileNames[x].replace(/^.+\//, '');
       fn = fn.replace(/\.json$/, '');
-      const path = epMap[fn];
+      let path = epMap[fn];
+      if (!path) {
+        path = fn;
+      }
       let url = `${config.okapi}/${path}`;
       let collStr = fs.readFileSync(`${fileNames[x]}`, 'utf8');
       let data = JSON.parse(collStr);
