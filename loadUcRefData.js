@@ -65,6 +65,7 @@ const fileNames = process.argv.slice(2);
       let url = `${config.okapi}/${path}`;
       let collStr = fs.readFileSync(`${fileNames[x]}`, 'utf8');
       let data = JSON.parse(collStr);
+      let errRecs = [];
       for (d = 0; d < data.length; d++) {
         try {
           console.log(`POST ${url}...`);
@@ -94,6 +95,7 @@ const fileNames = process.argv.slice(2);
           } catch (e) {
             let msg;
             let err1 = e;
+	    errRecs.push(data[d]);
             try {
               msg = e.response.res.text;
             } catch (e) {
@@ -104,7 +106,11 @@ const fileNames = process.argv.slice(2);
           } 
         }
       }
-    }
+      if (errRecs.length > 0) {
+        const fn = fileNames[x].replace(/\.json$/, '_err.json');
+        fs.writeFileSync(fn, JSON.stringify(errRecs, null, 2));
+      }
+    } 
     console.log(`Added:   ${added}`);
     console.log(`Updated: ${updated}`);
     console.log(`Errors:  ${errors}`);
