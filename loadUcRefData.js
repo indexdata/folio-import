@@ -55,7 +55,9 @@ const fileNames = process.argv.slice(2);
       "servicepoints": "service-points",
       "servicepointusers": "service-points-users",
       "statisticalcodes": "statistical-codes",
-      "statisticalcodetypes": "statistical-code-types"
+      "statisticalcodetypes": "statistical-code-types",
+      "permissions": "perms/permissions",
+      "permissionsusers": "perms/users"
     }
     
     for (let x = 0; x < fileNames.length; x++) {
