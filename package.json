@@ -6,6 +6,8 @@
   "author": "Charles Ledvina <charles@indexdata.com>",
   "license": "Apache-2.0",
   "dependencies": {
+    "JSONStream": "^1.3.5",
+    "event-stream": "^4.0.1",
     "superagent": "^5.1.0",
     "uuid": "^3.3.3",
     "winston": "^3.2.1"
