@@ -1,3 +1,9 @@
+/*
+
+Create a default credentials file based on folio users records.  The password will be 'changeMe'
+
+*/
+
 const usersFile = process.argv[2];
 if (!usersFile) {
   console.log('Usage: node changeMe.js <user_file.json>');
