@@ -47,9 +47,11 @@ const wait = (ms) => {
     let updated = 0;
     let success = 0;
     let fail = 0;
+    let count = 0;
 
-    const runRequest = async (data) => {
-      let recUrl = config.okapi + '/inventory/instances/' + data.id;
+    const runRequest = async (data, es) => {
+      console.log(`# ${count} Loading ${data.id}`);
+      count++;
       try {
         await superagent
           .post(actionUrl)
@@ -60,40 +62,35 @@ const wait = (ms) => {
         logger.info('Successfully added record');
         success++;
       } catch (e) {
-        try {
-          await superagent
-            .put(recUrl)
-            .send(data)
-            .set('x-okapi-token', authToken)
-            .set('content-type', 'application/json');
-          logger.info('Successfully updated record');
-          updated++;
-        } catch (e) {
-          logger.error(e.response.text);
-          fail++;
-        }
-      } 
+        logger.error(e.response.text);
+        fail++;
+      }
+      await wait(config.delay);
+      es.resume();
     }
 
-    const getStream = () => {
-      const jsonData = inFile;
-      const stream = fs.createReadStream(jsonData, { encoding: 'utf8' });
-      const parser = JSONStream.parse('*');
-      return stream.pipe(parser);
-    };
+    const stream = fs.createReadStream(inFile, { encoding: "utf8" });
+    stream
+      .pipe(JSONStream.parse('*'))
+      .pipe(es.through(function write(data) {
+          runRequest(data, this);
+          this.pause();
+        }, 
+        function end() {
+          showStats();
+          this.emit('end')
+        })
+      ); 
 
-    await getStream()
-      .pipe(es.mapSync(async data => {
-        await runRequest(data);
-      }));
-
-    const end = new Date().valueOf();
-    const ms = end - start;
-    const time = Math.floor(ms / 1000);
-    logger.info(`\nTime:            ${time} sec`);
-    logger.info(`Records updated: ${updated}`);
-    logger.info(`Records added:   ${success}`);
-    logger.info(`Failures:        ${fail}\n`);
+    const showStats = () => {
+      const end = new Date().valueOf();
+      const ms = end - start;
+      const time = Math.floor(ms / 1000);
+      logger.info(`\nTime:            ${time} sec`);
+      logger.info(`Records updated: ${updated}`);
+      logger.info(`Records added:   ${success}`);
+      logger.info(`Failures:        ${fail}\n`);
+    }
   } catch (e) {
     console.error(e.message);
   } 
