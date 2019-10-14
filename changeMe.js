@@ -7,6 +7,15 @@ if (users.users) {
   users = users.users;
 }
 
+creds = [];
 users.forEach(u => {
-  console.log(u);
-})
+  if (u.username) {
+    cred = {
+      userId: u.id,
+      username: u.username,
+      password: 'changeMe'
+    }
+    creds.push(cred);
+  }
+});
+console.log(creds);
