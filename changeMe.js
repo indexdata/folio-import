@@ -18,4 +18,4 @@ users.forEach(u => {
     creds.push(cred);
   }
 });
-console.log(creds);
+console.log(JSON.stringify(creds, null, 2));
