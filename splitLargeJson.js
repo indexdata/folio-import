@@ -23,21 +23,28 @@ const inFile = process.argv[3];
     const stream = fs.createReadStream(inFile, { encoding: "utf8" });
     let sz = parseInt(size, 10);
     let c = 0;
+    let fn;
     stream
       .pipe(JSONStream.parse('*'))
       .pipe(es.through(function write(data) {
-          let fc = Math.floor(c / sz);
-          let fcstr = fc.toString();
-          let sufx = fcstr.padStart(5, '0');
-          let fn = `${pathRoot}${sufx}.json`;
-          if (c % sz === 0 && fs.existsSync(fn)) {
-            console.log(fn);
-            fs.unlinkSync(fn);
-          }
           let rec = JSON.stringify(data, null, 2);
+          if (c % sz === 0) {
+            let fc = Math.floor(c / sz);
+            let fcstr = fc.toString();
+            let sufx = fcstr.padStart(5, '0');
+            fn = `${pathRoot}${sufx}.json`;
+            rec = '[' + rec;
+            if (fs.existsSync(fn)) {
+              fs.unlinkSync(fn);
+            }
+          }
+          if ((c + 1) % sz === 0) {
+            rec += ']';
+          } else {
+            rec += ',';
+          }
           fs.writeFileSync(fn, rec, { flag: 'a' });
           c++;
-
         }, 
         function end() {
           this.emit('end')
