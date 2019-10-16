@@ -1,3 +1,7 @@
+/*
+This script will stream instance, holdings, or item json objects from large collections.
+*/
+
 const fs = require('fs');
 const superagent = require('superagent');
 const winston = require('winston');
@@ -42,7 +46,6 @@ const wait = (ms) => {
 
     const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
 
-    const actionUrl = config.okapi + '/instance-storage/instances';
 
     let updated = 0;
     let success = 0;
@@ -50,6 +53,15 @@ const wait = (ms) => {
     let count = 0;
 
     const runRequest = async (data, es) => {
+      let endpoint = null;
+      if (data.instanceId) {
+        endpoint = '/holdings-storage/holdings';
+      } else if (data.holdingsRecordId) {
+        endpoint = '/item-storage/items';
+      } else {
+        endpoint = '/instance-storage/instances';
+      }
+      const actionUrl = config.okapi + endpoint;
       console.log(`# ${count} Loading ${data.id}`);
       count++;
       try {
@@ -62,7 +74,7 @@ const wait = (ms) => {
         logger.info('Successfully added record');
         success++;
       } catch (e) {
-        logger.error(e.response.text);
+        logger.error(`${data.id}: ${e.response.text}`);
         fail++;
       }
       await wait(config.delay);
