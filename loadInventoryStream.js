@@ -10,6 +10,10 @@ const es = require('event-stream');
 
 const { getAuthToken } = require('./lib/login');
 let inFile = process.argv[2];
+let startRec = 0;
+if (process.argv[3]) {
+  startRec = parseInt(process.argv[3], 10);
+}
 
 const wait = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -20,7 +24,7 @@ const wait = (ms) => {
     const start = new Date().valueOf();
     let inData;
     if (!inFile) {
-      throw new Error('Usage: node loadInstances.js <instances|holdings|items_file>');
+      throw new Error('Usage: node loadInstances.js <instances|holdings|items_file> [<start_record>]');
     } else if (!fs.existsSync(inFile)) {
       throw new Error('Can\'t find input file');
     }
@@ -51,7 +55,7 @@ const wait = (ms) => {
     let updated = 0;
     let success = 0;
     let fail = 0;
-    let count = 0;
+    let count = startRec;
     let failedRecs = [];
 
     const runRequest = async (data, es) => {
@@ -85,11 +89,15 @@ const wait = (ms) => {
     }
 
     const stream = fs.createReadStream(inFile, { encoding: "utf8" });
+    let streamCount = 0;
     stream
       .pipe(JSONStream.parse('*'))
       .pipe(es.through(function write(data) {
+        if (streamCount >= startRec) {
           runRequest(data, this);
           this.pause();
+        }
+          streamCount++;
         }, 
         function end() {
           showStats();
