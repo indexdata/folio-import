@@ -4,3 +4,4 @@ data
 bash/.okapi
 bash/login-*
 test/Batch*
+log

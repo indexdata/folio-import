@@ -20,7 +20,7 @@ const wait = (ms) => {
     const start = new Date().valueOf();
     let inData;
     if (!inFile) {
-      throw new Error('Usage: node loadInstances.js <instances_file> [ <limit> ]');
+      throw new Error('Usage: node loadInstances.js <instances|holdings|items_file>');
     } else if (!fs.existsSync(inFile)) {
       throw new Error('Can\'t find input file');
     }
@@ -29,9 +29,10 @@ const wait = (ms) => {
 
     var logger;
 
+    const lpath = config.logpath;
+    const lname = inFile.replace(/.+\//, '');
+
     if (config.logpath) {
-      const lpath = config.logpath;
-      const lname = inFile.replace(/.+\//, '');
       logger = winston.createLogger({
         level: 'info',
         format: winston.format.json(),
@@ -51,6 +52,7 @@ const wait = (ms) => {
     let success = 0;
     let fail = 0;
     let count = 0;
+    let failedRecs = [];
 
     const runRequest = async (data, es) => {
       let endpoint = null;
@@ -75,6 +77,7 @@ const wait = (ms) => {
         success++;
       } catch (e) {
         logger.error(`${data.id}: ${e.response.text}`);
+        failedRecs.push(data);
         fail++;
       }
       await wait(config.delay);
@@ -102,6 +105,10 @@ const wait = (ms) => {
       logger.info(`Records updated: ${updated}`);
       logger.info(`Records added:   ${success}`);
       logger.info(`Failures:        ${fail}\n`);
+      if (config.logpath && failedRecs[0]) {
+        let rfname = lname.replace(/\.json$/, '');
+        fs.writeFileSync(`${lpath}/${rfname}_err.json`, JSON.stringify(failedRecs, null, 2));
+      }
     }
   } catch (e) {
     console.error(e.message);
