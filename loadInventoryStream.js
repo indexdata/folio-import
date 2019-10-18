@@ -1,5 +1,8 @@
 /*
 This script will stream instance, holdings, or item json objects from large collections.
+options: 
+-s start record
+-r root node (an array of folio records)
 */
 
 const fs = require('fs');
@@ -7,12 +10,15 @@ const superagent = require('superagent');
 const winston = require('winston');
 const JSONStream = require('JSONStream');
 const es = require('event-stream');
+const argv = require('minimist')(process.argv.slice(2));
+console.log(argv);
 
 const { getAuthToken } = require('./lib/login');
-let inFile = process.argv[2];
+let inFile = argv._[0];
+let root = (argv.r)? argv.r + '.*' : '*';
 let startRec = 0;
-if (process.argv[3]) {
-  startRec = parseInt(process.argv[3], 10);
+if (argv.s) {
+  startRec = parseInt(argv.s, 10);
 }
 
 const wait = (ms) => {
@@ -24,7 +30,7 @@ const wait = (ms) => {
     const start = new Date().valueOf();
     let inData;
     if (!inFile) {
-      throw new Error('Usage: node loadInstances.js <instances|holdings|items_file> [<start_record>]');
+      throw new Error('Usage: node loadInstances.js [options -s start, -r root] <file>');
     } else if (!fs.existsSync(inFile)) {
       throw new Error('Can\'t find input file');
     }
@@ -50,7 +56,6 @@ const wait = (ms) => {
     }
 
     const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
-
 
     let updated = 0;
     let success = 0;
@@ -91,7 +96,7 @@ const wait = (ms) => {
     const stream = fs.createReadStream(inFile, { encoding: "utf8" });
     let streamCount = 0;
     stream
-      .pipe(JSONStream.parse('*'))
+      .pipe(JSONStream.parse(root))
       .pipe(es.through(function write(data) {
         if (streamCount >= startRec) {
           runRequest(data, this);
