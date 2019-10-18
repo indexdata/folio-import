@@ -11,7 +11,6 @@ const winston = require('winston');
 const JSONStream = require('JSONStream');
 const es = require('event-stream');
 const argv = require('minimist')(process.argv.slice(2));
-console.log(argv);
 
 const { getAuthToken } = require('./lib/login');
 let inFile = argv._[0];
