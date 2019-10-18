@@ -54,7 +54,6 @@ const wait = (ms) => {
     let fail = 0;
     for (let x = 0; x < limit; x++) {
       let recUrl = config.okapi + '/inventory/instances/' + inData[x].id;
-      logger.info('Checking: ' + recUrl);
       try {
         await superagent
           .post(actionUrl)
@@ -62,7 +61,7 @@ const wait = (ms) => {
           .set('x-okapi-token', authToken)
           .set('content-type', 'application/json')
           .set('accept', 'application/json');
-        logger.info('Successfully added record');
+        logger.info(`Successfully added record id ${inData[x].id}`);
         success++;
       } catch (e) {
         try {
@@ -71,10 +70,10 @@ const wait = (ms) => {
             .send(inData[x])
             .set('x-okapi-token', authToken)
             .set('content-type', 'application/json');
-          logger.info('Successfully updated record');
+          logger.info(`Successfully updated record id ${inData[x].id}`);
           updated++;
         } catch (e) {
-          logger.error(e.message);
+          logger.error(`${inData[x].id}: ${e.response.text}`);
           fail++;
         }
       }
