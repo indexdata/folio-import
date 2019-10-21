@@ -49,7 +49,7 @@ const wait = (ms) => {
 
     const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
 
-    const actionUrl = config.okapi + '/notesx';
+    const actionUrl = config.okapi + '/notes';
     
     let success = 0;
     let updated = 0;
