@@ -13,7 +13,7 @@ const wait = (ms) => {
     const start = new Date().valueOf();
     let inData;
     if (!inFile) {
-      throw new Error('Usage: node loadHoldings.js <holdings_file> [ <limit> ]');
+      throw new Error('Usage: node loadNotes.js <notes_file> [ <limit> ]');
     } else if (!fs.existsSync(inFile)) {
       throw new Error('Can\'t find input file');
     } else {
