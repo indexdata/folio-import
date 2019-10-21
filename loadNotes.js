@@ -31,10 +31,10 @@ const wait = (ms) => {
     }
 
     var logger;
+    const lpath = config.logpath;
+    const lname = inFile.replace(/.+\//, '');
 
     if (config.logpath) {
-      const lpath = config.logpath;
-      const lname = inFile.replace(/.+\//, '');
       logger = winston.createLogger({
         level: 'info',
         format: winston.format.json(),
@@ -49,11 +49,12 @@ const wait = (ms) => {
 
     const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
 
-    const actionUrl = config.okapi + '/notes';
+    const actionUrl = config.okapi + '/notesx';
     
     let success = 0;
     let updated = 0;
     let fail = 0;
+    let failedRecs = { notes: [] };
     for (let x = 0; x < limit; x++) {
       try {
         await superagent
@@ -76,10 +77,15 @@ const wait = (ms) => {
           updated++
         } catch (e) {
           logger.error(e.response.text);
+          failedRecs.notes.push(inData[x]);
           fail++;
         }
       }
       await wait(config.delay);
+    }
+    if (config.logpath && failedRecs.notes[0]) {
+      let rfname = lname.replace(/\.json$/, '');
+      fs.writeFileSync(`${lpath}/${rfname}_err.json`, JSON.stringify(failedRecs, null, 2));
     }
     const end = new Date().valueOf();
     const ms = end - start;
