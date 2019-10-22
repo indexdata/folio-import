@@ -63,6 +63,9 @@ try {
       user.active = false;
     }
     user.externalSystemId = getData(r, 239, 30);
+    if (user.externalSystemId === '') {
+      user.externalSystemId = 'voyager_' + getData(r, 1, 10, 'n');
+    } 
     user.barcode = getData(r, 21, 25);
     user.username = user.barcode || user.externalSystemId;
     let pg = getData(r, 46, 10);
@@ -106,7 +109,7 @@ try {
     records.totalRecords = total;
     records.deactivateMissingUsers = false;
     records.updateOnlyPresentFields = false;
-    records.sourceType = sifFile.replace(/^(.+\/)?((.+)\..+$|(.+$))/, '$3$4');
+    // records.sourceType = sifFile.replace(/^(.+\/)?((.+)\..+$|(.+$))/, '$3$4');
     const recString = JSON.stringify(records, null, 2);
     if (jsonFile) {
       fs.writeFileSync(jsonFile, recString);
