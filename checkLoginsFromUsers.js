@@ -3,12 +3,10 @@
   is written to a file.
 */
 
-
 const fs = require('fs');
 const superagent = require('superagent');
 const { getAuthToken } = require('./lib/login');
 const inFile = process.argv[2];
-const path = inFile.replace(/^(.+)\/.+/, '$1');
 
 const wait = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -29,6 +27,8 @@ const wait = (ms) => {
       }
     }
     const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
+    
+    const path = inFile.replace(/^(.+)\/.+/, '$1');
 
     const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
 
