@@ -85,11 +85,11 @@ try {
       let at = getData(r, 467 + m, 1, 'n');
       if (at === '1') {
         address.addressTypeId = 'Home';
-      } else {
+      } else if (at === '2') {
         address.addressTypeId = 'Campus';
       }
       address.addressLine1 = getData(r, 489 + m, 50);
-      if (address.addressTypeId === '3') {
+      if (at === '3') {
         user.personal.email = address.addressLine1;
       } else {
         address.addressLine2 = getData(r, 539 + m, 40);
