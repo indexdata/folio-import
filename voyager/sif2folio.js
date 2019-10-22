@@ -57,7 +57,12 @@ try {
     total++;
     let user = {};
     user.id = uuid();
-    user.externalSystemId = getData(r, 1, 10, 'n');
+    if (getData(r, 56, 1, 'n') === '1') {
+      user.active = true;
+    } else {
+      user.active = false;
+    }
+    user.externalSystemId = getData(r, 239, 30);
     user.barcode = getData(r, 21, 25);
     user.username = user.barcode || user.externalSystemId;
     let pg = getData(r, 46, 10);
@@ -70,6 +75,7 @@ try {
     user.personal.firstName = getData(r, 341, 20);
     user.personal.middleName = getData(r, 361, 20);
     user.personal.phone = getData(r, 776, 25);
+    user.personal.mobilePhone = getData(r, 801, 25);
     user.personal.email = '';
     const addressCount = getData(r, 456, 1, 'n');
     user.personal.addresses = [];
