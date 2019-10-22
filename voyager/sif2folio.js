@@ -82,7 +82,12 @@ try {
     for (let x = 0; x < addressCount; x++) {
       let m = x * 429;
       let address = {};
-      address.addressTypeId = getData(r, 467 + m, 1, 'n');
+      let at = getData(r, 467 + m, 1, 'n');
+      if (at === '1') {
+        address.addressTypeId = 'Home';
+      } else {
+        address.addressTypeId = 'Campus';
+      }
       address.addressLine1 = getData(r, 489 + m, 50);
       if (address.addressTypeId === '3') {
         user.personal.email = address.addressLine1;
