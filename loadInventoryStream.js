@@ -3,6 +3,7 @@ This script will stream instance, holdings, or item json objects from large coll
 options: 
 -s start record
 -r root node (an array of folio records)
+-m method (post|put) defaults to post
 */
 
 const fs = require('fs');
@@ -14,7 +15,8 @@ const argv = require('minimist')(process.argv.slice(2));
 
 const { getAuthToken } = require('./lib/login');
 let inFile = argv._[0];
-let root = (argv.r)? argv.r + '.*' : '*';
+let root = (argv.r) ? argv.r + '.*' : '*';
+let method = (argv.m && argv.m.match(/put/i)) ? 'put' : 'post';
 let startRec = 0;
 if (argv.s) {
   startRec = parseInt(argv.s, 10);
@@ -29,7 +31,7 @@ const wait = (ms) => {
     const start = new Date().valueOf();
     let inData;
     if (!inFile) {
-      throw new Error('Usage: node loadInstances.js [options -s start, -r root] <file>');
+      throw new Error('Usage: node loadInstances.js [options -s start, -r root, -m method] <file>');
     } else if (!fs.existsSync(inFile)) {
       throw new Error('Can\'t find input file');
     }
@@ -75,13 +77,23 @@ const wait = (ms) => {
       console.log(`# ${count} Loading ${data.id}`);
       count++;
       try {
-        await superagent
-          .post(actionUrl)
-          .send(data)
-          .set('x-okapi-token', authToken)
-          .set('content-type', 'application/json')
-          .set('accept', 'application/json');
-        logger.info('Successfully added record');
+        if (method === 'put') {
+          await superagent
+            .put(actionUrl + '/' + data.id)
+            .send(data)
+            .set('x-okapi-token', authToken)
+            .set('content-type', 'application/json')
+            .set('accept', 'text/plain');
+          logger.info(`Successfully updated record ${data.id}`);
+        } else {
+          await superagent
+            .post(actionUrl)
+            .send(data)
+            .set('x-okapi-token', authToken)
+            .set('content-type', 'application/json')
+            .set('accept', 'application/json');
+          logger.info(`Successfully added record ${data.id}`);
+        }
         success++;
       } catch (e) {
         logger.error(`${data.id}: ${e.response.text}`);
