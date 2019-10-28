@@ -65,6 +65,7 @@ const wait = (ms) => {
     let failedRecs = [];
 
     const runRequest = async (data, es) => {
+      let date = new Date().toISOString();
       let endpoint = null;
       if (data.instanceId) {
         endpoint = '/holdings-storage/holdings';
@@ -84,7 +85,7 @@ const wait = (ms) => {
             .set('x-okapi-token', authToken)
             .set('content-type', 'application/json')
             .set('accept', 'text/plain');
-          logger.info(`Successfully updated record ${data.id}`);
+          logger.info(`${date} [${count}] Successfully updated record ${data.id}`);
         } else {
           await superagent
             .post(actionUrl)
@@ -92,11 +93,11 @@ const wait = (ms) => {
             .set('x-okapi-token', authToken)
             .set('content-type', 'application/json')
             .set('accept', 'application/json');
-          logger.info(`Successfully added record ${data.id}`);
+          logger.info(`${date} [${count}] Successfully added record ${data.id}`);
         }
         success++;
       } catch (e) {
-        logger.error(`${data.id}: ${e.response.text}`);
+        logger.error(`${date} [${count}] (${data.id}): ${e.response.text}`);
         failedRecs.push(data);
         fail++;
       }
