@@ -53,7 +53,7 @@ const wait = (ms) => {
     let success = 0;
     let fail = 0;
     for (let x = 0; x < limit; x++) {
-      let recUrl = config.okapi + '/inventory/instances/' + inData[x].id;
+      let recUrl = config.okapi + '/instance-storage/instances' + inData[x].id;
       try {
         await superagent
           .post(actionUrl)
