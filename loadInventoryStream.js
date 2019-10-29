@@ -84,7 +84,8 @@ const wait = (ms) => {
             .send(data)
             .set('x-okapi-token', authToken)
             .set('content-type', 'application/json')
-            .set('accept', 'text/plain');
+            .set('accept', 'text/plain')
+            .set('connection', 'keep-alive');
           logger.info(`${date} [${count}] Successfully updated record ${data.id}`);
         } else {
           await superagent
@@ -92,7 +93,8 @@ const wait = (ms) => {
             .send(data)
             .set('x-okapi-token', authToken)
             .set('content-type', 'application/json')
-            .set('accept', 'application/json');
+            .set('accept', 'application/json')
+            .set('connection', 'keep-alive');
           logger.info(`${date} [${count}] Successfully added record ${data.id}`);
         }
         success++;
