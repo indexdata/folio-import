@@ -8,11 +8,14 @@ const path = inFile.replace(/^(.+)\/.+/, '$1');
 const fileName = inFile.replace(/(^.+\/)?(.+)\.json/, '$2');
 
 let inData = require(`./${inFile}`);
-if (root) {
-  inData = inData[root];
-}
-let count = 0;
 let out = {};
+if (root) {
+  out = inData;
+  inData = inData[root];
+  delete out[root];
+}
+console.log(out);
+let count = 0;
 let records = [];
 let fcount = 0;
 inData.forEach((r, dx) => {
