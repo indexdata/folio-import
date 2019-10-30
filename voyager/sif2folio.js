@@ -56,7 +56,7 @@ try {
   rl.on('line', r => {
     total++;
     let user = {};
-    user.id = uuid();
+    // user.id = uuid();
     if (getData(r, 56, 1, 'n') === '1') {
       user.active = true;
     } else {
@@ -67,7 +67,6 @@ try {
       user.externalSystemId = 'voyager_' + getData(r, 1, 10, 'n');
     } 
     user.barcode = getData(r, 21, 25);
-    user.username = user.barcode || user.externalSystemId;
     let pg = getData(r, 46, 10);
     user.patronGroup = pgroup_map[pg];
     user.enrollmentDate = getData(r, 179, 10, 'd');
@@ -103,6 +102,7 @@ try {
         user.personal.addresses.push(address);
       }
     }
+    user.username = user.personal.email || user.externalSystemId || user.barcode || user.personal.lastName + user.personal.firstName;
     records.users.push(user);
   });
   rl.on('close', () => {
