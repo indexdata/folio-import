@@ -27,6 +27,9 @@ inData.forEach((r, dx) => {
     } else {
       out = records;
     }
+    if (out.totalRecords) {
+      out.totalRecords = out[root].length;
+    }
     let fn = String(fcount).padStart(5, '0');
     let savePath = `${path}/${fileName}_${fn}.json`;
     console.log(`Saving to ${savePath}`);
