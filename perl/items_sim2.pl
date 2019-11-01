@@ -5,7 +5,7 @@
 # Call numbers are mapped from separate flat file.
 # Item data is in the 945 field.
 # The mapping is based on 001 to instance.id.
-# Use this to generate holdings to go with previously converted instances records.
+# Use this to generate holdings to go with previously converted instances recordse
 
 use MARC::Record;
 use Data::Dumper;
@@ -44,6 +44,7 @@ my $folio_locs = get_ref_data('locations.json', 'locations');
 my $folio_mtypes = get_ref_data('material-types.json', 'mtypes');
 my $folio_rel = get_ref_data('electronic-access-relationships.json', 'electronicAccessRelationships');
 my $folio_notes = get_ref_data('item-note-types.json', 'itemNoteTypes');
+print Dumper($folio_notes);
 
 # get location mappings from tsv file
 my $locmap = {};
@@ -101,7 +102,18 @@ my $status_map = {
   't' => 'In transit',
   'o' => 'Library use only',
   'w' => "Withdrawn",
-  'i' => "In process"
+  'i' => "In process",
+  'c' => "In process"
+};
+
+# iii item note codes
+my $item_notes ={
+  'p' => 'Note',
+  'g' => 'Note',
+  'f' => 'Note',
+  'o' => 'Note',
+  'c' => 'Note',
+  's' => 'Note'
 };
 
 # set static callno type to LC
@@ -168,7 +180,20 @@ while (<RAW>) {
     my $status = $_->as_string('s');
     $irec->{status} = { name => $status_map->{$status} || $status };
     $irec->{formerIds} = [ $_->as_string('y')];
+    my $iii_note_type = $_->as_string('o');
     $irec->{notes} = [];
+    foreach ($_->subfield('n')) {
+      my $note = {};
+      $note->{note} = $_;
+      $item_note_label = $item_notes->{$iii_note_type};
+      $note->{itemNoteTypeId} = $folio_notes->{$item_note_label};
+      if ($iii_note_type =~ /[pgfcs]/) {
+        $note->{staffOnly} = true;
+      } else {
+        $note->{staffOnly} = false;
+      }
+      push $irec->{notes}, $note;
+    }
     push $icoll->{items}, $irec;
     $icount++;
   }
@@ -190,7 +215,7 @@ my $icollection = JSON->new->pretty->encode($icoll);
 my $items_file = "$batch_path/${filename}_items.json";
 open ITM, ">:encoding(UTF-8)", $items_file;
 print ITM $icollection;
-# print $icollection;
+print $icollection;
 close ITM;
 
 print "\nHoldings: $hcount";
