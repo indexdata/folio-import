@@ -100,20 +100,38 @@ my $status_map = {
   '-' => 'Available',
   'm' => 'Missing',
   't' => 'In transit',
-  'o' => 'Library use only',
-  'w' => "Withdrawn",
   'i' => "In process",
-  'c' => "In process"
+  'c' => "In process",
+  '!' => "Awaiting pickup",
+  'o' => 'Available',
+  'h' => 'Available',
 };
 
 # iii item note codes
-my $item_notes ={
+my $item_notes = {
   'p' => 'Note',
   'g' => 'Note',
   'f' => 'Note',
   'o' => 'Note',
   'c' => 'Note',
   's' => 'Note'
+};
+
+# status note map
+my $status_note = {
+  's' => ['Note','On search',true],
+  'o' => ['Note','Library use only',false],
+  'd' => ['Review','On order',true],
+  'l' => ['Review','Lost',true],
+  'b' => ['Review','At bindery',true],
+  'w' => ['Action note','Withdrawn',true],
+  'e' => ['Note','Online',false],
+  'g' => ['Review','Media L232',true],
+  'a' => ['Note','Library use only, ask archivist',false],
+  '^' => ['Review','Request',true],
+  'j' => ['Note','Faculty use only',false],
+  'k' => ['Review','New book shelf',true],
+  'x' => ['Note','MCB Boardroom',true]
 };
 
 # set static callno type to LC
@@ -178,21 +196,35 @@ while (<RAW>) {
     $irec->{permanentLoanTypeId} = $loan_type_id;
     $irec->{copyNumbers} = [ $_->as_string('g') ];
     my $status = $_->as_string('s');
-    $irec->{status} = { name => $status_map->{$status} || $status };
+    $irec->{status} = { name => $status_map->{$status} || 'Available' };
     $irec->{formerIds} = [ $_->as_string('y')];
     my $iii_note_type = $_->as_string('o');
+    if ($iii_note_type =~ /[cso]/) {
+      $irec->{discoverySuppress} = true;
+    }
     $irec->{notes} = [];
     foreach ($_->subfield('n')) {
       my $note = {};
       $note->{note} = $_;
       $item_note_label = $item_notes->{$iii_note_type};
       $note->{itemNoteTypeId} = $folio_notes->{$item_note_label};
-      if ($iii_note_type =~ /[pgfcs]/) {
+      if ($iii_note_type =~ /[pgfcs]/ || $status =~ /[mc]/) {
         $note->{staffOnly} = true;
       } else {
         $note->{staffOnly} = false;
       }
       push $irec->{notes}, $note;
+    }
+    if ($status =~ /[sordlbwega^kjx]/) {
+      my $note = {};
+      $note->{note} = $status_note->{$status}[1];
+      my $note_label = $status_note->{$status}[0];
+      $note->{itemNoteTypeId} = $folio_notes->{$note_label};
+      $note->{staffOnly} = $status_note->{$status}[2];
+      push $irec->{notes}, $note; 
+    }
+    if ($status eq 'h') {
+      $irec->{temporaryLocationId} = 'Reserve cart'
     }
     push $icoll->{items}, $irec;
     $icount++;
