@@ -3,5 +3,15 @@
 TMP='./.okapi'
 OKAPI=`cat ${TMP}/url`
 TOKEN=`cat ${TMP}/token`
+TENANT=`cat ${TMP}/tenant`
 
-curl --http1.1 -w '\n' -X DELETE "${OKAPI}/inventory/instances" -H "x-okapi-token: ${TOKEN}"
+read -n 1 -p "Are you sure you want to delete all instances for tenant \"${TENANT}?\" (y/n): " YN
+echo
+if [ $YN == y ]
+  then
+    echo "Deleting all instances..."
+    curl --http1.1 -w '\n' -X DELETE "${OKAPI}/inventory/instances" -H "x-okapi-token: ${TOKEN}"
+  else
+    echo "Aborting process..."
+fi
+
