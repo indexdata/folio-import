@@ -188,7 +188,7 @@ while (<RAW>) {
     # create item 
     my $irec = {};
     $irec->{holdingsRecordId} = $hrecs->{$loc_code}->{id};
-    $irec->{barcode} = $_->as_string('i');
+    $irec->{barcode} = $_->as_string('i') || '';
     $irec->{volume} = $_->as_string('c');
     my $itype_code = $_->as_string('t');
     my $itype_name = $itypemap->{$itype_code};
