@@ -80,7 +80,8 @@ close CN;
 # load bib id to instance id map
 $/ = '';
 my $inst_map_file = $infile;
-$inst_map_file =~ s/\.(mrc|marc)$/_map.json/;
+# $inst_map_file =~ s/\.(mrc|marc)$/_map.json/;
+$inst_map_file = "$batch_path/inst2holdingsMap.json";
 open INST, "$inst_map_file" or die "Can't find instance id file: $inst_map_file\n";
 my $inst_map_str = <INST>;
 my $inst_map = decode_json($inst_map_str);
@@ -142,6 +143,8 @@ my $loan_type_id = '2b94c631-fca9-4892-a730-03ee529ffe27';
 
 # open a collection of raw marc records
 $/ = "\x1D";
+open HIDS, ">>$batch_path/holdings_ids.map";
+open IIDS, ">>$batch_path/item_ids.map";
 open RAW, "<:encoding(UTF-8)", $infile;
 my $hcoll = { holdingsRecords => [] };
 my $icoll = { items => [] };
@@ -164,6 +167,7 @@ while (<RAW>) {
       my $uustr = lc($ug->to_string($uuid));
       $hrecs->{$loc_code}->{id} = $uustr;
       $hrecs->{$loc_code}->{instanceId} = $inst_map->{$control_num};
+      print HIDS $inst_map->{$control_num} . "|" . $uustr . "\n";
       $hrecs->{$loc_code}->{callNumber} = $cnmap->{$iii_num};
       $hrecs->{$loc_code}->{callNumberTypeId} = $cn_type_id;
       my $loc_name = $locmap->{$loc_code};
@@ -227,6 +231,7 @@ while (<RAW>) {
       $irec->{temporaryLocationId} = 'Reserve cart'
     }
     push $icoll->{items}, $irec;
+    print IIDS $irec->{holdingsRecordId} . "|" . $irec->{formerIds}[0] . "\n";
     $icount++;
   }
   foreach (keys $hrecs) {
@@ -247,7 +252,7 @@ my $icollection = JSON->new->pretty->encode($icoll);
 my $items_file = "$batch_path/${filename}_items.json";
 open ITM, ">:encoding(UTF-8)", $items_file;
 print ITM $icollection;
-print $icollection;
+# print $icollection;
 close ITM;
 
 print "\nHoldings: $hcount";
