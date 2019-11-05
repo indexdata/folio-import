@@ -39,6 +39,13 @@ sub get_ref_data {
   return $ret;
 }
 
+sub uuid {
+  my $ug = Data::UUID->new;
+  my $uuid = $ug->create();
+  my $uustr = lc($ug->to_string($uuid));
+  return $uustr;
+}
+
 # load folio reference data 
 my $folio_locs = get_ref_data('locations.json', 'locations');
 my $folio_mtypes = get_ref_data('material-types.json', 'mtypes');
@@ -163,9 +170,7 @@ while (<RAW>) {
     $loc_code =~ s/^\s+|\s+$//g;
     # create holdings record if record doesn't already exists for said location
     if (!$hrecs->{$loc_code}) {
-      my $ug = Data::UUID->new;
-      my $uuid = $ug->create();
-      my $uustr = lc($ug->to_string($uuid));
+      my $uustr = uuid();
       $hrecs->{$loc_code}->{id} = $uustr;
       $hrecs->{$loc_code}->{instanceId} = $inst_map->{$control_num};
       print HIDS $inst_map->{$control_num} . "|" . $uustr . "\n";
@@ -192,6 +197,7 @@ while (<RAW>) {
 
     # create item 
     my $irec = {};
+    $irec->{id} = uuid();
     $irec->{holdingsRecordId} = $hrecs->{$loc_code}->{id};
     $irec->{barcode} = $_->as_string('i') || '';
     $irec->{volume} = $_->as_string('c');
