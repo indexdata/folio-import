@@ -5,7 +5,8 @@
 # Call numbers are mapped from separate flat file.
 # Item data is in the 945 field.
 # The mapping is based on 001 to instance.id.
-# Use this to generate holdings to go with previously converted instances recordse
+# Use this to generate holdings to go with previously converted instances records.
+# Define holdings to item map using -i <file_name> option. 
 
 use MARC::Record;
 use Data::Dumper;
@@ -15,6 +16,25 @@ use Data::UUID;
 my $refpath = '../data/SIMREF';
 
 binmode STDOUT, ":utf8";
+
+my $itemsonly = 0;
+my $h2i_file;
+my $a = 0;
+my $h2i_map = {};
+foreach (@ARGV) {
+  if ($_ eq '-i') {
+    $itemsonly = 1;
+    $h2i_file = $ARGV[$a + 1];
+    open H2I, $h2i_file or die "Can't open holdings to item map!\n";
+    while (<H2I>) {
+      chomp;
+      my @kv = split(/\|/);
+      $h2i_map->{$kv[1]} = $kv[0];
+    }
+    splice(@ARGV, $a, 2);
+  }
+  $a++
+} 
 
 my $infile = shift or die "Usage: items_sim.pl <batch_directory>\n";
 if (! -e $infile) {
@@ -169,7 +189,7 @@ while (<RAW>) {
     my $loc_code = $_->as_string('l');
     $loc_code =~ s/^\s+|\s+$//g;
     # create holdings record if record doesn't already exists for said location
-    if (!$hrecs->{$loc_code}) {
+    if (!$hrecs->{$loc_code} && !$itemsonly) {
       my $uustr = uuid();
       $hrecs->{$loc_code}->{id} = $uustr;
       $hrecs->{$loc_code}->{instanceId} = $inst_map->{$control_num};
@@ -198,7 +218,12 @@ while (<RAW>) {
     # create item 
     my $irec = {};
     $irec->{id} = uuid();
-    $irec->{holdingsRecordId} = $hrecs->{$loc_code}->{id};
+    my $inum = $_->as_string('y');
+    if ($itemsonly) {
+      $irec->{holdingsRecordId} = $h2i_map->{$inum};
+    } else {
+      $irec->{holdingsRecordId} = $hrecs->{$loc_code}->{id};
+    }
     $irec->{barcode} = $_->as_string('i') || '';
     $irec->{volume} = $_->as_string('c');
     my $itype_code = $_->as_string('t');
@@ -208,7 +233,7 @@ while (<RAW>) {
     $irec->{copyNumbers} = [ $_->as_string('g') ];
     my $status = $_->as_string('s');
     $irec->{status} = { name => $status_map->{$status} || 'Available' };
-    $irec->{formerIds} = [ $_->as_string('y')];
+    $irec->{formerIds} = [ $inum ];
     my $iii_note_type = $_->as_string('o');
     if ($iii_note_type =~ /[cso]/) {
       $irec->{discoverySuppress} = true;
@@ -246,20 +271,22 @@ while (<RAW>) {
   }
 }
 
-$hcoll->{totalRecords} = $hcount;
-my $hcollection = JSON->new->pretty->encode($hcoll);
-my $holdings_file = "$batch_path/${filename}_holdings.json";
-open HLD, ">:encoding(UTF-8)", $holdings_file;
-print HLD $hcollection;
-print $hcollection;
-close HLD;
+if (!$itemsonly) {
+  $hcoll->{totalRecords} = $hcount;
+  my $hcollection = JSON->new->pretty->encode($hcoll);
+  my $holdings_file = "$batch_path/${filename}_holdings.json";
+  open HLD, ">:encoding(UTF-8)", $holdings_file;
+  print HLD $hcollection;
+  print $hcollection;
+  close HLD;
+}
 
 $icoll->{totalRecords} = $icount;
 my $icollection = JSON->new->pretty->encode($icoll);
 my $items_file = "$batch_path/${filename}_items.json";
 open ITM, ">:encoding(UTF-8)", $items_file;
 print ITM $icollection;
-print $icollection;
+#print $icollection;
 close ITM;
 
 print "\nHoldings: $hcount";
