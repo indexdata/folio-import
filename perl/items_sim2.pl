@@ -228,7 +228,7 @@ while (<RAW>) {
     $irec->{volume} = $_->as_string('c');
     my $itype_code = $_->as_string('t');
     my $itype_name = $itypemap->{$itype_code};
-    $irec->{materialTypeId} = $folio_mtypes->{$itype_name};
+    $irec->{materialTypeId} = $folio_mtypes->{$itype_name} || $itype_code;
     $irec->{permanentLoanTypeId} = $loan_type_id;
     $irec->{copyNumbers} = [ $_->as_string('g') ];
     my $status = $_->as_string('s');
