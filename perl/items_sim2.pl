@@ -44,7 +44,7 @@ my $folio_locs = get_ref_data('locations.json', 'locations');
 my $folio_mtypes = get_ref_data('material-types.json', 'mtypes');
 my $folio_rel = get_ref_data('electronic-access-relationships.json', 'electronicAccessRelationships');
 my $folio_notes = get_ref_data('item-note-types.json', 'itemNoteTypes');
-print Dumper($folio_notes);
+print Dumper($folio_locs);
 
 # get location mappings from tsv file
 my $locmap = {};
@@ -115,7 +115,8 @@ my $item_notes = {
   'f' => 'Note',
   'o' => 'Note',
   'c' => 'Note',
-  's' => 'Note'
+  's' => 'Note',
+  '-' => 'Note'
 };
 
 # status note map
@@ -211,7 +212,7 @@ while (<RAW>) {
       my $note = {};
       $note->{note} = $_;
       $item_note_label = $item_notes->{$iii_note_type};
-      $note->{itemNoteTypeId} = $folio_notes->{$item_note_label};
+      $note->{itemNoteTypeId} = $folio_notes->{$item_note_label} || $iii_note_type;
       if ($iii_note_type =~ /[pgfcs]/ || $status =~ /[mc]/) {
         $note->{staffOnly} = true;
       } else {
@@ -228,7 +229,7 @@ while (<RAW>) {
       push $irec->{notes}, $note; 
     }
     if ($status eq 'h') {
-      $irec->{temporaryLocationId} = 'Reserve cart'
+      $irec->{temporaryLocationId} = $folio_locs->{'Reserve Cart'};
     }
     push $icoll->{items}, $irec;
     print IIDS $irec->{holdingsRecordId} . "|" . $irec->{formerIds}[0] . "\n";
@@ -244,7 +245,7 @@ my $hcollection = JSON->new->pretty->encode($hcoll);
 my $holdings_file = "$batch_path/${filename}_holdings.json";
 open HLD, ">:encoding(UTF-8)", $holdings_file;
 print HLD $hcollection;
-# print $hcollection;
+print $hcollection;
 close HLD;
 
 $icoll->{totalRecords} = $icount;
@@ -252,7 +253,7 @@ my $icollection = JSON->new->pretty->encode($icoll);
 my $items_file = "$batch_path/${filename}_items.json";
 open ITM, ">:encoding(UTF-8)", $items_file;
 print ITM $icollection;
-# print $icollection;
+print $icollection;
 close ITM;
 
 print "\nHoldings: $hcount";
