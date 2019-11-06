@@ -23,7 +23,7 @@ if (! -e $ctrl_file) {
 }
 my $limit = shift || 1000000;
 my $save_path = $ctrl_file;
-$save_path =~ s/^(.+)_.+/$1_holdings.json/;
+$save_path =~ s/\.\w+$/_holdings.json/;
 print "Saving to $save_path\n";
 
 sub getIds {
