@@ -98,12 +98,23 @@ my $rel_ind = {
 
 # set status map
 my $status_map = {
-  '-' => 'Available',
-  'm' => 'Missing',
-  't' => 'In transit',
-  'o' => 'Library use only',
-  'w' => "Withdrawn",
-  'i' => "In process"
+  'Not Charged' => 'Available',
+  'Charged' => 'Checked out',
+  'Renewed' => 'Checked out',
+  'Overdue' => 'Checked out',
+  'Recall Request' => 'Paged',
+  'Hold Request' => 'Paged',
+  'On Hold' => 'Awaiting pickup',
+  'In Transit' => 'In transit',
+  'In Transit Discharged' => 'In transit',
+  'In Transit On Hold' => 'Awaiting pickup',
+  'Discharged' => 'Available',
+  'Missing' => 'Missing',
+  'Lost--Library Applied' => 'Missing',
+  'Lost--System Applied' => 'Missing',
+  'Claims Returned' => 'Checked out',
+  'Damaged' => 'In process',
+  'Call Slip Request' => 'In process'
 };
 
 # set static callno type to LC
@@ -159,13 +170,14 @@ foreach (@$items) {
   }
   $irec->{volume} = $_->{enum} if $_->{enum};
   $irec->{barcode} = $_->{barcode} || '';
+  my $status;
+  $irec->{status} = { name => $status_map->{$status} || 'Available' };
+
+
   my $itype_code;
   my $itype_name = $itypemap->{$itype_code};
   $irec->{materialTypeId} = $folio_mtypes->{$itype_name} || $itype_code;
   $irec->{permanentLoanTypeId} = $loan_type_id;
-  $irec->{copyNumbers} = [ ];
-  my $status;
-  $irec->{status} = { name => $status_map->{$status} || 'Available' };
   my $iii_note_type;
   if ($iii_note_type =~ /[cso]/) {
     $irec->{discoverySuppress} = true;
