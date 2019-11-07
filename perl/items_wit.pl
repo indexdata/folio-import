@@ -10,13 +10,41 @@ my $refpath = '../data/WITREF';
 
 binmode STDOUT, ":utf8";
 
-my $infile = shift or die "Usage: items_sim.pl <holdings_file.json>\n";
+my $h2i_file = shift;
+my $infile = shift or die "Usage: items_sim.pl <holdings2item_map> <items_file.json>\n";
 if (! -e $infile) {
   die "Can't find input file!\n"
 }
 my $filename = $infile;
 $filename =~ s/^(.+\/)?(.+)\..+$/$2/;
 my $batch_path = $1;
+
+sub uuid {
+  my $ug = Data::UUID->new;
+  my $uuid = $ug->create();
+  my $uustr = lc($ug->to_string($uuid));
+  return $uustr;
+}
+
+sub get_hmap {
+  local $/ = '';
+  open HMAP, "<:encoding(UTF-8)", $h2i_file;
+  my $jsonstr = <HMAP>;
+  return decode_json($jsonstr);
+}
+
+my $h2i_map = get_hmap();
+# print Dumper($h2i_map);
+
+sub get_items {
+  local $/ = '';
+  open ITM, "<:encoding(UTF-8)", $infile;
+  my $jsonstr = <ITM>;
+  return decode_json($jsonstr);
+}
+
+my $items = get_items();
+# print Dumper($items);
 
 sub get_ref_data {
   my $path = shift;
@@ -32,16 +60,6 @@ sub get_ref_data {
   close REF;
   return $ret;
 }
-
-sub get_items {
-  local $/ = '';
-  open ITM, "<:encoding(UTF-8)", $infile;
-  my $jsonstr = <ITM>;
-  return decode_json($jsonstr);
-}
-
-my $items = get_items();
-print Dumper($items);
 
 # load folio reference data 
 # my $folio_locs = get_ref_data('locations.json', 'locations');
@@ -94,79 +112,60 @@ my $cn_type_id = '95467209-6d7b-468b-94df-0f5d7ad2747d';
 # set static loantype to "can circulate"
 my $loan_type_id = '2b94c631-fca9-4892-a730-03ee529ffe27';
 
-exit;
-# open a collection of raw marc records
-my $hcoll = { holdingsRecords => [] };
 my $icoll = { items => [] };
-my $hcount = 0;
 my $icount = 0;
-while (<RAW>) {
-  my $hrecs = {};
-  $raw = $_;
-  my $marc = MARC::Record->new_from_usmarc($raw);
-  my $control_num = $marc->subfield('907','a');
-  my @marc_items = $marc->field('945');
-  foreach (@marc_items) {
-    my $loc_code = $_->as_string('l');
-    $loc_code =~ s/^\s+|\s+$//g;
-    # create holdings record if record doesn't already exists for said location
-    if (!$hrecs->{$loc_code}) {
-      my $ug = Data::UUID->new;
-      my $uuid = $ug->create();
-      my $uustr = lc($ug->to_string($uuid));
-      $hrecs->{$loc_code}->{id} = $uustr;
-      $hrecs->{$loc_code}->{instanceId} = $inst_map->{$control_num};
-      my $callno = $control_num;
-      $hrecs->{$loc_code}->{callNumber} = $cnmap->{$callno};
-      $hrecs->{$loc_code}->{callNumberTypeId} = $cn_type_id;
-      my $loc_name = $locmap->{$loc_code};
-      $hrecs->{$loc_code}->{permanentLocationId} = $folio_locs->{$loc_name} || $loc_code;
-      my @url_fields = $marc->field('856');
-      foreach (@url_fields) {
-        if (!$hrecs->{$loc_code}->{electronicAccess}) {
-          $hrecs->{$loc_code}->{electronicAccess} = []; 
-        } 
-        my $eaObj = {};
-        $eaObj->{uri} = $_->as_string('u');
-        $eaObj->{publicNote} = $_->as_string('z');
-        $eaObj->{publicNote} = $_->as_string('3');
-        my $indval = $_->{_ind2};
-        my $relname = $rel_ind->{$indval};
-        $eaObj->{relationshipId} = $folio_rel->{$relname};
-        push $hrecs->{$loc_code}->{electronicAccess}, $eaObj;
-      }
-      $hcount++;
-    }
-
-    # create item 
-    my $irec = {};
+foreach (@$items) {
+  # create item 
+  my $irec = {};
+  $irec->{id} = uuid();
+  my $inum = $_->{item_id};
+  if ($itemsonly) {
+    $irec->{holdingsRecordId} = $h2i_map->{$inum};
+  } else {
     $irec->{holdingsRecordId} = $hrecs->{$loc_code}->{id};
-    $irec->{barcode} = $_->as_string('i');
-    $irec->{volume} = $_->as_string('c');
-    my $itype_code = $_->as_string('t');
-    my $itype_name = $itypemap->{$itype_code};
-    $irec->{materialTypeId} = $folio_mtypes->{$itype_name};
-    $irec->{permanentLoanTypeId} = $loan_type_id;
-    $irec->{copyNumbers} = [ $_->as_string('g') ];
-    my $status = $_->as_string('s');
-    $irec->{status} = { name => $status_map->{$status} || $status };
-    $irec->{formerIds} = [ $_->as_string('y')];
-    $irec->{notes} = [];
-    push $icoll->{items}, $irec;
-    $icount++;
   }
-  foreach (keys $hrecs) {
-    push $hcoll->{holdingsRecords}, $hrecs->{$_};
+  $irec->{barcode};
+  $irec->{volume};
+  my $itype_code;
+  my $itype_name = $itypemap->{$itype_code};
+  $irec->{materialTypeId} = $folio_mtypes->{$itype_name} || $itype_code;
+  $irec->{permanentLoanTypeId} = $loan_type_id;
+  $irec->{copyNumbers} = [ ];
+  my $status;
+  $irec->{status} = { name => $status_map->{$status} || 'Available' };
+  $irec->{formerIds} = [ $inum ];
+  my $iii_note_type;
+  if ($iii_note_type =~ /[cso]/) {
+    $irec->{discoverySuppress} = true;
   }
+  $irec->{notes} = [];
+  foreach (null) {
+    my $note = {};
+    $note->{note} = $_;
+    $item_note_label = $item_notes->{$iii_note_type};
+    $note->{itemNoteTypeId} = $folio_notes->{$item_note_label} || $iii_note_type;
+    if ($iii_note_type =~ /[pgfcs]/ || $status =~ /[mc]/) {
+      $note->{staffOnly} = true;
+    } else {
+      $note->{staffOnly} = false;
+    }
+    push $irec->{notes}, $note;
+  }
+  if ($status =~ /[sordlbwega^kjx]/) {
+    my $note = {};
+    $note->{note} = $status_note->{$status}[1];
+    my $note_label = $status_note->{$status}[0];
+    $note->{itemNoteTypeId} = $folio_notes->{$note_label};
+    $note->{staffOnly} = $status_note->{$status}[2];
+    push $irec->{notes}, $note; 
+  }
+  if ($status eq 'h') {
+    $irec->{temporaryLocationId} = $folio_locs->{'Reserve Cart'};
+  }
+  push $icoll->{items}, $irec;
+  print IIDS $irec->{holdingsRecordId} . "|" . $irec->{formerIds}[0] . "\n";
+  $icount++;
 }
-
-$hcoll->{totalRecords} = $hcount;
-my $hcollection = JSON->new->pretty->encode($hcoll);
-my $holdings_file = "$batch_path/${filename}_holdings.json";
-open HLD, ">:encoding(UTF-8)", $holdings_file;
-print HLD $hcollection;
-print $hcollection;
-close HLD;
 
 $icoll->{totalRecords} = $icount;
 my $icollection = JSON->new->pretty->encode($icoll);
@@ -176,5 +175,4 @@ print ITM $icollection;
 print $icollection;
 close ITM;
 
-print "\nHoldings: $hcount";
 print "\nItems:    $icount\n";
