@@ -170,9 +170,8 @@ foreach (@$items) {
   }
   $irec->{volume} = $_->{enum} if $_->{enum};
   $irec->{barcode} = $_->{barcode} || '';
-  my $status;
+  my $status = $_->{status}[0];
   $irec->{status} = { name => $status_map->{$status} || 'Available' };
-
 
   my $itype_code;
   my $itype_name = $itypemap->{$itype_code};
