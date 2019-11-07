@@ -62,7 +62,7 @@ sub get_ref_data {
 }
 
 # load folio reference data 
-# my $folio_locs = get_ref_data('locations.json', 'locations');
+my $folio_locs = get_ref_data('locations.json', 'locations');
 # my $folio_mtypes = get_ref_data('material-types.json', 'mtypes');
 # my $folio_rel = get_ref_data('electronic-access-relationships.json', 'electronicAccessRelationships');
 # my $folio_notes = get_ref_data('item-note-types.json', 'itemNoteTypes');
@@ -73,7 +73,7 @@ open LOC, "$refpath/locations.tsv" or die "Can't find locations.tsv file\n";
 while (<LOC>) {
   my @col = split /\t/;
   $col[4] =~ s/\s*$//;
-  $locmap->{$col[0]} = $col[4];
+  $locmap->{$col[0]} = $col[3];
 }
 close LOC;
 
@@ -112,19 +112,52 @@ my $cn_type_id = '95467209-6d7b-468b-94df-0f5d7ad2747d';
 # set static loantype to "can circulate"
 my $loan_type_id = '2b94c631-fca9-4892-a730-03ee529ffe27';
 
+# month map for created date.
+my $months = {
+  JAN=>'01',
+  FEB=>'02',
+  MAR=>'03',
+  APR=>'04',
+  MAY=>'05',
+  JUN=>'06',
+  JUL=>'07',
+  AUG=>'08',
+  SEP=>'09',
+  OCT=>'10',
+  NOV=>'11',
+  DEC=>'12'
+};
+
 my $icoll = { items => [] };
 my $icount = 0;
 foreach (@$items) {
   # create item 
   my $irec = {};
-  $irec->{id} = uuid();
-  my $inum = $_->{item_id};
-  if ($itemsonly) {
-    $irec->{holdingsRecordId} = $h2i_map->{$inum};
+  my $cdate = $_->{create_date};
+  my @d = split '-', $cdate;
+  if ($d[2] =~ /^[01]/) {
+    $d[2] = "20$d[2]";
   } else {
-    $irec->{holdingsRecordId} = $hrecs->{$loc_code}->{id};
+    $d[2] = "19$d[2]";
   }
-  $irec->{barcode};
+  my $created_date = $d[2] . "-" . $months->{$d[1]} . "-" . $d[0];
+  $irec->{metadata} = { createdDate=>$created_date };
+  $irec->{id} = uuid();
+  my $iid = $_->{item_id};
+  my $mid = $_->{mfhd_id};
+  $irec->{holdingsRecordId} = $h2i_map->{$mid} or die "\nCan't find MFHD ID $mid in h2i_map\n";
+  $irec->{formerIds} = [ $iid, "mfhd:$mid" ];
+  my $permloc = $_->{perm_location};
+  if ($permloc) {
+    my $locstr = $locmap->{$permloc} or die "\nCan't find \"$permloc\" in locmap\n";
+    $irec->{temporaryLocationId} = $folio_locs->{$locstr} or die "\nCan't find temporaryLocationId for \"$locstr\" in folio_locs map\n";
+  }
+  my $tmploc = $_->{temp_location};
+  if ($tmploc) {
+    my $locstr = $locmap->{$tmploc} or die "\nCan't find \"$tmploc\" in locmap\n";
+    $irec->{temporaryLocationId} = $folio_locs->{$locstr} or die "\nCan't find temporaryLocationId for \"$locstr\" in folio_locs map\n";
+  }
+  $irec->{barcode} = $_->{barcode} || '';
   $irec->{volume};
   my $itype_code;
   my $itype_name = $itypemap->{$itype_code};
@@ -133,7 +166,6 @@ foreach (@$items) {
   $irec->{copyNumbers} = [ ];
   my $status;
   $irec->{status} = { name => $status_map->{$status} || 'Available' };
-  $irec->{formerIds} = [ $inum ];
   my $iii_note_type;
   if ($iii_note_type =~ /[cso]/) {
     $irec->{discoverySuppress} = true;
@@ -158,9 +190,6 @@ foreach (@$items) {
     $note->{itemNoteTypeId} = $folio_notes->{$note_label};
     $note->{staffOnly} = $status_note->{$status}[2];
     push $irec->{notes}, $note; 
-  }
-  if ($status eq 'h') {
-    $irec->{temporaryLocationId} = $folio_locs->{'Reserve Cart'};
   }
   push $icoll->{items}, $irec;
   print IIDS $irec->{holdingsRecordId} . "|" . $irec->{formerIds}[0] . "\n";
