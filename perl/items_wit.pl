@@ -157,8 +157,8 @@ foreach (@$items) {
     my $locstr = $locmap->{$tmploc} or die "\nCan't find \"$tmploc\" in locmap\n";
     $irec->{temporaryLocationId} = $folio_locs->{$locstr} or die "\nCan't find temporaryLocationId for \"$locstr\" in folio_locs map\n";
   }
+  $irec->{volume} = $_->{enum} if $_->{enum};
   $irec->{barcode} = $_->{barcode} || '';
-  $irec->{volume};
   my $itype_code;
   my $itype_name = $itypemap->{$itype_code};
   $irec->{materialTypeId} = $folio_mtypes->{$itype_name} || $itype_code;
