@@ -74,16 +74,6 @@ my $rel_ind = {
   ' ' => 'No information provided'
 };
 
-# set status map
-my $status_map = {
-  '-' => 'Available',
-  'm' => 'Missing',
-  't' => 'In transit',
-  'o' => 'Library use only',
-  'w' => "Withdrawn",
-  'i' => "In process"
-};
-
 # set static callno type to LC
 my $cn_type_id = '03dd64d0-5626-4ecd-8ece-4531e0069f35';
 my $cn_other_id = '6caca63e-5651-4db6-9247-3205156e9699';
@@ -116,8 +106,8 @@ while (<RAW>) {
 
   # $hrec->{instanceId} = $inst_map->{$control_num};
   my $locstr = $loc->as_string('b');
-  my $locname = $voyager_locs->{$locstr};
-  $hrec->{permanentLocationId} = $folio_locs->{$locname} || $locname || $locstr;
+  my $locname = $voyager_locs->{$locstr} or die "\nCan't find $locstr in voyager_locs\n";
+  $hrec->{permanentLocationId} = $folio_locs->{$locname} or die "\nCan't find permanentLocationId for $locname\n";
 
   # call number and type
   $hrec->{callNumber} = $loc->as_string('h') || $loc->as_string('k');
