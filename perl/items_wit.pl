@@ -65,7 +65,7 @@ sub get_ref_data {
 my $folio_locs = get_ref_data('locations.json', 'locations');
 # my $folio_mtypes = get_ref_data('material-types.json', 'mtypes');
 # my $folio_rel = get_ref_data('electronic-access-relationships.json', 'electronicAccessRelationships');
-# my $folio_notes = get_ref_data('item-note-types.json', 'itemNoteTypes');
+my $folio_notes = get_ref_data('item-note-types.json', 'itemNoteTypes');
 
 # get location mappings from tsv file
 my $locmap = {};
@@ -144,6 +144,7 @@ my $icount = 0;
 foreach (@$items) {
   # create item 
   my $irec = {};
+  $irec->{notes} = [];
   my $cdate = $_->{create_date};
   my @d = split '-', $cdate;
   if ($d[2] =~ /^[01]/) {
@@ -171,40 +172,35 @@ foreach (@$items) {
   $irec->{volume} = $_->{enum} if $_->{enum};
   $irec->{barcode} = $_->{barcode} || '';
   my $status = $_->{status}[0];
-  $irec->{status} = { name => $status_map->{$status} || 'Available' };
+  my $status_name = $status_map->{$status} or die "\nStatus \"$status\" not found in status_map\n";
+  $irec->{status} = $status_name; 
+  if ($status eq 'Lost--System Applied') {
+    push $irec->{notes}, make_note('Note', 'Lost--System Applied', true);
+  }
 
   my $itype_code;
   my $itype_name = $itypemap->{$itype_code};
   $irec->{materialTypeId} = $folio_mtypes->{$itype_name} || $itype_code;
   $irec->{permanentLoanTypeId} = $loan_type_id;
-  my $iii_note_type;
-  if ($iii_note_type =~ /[cso]/) {
-    $irec->{discoverySuppress} = true;
-  }
-  $irec->{notes} = [];
-  foreach (null) {
-    my $note = {};
-    $note->{note} = $_;
-    $item_note_label = $item_notes->{$iii_note_type};
-    $note->{itemNoteTypeId} = $folio_notes->{$item_note_label} || $iii_note_type;
-    if ($iii_note_type =~ /[pgfcs]/ || $status =~ /[mc]/) {
-      $note->{staffOnly} = true;
-    } else {
-      $note->{staffOnly} = false;
-    }
-    push $irec->{notes}, $note;
-  }
-  if ($status =~ /[sordlbwega^kjx]/) {
-    my $note = {};
-    $note->{note} = $status_note->{$status}[1];
-    my $note_label = $status_note->{$status}[0];
-    $note->{itemNoteTypeId} = $folio_notes->{$note_label};
-    $note->{staffOnly} = $status_note->{$status}[2];
-    push $irec->{notes}, $note; 
-  }
+  
   push $icoll->{items}, $irec;
-  print IIDS $irec->{holdingsRecordId} . "|" . $irec->{formerIds}[0] . "\n";
+  # print IIDS $irec->{holdingsRecordId} . "|" . $irec->{formerIds}[0] . "\n";
   $icount++;
+}
+
+sub make_note {
+  my $note_name = shift;
+  my $text = shift;
+  my $staff = shift;
+  my $note = {};
+  $note->{itemNoteTypeId} = $folio_notes->{$note_name} or die "\n#$icount : Can't find \"$note_name\" in folio_notes.\n";
+  $note->{note} = $text;
+  if ($staff) {
+    $note->{staffOnly} = $staff;
+  } else {
+    $note->{staffOnly} = false;
+  }
+  return $note;
 }
 
 $icoll->{totalRecords} = $icount;
