@@ -197,7 +197,7 @@ foreach (@$items) {
   }
   my $status = $_->{status}[0];
   my $status_name = $status_map->{$status} or die "\nStatus \"$status\" not found in status_map\n ";
-  $irec->{status} = $status_name; 
+  $irec->{status} = { name=>$status_name }; 
   if ($lost_flag) {
     push $irec->{notes}, make_note('Note', 'Lost--System Applied', true);
   }
@@ -208,7 +208,7 @@ foreach (@$items) {
 
   my $itype_voyager = uc $_->{item_type}; # normalize voyager status
   my $itype_name = $itypemap->{$itype_voyager} or die "\nCan't find '$itype_voyager' in itypemap\n ";
-  $irec->{materialTypeId} = $folio_mtypes->{$itype_name} || $itype_code;
+  $irec->{materialTypeId} = $folio_mtypes->{$itype_name} or die "\nCan't find '$itype_name' in folio_mtypes\n" ;
   $irec->{permanentLoanTypeId} = $loan_type_id;
   
   push $icoll->{items}, $irec;
