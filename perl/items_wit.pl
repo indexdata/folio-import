@@ -9,6 +9,7 @@ use Data::UUID;
 my $refpath = '../data/WITREF';
 
 binmode STDOUT, ":utf8";
+$| = 1;
 
 my $h2i_file = shift;
 my $infile = shift or die "Usage: items_sim.pl <holdings2item_map> <items_file.json>\n ";
@@ -156,6 +157,7 @@ my $icoll = { items => [] };
 my $icount = 0;
 foreach (@$items) {
   # create item 
+  print STDOUT "\r$icount";
   my $irec = {};
   $irec->{notes} = [];
   my $cdate = $_->{create_date};
