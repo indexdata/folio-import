@@ -11,9 +11,9 @@ my $refpath = '../data/WITREF';
 binmode STDOUT, ":utf8";
 
 my $h2i_file = shift;
-my $infile = shift or die "Usage: items_sim.pl <holdings2item_map> <items_file.json>\n";
+my $infile = shift or die "Usage: items_sim.pl <holdings2item_map> <items_file.json>\n ";
 if (! -e $infile) {
-  die "Can't find input file!\n"
+  die "Can't find input file!\n "
 }
 my $filename = $infile;
 $filename =~ s/^(.+\/)?(.+)\..+$/$2/;
@@ -50,7 +50,7 @@ sub get_ref_data {
   my $path = shift;
   my $prop = shift;
   local $/ = '';
-  open REF, "<:encoding(UTF-8)", "$refpath/$path" or die "Can't find reference file: $path\n";
+  open REF, "<:encoding(UTF-8)", "$refpath/$path" or die "Can't find reference file: $path\n ";
   my $ref_str = <REF>;
   my $ref_json = decode_json($ref_str);
   my $ret = {};
@@ -63,13 +63,13 @@ sub get_ref_data {
 
 # load folio reference data 
 my $folio_locs = get_ref_data('locations.json', 'locations');
-# my $folio_mtypes = get_ref_data('material-types.json', 'mtypes');
+my $folio_mtypes = get_ref_data('material-types.json', 'mtypes');
 # my $folio_rel = get_ref_data('electronic-access-relationships.json', 'electronicAccessRelationships');
 my $folio_notes = get_ref_data('item-note-types.json', 'itemNoteTypes');
 
 # get location mappings from tsv file
 my $locmap = {};
-open LOC, "$refpath/locations.tsv" or die "Can't find locations.tsv file\n";
+open LOC, "$refpath/locations.tsv" or die "Can't find locations.tsv file\n ";
 while (<LOC>) {
   my @col = split /\t/;
   $col[4] =~ s/\s*$//;
@@ -78,14 +78,16 @@ while (<LOC>) {
 close LOC;
 
 # get itype mappings from tsv file
-# my $itypemap = {};
-# open ITP, "$refpath/itypes.tsv" or die "Can't find itypes.tsv file\n";
-# while (<ITP>) {
-  # my @col = split /\t/;
-  # next unless $col[0] =~ /^\d+$/;
-  # $itypemap->{$col[0]} = $col[5];
-# }
-# close ITP;
+my $itypemap = {};
+open ITP, "$refpath/itypes.tsv" or die "Can't find itypes.tsv file\n ";
+while (<ITP>) {
+  my @col = split /\t/;
+  next unless $col[0] =~ /^\w/;
+  $col[0] = uc $col[0]; # normalize voyager name.
+  $itypemap->{$col[0]} = $col[3];
+}
+close ITP;
+# print Dumper($itypemap); exit;
 
 # set relationship indicator map
 my $rel_ind = {
@@ -168,17 +170,17 @@ foreach (@$items) {
   $irec->{id} = uuid();
   my $iid = $_->{item_id};
   my $mid = $_->{mfhd_id};
-  $irec->{holdingsRecordId} = $h2i_map->{$mid} or die "\nCan't find MFHD ID $mid in h2i_map\n";
+  $irec->{holdingsRecordId} = $h2i_map->{$mid} or die "\nCan't find MFHD ID $mid in h2i_map\n ";
   $irec->{formerIds} = [ $iid, "mfhd:$mid" ];
   my $permloc = $_->{perm_location};
   if ($permloc) {
     my $locstr = $locmap->{$permloc} or die "\nCan't find \"$permloc\" in locmap\n";
-    $irec->{temporaryLocationId} = $folio_locs->{$locstr} or die "\nCan't find temporaryLocationId for \"$locstr\" in folio_locs map\n";
+    $irec->{temporaryLocationId} = $folio_locs->{$locstr} or die "\nCan't find temporaryLocationId for \"$locstr\" in folio_locs map\n ";
   }
   my $tmploc = $_->{temp_location};
   if ($tmploc) {
-    my $locstr = $locmap->{$tmploc} or die "\nCan't find \"$tmploc\" in locmap\n";
-    $irec->{temporaryLocationId} = $folio_locs->{$locstr} or die "\nCan't find temporaryLocationId for \"$locstr\" in folio_locs map\n";
+    my $locstr = $locmap->{$tmploc} or die "\nCan't find \"$tmploc\" in locmap\n ";
+    $irec->{temporaryLocationId} = $folio_locs->{$locstr} or die "\nCan't find temporaryLocationId for \"$locstr\" in folio_locs map\n ";
   }
   $irec->{volume} = $_->{enum} if $_->{enum};
   $irec->{barcode} = $_->{barcode} || '';
@@ -189,7 +191,7 @@ foreach (@$items) {
     $lost_flag = 1 if /Lost--Sys/;
   }
   my $status = $_->{status}[0];
-  my $status_name = $status_map->{$status} or die "\nStatus \"$status\" not found in status_map\n";
+  my $status_name = $status_map->{$status} or die "\nStatus \"$status\" not found in status_map\n ";
   $irec->{status} = $status_name; 
   if ($lost_flag) {
     push $irec->{notes}, make_note('Note', 'Lost--System Applied', true);
@@ -199,8 +201,8 @@ foreach (@$items) {
     $irec->{itemDamagedStatusDate} = $today;
   }
 
-  my $itype_code;
-  my $itype_name = $itypemap->{$itype_code};
+  my $itype_voyager = uc $_->{item_type}; # normalize voyager status
+  my $itype_name = $itypemap->{$itype_voyager} or die "\nCan't find '$itype_voyager' in itypemap\n ";
   $irec->{materialTypeId} = $folio_mtypes->{$itype_name} || $itype_code;
   $irec->{permanentLoanTypeId} = $loan_type_id;
   
@@ -214,7 +216,7 @@ sub make_note {
   my $text = shift;
   my $staff = shift;
   my $note = {};
-  $note->{itemNoteTypeId} = $folio_notes->{$note_name} or die "\n#$icount : Can't find \"$note_name\" in folio_notes.\n";
+  $note->{itemNoteTypeId} = $folio_notes->{$note_name} or die "\n#$icount : Can't find \"$note_name\" in folio_notes.\n ";
   $note->{note} = $text;
   if ($staff) {
     $note->{staffOnly} = $staff;
