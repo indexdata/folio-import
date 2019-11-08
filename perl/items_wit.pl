@@ -117,7 +117,10 @@ my $status_map = {
   'Lost--System Applied' => 'Missing',
   'Claims Returned' => 'Checked out',
   'Damaged' => 'In process',
-  'Call Slip Request' => 'In process'
+  'Call Slip Request' => 'In process',
+  'At Bindery' => 'In process',
+  'Circulation Review' => 'Paged',
+  'Cataloging Review' => 'Paged'
 };
 
 # set static callno type to LC
@@ -233,7 +236,7 @@ my $icollection = JSON->new->pretty->encode($icoll);
 my $items_file = "$batch_path/${filename}_items.json";
 open ITM, ">:encoding(UTF-8)", $items_file;
 print ITM $icollection;
-print $icollection;
+# print $icollection;
 close ITM;
 
 print "\nItems:    $icount\n";
