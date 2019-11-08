@@ -139,6 +139,16 @@ my $months = {
   DEC=>'12'
 };
 
+my @lt = localtime;
+my $yr = $lt[5] + 1900;
+my $mo = $lt[4] + 1;
+$mo =~ s/^(\d)$/0$1/;
+my $dy = $lt[3];
+$dy =~ s/^(\d)$/0$1/;
+my $today = "$yr-$mo-$dy";
+print "$today\n";
+exit;
+
 my $icoll = { items => [] };
 my $icount = 0;
 foreach (@$items) {
