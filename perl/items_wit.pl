@@ -123,6 +123,9 @@ my $cn_type_id = '95467209-6d7b-468b-94df-0f5d7ad2747d';
 # set static loantype to "can circulate"
 my $loan_type_id = '2b94c631-fca9-4892-a730-03ee529ffe27';
 
+my $damaged = 'afe30448-0331-44ac-8159-e13433f9a1b0';
+my $not_damaged = 'f3870a55-4159-4083-a858-2d47e260f43b';
+
 # month map for created date.
 my $months = {
   JAN=>'01',
@@ -146,8 +149,6 @@ $mo =~ s/^(\d)$/0$1/;
 my $dy = $lt[3];
 $dy =~ s/^(\d)$/0$1/;
 my $today = "$yr-$mo-$dy";
-print "$today\n";
-exit;
 
 my $icoll = { items => [] };
 my $icount = 0;
@@ -181,11 +182,21 @@ foreach (@$items) {
   }
   $irec->{volume} = $_->{enum} if $_->{enum};
   $irec->{barcode} = $_->{barcode} || '';
+  my $damaged_flag = 0;
+  my $lost_flag = 0;
+  foreach (@{ $_->{status} }) {
+    $damaged_flag = 1 if /Damaged/;
+    $lost_flag = 1 if /Lost--Sys/;
+  }
   my $status = $_->{status}[0];
   my $status_name = $status_map->{$status} or die "\nStatus \"$status\" not found in status_map\n";
   $irec->{status} = $status_name; 
-  if ($status eq 'Lost--System Applied') {
+  if ($lost_flag) {
     push $irec->{notes}, make_note('Note', 'Lost--System Applied', true);
+  }
+  if ($damaged_flag) {
+    $irec->{itemDamagedStatusId} = $damaged;
+    $irec->{itemDamagedStatusDate} = $today;
   }
 
   my $itype_code;
