@@ -33,7 +33,8 @@ let refDir = process.argv[2];
       'https://raw.githubusercontent.com/folio-org/mod-feesfines/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-email/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-template-engine/master/descriptors/ModuleDescriptor-template.json',
-      'https://raw.githubusercontent.com/folio-org/mod-login-saml/master/descriptors/ModuleDescriptor-template.json'
+      'https://raw.githubusercontent.com/folio-org/mod-login-saml/master/descriptors/ModuleDescriptor-template.json',
+      'https://raw.githubusercontent.com/folio-org/mod-data-import/master/descriptors/ModuleDescriptor-template.json'
     ]
 
     const skipList = {
