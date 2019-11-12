@@ -34,7 +34,9 @@ let refDir = process.argv[2];
       'https://raw.githubusercontent.com/folio-org/mod-email/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-template-engine/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-login-saml/master/descriptors/ModuleDescriptor-template.json',
-      'https://raw.githubusercontent.com/folio-org/mod-data-import/master/descriptors/ModuleDescriptor-template.json'
+      'https://raw.githubusercontent.com/folio-org/mod-data-import/master/descriptors/ModuleDescriptor-template.json',
+      'https://raw.githubusercontent.com/folio-org/mod-source-record-storage/master/descriptors/ModuleDescriptor-template.json',
+      'https://raw.githubusercontent.com/folio-org/mod-courses/master/descriptors/ModuleDescriptor-template.json'
     ]
 
     const skipList = {
@@ -48,7 +50,9 @@ let refDir = process.argv[2];
       '/loan-storage/loans': true,
       '/loan-storage/loan-history': true,
       '/request-storage/requests': true,
-      '/patron-action-session-storage/patron-action-sessions': true
+      '/patron-action-session-storage/patron-action-sessions': true,
+      '/source-storage/records': true,
+      '/source-storage/sourceRecords': true
     }
     
     let paths = [];
