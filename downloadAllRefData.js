@@ -70,7 +70,7 @@ let refDir = process.argv[2];
           for (let y = 0; y < hand.length; y++) {
             let method = hand[y].methods[0];
             let pp = hand[y].pathPattern;
-            if (method === 'GET' && !pp.match(/\{/)) {
+            if (method === 'GET' && !pp.match(/\{|^\/_/)) {
               if (skipList[pp]) {
                 console.log(`Skipping ${pp}`);
               } else {
