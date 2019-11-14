@@ -20,6 +20,9 @@ if (! -e $ctrl_file) {
   die "Can't find id to uuid map file\n";
 }
 
+$save_path = $infile;
+$save_path =~ s/^(.+)\..+$/$1_srs.json/;
+
 sub uuid {
   my $ug = Data::UUID->new;
   my $uuid = $ug->create();
@@ -61,4 +64,5 @@ while (<RAW>) {
   push $srs_recs->{records}, $srs;
 }
 $out = JSON->new->pretty->encode($srs_recs);
-print $out;
+open OUT, ">:encoding(UTF-8)", $save_path;
+print OUT $out;
