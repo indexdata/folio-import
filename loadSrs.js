@@ -14,11 +14,14 @@ const wait = (ms) => {
   try {
     let inData;
     if (!inFile) {
-      throw new Error('Usage: node loadSrs.js <marc_batch_file>');
+      throw new Error('Usage: node loadSrs.js <srs_collection_file>');
     } else if (!fs.existsSync(inFile)) {
       throw new Error('Can\'t find input file');
     } else {
-      inData = fs.readFileSync(inFile, 'utf8');
+      inData = require(inFile);
+      if (inData.records) {
+        inData = inData.records;
+      } 
     }
     const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
 
@@ -28,7 +31,9 @@ const wait = (ms) => {
     const snapshotUrl = config.okapi + '/source-storage/snapshots';
     const snapId = uuid();
 
+    // create snapshot
     try {
+      console.log(`Creating snapshot with id: ${snapId}`);
       const snap = {}
       snap.jobExecutionId = snapId;
       snap.status = 'PARSING_IN_PROGRESS';
@@ -40,32 +45,29 @@ const wait = (ms) => {
         .set('content-type', 'application/json')
         .set('accept', 'application/json');
       const mesg = JSON.parse(res.text);
-      console.log(JSON.stringify(mesg, null, 2));
     } catch (e) {
       console.log(e.message);
     }
 
-    try {
-      let payload = {};
-      payload.recordType = 'MARC';
-      payload.rawRecord = {};
-      payload.rawRecord.content = inData;
-      payload.parsedRecord.content = inParsed;
-      payload.matchedId = uuid();
-      payload.snapshotId = snapId;
-      res = await superagent
-        .post(actionUrl)
-        .send(payload)
-        .set('x-okapi-tenant', config.tenant)
-        .set('x-okapi-token', authToken)
-        .set('content-type', 'application/json')
-        .set('accept', 'application/json');
-      const mesg = JSON.parse(res.text);
-      console.log(JSON.stringify(mesg, null, 2));
-    } catch (e) {
-      const mesg = e;
-      console.error(JSON.stringify(mesg, null, 2));
+    // load srs records
+    for (x = 0; x < inData.length; x++) {
+      inData[x].snapshotId = snapId;
+      console.log(`Loading SRS record ${inData[x].id}`);
+      try {
+        res = await superagent
+          .post(actionUrl)
+          .send(inData[x])
+          .set('x-okapi-tenant', config.tenant)
+          .set('x-okapi-token', authToken)
+          .set('content-type', 'application/json')
+          .set('accept', 'application/json');
+        const mesg = JSON.parse(res.text);
+      } catch (e) {
+        const mesg = e;
+        console.error(JSON.stringify(mesg, null, 2));
+      }
     }
+
   } catch (e) {
     console.error(e);
   }

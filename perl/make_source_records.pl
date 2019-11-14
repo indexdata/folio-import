@@ -53,8 +53,9 @@ while (<RAW>) {
   my $control_num = $marc->field('001')->{_data};
   $srs->{id} = uuid();
   my $nine = {};
-  $nine->{'999'} = { ind1=>'f', ind2=>'f' };
   $nine->{'999'} = { subfields=>[ { 'i'=>$id_map->{$control_num} }, { 's'=>$srs->{id} } ] };
+  $nine->{'999'}->{'ind1'} = 'f';
+  $nine->{'999'}->{'ind2'} = 'f';
   push @{ $parsed->{fields} }, $nine;
   $srs->{snapshotId} = 'TO BE ADDED BY LOADING SCRIPT';
   $srs->{matchedId} = uuid();
