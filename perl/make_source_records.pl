@@ -45,11 +45,19 @@ while (<RAW>) {
   my $raw = $_;
   my $srs = {};
   my $marc = MARC::Record->new_from_usmarc($raw);
-  my $parsed = MARC::Record::MiJ->to_mij($marc);
+  my $mij = MARC::Record::MiJ->to_mij($marc);
+  my $parsed = decode_json($mij);
   my $control_num = $marc->field('001')->{_data};
   $srs->{id} = uuid();
+  my $nine = {};
+  $nine->{'999'} = { ind1=>'f', ind2=>'f' };
+  $nine->{'999'} = { subfields=>[ { 'i'=>$id_map->{$control_num} }, { 's'=>$srs->{id} } ] };
+  push @{ $parsed->{fields} }, $nine;
+  $srs->{snapshotId} = 'TO BE ADDED BY LOADING SCRIPT';
+  $srs->{matchedId} = uuid();
+  $srs->{recordType} = 'MARC';
   $srs->{rawRecord} = { id=>uuid(), content=>$raw };
-  $srs->{parsedRecord} = { id=>uuid(), content=>decode_json($parsed) };
+  $srs->{parsedRecord} = { id=>uuid(), content=>$parsed };
   push $srs_recs->{records}, $srs;
 }
 $out = JSON->new->pretty->encode($srs_recs);
