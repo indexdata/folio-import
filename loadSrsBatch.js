@@ -10,7 +10,10 @@ const wait = (ms) => {
 };
 */
 
+const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
+
 (async () => {
+  const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
   for (f = 0; f < inFiles.length; f++) {
     let inFile = inFiles[f];
     try {
@@ -25,11 +28,8 @@ const wait = (ms) => {
           inData = inData.records;
         }
       }
-      const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
 
-      const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
-
-      const actionUrl = config.okapi + '/source-storage/records';
+      const actionUrl = config.okapi + '/source-storage/batch/records';
       const snapshotUrl = config.okapi + '/source-storage/snapshots';
       const snapId = uuid();
 
