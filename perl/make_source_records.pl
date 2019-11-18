@@ -11,7 +11,7 @@ use Data::UUID;
 binmode STDOUT, ":utf8";
 $| = 1;
 
-my $ctrl_file = shift;
+my $ctrl_file = shift or die "Usage: ./make_source_records.pl <uuid_map_file> <raw_marc_files>\n";
 
 sub uuid {
   my $ug = Data::UUID->new;
