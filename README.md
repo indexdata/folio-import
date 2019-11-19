@@ -32,6 +32,10 @@ There is a collection of bash scripts in the bash directory.  There are also a h
 
 Since JS doesn't have any reliable MARC libraries, working with MARC records is best achieved using Perl. So far the scripts only deal with conversion -- nothing talks to okapi.
 
+### downloadAllRefData.js
+
+This script will consult modual descripters, grab GET endpoints, fetch and store the data returned by the requests.  You just need to supply a path to a directory for storing these data.  The filenames will be the endpoint (forward slashes are converted to %2F) and the module root is added as prefix.
+
 ### loadCreds.js
 
 Since mod-user-import does not create credentials records, this script is a way to do so.  It will read a file in "credentials" format and first check to see if the userId exists, and then will POST the credential record to the /authn/credentials.  If a credentials record already exists for the userId, then the script will return a detailed error message.
