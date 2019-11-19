@@ -34,7 +34,7 @@ Since JS doesn't have any reliable MARC libraries, working with MARC records is 
 
 ### downloadAllRefData.js
 
-This script will consult modual descripters, grab GET endpoints, fetch and store the data returned by the requests.  You just need to supply a path to a directory for storing these data.  The filenames will be the endpoint (forward slashes are converted to %2F) and the module root is added as prefix.
+This programe will consult modual descripters, grab GET endpoints, fetch and store the data returned by the requests.  You just need to supply a path to a directory for storing these data.  The filenames will be the endpoint (forward slashes are converted to %2F) and the module root is added as prefix.
 
 Usage:
 ```
@@ -45,7 +45,7 @@ $ node downloadAllRefData.js <target_directory>
 
 This script will load the data fetched by the above script.  It will get the endpoint from the filename, read for the second level arrary object and start loading one reference record at a time.  
 
-Needless to say, order of loading is important.  The user can pick individual files or globs of files as needed.
+Needless to say, order of loading is important.  The user may pick individual files or globs of files as needed.
 
 Usage:
 ```
@@ -53,12 +53,12 @@ $ node loadRedData.js <target_directory/filename(s)>
 ```
 
 Recommended workflow example:
-1) $ node loadRefData.js Configuration*
-2) $ node loadRefData.js users*
-3) $ node loadRefData.js Inventory_Storage_Module\:location-units%2Finstitutions.json
-4) $ node loadRefData.js Inventory_Storage_Module\:location-units%2Fcampuses.json
-5) $ node loadRefData.js Inventory_Storage_Module\:location-units%2Flibraries.json
-6) $ node loadRefData.js Inventory_Storage_Module\:location-units%2Flocations.json
+1) $ node loadRefData.js Refdata/Configuration*
+2) $ node loadRefData.js Refdata/users*
+3) $ node loadRefData.js Refdata/Inventory_Storage_Module\:location-units%2Finstitutions.json
+4) $ node loadRefData.js Refdata/Inventory_Storage_Module\:location-units%2Fcampuses.json
+5) $ node loadRefData.js Refdata/Inventory_Storage_Module\:location-units%2Flibraries.json
+6) $ node loadRefData.js Refdata/Inventory_Storage_Module\:location-units%2Flocations.json
 7) ... the rest of Inventory_Storage_Module ...
 8) ... everything else ...
 
