@@ -56,9 +56,9 @@ Recommended workflow example:
 1) $ node loadRefData.js Configuration*
 2) $ node loadRefData.js users*
 3) $ node loadRefData.js Inventory_Storage_Module\:location-units%2Finstitutions.json
-4) $ node loadRedData.js Inventory_Storage_Module\:location-units%2Fcampuses.json
-5) $ node loadRedData.js Inventory_Storage_Module\:location-units%2Flibraries.json
-6) $ node loadRedData.js Inventory_Storage_Module\:location-units%2Flocations.json
+4) $ node loadRefData.js Inventory_Storage_Module\:location-units%2Fcampuses.json
+5) $ node loadRefData.js Inventory_Storage_Module\:location-units%2Flibraries.json
+6) $ node loadRefData.js Inventory_Storage_Module\:location-units%2Flocations.json
 7) ... the rest of Inventory_Storage_Module ...
 8) ... everything else ...
 
