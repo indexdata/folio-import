@@ -24,14 +24,17 @@ const config = (fs.existsSync('./config.js')) ? require('./config.js') : require
         throw new Error('Can\'t find input file');
       } else {
         inData = require(inFile);
-        if (inData.records) {
-          inData = inData.records;
-        }
       }
 
       const actionUrl = config.okapi + '/source-storage/batch/records';
       const snapshotUrl = config.okapi + '/source-storage/snapshots';
       const snapId = uuid();
+      inData.records.forEach(r => {
+        r.snapshotId = snapId;
+      });
+      if (!inData.totalRecords) {
+        inData.totalRecords = inData.records.length;
+      }
 
       // create snapshot
       try {
@@ -52,24 +55,20 @@ const config = (fs.existsSync('./config.js')) ? require('./config.js') : require
       }
 
       // load srs records
-      for (x = 0; x < inData.length; x++) {
-        inData[x].snapshotId = snapId;
-        console.log(`Loading SRS record ${inData[x].id}`);
-        try {
-          res = await superagent
-            .post(actionUrl)
-            .send(inData[x])
-            .set('x-okapi-tenant', config.tenant)
-            .set('x-okapi-token', authToken)
-            .set('content-type', 'application/json')
-            .set('accept', 'application/json');
-          const mesg = JSON.parse(res.text);
-        } catch (e) {
-          const mesg = e;
-          console.error(JSON.stringify(mesg, null, 2));
-        }
+      console.log(`Loading SRS records with snapshot ID ${snapId}`);
+      try {
+        res = await superagent
+          .post(actionUrl)
+          .send(inData)
+          .set('x-okapi-tenant', config.tenant)
+          .set('x-okapi-token', authToken)
+          .set('content-type', 'application/json')
+          .set('accept', 'application/json');
+        const mesg = JSON.parse(res.text);
+      } catch (e) {
+        const mesg = e;
+        console.error(JSON.stringify(mesg, null, 2));
       }
-
     } catch (e) {
       console.error(e);
     }
