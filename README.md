@@ -49,7 +49,7 @@ Needless to say, order of loading is important.  The user may pick individual fi
 
 Usage:
 ```
-$ node loadRedData.js <target_directory/filename(s)>
+$ node loadRefData.js <target_directory/filename(s)>
 ```
 
 Recommended workflow example:
