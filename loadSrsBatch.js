@@ -4,11 +4,9 @@ const uuid = require('uuid/v1');
 const { getAuthToken } = require('./lib/login');
 let inFiles = process.argv.slice(2);
 
-/*
 const wait = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
-*/
 
 const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
 
@@ -69,6 +67,7 @@ const config = (fs.existsSync('./config.js')) ? require('./config.js') : require
         const mesg = e;
         console.error(JSON.stringify(mesg, null, 2));
       }
+      wait(30000);
     } catch (e) {
       console.error(e);
     }
