@@ -36,6 +36,32 @@ Since JS doesn't have any reliable MARC libraries, working with MARC records is 
 
 This script will consult modual descripters, grab GET endpoints, fetch and store the data returned by the requests.  You just need to supply a path to a directory for storing these data.  The filenames will be the endpoint (forward slashes are converted to %2F) and the module root is added as prefix.
 
+Usage:
+```
+$ node downloadAllRefData.js <target_directory>
+```
+
+### loadRefData.js
+
+This script will load the data fetched by the above script.  It will get the endpoint from the filename, read for the second level arrary object and start loading one reference record at a time.  
+
+Needless to say, order of loading is important.  The user can pick individual files or globs of files as needed.
+
+Usage:
+```
+$ node loadRedData.js <target_directory/filename(s)>
+```
+
+Recommended workflow example:
+1) $ node loadRefData.js Configuration*
+2) $ node loadRefData.js users*
+3) $ node loadRefData.js Inventory_Storage_Module\:location-units%2Finstitutions.json
+4) $ node loadRedData.js Inventory_Storage_Module\:location-units%2Fcampuses.json
+5) $ node loadRedData.js Inventory_Storage_Module\:location-units%2Flibraries.json
+6) $ node loadRedData.js Inventory_Storage_Module\:location-units%2Flocations.json
+7) ... the rest of Inventory_Storage_Module ...
+8) ... everything else ...
+
 ### loadCreds.js
 
 Since mod-user-import does not create credentials records, this script is a way to do so.  It will read a file in "credentials" format and first check to see if the userId exists, and then will POST the credential record to the /authn/credentials.  If a credentials record already exists for the userId, then the script will return a detailed error message.
