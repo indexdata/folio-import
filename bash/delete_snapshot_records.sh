@@ -10,4 +10,7 @@ if [ ! $ID ]
     exit;
 fi
 
-curl --http1.1 -w '\n' -X DELETE "${OKAPI}/source-storage/snapshots/${ID}/records" -H "x-okapi-token: ${TOKEN}"
+for i in ${BASH_ARGV[*]}; do
+  echo $i
+  curl --http1.1 -w '\n' -X DELETE "${OKAPI}/source-storage/snapshots/${i}/records" -H "x-okapi-token: ${TOKEN}"
+done
