@@ -67,10 +67,11 @@ const config = (fs.existsSync('./config.js')) ? require('./config.js') : require
         const mesg = e;
         console.error(JSON.stringify(mesg, null, 2));
       }
-      wait(30000);
+      console.log('Waiting 30 secs...');
+      await wait(30000);
+      delete require.cache[inFile];
     } catch (e) {
       console.error(e);
     }
   }
-  
 })();
