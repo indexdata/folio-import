@@ -4,11 +4,17 @@ const uuid = require('uuid/v1');
 const { getAuthToken } = require('./lib/login');
 let inFiles = process.argv.slice(2);
 
+const delay = 15000;
+
 const wait = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
 const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
+
+if (!inFiles[0]) {
+  throw new Error('Usage: node loadSrs.js <srs_collection_files>');
+}
 
 (async () => {
   const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
@@ -16,12 +22,11 @@ const config = (fs.existsSync('./config.js')) ? require('./config.js') : require
     let inFile = inFiles[f];
     try {
       let inData;
-      if (!inFile) {
-        throw new Error('Usage: node loadSrs.js <srs_collection_file>');
-      } else if (!fs.existsSync(inFile)) {
+      if (!fs.existsSync(inFile)) {
         throw new Error('Can\'t find input file');
       } else {
-        inData = require(inFile);
+	const jsonText = fs.readFileSync(inFile, 'utf8');
+        inData = JSON.parse(jsonText);
       }
 
       const actionUrl = config.okapi + '/source-storage/batch/records';
@@ -53,7 +58,7 @@ const config = (fs.existsSync('./config.js')) ? require('./config.js') : require
       }
 
       // load srs records
-      console.log(`Loading SRS records with snapshot ID ${snapId}`);
+      console.log(`Loading SRS records from ${inFile}`);
       try {
         res = await superagent
           .post(actionUrl)
@@ -67,9 +72,8 @@ const config = (fs.existsSync('./config.js')) ? require('./config.js') : require
         const mesg = e;
         console.error(JSON.stringify(mesg, null, 2));
       }
-      console.log('Waiting 30 secs...');
-      await wait(30000);
-      delete require.cache[inFile];
+      console.log(`Waiting ${delay}ms...`);
+      await wait(delay);
     } catch (e) {
       console.error(e);
     }
