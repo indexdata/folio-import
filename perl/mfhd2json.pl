@@ -104,8 +104,8 @@ while (<RAW>) {
   $hrec->{formerIds} = [ $control_num ];
   $hrec->{instanceId} = $id_map->{$bib_num};
 
-  # $hrec->{instanceId} = $inst_map->{$control_num};
   my $locstr = $loc->as_string('b');
+  next if $locstr eq 'WITORDER';
   my $locname = $voyager_locs->{$locstr} or die "\nCan't find $locstr in voyager_locs\n";
   $hrec->{permanentLocationId} = $folio_locs->{$locname} or die "\nCan't find permanentLocationId for $locname\n";
 
