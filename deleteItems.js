@@ -16,6 +16,9 @@ const wait = (ms) => {
       throw new Error('Can\'t find input file');
     } else {
       inData = require(inFile);
+      if (inData.items) {
+        inData = inData.items;
+      }
     }
     const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
 
