@@ -23,7 +23,7 @@ const wait = (ms) => {
 
     const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
 
-    const actionUrl = config.okapi + '/inventory/instances/batch';
+    const actionUrl = config.okapi + '/instance-storage/batch/synchronous';
 
     try {
       res = await superagent
@@ -31,14 +31,13 @@ const wait = (ms) => {
         .send(inData)
         .set('x-okapi-tenant', config.tenant)
         .set('x-okapi-token', authToken)
-        .set('content-type', 'application/json');
-      const mesg = JSON.parse(res.text);
-      console.log(JSON.stringify(mesg, null, 2));
+        .set('content-type', 'application/json')
+        .set('accept', 'text/plain');
+      console.log(res.text);
     } catch (e) {
-      const mesg = JSON.parse(e.response.text);
-      console.error(JSON.stringify(mesg, null, 2));
+      console.log(e);
     }
   } catch (e) {
-    console.error(e.message);
+    console.error(e);
   }
 })();
