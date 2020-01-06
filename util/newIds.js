@@ -10,5 +10,8 @@ if (!coll[root]) {
 }
 coll[root].forEach(r => {
   r.id = uuid();
+  if (r.hrid) {
+    delete r.hrid;
+  }
 });
 console.log(JSON.stringify(coll, null, 2));
