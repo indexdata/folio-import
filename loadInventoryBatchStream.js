@@ -112,13 +112,12 @@ const wait = (ms) => {
     const stream = fs.createReadStream(inFile, { encoding: "utf8" });
     let streamCount = 0;
     let coll = { start: true };
-    let collSize = 5;
+    let collSize = 50;
     let collRoot = null;
     stream
       .pipe(JSONStream.parse(root))
       .pipe(es.through(function write(data) {
         if (coll.start) {
-          console.log(data);
           if (data.instanceId) {
             collRoot = 'holdingsRecords';
           } else if (data.holdingsRecordId) {
@@ -131,15 +130,20 @@ const wait = (ms) => {
         }
         if (streamCount >= startRec && coll[collRoot].length <= collSize) {
           coll[collRoot].push(data);
-        } 
+        }
+        streamCount++;
         if (coll[collRoot].length === collSize) {
           runRequest(coll, this);
           this.pause();
-          coll.instances = [];
+          coll[collRoot] = [];
         }
-          streamCount++;
         }, 
         function end() {
+          // Check for remaining objects, if found call runRequest one more time
+          if (coll[collRoot].length > 0) {
+            runRequest(coll, this);
+            this.pause();
+          }
           showStats();
           this.emit('end')
         })
