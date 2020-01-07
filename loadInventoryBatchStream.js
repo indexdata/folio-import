@@ -56,7 +56,7 @@ const wait = (ms) => {
       logger = console;
     }
 
-    // const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
+    const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
 
     let updated = 0;
     let success = 0;
@@ -66,45 +66,37 @@ const wait = (ms) => {
 
     const runRequest = async (data, es) => {
       let date = new Date().toISOString();
-      console.log(data.instances.length);
-      /*
       let endpoint = null;
-      if (data.instanceId) {
-        endpoint = '/holdings-storage/holdings';
-      } else if (data.holdingsRecordId) {
-        endpoint = '/item-storage/items';
+      let root = null;
+      if (data.holdingsRecords) {
+        endpoint = '/holdings-storage/batch/synchronous';
+        root = 'holdingsRecords'
+      } else if (data.items) {
+        endpoint = '/item-storage/batch/synchronous';
+        root = 'items';
       } else {
-        endpoint = '/instance-storage/instances';
+        endpoint = '/instance-storage/batch/synchronous';
+        root = 'instances';
       }
       const actionUrl = config.okapi + endpoint;
-      console.log(`# ${count} Loading ${data.id}`);
+      const slice = `${data[root][0].id} - ${data[root][data[root].length - 1].id}`;
+      console.log(`# ${count} Loading section ${slice}`);
       count++;
       try {
-        if (method === 'put') {
-          await superagent
-            .put(actionUrl + '/' + data.id)
-            .send(data)
-            .set('x-okapi-token', authToken)
-            .set('content-type', 'application/json')
-            .set('accept', 'text/plain')
-            .set('connection', 'keep-alive');
-          logger.info(`${date} [${count}] Successfully updated record ${data.id}`);
-        } else {
-          await superagent
-            .post(actionUrl)
-            .send(data)
-            .set('x-okapi-token', authToken)
-            .set('content-type', 'application/json')
-            .set('accept', 'application/json')
-            .set('connection', 'keep-alive');
-          logger.info(`${date} [${count}] Successfully added record ${data.id}`);
-        }
+        await superagent
+          .post(actionUrl)
+          .send(data)
+          .set('x-okapi-token', authToken)
+          .set('content-type', 'application/json')
+          .set('accept', 'text/plain')
+          .set('connection', 'keep-alive');
+        logger.info(`${date} [${count}] Successfully added record ${slice}`);
         success++;
       } catch (e) {
-        logger.error(`${date} [${count}] (${data.id}): ${e.response.text}`);
+        logger.error(`${date} [${count}] (${slice}): ${e.response.text}`);
         failedRecs.push(data);
         fail++;
-      } */
+      }
       await wait(config.delay);
       es.resume(); 
     }
