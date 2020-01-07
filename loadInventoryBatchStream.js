@@ -3,7 +3,6 @@ This script will stream instance, holdings, or item json objects from large coll
 options: 
 -s start record
 -r root node (an array of folio records)
--m method (post|put) defaults to post
 */
 
 const fs = require('fs');
@@ -31,7 +30,7 @@ const wait = (ms) => {
     const start = new Date().valueOf();
     let inData;
     if (!inFile) {
-      throw new Error('Usage: node loadInstancesBatchStream.js [options -s start, -r root, -m method] <file>');
+      throw new Error('Usage: node loadInstancesBatchStream.js [options -s start, -r root] <file>');
     } else if (!fs.existsSync(inFile)) {
       throw new Error('Can\'t find input file');
     }
