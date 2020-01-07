@@ -57,13 +57,11 @@ const wait = (ms) => {
 
     const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
 
-    let updated = 0;
     let success = 0;
     let fail = 0;
-    let count = startRec;
     let failedRecs = [];
 
-    const runRequest = async (data, es) => {
+    const runRequest = async (data, es, count, end) => {
       let date = new Date().toISOString();
       let endpoint = null;
       let root = null;
@@ -79,8 +77,7 @@ const wait = (ms) => {
       }
       const actionUrl = config.okapi + endpoint;
       const slice = `${data[root][0].id} - ${data[root][data[root].length - 1].id}`;
-      console.log(`# ${count} Loading section ${slice}`);
-      count++;
+      console.log(`# ${count}-${end} Loading section ${slice}`);
       try {
         await superagent
           .post(actionUrl)
@@ -103,8 +100,9 @@ const wait = (ms) => {
     const stream = fs.createReadStream(inFile, { encoding: "utf8" });
     let streamCount = 0;
     let coll = { start: true };
-    let collSize = 50;
+    let collSize = 1000;
     let collRoot = null;
+    let startRecord = startRec;
     stream
       .pipe(JSONStream.parse(root))
       .pipe(es.through(function write(data) {
@@ -119,20 +117,22 @@ const wait = (ms) => {
           coll[collRoot] = [];
           delete coll.start;
         }
-        if (streamCount >= startRec && coll[collRoot].length <= collSize) {
-          coll[collRoot].push(data);
+        if (streamCount >= startRec) {
+          if (coll[collRoot].length <= collSize) {
+            coll[collRoot].push(data);
+          }
+          if (coll[collRoot].length === collSize) {
+            runRequest(coll, this, startRecord, streamCount);
+            this.pause();
+            coll[collRoot] = [];
+            startRecord = streamCount + 1;
+          }
         }
         streamCount++;
-        if (coll[collRoot].length === collSize) {
-          runRequest(coll, this);
-          this.pause();
-          coll[collRoot] = [];
-        }
         }, 
-        function end() {
-          // Check for remaining objects, if found call runRequest one more time
+        async function end() {
           if (coll[collRoot].length > 0) {
-            runRequest(coll, this);
+            await runRequest(coll, this, startRecord, streamCount);
             this.pause();
           }
           showStats();
@@ -144,10 +144,9 @@ const wait = (ms) => {
       const end = new Date().valueOf();
       const ms = end - start;
       const time = Math.floor(ms / 1000);
-      logger.info(`\nTime:            ${time} sec`);
-      logger.info(`Records updated: ${updated}`);
-      logger.info(`Records added:   ${success}`);
-      logger.info(`Failures:        ${fail}\n`);
+      logger.info(`\nTime:          ${time} sec`);
+      logger.info(`Files added:   ${success} (${collSize} recs per file)`);
+      logger.info(`Failures:      ${fail}\n`);
       if (config.logpath && failedRecs[0]) {
         let rfname = lname.replace(/\.json$/, '');
         fs.writeFileSync(`${lpath}/${rfname}_err.json`, JSON.stringify(failedRecs, null, 2));
