@@ -3,6 +3,7 @@ This script will stream instance, holdings, or item json objects from large coll
 options: 
 -s start record
 -r root node (an array of folio records)
+-b batch size
 */
 
 const fs = require('fs');
@@ -21,6 +22,11 @@ if (argv.s) {
   startRec = parseInt(argv.s, 10);
 }
 
+let collSize = 1000;
+if (argv.b) {
+  collSize = parseInt(argv.b, 10);
+}
+
 const wait = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
@@ -30,7 +36,7 @@ const wait = (ms) => {
     const start = new Date().valueOf();
     let inData;
     if (!inFile) {
-      throw new Error('Usage: node loadInstancesBatchStream.js [options -s start, -r root] <file>');
+      throw new Error('Usage: node loadInstancesBatchStream.js [options -s start, -r root, -b batch size (default 1000)] <file>');
     } else if (!fs.existsSync(inFile)) {
       throw new Error('Can\'t find input file');
     }
@@ -76,8 +82,10 @@ const wait = (ms) => {
         root = 'instances';
       }
       const actionUrl = config.okapi + endpoint;
+      const range = `${count}-${end}`;
       const slice = `${data[root][0].id} - ${data[root][data[root].length - 1].id}`;
-      console.log(`# ${count}-${end} Loading section ${slice}`);
+      console.log(`# ${range} Loading section ${slice}`);
+      const ldata = { [root]: data[root] };
       try {
         await superagent
           .post(actionUrl)
@@ -86,11 +94,12 @@ const wait = (ms) => {
           .set('content-type', 'application/json')
           .set('accept', 'text/plain')
           .set('connection', 'keep-alive');
-        logger.info(`${date} [${count}] Successfully added record ${slice}`);
+        logger.info(`${date} [${range}] Successfully added record ${slice}`);
         success++;
       } catch (e) {
-        logger.error(`${date} [${count}] (${slice}): ${e.response.text}`);
-        failedRecs.push(data);
+        logger.error(`${date} [${range}] (${slice}): ${e.response.text}`);
+        let rfname = lname.replace(/\.json$/, '');
+        fs.writeFileSync(`${lpath}/${rfname}_${range}_err.json`, JSON.stringify(ldata, null, 2));
         fail++;
       }
       await wait(config.delay);
@@ -100,7 +109,6 @@ const wait = (ms) => {
     const stream = fs.createReadStream(inFile, { encoding: "utf8" });
     let streamCount = 0;
     let coll = { start: true };
-    let collSize = 1000;
     let collRoot = null;
     let startRecord = startRec;
     stream
@@ -147,10 +155,6 @@ const wait = (ms) => {
       logger.info(`\nTime:          ${time} sec`);
       logger.info(`Files added:   ${success} (${collSize} recs per file)`);
       logger.info(`Failures:      ${fail}\n`);
-      if (config.logpath && failedRecs[0]) {
-        let rfname = lname.replace(/\.json$/, '');
-        fs.writeFileSync(`${lpath}/${rfname}_err.json`, JSON.stringify(failedRecs, null, 2));
-      }
     }
   } catch (e) {
     console.error(e.message);
