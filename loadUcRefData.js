@@ -83,6 +83,8 @@ const fileNames = process.argv.slice(2);
             .send(data[d]);
           added++;
         } catch (e) {
+          console.log(e);
+          let err0 = e;
           try {
             let purl = url;
             if (!purl.match(/circulation-rules-storage/)) {
@@ -98,15 +100,16 @@ const fileNames = process.argv.slice(2);
               .send(data[d]);
             updated++;
           } catch (e) {
+            console.log(e);
             let msg;
             let err1 = e;
-	    errRecs.push(data[d]);
+	          errRecs.push(data[d]);
             try {
               msg = e.response.res.text;
             } catch (e) {
               msg = err1.message;
             }
-            console.log(`ERROR: ${msg}`);
+            console.log(`ERROR: ${msg} -- ${err0} -- ${err1}`);
             errors++;
           } 
         }
