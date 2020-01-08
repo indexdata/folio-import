@@ -1,5 +1,5 @@
 /*
-  Delete nature of contents by natureOfContentTerms reference collection file.
+  Delete modes of issuances records by issuanceModes reference collection file.
 */
 
 const fs = require('fs');
