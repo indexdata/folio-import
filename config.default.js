@@ -4,5 +4,5 @@ module.exports = {
   tenant: 'diku',
   username: 'diku_admin',
   password: 'admin',
-  delay: 500 // delay between record loads in ms
+  delay: 50 // delay between record loads in ms
 };
