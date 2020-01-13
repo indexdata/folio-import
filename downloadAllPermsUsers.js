@@ -47,7 +47,7 @@ let refDir = process.argv[2];
       console.log(url);
       console.log(`Received ${totFetch} of ${totRecs}...`);
     }
-    const fn = `${refDir}/permsUsers.json`
+    const fn = `${refDir}/perms%2Fusers.json`
     console.log(`Writing to ${fn}`);
     const jsonStr = JSON.stringify(coll, null, 2);
     fs.writeFileSync(fn, jsonStr);
