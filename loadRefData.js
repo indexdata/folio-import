@@ -49,6 +49,7 @@ const fileNames = process.argv.slice(2);
           added++;
         } catch (e) {
           try {
+            console.log(`WARN ${e}`);
             let purl = url;
             if (!purl.match(/circulation-rules-storage/)) {
               purl += '/' + data[d].id;

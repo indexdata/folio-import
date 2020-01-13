@@ -28,7 +28,11 @@ const wait = (ms) => {
     for (let x = 0; x < inData.length; x++) {
       let id = inData[x].id;
       let permId = null;
-      console.log(`Deleting ${id} -- ${inData[x].personal.lastName}`);
+      if (inData[x].personal !== undefined) {
+        console.log(`Deleting ${id} -- ${inData[x].personal.lastName}`);
+      } else {
+        console.log(`Deleting ${id}`);
+      }
       try {
         await superagent
           .delete(`${actionUrl}/${id}`)
