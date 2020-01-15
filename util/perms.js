@@ -1,4 +1,4 @@
-const perms = require('./perms%2Fusers');
+const perms = require(process.argv[2]);
 
 const out = { permissionUsers: [] };
 perms.permissionUsers.forEach(p => {
