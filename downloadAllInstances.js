@@ -2,11 +2,13 @@ const fs = require('fs');
 const superagent = require('superagent');
 const { getAuthToken } = require('./lib/login');
 let refDir = process.argv[2];
+let start = parseInt(process.argv[3], 10);
+let limit = parseInt(process.argv[4], 10);
 
 (async () => {
   try {
     if (!refDir) {
-      throw new Error('Usage: node downloadAllInstances.js <download_dir>');
+      throw new Error('Usage: node downloadAllInstances.js <download_dir> <start> <stop>');
     } else if (!fs.existsSync(refDir)) {
       throw new Error('Reference directory does\'t exist!');
     } else if (!fs.lstatSync(refDir).isDirectory()) {
@@ -23,7 +25,7 @@ let refDir = process.argv[2];
     let totFetch = 0;
     let totRecs = 10000;
     let perPage = 500;
-    let offset = 0;
+    let offset = start || 0;
     const coll = { instances: [] };
     while (totFetch < totRecs) {
       let url = `${actionUrl}?limit=${perPage}&offset=${offset}`;
@@ -35,7 +37,10 @@ let refDir = process.argv[2];
           .set('x-okapi-token', authToken);
         coll.instances = coll.instances.concat(res.body.instances);
         totFetch = coll.instances.length;
-        totRecs = res.body.totalRecords;
+        if (start) {
+          totFetch += start;
+        }
+        totRecs = limit || res.body.totalRecords;
       } catch (e) {
         try {
           console.log(e.response.text);

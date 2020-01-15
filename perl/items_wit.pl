@@ -175,7 +175,8 @@ foreach (@$items) {
   $irec->{id} = uuid();
   my $iid = $_->{item_id};
   my $mid = $_->{mfhd_id};
-  $irec->{holdingsRecordId} = $h2i_map->{$mid} or die "\nCan't find MFHD ID $mid in h2i_map\n ";
+  next unless $h2i_map->{$mid};
+  $irec->{holdingsRecordId} = $h2i_map->{$mid} or print "\nWARN: Can't find MFHD ID $mid in h2i_map\n ";
   $irec->{formerIds} = [ $iid, "mfhd:$mid" ];
   my $permloc = $_->{perm_location};
   if ($permloc) {

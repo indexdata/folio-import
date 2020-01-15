@@ -184,6 +184,7 @@ while (<RAW>) {
   my $marc = MARC::Record->new_from_usmarc($raw);
   my $control_num = $marc->field('001')->as_string();
   my $iii_num = $marc->field('907')->as_string('a');
+  next if !$inst_map->{$iii_num};
   my @marc_items = $marc->field('945');
   foreach (@marc_items) {
     my $loc_code = $_->as_string('l');
@@ -193,7 +194,7 @@ while (<RAW>) {
       my $uustr = uuid();
       $hrecs->{$loc_code}->{id} = $uustr;
       $hrecs->{$loc_code}->{instanceId} = $inst_map->{$iii_num};
-      print HIDS $inst_map->{$control_num} . "|" . $uustr . "\n";
+      print HIDS $inst_map->{$iii_num} . "|" . $uustr . "\n";
       $hrecs->{$loc_code}->{callNumber} = $cnmap->{$iii_num};
       $hrecs->{$loc_code}->{callNumberTypeId} = $cn_type_id;
       my $loc_name = $locmap->{$loc_code};
