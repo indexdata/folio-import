@@ -57,7 +57,8 @@ const fileNames = process.argv.slice(2);
       "statisticalcodes": "statistical-codes",
       "statisticalcodetypes": "statistical-code-types",
       "permissions": "perms/permissions",
-      "permissionsusers": "perms/users"
+      "permissionsusers": "perms/users",
+      "hridsettings": "hrid-settings-storage/hrid-settings"
     }
     
     for (let x = 0; x < fileNames.length; x++) {
@@ -87,7 +88,7 @@ const fileNames = process.argv.slice(2);
           let err0 = e;
           try {
             let purl = url;
-            if (!purl.match(/circulation-rules-storage/)) {
+            if (!purl.match(/circulation-rules-storage|hrid-settings/)) {
               purl += '/' + data[d].id;
             }
             console.log(`  PUT ${purl}...`);
