@@ -18,7 +18,9 @@ $outfile =~ s/(.+)\.\w+$/$1/;
 $outfile = "${outfile}_fixed.mrc";
 unlink $outfile;
 open OUT, ">>:utf8", $outfile or die "Can't open outfile!";
+my $count = 0;
 while (<RAW>) {
+  $count++;
   $raw = $_;
   my $marc = MARC::Record->new_from_usmarc($raw);
   foreach ($marc->field('020')) {
@@ -27,6 +29,7 @@ while (<RAW>) {
     foreach ($f->subfield('a')) {
       $data = $_;
       if ($fc > 0) {
+        print "Fixing record # $count\n";
         my $field = MARC::Field->new('020', ' ', ' ', 'a' => $data);
         $marc->insert_fields_after($f, $field);
         $f->delete_subfield(code => 'a', pos => 1);
@@ -34,7 +37,6 @@ while (<RAW>) {
       $fc++;
     } 
   }
-  print $marc->as_formatted();
-  print "\n";
-  # print OUT $marc->as_usmarc();
+  # print $marc->as_formatted();
+  print OUT $marc->as_usmarc();
 }
