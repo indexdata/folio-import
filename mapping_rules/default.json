@@ -1,4 +1,12 @@
 {
+   "001" : [
+      {
+         "description" : "The human readable ID",
+         "rules" : [],
+         "subfield" : [],
+         "target" : "hrid"
+      }
+   ],
    "008" : [
       {
          "description" : "Default Unspecified Instance type in case when no 336 field present",
@@ -6307,27 +6315,6 @@
                "target" : "electronicAccess.publicNote"
             }
          ]
-      }
-   ],
-   "907": [
-      {
-         "rules": [
-            {
-               "conditions": [
-                  {
-                     "parameter": {
-                        "from": 1,
-                        "to": 9
-                     },
-                     "type": "char_select"
-                  }
-               ]
-            }
-         ],
-         "subfield": [
-            "a"
-         ],
-         "target": "hrid"
       }
    ]
 }
