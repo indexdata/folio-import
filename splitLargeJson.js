@@ -38,12 +38,18 @@ if (process.argv[4]) {
             let sufx = fcstr.padStart(5, '0');
             fn = `${pathRoot}${sufx}.json`;
             rec = '[' + rec;
+            if (root !== '*') {
+              rec = `{ "${process.argv[4]}" : ${rec}`;
+            }
             if (fs.existsSync(fn)) {
               fs.unlinkSync(fn);
             }
           }
           if ((c + 1) % sz === 0) {
             rec += ']';
+            if (root !== '*') {
+              rec += '}';
+            }
           } else {
             rec += ',';
           }
