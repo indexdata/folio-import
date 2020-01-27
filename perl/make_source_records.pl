@@ -55,7 +55,8 @@ foreach (@ARGV) {
     my $marc = MARC::Record->new_from_usmarc($raw);
     my $mij = MARC::Record::MiJ->to_mij($marc);
     my $parsed = decode_json($mij);
-    my $control_num = $marc->field('001')->{_data};
+    my $control_num = $marc->subfield('907','a') || $marc->field('001')->{_data};
+    next unless $id_map->{$control_num};
     $srs->{id} = uuid();
     my $nine = {};
     $nine->{'999'} = { subfields=>[ { 'i'=>$id_map->{$control_num} }, { 's'=>$srs->{id} } ] };
@@ -67,6 +68,7 @@ foreach (@ARGV) {
     $srs->{recordType} = 'MARC';
     $srs->{rawRecord} = { id=>uuid(), content=>$raw };
     $srs->{parsedRecord} = { id=>uuid(), content=>$parsed };
+    $srs->{externalIdsHolder} = { instanceId=>$id_map->{$control_num} };
     push $srs_recs->{records}, $srs;
   }
   $out = JSON->new->pretty->encode($srs_recs);
