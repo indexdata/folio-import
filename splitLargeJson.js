@@ -4,6 +4,10 @@ const es = require('event-stream');
 
 const size = process.argv[2];
 const inFile = process.argv[3];
+let root = '*';
+if (process.argv[4]) {
+  root = process.argv[4] + '.*';
+}
 
 (async () => {
   try {
@@ -25,7 +29,7 @@ const inFile = process.argv[3];
     let c = 0;
     let fn;
     stream
-      .pipe(JSONStream.parse('*'))
+      .pipe(JSONStream.parse(root))
       .pipe(es.through(function write(data) {
           let rec = JSON.stringify(data, null, 2);
           if (c % sz === 0) {
