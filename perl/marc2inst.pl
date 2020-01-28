@@ -84,7 +84,7 @@ foreach (@ARGV) {
   }
 
   my $rules = getRules($rules_file);
-  print Dumper($rules);
+  # print Dumper($rules);
 
   $ref_dir =~ s/\/$//;
   my $refdata = getRefData($ref_dir);
@@ -142,19 +142,25 @@ foreach (@ARGV) {
       my $fldrule = $rules->{$tag};
       if ($fldrule) {
         foreach (@{ $fldrule }) {
+          $fr = $_;
           if ($_->{entity}) {
             print "$tag has entities\n"
           } else {
             my $targ = $_->{target};
             if (ref($rec->{$targ}) eq 'ARRAY') {
               print "$targ is an array\n";
-            } else {
-              print "$targ\n";
+              push $rec->{$targ}, $field->as_string($fr->{subfields});
+            } elsif ($targ =~ /\./) {
+              print "$targ is a complex object\n";
+            } 
+            else {
+              $rec->{$targ} = $field->as_string($fr->{subfields});
             }
           }
         }
       }
     }
+    print Dumper($rec);
     last;
   }
   exit;
