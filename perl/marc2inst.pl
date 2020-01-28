@@ -41,11 +41,21 @@ sub getRefData {
     my $json = eval { decode_json($jsonstr) };
     if ($@) {
       print "WARN $_ is not valid JSON!\n";
-      next;
+    } else {
+      foreach (keys $json) {
+        if ($_ ne 'totalRecords') {
+          $refroot = $_;
+          $refobj->{$refroot} = {};
+          foreach (@{ $json->{$_} }) {
+            my $name = $_->{name};
+            my $id = $_->{id};
+            $refobj->{$refroot}->{$name} = $id;
+          }
+        }
+      }
     }
   }
-  return;
- return $json;
+ return $refobj;
 }
 
 foreach (@ARGV) {
@@ -60,8 +70,10 @@ foreach (@ARGV) {
 
   my $rules = getRules($rules_file);
   # print Dumper($rules);
+
   $ref_dir =~ s/\/$//;
   my $refdata = getRefData($ref_dir);
+  print Dumper($refdata);
 
   exit;
   my $save_path = $infile;
