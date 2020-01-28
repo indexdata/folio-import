@@ -25,6 +25,21 @@ sub getRules {
   open my $rules, $rfile or die "Can't open $rfile";
   my $jsonstr = <$rules>;
   my $json = decode_json($jsonstr);
+  foreach (sort keys $json) {
+    my $tag = $_;
+    foreach (@{ $json->{$tag} }) {
+      my $conf = $_;
+      if ($conf->{entity}) {
+        foreach (@{ $conf->{entity} }) {
+          my $subs = join '', @{ $_->{subfield} };
+          $_->{subfields} = $subs if $subs;
+        }
+      } else {
+        my $subs = join '', @{ $_->{subfield} };
+        $_->{subfields} = $subs if $subs;
+      }
+    }
+  }
   return $json;
 }
 
@@ -35,7 +50,7 @@ sub getRefData {
   foreach (<$refdir/*.json>) {
     my $prop = $_;
     $prop =~ s/^(.+\/)?(.+?)\.json/$2/;
-    print "Opening reference data file '$prop.json'\n";    
+    # print "Opening reference data file '$prop.json'\n";    
     open my $refdata, $_ or die "Can't open $_";
     my $jsonstr = <$refdata>;
     my $json = eval { decode_json($jsonstr) };
@@ -69,45 +84,80 @@ foreach (@ARGV) {
   }
 
   my $rules = getRules($rules_file);
-  # print Dumper($rules);
+  print Dumper($rules);
 
   $ref_dir =~ s/\/$//;
   my $refdata = getRefData($ref_dir);
-  print Dumper($refdata);
+  # print Dumper($refdata);
 
-  exit;
   my $save_path = $infile;
-  $save_path =~ s/^(.+)\..+$/$1_srs.json/;
+  $save_path =~ s/^(.+)\..+$/$1_instances.json/;
 
   # open a collection of raw marc records
-  my $srs_recs = { records=>[] };
   $/ = "\x1D";
   my $count = 0;
   open RAW, "<:encoding(UTF-8)", $infile;
+  my $instances = [];
   while (<RAW>) {
+    my $rec = {
+      id => uuid(),
+      source => 'MARC',
+      title => '',
+      indexTitle => '',
+      alternativeTitles => [],
+      editions => [],
+      series => [],
+      identifiers => [],
+      contributors => [],
+      subjects => [],
+      classifications => [],
+      publication => [],
+      publicationFrequency => [],
+      publicationRange => [],
+      electronicAccess => [],
+      instanceTypeId => '',
+      instanceFormatIds => [],
+      physicalDescriptions => [],
+      lanuages => [],
+      notes => [],
+      modeOfIssuanceId => '',
+      catalogedDate => '',
+      previouslyHeld => '',
+      staffSuppress => false,
+      discoverySuppress => false,
+      statisticalCodeIds => [],
+      sourceRecordFormat => 'MARC',
+      statusId => '',
+      statusUpdatedDate => '',
+      tags => {},
+      holdingsRecords2 => [],
+      natureOfContentTermIds => []
+    };
     $count++;
-    print "\r$count";
     my $raw = $_;
-    my $srs = {};
     my $marc = MARC::Record->new_from_usmarc($raw);
-    my $mij = MARC::Record::MiJ->to_mij($marc);
-    my $parsed = decode_json($mij);
-    my $control_num = $marc->subfield('907','a') || $marc->field('001')->{_data};
-    next unless $id_map->{$control_num};
-    $srs->{id} = uuid();
-    my $nine = {};
-    $nine->{'999'} = { subfields=>[ { 'i'=>$id_map->{$control_num} }, { 's'=>$srs->{id} } ] };
-    $nine->{'999'}->{'ind1'} = 'f';
-    $nine->{'999'}->{'ind2'} = 'f';
-    push @{ $parsed->{fields} }, $nine;
-    $srs->{snapshotId} = 'TO BE ADDED BY LOADING SCRIPT';
-    $srs->{matchedId} = uuid();
-    $srs->{recordType} = 'MARC';
-    $srs->{rawRecord} = { id=>uuid(), content=>$raw };
-    $srs->{parsedRecord} = { id=>uuid(), content=>$parsed };
-    $srs->{externalIdsHolder} = { instanceId=>$id_map->{$control_num} };
-    push $srs_recs->{records}, $srs;
+    foreach ($marc->fields()) {
+      my $field = $_;
+      my $tag = $_->tag();
+      my $fldrule = $rules->{$tag};
+      if ($fldrule) {
+        foreach (@{ $fldrule }) {
+          if ($_->{entity}) {
+            print "$tag has entities\n"
+          } else {
+            my $targ = $_->{target};
+            if (ref($rec->{$targ}) eq 'ARRAY') {
+              print "$targ is an array\n";
+            } else {
+              print "$targ\n";
+            }
+          }
+        }
+      }
+    }
+    last;
   }
+  exit;
   $out = JSON->new->pretty->encode($srs_recs);
   open OUT, ">:encoding(UTF-8)", $save_path;
   print OUT $out;
