@@ -6,11 +6,15 @@ use MARC::Record;
 use Data::Dumper;
 use JSON;
 use Data::UUID;
+$Data::Dumper::Indent = 1;
 
 binmode STDOUT, ":utf8";
 
 my $rules_file = shift;
 my $ref_dir = shift;
+if (! $ARGV[0]) {
+  die "Usage: ./marc2inst.pl <mapping_rules> <ref_data_dir> <raw_marc_files>\n";
+}
 
 sub uuid {
   my $ug = Data::UUID->new;
@@ -25,21 +29,6 @@ sub getRules {
   open my $rules, $rfile or die "Can't open $rfile";
   my $jsonstr = <$rules>;
   my $json = decode_json($jsonstr);
-  foreach (sort keys $json) {
-    my $tag = $_;
-    foreach (@{ $json->{$tag} }) {
-      my $conf = $_;
-      if ($conf->{entity}) {
-        foreach (@{ $conf->{entity} }) {
-          my $subs = join '', @{ $_->{subfield} };
-          $_->{subfields} = $subs if $subs;
-        }
-      } else {
-        my $subs = join '', @{ $_->{subfield} };
-        $_->{subfields} = $subs if $subs;
-      }
-    }
-  }
   return $json;
 }
 
@@ -74,7 +63,7 @@ sub getRefData {
 }
 
 foreach (@ARGV) {
-  my $infile = $_ or die "Usage: ./marc2inst.pl <mapping_rules> <ref_data_dir> <raw_marc_files>\n";
+  my $infile = $_;
   if (! -e $infile) {
     die "Can't find raw Marc file!"
   } elsif (! -e $ref_dir) {
@@ -93,6 +82,42 @@ foreach (@ARGV) {
   my $save_path = $infile;
   $save_path =~ s/^(.+)\..+$/$1_instances.json/;
 
+  my $ftypes = {
+    id => 'string',
+    hrid => 'string',
+    source => 'string',
+    title => 'string',
+    indexTitle => 'string',
+    alternativeTitles => 'array.object',
+    editions => 'array',
+    series => 'array',
+    identifiers => 'array.object',
+    contributors => 'array.object',
+    subjects => 'array',
+    classifications => 'array.object',
+    publication => 'array.object',
+    publicationFrequency => 'array',
+    publicationRange => 'array',
+    electronicAccess => 'array.object',
+    instanceTypeId => 'string',
+    instanceFormatIds => 'array',
+    physicalDescriptions => 'array',
+    lanuages => 'array',
+    notes => 'array.object',
+    modeOfIssuanceId => 'string',
+    catalogedDate => 'string',
+    previouslyHeld => 'boolean',
+    staffSuppress => 'boolean',
+    discoverySuppress => 'boolean',
+    statisticalCodeIds => 'array',
+    sourceRecordFormat => 'string',
+    statusId => 'string',
+    statusUpdatedDate => 'string',
+    tags => 'object',
+    holdingsRecords2 => 'array.object',
+    natureOfContentTermIds => 'array.string'
+  };
+
   # open a collection of raw marc records
   $/ = "\x1D";
   my $count = 0;
@@ -101,6 +126,7 @@ foreach (@ARGV) {
   while (<RAW>) {
     my $rec = {
       id => uuid(),
+      hrid => '',
       source => 'MARC',
       title => '',
       indexTitle => '',
@@ -139,30 +165,31 @@ foreach (@ARGV) {
     foreach ($marc->fields()) {
       my $field = $_;
       my $tag = $_->tag();
-      my $fldrule = $rules->{$tag};
-      if ($fldrule) {
-        foreach (@{ $fldrule }) {
-          $fr = $_;
-          if ($_->{entity}) {
-            print "$tag has entities\n"
-          } else {
-            my $targ = $_->{target};
-            if (ref($rec->{$targ}) eq 'ARRAY') {
-              print "$targ is an array\n";
-              push $rec->{$targ}, $field->as_string($fr->{subfields});
-            } elsif ($targ =~ /\./) {
-              print "$targ is a complex object\n";
-            } 
-            else {
-              $rec->{$targ} = $field->as_string($fr->{subfields});
+      my $fld_conf = $rules->{$tag};
+      if ($fld_conf) {
+        foreach (@{ $fld_conf }) {
+          $fc = $_;
+          print $tag;
+          if ($fc->{entity}) {
+            foreach (@{ $fc->{entity} }) {
+              rule_proc($field, $_);
             }
+          } else {
+            rule_proc($field, $_);
           }
+          print "\n\n";
         }
       }
     }
-    print Dumper($rec);
     last;
   }
+
+  sub rule_proc {
+    my $field = shift;
+    my $conf = shift;
+    my $prop = {};
+  }
+
   exit;
   $out = JSON->new->pretty->encode($srs_recs);
   open OUT, ">:encoding(UTF-8)", $save_path;
