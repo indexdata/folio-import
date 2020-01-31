@@ -165,29 +165,77 @@ foreach (@ARGV) {
     foreach ($marc->fields()) {
       my $field = $_;
       my $tag = $_->tag();
+      # print $tag . "\n";
+      my @entities;
       my $fld_conf = $rules->{$tag};
       if ($fld_conf) {
-        foreach (@{ $fld_conf }) {
-          $fc = $_;
-          print $tag;
-          if ($fc->{entity}) {
-            foreach (@{ $fc->{entity} }) {
-              rule_proc($field, $_);
-            }
-          } else {
-            rule_proc($field, $_);
+        my $ent = $fld_conf->[0]->{entity};
+        if ($ent) {
+          foreach ($ent) {
+            push @entities, $ent;
           }
-          print "\n\n";
+        } else {
+          @entities = $fld_conf;
+        }
+        foreach (@entities) {
+          my @entity = @$_;
+          foreach (@entity) {
+            my $targ = $_->{target};
+            if ($ftypes->{$targ} eq 'array') {
+              my $data = getSubs($field, $_);
+              push $rec->{$targ}, $data;
+            }
+          }
         }
       }
     }
+    print Dumper($rec);
     last;
   }
 
-  sub rule_proc {
+  sub getSubs {
     my $field = shift;
-    my $conf = shift;
-    my $prop = {};
+    my $ent = shift;
+    my @data;
+    my @delimiters = @{ $ent->{subFieldDelimiter} };
+    if (@delimiters) {
+      foreach (@delimiters) {
+        my $val = $_->{value};
+        my @group;
+        foreach (@{ $_->{subfields} }) {
+          my @subfield = $field->subfield($_); 
+          foreach (@subfield) {
+            push @group, $_
+          }
+        }
+        push @data, join $val, @group;
+      }
+    } else {
+      foreach (@{ $ent->{subfield} }) {
+        my @subfield = $field->subfield($_);
+        foreach (@subfield) {
+          push @data, $_
+        }
+      }
+    }
+    my $out = join ' ', @data;
+    return $out;
+  }
+
+  sub rule_proc {
+    my $field_obj = shift;
+    my @conf = shift;
+    my $ret = {};
+    foreach (@conf) {
+      foreach (@{ $_ }) {
+        $targ = $_->{target};
+        if ($ftypes->{$targ} eq 'array') {
+          $ret->{$targ} = [];
+          push @{ $ret->{$targ} }, 'hey';
+        }
+      }
+    }
+    print Dumper($ret);
   }
 
   exit;
