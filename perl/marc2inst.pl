@@ -179,19 +179,24 @@ foreach (@ARGV) {
         }
         foreach (@entities) {
           my @entity = @$_;
+          my $data_obj = {};
           foreach (@entity) {
-            my $targ = $_->{target};
-            my $root = $targ;
-            $root =~ s/\..+$//;
-            my $flavor = $ftypes->{$root};
+            my @targ = split /\./, $_->{target};
+            my $flavor = $ftypes->{$targ[0]};
             my $data = getSubs($field, $_);
             if ($flavor eq 'array') {
-              push $rec->{$targ}, $data;
+              push $rec->{$targ[0]}, $data;
             } elsif ($flavor eq 'array.object') {
+              $data_obj->{$targ[0]}->{$targ[1]} = $data;
             } elsif ($flavor eq 'object') {
             } elsif ($flavor eq 'boolean') {
             } else {
-              $rec->{$targ} = $data;
+              $rec->{$targ[0]} = $data;
+            }
+          }
+          foreach (keys $data_obj) {
+            if ($ftypes->{$_} eq 'array.object') {
+              push $rec->{$_}, $data_obj->{$_};
             }
           }
         }
