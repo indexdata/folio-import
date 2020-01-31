@@ -181,9 +181,17 @@ foreach (@ARGV) {
           my @entity = @$_;
           foreach (@entity) {
             my $targ = $_->{target};
-            if ($ftypes->{$targ} eq 'array') {
-              my $data = getSubs($field, $_);
+            my $root = $targ;
+            $root =~ s/\..+$//;
+            my $flavor = $ftypes->{$root};
+            my $data = getSubs($field, $_);
+            if ($flavor eq 'array') {
               push $rec->{$targ}, $data;
+            } elsif ($flavor eq 'array.object') {
+            } elsif ($flavor eq 'object') {
+            } elsif ($flavor eq 'boolean') {
+            } else {
+              $rec->{$targ} = $data;
             }
           }
         }
@@ -197,6 +205,13 @@ foreach (@ARGV) {
     my $field = shift;
     my $ent = shift;
     my @data;
+    my @rules = @{ $ent->{rules} };
+    my @funcs;
+    foreach (@rules) {
+      foreach (@{ $_->{conditions} }) {
+        @funcs = split /,\s*/, $_->{type};
+      }
+    }
     my @delimiters = @{ $ent->{subFieldDelimiter} };
     if (@delimiters) {
       foreach (@delimiters) {
@@ -219,7 +234,25 @@ foreach (@ARGV) {
       }
     }
     my $out = join ' ', @data;
+    foreach (@funcs) {
+      if ($_ eq 'trim_period') {
+        $out = trim_period($out);
+      } elsif ($_ eq 'trim') {
+        $out =~ s/^\s+|\s+$//g;
+      } elsif ($_ eq 'remove_prefix_by_indicator') {
+        my $ind = $field->indicator(2);
+        $out = substr($out, $ind);
+      } elsif ($_ eq 'capitalize') {
+        $out = ucfirst $out;
+      }
+    }
     return $out;
+  }
+
+  sub trim_period {
+    my $data = shift;
+    $data =~ s/\.\s*$//;
+    return $data;
   }
 
   sub rule_proc {
