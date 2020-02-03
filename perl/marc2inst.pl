@@ -51,7 +51,12 @@ sub getRefData {
           $refroot = $_;
           $refobj->{$refroot} = {};
           foreach (@{ $json->{$_} }) {
-            my $name = $_->{name};
+            my $name;
+            if ($refroot =~ /^(instanceTypes|contributorTypes)$/) {
+              $name = $_->{code};
+            } else {
+              $name = $_->{name};
+            }
             my $id = $_->{id};
             $refobj->{$refroot}->{$name} = $id;
           }
@@ -243,10 +248,14 @@ foreach (@ARGV) {
         push @data, join $val, @group;
       }
     } else {
-      foreach (@{ $ent->{subfield} }) {
-        my @subfield = $field->subfield($_);
-        foreach (@subfield) {
-          push @data, $_
+      if ($default) {
+        push @data, $default;
+      } else {
+        foreach (@{ $ent->{subfield} }) {
+          my @subfield = $field->subfield($_);
+          foreach (@subfield) {
+            push @data, $_;
+          }
         }
       }
     }
@@ -259,6 +268,11 @@ foreach (@ARGV) {
       } elsif ($_ eq 'remove_prefix_by_indicator') {
         my $ind = $field->indicator(2);
         $out = substr($out, $ind);
+      } elsif ($_ eq 'set_contributor_name_type_id') {
+        my $name = $params->{name};
+        $out = $refdata->{contributorNameTypes}->{$name};
+      } elsif ($_ eq 'set_contributor_type_id') {
+        $out = $refdata->{contributorTypes}->{$out} || '';
       } elsif ($_ eq 'capitalize') {
         $out = ucfirst $out;
       } elsif ($_ eq 'char_select') {
@@ -266,7 +280,17 @@ foreach (@ARGV) {
         my $to = $params->{to};
         my $len = $to - $from;
         $out = substr($out, $from, $len);
-      } 
+      } elsif ($_ eq 'set_instance_type_id') {
+        $out = $refdata->{instanceTypes}->{$out};
+      } elsif ($_ eq 'set_identifier_type_id_by_value') {
+        my $name;
+        if ($out =~ /^(\(OCoLC\)|ocm|ocn|on).*/) {
+          $name = 'OCLC';
+        } else {
+          $name = 'System control number';
+        }
+        $out = $refdata->{identifierTypes}->{$name};
+      }
     }
     return $out;
   }
