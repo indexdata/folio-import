@@ -52,7 +52,7 @@ sub getRefData {
           $refobj->{$refroot} = {};
           foreach (@{ $json->{$_} }) {
             my $name;
-            if ($refroot =~ /^(instanceTypes|contributorTypes)$/) {
+            if ($refroot =~ /^(instanceTypes|contributorTypes|instanceFormats)$/) {
               $name = $_->{code};
             } else {
               $name = $_->{name};
@@ -273,6 +273,14 @@ foreach (@ARGV) {
         $out = $refdata->{contributorNameTypes}->{$name};
       } elsif ($_ eq 'set_contributor_type_id') {
         $out = $refdata->{contributorTypes}->{$out} || '';
+      } elsif ($_ eq 'set_note_type_id') {
+        my $name = $params->{name};
+        $out = $refdata->{instanceNoteTypes}->{$name};
+      } elsif ($_ eq 'set_classification_type_id') {
+        my $name = $params->{name};
+        $out = $refdata->{classificationTypes}->{$name};
+      } elsif ($_ eq 'set_instance_format_id') {
+        $out = $refdata->{instanceFormats}->{$out} || '';
       } elsif ($_ eq 'capitalize') {
         $out = ucfirst $out;
       } elsif ($_ eq 'char_select') {
