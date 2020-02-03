@@ -102,7 +102,7 @@ foreach (@ARGV) {
     instanceTypeId => 'string',
     instanceFormatIds => 'array',
     physicalDescriptions => 'array',
-    lanuages => 'array',
+    languages => 'array',
     notes => 'array.object',
     modeOfIssuanceId => 'string',
     catalogedDate => 'string',
@@ -144,7 +144,7 @@ foreach (@ARGV) {
       instanceTypeId => '',
       instanceFormatIds => [],
       physicalDescriptions => [],
-      lanuages => [],
+      languages => [],
       notes => [],
       modeOfIssuanceId => '',
       catalogedDate => '',
@@ -183,7 +183,7 @@ foreach (@ARGV) {
           foreach (@entity) {
             my @targ = split /\./, $_->{target};
             my $flavor = $ftypes->{$targ[0]};
-            my $data = getSubs($field, $_);
+            my $data = getData($field, $_);
             if ($flavor eq 'array') {
               push $rec->{$targ[0]}, $data;
             } elsif ($flavor eq 'array.object') {
@@ -206,19 +206,31 @@ foreach (@ARGV) {
     last;
   }
 
-  sub getSubs {
+  sub getData {
     my $field = shift;
     my $ent = shift;
     my @data;
     my @rules = @{ $ent->{rules} };
     my @funcs;
+    my $default;
+    my $params;
     foreach (@rules) {
       foreach (@{ $_->{conditions} }) {
         @funcs = split /,\s*/, $_->{type};
+        $params = $_->{parameter};
       }
+      $default = $_->{value};
     }
     my @delimiters = @{ $ent->{subFieldDelimiter} };
-    if (@delimiters) {
+    if ($field->tag() =~ /^00/) {
+      my $d;
+      if ($default) {
+        $d = $default;
+      } else {
+        $d = $field->data();
+      }
+      push @data, $d;
+    } elsif (@delimiters) {
       foreach (@delimiters) {
         my $val = $_->{value};
         my @group;
@@ -241,7 +253,7 @@ foreach (@ARGV) {
     my $out = join ' ', @data;
     foreach (@funcs) {
       if ($_ eq 'trim_period') {
-        $out = trim_period($out);
+        $out =~ s/\.\s*$//;
       } elsif ($_ eq 'trim') {
         $out =~ s/^\s+|\s+$//g;
       } elsif ($_ eq 'remove_prefix_by_indicator') {
@@ -249,31 +261,14 @@ foreach (@ARGV) {
         $out = substr($out, $ind);
       } elsif ($_ eq 'capitalize') {
         $out = ucfirst $out;
-      }
+      } elsif ($_ eq 'char_select') {
+        my $from = $params->{from};
+        my $to = $params->{to};
+        my $len = $to - $from;
+        $out = substr($out, $from, $len);
+      } 
     }
     return $out;
-  }
-
-  sub trim_period {
-    my $data = shift;
-    $data =~ s/\.\s*$//;
-    return $data;
-  }
-
-  sub rule_proc {
-    my $field_obj = shift;
-    my @conf = shift;
-    my $ret = {};
-    foreach (@conf) {
-      foreach (@{ $_ }) {
-        $targ = $_->{target};
-        if ($ftypes->{$targ} eq 'array') {
-          $ret->{$targ} = [];
-          push @{ $ret->{$targ} }, 'hey';
-        }
-      }
-    }
-    print Dumper($ret);
   }
 
   exit;
