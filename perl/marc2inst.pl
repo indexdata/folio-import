@@ -283,6 +283,8 @@ foreach (@ARGV) {
         $out = $refdata->{classificationTypes}->{$name};
       } elsif ($_ eq 'set_instance_format_id') {
         $out = $refdata->{instanceFormats}->{$out} || '';
+      } elsif ($_ eq 'remove_ending_punc') {
+        $out =~ s/[;:,\/+= ]$//g;
       } elsif ($_ eq 'capitalize') {
         $out = ucfirst $out;
       } elsif ($_ eq 'char_select') {
