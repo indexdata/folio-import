@@ -127,14 +127,10 @@ foreach (@ARGV) {
   $/ = "\x1D";
   my $count = 0;
   open RAW, "<:encoding(UTF-8)", $infile;
-  my $instances = [];
+  my $coll = { instances => [] };
   while (<RAW>) {
     my $rec = {
       id => uuid(),
-      hrid => '',
-      source => 'MARC',
-      title => '',
-      indexTitle => '',
       alternativeTitles => [],
       editions => [],
       series => [],
@@ -146,20 +142,13 @@ foreach (@ARGV) {
       publicationFrequency => [],
       publicationRange => [],
       electronicAccess => [],
-      instanceTypeId => '',
       instanceFormatIds => [],
       physicalDescriptions => [],
       languages => [],
       notes => [],
-      modeOfIssuanceId => '',
-      catalogedDate => '',
-      previouslyHeld => '',
       staffSuppress => false,
       discoverySuppress => false,
       statisticalCodeIds => [],
-      sourceRecordFormat => 'MARC',
-      statusId => '',
-      statusUpdatedDate => '',
       tags => {},
       holdingsRecords2 => [],
       natureOfContentTermIds => []
@@ -189,6 +178,7 @@ foreach (@ARGV) {
             my @targ = split /\./, $_->{target};
             my $flavor = $ftypes->{$targ[0]};
             my $data = getData($field, $_);
+            next unless $data;
             if ($flavor eq 'array') {
               push $rec->{$targ[0]}, $data;
             } elsif ($flavor eq 'array.object') {
@@ -207,7 +197,8 @@ foreach (@ARGV) {
         }
       }
     }
-    print Dumper($rec);
+    # print Dumper($rec);
+    push @{ $coll->{instances} }, $rec;
     last;
   }
 
@@ -302,9 +293,9 @@ foreach (@ARGV) {
     }
     return $out;
   }
-
+  $out = JSON->new->pretty->encode($coll);
+  print $out;
   exit;
-  $out = JSON->new->pretty->encode($srs_recs);
   open OUT, ">:encoding(UTF-8)", $save_path;
   print OUT $out;
   print "\nDone! SRS records saved to $save_path\n";
