@@ -84,6 +84,12 @@ foreach (@ARGV) {
   my $refdata = getRefData($ref_dir);
   # print Dumper($refdata);
 
+  my $blvl = {
+    'm' => 'Monograph',
+    'i' => 'Integrating Resource',
+    's' => 'Serial'
+  };
+
   my $save_path = $infile;
   $save_path =~ s/^(.+)\..+$/$1_instances.json/;
 
@@ -157,6 +163,11 @@ foreach (@ARGV) {
     my $raw = $_;
     my $marc = MARC::Record->new_from_usmarc($raw);
     foreach ($marc->fields()) {
+      my $ldr = $marc->leader();
+      my $blevel = substr($ldr, 7, 1);
+      $blevel = 'x';
+      my $mode_name = $blvl->{$blevel} || 'Other';
+      $rec->{modeOfIssuanceId} = $refdata->{issuanceModes}->{$mode_name};
       my $field = $_;
       my $tag = $_->tag();
       # print $tag . "\n";
