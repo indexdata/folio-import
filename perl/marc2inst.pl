@@ -157,7 +157,8 @@ foreach (@ARGV) {
       statisticalCodeIds => [],
       tags => {},
       holdingsRecords2 => [],
-      natureOfContentTermIds => []
+      natureOfContentTermIds => [],
+      statusId => '52a2ff34-2a12-420d-8539-21aa8d3cf5d8'
     };
     $count++;
     my $raw = $_;
@@ -165,7 +166,6 @@ foreach (@ARGV) {
     foreach ($marc->fields()) {
       my $ldr = $marc->leader();
       my $blevel = substr($ldr, 7, 1);
-      $blevel = 'x';
       my $mode_name = $blvl->{$blevel} || 'Other';
       $rec->{modeOfIssuanceId} = $refdata->{issuanceModes}->{$mode_name};
       my $field = $_;
