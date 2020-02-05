@@ -21,6 +21,7 @@ my $itemsonly = 0;
 my $h2i_file;
 my $a = 0;
 my $h2i_map = {};
+my $limit = 1000000;
 foreach (@ARGV) {
   if ($_ eq '-i') {
     $itemsonly = 1;
@@ -36,7 +37,7 @@ foreach (@ARGV) {
   $a++
 } 
 
-my $infile = shift or die "Usage: items_sim.pl <batch_directory>\n";
+my $infile = shift or die "Usage: items_sim.pl <raw_marc_file>\n";
 if (! -e $infile) {
   die "Can't find input file!\n"
 }
@@ -53,7 +54,11 @@ sub get_ref_data {
   my $ref_json = decode_json($ref_str);
   my $ret = {};
   foreach (@{ $ref_json->{$prop} }) {
-    $ret->{$_->{name}} = $_->{id};
+    if ($prop eq 'locations') {
+      $ret->{$_->{code}} = $_->{id};
+    } else {
+      $ret->{$_->{name}} = $_->{id};
+    }
   }
   close REF;
   return $ret;
@@ -71,7 +76,6 @@ my $folio_locs = get_ref_data('locations.json', 'locations');
 my $folio_mtypes = get_ref_data('material-types.json', 'mtypes');
 my $folio_rel = get_ref_data('electronic-access-relationships.json', 'electronicAccessRelationships');
 my $folio_notes = get_ref_data('item-note-types.json', 'itemNoteTypes');
-print Dumper($folio_locs);
 
 # get location mappings from tsv file
 my $locmap = {};
@@ -178,6 +182,7 @@ my $hcoll = { holdingsRecords => [] };
 my $icoll = { items => [] };
 my $hcount = 0;
 my $icount = 0;
+my $mcount = 0;
 while (<RAW>) {
   my $hrecs = {};
   $raw = $_;
@@ -206,8 +211,7 @@ while (<RAW>) {
         } 
         my $eaObj = {};
         $eaObj->{uri} = $_->as_string('u');
-        $eaObj->{publicNote} = $_->as_string('z');
-        $eaObj->{publicNote} = $_->as_string('3');
+        $eaObj->{linkText} = $_->as_string('z');
         my $indval = $_->{_ind2};
         my $relname = $rel_ind->{$indval};
         $eaObj->{relationshipId} = $folio_rel->{$relname};
@@ -220,6 +224,7 @@ while (<RAW>) {
     my $irec = {};
     $irec->{id} = uuid();
     my $inum = $_->as_string('y');
+    $inum =~ s/^\.(.{8}).*/$1/;
     if ($itemsonly) {
       $irec->{holdingsRecordId} = $h2i_map->{$inum};
     } else {
@@ -245,11 +250,7 @@ while (<RAW>) {
       $note->{note} = $_;
       $item_note_label = $item_notes->{$iii_note_type};
       $note->{itemNoteTypeId} = $folio_notes->{$item_note_label} || $iii_note_type;
-      if ($iii_note_type =~ /[pgfcs]/ || $status =~ /[mc]/) {
-        $note->{staffOnly} = true;
-      } else {
-        $note->{staffOnly} = false;
-      }
+      $note->{staffOnly} = true;
       push $irec->{notes}, $note;
     }
     if ($status =~ /[sordlbwega^kjx]/) {
@@ -270,6 +271,8 @@ while (<RAW>) {
   foreach (keys $hrecs) {
     push $hcoll->{holdingsRecords}, $hrecs->{$_};
   }
+  $mcount++;
+  last if $mcount == 10;
 }
 
 if (!$itemsonly) {
@@ -287,7 +290,7 @@ my $icollection = JSON->new->pretty->encode($icoll);
 my $items_file = "$batch_path/${filename}_items.json";
 open ITM, ">:encoding(UTF-8)", $items_file;
 print ITM $icollection;
-#print $icollection;
+print $icollection;
 close ITM;
 
 print "\nHoldings: $hcount";
