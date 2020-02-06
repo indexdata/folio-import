@@ -76,6 +76,7 @@ my $folio_locs = get_ref_data('locations.json', 'locations');
 my $folio_mtypes = get_ref_data('material-types.json', 'mtypes');
 my $folio_rel = get_ref_data('electronic-access-relationships.json', 'electronicAccessRelationships');
 my $folio_notes = get_ref_data('item-note-types.json', 'itemNoteTypes');
+# print Dumper($folio_notes);
 
 # get location mappings from tsv file
 my $locmap = {};
@@ -102,11 +103,12 @@ my $cnmap = {};
 open CN, "$refpath/sim_callno.txt" or die "Can't find sim_callno.txt file\n";
 while (<CN>) {
   my ($id, $cn) = split /","/;
-  $id =~ s/^"/./;
+  $id =~ s/^"(.{8}).*/$1/;
   $cn =~ s/"\s*$//;
   $cnmap->{$id} = $cn;
 }
 close CN;
+# print Dumper($cnmap); exit;
 
 # load bib id to instance id map
 $/ = '';
@@ -141,9 +143,9 @@ my $status_map = {
 
 # iii item note codes
 my $item_notes = {
-  'p' => 'Note',
-  'g' => 'Note',
-  'f' => 'Note',
+  'p' => 'Provenance',
+  'g' => 'Provenance',
+  'f' => 'Binding',
   'o' => 'Note',
   'c' => 'Note',
   's' => 'Note',
@@ -189,6 +191,7 @@ while (<RAW>) {
   my $marc = MARC::Record->new_from_usmarc($raw);
   my $control_num = $marc->field('001')->as_string();
   my $iii_num = $marc->field('907')->as_string('a');
+  $iii_num =~ s/^\.(.{8}).*/$1/;
   next if !$inst_map->{$iii_num};
   my @marc_items = $marc->field('945');
   foreach (@marc_items) {
@@ -290,7 +293,7 @@ my $icollection = JSON->new->pretty->encode($icoll);
 my $items_file = "$batch_path/${filename}_items.json";
 open ITM, ">:encoding(UTF-8)", $items_file;
 print ITM $icollection;
-print $icollection;
+# print $icollection;
 close ITM;
 
 print "\nHoldings: $hcount";
