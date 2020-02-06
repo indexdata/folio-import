@@ -207,7 +207,7 @@ while (<RAW>) {
       $hrecs->{$loc_code}->{callNumber} = $callno;
       $hrecs->{$loc_code}->{callNumberTypeId} = $cn_type_id;
       my $loc_name = $locmap->{$loc_code};
-      $hrecs->{$loc_code}->{permanentLocationId} = $folio_locs->{$loc_name} || $loc_code;
+      $hrecs->{$loc_code}->{permanentLocationId} = $folio_locs->{$loc_name} or die "[$iii_num] Can't find permanentLocationId for $loc_code";
       my @url_fields = $marc->field('856');
       foreach (@url_fields) {
         if (!$hrecs->{$loc_code}->{electronicAccess}) {
@@ -237,8 +237,8 @@ while (<RAW>) {
     $irec->{barcode} = $_->as_string('i') || '';
     $irec->{volume} = $_->as_string('c');
     my $itype_code = $_->as_string('t');
-    my $itype_name = $itypemap->{$itype_code};
-    $irec->{materialTypeId} = $folio_mtypes->{$itype_name} || $itype_code;
+    my $itype_name = $itypemap->{$itype_code} || 'Review';
+    $irec->{materialTypeId} = $folio_mtypes->{$itype_name} or die "[$iii_num] Can't find materialTypeId for $itype_code";
     $irec->{permanentLoanTypeId} = $loan_type_id;
     $irec->{copyNumbers} = [ $_->as_string('g') ];
     $irec->{itemLevelCallNumber} = $callno;
@@ -269,7 +269,7 @@ while (<RAW>) {
       }
       $note->{note} = $nval || "ICODE2: $iii_note_type";
       $item_note_label = $item_notes->{$iii_note_type};
-      $note->{itemNoteTypeId} = $folio_notes->{$item_note_label} || $iii_note_type;
+      $note->{itemNoteTypeId} = $folio_notes->{$item_note_label} or die "[$iii_num] Can't find itemNoteTypeId for $item_note_label";
       $note->{staffOnly} = true;
       push $irec->{notes}, $note;
     }
@@ -292,7 +292,7 @@ while (<RAW>) {
     push $hcoll->{holdingsRecords}, $hrecs->{$_};
   }
   $mcount++;
-  last if $mcount == 10;
+  print "# $mcount [$iii_num]\n"
 }
 
 if (!$itemsonly) {
@@ -301,7 +301,7 @@ if (!$itemsonly) {
   my $holdings_file = "$batch_path/${filename}_holdings.json";
   open HLD, ">:encoding(UTF-8)", $holdings_file;
   print HLD $hcollection;
-  print $hcollection;
+  # print $hcollection;
   close HLD;
 }
 
@@ -310,7 +310,7 @@ my $icollection = JSON->new->pretty->encode($icoll);
 my $items_file = "$batch_path/${filename}_items.json";
 open ITM, ">:encoding(UTF-8)", $items_file;
 print ITM $icollection;
-print $icollection;
+# print $icollection;
 close ITM;
 
 print "\nHoldings: $hcount";
