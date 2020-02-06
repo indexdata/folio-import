@@ -267,7 +267,7 @@ while (<RAW>) {
       } elsif ($iii_note_type eq 's') {
         $nval = 'Suppressed';
       }
-      $note->{note} = $nval;
+      $note->{note} = $nval || "ICODE2: $iii_note_type";
       $item_note_label = $item_notes->{$iii_note_type};
       $note->{itemNoteTypeId} = $folio_notes->{$item_note_label} || $iii_note_type;
       $note->{staffOnly} = true;
