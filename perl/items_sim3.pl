@@ -76,7 +76,7 @@ my $folio_locs = get_ref_data('locations.json', 'locations');
 my $folio_mtypes = get_ref_data('material-types.json', 'mtypes');
 my $folio_rel = get_ref_data('electronic-access-relationships.json', 'electronicAccessRelationships');
 my $folio_notes = get_ref_data('item-note-types.json', 'itemNoteTypes');
-# print Dumper($folio_notes);
+# print Dumper($folio_notes); exit;
 
 # get location mappings from tsv file
 my $locmap = {};
@@ -147,8 +147,8 @@ my $item_notes = {
   'g' => 'Provenance',
   'f' => 'Binding',
   'o' => 'Note',
-  'c' => 'Note',
-  's' => 'Note',
+  'c' => 'MilleniumData',
+  's' => 'MilleniumData',
   '-' => 'Note'
 };
 
@@ -247,13 +247,27 @@ while (<RAW>) {
     $irec->{status} = { name => $status_map->{$status} || 'Available' };
     $irec->{formerIds} = [ $inum ];
     my $iii_note_type = $_->as_string('o');
-    if ($iii_note_type =~ /[cso]/) {
+    if ($iii_note_type =~ /[cs]/ or $status =~ /[mtlc]/) {
       $irec->{discoverySuppress} = true;
     }
     $irec->{notes} = [];
-    foreach ($_->subfield('n')) {
+    my $note_text = $_->subfield('n');
+    if ($iii_note_type =~ /[gpfosc]/) {
       my $note = {};
-      $note->{note} = $_;
+      my $nval;
+      if ($iii_note_type eq 'g') {
+        $nval = 'Donation';
+      } elsif ($iii_note_type eq 'p') {
+        $nval = 'Personal copy';
+        $nval .= " ($note_text)" if $note_text;
+      } elsif ($iii_note_type eq 'f') {
+        $nval = 'Reserve folder';
+      } elsif ($iii_note_type =~ /[oc]/) {
+        $nval = $note_text;
+      } elsif ($iii_note_type eq 's') {
+        $nval = 'Suppressed';
+      }
+      $note->{note} = $nval;
       $item_note_label = $item_notes->{$iii_note_type};
       $note->{itemNoteTypeId} = $folio_notes->{$item_note_label} || $iii_note_type;
       $note->{staffOnly} = true;
