@@ -302,7 +302,7 @@ if (!$itemsonly) {
   my $holdings_file = "$batch_path/${filename}_holdings.json";
   open HLD, ">:encoding(UTF-8)", $holdings_file;
   print HLD $hcollection;
-  print $hcollection;
+  # print $hcollection;
   close HLD;
 }
 
