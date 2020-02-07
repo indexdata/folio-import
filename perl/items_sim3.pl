@@ -200,6 +200,7 @@ while (<RAW>) {
     $loc_code =~ s/^\s+|\s+$//g;
     # create holdings record if record doesn't already exists for said location
     if (!$hrecs->{$loc_code} && !$itemsonly) {
+      $hrecs->{$loc_code}->{formerIds} = [ "$iii_num-$loc_code" ];
       my $uustr = uuid();
       $hrecs->{$loc_code}->{id} = $uustr;
       $hrecs->{$loc_code}->{instanceId} = $inst_map->{$iii_num};
@@ -301,7 +302,7 @@ if (!$itemsonly) {
   my $holdings_file = "$batch_path/${filename}_holdings.json";
   open HLD, ">:encoding(UTF-8)", $holdings_file;
   print HLD $hcollection;
-  # print $hcollection;
+  print $hcollection;
   close HLD;
 }
 
