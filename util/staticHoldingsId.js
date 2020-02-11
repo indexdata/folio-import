@@ -20,6 +20,7 @@ const static = require(staticRecs);
 const updated = require(newRecs);
 let mkeys = process.argv[4].split(/,/) || [ formerIds ];
 const staticId = {};
+const hrid = {};
 static.holdingsRecords.forEach(s => {
   let vals = [];
   mkeys.forEach(k => {
@@ -27,6 +28,7 @@ static.holdingsRecords.forEach(s => {
   });
   let matchKey = vals.join(':');
   staticId[matchKey] = s.id;
+  hrid[matchKey] = s.hrid;
 });
 
 updated.holdingsRecords.forEach(u => {
@@ -37,6 +39,7 @@ updated.holdingsRecords.forEach(u => {
   let matchKey = vals.join(':');
   if (staticId[matchKey]) {
     u.id = staticId[matchKey];
+    u.hrid = hrid[matchKey];
   }
 });
 
