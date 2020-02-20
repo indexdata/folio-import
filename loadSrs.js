@@ -64,11 +64,11 @@ const wait = (ms) => {
         const mesg = JSON.parse(res.text);
       } catch (e) {
         const mesg = e;
-        console.error(JSON.stringify(mesg, null, 2));
+        console.log(JSON.stringify(mesg, null, 2));
       }
     }
 
   } catch (e) {
-    console.error(e);
+    console.log(e);
   }
 })();
