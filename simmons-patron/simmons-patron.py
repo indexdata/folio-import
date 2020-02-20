@@ -259,6 +259,7 @@ def main():
                     address['addressTypeId'] = 'Campus'
                     addresses.append(address)
             user['personal']['addresses'] = addresses
+            user['personal']['preferredContactTypeId'] = determine_preferred_contact(user)
             # dates:
             (created_date_str, date_error) = parse_date(row['CREATED(PATRON)'], date_re)
             if not date_error:
@@ -492,6 +493,19 @@ def parse_date(date_str, date_re):
             return (date_utc, False)
     else:
         return (date_str, True)
+
+def determine_preferred_contact(user_data):
+    """
+    Determine the preferredContactTypeId
+    Use "email" if it does exist, else "mail" even if address/phone does not exist.
+    """
+    try:
+        user_data['personal']['email']
+    except KeyError:
+        preferred_contact = 'mail'
+    else:
+        preferred_contact = 'email'
+    return preferred_contact
 
 def load_uuid_map(input_fn):
     """
