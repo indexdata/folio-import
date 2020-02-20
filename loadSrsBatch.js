@@ -25,8 +25,14 @@ if (!inFiles[0]) {
       if (!fs.existsSync(inFile)) {
         throw new Error('Can\'t find input file');
       } else {
-	const jsonText = fs.readFileSync(inFile, 'utf8');
-        inData = JSON.parse(jsonText);
+        inData = require(inFile); 
+	if (!inData.records) {
+	  let tmp = inData;
+          inData = {};
+	  inData.records = tmp;
+	  tmp = {};
+          console.log(inData);
+	}
       }
 
       const actionUrl = config.okapi + '/source-storage/batch/records';

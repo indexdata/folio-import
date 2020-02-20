@@ -2,6 +2,7 @@ const MongoClient = require('mongodb').MongoClient;
 const fs = require('fs');
 const recs = require(process.argv[2]);
 
+const path = process.argv[2].replace(/(.+)\.json/, '$1_srs.json');
 // Connection URL
 const url = 'mongodb://localhost:27017';
 
@@ -23,5 +24,5 @@ const dbName = 'uc';
 	delete recs[x].parsedRecordId;
     }
     await client.close();
-    fs.writeFileSync('data/srs/test.json', JSON.stringify(recs, null, 2));
+    fs.writeFileSync(path, JSON.stringify(recs, null, 2));
 })();
