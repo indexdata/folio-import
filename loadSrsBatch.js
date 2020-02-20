@@ -4,7 +4,7 @@ const uuid = require('uuid/v1');
 const { getAuthToken } = require('./lib/login');
 let inFiles = process.argv.slice(2);
 
-const delay = 15000;
+const delay = 5000;
 
 const wait = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -31,7 +31,6 @@ if (!inFiles[0]) {
           inData = {};
 	  inData.records = tmp;
 	  tmp = {};
-          console.log(inData);
 	}
       }
 
