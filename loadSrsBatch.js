@@ -70,12 +70,12 @@ if (!inFiles[0]) {
         const mesg = JSON.parse(res.text);
       } catch (e) {
         const mesg = e;
-        console.error(JSON.stringify(mesg, null, 2));
+        console.log(JSON.stringify(mesg, null, 2));
       }
       console.log(`Waiting ${delay}ms...`);
       await wait(delay);
     } catch (e) {
-      console.error(e);
+      console.log(e);
     }
   }
 })();
