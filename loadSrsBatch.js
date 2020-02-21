@@ -32,6 +32,7 @@ if (!inFiles[0]) {
 	  inData.records = tmp;
 	  tmp = {};
 	}
+	delete require.cache[require.resolve(inFile)]
       }
 
       const actionUrl = config.okapi + '/source-storage/batch/records';
@@ -43,10 +44,11 @@ if (!inFiles[0]) {
       if (!inData.totalRecords) {
         inData.totalRecords = inData.records.length;
       }
+      let logDate = new Date();
 
       // create snapshot
       try {
-        console.log(`Creating snapshot with id: ${snapId}`);
+        console.log(`[${logDate}] Creating snapshot with id: ${snapId}`);
         const snap = {}
         snap.jobExecutionId = snapId;
         snap.status = 'PARSING_IN_PROGRESS';
