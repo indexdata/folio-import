@@ -100,7 +100,7 @@ close ITP;
 
 # get callno mappings from txt file
 my $cnmap = {};
-open CN, "$refpath/sim_callno.txt" or die "Can't find sim_callno.txt file\n";
+open CN, "<:encoding(UTF-8)","$refpath/sim_callno.txt" or die "Can't find sim_callno.txt file\n";
 while (<CN>) {
   my ($id, $cn) = split /","/;
   $id =~ s/^"(.{8}).*/$1/;
