@@ -253,7 +253,7 @@ while (<RAW>) {
     }
     $irec->{notes} = [];
     my $note_text = $_->subfield('n');
-    if ($iii_note_type =~ /[gpfosc]/) {
+    if ($iii_note_type =~ /[gpfosc]/ or ($iii_note_type eq '-' and $note_text)) {
       my $note = {};
       my $nval;
       if ($iii_note_type eq 'g') {
@@ -263,7 +263,7 @@ while (<RAW>) {
         $nval .= " ($note_text)" if $note_text;
       } elsif ($iii_note_type eq 'f') {
         $nval = 'Reserve folder';
-      } elsif ($iii_note_type =~ /[oc]/) {
+      } elsif ($iii_note_type =~ /[oc-]/) {
         $nval = $note_text;
       } elsif ($iii_note_type eq 's') {
         $nval = 'Suppressed';
@@ -311,7 +311,7 @@ my $icollection = JSON->new->pretty->encode($icoll);
 my $items_file = "$batch_path/${filename}_items.json";
 open ITM, ">:encoding(UTF-8)", $items_file;
 print ITM $icollection;
-# print $icollection;
+print $icollection;
 close ITM;
 
 print "\nHoldings: $hcount";
