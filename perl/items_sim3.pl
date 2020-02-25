@@ -175,6 +175,11 @@ my $cn_type_id = '95467209-6d7b-468b-94df-0f5d7ad2747d';
 # set static loantype to "can circulate"
 my $loan_type_id = '2b94c631-fca9-4892-a730-03ee529ffe27';
 
+# simmons administrator id
+my $admin = '7a816507-d31a-54af-8af4-d9fe3eb48324';
+my $admin_first = 'Script';
+my $admin_last = 'Perl';
+
 # open a collection of raw marc records
 $/ = "\x1D";
 open HIDS, ">>$batch_path/holdings_ids.map";
@@ -285,6 +290,20 @@ while (<RAW>) {
     if ($status eq 'h') {
       $irec->{temporaryLocationId} = $folio_locs->{'Reserve Cart'};
     }
+    my $checkout_mesg = $_->as_string('m');
+    if ($checkout_mesg) {
+      $irec->{circulationNotes} = [];
+      my $circ_note = {
+        id=>uuid(),
+        noteType=>'Check out',
+        note=>$checkout_mesg,
+        staffOnly=>true,
+        date=>'2020-02-02'
+      };
+      $circ_note->{source} = { id=>$admin };
+      $circ_note->{source}->{personal} = { lastName=>$admin_last, firstName=>$admin_first };
+      push $irec->{circulationNotes}, $circ_note;
+    }
     push $icoll->{items}, $irec;
     print IIDS $irec->{holdingsRecordId} . "|" . $irec->{formerIds}[0] . "\n";
     $icount++;
@@ -311,7 +330,7 @@ my $icollection = JSON->new->pretty->encode($icoll);
 my $items_file = "$batch_path/${filename}_items.json";
 open ITM, ">:encoding(UTF-8)", $items_file;
 print ITM $icollection;
-print $icollection;
+# print $icollection;
 close ITM;
 
 print "\nHoldings: $hcount";
