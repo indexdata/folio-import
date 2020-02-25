@@ -18,7 +18,10 @@ if (! (staticRecs && newRecs)) {
 
 const static = require(staticRecs);
 const updated = require(newRecs);
-let mkeys = process.argv[4].split(/,/) || [ formerIds ];
+let mkeys = [ 'formerIds' ];
+if (process.argv[4]) {
+  mkeys = process.argv[4].split(/,/);
+}
 const staticId = {};
 const hrid = {};
 static.holdingsRecords.forEach(s => {
