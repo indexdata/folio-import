@@ -18,6 +18,7 @@ foreach (@ARGV) {
   }
   $a++;
 }
+$| = 1 if $bin;
 
 my $field = shift;
 my $query = shift;
@@ -59,8 +60,8 @@ while (<IN>) {
       $f =~ s/_(\w)/\$$1 /g;
       $f =~ s/\n\s+/ /g;
       print "$f\n\n";
-      $i++;
     }
+    $i++;
   }
 }
 print "------\n$i Record(s) Found\n" unless $bin;
