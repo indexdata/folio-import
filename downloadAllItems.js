@@ -24,7 +24,7 @@ let limit = parseInt(process.argv[4], 10);
 
     let totFetch = 0;
     let totRecs = 1000000;
-    let perPage = 500;
+    let perPage = 1000;
     let offset = start || 0;
     const coll = { items: [] };
     while (totFetch < totRecs) {
