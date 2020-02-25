@@ -29,23 +29,29 @@ $i = 0;
 my ($tag, $sf) = $field =~ /^(...)(.*)/;
 while (<IN>) {
   last if $i == $lim;
+  my $found = 0;
   my $mdata;
   $raw = $_;
   next unless /$query/i;
   my $marc = MARC::Record->new_from_usmarc($raw);
   if ($field eq 'LDR') {
     $mdata = $marc->leader();
+    $found = 1 if $mdata =~ /$query/i;
   } else {
-      foreach ($marc->field($tag)) {
+    foreach ($marc->field($tag)) {
       if ($sf) {
         $mdata = $_->as_string($sf);
       } else {
         $mdata = $_->as_string();
       }
+      if ($mdata =~ /$query/i) {
+        $found = 1;
+        last;
+      }
     }
   }
   
-  if ($mdata =~ /$query/i) {
+  if ($found) {
     if ($bin) {
       print $raw;
     } else {
