@@ -189,7 +189,7 @@ while (<RAW>) {
   my $hrecs = {};
   $raw = $_;
   my $marc = MARC::Record->new_from_usmarc($raw);
-  my $control_num = $marc->field('001')->as_string();
+  # my $control_num = $marc->field('001')->as_string();
   my $iii_num = $marc->field('907')->as_string('a');
   $iii_num =~ s/^\.(.{8}).*/$1/;
   next if !$inst_map->{$iii_num};
