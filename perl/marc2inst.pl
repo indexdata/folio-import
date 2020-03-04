@@ -144,6 +144,8 @@ sub getData {
         $out = $refdata->{contributorNameTypes}->{$name};
       } elsif ($_ eq 'set_contributor_type_id') {
         $out = $refdata->{contributorTypes}->{$out} || '';
+      } elsif ($_ eq 'set_contributor_type_text') {
+        # Not sure what's supposed to happen here...
       } elsif ($_ eq 'set_note_type_id') {
         my $name = $params->{name};
         $out = $refdata->{instanceNoteTypes}->{$name};
@@ -319,13 +321,11 @@ foreach (@ARGV) {
       }
     }
     push @{ $coll->{instances} }, $rec;
-    last;
   }
-
   
   $out = JSON->new->pretty->encode($coll);
   print $out;
-  exit;
+  # exit;
   open OUT, ">:encoding(UTF-8)", $save_path;
   print OUT $out;
   print "\nDone! SRS records saved to $save_path\n";
