@@ -67,6 +67,111 @@ sub getRefData {
  return $refobj;
 }
 
+sub getData {
+    my $field = shift;
+    my $ent = shift;
+    my @data;
+    my @rules = @{ $ent->{rules} };
+    my @funcs;
+    my $default;
+    my $params;
+    foreach (@rules) {
+      foreach (@{ $_->{conditions} }) {
+        @funcs = split /,\s*/, $_->{type};
+        $params = $_->{parameter};
+      }
+      $default = $_->{value};
+    }
+    my @delimiters = @{ $ent->{subFieldDelimiter} };
+    if ($field->tag() =~ /^00/) {
+      my $d;
+      if ($default) {
+        $d = $default;
+      } else {
+        $d = $field->data();
+      }
+      push @data, $d;
+      $ent->{applyRulesOnConcatenatedData} = true;
+    } elsif (@delimiters) {
+      foreach (@delimiters) {
+        my $val = $_->{value};
+        my @group;
+        foreach (@{ $_->{subfields} }) {
+          my @subfield = $field->subfield($_); 
+          foreach (@subfield) {
+            $_ = processing_funcs($_, $field, $params, @funcs) unless $ent->{applyRulesOnConcatenatedData};
+            push @group, $_
+          }
+        }
+        push @data, join $val, @group;
+      }
+    } else {
+      if ($default) {
+        push @data, $default;
+      } else {
+        foreach (@{ $ent->{subfield} }) {
+          my @subfield = $field->subfield($_);
+          foreach (@subfield) {
+            $_ = processing_funcs($_, $field, $params, @funcs) unless $ent->{applyRulesOnConcatenatedData};
+            push @data, $_;
+          }
+        }
+      }
+    }
+    my $out = join ' ', @data;
+    $out = processing_funcs($out, $field, $params, @funcs) if $ent->{applyRulesOnConcatenatedData};
+    return $out;
+  }
+
+  sub processing_funcs {
+    my $out = shift;
+    my $field = shift;
+    my $params = shift;
+    foreach (@_) {
+      if ($_ eq 'trim_period') {
+        $out =~ s/\.\s*$//;
+      } elsif ($_ eq 'trim') {
+        $out =~ s/^\s+|\s+$//g;
+      } elsif ($_ eq 'remove_prefix_by_indicator') {
+        my $ind = $field->indicator(2);
+        $out = substr($out, $ind);
+      } elsif ($_ eq 'set_contributor_name_type_id') {
+        my $name = $params->{name};
+        $out = $refdata->{contributorNameTypes}->{$name};
+      } elsif ($_ eq 'set_contributor_type_id') {
+        $out = $refdata->{contributorTypes}->{$out} || '';
+      } elsif ($_ eq 'set_note_type_id') {
+        my $name = $params->{name};
+        $out = $refdata->{instanceNoteTypes}->{$name};
+      } elsif ($_ eq 'set_classification_type_id') {
+        my $name = $params->{name};
+        $out = $refdata->{classificationTypes}->{$name};
+      } elsif ($_ eq 'set_instance_format_id') {
+        $out = $refdata->{instanceFormats}->{$out} || '';
+      } elsif ($_ eq 'remove_ending_punc') {
+        $out =~ s/[;:,\/+= ]$//g;
+      } elsif ($_ eq 'capitalize') {
+        $out = ucfirst $out;
+      } elsif ($_ eq 'char_select') {
+        my $from = $params->{from};
+        my $to = $params->{to};
+        my $len = $to - $from;
+        $out = substr($out, $from, $len);
+      } elsif ($_ eq 'set_instance_type_id') {
+        $out = $refdata->{instanceTypes}->{$out};
+      } elsif ($_ eq 'set_identifier_type_id_by_value') {
+        my $name;
+        if ($out =~ /^(\(OCoLC\)|ocm|ocn|on).*/) {
+          $name = 'OCLC';
+        } else {
+          $name = 'System control number';
+        }
+        $out = $refdata->{identifierTypes}->{$name};
+      }
+    }
+    return $out;
+  }
+
 foreach (@ARGV) {
   my $infile = $_;
   if (! -e $infile) {
@@ -170,7 +275,6 @@ foreach (@ARGV) {
       $rec->{modeOfIssuanceId} = $refdata->{issuanceModes}->{$mode_name};
       my $field = $_;
       my $tag = $_->tag();
-      # print $tag . "\n";
       my @entities;
       my $fld_conf = $rules->{$tag};
       if ($fld_conf) {
@@ -213,110 +317,7 @@ foreach (@ARGV) {
     last;
   }
 
-  sub getData {
-    my $field = shift;
-    my $ent = shift;
-    my @data;
-    my @rules = @{ $ent->{rules} };
-    my @funcs;
-    my $default;
-    my $params;
-    foreach (@rules) {
-      foreach (@{ $_->{conditions} }) {
-        @funcs = split /,\s*/, $_->{type};
-        $params = $_->{parameter};
-      }
-      $default = $_->{value};
-    }
-    my @delimiters = @{ $ent->{subFieldDelimiter} };
-    if ($field->tag() =~ /^00/) {
-      my $d;
-      if ($default) {
-        $d = $default;
-      } else {
-        $d = $field->data();
-      }
-      push @data, $d;
-    } elsif (@delimiters) {
-      foreach (@delimiters) {
-        my $val = $_->{value};
-        my @group;
-        foreach (@{ $_->{subfields} }) {
-          my @subfield = $field->subfield($_); 
-          foreach (@subfield) {
-            $_ = processing_funcs($_, $field, $params, @funcs) unless $ent->{applyRulesOnConcatenatedData};
-            push @group, $_
-          }
-        }
-        push @data, join $val, @group;
-      }
-    } else {
-      if ($default) {
-        push @data, $default;
-      } else {
-        foreach (@{ $ent->{subfield} }) {
-          my @subfield = $field->subfield($_);
-          foreach (@subfield) {
-            $_ = processing_funcs($_, $field, $params, @funcs) unless $ent->{applyRulesOnConcatenatedData};
-            push @data, $_;
-          }
-        }
-      }
-    }
-    my $out = join ' ', @data;
-    $out = processing_funcs($out, $field, $params, @funcs) if $ent->{applyRulesOnConcatenatedData};
-    
-    return $out;
-  }
-
-  sub processing_funcs {
-    my $out = shift;
-    my $field = shift;
-    my $params = shift;
-    foreach (@_) {
-      if ($_ eq 'trim_period') {
-        $out =~ s/\.\s*$//;
-      } elsif ($_ eq 'trim') {
-        $out =~ s/^\s+|\s+$//g;
-      } elsif ($_ eq 'remove_prefix_by_indicator') {
-        my $ind = $field->indicator(2);
-        $out = substr($out, $ind);
-      } elsif ($_ eq 'set_contributor_name_type_id') {
-        my $name = $params->{name};
-        $out = $refdata->{contributorNameTypes}->{$name};
-      } elsif ($_ eq 'set_contributor_type_id') {
-        $out = $refdata->{contributorTypes}->{$out} || '';
-      } elsif ($_ eq 'set_note_type_id') {
-        my $name = $params->{name};
-        $out = $refdata->{instanceNoteTypes}->{$name};
-      } elsif ($_ eq 'set_classification_type_id') {
-        my $name = $params->{name};
-        $out = $refdata->{classificationTypes}->{$name};
-      } elsif ($_ eq 'set_instance_format_id') {
-        $out = $refdata->{instanceFormats}->{$out} || '';
-      } elsif ($_ eq 'remove_ending_punc') {
-        $out =~ s/[;:,\/+= ]$//g;
-      } elsif ($_ eq 'capitalize') {
-        $out = ucfirst $out;
-      } elsif ($_ eq 'char_select') {
-        my $from = $params->{from};
-        my $to = $params->{to};
-        my $len = $to - $from;
-        $out = substr($out, $from, $len);
-      } elsif ($_ eq 'set_instance_type_id') {
-        $out = $refdata->{instanceTypes}->{$out};
-      } elsif ($_ eq 'set_identifier_type_id_by_value') {
-        my $name;
-        if ($out =~ /^(\(OCoLC\)|ocm|ocn|on).*/) {
-          $name = 'OCLC';
-        } else {
-          $name = 'System control number';
-        }
-        $out = $refdata->{identifierTypes}->{$name};
-      }
-    }
-    return $out;
-  }
+  
   $out = JSON->new->pretty->encode($coll);
   print $out;
   exit;
