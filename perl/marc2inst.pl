@@ -244,6 +244,7 @@ foreach (@ARGV) {
         foreach (@{ $_->{subfields} }) {
           my @subfield = $field->subfield($_); 
           foreach (@subfield) {
+            $_ = processing_funcs($_, $field, $params, @funcs) unless $ent->{applyRulesOnConcatenatedData};
             push @group, $_
           }
         }
@@ -256,13 +257,23 @@ foreach (@ARGV) {
         foreach (@{ $ent->{subfield} }) {
           my @subfield = $field->subfield($_);
           foreach (@subfield) {
+            $_ = processing_funcs($_, $field, $params, @funcs) unless $ent->{applyRulesOnConcatenatedData};
             push @data, $_;
           }
         }
       }
     }
     my $out = join ' ', @data;
-    foreach (@funcs) {
+    $out = processing_funcs($out, $field, $params, @funcs) if $ent->{applyRulesOnConcatenatedData};
+    
+    return $out;
+  }
+
+  sub processing_funcs {
+    my $out = shift;
+    my $field = shift;
+    my $params = shift;
+    foreach (@_) {
       if ($_ eq 'trim_period') {
         $out =~ s/\.\s*$//;
       } elsif ($_ eq 'trim') {
