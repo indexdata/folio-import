@@ -67,6 +67,9 @@ sub getRefData {
  return $refobj;
 }
 
+$ref_dir =~ s/\/$//;
+my $refdata = getRefData($ref_dir);
+
 sub getData {
     my $field = shift;
     my $ent = shift;
@@ -145,6 +148,7 @@ sub getData {
         $out = $refdata->{instanceNoteTypes}->{$name};
       } elsif ($_ eq 'set_classification_type_id') {
         my $name = $params->{name};
+        print Dumper($refdata);
         $out = $refdata->{classificationTypes}->{$name};
       } elsif ($_ eq 'set_instance_format_id') {
         $out = $refdata->{instanceFormats}->{$out} || '';
@@ -167,10 +171,58 @@ sub getData {
           $name = 'System control number';
         }
         $out = $refdata->{identifierTypes}->{$name};
+      } elsif ($_ eq 'remove_substring') {
+        my $ss = $params->{substring};
+        $out =~ s/$ss//;
       }
     }
     return $out;
   }
+
+my $rules = getRules($rules_file);
+
+my $blvl = {
+  'm' => 'Monograph',
+  'i' => 'Integrating Resource',
+  's' => 'Serial'
+};
+
+my $ftypes = {
+  id => 'string',
+  hrid => 'string',
+  source => 'string',
+  title => 'string',
+  indexTitle => 'string',
+  alternativeTitles => 'array.object',
+  editions => 'array',
+  series => 'array',
+  identifiers => 'array.object',
+  contributors => 'array.object',
+  subjects => 'array',
+  classifications => 'array.object',
+  publication => 'array.object',
+  publicationFrequency => 'array',
+  publicationRange => 'array',
+  electronicAccess => 'array.object',
+  instanceTypeId => 'string',
+  instanceFormatIds => 'array',
+  physicalDescriptions => 'array',
+  languages => 'array',
+  notes => 'array.object',
+  modeOfIssuanceId => 'string',
+  catalogedDate => 'string',
+  previouslyHeld => 'boolean',
+  staffSuppress => 'boolean',
+  discoverySuppress => 'boolean',
+  statisticalCodeIds => 'array',
+  sourceRecordFormat => 'string',
+  statusId => 'string',
+  statusUpdatedDate => 'string',
+  tags => 'object',
+  holdingsRecords2 => 'array.object',
+  natureOfContentTermIds => 'array.string'
+};
+
 
 foreach (@ARGV) {
   my $infile = $_;
@@ -182,57 +234,8 @@ foreach (@ARGV) {
     die "Can't find mapping rules file!";
   }
 
-  my $rules = getRules($rules_file);
-  # print Dumper($rules);
-
-  $ref_dir =~ s/\/$//;
-  my $refdata = getRefData($ref_dir);
-  # print Dumper($refdata);
-
-  my $blvl = {
-    'm' => 'Monograph',
-    'i' => 'Integrating Resource',
-    's' => 'Serial'
-  };
-
   my $save_path = $infile;
   $save_path =~ s/^(.+)\..+$/$1_instances.json/;
-
-  my $ftypes = {
-    id => 'string',
-    hrid => 'string',
-    source => 'string',
-    title => 'string',
-    indexTitle => 'string',
-    alternativeTitles => 'array.object',
-    editions => 'array',
-    series => 'array',
-    identifiers => 'array.object',
-    contributors => 'array.object',
-    subjects => 'array',
-    classifications => 'array.object',
-    publication => 'array.object',
-    publicationFrequency => 'array',
-    publicationRange => 'array',
-    electronicAccess => 'array.object',
-    instanceTypeId => 'string',
-    instanceFormatIds => 'array',
-    physicalDescriptions => 'array',
-    languages => 'array',
-    notes => 'array.object',
-    modeOfIssuanceId => 'string',
-    catalogedDate => 'string',
-    previouslyHeld => 'boolean',
-    staffSuppress => 'boolean',
-    discoverySuppress => 'boolean',
-    statisticalCodeIds => 'array',
-    sourceRecordFormat => 'string',
-    statusId => 'string',
-    statusUpdatedDate => 'string',
-    tags => 'object',
-    holdingsRecords2 => 'array.object',
-    natureOfContentTermIds => 'array.string'
-  };
 
   # open a collection of raw marc records
   $/ = "\x1D";
