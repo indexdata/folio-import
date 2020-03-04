@@ -147,6 +147,9 @@ sub getData {
       } elsif ($_ eq 'set_note_type_id') {
         my $name = $params->{name};
         $out = $refdata->{instanceNoteTypes}->{$name};
+      } elsif ($_ eq 'set_alternative_title_type_id') {
+        my $name = $params->{name};
+        $out = $refdata->{alternativeTitleTypes}->{$name};
       } elsif ($_ eq 'set_classification_type_id') {
         my $name = $params->{name};
         $out = $refdata->{classificationTypes}->{$name};
