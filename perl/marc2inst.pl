@@ -102,7 +102,7 @@ sub getData {
         foreach (@{ $_->{subfields} }) {
           my @subfield = $field->subfield($_); 
           foreach (@subfield) {
-            $_ = processing_funcs($_, $field, $params, @funcs) unless $ent->{applyRulesOnConcatenatedData};
+            $_ = processing_funcs($_, $field, $params, @funcs); # unless $ent->{applyRulesOnConcatenatedData};
             push @group, $_
           }
         }
@@ -115,7 +115,7 @@ sub getData {
         foreach (@{ $ent->{subfield} }) {
           my @subfield = $field->subfield($_);
           foreach (@subfield) {
-            $_ = processing_funcs($_, $field, $params, @funcs) unless $ent->{applyRulesOnConcatenatedData};
+            $_ = processing_funcs($_, $field, $params, @funcs); # unless $ent->{applyRulesOnConcatenatedData};
             push @data, $_;
           }
         }
@@ -132,6 +132,7 @@ sub getData {
     my $params = shift;
     foreach (@_) {
       if ($_ eq 'trim_period') {
+        print "$out\n";
         $out =~ s/\.\s*$//;
       } elsif ($_ eq 'trim') {
         $out =~ s/^\s+|\s+$//g;
@@ -148,7 +149,6 @@ sub getData {
         $out = $refdata->{instanceNoteTypes}->{$name};
       } elsif ($_ eq 'set_classification_type_id') {
         my $name = $params->{name};
-        print Dumper($refdata);
         $out = $refdata->{classificationTypes}->{$name};
       } elsif ($_ eq 'set_instance_format_id') {
         $out = $refdata->{instanceFormats}->{$out} || '';
@@ -173,7 +173,7 @@ sub getData {
         $out = $refdata->{identifierTypes}->{$name};
       } elsif ($_ eq 'remove_substring') {
         my $ss = $params->{substring};
-        $out =~ s/$ss//;
+        $out =~ s/$ss//g;
       }
     }
     return $out;
@@ -315,7 +315,6 @@ foreach (@ARGV) {
         }
       }
     }
-    # print Dumper($rec);
     push @{ $coll->{instances} }, $rec;
     last;
   }
