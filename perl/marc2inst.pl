@@ -139,6 +139,9 @@ sub getData {
       } elsif ($_ eq 'remove_prefix_by_indicator') {
         my $ind = $field->indicator(2);
         $out = substr($out, $ind);
+      } elsif ($_ eq 'set_identifier_type_id_by_name') {
+        my $name = $params->{name};
+        $out = $refdata->{identifierTypes}->{$name};
       } elsif ($_ eq 'set_contributor_name_type_id') {
         my $name = $params->{name};
         $out = $refdata->{contributorNameTypes}->{$name};
