@@ -162,27 +162,27 @@ sub getData {
         $out = substr($out, $ind);
       } elsif ($_ eq 'set_identifier_type_id_by_name') {
         my $name = $params->{name};
-        $out = $refdata->{identifierTypes}->{$name};
+        $out = $refdata->{identifierTypes}->{$name} or die "Can't find identifierType for $name!";
       } elsif ($_ eq 'set_contributor_name_type_id') {
         my $name = $params->{name};
-        $out = $refdata->{contributorNameTypes}->{$name};
+        $out = $refdata->{contributorNameTypes}->{$name} or die "Can't find contributorNameType for $name";
       } elsif ($_ eq 'set_contributor_type_id') {
         $out = $refdata->{contributorTypes}->{$out} || '';
       } elsif ($_ eq 'set_contributor_type_text') {
         # Not sure what's supposed to happen here...
       } elsif ($_ eq 'set_note_type_id') {
         my $name = $params->{name};
-        $out = $refdata->{instanceNoteTypes}->{$name};
+        $out = $refdata->{instanceNoteTypes}->{$name} or die "Can't find instanceNoteType for $name";;
       } elsif ($_ eq 'set_alternative_title_type_id') {
         my $name = $params->{name};
         $out = $refdata->{alternativeTitleTypes}->{$name};
       } elsif ($_ eq 'set_electronic_access_relations_id') {
         my $ind = $field->indicator(2);
         my $name = $relations->{$ind};
-        $out = $refdata->{electronicAccessRelationships}->{$name} || '';
+        $out = $refdata->{electronicAccessRelationships}->{$name} or die "Can't find electronicAccessRelationship for $name";
       } elsif ($_ eq 'set_classification_type_id') {
         my $name = $params->{name};
-        $out = $refdata->{classificationTypes}->{$name};
+        $out = $refdata->{classificationTypes}->{$name} or die "Can't find classificationType for $name";
       } elsif ($_ eq 'set_instance_format_id') {
         $out = $refdata->{instanceFormats}->{$out} || '';
       } elsif ($_ eq 'set_publisher_role') {
@@ -204,7 +204,7 @@ sub getData {
         } else {
           $name = 'System control number';
         }
-        $out = $refdata->{identifierTypes}->{$name};
+        $out = $refdata->{identifierTypes}->{$name} or die "Cain't find identifierType for $name";
       } elsif ($_ eq 'remove_substring') {
         my $ss = $params->{substring};
         $out =~ s/$ss//g;
@@ -353,11 +353,11 @@ foreach (@ARGV) {
       }
     }
     push @{ $coll->{instances} }, $rec;
+    print "Processing #$count " . substr($rec->{title}, 0, 60) . "\n";
   }
   
   $out = JSON->new->pretty->encode($coll);
-  print $out;
-  exit;
+  # print $out;
   open OUT, ">:encoding(UTF-8)", $save_path;
   print OUT $out;
   print "\nDone! SRS records saved to $save_path\n";
