@@ -67,6 +67,19 @@ sub getRefData {
  return $refobj;
 }
 
+my $blvl = {
+  'm' => 'Monograph',
+  'i' => 'Integrating Resource',
+  's' => 'Serial'
+};
+
+my $relations = {
+  '0' => 'Resource',
+  '1' => 'Version of resource',
+  '2' => 'Related resource',
+  '3' => 'No information provided'
+};
+
 $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
 
@@ -102,7 +115,7 @@ sub getData {
         foreach (@{ $_->{subfields} }) {
           my @subfield = $field->subfield($_); 
           foreach (@subfield) {
-            $_ = processing_funcs($_, $field, $params, @funcs); # unless $ent->{applyRulesOnConcatenatedData};
+            $_ = processing_funcs($_, $field, $params, @funcs) unless $ent->{applyRulesOnConcatenatedData};
             push @group, $_
           }
         }
@@ -115,7 +128,7 @@ sub getData {
         foreach (@{ $ent->{subfield} }) {
           my @subfield = $field->subfield($_);
           foreach (@subfield) {
-            $_ = processing_funcs($_, $field, $params, @funcs); # unless $ent->{applyRulesOnConcatenatedData};
+            $_ = processing_funcs($_, $field, $params, @funcs) unless $ent->{applyRulesOnConcatenatedData};
             push @data, $_;
           }
         }
@@ -155,6 +168,10 @@ sub getData {
       } elsif ($_ eq 'set_alternative_title_type_id') {
         my $name = $params->{name};
         $out = $refdata->{alternativeTitleTypes}->{$name};
+      } elsif ($_ eq 'set_electronic_access_relations_id') {
+        my $ind = $field->indicator(2);
+        my $name = $relations->{$ind};
+        $out = $refdata->{electronicAccessRelationships}->{$name} || '';
       } elsif ($_ eq 'set_classification_type_id') {
         my $name = $params->{name};
         $out = $refdata->{classificationTypes}->{$name};
@@ -189,11 +206,7 @@ sub getData {
 
 my $rules = getRules($rules_file);
 
-my $blvl = {
-  'm' => 'Monograph',
-  'i' => 'Integrating Resource',
-  's' => 'Serial'
-};
+
 
 my $ftypes = {
   id => 'string',
@@ -328,7 +341,7 @@ foreach (@ARGV) {
   
   $out = JSON->new->pretty->encode($coll);
   print $out;
-  # exit;
+  exit;
   open OUT, ">:encoding(UTF-8)", $save_path;
   print OUT $out;
   print "\nDone! SRS records saved to $save_path\n";
