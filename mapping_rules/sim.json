@@ -5642,7 +5642,6 @@
    ],
    "650" : [
       {
-         "applyRulesOnConcatenatedData" : true,
          "description" : "Subject Headings",
          "rules" : [
             {

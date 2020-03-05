@@ -39,7 +39,6 @@ sub getRefData {
   foreach (<$refdir/*.json>) {
     my $prop = $_;
     $prop =~ s/^(.+\/)?(.+?)\.json/$2/;
-    # print "Opening reference data file '$prop.json'\n";    
     open my $refdata, $_ or die "Can't open $_";
     my $jsonstr = <$refdata>;
     my $json = eval { decode_json($jsonstr) };
@@ -78,6 +77,14 @@ my $relations = {
   '1' => 'Version of resource',
   '2' => 'Related resource',
   '3' => 'No information provided'
+};
+
+my $pub_roles = {
+  '0' => 'Production',
+  '1' => 'Publication',
+  '2' => 'Distribution',
+  '3' => 'Manufacture',
+  '4' => 'Copyright notice date'
 };
 
 $ref_dir =~ s/\/$//;
@@ -177,6 +184,9 @@ sub getData {
         $out = $refdata->{classificationTypes}->{$name};
       } elsif ($_ eq 'set_instance_format_id') {
         $out = $refdata->{instanceFormats}->{$out} || '';
+      } elsif ($_ eq 'set_publisher_role') {
+        $ind2 = $field->indicator(2);
+        $out = $pub_roles->{$ind2} || '';
       } elsif ($_ eq 'remove_ending_punc') {
         $out =~ s/[;:,\/+= ]$//g;
       } elsif ($_ eq 'capitalize') {
