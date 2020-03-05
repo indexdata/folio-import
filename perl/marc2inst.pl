@@ -1,6 +1,18 @@
 #! /usr/bin/perl
 
-# Create instance records from raw marc.
+# Create instance records from raw marc using default (or updated) Folio mapping rules.
+#
+# There are couple of bash scripts that will fetch mapping rules and ref data:
+#   get_mapping_rules.sh
+#   reference_inventory.sh
+#
+# You must first create an okapi session by running login.sh to use the above scripts.
+#
+# Direct the output of get_mapping_rules.sh to some file, the reference_inventory.sh script
+# will require a directory argument.
+#
+# This script will output a single instances collection and will be saved to the same
+# directory as the raw marc file.
 
 use MARC::Record;
 use Data::Dumper;
