@@ -152,10 +152,11 @@ sub getData {
     my $params = shift;
     foreach (@_) {
       if ($_ eq 'trim_period') {
-        print "$out\n";
         $out =~ s/\.\s*$//;
       } elsif ($_ eq 'trim') {
         $out =~ s/^\s+|\s+$//g;
+      } elsif ($_ eq 'remove_ending_punc') {
+        $out =~ s/[;:,\/+= ]$//g;
       } elsif ($_ eq 'remove_prefix_by_indicator') {
         my $ind = $field->indicator(2);
         $out = substr($out, $ind);
@@ -187,8 +188,6 @@ sub getData {
       } elsif ($_ eq 'set_publisher_role') {
         $ind2 = $field->indicator(2);
         $out = $pub_roles->{$ind2} || '';
-      } elsif ($_ eq 'remove_ending_punc') {
-        $out =~ s/[;:,\/+= ]$//g;
       } elsif ($_ eq 'capitalize') {
         $out = ucfirst $out;
       } elsif ($_ eq 'char_select') {
@@ -329,7 +328,14 @@ foreach (@ARGV) {
             my $data = getData($field, $_);
             next unless $data;
             if ($flavor eq 'array') {
-              push $rec->{$targ[0]}, $data;
+              if ($_->{subFieldSplit}) { # subFieldSplit is only used for one field, 041, which may have a lang string like engfreger.
+                my $val = $_->{subFieldSplit}->{value};
+                my @splitdata = $data =~ /(\w{$val})/g;
+                $rec->{$targ[0]} = [] if $tag eq '041';  # we don't want duplicate languages since it probably alread exists in the 008;
+                push $rec->{$targ[0]}, @splitdata;
+              } else {
+                push $rec->{$targ[0]}, $data;
+              }
             } elsif ($flavor eq 'array.object') {
               $data_obj->{$targ[0]}->{$targ[1]} = $data;
             } elsif ($flavor eq 'object') {
