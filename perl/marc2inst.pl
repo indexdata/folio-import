@@ -179,7 +179,7 @@ sub getData {
       } elsif ($_ eq 'set_electronic_access_relations_id') {
         my $ind = $field->indicator(2);
         my $name = $relations->{$ind};
-        $out = $refdata->{electronicAccessRelationships}->{$name} or die "Can't find electronicAccessRelationship for $name";
+        $out = $refdata->{electronicAccessRelationships}->{$name} || '';
       } elsif ($_ eq 'set_classification_type_id') {
         my $name = $params->{name};
         $out = $refdata->{classificationTypes}->{$name} or die "Can't find classificationType for $name";
