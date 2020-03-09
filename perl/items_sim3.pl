@@ -295,7 +295,7 @@ while (<RAW>) {
       $irec->{circulationNotes} = [];
       my $circ_note = {
         id=>uuid(),
-        noteType=>'Check out',
+        noteType=>'Check in',
         note=>$checkout_mesg,
         staffOnly=>true,
         date=>'2020-02-02'
@@ -330,7 +330,7 @@ my $icollection = JSON->new->pretty->encode($icoll);
 my $items_file = "$batch_path/${filename}_items.json";
 open ITM, ">:encoding(UTF-8)", $items_file;
 print ITM $icollection;
-# print $icollection;
+print $icollection;
 close ITM;
 
 print "\nHoldings: $hcount";
