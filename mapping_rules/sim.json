@@ -121,7 +121,8 @@
                ],
                "target" : "identifiers.value"
             }
-         ]
+         ],
+         "entityPerRepeatedSubfield": true
       },
       {
          "entity" : [

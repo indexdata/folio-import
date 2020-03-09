@@ -225,7 +225,7 @@ sub getData {
     return $out;
   }
 
-my $rules = getRules($rules_file);
+my $mapping_rules = getRules($rules_file);
 
 
 
@@ -313,15 +313,16 @@ foreach (@ARGV) {
     $count++;
     my $raw = $_;
     my $marc = MARC::Record->new_from_usmarc($raw);
+    my $ldr = $marc->leader();
+    my $blevel = substr($ldr, 7, 1);
+    my $mode_name = $blvl->{$blevel} || 'Other';
+    $rec->{modeOfIssuanceId} = $refdata->{issuanceModes}->{$mode_name};
     foreach ($marc->fields()) {
-      my $ldr = $marc->leader();
-      my $blevel = substr($ldr, 7, 1);
-      my $mode_name = $blvl->{$blevel} || 'Other';
-      $rec->{modeOfIssuanceId} = $refdata->{issuanceModes}->{$mode_name};
+
       my $field = $_;
       my $tag = $_->tag();
       my @entities;
-      my $fld_conf = $rules->{$tag};
+      my $fld_conf = $mapping_rules->{$tag};
       if ($fld_conf) {
         my $ent = $fld_conf->[0]->{entity};
         if ($ent) {
@@ -369,7 +370,7 @@ foreach (@ARGV) {
   }
   
   $out = JSON->new->pretty->encode($coll);
-  # print $out;
+  print $out;
   open OUT, ">:encoding(UTF-8)", $save_path;
   print OUT $out;
   print "\nDone! SRS records saved to $save_path\n";
