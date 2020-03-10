@@ -371,11 +371,15 @@ foreach (@ARGV) {
         } else {
           @entities = $fld_conf;
         }
-        print Dumper(@entities) if $field->tag() eq '022';
+        # print Dumper(@entities) if $field->tag() eq '020';
         foreach (@entities) {
           my @entity = @$_;
           my $data_obj = {};
           foreach (@entity) {
+            my @required = @{ $_->{requiredSubfield} };
+            if ($required[0] && !$field->subfield($required[0])) {
+              next;
+            }
             my @targ = split /\./, $_->{target};
             my $flavor = $ftypes->{$targ[0]};
             my $data = getData($field, $_);
@@ -407,6 +411,7 @@ foreach (@ARGV) {
     }
     push @{ $coll->{instances} }, $rec;
     print "Processing #$count " . substr($rec->{title}, 0, 60) . "\n";
+    # print Dumper(@marc_fields);
   }
   
   $out = JSON->new->pretty->encode($coll);
