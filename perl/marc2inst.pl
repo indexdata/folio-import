@@ -362,14 +362,16 @@ foreach (@ARGV) {
       my $fld_conf = $mapping_rules->{$tag};
       my @entities;
       if ($fld_conf) {
-        my $ent = $fld_conf->[0]->{entity};
-        if ($ent) {
-          foreach ($ent) {
-            push @entities, $ent;
+        if ($fld_conf->[0]->{entity}) {
+          foreach (@{ $fld_conf }) {
+            if ($_->{entity}) {
+              push @entities, $_->{entity};
+            }
           }
         } else {
           @entities = $fld_conf;
         }
+        print Dumper(@entities) if $field->tag() eq '022';
         foreach (@entities) {
           my @entity = @$_;
           my $data_obj = {};
@@ -408,7 +410,7 @@ foreach (@ARGV) {
   }
   
   $out = JSON->new->pretty->encode($coll);
-  # print $out;
+  print $out;
   open OUT, ">:encoding(UTF-8)", $save_path;
   print OUT $out;
   print "\nDone! SRS records saved to $save_path\n";
