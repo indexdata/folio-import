@@ -227,8 +227,6 @@ sub getData {
 
 my $mapping_rules = getRules($rules_file);
 
-
-
 my $ftypes = {
   id => 'string',
   hrid => 'string',
@@ -264,6 +262,22 @@ my $ftypes = {
   holdingsRecords2 => 'array.object',
   natureOfContentTermIds => 'array.string'
 };
+
+# We need to know upfront which tags support repeated subfields.
+my $repeat_subs = {};
+  foreach (keys %{ $mapping_rules }) {
+    my $rtag = $_;
+    foreach (@{ $mapping_rules->{$rtag} }) {
+      if ($_->{entityPerRepeatedSubfield}) {
+        my $conf = $_;
+        $repeat_subs->{$rtag} = {};
+        foreach (@{ $conf->{entity} }) {
+          $repeat_subs->{$rtag} = $_->{subfield} if $_->{target} !~ /Id$/;
+        }
+      }
+    }
+  }
+print Dumper($repeat_subs);
 
 
 foreach (@ARGV) {
@@ -310,6 +324,7 @@ foreach (@ARGV) {
       natureOfContentTermIds => [],
       statusId => '52a2ff34-2a12-420d-8539-21aa8d3cf5d8'
     };
+    
     $count++;
     my $raw = $_;
     my $marc = MARC::Record->new_from_usmarc($raw);
@@ -317,12 +332,36 @@ foreach (@ARGV) {
     my $blevel = substr($ldr, 7, 1);
     my $mode_name = $blvl->{$blevel} || 'Other';
     $rec->{modeOfIssuanceId} = $refdata->{issuanceModes}->{$mode_name};
-    foreach ($marc->fields()) {
-
+    my @marc_fields = $marc->fields();
+    foreach (@marc_fields) {
+      my $repeat_flag = 0;
       my $field = $_;
       my $tag = $_->tag();
-      my @entities;
+      
+      # Let's determine if a subfield is repeatable, if so create append separate marc fields for each subfield;
+      if ($repeat_subs->{$tag}) {
+        print "$tag repeats\n";
+        my @s = @{ $field->{_subfields} };
+        my $scount = {};
+        for (my $x = 0; $x < @s; $x += 2) {
+          $scount->{$s[x]}++;
+        }
+        foreach (keys %{ $scount }) {
+          if ($scount->{$_} > 1) {
+            $repeat_flag = 1;
+          } 
+        }
+        if ($repeat_flag) {
+          foreach ($field->subfields()) {
+            my ($code, $sdata) = @$_;
+            $new_field = MARC::Field->new($tag, $field->{_ind1}, $field->{_ind2}, $code => $sdata);
+            push @marc_fields, $new_field;
+          }
+          next;
+        }
+      }
       my $fld_conf = $mapping_rules->{$tag};
+      my @entities;
       if ($fld_conf) {
         my $ent = $fld_conf->[0]->{entity};
         if ($ent) {
