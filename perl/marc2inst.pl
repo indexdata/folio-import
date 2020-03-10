@@ -413,7 +413,7 @@ foreach (@ARGV) {
   }
   
   $out = JSON->new->pretty->encode($coll);
-  print $out;
+  # print $out;
   open OUT, ">:encoding(UTF-8)", $save_path;
   print OUT $out;
   print "\nDone! SRS records saved to $save_path\n";
