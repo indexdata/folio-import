@@ -371,7 +371,6 @@ foreach (@ARGV) {
         } else {
           @entities = $fld_conf;
         }
-        # print Dumper(@entities) if $field->tag() eq '020';
         foreach (@entities) {
           my @entity = @$_;
           my $data_obj = {};
@@ -388,7 +387,7 @@ foreach (@ARGV) {
               if ($_->{subFieldSplit}) { # subFieldSplit is only used for one field, 041, which may have a lang string like engfreger.
                 my $val = $_->{subFieldSplit}->{value};
                 my @splitdata = $data =~ /(\w{$val})/g;
-                $rec->{$targ[0]} = [] if $tag eq '041';  # we don't want duplicate languages since it probably alread exists in the 008;
+                # $rec->{$targ[0]} = [] if $tag eq '041';  # we don't want duplicate languages since it probably alread exists in the 008;
                 push $rec->{$targ[0]}, @splitdata;
               } else {
                 push $rec->{$targ[0]}, $data;
@@ -411,7 +410,6 @@ foreach (@ARGV) {
     }
     push @{ $coll->{instances} }, $rec;
     print "Processing #$count " . substr($rec->{title}, 0, 60) . "\n";
-    # print Dumper(@marc_fields);
   }
   
   $out = JSON->new->pretty->encode($coll);
