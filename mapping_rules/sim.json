@@ -293,7 +293,7 @@
                "target" : "identifiers.value"
             }
          ],
-         "entityPerRepeatedSubfield" : true
+         "entityPerRepeatedSubfield": true 
       }
    ],
    "024" : [

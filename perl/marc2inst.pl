@@ -277,8 +277,6 @@ my $repeat_subs = {};
       }
     }
   }
-print Dumper($repeat_subs);
-
 
 foreach (@ARGV) {
   my $infile = $_;
@@ -334,28 +332,29 @@ foreach (@ARGV) {
     $rec->{modeOfIssuanceId} = $refdata->{issuanceModes}->{$mode_name};
     my @marc_fields = $marc->fields();
     foreach (@marc_fields) {
-      my $repeat_flag = 0;
       my $field = $_;
       my $tag = $_->tag();
       
       # Let's determine if a subfield is repeatable, if so create append separate marc fields for each subfield;
       if ($repeat_subs->{$tag}) {
-        print "$tag repeats\n";
-        my @s = @{ $field->{_subfields} };
-        my $scount = {};
-        for (my $x = 0; $x < @s; $x += 2) {
-          $scount->{$s[x]}++;
-        }
-        foreach (keys %{ $scount }) {
-          if ($scount->{$_} > 1) {
-            $repeat_flag = 1;
-          } 
-        }
-        if ($repeat_flag) {
-          foreach ($field->subfields()) {
+        my $main_code = $repeat_subs->{$tag}[0];
+        my @sf = $field->subfield($main_code);
+        my $occurence = @sf;
+        
+        if ($occurence > 1) {
+          my $new_field = {};
+          my $i = 0;
+          my @subs = $field->subfields();
+          foreach (@subs) {
             my ($code, $sdata) = @$_;
-            $new_field = MARC::Field->new($tag, $field->{_ind1}, $field->{_ind2}, $code => $sdata);
-            push @marc_fields, $new_field;
+            if ($code eq $main_code) {
+              $new_field = MARC::Field->new($tag, $field->{_ind1}, $field->{_ind2}, $code => $sdata);
+            } else {
+              $new_field->add_subfields($code => $sdata );
+            }
+            $i++;
+            my ($ncode) = @{ $subs[$i] };
+            push @marc_fields, $new_field if $ncode eq $main_code || $ncode eq undef;
           }
           next;
         }
@@ -409,7 +408,7 @@ foreach (@ARGV) {
   }
   
   $out = JSON->new->pretty->encode($coll);
-  print $out;
+  # print $out;
   open OUT, ">:encoding(UTF-8)", $save_path;
   print OUT $out;
   print "\nDone! SRS records saved to $save_path\n";
