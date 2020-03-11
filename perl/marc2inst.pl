@@ -270,13 +270,14 @@ my $repeat_subs = {};
     foreach (@{ $mapping_rules->{$rtag} }) {
       if ($_->{entityPerRepeatedSubfield}) {
         my $conf = $_;
-        $repeat_subs->{$rtag} = {};
+        $repeat_subs->{$rtag} = [] unless $repeat_subs->{$rtag};
         foreach (@{ $conf->{entity} }) {
-          $repeat_subs->{$rtag} = $_->{subfield} if $_->{target} !~ /Id$/;
+          push @{ $repeat_subs->{$rtag} }, $_->{subfield}->[0] if $_->{target} !~ /Id$/;
         }
       }
     }
   }
+# print Dumper($repeat_subs);
 
 foreach (@ARGV) {
   my $infile = $_;
@@ -332,17 +333,21 @@ foreach (@ARGV) {
     my $mode_name = $blvl->{$blevel} || 'Other';
     $rec->{modeOfIssuanceId} = $refdata->{issuanceModes}->{$mode_name};
     my @marc_fields = $marc->fields();
-    foreach (@marc_fields) {
+    MARC_FIELD: foreach (@marc_fields) {
       my $field = $_;
       my $tag = $_->tag();
+      print "NEW field\n";
       
       # Let's determine if a subfield is repeatable, if so create append separate marc fields for each subfield;
-      if ($repeat_subs->{$tag}) {
-        my $main_code = $repeat_subs->{$tag}[0];
+      foreach (@{ $repeat_subs->{$tag} }) {
+        # my $main_code = $repeat_subs->{$tag}->[0];
+        my $main_code = $_;
+        my $all_codes = join '', @{ $repeat_subs->{$tag} };
         my @sf = $field->subfield($main_code);
         my $occurence = @sf;
-        
+        print "$tag $main_code\n";
         if ($occurence > 1) {
+          print "Repeated subfield $main_code found\n";
           my $new_field = {};
           my $i = 0;
           my @subs = $field->subfields();
@@ -350,14 +355,14 @@ foreach (@ARGV) {
             my ($code, $sdata) = @$_;
             if ($code eq $main_code) {
               $new_field = MARC::Field->new($tag, $field->{_ind1}, $field->{_ind2}, $code => $sdata);
-            } else {
+            } elsif ($new_field->{_tag}) {
               $new_field->add_subfields($code => $sdata );
             }
             $i++;
             my ($ncode) = @{ $subs[$i] };
-            push @marc_fields, $new_field if $ncode eq $main_code || $ncode eq undef;
+            push @marc_fields, $new_field if (index($all_codes, $ncode) != -1 && $new_field->{_tag}) || $ncode eq undef;
           }
-          next;
+          next MARC_FIELD;
         }
       }
       my $fld_conf = $mapping_rules->{$tag};
@@ -412,6 +417,7 @@ foreach (@ARGV) {
     }
     push @{ $coll->{instances} }, $rec;
     print "Processing #$count " . substr($rec->{title}, 0, 60) . "\n";
+    # print Dumper(@marc_fields);
   }
   
   $out = JSON->new->pretty->encode($coll);

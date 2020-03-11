@@ -167,7 +167,8 @@
                ],
                "target" : "identifiers.value"
             }
-         ]
+         ],
+         "entityPerRepeatedSubfield": true
       }
    ],
    "022" : [
