@@ -336,7 +336,6 @@ foreach (@ARGV) {
     MARC_FIELD: foreach (@marc_fields) {
       my $field = $_;
       my $tag = $_->tag();
-      print "NEW field\n";
       
       # Let's determine if a subfield is repeatable, if so create append separate marc fields for each subfield;
       foreach (@{ $repeat_subs->{$tag} }) {
@@ -345,9 +344,7 @@ foreach (@ARGV) {
         my $all_codes = join '', @{ $repeat_subs->{$tag} };
         my @sf = $field->subfield($main_code);
         my $occurence = @sf;
-        print "$tag $main_code\n";
         if ($occurence > 1) {
-          print "Repeated subfield $main_code found\n";
           my $new_field = {};
           my $i = 0;
           my @subs = $field->subfields();
@@ -417,7 +414,6 @@ foreach (@ARGV) {
     }
     push @{ $coll->{instances} }, $rec;
     print "Processing #$count " . substr($rec->{title}, 0, 60) . "\n";
-    # print Dumper(@marc_fields);
   }
   
   $out = JSON->new->pretty->encode($coll);
