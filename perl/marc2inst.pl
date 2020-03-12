@@ -422,5 +422,5 @@ foreach (@ARGV) {
   # print $out;
   open OUT, ">:encoding(UTF-8)", $save_path;
   print OUT $out;
-  print "\nDone! SRS records saved to $save_path\n";
+  print "\nDone! $count instance records saved to $save_path\n";
 }
