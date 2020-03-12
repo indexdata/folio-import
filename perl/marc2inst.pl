@@ -135,21 +135,23 @@ sub getData {
           my @subfield = $field->subfield($_); 
           foreach (@subfield) {
             $_ = processing_funcs($_, $field, $params, @funcs) unless $ent->{applyRulesOnConcatenatedData};
+            if ($default) {
+              $_ = $default;
+            }
             push @group, $_
           }
         }
         push @data, join $val, @group;
       }
     } else {
-      if ($default) {
-        push @data, $default;
-      } else {
-        foreach (@{ $ent->{subfield} }) {
-          my @subfield = $field->subfield($_);
-          foreach (@subfield) {
-            $_ = processing_funcs($_, $field, $params, @funcs) unless $ent->{applyRulesOnConcatenatedData};
-            push @data, $_;
+      foreach (@{ $ent->{subfield} }) {
+        my @subfield = $field->subfield($_);
+        foreach (@subfield) {
+          $_ = processing_funcs($_, $field, $params, @funcs) unless $ent->{applyRulesOnConcatenatedData};
+          if ($default) {
+            $_ = $default;
           }
+          push @data, $_;
         }
       }
     }
