@@ -64,6 +64,8 @@ const wait = (ms) => {
         logger.info(`Successfully added record id ${inData[x].id}`);
         success++;
       } catch (e) {
+        logger.warn(e);
+        logger.info('Trying PUT request...');
         try {
           await superagent
             .put(recUrl)

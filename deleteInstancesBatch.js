@@ -29,7 +29,7 @@ const wait = (ms) => {
 
     for (let x = 0; x < inData.instances.length; x++) {
       let id = inData.instances[x].id;
-      console.log(`Deleting ${id} ${inData.instances[x].title}`);
+      console.log(`[${x}] Deleting ${id} ${inData.instances[x].title}`);
       try {
         await superagent
           .delete(`${actionUrl}/${id}`)
