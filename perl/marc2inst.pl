@@ -134,6 +134,7 @@ sub getData {
         foreach (@{ $_->{subfields} }) {
           my @subfield = $field->subfield($_); 
           foreach (@subfield) {
+            next unless /\S/;
             $_ = processing_funcs($_, $field, $params, @funcs) unless $ent->{applyRulesOnConcatenatedData};
             if ($default) {
               $_ = $default;
@@ -147,6 +148,7 @@ sub getData {
       foreach (@{ $ent->{subfield} }) {
         my @subfield = $field->subfield($_);
         foreach (@subfield) {
+          next unless /\S/;
           $_ = processing_funcs($_, $field, $params, @funcs) unless $ent->{applyRulesOnConcatenatedData};
           if ($default) {
             $_ = $default;
