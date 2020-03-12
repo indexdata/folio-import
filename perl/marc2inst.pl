@@ -189,10 +189,10 @@ sub getData {
         # Not sure what's supposed to happen here...
       } elsif ($_ eq 'set_note_type_id') {
         my $name = $params->{name};
-        $out = $refdata->{instanceNoteTypes}->{$name} or die "Can't find instanceNoteType for $name";;
+        $out = $refdata->{instanceNoteTypes}->{$name} or die "Can't find instanceNoteType for $name";
       } elsif ($_ eq 'set_alternative_title_type_id') {
         my $name = $params->{name};
-        $out = $refdata->{alternativeTitleTypes}->{$name};
+        $out = $refdata->{alternativeTitleTypes}->{$name} or die "Can't find alternativeTitleType for $name";
       } elsif ($_ eq 'set_electronic_access_relations_id') {
         my $ind = $field->indicator(2);
         my $name = $relations->{$ind};
