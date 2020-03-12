@@ -155,6 +155,7 @@ sub getData {
           }
           push @data, $_;
         }
+        last if $ent->{target} =~ /Id$/;
       }
     }
     my $out = join ' ', @data;
