@@ -139,6 +139,7 @@ sub getData {
             if ($default) {
               $_ = $default;
             }
+            last if $default;
             push @group, $_
           }
         }
@@ -154,6 +155,7 @@ sub getData {
             $_ = $default;
           }
           push @data, $_;
+          last if $default;
         }
         last if $ent->{target} =~ /Id$/ || $default;
       }
