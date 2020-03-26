@@ -15,4 +15,7 @@ if [ ! -f $UFILE ]
     exit;
 fi
 
-curl -w '\n' --http1.1 -X PUT -v "${OKAPI}/circulation/loans/" -H 'content-type: application/json' -H "x-okapi-token: ${TOKEN}" -d @$UFILE
+ID=`cat $UFILE | grep -oE -m 1 '"id".*?".+?"' | grep -oE '[a-z0-9-]{8,}'`
+echo $ID
+
+curl -w '\n' --http1.1 -X PUT -v "${OKAPI}/circulation/loans/${ID}" -H 'content-type: application/json' -H "x-okapi-token: ${TOKEN}" -d @$UFILE
