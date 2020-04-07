@@ -424,8 +424,17 @@ foreach (@ARGV) {
         }
       }
     }
-    push @{ $coll->{instances} }, $rec;
-    print "Processing #$count " . substr($rec->{title}, 0, 60) . "\n";
+    # Do some some record checking and cleaning
+    my $clean_rec = {};
+    foreach my $k (keys %{ $rec }) {
+      if ($ftypes->{$k} =~ /^array/ && $rec->{$k}[0]) {
+        $clean_rec->{$k} = $rec->{$k};
+      } elsif ($ftypes->{$k} =~ /^(string|boolean|object)/){
+        $clean_rec->{$k} = $rec->{$k};
+      }
+    }
+    push @{ $coll->{instances} }, $clean_rec;
+    print "Processing #$count " . substr($clean_rec->{title}, 0, 60) . "\n";
   }
   
   $out = JSON->new->pretty->encode($coll);
