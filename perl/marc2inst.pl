@@ -147,6 +147,7 @@ sub getData {
       }
     } else {
       foreach (@{ $ent->{subfield} }) {
+    print "$_\n" if $field->{_tag} eq '024';
         my @subfield = $field->subfield($_);
         foreach (@subfield) {
           next unless /\S/;
@@ -154,10 +155,15 @@ sub getData {
           if ($default) {
             $_ = $default;
           }
+          print "  $_\n" if $field->{_tag} eq '024';
           push @data, $_;
           last if $default;
         }
-        last if $ent->{target} =~ /Id$/ || $default;
+        if ($data[-1]) {
+          if (($ent->{target} =~ /Id$/)) {
+            last;
+          }
+        }
       }
     }
     my $out = join ' ', @data;
@@ -392,6 +398,7 @@ foreach (@ARGV) {
             my @targ = split /\./, $_->{target};
             my $flavor = $ftypes->{$targ[0]};
             my $data = getData($field, $_);
+            # print Dumper($data) if $field->{_tag} eq '024';
             next unless $data;
             if ($flavor eq 'array') {
               if ($_->{subFieldSplit}) { # subFieldSplit is only used for one field, 041, which may have a lang string like engfreger.
