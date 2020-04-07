@@ -147,7 +147,6 @@ sub getData {
       }
     } else {
       foreach (@{ $ent->{subfield} }) {
-    print "$_\n" if $field->{_tag} eq '024';
         my @subfield = $field->subfield($_);
         foreach (@subfield) {
           next unless /\S/;
@@ -155,7 +154,6 @@ sub getData {
           if ($default) {
             $_ = $default;
           }
-          print "  $_\n" if $field->{_tag} eq '024';
           push @data, $_;
           last if $default;
         }
