@@ -16,7 +16,7 @@
          "rules" : [
             {
                "conditions" : [],
-               "value" : "MARC21"
+               "value" : "MARC"
             }
          ],
          "subfield" : [],
