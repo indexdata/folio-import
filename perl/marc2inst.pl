@@ -111,6 +111,7 @@ sub process_entity {
     my $default;
     my $params;
     my $tag = $field->tag();
+    my $subs = join '', @{ $ent->{subfield} };
     foreach (@rules) {
       foreach (@{ $_->{conditions} }) {
         @funcs = split /,\s*/, $_->{type};
@@ -127,11 +128,17 @@ sub process_entity {
       }
       push @data, $d;
       $ent->{applyRulesOnConcatenatedData} = true;
-    } elsif ($default) {
-      push @data, $default;
+    } elsif ($default && $subs) {
+      my $add = 0;
+      foreach ($field->subfields()) {
+          if ($_->[0] =~ /[$subs]/ && $_->[1] =~ /\S/) {
+            $add = 1;
+            last;
+          }
+      }
+      push @data, $default if $add;
     } else {
       my $tmp_field = $field->clone();
-      my $subs = join '', @{ $ent->{subfield} };
       if (!$ent->{applyRulesOnConcatenatedData}) {
         my $i = 0;
         my $sf;
@@ -144,11 +151,10 @@ sub process_entity {
           $i++;
         }
       }
-      print Dumper($field) if $tag eq '020';
       if ($ent->{subFieldDelimiter}) {
         foreach (@{ $ent->{subFieldDelimiter} }) {
           my $subs = join '', @{ $_->{subfields} };
-          push @data, $tmp_field->as_string($subs, $_->{value}); 
+          push @data, $tmp_field->as_string($subs, $_->{value}) if $subs; 
         }
       } else {
         push @data, $tmp_field->as_string($subs) if $subs;
