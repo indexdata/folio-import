@@ -102,7 +102,7 @@ my $pub_roles = {
 $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
 
-sub getData {
+sub process_entity {
     my $field = shift;
     my $ent = shift;
     my @data;
@@ -110,6 +110,8 @@ sub getData {
     my @funcs;
     my $default;
     my $params;
+    my $tag = $field->tag();
+    my $subs = join '', @{ $ent->{subfield} };
     foreach (@rules) {
       foreach (@{ $_->{conditions} }) {
         @funcs = split /,\s*/, $_->{type};
@@ -117,8 +119,7 @@ sub getData {
       }
       $default = $_->{value};
     }
-    my @delimiters = @{ $ent->{subFieldDelimiter} };
-    if ($field->tag() =~ /^00/) {
+    if ($tag =~ /^00/) {
       my $d;
       if ($default) {
         $d = $default;
@@ -127,41 +128,36 @@ sub getData {
       }
       push @data, $d;
       $ent->{applyRulesOnConcatenatedData} = true;
-    } elsif (@delimiters) {
-      foreach (@delimiters) {
-        my $val = $_->{value};
-        my @group;
-        foreach (@{ $_->{subfields} }) {
-          my @subfield = $field->subfield($_); 
-          foreach (@subfield) {
-            next unless /\S/;
-            $_ = processing_funcs($_, $field, $params, @funcs) unless $ent->{applyRulesOnConcatenatedData};
-            if ($default) {
-              $_ = $default;
-            }
-            last if $default;
-            push @group, $_
-          }
-        }
-        push @data, join $val, @group;
-      }
-    } else {
-      foreach (@{ $ent->{subfield} }) {
-        my @subfield = $field->subfield($_);
-        foreach (@subfield) {
-          next unless /\S/;
-          $_ = processing_funcs($_, $field, $params, @funcs) unless $ent->{applyRulesOnConcatenatedData};
-          if ($default) {
-            $_ = $default;
-          }
-          push @data, $_;
-          last if $default;
-        }
-        if ($data[-1]) {
-          if (($ent->{target} =~ /Id$/)) {
+    } elsif ($default && $subs) {
+      my $add = 0;
+      foreach ($field->subfields()) {
+          if ($_->[0] =~ /[$subs]/ && $_->[1] =~ /\S/) {
+            $add = 1;
             last;
           }
+      }
+      push @data, $default if $add;
+    } else {
+      my $tmp_field = $field->clone();
+      if (!$ent->{applyRulesOnConcatenatedData}) {
+        my $i = 0;
+        my $sf;
+        foreach (@{ $tmp_field->{_subfields} }) {
+          if ($i % 2 && $sf =~ /[$subs]/) {
+            $_ = processing_funcs($_, $tmp_field, $params, @funcs);
+          } else {
+            $sf = $_;
+          }
+          $i++;
         }
+      }
+      if ($ent->{subFieldDelimiter}) {
+        foreach (@{ $ent->{subFieldDelimiter} }) {
+          my $subs = join '', @{ $_->{subfields} };
+          push @data, $tmp_field->as_string($subs, $_->{value}) if $subs; 
+        }
+      } else {
+        push @data, $tmp_field->as_string($subs) if $subs;
       }
     }
     my $out = join ' ', @data;
@@ -395,7 +391,7 @@ foreach (@ARGV) {
             }
             my @targ = split /\./, $_->{target};
             my $flavor = $ftypes->{$targ[0]};
-            my $data = getData($field, $_);
+            my $data = process_entity($field, $_);
             # print Dumper($data) if $field->{_tag} eq '024';
             next unless $data;
             if ($flavor eq 'array') {
