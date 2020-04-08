@@ -110,6 +110,7 @@ sub getData {
     my @funcs;
     my $default;
     my $params;
+    my $out;
     foreach (@rules) {
       foreach (@{ $_->{conditions} }) {
         @funcs = split /,\s*/, $_->{type};
@@ -117,7 +118,6 @@ sub getData {
       }
       $default = $_->{value};
     }
-    my @delimiters = @{ $ent->{subFieldDelimiter} };
     if ($field->tag() =~ /^00/) {
       my $d;
       if ($default) {
@@ -127,41 +127,15 @@ sub getData {
       }
       push @data, $d;
       $ent->{applyRulesOnConcatenatedData} = true;
-    } elsif (@delimiters) {
-      foreach (@delimiters) {
-        my $val = $_->{value};
-        my @group;
-        foreach (@{ $_->{subfields} }) {
-          my @subfield = $field->subfield($_); 
-          foreach (@subfield) {
-            next unless /\S/;
-            $_ = processing_funcs($_, $field, $params, @funcs) unless $ent->{applyRulesOnConcatenatedData};
-            if ($default) {
-              $_ = $default;
-            }
-            last if $default;
-            push @group, $_
-          }
-        }
-        push @data, join $val, @group;
-      }
     } else {
-      foreach (@{ $ent->{subfield} }) {
-        my @subfield = $field->subfield($_);
-        foreach (@subfield) {
-          next unless /\S/;
-          $_ = processing_funcs($_, $field, $params, @funcs) unless $ent->{applyRulesOnConcatenatedData};
-          if ($default) {
-            $_ = $default;
-          }
-          push @data, $_;
-          last if $default;
+      if ($ent->{subFieldDelimiter}) {
+        foreach (@{ $ent->{subFieldDelimiter} }) {
+          my $subs = join '', @{ $_->{subfields} };
+          push @data, $field->as_string($subs, $_->{value}); 
         }
-        if ($data[-1]) {
-          if (($ent->{target} =~ /Id$/)) {
-            last;
-          }
-        }
+      } else {
+        my $subs = join '', @{ $ent->{subfield} };
+        push @data, $field->as_string($subs) if $subs;
       }
     }
     my $out = join ' ', @data;
