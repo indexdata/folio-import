@@ -4410,30 +4410,30 @@
    ],
    "561" : [
       {
-         "applyRulesOnConcatenatedData" : true,
-         "description" : "Instance note type id",
-         "rules" : [
-            {
-               "conditions" : [
-                  {
-                     "parameter" : {
-                        "name" : "Ownership and Custodial History note"
-                     },
-                     "type" : "set_note_type_id"
-                  }
-               ]
-            }
-         ],
-         "subfield" : [
-            "a",
-            "u",
-            "3",
-            "5"
-         ],
-         "target" : "notes.instanceNoteTypeId"
-      },
-      {
          "entity" : [
+            {
+               "applyRulesOnConcatenatedData": true,
+               "description": "Instance note type id",
+               "rules": [
+                  {
+                     "conditions": [
+                        {
+                           "parameter": {
+                              "name": "Ownership and Custodial History note"
+                           },
+                           "type": "set_note_type_id"
+                        }
+                     ]
+                  }
+               ],
+               "subfield": [
+                  "a",
+                  "u",
+                  "3",
+                  "5"
+               ],
+               "target": "notes.instanceNoteTypeId"
+            },
             {
                "applyRulesOnConcatenatedData" : true,
                "description" : "Ownership and Custodial History",

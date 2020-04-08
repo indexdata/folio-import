@@ -131,7 +131,7 @@ sub process_entity {
     } elsif ($default && $subs) {
       my $add = 0;
       foreach ($field->subfields()) {
-          if ($_->[0] =~ /[$subs]/ && $_->[1] =~ /\S/) {
+          if ($subs =~ /$_->[0]/ && $_->[1] =~ /\S/) {
             $add = 1;
             last;
           }
@@ -143,7 +143,7 @@ sub process_entity {
         my $i = 0;
         my $sf;
         foreach (@{ $tmp_field->{_subfields} }) {
-          if ($i % 2 && $sf =~ /[$subs]/) {
+          if ($i % 2 && $subs =~ /$sf/) {
             $_ = processing_funcs($_, $tmp_field, $params, @funcs);
           } else {
             $sf = $_;
@@ -284,7 +284,6 @@ my $repeat_subs = {};
       }
     }
   }
-# print Dumper($repeat_subs);
 
 foreach (@ARGV) {
   my $infile = $_;
@@ -392,7 +391,6 @@ foreach (@ARGV) {
             my @targ = split /\./, $_->{target};
             my $flavor = $ftypes->{$targ[0]};
             my $data = process_entity($field, $_);
-            # print Dumper($data) if $field->{_tag} eq '024';
             next unless $data;
             if ($flavor eq 'array') {
               if ($_->{subFieldSplit}) { # subFieldSplit is only used for one field, 041, which may have a lang string like engfreger.
