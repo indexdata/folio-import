@@ -102,7 +102,7 @@ my $pub_roles = {
 $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
 
-sub getData {
+sub process_entity {
     my $field = shift;
     my $ent = shift;
     my @data;
@@ -110,7 +110,7 @@ sub getData {
     my @funcs;
     my $default;
     my $params;
-    my $out;
+    my $tag = $field->tag();
     foreach (@rules) {
       foreach (@{ $_->{conditions} }) {
         @funcs = split /,\s*/, $_->{type};
@@ -118,7 +118,7 @@ sub getData {
       }
       $default = $_->{value};
     }
-    if ($field->tag() =~ /^00/) {
+    if ($tag =~ /^00/) {
       my $d;
       if ($default) {
         $d = $default;
@@ -127,15 +127,31 @@ sub getData {
       }
       push @data, $d;
       $ent->{applyRulesOnConcatenatedData} = true;
+    } elsif ($default) {
+      push @data, $default;
     } else {
+      my $tmp_field = $field->clone();
+      my $subs = join '', @{ $ent->{subfield} };
+      if (!$ent->{applyRulesOnConcatenatedData}) {
+        my $i = 0;
+        my $sf;
+        foreach (@{ $tmp_field->{_subfields} }) {
+          if ($i % 2 && $sf =~ /[$subs]/) {
+            $_ = processing_funcs($_, $tmp_field, $params, @funcs);
+          } else {
+            $sf = $_;
+          }
+          $i++;
+        }
+      }
+      print Dumper($field) if $tag eq '020';
       if ($ent->{subFieldDelimiter}) {
         foreach (@{ $ent->{subFieldDelimiter} }) {
           my $subs = join '', @{ $_->{subfields} };
-          push @data, $field->as_string($subs, $_->{value}); 
+          push @data, $tmp_field->as_string($subs, $_->{value}); 
         }
       } else {
-        my $subs = join '', @{ $ent->{subfield} };
-        push @data, $field->as_string($subs) if $subs;
+        push @data, $tmp_field->as_string($subs) if $subs;
       }
     }
     my $out = join ' ', @data;
@@ -369,7 +385,7 @@ foreach (@ARGV) {
             }
             my @targ = split /\./, $_->{target};
             my $flavor = $ftypes->{$targ[0]};
-            my $data = getData($field, $_);
+            my $data = process_entity($field, $_);
             # print Dumper($data) if $field->{_tag} eq '024';
             next unless $data;
             if ($flavor eq 'array') {
