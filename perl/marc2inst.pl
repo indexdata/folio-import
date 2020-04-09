@@ -106,14 +106,17 @@ sub process_entity {
     my $field = shift;
     my $ent = shift;
     my @data;
+    my $out;
     my @rules = @{ $ent->{rules} };
     my @funcs;
     my $default;
     my $params;
     my $tag = $field->tag();
+    my $func_type;
     my $subs = join '', @{ $ent->{subfield} };
     foreach (@rules) {
       foreach (@{ $_->{conditions} }) {
+        $func_type = $_->{type};
         @funcs = split /,\s*/, $_->{type};
         $params = $_->{parameter};
       }
@@ -128,15 +131,25 @@ sub process_entity {
       }
       push @data, $d;
       $ent->{applyRulesOnConcatenatedData} = true;
-    } elsif ($default && $subs) {
+    } elsif ($default || ($func_type =~ /\bset_/ && $params)) {
       my $add = 0;
-      foreach ($field->subfields()) {
+      if (!$subs) {
+        $add = 1;
+      } else {
+        foreach ($field->subfields()) {
           if ($subs =~ /$_->[0]/ && $_->[1] =~ /\S/) {
             $add = 1;
             last;
           }
+        }
       }
-      push @data, $default if $add;
+      if ($default) {
+        push @data, $default if $add;
+      } else {
+        my $d = processing_funcs('', $field, $params, @funcs);
+        push @data, $d if $add;
+      }
+      print "$add\n" if $tag eq '110';
     } else {
       my $tmp_field = $field->clone();
       if (!$ent->{applyRulesOnConcatenatedData}) {
@@ -160,8 +173,11 @@ sub process_entity {
         push @data, $tmp_field->as_string($subs) if $subs;
       }
     }
-    my $out = join ' ', @data;
-    $out = processing_funcs($out, $field, $params, @funcs) if $ent->{applyRulesOnConcatenatedData};
+    
+    if ($data[0]) {
+      $out = join ' ', @data;
+      $out = processing_funcs($out, $field, $params, @funcs) if $ent->{applyRulesOnConcatenatedData};
+    }
     return $out;
   }
 
