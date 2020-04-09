@@ -205,7 +205,7 @@ while (<RAW>) {
     $loc_code =~ s/^\s+|\s+$//g;
     # create holdings record if record doesn't already exists for said location
     if (!$hrecs->{$loc_code} && !$itemsonly) {
-      $hrecs->{$loc_code}->{formerIds} = [ "$iii_num-$loc_code" ];
+      $hrecs->{$loc_code}->{hrid} = "$iii_num-$loc_code";
       my $uustr = uuid();
       $hrecs->{$loc_code}->{id} = $uustr;
       $hrecs->{$loc_code}->{instanceId} = $inst_map->{$iii_num};
@@ -251,7 +251,7 @@ while (<RAW>) {
     $irec->{itemLevelCallNumberTypeId} = $cn_type_id;
     my $status = $_->as_string('s');
     $irec->{status} = { name => $status_map->{$status} || 'Available' };
-    $irec->{formerIds} = [ $inum ];
+    $irec->{hrid} = $inum;
     my $iii_note_type = $_->as_string('o');
     if ($iii_note_type =~ /[cs]/ or $status =~ /[mtlc]/) {
       $irec->{discoverySuppress} = true;
@@ -305,7 +305,7 @@ while (<RAW>) {
       push $irec->{circulationNotes}, $circ_note;
     }
     push $icoll->{items}, $irec;
-    print IIDS $irec->{holdingsRecordId} . "|" . $irec->{formerIds}[0] . "\n";
+    print IIDS $irec->{holdingsRecordId} . "|" . $irec->{hrid} . "\n";
     $icount++;
   }
   foreach (keys $hrecs) {
