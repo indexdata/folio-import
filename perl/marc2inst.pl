@@ -149,7 +149,6 @@ sub process_entity {
         my $d = processing_funcs('', $field, $params, @funcs);
         push @data, $d if $add;
       }
-      print "$add\n" if $tag eq '110';
     } else {
       my $tmp_field = $field->clone();
       if (!$ent->{applyRulesOnConcatenatedData}) {
