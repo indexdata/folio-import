@@ -53,7 +53,7 @@ const wait = (ms) => {
           if (hits === 1) {
             uuid = res.body.instances[0].id;
           } else {
-            console.log(`No record found for ${lines[x]}`);
+            console.log(`[${x}] No record found for ${lines[x]}`);
           }
         } catch (e) {
           console.log(e);
@@ -62,7 +62,7 @@ const wait = (ms) => {
         uuid = lines[x];
       }
       if (uuid) {
-        console.log(`Deleting ${lines[x]} (${uuid})`);
+        console.log(`[${x}] Deleting ${lines[x]} (${uuid})`);
         try {
           await superagent
             .delete(`${deleteUrl}/${uuid}`)
