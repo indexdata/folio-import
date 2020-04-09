@@ -11,7 +11,7 @@ const wait = (ms) => {
   try {
     let inData;
     if (!inFile) {
-      throw new Error('Usage: node deleteInstancesBatch.js <instances_batch_file>');
+      throw new Error('Usage: node deleteInstancesBatch.js <instances_collection>');
     } else if (!fs.existsSync(inFile)) {
       throw new Error('Can\'t find input file');
     } else {
