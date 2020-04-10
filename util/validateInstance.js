@@ -20,7 +20,22 @@ ajv.addSchema(hrSchema, 'holdingsrecord.json');
 ajv.addSchema(itemSchema, 'item.json');
 validate = ajv.compile(instSchema);
 
+let ecount = 0;
+let errTypes = {};
 inst.instances.forEach(i => {
   let valid = validate(i);
-  if (!valid) console.log(validate.errors);
+  if (!valid) {
+    ecount++;
+    validate.errors.forEach(e =>{
+      let ekey = `${e.dataPath} -- ${e.keyword}`;
+      if (!errTypes[ekey]) {
+        errTypes[ekey] = 0;
+      }
+      errTypes[ekey]++;
+    });
+    console.log(i.hrid);
+    console.log(validate.errors);
+  }
 });
+console.log(errTypes);
+console.log(`${ecount} records have errors!`);
