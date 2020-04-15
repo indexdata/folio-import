@@ -47,15 +47,61 @@ This document will lay out the process for getting Simmons University's instance
     
     Output:
     {
-      '.subjects -- uniqueItems': 8393,
       '.alternativeTitles -- uniqueItems': 2,
-      '.series -- uniqueItems': 5,
       '.classifications[3] -- required': 1,
       '.electronicAccess[0] -- required': 1
     }
 
     NOTE: Either fix the errored records or remove them from the collection-- these items will cause batch loads to fail.
 
+2. Create holdings and items
+
+  Holdings and items are created by the same script, items_sim.pl (located in the perl directory)
+
+  The required argument is MARC binary file used to create instances
+
+  Ex: $ ./items_sim.pl ../../SIM/SimConv.mrc
+
+  But first, we need to create an hrid to instance id map.  Use hrid2uuidMap.js in the util directory and requires 
+  an instances.json file as input (eg. $ node hrid2uuidMap.js ../../SIM/SimConv.mrc).  This script will 
+  create the inst2holdingsMap.json file in the same directory as the MARC binary file.
+
+  Now run ./items_sim.pl ../../SIM/SimConv.mrc
+
+  Output ex:
+    ...
+    # 160279 [b2273453]
+    # 160280 [b2273454]
+    # 160281 [b2273457]
+    # 160282 [b2273458]
+
+    Holdings: 161503
+    Items:    178745
+
+  This script will create both holdings and items files with the same prefix as the incoming MARC file (eg. SimConv_holdings.json
+  and SimConv_items.json)
+
+  NOTE: items_sim.pl will expect to find reference data in ../data/SIMREF/.  If they are located in a different directory,
+  then update line 16.  This directory should also contain tsv files from the mapping spreadsheet located at 
+  https://docs.google.com/spreadsheets/d/10MQb_mhbC0cBEvQ5FeJqGA9O7wDRP-sjHmHAg7io7RI/edit#gid=0. The script is looking for 
+  locations.tsv and itypes.tsv.
+
+  NOTE: items_sim.pl will also expect to find a call number file as sim_callno.txt.  This file maps the "b" number to call num.
+
+3. Load json files into FOLIO
+
+  Use your favorite nodejs loader from the root directory of this project.  I recommend:
+  
+  loadInvetoryBatchStream.js -r instances SimConv_instances.json
+  loadInvetoryBatchStream.js -r holdingsRecords SimConv_holdings.json
+  loadInvetoryBatchStream.js -r items SimConv_items.json
+
+
+
+
+
+
+  
     
 
 
