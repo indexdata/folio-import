@@ -54,5 +54,9 @@ This document will lay out the process for getting Simmons University's instance
       '.electronicAccess[0] -- required': 1
     }
 
+    NOTE: Either fix the errored records or remove them from the collection-- these items will cause batch loads to fail.
+
+    
+
 
 

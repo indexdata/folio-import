@@ -347,7 +347,6 @@ foreach (@ARGV) {
     };
     
     $count++;
-    $lang_count; # This is here to help in deduping languages.
     my $raw = $_;
     my $marc = MARC::Record->new_from_usmarc($raw);
     my $ldr = $marc->leader();
@@ -411,9 +410,7 @@ foreach (@ARGV) {
               if ($_->{subFieldSplit}) { # subFieldSplit is only used for one field, 041, which may have a lang string like engfreger.
                 my $val = $_->{subFieldSplit}->{value};
                 my @splitdata = $data =~ /(\w{$val})/g;
-                $rec->{$targ[0]} = [] if $tag eq '041' && $lang_count == 0;  # we don't want duplicate languages since it probably alread exists in the 008;
                 push $rec->{$targ[0]}, @splitdata;
-                $lang_count++;
               } else {
                 push $rec->{$targ[0]}, $data;
               }
@@ -435,6 +432,8 @@ foreach (@ARGV) {
     }
     # Do some some record checking and cleaning
     $rec->{subjects} = dedupe(@{ $rec->{subjects} });
+    $rec->{languages} = dedupe(@{ $rec->{languages} });
+    $rec->{series} = dedupe(@{ $rec->{series} });
     $rec->{alternativeTitles} = dedupe(@{ $rec->{alternativeTitles} });
     # my $clean_rec = {};
     # foreach my $k (keys %{ $rec }) {
