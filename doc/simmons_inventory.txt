@@ -1,0 +1,35 @@
+This document will lay out the process for getting Simmons University's instances, holdings and items into FOLIO.
+
+1. Convert MARC records
+
+  All records must be in utf8 format to load properly into FOLIO-- yaz-marcdump will do the trick.  Here is a one-liner
+  that will accomplish our conversion:
+
+  $ yaz-marcdump -f marc8 -t utf8 -l 9=97 -o marc SimmonsBibRecords.mrc > SimConv.mrc
+
+  What's happening above?
+  -f = from "marc8"
+  -t = to "utf8"
+  -l = leader byte 9 is set to ascii char 97 ("a").  This indicates that we're dealing with a utf8 record
+  -o = output is "marc" binary.  By default it will be outputted as MARC text.
+  SimmonsBibRecords.mrc is the input file.
+  > = direct output SimConv.mrc
+
+2. Create instance records
+
+  There are two ways to do this: convert records locally and use the various APIs to load json records
+  into FOLIO, or use FOLIO data import API which will do the conversion for you, with default mapping.
+  Regardless, holdings and items need to be converted locally.
+
+  The local method using marc2inst.pl (located /folio-import/perl/).  This script requires three arguments:
+  1. Mapping_rules path (you can download the default mapper with /folio-import/bash/get_mapping_rules.sh)
+  2. Reference directory -- this is the directory were reference json files are located (use reference_inventory.sh)
+  3. Path to MARC file -- This would be the utf8 binary file created by the above steps.
+
+  Ex: $ ./marc2inst.pl ../mapping_rules/sim.json ../data/SIMREF/ ../../SIM/Bibs/SimConv.mrc
+
+  This script will run for a while and echo record pos and title to the terminal.  This script will die
+  if certain reference mappings are not found.
+
+
+
