@@ -21,7 +21,7 @@ This document will lay out the process for getting Simmons University's instance
   into FOLIO, or use FOLIO data import API which will do the conversion for you, with default mapping.
   Regardless, holdings and items need to be converted locally.
 
-  The local method using marc2inst.pl (located /folio-import/perl/).  This script requires three arguments:
+  The local method using marc2inst.pl (located in /folio-import/perl/).  This script requires three arguments:
   1. Mapping_rules path (you can download the default mapper with /folio-import/bash/get_mapping_rules.sh)
   2. Reference directory -- this is the directory were reference json files are located (use reference_inventory.sh)
   3. Path to MARC file -- This would be the utf8 binary file created by the above steps.
@@ -58,13 +58,13 @@ This document will lay out the process for getting Simmons University's instance
 
   Holdings and items are created by the same script, items_sim.pl (located in the perl directory)
 
-  The required argument is MARC binary file used to create instances
+  The required argument is the MARC binary file used to create instances
 
   Ex: $ ./items_sim.pl ../../SIM/SimConv.mrc
 
-  But first, we need to create an hrid to instance id map.  Use hrid2uuidMap.js in the util directory and requires 
-  an instances.json file as input (eg. $ node hrid2uuidMap.js ../../SIM/SimConv.mrc).  This script will 
-  create the inst2holdingsMap.json file in the same directory as the MARC binary file.
+  But first, we need to create an hrid to instance id map.  Use hrid2uuidMap.js in the util directory which requires 
+  an instances.json file as input (eg. $ node hrid2uuidMap.js ../../SIM/SimConv_instances.json).  This script will 
+  create the needed inst2holdingsMap.json file in the same directory as the MARC binary file.
 
   Now run ./items_sim.pl ../../SIM/SimConv.mrc
 
@@ -78,8 +78,8 @@ This document will lay out the process for getting Simmons University's instance
     Holdings: 161503
     Items:    178745
 
-  This script will create both holdings and items files with the same prefix as the incoming MARC file (eg. SimConv_holdings.json
-  and SimConv_items.json)
+  This script will create both holdings and items files with the same prefix as the incoming MARC file
+  (eg. SimConv_holdings.json and SimConv_items.json)
 
   NOTE: items_sim.pl will expect to find reference data in ../data/SIMREF/.  If they are located in a different directory,
   then update line 16.  This directory should also contain tsv files from the mapping spreadsheet located at 
