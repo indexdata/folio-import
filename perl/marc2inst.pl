@@ -233,12 +233,13 @@ sub process_entity {
         $out = $refdata->{instanceTypes}->{$out};
       } elsif ($_ eq 'set_identifier_type_id_by_value') {
         my $name;
-        if ($out =~ /^(\(OCoLC\)|ocm|ocn|on).*/) {
+        my $data = $field->subfield('a');
+        if ($data =~ /^(\(OCoLC\)|ocm|ocn|on).*/) {
           $name = 'OCLC';
         } else {
           $name = 'System control number';
         }
-        $out = $refdata->{identifierTypes}->{$name} or die "Cain't find identifierType for $name";
+        $out = $refdata->{identifierTypes}->{$name} or die "Can't find identifierType for $name";
       } elsif ($_ eq 'remove_substring') {
         my $ss = $params->{substring};
         $out =~ s/$ss//g;
@@ -360,7 +361,6 @@ foreach (@ARGV) {
       
       # Let's determine if a subfield is repeatable, if so create append separate marc fields for each subfield;
       foreach (@{ $repeat_subs->{$tag} }) {
-        # my $main_code = $repeat_subs->{$tag}->[0];
         my $main_code = $_;
         my $all_codes = join '', @{ $repeat_subs->{$tag} };
         my @sf = $field->subfield($main_code);
