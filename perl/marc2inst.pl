@@ -434,16 +434,18 @@ foreach (@ARGV) {
       }
     }
     # Do some some record checking and cleaning
-    my $clean_rec = {};
-    foreach my $k (keys %{ $rec }) {
-      if ($ftypes->{$k} =~ /^array/ && $rec->{$k}[0]) {
-        $clean_rec->{$k} = $rec->{$k};
-      } elsif ($ftypes->{$k} =~ /^(string|boolean|object)/){
-        $clean_rec->{$k} = $rec->{$k};
-      }
-    }
-    push @{ $coll->{instances} }, $clean_rec;
-    print "Processing #$count " . substr($clean_rec->{title}, 0, 60) . "\n";
+    $rec->{subjects} = dedupe(@{ $rec->{subjects} });
+    $rec->{alternativeTitles} = dedupe(@{ $rec->{alternativeTitles} });
+    # my $clean_rec = {};
+    # foreach my $k (keys %{ $rec }) {
+    #  if ($ftypes->{$k} =~ /^array/ && $rec->{$k}[0]) {
+    #    $clean_rec->{$k} = $rec->{$k};
+    #  } elsif ($ftypes->{$k} =~ /^(string|boolean|object)/){
+    #    $clean_rec->{$k} = $rec->{$k};
+    #  }
+    #}
+    push @{ $coll->{instances} }, $rec;
+    print "Processing #$count " . substr($rec->{title}, 0, 60) . "\n";
   }
   
   $out = JSON->new->pretty->encode($coll);
@@ -451,4 +453,16 @@ foreach (@ARGV) {
   open OUT, ">:encoding(UTF-8)", $save_path;
   print OUT $out;
   print "\nDone! $count instance records saved to $save_path\n";
+}
+
+sub dedupe {
+  my @out;
+  my $found = {};
+  foreach (@_) { 
+    $found->{$_}++;
+    if ($found->{$_} < 2) {
+      push @out, $_;
+    }
+  }
+  return [ @out ];
 }

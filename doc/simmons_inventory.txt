@@ -31,5 +31,28 @@ This document will lay out the process for getting Simmons University's instance
   This script will run for a while and echo record pos and title to the terminal.  This script will die
   if certain reference mappings are not found.
 
+  Example output:
+
+      ...
+      Processing #160280 Looking for Lorraine : the radiant and radical life of Lorra
+      Processing #160281 Medicalizing blackness : making racial differences in the At
+      Processing #160282 Essentials of health behavior : social and behavioral theory
+
+      Done! 160282 instance records saved to ../../SIM/SimConv_instances.json
+
+  Now it is time to validate the newly created instances.  The validation script is located in the /folio-import/util/
+  directory.
+
+    Ex: $ node validateInstance.js ../../SIM/SimConv_instances.json
+    
+    Output:
+    {
+      '.subjects -- uniqueItems': 8393,
+      '.alternativeTitles -- uniqueItems': 2,
+      '.series -- uniqueItems': 5,
+      '.classifications[3] -- required': 1,
+      '.electronicAccess[0] -- required': 1
+    }
+
 
 
