@@ -55,7 +55,13 @@ foreach (@ARGV) {
     my $marc = MARC::Record->new_from_usmarc($raw);
     my $mij = MARC::Record::MiJ->to_mij($marc);
     my $parsed = decode_json($mij);
-    my $control_num = $marc->subfield('907','a') || $marc->field('001')->{_data};
+    my $control_num;
+    if ($marc->subfield('907','a')) {
+      $control_num = $marc->subfield('907','a');
+      $control_num =~ s/^.(b\d{7}).$/$1/; # strip out leading period and check digit
+    } else {
+     $control_num = $marc->field('001')->{_data} 
+    }
     next unless $id_map->{$control_num};
     $srs->{id} = uuid();
     my $nine = {};

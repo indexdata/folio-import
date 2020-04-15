@@ -96,13 +96,40 @@ This document will lay out the process for getting Simmons University's instance
   loadInvetoryBatchStream.js -r holdingsRecords SimConv_holdings.json
   loadInvetoryBatchStream.js -r items SimConv_items.json
 
+4. Create the dreaded SRS (source record storage) files.
 
+  In the perl directory, you'll find a script called make_source_records.pl-- use it.  But first, it is a good idea to split
+  that original MARC binary file into files of 1000 records each.  We'll use our beloved yaz-marcdump for this.
 
+  Ex: $ yaz-marcdump -s srs -C 1000 SimConv.mrc > /dev/null
 
+  -s is the prefix of the filenames
+  -C is the records per file (Chunk)
 
+  This creates files that look like this:
+  ...
+  srs0000026			srs0000089			srs0000152
+  srs0000027			srs0000090			srs0000153
+  srs0000028			srs0000091			srs0000154
+  srs0000029			srs0000092			srs0000155
+  srs0000030			srs0000093			srs0000156
+  ...
 
-  
-    
+  It's probably a good idea to give these guys a .mrc extension.
 
+  Ex: $ for f in srs*; do mv $f $f.mrc; done
 
+  Now we have:
+  ...
+  srs0000026.mrc			srs0000089.mrc			srs0000152.mrc
+  srs0000027.mrc			srs0000090.mrc			srs0000153.mrc
+  srs0000028.mrc			srs0000091.mrc			srs0000154.mrc
+  srs0000029.mrc			srs0000092.mrc			srs0000155.mrc
+  srs0000030.mrc			srs0000093.mrc			srs0000156.mrc
+  ...
 
+  Now run $ ./make_source_records.pl ../../SIM/inst2holdingsMap.json ../../SIM/srs*.mrc
+
+  Use loadSrsBatch.js to load the srs.json files
+
+  Ex $ node loadSrsBatch.js ../SIM/*srs.json
