@@ -102,7 +102,7 @@ close ITP;
 my $cnmap = {};
 open CN, "<:encoding(UTF-8)","$refpath/sim_callno.txt" or die "Can't find sim_callno.txt file\n";
 while (<CN>) {
-  my ($id, $cn) = split /"|"/;
+  my ($id, $cn) = split /"\|"/;
   $id =~ s/^"(.{8}).*/$1/;
   $cn =~ s/"\s*$//;
   $cnmap->{$id} = $cn;
