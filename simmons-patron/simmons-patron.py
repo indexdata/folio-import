@@ -536,7 +536,7 @@ def load_patron_group_map():
         '19': 'Special User',
         '27': 'Doctoral Student',
         '34': 'Unclassified User',
-        '37': 'Library Staff',
+        '37': 'Millenium Library Staff',
         '40': 'Employee',
         '41': 'Employee',
         '42': 'Employee',
@@ -554,7 +554,7 @@ def load_patron_group_map():
         '185': 'Unclassified User',
         '220': 'Unclassified User',
         '221': 'Unclassified User',
-        '255': 'Library Staff'
+        '255': 'Millenium Library Staff'
     }
     return map
 
