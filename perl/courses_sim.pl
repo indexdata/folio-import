@@ -22,6 +22,7 @@ my $term = {
   endDate => '2099-12-31T23:59:59.000Z'
 };
 my $depts = {};
+my $listings = {};
 my $line = 0;
 while (<TSV>) {
   chomp;
@@ -34,10 +35,15 @@ while (<TSV>) {
     next unless $_;
     if (!$depts->{$_}) {
       $depts->{$_}->{id} = uuid();
+      $depts->{$_}->{name} = $_;
     }
   }
+  $listings->{$rid} = {
+    externalId => $rid,
+    termId => $term->{id}
+  };
 }
-print Dumper($depts);
+print Dumper($listings);
 
 sub uuid {
   my $ug = Data::UUID->new;
