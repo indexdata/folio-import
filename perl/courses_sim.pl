@@ -9,11 +9,15 @@ use Data::UUID;
 binmode(STDOUT, 'utf8');
 
 if (!$ARGV[0]) {
-  die "Usage: $0 <courses_tsv_file>\n";
+  die "Usage: $0 <courses_tsv_file> [limit]\n";
 }
+my $limit = $ARGV[1] || 100000;
 
 my $tsv_file = shift;
 open TSV, "<:encoding(UTF8)", $tsv_file or die "Can't open $tsv_file!";
+
+my $path = $tsv_file;
+$path =~ s/^(.+)\/.+/$1/;
 
 my $term = {
   id => '517505e7-58cc-456c-8505-1ebf197d5c49',
@@ -23,7 +27,7 @@ my $term = {
 };
 my $depts = {};
 my $listings = {};
-my $courses = [];
+my $courses = { courses => [] };
 my $line = 0;
 while (<TSV>) {
   chomp;
@@ -83,22 +87,28 @@ while (<TSV>) {
       courseListingId => $listings->{$rid}->{id},
       courseListingObject => $listings->{$rid}
     };
-    push @{ $courses }, $cobj;
+    push @{ $courses->{courses} }, $cobj;
     $c++;
   }
+  last if $line > $limit;
 }
+
 my $courses_out = to_json($courses, {utf8 => 1, pretty => 1});
-print $courses_out;
+open OUT, ">$path/courses.json";
+print OUT $courses_out;
+close OUT;
 
 my $tot = 0;
 my $d = { departments => [] } ;
 foreach (sort keys $depts) {
-  push @{ $d->{departments} }, $depts->{$_};
+  push @{ $d->{departments} }, $depts->{$_} if $depts->{$_}->{id};
   $tot++;
 }
 $d->{totalRecords} = $tot;
 my $depts_out = to_json($d, {utf8 => 1, pretty => 1});
-# print $depts_out;
+open OUT, ">$path/departments.json";
+print OUT $depts_out;
+close OUT;
 
 $tot = 0;
 my $clist = { courseListings => [] } ;
@@ -108,7 +118,6 @@ foreach (sort keys $listings) {
 }
 $clist->{totalRecords} = $tot;
 my $listings_out = to_json($clist, {utf8 => 1, pretty => 1});
-# print $listings_out; 
 
 sub uuid {
   my $ug = Data::UUID->new;
