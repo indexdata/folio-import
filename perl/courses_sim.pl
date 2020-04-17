@@ -78,6 +78,8 @@ while (<TSV>) {
     $num = $_ if / - /;
     $num =~ s/^(.+?) -.*/$1/;
     my $name = $_;
+    my $sect = $prof;
+    $sect =~ s/.*?\((.+?)\).*/$1/;
     my $cobj = {
       id => uuid(),
       name => $_,
@@ -85,7 +87,8 @@ while (<TSV>) {
       departmentId => $depts->{$dept[$c]}->{id},
       departmentObject => $depts->{$dept[$c]},
       courseListingId => $listings->{$rid}->{id},
-      courseListingObject => $listings->{$rid}
+      courseListingObject => $listings->{$rid},
+      sectionName => $sect
     };
     push @{ $courses->{courses} }, $cobj;
     $c++;
