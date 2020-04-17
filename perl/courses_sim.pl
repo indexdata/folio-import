@@ -23,6 +23,7 @@ my $term = {
 };
 my $depts = {};
 my $listings = {};
+my $courses = {};
 my $line = 0;
 while (<TSV>) {
   chomp;
@@ -39,11 +40,35 @@ while (<TSV>) {
     }
   }
   $listings->{$rid} = {
+    id => uuid(),
     externalId => $rid,
-    termId => $term->{id}
+    termId => $term->{id},
+    termObject => $term
   };
+  $courses->{$rid} = {
+
+  }
 }
-print Dumper($listings);
+
+my $tot = 0;
+my $d = { departments => [] } ;
+foreach (sort keys $depts) {
+  push @{ $d->{departments} }, $depts->{$_};
+  $tot++;
+}
+$d->{totalRecords} = $tot;
+my $depts_out = to_json($d, {utf8 => 1, pretty => 1});
+print $depts_out;
+
+$tot = 0;
+my $clist = { courseListings => [] } ;
+foreach (sort keys $listings) {
+  push @{ $clist->{courseListings} }, $listings->{$_};
+  $tot++;
+}
+$clist->{totalRecords} = $tot;
+my $listings_out = to_json($clist, {utf8 => 1, pretty => 1});
+print $listings_out; 
 
 sub uuid {
   my $ug = Data::UUID->new;
