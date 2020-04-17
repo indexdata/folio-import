@@ -31,6 +31,7 @@ while (<TSV>) {
   next if $line == 1;
   my @dept;
   my @pid;
+  my @profs;
   (my $rid, my $course, @dept[0..2], my $prof, @pid[0..2], my $items) = split /\t/;
   foreach (@dept) {
     next unless $_;
@@ -45,9 +46,25 @@ while (<TSV>) {
     termId => $term->{id},
     termObject => $term
   };
-  $courses->{$rid} = {
-
+  my @names = split(/\^"/, $prof);
+  my $p = 0;
+  foreach (@pid) {
+    next unless $_;
+    $names[$p] =~ s/"//g;
+    if (!$names[$p]) {
+      die "Instructor name cannot by empty!"
+    };
+    my $inst = {
+      id => uuid(),
+      name => $names[$p],
+      barcode => $_,
+      courseListingId => $listings->{$rid}->{id}
+    };
+    push @profs, $inst; 
+    $p++;
   }
+  $listings->{$rid}->{instructorObjects} = [];
+  push @{ $listings->{$rid}->{instructorObjects} }, @profs;
 }
 
 my $tot = 0;
@@ -58,7 +75,7 @@ foreach (sort keys $depts) {
 }
 $d->{totalRecords} = $tot;
 my $depts_out = to_json($d, {utf8 => 1, pretty => 1});
-print $depts_out;
+# print $depts_out;
 
 $tot = 0;
 my $clist = { courseListings => [] } ;
