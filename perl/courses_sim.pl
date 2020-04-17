@@ -23,7 +23,7 @@ my $term = {
 };
 my $depts = {};
 my $listings = {};
-my $courses = {};
+my $courses = [];
 my $line = 0;
 while (<TSV>) {
   chomp;
@@ -51,6 +51,7 @@ while (<TSV>) {
   foreach (@pid) {
     next unless $_;
     $names[$p] =~ s/"//g;
+    $names[$p] =~ s/\s*\(.+?\).*//;
     if (!$names[$p]) {
       die "Instructor name cannot by empty!"
     };
@@ -65,7 +66,29 @@ while (<TSV>) {
   }
   $listings->{$rid}->{instructorObjects} = [];
   push @{ $listings->{$rid}->{instructorObjects} }, @profs;
+  my @crs = split(/\^"/, $course);
+  my $c = 0;
+  foreach (@crs) {
+    s/"\s*$//;
+    my $num;
+    $num = $_ if / - /;
+    $num =~ s/^(.+?) -.*/$1/;
+    my $name = $_;
+    my $cobj = {
+      id => uuid(),
+      name => $_,
+      courseNumber => $num,
+      departmentId => $depts->{$dept[$c]}->{id},
+      departmentObject => $depts->{$dept[$c]},
+      courseListingId => $listings->{$rid}->{id},
+      courseListingObject => $listings->{$rid}
+    };
+    push @{ $courses }, $cobj;
+    $c++;
+  }
 }
+my $courses_out = to_json($courses, {utf8 => 1, pretty => 1});
+print $courses_out;
 
 my $tot = 0;
 my $d = { departments => [] } ;
@@ -85,7 +108,7 @@ foreach (sort keys $listings) {
 }
 $clist->{totalRecords} = $tot;
 my $listings_out = to_json($clist, {utf8 => 1, pretty => 1});
-print $listings_out; 
+# print $listings_out; 
 
 sub uuid {
   my $ug = Data::UUID->new;
