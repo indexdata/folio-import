@@ -15,6 +15,12 @@ if (!$ARGV[0]) {
 my $tsv_file = shift;
 open TSV, "<:encoding(UTF8)", $tsv_file or die "Can't open $tsv_file!";
 
+my $term = {
+  id => '517505e7-58cc-456c-8505-1ebf197d5c49',
+  name => 'Permanent',
+  startDate => '2020-01-01T00:00:00.000Z',
+  endDate => '2099-12-31T23:59:59.000Z'
+};
 my $depts = {};
 my $line = 0;
 while (<TSV>) {
