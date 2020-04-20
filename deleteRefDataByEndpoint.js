@@ -1,5 +1,6 @@
 /*
-  Download up to 1000 records from an okapi endpoint and delete each by id
+  Download up to 1000 records from an okapi endpoint and delete each by id, or read from a json file of red data
+  and do the same.
 */
 
 const fs = require('fs');
@@ -50,7 +51,7 @@ const wait = (ms) => {
         root = l;
       }
     });
-    
+
     console.log(`Deleting ${refData.totalRecords} ${root}...`);
     for (let x = 0; x < refData[root].length; x++) {
       let id = refData[root][x].id;
