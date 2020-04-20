@@ -158,7 +158,7 @@ def main():
             user['type'] = 'patron'
             # Determine active
             expiry_date = ''
-            (expiry_date_str, date_error) = parse_date(row['EXP DATE'], date_re)
+            (expiry_date_str, date_error) = parse_date(row['expirationDate'], date_re)
             if not date_error:
                 expiry_date = datetime.datetime.fromisoformat(expiry_date_str)
                 if expiry_date > datetime_now:
@@ -166,7 +166,7 @@ def main():
                 else:
                     user['active'] = False
             else:
-                data_errors.append('expiryDate: cannot parse: {}'.format(row['EXP DATE']))
+                data_errors.append('expirationDate: cannot parse: {}'.format(row['expirationDate']))
                 has_critical = True
             # patron_group:
             # FIXME: For debug, count the occurrence, and whether missing.
@@ -262,16 +262,16 @@ def main():
             user['personal']['addresses'] = addresses
             user['personal']['preferredContactTypeId'] = determine_preferred_contact(user)
             # dates:
-            (created_date_str, date_error) = parse_date(row['CREATED(PATRON)'], date_re)
+            (created_date_str, date_error) = parse_date(row['createdDate'], date_re)
             if not date_error:
                 user['createdDate'] = created_date_str
             else:
-                data_errors.append('createdDate: cannot parse: {}'.format(row['CREATED(PATRON)']))
-            (updated_date_str, date_error) = parse_date(row['UPDATED(PATRON)'], date_re)
+                data_errors.append('createdDate: cannot parse: {}'.format(row['createdDate']))
+            (updated_date_str, date_error) = parse_date(row['updatedDate'], date_re)
             if not date_error:
                 user['updatedDate'] = updated_date_str
             else:
-                data_errors.append('updatedDate: cannot parse: {}'.format(row['UPDATED(PATRON)']))
+                data_errors.append('updatedDate: cannot parse: {}'.format(row['updatedDate']))
             if expiry_date != '':
                 user['expirationDate'] = expiry_date_str
             #-------------------------------
