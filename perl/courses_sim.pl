@@ -29,6 +29,7 @@ my $depts = {};
 my $listings = {};
 my $courses = { courses => [] };
 my $line = 0;
+my $cc = 0;
 while (<TSV>) {
   chomp;
   $line++;
@@ -92,11 +93,15 @@ while (<TSV>) {
     };
     push @{ $courses->{courses} }, $cobj;
     $c++;
+    $cc++;
   }
   last if $line > $limit;
 }
 
+$courses->{totalRecords} = $cc;
 my $courses_out = to_json($courses, {utf8 => 1, pretty => 1});
+# print $courses_out;
+print "Writing $cc courses to $path/courses.json\n";
 open OUT, ">$path/courses.json";
 print OUT $courses_out;
 close OUT;
@@ -109,18 +114,27 @@ foreach (sort keys $depts) {
 }
 $d->{totalRecords} = $tot;
 my $depts_out = to_json($d, {utf8 => 1, pretty => 1});
+print "Writing $tot departments to $path/departments.json\n";
 open OUT, ">$path/departments.json";
 print OUT $depts_out;
 close OUT;
 
-$tot = 0;
-my $clist = { courseListings => [] } ;
-foreach (sort keys $listings) {
-  push @{ $clist->{courseListings} }, $listings->{$_};
-  $tot++;
-}
-$clist->{totalRecords} = $tot;
-my $listings_out = to_json($clist, {utf8 => 1, pretty => 1});
+my $t = { terms => [ $term ] } ;
+$t->{totalRecords} = 1;
+my $terms_out = to_json($t, {utf8 => 1, pretty => 1});
+print "Writing 1 terms to $path/terms.json\n";
+open OUT, ">$path/terms.json";
+print OUT $terms_out;
+close OUT;
+
+# $tot = 0;
+# my $clist = { courseListings => [] } ;
+# foreach (sort keys $listings) {
+  # push @{ $clist->{courseListings} }, $listings->{$_};
+  # $tot++;
+# }
+# $clist->{totalRecords} = $tot;
+# my $listings_out = to_json($clist, {utf8 => 1, pretty => 1});
 
 sub uuid {
   my $ug = Data::UUID->new;
