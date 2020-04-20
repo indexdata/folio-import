@@ -25,29 +25,27 @@ const endpoints = [
     let collStr = fs.readFileSync(fn, 'utf8');
     let coll = JSON.parse(collStr);
 
+    let rootEndpoint = '';
     let endpoint;
     endpoints.forEach(e => {
       if (coll[e] && coll[e][0]) {
         endpoint = e;
       }
     });
-   
-    let path = 'coursereserves/' + endpoint;
-    console.log(path);
-    return;
-    
-    let url = `${config.okapi}/${path}`;
-    
-    
+
+    const base = `${config.okapi}/coursereserves`;
+
     let data = [];
-    if (Array.isArray(coll[collKeys[0]])) {
-      data = coll[collKeys[0]];
-    } else {
-      data.push(coll);
-    }
+    data = coll[endpoint];
+
     for (d = 0; d < data.length; d++) {
+      if (endpoint === 'instructors') {
+        url = `${base}/courselistings/${data[d].courseListingId}/instructors`;
+      } else {
+        url = `${base}/${endpoint}`;
+      }
       try {
-        console.log(`POST ${url}...`);
+        console.log(`\nPOST ${url}...`);
         let res = await superagent
           .post(url)
           .timeout({ response: 5000 })
@@ -57,6 +55,7 @@ const endpoints = [
           .send(data[d]);
         added++;
       } catch (e) {
+        // console.log(e.response.text);
         try {
           console.log(`  ${e} -- Trying PUT...`);
           let purl = url;
