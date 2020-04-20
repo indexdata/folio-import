@@ -170,15 +170,18 @@ def main():
                 has_critical = True
             # patron_group:
             # FIXME: For debug, count the occurrence, and whether missing.
-            patron_group_str = row['P TYPE'].strip()
+            patron_group_str = row['patronGroup'].strip()
             try:
                 patron_groups[patron_group_str] += 1
             except KeyError:
                 patron_groups[patron_group_str] = 1
+            # FIXME: Discontinue patron_group_map(), but ensure only from specific set
+            '''
             try:
                 user['patronGroup'] = patron_group_map[patron_group_str]
             except KeyError:
                 data_errors.append('patron_group missing map: {}'.format(patron_group_str))
+            '''
             # patron_name:
             user['personal'] = {}
             patron_name = row['PATRN NAME'].strip()
