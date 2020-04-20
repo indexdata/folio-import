@@ -28,6 +28,7 @@ my $term = {
 my $depts = {};
 my $listings = {};
 my $courses = { courses => [] };
+my @instructors;
 my $line = 0;
 my $cc = 0;
 while (<TSV>) {
@@ -67,6 +68,7 @@ while (<TSV>) {
       courseListingId => $listings->{$rid}->{id}
     };
     push @profs, $inst; 
+    push @instructors, $inst;
     $p++;
   }
   $listings->{$rid}->{instructorObjects} = [];
@@ -128,7 +130,7 @@ print OUT $terms_out;
 close OUT;
 
 $tot = 0;
-my $clist = { courseListings => [] } ;
+my $clist = { courseListings => [] };
 foreach (sort keys $listings) {
   push @{ $clist->{courseListings} }, $listings->{$_};
   $tot++;
@@ -138,6 +140,19 @@ my $listings_out = to_json($clist, {utf8 => 1, pretty => 1});
 print "Writing $tot course listings to $path/courselistings.json\n";
 open OUT, ">$path/courselistings.json";
 print OUT $listings_out;
+close OUT;
+
+$tot = 0;
+my $ilist = { instructors => [] };
+foreach (@instructors) {
+  push @{ $ilist->{instructors} }, $_;
+  $tot++;
+}
+$ilist->{totalRecords} = $tot;
+my $inst_out = to_json($ilist, {utf8 => 1, pretty => 1});
+print "Writing $tot course listings to $path/instructors.json\n";
+open OUT, ">$path/instructors.json";
+print OUT $inst_out;
 close OUT;
 
 sub uuid {
