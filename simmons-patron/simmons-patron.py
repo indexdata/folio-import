@@ -113,7 +113,7 @@ def main():
     with open(input_fn) as input_fh:
         # Investigate the header
         #print("encoding=", input_fh.encoding)
-        reader = csv.reader(input_fh, delimiter='|')
+        reader = csv.reader(input_fh, dialect='excel-tab')
         header_row = next(reader)
         num_fields = len(header_row)
         #print(header_row)
@@ -124,7 +124,7 @@ def main():
         patron_groups = {} # FIXME: For temporary debug
         univ_ids = []
         datetime_now = datetime.datetime.now(datetime.timezone.utc)
-        reader = csv.DictReader(input_fh, delimiter='|')
+        reader = csv.DictReader(input_fh, dialect='excel-tab')
         for row in reader:
             row_num += 1
             has_critical = False
