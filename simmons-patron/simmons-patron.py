@@ -185,7 +185,7 @@ def main():
             # patron_name:
             user['personal'] = {}
             patron_name = row['PATRN NAME'].strip()
-            #do_debug(row_num, barccode, 'PATRN NAME={}'.format(patron_name))
+            #do_debug(row_num, barcode, 'PATRN NAME={}'.format(patron_name))
             patron_names = patron_name.split(',')
             if patron_name == '':
                 data_errors.append('patron_name: missing')
@@ -205,29 +205,29 @@ def main():
                 else:
                     user['personal']['firstName'] = patron_names[1].strip()
             # email: ensure reliable
-            email_address = row['EMAIL ADDR'].strip()
+            email_address = row['personal.email'].strip()
             if email_address != '' and email_address != 'None':
                 # FIXME: Perhaps should use more robust regex
                 if '@' not in email_address:
-                    msg = 'email invalid: {}'.format(email_address)
+                    msg = 'personal.email invalid: {}'.format(email_address)
                     data_errors.append(msg)
                 else:
                     user['personal']['email'] = email_address
             # telephones:
-            telephone_str = tidy_telephone(row['TELEPHONE2'].strip().lower())
+            telephone_str = tidy_telephone(row['personal.phone'].strip().lower())
             if telephone_str != '':
                 (telephone, error) = parse_telephone(telephone_str, telephone_re)
                 if not error:
                     user['personal']['phone'] = telephone
                 else:
-                    data_errors.append('telephone2: has junk: {}'.format(row['TELEPHONE2'].strip()))
-            telephone_str = tidy_telephone(row['TELEPHONE'].strip().lower())
+                    data_errors.append('personal.phone: has junk: {}'.format(row['personal.phone'].strip()))
+            telephone_str = tidy_telephone(row['personal.mobilePhone'].strip().lower())
             if telephone_str != '':
                 (telephone, error) = parse_telephone(telephone_str, telephone_re)
                 if not error:
                     user['personal']['mobilePhone'] = telephone
                 else:
-                    data_errors.append('telephone: has junk: {}'.format(row['TELEPHONE'].strip()))
+                    data_errors.append('personal.mobilePhone: has junk: {}'.format(row['personal.mobilePhone'].strip()))
             # addresses:
             addresses = []
             # address1: These should be home address.
@@ -280,7 +280,7 @@ def main():
             #-------------------------------
             # Record any errors for this row
             if len(data_errors) > 0:
-                errors_entry = { 'rowNum': row_num, 'barccode': barccode, 'username': user_id, 'errors': data_errors }
+                errors_entry = { 'rowNum': row_num, 'barcode': barcode, 'username': user_id, 'errors': data_errors }
                 if has_critical:
                     errors_entry['hasCritical'] = True
                     critical_count += 1
@@ -513,7 +513,7 @@ def determine_preferred_contact(user_data):
 
 def load_uuid_map(input_fn):
     """
-    Load the data file map of barccode,uuid
+    Load the data file map of barcode,uuid
     Enables reloading of users data.
     """
     with open(input_fn) as input_fh:
