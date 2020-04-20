@@ -6,7 +6,7 @@ Process the Simmons patron data export to transform into FOLIO users JSON.
        1: One or more data processing problems encountered.
        2: Configuration issues.
 
-Typical invocation: python3 simmons-patron.py -i data/20191028.txt -m uuid-map.txt -c 1000
+Typical invocation: python3 simmons-patron.py -i data/20200417.txt -m uuid-map.txt -c 1000
 """
 
 import argparse
@@ -37,7 +37,7 @@ def main():
     parser.add_argument("-i", "--input",
         help="Pathname to input data file (pipe-separated values).")
     parser.add_argument("-m", "--map",
-        help="Pathname to input uuid map file (comma-separated values record_id,uuid).")
+        help="Pathname to input uuid map file (comma-separated values barcode,uuid).")
     parser.add_argument("-c", "--chunk",
         default=0,
         help="Enable output chunks (integer). Number of records. Minimum 1000. (Default: 0, so all)")
@@ -131,10 +131,11 @@ def main():
             data_errors = []
             user = {}
             user_id = ''
-            record_id = row['RECORD #(PATRON)'].strip()
+            barcode = row['barcode'].strip()
             try:
-                user_uuid = uuid_map[record_id]
+                user_uuid = uuid_map[barcode]
             except KeyError:
+                do_debug(row_num, barcode, 'Generated new UUID.')
                 user_uuid = str(uuid.uuid4())
             # univ_id: ensure unique and reliable
             univ_id = row['UNIV ID'].strip()
@@ -153,7 +154,7 @@ def main():
             user['username'] = user_id
             user['id'] = user_uuid
             user['externalSystemId'] = user_id
-            user['barcode'] = record_id
+            user['barcode'] = barcode
             user['type'] = 'patron'
             # Determine active
             expiry_date = ''
@@ -181,7 +182,7 @@ def main():
             # patron_name:
             user['personal'] = {}
             patron_name = row['PATRN NAME'].strip()
-            #do_debug(row_num, record_id, 'PATRN NAME={}'.format(patron_name))
+            #do_debug(row_num, barccode, 'PATRN NAME={}'.format(patron_name))
             patron_names = patron_name.split(',')
             if patron_name == '':
                 data_errors.append('patron_name: missing')
@@ -276,7 +277,7 @@ def main():
             #-------------------------------
             # Record any errors for this row
             if len(data_errors) > 0:
-                errors_entry = { 'rowNum': row_num, 'recordId': record_id, 'univId': univ_id, 'errors': data_errors }
+                errors_entry = { 'rowNum': row_num, 'barccode': barccode, 'univId': univ_id, 'errors': data_errors }
                 if has_critical:
                     errors_entry['hasCritical'] = True
                     critical_count += 1
@@ -509,15 +510,15 @@ def determine_preferred_contact(user_data):
 
 def load_uuid_map(input_fn):
     """
-    Load the data file map of record_id,uuid
+    Load the data file map of barccode,uuid
     Enables reloading of users data.
     """
     with open(input_fn) as input_fh:
-        fieldnames = ['record_id', 'uuid']
+        fieldnames = ['barcode', 'uuid']
         reader = csv.DictReader(input_fh, fieldnames=fieldnames)
         uuids = {}
         for row in reader:
-            uuids[row['record_id']] = row['uuid']
+            uuids[row['barcode']] = row['uuid']
     return uuids
 
 def load_patron_group_map():
@@ -558,12 +559,12 @@ def load_patron_group_map():
     }
     return map
 
-def do_debug(row, record_id, message):
+def do_debug(row, barcode, message):
     """
     Output a debug message.
     """
     logger = logging.getLogger("simmons-patron")
-    logger.debug('row={} recordId={} {}'.format(row, record_id, message))
+    logger.debug('row={} barcode={} {}'.format(row, barcode, message))
 
 if __name__ == '__main__':
     sys.exit(main())
