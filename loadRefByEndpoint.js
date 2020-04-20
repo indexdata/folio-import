@@ -33,6 +33,7 @@ const fn = process.argv[3];
       data.push(coll);
     }
     for (d = 0; d < data.length; d++) {
+      console.log(data[d]);
       try {
         console.log(`POST ${url}...`);
         let res = await superagent

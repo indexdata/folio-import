@@ -127,14 +127,18 @@ open OUT, ">$path/terms.json";
 print OUT $terms_out;
 close OUT;
 
-# $tot = 0;
-# my $clist = { courseListings => [] } ;
-# foreach (sort keys $listings) {
-  # push @{ $clist->{courseListings} }, $listings->{$_};
-  # $tot++;
-# }
-# $clist->{totalRecords} = $tot;
-# my $listings_out = to_json($clist, {utf8 => 1, pretty => 1});
+$tot = 0;
+my $clist = { courseListings => [] } ;
+foreach (sort keys $listings) {
+  push @{ $clist->{courseListings} }, $listings->{$_};
+  $tot++;
+}
+$clist->{totalRecords} = $tot;
+my $listings_out = to_json($clist, {utf8 => 1, pretty => 1});
+print "Writing $tot course listings to $path/courselistings.json\n";
+open OUT, ">$path/courselistings.json";
+print OUT $listings_out;
+close OUT;
 
 sub uuid {
   my $ug = Data::UUID->new;
