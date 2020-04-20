@@ -137,16 +137,16 @@ def main():
             except KeyError:
                 do_debug(row_num, barcode, 'Generated new UUID.')
                 user_uuid = str(uuid.uuid4())
-            # univ_id: ensure unique and reliable
-            univ_id = row['UNIV ID'].strip()
+            # externalSystemId and username: ensure unique and reliable
+            univ_id = row['externalSystemId'].strip()
             if univ_id == '':
-                data_errors.append('univ_id missing, using record_id')
-                user_id = record_id
+                data_errors.append('externalSystemId missing, using barcode')
+                user_id = barcode
             elif not re.match(univ_id_re, univ_id):
-                data_errors.append('univ_id non-numeric: {}'.format(univ_id))
+                data_errors.append('externalSystemId non-numeric: {}'.format(univ_id))
                 has_critical = True
             elif univ_id in univ_ids:
-                data_errors.append('univ_id duplicate')
+                data_errors.append('externalSystemId duplicate')
                 has_critical = True
             else:
                 user_id = univ_id
@@ -277,7 +277,7 @@ def main():
             #-------------------------------
             # Record any errors for this row
             if len(data_errors) > 0:
-                errors_entry = { 'rowNum': row_num, 'barccode': barccode, 'univId': univ_id, 'errors': data_errors }
+                errors_entry = { 'rowNum': row_num, 'barccode': barccode, 'username': user_id, 'errors': data_errors }
                 if has_critical:
                     errors_entry['hasCritical'] = True
                     critical_count += 1
