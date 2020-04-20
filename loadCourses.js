@@ -5,7 +5,7 @@ const fn = process.argv[2];
 const endpoints = [
   'terms',
   'courses',
-  'courselistings',
+  'courseListings',
   'instructors',
   'departments'
 ];
@@ -14,9 +14,10 @@ const endpoints = [
   let added = 0;
   let updated = 0;
   let errors = 0;
+  let deleted = 0;
   try {
     if (!fn) {
-      throw new Error('Usage: node loadCourses.js <file>');
+      throw new Error('Usage: node loadCourses.js <file> [DELETE]');
     }
     const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
 
@@ -37,40 +38,55 @@ const endpoints = [
 
     let data = [];
     data = coll[endpoint];
+    let url;
 
     for (d = 0; d < data.length; d++) {
       if (endpoint === 'instructors') {
         url = `${base}/courselistings/${data[d].courseListingId}/instructors`;
       } else {
         url = `${base}/${endpoint}`;
+        url = url.toLocaleLowerCase();
       }
       try {
-        console.log(`\nPOST ${url}...`);
-        let res = await superagent
-          .post(url)
-          .timeout({ response: 5000 })
-          .set('accept', 'application/json', 'text/plain')
-          .set('x-okapi-token', authToken)
-          .set('content-type', 'application/json')
-          .send(data[d]);
-        added++;
-      } catch (e) {
-        // console.log(e.response.text);
-        try {
-          console.log(`  ${e} -- Trying PUT...`);
-          let purl = url;
-          if (!purl.match(/circulation-rules-storage/)) {
-            purl += '/' + data[d].id;
-          }
-          console.log(`  PUT ${purl}...`);
-          let res = await superagent
-            .put(purl)
+        if (process.argv[3] === 'DELETE') {
+          url += `/${data[d].id}`;
+          console.log(`\nDELETE ${url}...`);
+          await superagent
+            .delete(url)
             .timeout({ response: 5000 })
             .set('accept', 'text/plain')
             .set('x-okapi-token', authToken)
+          deleted++;
+        } else {
+          console.log(`\nPOST ${url}...`);
+          let res = await superagent
+            .post(url)
+            .timeout({ response: 5000 })
+            .set('accept', 'application/json', 'text/plain')
+            .set('x-okapi-token', authToken)
             .set('content-type', 'application/json')
             .send(data[d]);
-          updated++;
+          added++;
+        }
+      } catch (e) {
+        try {
+          if (process.argv[3] === 'DELETE' && e.response) throw new Error(e.response.text);
+          if (process.argv[3] !== 'DELETE') {
+            console.log(`  ${e} -- Trying PUT...`);
+            let purl = url;
+            if (!purl.match(/circulation-rules-storage/)) {
+              purl += '/' + data[d].id;
+            }
+            console.log(`  PUT ${purl}...`);
+            let res = await superagent
+              .put(purl)
+              .timeout({ response: 5000 })
+              .set('accept', 'text/plain')
+              .set('x-okapi-token', authToken)
+              .set('content-type', 'application/json')
+              .send(data[d]);
+            updated++;
+          }
         } catch (e) {
           let msg;
           let err1 = e;
@@ -87,6 +103,7 @@ const endpoints = [
     console.log(`Added:   ${added}`);
     console.log(`Updated: ${updated}`);
     console.log(`Errors:  ${errors}`);
+    console.log(`Deleted: ${deleted}`)
   } catch (e) {
     console.error(e.message);
   }
