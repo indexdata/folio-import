@@ -199,8 +199,8 @@ while (<RAW>) {
   $iii_num =~ s/^\.(.{8}).*/$1/;
   next if !$inst_map->{$iii_num};
   my @marc_items = $marc->field('945');
-  my $callno = $cnmap->{$iii_num};
   foreach (@marc_items) {
+    my $callno = $_->as_string('a') || $cnmap->{$iii_num};
     my $loc_code = $_->as_string('l');
     $loc_code =~ s/^\s+|\s+$//g;
     # create holdings record if record doesn't already exists for said location
