@@ -288,18 +288,18 @@ my $ftypes = {
 
 # We need to know upfront which tags support repeated subfields.
 my $repeat_subs = {};
-  foreach (keys %{ $mapping_rules }) {
-    my $rtag = $_;
-    foreach (@{ $mapping_rules->{$rtag} }) {
-      if ($_->{entityPerRepeatedSubfield}) {
-        my $conf = $_;
-        $repeat_subs->{$rtag} = [] unless $repeat_subs->{$rtag};
-        foreach (@{ $conf->{entity} }) {
-          push @{ $repeat_subs->{$rtag} }, $_->{subfield}->[0] if $_->{target} !~ /Id$/;
-        }
+foreach (keys %{ $mapping_rules }) {
+  my $rtag = $_;
+  foreach (@{ $mapping_rules->{$rtag} }) {
+    if ($_->{entityPerRepeatedSubfield}) {
+      my $conf = $_;
+      $repeat_subs->{$rtag} = [] unless $repeat_subs->{$rtag};
+      foreach (@{ $conf->{entity} }) {
+        push @{ $repeat_subs->{$rtag} }, $_->{subfield}->[0] if $_->{target} !~ /Id$/;
       }
     }
   }
+}
 
 foreach (@ARGV) {
   my $infile = $_;
@@ -313,6 +313,14 @@ foreach (@ARGV) {
 
   my $save_path = $infile;
   $save_path =~ s/^(.+)\..+$/$1_instances.json/;
+  my $id_map = $infile;
+  $id_map =~ s/^(.+)\..+$/$1_instances.map/;
+  my $save_ids = 0;
+  if (! -e $id_map) {
+    open IDMAP, ">>$id_map";
+    print "Creating ID map file...\n";
+    $save_ids = 1;
+  }
 
   # open a collection of raw marc records
   $/ = "\x1D";
@@ -434,7 +442,6 @@ foreach (@ARGV) {
     $rec->{subjects} = dedupe(@{ $rec->{subjects} });
     $rec->{languages} = dedupe(@{ $rec->{languages} });
     $rec->{series} = dedupe(@{ $rec->{series} });
-    $rec->{alternativeTitles} = dedupe(@{ $rec->{alternativeTitles} });
     # my $clean_rec = {};
     # foreach my $k (keys %{ $rec }) {
     #  if ($ftypes->{$k} =~ /^array/ && $rec->{$k}[0]) {
@@ -442,7 +449,10 @@ foreach (@ARGV) {
     #  } elsif ($ftypes->{$k} =~ /^(string|boolean|object)/){
     #    $clean_rec->{$k} = $rec->{$k};
     #  }
-    #}
+    # }
+    if ($save_ids) {
+      print IDMAP "$rec->{hrid}\t$rec->{id}\n";
+    }
     push @{ $coll->{instances} }, $rec;
     print "Processing #$count " . substr($rec->{title}, 0, 60) . "\n";
   }
