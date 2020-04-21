@@ -98,7 +98,7 @@ def main():
     patron_name_middle_re = re.compile(r'^(.+)( [A-Za-z]\.?)$')
     telephone_re = re.compile(r'^(\+?[0-9-+ .)(x]+)$')
     telephone_ext_re = re.compile(r'^(\+?[0-9-+ .)(]+ext[0-9]+)$')
-    date_re = re.compile(r'^([0-9]{2})-([0-9]{2})-([0-9]{2,4})$')
+    date_re = re.compile(r'^([0-9]{1,2})/([0-9]{1,2})/([0-9]{2,4})$')
     # Obtain city,region,zip - lenient
     address_zip_us_re = re.compile(r'^([A-Za-z- .\']+),? +([A-Z][A-Za-z]),? +([0-9 -]+)$')
     address_zip_us_lax_re = re.compile(r'^(.+) +([A-Z][A-Za-z]),? +([0-9 -]+)$')
@@ -485,11 +485,13 @@ def parse_address_campus(address_str, address_campus_re, address_campus_room_re)
 def parse_date(date_str, date_re):
     """
     Parse a date and convert to UTC date string.
-    Format: MM-DD-YYYY
-    Handle some that are Y2K.
+    Format: MM/DD/YYYY
+    Handle some that might be Y2K.
     Returns: UTC datetime, error condition
     """
-    match = re.search(date_re, date_str)
+    date_str_tidy = date_str.replace('-', '')
+    date_str_tidy = date_str_tidy.replace(' ', '')
+    match = re.search(date_re, date_str_tidy)
     if match:
         year = match.group(3)
         if len(year) == 2:
