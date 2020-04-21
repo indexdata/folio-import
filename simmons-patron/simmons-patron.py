@@ -133,10 +133,10 @@ def main():
             user_id = ''
             barcode = row['barcode'].strip()
             if barcode == '':
-                data_errors.append('barcode missing')
+                data_errors.append('barcode: missing')
                 has_critical = True
             elif barcode in barcodes:
-                data_errors.append('barcode duplicate')
+                data_errors.append('barcode: duplicate')
                 has_critical = True
             else:
                 barcodes.append(barcode)
@@ -149,13 +149,13 @@ def main():
             # externalSystemId and username: ensure unique and reliable
             univ_id = row['externalSystemId'].strip()
             if univ_id == '':
-                data_errors.append('externalSystemId missing, using barcode')
+                data_errors.append('externalSystemId: missing, using barcode')
                 user_id = barcode
             elif not re.match(univ_id_re, univ_id):
-                data_errors.append('externalSystemId non-numeric: {}'.format(univ_id))
+                data_errors.append('externalSystemId: non-numeric: {}'.format(univ_id))
                 has_critical = True
             elif univ_id in univ_ids:
-                data_errors.append('externalSystemId duplicate')
+                data_errors.append('externalSystemId: duplicate')
                 has_critical = True
             else:
                 user_id = univ_id
@@ -181,7 +181,7 @@ def main():
             # For debug, count the occurrence, and whether missing.
             patron_group_str = row['patronGroup'].strip()
             if patron_group_str == '':
-                data_errors.append('patronGroup missing')
+                data_errors.append('patronGroup: missing')
                 has_critical = True
             else:
                 try:
@@ -216,7 +216,7 @@ def main():
             if email_address != '' and email_address != 'None':
                 # FIXME: Perhaps should use more robust regex
                 if '@' not in email_address:
-                    msg = 'personal.email invalid: {}'.format(email_address)
+                    msg = 'personal.email: invalid: {}'.format(email_address)
                     data_errors.append(msg)
                 else:
                     user['personal']['email'] = email_address
