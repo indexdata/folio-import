@@ -16,7 +16,13 @@ const fileNames = process.argv.slice(2);
     const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
     
     for (let x = 0; x < fileNames.length; x++) {
+      let refDir = fileNames[x].replace(/^(.+\/).+/, '$1');
+      let doneDir = refDir + 'Done';
+      if (!fs.existsSync(doneDir)) {
+        fs.mkdirSync(doneDir);
+      }
       let path = fileNames[x].replace(/^.+\//, '');
+      let name = path;
       path = path.replace(/%2F/g, '/');
       path = path.replace(/\.json$/, '');
       path = path.replace(/^.+?:/, '');
@@ -76,6 +82,7 @@ const fileNames = process.argv.slice(2);
           } 
         }
       }
+      fs.renameSync(fileNames[x], doneDir + '/' + name);
     } 
     console.log(`Added:   ${added}`);
     console.log(`Updated: ${updated}`);
