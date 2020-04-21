@@ -109,7 +109,6 @@ def main():
     uuid_map = {}
     if args.map:
         uuid_map = load_uuid_map(input_map_fn)
-    patron_group_map = load_patron_group_map()
     with open(input_fn) as input_fh:
         # Investigate the header
         #print("encoding=", input_fh.encoding)
@@ -121,7 +120,7 @@ def main():
         # Now process the data
         row_num = 1
         total_records = 0
-        patron_groups = {} # FIXME: For temporary debug
+        patron_groups = {}
         barcodes = []
         univ_ids = []
         datetime_now = datetime.datetime.now(datetime.timezone.utc)
@@ -179,19 +178,17 @@ def main():
                 data_errors.append('expirationDate: cannot parse: {}'.format(row['expirationDate']))
                 has_critical = True
             # patron_group:
-            # FIXME: For debug, count the occurrence, and whether missing.
+            # For debug, count the occurrence, and whether missing.
             patron_group_str = row['patronGroup'].strip()
-            try:
-                patron_groups[patron_group_str] += 1
-            except KeyError:
-                patron_groups[patron_group_str] = 1
-            # FIXME: Discontinue patron_group_map(), but ensure only from specific set
-            '''
-            try:
-                user['patronGroup'] = patron_group_map[patron_group_str]
-            except KeyError:
-                data_errors.append('patron_group missing map: {}'.format(patron_group_str))
-            '''
+            if patron_group_str == '':
+                data_errors.append('patronGroup missing')
+                has_critical = True
+            else:
+                try:
+                    patron_groups[patron_group_str] += 1
+                except KeyError:
+                    patron_groups[patron_group_str] = 1
+            user['patronGroup'] = patron_group_str
             # patron_name:
             user['personal'] = {}
             patron_name = row['PATRN NAME'].strip()
@@ -533,44 +530,6 @@ def load_uuid_map(input_fn):
         for row in reader:
             uuids[row['barcode']] = row['uuid']
     return uuids
-
-def load_patron_group_map():
-    """
-    Load a map of "P TYPE" code to patron group name.
-    Hard code it for now.
-    """
-    map = {
-        '0': 'Unclassified User',
-        '3': 'Interlibrary Loan',
-        '7': 'Special User',
-        '10': 'Undergraduate Student',
-        '11': 'Special User',
-        '16': 'Graduate Student',
-        '17': 'Online Graduate Student',
-        '19': 'Special User',
-        '27': 'Doctoral Student',
-        '34': 'Unclassified User',
-        '37': 'Millenium Library Staff',
-        '40': 'Employee',
-        '41': 'Employee',
-        '42': 'Employee',
-        '43': 'Employee',
-        '44': 'Employee',
-        '45': 'Employee',
-        '50': 'Unclassified User',
-        '53': 'Unclassified User',
-        '54': 'Unclassified User',
-        '89': 'Unclassified User',
-        '100': 'FLO User',
-        '110': 'Alumna/us',
-        '119': 'Unclassified User',
-        '154': 'Unclassified User',
-        '185': 'Unclassified User',
-        '220': 'Unclassified User',
-        '221': 'Unclassified User',
-        '255': 'Millenium Library Staff'
-    }
-    return map
 
 def do_debug(row, barcode, message):
     """
