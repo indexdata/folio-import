@@ -246,7 +246,7 @@ while (<RAW>) {
     my $itype_name = $itypemap->{$itype_code} || 'Review';
     $irec->{materialTypeId} = $folio_mtypes->{$itype_name} or die "[$iii_num] Can't find materialTypeId for $itype_code";
     $irec->{permanentLoanTypeId} = $loan_type_id;
-    $irec->{copyNumbers} = [ $_->as_string('g') ];
+    $irec->{copyNumber} = $_->as_string('g');
     $irec->{itemLevelCallNumber} = $callno;
     $irec->{itemLevelCallNumberTypeId} = $cn_type_id;
     my $status = $_->as_string('s');
