@@ -187,6 +187,7 @@ open IIDS, ">>$batch_path/item_ids.map";
 open RAW, "<:encoding(UTF-8)", $infile;
 my $hcoll = { holdingsRecords => [] };
 my $icoll = { items => [] };
+my $inum_seen = {};
 my $hcount = 0;
 my $icount = 0;
 my $mcount = 0;
@@ -235,6 +236,10 @@ while (<RAW>) {
     $irec->{id} = uuid();
     my $inum = $_->as_string('y');
     $inum =~ s/^\.(.{8}).*/$1/;
+    if ($inum_seen->{$inum}) {
+      $inum .= 'd';
+    }
+    $inum_seen->{$inum} = 1;
     if ($itemsonly) {
       $irec->{holdingsRecordId} = $h2i_map->{$inum};
     } else {
