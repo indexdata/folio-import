@@ -122,6 +122,7 @@ def main():
         row_num = 1
         total_records = 0
         patron_groups = {} # FIXME: For temporary debug
+        barcodes = []
         univ_ids = []
         datetime_now = datetime.datetime.now(datetime.timezone.utc)
         reader = csv.DictReader(input_fh, dialect='excel-tab')
@@ -132,11 +133,20 @@ def main():
             user = {}
             user_id = ''
             barcode = row['barcode'].strip()
-            try:
-                user_uuid = uuid_map[barcode]
-            except KeyError:
-                do_debug(row_num, barcode, 'Generated new UUID.')
-                user_uuid = str(uuid.uuid4())
+            if barcode == '':
+                data_errors.append('barcode missing')
+                has_critical = True
+            elif barcode in barcodes:
+                data_errors.append('barcode duplicate')
+                has_critical = True
+            else:
+                barcodes.append(barcode)
+                try:
+                    user_uuid = uuid_map[barcode]
+                except KeyError:
+                    if args.loglevel == "debug":
+                        do_debug(row_num, barcode, 'Generated new UUID.')
+                    user_uuid = str(uuid.uuid4())
             # externalSystemId and username: ensure unique and reliable
             univ_id = row['externalSystemId'].strip()
             if univ_id == '':
