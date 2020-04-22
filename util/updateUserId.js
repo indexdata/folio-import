@@ -37,8 +37,10 @@ inData[root].forEach(r => {
   let oldBc = oldMapFlipped[r.userId];
   if (oldBc && newMap[oldBc]) {
     r.userId = newMap[oldBc];
-    out[root].push(r);
-    c++;
+    if (root === 'servicePointsUsers' || r.permissions[0]) {
+      out[root].push(r);
+      c++
+    }
   }
 });
 out.totalRecords = c;

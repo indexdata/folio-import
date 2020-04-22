@@ -22,7 +22,7 @@ let refDir = process.argv[2];
 
     let totFetch = 0;
     let totRecs = 10000;
-    let perPage = 100;
+    let perPage = 1000;
     let offset = 1;
     const coll = { permissionUsers: [] };
     while (totFetch < totRecs) {
