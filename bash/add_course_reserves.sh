@@ -16,4 +16,4 @@ if [ ! -f $UFILE ]
     exit;
 fi
 
-curl -w '\n' --http1.1 "${OKAPI}/coursereserves/reserves" -H 'content-type: application/json' -H "x-okapi-token: ${TOKEN}" -d @$UFILE
+curl -D - -w '\n' --http1.1 "${OKAPI}/coursereserves/reserves" -H 'content-type: application/json' -H "x-okapi-token: ${TOKEN}" -d @$UFILE

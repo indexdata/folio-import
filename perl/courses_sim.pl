@@ -19,6 +19,17 @@ open TSV, "<:encoding(UTF8)", $tsv_file or die "Can't open $tsv_file!";
 my $path = $tsv_file;
 $path =~ s/^(.+)\/.+/$1/;
 
+my $ids_map_file = "$path/item_ids.map";
+open IDMAP, $ids_map_file or die "Can't open $path/item_ids.map!";
+my $iids_map = {};
+while (<IDMAP>) {
+  chomp;
+  my ($uuid, $iid) = split(/\|/);
+  $iids_map->{$iid} = $uuid;
+}
+print Dumper($iids_map);
+exit;
+
 my $term = {
   id => '517505e7-58cc-456c-8505-1ebf197d5c49',
   name => 'Permanent',
