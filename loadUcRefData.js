@@ -56,7 +56,6 @@ const fileNames = process.argv.slice(2);
       "servicepointusers": "service-points-users",
       "statisticalcodes": "statistical-codes",
       "statisticalcodetypes": "statistical-code-types",
-      "permissions": "perms/permissions",
       "permissionsusers": "perms/users",
       "hridsettings": "hrid-settings-storage/hrid-settings"
     }

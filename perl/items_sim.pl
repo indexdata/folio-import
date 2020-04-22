@@ -187,6 +187,7 @@ open IIDS, ">>$batch_path/item_ids.map";
 open RAW, "<:encoding(UTF-8)", $infile;
 my $hcoll = { holdingsRecords => [] };
 my $icoll = { items => [] };
+my $inum_seen = {};
 my $hcount = 0;
 my $icount = 0;
 my $mcount = 0;
@@ -199,8 +200,8 @@ while (<RAW>) {
   $iii_num =~ s/^\.(.{8}).*/$1/;
   next if !$inst_map->{$iii_num};
   my @marc_items = $marc->field('945');
-  my $callno = $cnmap->{$iii_num};
   foreach (@marc_items) {
+    my $callno = $_->as_string('a') || $cnmap->{$iii_num};
     my $loc_code = $_->as_string('l');
     $loc_code =~ s/^\s+|\s+$//g;
     # create holdings record if record doesn't already exists for said location
@@ -235,6 +236,10 @@ while (<RAW>) {
     $irec->{id} = uuid();
     my $inum = $_->as_string('y');
     $inum =~ s/^\.(.{8}).*/$1/;
+    if ($inum_seen->{$inum}) {
+      $inum .= 'd';
+    }
+    $inum_seen->{$inum} = 1;
     if ($itemsonly) {
       $irec->{holdingsRecordId} = $h2i_map->{$inum};
     } else {
@@ -246,7 +251,7 @@ while (<RAW>) {
     my $itype_name = $itypemap->{$itype_code} || 'Review';
     $irec->{materialTypeId} = $folio_mtypes->{$itype_name} or die "[$iii_num] Can't find materialTypeId for $itype_code";
     $irec->{permanentLoanTypeId} = $loan_type_id;
-    $irec->{copyNumbers} = [ $_->as_string('g') ];
+    $irec->{copyNumber} = $_->as_string('g');
     $irec->{itemLevelCallNumber} = $callno;
     $irec->{itemLevelCallNumberTypeId} = $cn_type_id;
     my $status = $_->as_string('s');
