@@ -47,8 +47,8 @@ $/ = "\n";
 my $term = {
   id => '517505e7-58cc-456c-8505-1ebf197d5c49',
   name => 'Permanent',
-  startDate => '2020-01-01T00:00:00.000Z',
-  endDate => '2099-12-31T23:59:59.000Z'
+  startDate => '2020-01-01T12:00:00.000Z',
+  endDate => '2099-12-31T12:00:00.000Z'
 };
 my $depts = {};
 my $listings = {};
@@ -211,7 +211,7 @@ foreach (@instructors) {
 }
 $ilist->{totalRecords} = $tot;
 my $inst_out = to_json($ilist, {utf8 => 1, pretty => 1});
-print "Writing $tot course listings to $path/instructors.json\n";
+print "Writing $tot instructors to $path/instructors.json\n";
 open OUT, ">$path/instructors.json";
 print OUT $inst_out;
 close OUT;
