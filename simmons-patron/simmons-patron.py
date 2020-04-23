@@ -6,7 +6,7 @@ Process the Simmons patron data export to transform into FOLIO users JSON.
        1: One or more data processing problems encountered.
        2: Configuration issues.
 
-Typical invocation: python3 simmons-patron.py -i data/20191028.txt -m uuid-map.txt -c 1000
+Typical invocation: python3 simmons-patron.py -i data/20200417.txt -m uuid-map.txt -c 1000
 """
 
 import argparse
@@ -37,7 +37,7 @@ def main():
     parser.add_argument("-i", "--input",
         help="Pathname to input data file (pipe-separated values).")
     parser.add_argument("-m", "--map",
-        help="Pathname to input uuid map file (comma-separated values record_id,uuid).")
+        help="Pathname to input uuid map file (comma-separated values barcode,uuid).")
     parser.add_argument("-c", "--chunk",
         default=0,
         help="Enable output chunks (integer). Number of records. Minimum 1000. (Default: 0, so all)")
@@ -98,7 +98,7 @@ def main():
     patron_name_middle_re = re.compile(r'^(.+)( [A-Za-z]\.?)$')
     telephone_re = re.compile(r'^(\+?[0-9-+ .)(x]+)$')
     telephone_ext_re = re.compile(r'^(\+?[0-9-+ .)(]+ext[0-9]+)$')
-    date_re = re.compile(r'^([0-9]{2})-([0-9]{2})-([0-9]{2,4})$')
+    date_re = re.compile(r'^([0-9]{1,2})/([0-9]{1,2})/([0-9]{2,4})$')
     # Obtain city,region,zip - lenient
     address_zip_us_re = re.compile(r'^([A-Za-z- .\']+),? +([A-Z][A-Za-z]),? +([0-9 -]+)$')
     address_zip_us_lax_re = re.compile(r'^(.+) +([A-Z][A-Za-z]),? +([0-9 -]+)$')
@@ -109,11 +109,10 @@ def main():
     uuid_map = {}
     if args.map:
         uuid_map = load_uuid_map(input_map_fn)
-    patron_group_map = load_patron_group_map()
     with open(input_fn) as input_fh:
         # Investigate the header
         #print("encoding=", input_fh.encoding)
-        reader = csv.reader(input_fh, delimiter='|')
+        reader = csv.reader(input_fh, dialect='excel-tab')
         header_row = next(reader)
         num_fields = len(header_row)
         #print(header_row)
@@ -121,31 +120,42 @@ def main():
         # Now process the data
         row_num = 1
         total_records = 0
-        patron_groups = {} # FIXME: For temporary debug
+        patron_groups = {}
+        barcodes = []
         univ_ids = []
         datetime_now = datetime.datetime.now(datetime.timezone.utc)
-        reader = csv.DictReader(input_fh, delimiter='|')
+        reader = csv.DictReader(input_fh, dialect='excel-tab')
         for row in reader:
             row_num += 1
             has_critical = False
             data_errors = []
             user = {}
             user_id = ''
-            record_id = row['RECORD #(PATRON)'].strip()
-            try:
-                user_uuid = uuid_map[record_id]
-            except KeyError:
-                user_uuid = str(uuid.uuid4())
-            # univ_id: ensure unique and reliable
-            univ_id = row['UNIV ID'].strip()
+            barcode = row['barcode'].strip()
+            if barcode == '':
+                data_errors.append('barcode: missing')
+                has_critical = True
+            elif barcode in barcodes:
+                data_errors.append('barcode: duplicate')
+                has_critical = True
+            else:
+                barcodes.append(barcode)
+                try:
+                    user_uuid = uuid_map[barcode]
+                except KeyError:
+                    if args.loglevel == "debug":
+                        do_debug(row_num, barcode, 'Generated new UUID.')
+                    user_uuid = str(uuid.uuid4())
+            # externalSystemId and username: ensure unique and reliable
+            univ_id = row['externalSystemId'].strip()
             if univ_id == '':
-                data_errors.append('univ_id missing, using record_id')
-                user_id = record_id
+                data_errors.append('externalSystemId: missing, using barcode')
+                user_id = barcode
             elif not re.match(univ_id_re, univ_id):
-                data_errors.append('univ_id non-numeric: {}'.format(univ_id))
+                data_errors.append('externalSystemId: non-numeric: {}'.format(univ_id))
                 has_critical = True
             elif univ_id in univ_ids:
-                data_errors.append('univ_id duplicate')
+                data_errors.append('externalSystemId: duplicate')
                 has_critical = True
             else:
                 user_id = univ_id
@@ -153,11 +163,11 @@ def main():
             user['username'] = user_id
             user['id'] = user_uuid
             user['externalSystemId'] = user_id
-            user['barcode'] = record_id
+            user['barcode'] = barcode
             user['type'] = 'patron'
             # Determine active
             expiry_date = ''
-            (expiry_date_str, date_error) = parse_date(row['EXP DATE'], date_re)
+            (expiry_date_str, date_error) = parse_date(row['expirationDate'], date_re)
             if not date_error:
                 expiry_date = datetime.datetime.fromisoformat(expiry_date_str)
                 if expiry_date > datetime_now:
@@ -165,23 +175,24 @@ def main():
                 else:
                     user['active'] = False
             else:
-                data_errors.append('expiryDate: cannot parse: {}'.format(row['EXP DATE']))
+                data_errors.append('expirationDate: cannot parse: {}'.format(row['expirationDate']))
                 has_critical = True
             # patron_group:
-            # FIXME: For debug, count the occurrence, and whether missing.
-            patron_group_str = row['P TYPE'].strip()
-            try:
-                patron_groups[patron_group_str] += 1
-            except KeyError:
-                patron_groups[patron_group_str] = 1
-            try:
-                user['patronGroup'] = patron_group_map[patron_group_str]
-            except KeyError:
-                data_errors.append('patron_group missing map: {}'.format(patron_group_str))
+            # For debug, count the occurrence, and whether missing.
+            patron_group_str = row['patronGroup'].strip()
+            if patron_group_str == '':
+                data_errors.append('patronGroup: missing')
+                has_critical = True
+            else:
+                try:
+                    patron_groups[patron_group_str] += 1
+                except KeyError:
+                    patron_groups[patron_group_str] = 1
+            user['patronGroup'] = patron_group_str
             # patron_name:
             user['personal'] = {}
             patron_name = row['PATRN NAME'].strip()
-            #do_debug(row_num, record_id, 'PATRN NAME={}'.format(patron_name))
+            #do_debug(row_num, barcode, 'PATRN NAME={}'.format(patron_name))
             patron_names = patron_name.split(',')
             if patron_name == '':
                 data_errors.append('patron_name: missing')
@@ -201,29 +212,29 @@ def main():
                 else:
                     user['personal']['firstName'] = patron_names[1].strip()
             # email: ensure reliable
-            email_address = row['EMAIL ADDR'].strip()
+            email_address = row['personal.email'].strip()
             if email_address != '' and email_address != 'None':
                 # FIXME: Perhaps should use more robust regex
                 if '@' not in email_address:
-                    msg = 'email invalid: {}'.format(email_address)
+                    msg = 'personal.email: invalid: {}'.format(email_address)
                     data_errors.append(msg)
                 else:
                     user['personal']['email'] = email_address
             # telephones:
-            telephone_str = tidy_telephone(row['TELEPHONE2'].strip().lower())
+            telephone_str = tidy_telephone(row['personal.phone'].strip().lower())
             if telephone_str != '':
                 (telephone, error) = parse_telephone(telephone_str, telephone_re)
                 if not error:
                     user['personal']['phone'] = telephone
                 else:
-                    data_errors.append('telephone2: has junk: {}'.format(row['TELEPHONE2'].strip()))
-            telephone_str = tidy_telephone(row['TELEPHONE'].strip().lower())
+                    data_errors.append('personal.phone: has junk: {}'.format(row['personal.phone'].strip()))
+            telephone_str = tidy_telephone(row['personal.mobilePhone'].strip().lower())
             if telephone_str != '':
                 (telephone, error) = parse_telephone(telephone_str, telephone_re)
                 if not error:
                     user['personal']['mobilePhone'] = telephone
                 else:
-                    data_errors.append('telephone: has junk: {}'.format(row['TELEPHONE'].strip()))
+                    data_errors.append('personal.mobilePhone: has junk: {}'.format(row['personal.mobilePhone'].strip()))
             # addresses:
             addresses = []
             # address1: These should be home address.
@@ -261,22 +272,22 @@ def main():
             user['personal']['addresses'] = addresses
             user['personal']['preferredContactTypeId'] = determine_preferred_contact(user)
             # dates:
-            (created_date_str, date_error) = parse_date(row['CREATED(PATRON)'], date_re)
+            (created_date_str, date_error) = parse_date(row['createdDate'], date_re)
             if not date_error:
                 user['createdDate'] = created_date_str
             else:
-                data_errors.append('createdDate: cannot parse: {}'.format(row['CREATED(PATRON)']))
-            (updated_date_str, date_error) = parse_date(row['UPDATED(PATRON)'], date_re)
+                data_errors.append('createdDate: cannot parse: {}'.format(row['createdDate']))
+            (updated_date_str, date_error) = parse_date(row['updatedDate'], date_re)
             if not date_error:
                 user['updatedDate'] = updated_date_str
             else:
-                data_errors.append('updatedDate: cannot parse: {}'.format(row['UPDATED(PATRON)']))
+                data_errors.append('updatedDate: cannot parse: {}'.format(row['updatedDate']))
             if expiry_date != '':
                 user['expirationDate'] = expiry_date_str
             #-------------------------------
             # Record any errors for this row
             if len(data_errors) > 0:
-                errors_entry = { 'rowNum': row_num, 'recordId': record_id, 'univId': univ_id, 'errors': data_errors }
+                errors_entry = { 'rowNum': row_num, 'barcode': barcode, 'username': user_id, 'errors': data_errors }
                 if has_critical:
                     errors_entry['hasCritical'] = True
                     critical_count += 1
@@ -474,11 +485,13 @@ def parse_address_campus(address_str, address_campus_re, address_campus_room_re)
 def parse_date(date_str, date_re):
     """
     Parse a date and convert to UTC date string.
-    Format: MM-DD-YYYY
-    Handle some that are Y2K.
+    Format: MM/DD/YYYY
+    Handle some that might be Y2K.
     Returns: UTC datetime, error condition
     """
-    match = re.search(date_re, date_str)
+    date_str_tidy = date_str.replace('-', '')
+    date_str_tidy = date_str_tidy.replace(' ', '')
+    match = re.search(date_re, date_str_tidy)
     if match:
         year = match.group(3)
         if len(year) == 2:
@@ -509,61 +522,23 @@ def determine_preferred_contact(user_data):
 
 def load_uuid_map(input_fn):
     """
-    Load the data file map of record_id,uuid
+    Load the data file map of barcode,uuid
     Enables reloading of users data.
     """
     with open(input_fn) as input_fh:
-        fieldnames = ['record_id', 'uuid']
+        fieldnames = ['barcode', 'uuid']
         reader = csv.DictReader(input_fh, fieldnames=fieldnames)
         uuids = {}
         for row in reader:
-            uuids[row['record_id']] = row['uuid']
+            uuids[row['barcode']] = row['uuid']
     return uuids
 
-def load_patron_group_map():
-    """
-    Load a map of "P TYPE" code to patron group name.
-    Hard code it for now.
-    """
-    map = {
-        '0': 'Unclassified User',
-        '3': 'Interlibrary Loan',
-        '7': 'Special User',
-        '10': 'Undergraduate Student',
-        '11': 'Special User',
-        '16': 'Graduate Student',
-        '17': 'Online Graduate Student',
-        '19': 'Special User',
-        '27': 'Doctoral Student',
-        '34': 'Unclassified User',
-        '37': 'Millenium Library Staff',
-        '40': 'Employee',
-        '41': 'Employee',
-        '42': 'Employee',
-        '43': 'Employee',
-        '44': 'Employee',
-        '45': 'Employee',
-        '50': 'Unclassified User',
-        '53': 'Unclassified User',
-        '54': 'Unclassified User',
-        '89': 'Unclassified User',
-        '100': 'FLO User',
-        '110': 'Alumna/us',
-        '119': 'Unclassified User',
-        '154': 'Unclassified User',
-        '185': 'Unclassified User',
-        '220': 'Unclassified User',
-        '221': 'Unclassified User',
-        '255': 'Millenium Library Staff'
-    }
-    return map
-
-def do_debug(row, record_id, message):
+def do_debug(row, barcode, message):
     """
     Output a debug message.
     """
     logger = logging.getLogger("simmons-patron")
-    logger.debug('row={} recordId={} {}'.format(row, record_id, message))
+    logger.debug('row={} barcode={} {}'.format(row, barcode, message))
 
 if __name__ == '__main__':
     sys.exit(main())
