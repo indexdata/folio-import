@@ -27,8 +27,6 @@ while (<IDMAP>) {
   my ($uuid, $iid) = split(/\|/);
   $iids_map->{$iid} = $uuid;
 }
-print Dumper($iids_map);
-exit;
 
 my $term = {
   id => '517505e7-58cc-456c-8505-1ebf197d5c49',
@@ -38,10 +36,12 @@ my $term = {
 };
 my $depts = {};
 my $listings = {};
+my $reserves = { reserves => [] };
 my $courses = { courses => [] };
 my @instructors;
 my $line = 0;
 my $cc = 0;
+my $rr = 0;
 while (<TSV>) {
   chomp;
   $line++;
@@ -63,6 +63,24 @@ while (<TSV>) {
     termId => $term->{id},
     termObject => $term
   };
+  foreach (split(/\^/, $items)) {
+    s/\r//g;
+    s/::.+//;
+    s/"//;
+    next unless $_;
+    my $iid = $iids_map->{$_};
+    if ($iid !~ /\w/) {
+      print "WARN [$course] no itemId found for $_!\n"
+    } else {
+      my $resObj = {
+        id => uuid(),
+        courseListingId => $listings->{$rid}->{id},
+        itemId => $iid
+      };
+      push @{ $reserves->{reserves} }, $resObj;
+      $rr++;
+    }
+  }
   my @names = split(/\^"/, $prof);
   my $p = 0;
   foreach (@pid) {
@@ -94,29 +112,40 @@ while (<TSV>) {
     my $name = $_;
     my $sect = $prof;
     $sect =~ s/.*?\((.+?)\).*/$1/;
-    my $cobj = {
-      id => uuid(),
-      name => $_,
-      courseNumber => $num,
-      departmentId => $depts->{$dept[$c]}->{id},
-      departmentObject => $depts->{$dept[$c]},
-      courseListingId => $listings->{$rid}->{id},
-      courseListingObject => $listings->{$rid},
-      sectionName => $sect
-    };
-    push @{ $courses->{courses} }, $cobj;
+    my $dpt = $depts->{$dept[$c]}->{id} || $depts->{$dept[0]}->{id};
+    if (!$dpt) {
+      print "WARN [$_] no Department ID found for $dpt!\n";
+    } else {
+      my $cobj = {
+        id => uuid(),
+        name => $_,
+        courseNumber => $num,
+        departmentId => $dpt,
+        departmentObject => $depts->{$dept[$c]},
+        courseListingId => $listings->{$rid}->{id},
+        courseListingObject => $listings->{$rid},
+        sectionName => $sect
+      };
+      push @{ $courses->{courses} }, $cobj;
+      $cc++;
+    }
     $c++;
-    $cc++;
   }
   last if $line > $limit;
 }
 
 $courses->{totalRecords} = $cc;
 my $courses_out = to_json($courses, {utf8 => 1, pretty => 1});
-# print $courses_out;
 print "Writing $cc courses to $path/courses.json\n";
 open OUT, ">$path/courses.json";
 print OUT $courses_out;
+close OUT;
+
+$reserves->{totalRecords} = $rr;
+my $res_out = to_json($reserves, {utf8 => 1, pretty => 1});
+print "Writing $rr reserves to $path/reserves.json\n";
+open OUT, ">$path/reserves.json";
+print OUT $res_out;
 close OUT;
 
 my $tot = 0;
