@@ -50,7 +50,7 @@ const endpoints = [
       try {
         if (process.argv[3] === 'DELETE') {
           url += `/${data[d].id}`;
-          console.log(`\nDELETE ${url}...`);
+          console.log(`[${deleted}] DELETE ${url}...`);
           await superagent
             .delete(url)
             .timeout({ response: 5000 })
@@ -58,7 +58,7 @@ const endpoints = [
             .set('x-okapi-token', authToken)
           deleted++;
         } else {
-          console.log(`\nPOST ${url}...`);
+          console.log(`[${added}] POST ${url}...`);
           let res = await superagent
             .post(url)
             .timeout({ response: 5000 })
@@ -74,9 +74,7 @@ const endpoints = [
           if (process.argv[3] !== 'DELETE') {
             console.log(`  ${e} -- Trying PUT...`);
             let purl = url;
-            if (!purl.match(/circulation-rules-storage/)) {
-              purl += '/' + data[d].id;
-            }
+            purl += '/' + data[d].id;
             console.log(`  PUT ${purl}...`);
             let res = await superagent
               .put(purl)
