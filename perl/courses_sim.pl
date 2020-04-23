@@ -19,14 +19,29 @@ open TSV, "<:encoding(UTF8)", $tsv_file or die "Can't open $tsv_file!";
 my $path = $tsv_file;
 $path =~ s/^(.+)\/.+/$1/;
 
+# Create maps from items and users collections
+
 my $ids_map_file = "$path/items.json";
 $/ = '';
-open ITMS, $ids_map_file or die "Can't open $path/items.json!";
+open ITMS, $ids_map_file or die "Can't open $ids_map_file!";
 my $items = decode_json(<ITMS>);
+close ITMS;
 my $iids_map;
-foreach (@{ $items->{items }}) {
+foreach (@{ $items->{items} }) {
   $iids_map->{$_->{hrid}} = $_->{id};
 }
+$items = {};
+
+my $usr_map_file = "$path/users.json";
+$/ = '';
+open USRS, $usr_map_file or die "Can't open $usr_map_file!";
+my $users = decode_json(<USRS>);
+close USRS;
+my $users_map = {};
+foreach (@{ $users->{users}}) {
+  $users_map->{$_->{barcode}} = $_->{id};
+}
+$users = {};
 $/ = "\n";
 
 my $term = {
@@ -94,9 +109,14 @@ while (<TSV>) {
     my $inst = {
       id => uuid(),
       name => $names[$p],
-      barcode => $_,
       courseListingId => $listings->{$rid}->{id}
     };
+    my $uid = $users_map->{$_}; 
+    if ($uid) {
+      $inst->{userId} = $uid;
+    } elsif (/^p\w{8}/) {
+      $inst->{barcode} = $_;
+    }
     push @profs, $inst; 
     push @instructors, $inst;
     $p++;
@@ -122,9 +142,9 @@ while (<TSV>) {
         name => $_,
         courseNumber => $num,
         departmentId => $dpt,
-        departmentObject => $depts->{$dept[$c]},
+        # departmentObject => $depts->{$dept[$c]},
         courseListingId => $listings->{$rid}->{id},
-        courseListingObject => $listings->{$rid},
+        # courseListingObject => $listings->{$rid},
         sectionName => $sect
       };
       push @{ $courses->{courses} }, $cobj;
