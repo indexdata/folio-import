@@ -19,14 +19,15 @@ open TSV, "<:encoding(UTF8)", $tsv_file or die "Can't open $tsv_file!";
 my $path = $tsv_file;
 $path =~ s/^(.+)\/.+/$1/;
 
-my $ids_map_file = "$path/item_ids.map";
-open IDMAP, $ids_map_file or die "Can't open $path/item_ids.map!";
-my $iids_map = {};
-while (<IDMAP>) {
-  chomp;
-  my ($uuid, $iid) = split(/\|/);
-  $iids_map->{$iid} = $uuid;
+my $ids_map_file = "$path/items.json";
+$/ = '';
+open ITMS, $ids_map_file or die "Can't open $path/items.json!";
+my $items = decode_json(<ITMS>);
+my $iids_map;
+foreach (@{ $items->{items }}) {
+  $iids_map->{$_->{hrid}} = $_->{id};
 }
+$/ = "\n";
 
 my $term = {
   id => '517505e7-58cc-456c-8505-1ebf197d5c49',
