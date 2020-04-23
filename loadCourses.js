@@ -7,6 +7,7 @@ const endpoints = [
   'courses',
   'courseListings',
   'instructors',
+  'reserves',
   'departments'
 ];
 
@@ -41,8 +42,8 @@ const endpoints = [
     let url;
 
     for (d = 0; d < data.length; d++) {
-      if (endpoint === 'instructors') {
-        url = `${base}/courselistings/${data[d].courseListingId}/instructors`;
+      if (endpoint === 'instructors' || endpoint === 'reserves') {
+        url = `${base}/courselistings/${data[d].courseListingId}/${endpoint}`;
       } else {
         url = `${base}/${endpoint}`;
         url = url.toLocaleLowerCase();
@@ -69,9 +70,11 @@ const endpoints = [
           added++;
         }
       } catch (e) {
-        try {
+        console.log(e.response.error.text);
+        /* try {
           if (process.argv[3] === 'DELETE' && e.response) throw new Error(e.response.text);
           if (process.argv[3] !== 'DELETE') {
+            console.log(e.response.error);
             console.log(`  ${e} -- Trying PUT...`);
             let purl = url;
             purl += '/' + data[d].id;
@@ -94,8 +97,10 @@ const endpoints = [
             msg = err1.message;
           }
           console.log(`ERROR: ${msg}`);
-          errors++;
+          errors++; 
         } 
+        */
+       errors++;
       }
     } 
     console.log(`Added:   ${added}`);
