@@ -42,7 +42,7 @@ const wait = (ms) => {
       // console.log(data[d]);
       try {
         // await wait(5000);
-        console.log(`[${added}] POST ${url} (${data[d].itemBarcode})`);
+        console.log(`[${d}] POST ${url} (${data[d].itemBarcode})`);
         let res = await superagent
           .post(url)
           .timeout({ response: 5000 })
