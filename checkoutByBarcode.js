@@ -4,6 +4,10 @@ const { getAuthToken } = require('./lib/login');
 const fn = process.argv[2];
 const checkIn = process.argv[3];
 
+const wait = (ms) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
 (async () => {
   let added = 0;
   let updated = 0;
@@ -37,14 +41,16 @@ const checkIn = process.argv[3];
       }
       // console.log(data[d]);
       try {
+        // await wait(5000);
         console.log(`[${added}] POST ${url} (${data[d].itemBarcode})`);
         let res = await superagent
           .post(url)
-          .timeout({ response: 10000 })
+          .timeout({ response: 5000 })
           .set('accept', 'application/json', 'text/plain')
           .set('x-okapi-token', authToken)
           .set('content-type', 'application/json')
           .send(data[d]);
+        // console.log(res.body);
         added++;
       } catch (e) {
         console.log(e);
