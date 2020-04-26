@@ -8,6 +8,44 @@ const wait = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
+const post_put = async (authToken, url, checkout, r) => {
+  r = (r) ? r : 0;
+  try {
+    if (url.match(/\/loans\//)) {
+      await superagent
+        .put(url)
+        .timeout({ response: 3000 })
+        .set('accept', 'application/json', 'text/plain')
+        .set('x-okapi-token', authToken)
+        .set('content-type', 'application/json')
+        .send(checkout);
+      return;
+    } else {
+      let res = await superagent
+        .post(url)
+        .timeout({ response: 3000 })
+        .set('accept', 'application/json', 'text/plain')
+        .set('x-okapi-token', authToken)
+        .set('content-type', 'application/json')
+        .send(checkout);
+      return res.body;
+    }
+  } catch (e) {
+    if (e.code) {
+      console.log(`    Connection timed out! Retrying (${r})...`);
+      r++;
+      if (r < 10) {
+        let loanObj = await post_put(authToken, url, checkout, r);
+        return loanObj;
+      } else {
+        throw new Error(`Too many retries (${r})!`);
+      }
+    } else {
+      console.log(e.response.text);
+    }
+  }
+}
+
 (async () => {
   let added = 0;
   let updated = 0;
@@ -26,12 +64,9 @@ const wait = (ms) => {
 
     let url = `${config.okapi}/circulation/check-out-by-barcode`;
     let collRoot = 'checkouts';
-    if (coll.overrides) {
-      collRoot = 'overrides';
-      url = `${config.okapi}/circulation/override-check-out-by-barcode`; 
-    }
     let data = coll[collRoot];
     let today;
+
     if (checkIn === 'checkin') {
       url = `${config.okapi}/circulation/check-in-by-barcode`;
       today = new Date().toISOString();
@@ -47,18 +82,10 @@ const wait = (ms) => {
        dueDate = data[d].dueDate;
        delete data[d].dueDate;
       }
-      // console.log(data[d]);
       try {
         console.log(`[${d}] POST ${url} (${data[d].itemBarcode})`);
-        let res = await superagent
-          .post(url)
-          .timeout({ response: 3000 })
-          .set('accept', 'application/json', 'text/plain')
-          .set('x-okapi-token', authToken)
-          .set('content-type', 'application/json')
-          .send(data[d]);
-          if (checkIn === 'checkin') added++;
-        let loanObj = res.body;
+        let loanObj = await post_put(authToken, url, data[d]);
+        if (checkIn === 'checkin') added++;
         if (checkIn !== 'checkin') {
           try {
             loanObj.dueDate = dueDate;
@@ -66,14 +93,8 @@ const wait = (ms) => {
             loanObj.action = 'dueDateChanged';
             let lurl = `${config.okapi}/circulation/loans/${loanObj.id}`;
             console.log(`[${d}] PUT ${lurl} (${data[d].itemBarcode})`);
-            let res = await superagent
-              .put(lurl)
-              .timeout({ response: 3000 })
-              .set('accept', 'application/json', 'text/plain')
-              .set('x-okapi-token', authToken)
-              .set('content-type', 'application/json')
-              .send(loanObj);
-              added++;
+            await post_put(authToken, lurl, loanObj);
+            added++
           } catch (e) {
             let m;
             if (e.response) {

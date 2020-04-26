@@ -32,7 +32,7 @@ while (<TSV>) {
   next if $line == 1;
   my ($bc, $ldate, $due, $au, $ti, $pname, $userbc) = split /\t/;
   my $iso_ldate = date_conv($ldate);
-  my $iso_due = date_conv("$due 12:12");
+  my $iso_due = date_conv("$due 17:00:00Z");
   if ($bc && $userbc) {
     my $co = {
       itemBarcode => $bc,
@@ -42,10 +42,10 @@ while (<TSV>) {
       dueDate => $iso_due
     };
     push @{ $checkout->{checkouts} }, $co;
-    my $ov = $co;
+    # my $ov = $co;
     # $ov->{dueDate} = $iso_due;
     # $ov->{comment} = 'Migration load';
-    push @{ $overrides->{overrides} }, $ov;
+    # push @{ $overrides->{overrides} }, $ov;
     $coc++;
   } else {
     print "WARN [$line] There is a missing item or user barcode: item: $bc, user: $userbc\n"
@@ -59,12 +59,12 @@ open OUT, ">$co_out" or die "Can't write to $co_out\n!";
 print OUT $co_json;
 close OUT;
 
-my $ov_json = to_json($overrides, {utf8 => 1, pretty => 1});
-my $ov_out = "$path/overrides.json";
-print "Writing $coc override records to $ov_out\n";
-open OUT, ">$ov_out" or die "Can't write to $ov_out\n!";
-print OUT $ov_json;
-close OUT;
+# my $ov_json = to_json($overrides, {utf8 => 1, pretty => 1});
+# my $ov_out = "$path/overrides.json";
+# print "Writing $coc override records to $ov_out\n";
+# open OUT, ">$ov_out" or die "Can't write to $ov_out\n!";
+# print OUT $ov_json;
+# close OUT;
 
 sub date_conv {
   $in = shift;
