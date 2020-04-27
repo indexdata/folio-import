@@ -21,9 +21,11 @@ my $users = decode_json(<USRS>);
 $/ = "\n";
 my $active = {};
 my $exists = {};
+my $expiry = {};
 foreach (@{ $users->{users} }) {
   my $bc = $_->{barcode};
   $exists->{$bc} = 1;
+  $expiry->{$bc} = $_->{expirationDate};
   if ($_->{active}) {
     $active->{$bc} = 1;
   } else {
@@ -64,6 +66,7 @@ while (<TSV>) {
     if ($exists->{$userbc}) {
       push @{ $checkout->{checkouts} }, $co;
       if (!$active->{$userbc}) {
+        $co->{expirationDate} = $expiry->{$userbc};
         push @{ $inactive->{checkouts} }, $co unless $active{$userbc};
       }
     } else {
