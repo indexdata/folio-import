@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 
 # This script will create course reserves json files from a tsv file.
+# A users file is required to determine if a user exists and is active.
 
 use JSON;
 use Data::Dumper;
@@ -9,9 +10,27 @@ use Data::UUID;
 binmode(STDOUT, 'utf8');
 
 if (!$ARGV[1]) {
-  die "Usage: $0 <user_map.js> <loans_tsv_file> [limit]\n";
+  die "Usage: $0 <users.json> <loans_tsv_file> [limit]\n";
 }
-my $limit = $ARGV[1] || 100000;
+my $limit = $ARGV[3] || 100000;
+
+my $user_file = shift;
+$/ = '';
+open USRS, $user_file or die "Can't open $user_file!";
+my $users = decode_json(<USRS>);
+$/ = "\n";
+my $active = {};
+my $exists = {};
+foreach (@{ $users->{users} }) {
+  my $bc = $_->{barcode};
+  $exists->{$bc} = 1;
+  if ($_->{active}) {
+    $active->{$bc} = 1;
+  } else {
+    $active->{$bc} = 0;
+  }
+}
+$users = {};
 
 my $tsv_file = shift;
 open TSV, $tsv_file or die "Can't open $tsv_file!";
@@ -24,7 +43,8 @@ my $sp = '3a40852d-49fd-4df2-a1f9-6e2641a6e91f';
 my $line = 0;
 my $coc = 0;
 my $checkout = { checkouts => [] };
-my $overrides = { overrides => [] };
+my $inactive = { checkouts => [] };
+my $nouser = { checkouts => [] };
 while (<TSV>) {
   chomp;
   s/\r//g;
@@ -41,30 +61,37 @@ while (<TSV>) {
       loanDate => $iso_ldate,
       dueDate => $iso_due
     };
-    push @{ $checkout->{checkouts} }, $co;
-    # my $ov = $co;
-    # $ov->{dueDate} = $iso_due;
-    # $ov->{comment} = 'Migration load';
-    # push @{ $overrides->{overrides} }, $ov;
+    if ($exists->{$userbc}) {
+      push @{ $checkout->{checkouts} }, $co;
+      if (!$active->{$userbc}) {
+        push @{ $inactive->{checkouts} }, $co unless $active{$userbc};
+      }
+    } else {
+      push @{ $nouser->{checkouts} }, $co
+    }
+    
     $coc++;
   } else {
     print "WARN [$line] There is a missing item or user barcode: item: $bc, user: $userbc\n"
   }
   last if $line > $limit;
 }
-my $co_json = to_json($checkout, {utf8 => 1, pretty => 1});
-my $co_out = "$path/checkouts.json";
-print "Writing $coc checkout records to $co_out\n";
-open OUT, ">$co_out" or die "Can't write to $co_out\n!";
-print OUT $co_json;
-close OUT;
 
-# my $ov_json = to_json($overrides, {utf8 => 1, pretty => 1});
-# my $ov_out = "$path/overrides.json";
-# print "Writing $coc override records to $ov_out\n";
-# open OUT, ">$ov_out" or die "Can't write to $ov_out\n!";
-# print OUT $ov_json;
-# close OUT;
+write_json($checkout, 'checkouts.json');
+write_json($inactive, 'checkouts-inactive.json');
+write_json($nouser, 'checkouts-nouser.json');
+
+sub write_json {
+  my $in_obj = $_[0];
+  my $fn = $_[1];
+  my $count = @{ $in_obj->{checkouts} };
+  my $co_json = to_json($in_obj, {utf8 => 1, pretty => 1});
+  my $co_out = "$path/$fn";
+  print "Writing $count checkout records to $co_out\n";
+  open OUT, ">$co_out" or die "Can't write to $co_out\n!";
+  print OUT $co_json;
+  close OUT;
+}
 
 sub date_conv {
   $in = shift;
