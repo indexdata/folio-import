@@ -8,8 +8,8 @@ use Data::UUID;
 
 binmode(STDOUT, 'utf8');
 
-if (!$ARGV[0]) {
-  die "Usage: $0 <loans_tsv_file> [limit]\n";
+if (!$ARGV[1]) {
+  die "Usage: $0 <user_map.js> <loans_tsv_file> [limit]\n";
 }
 my $limit = $ARGV[1] || 100000;
 
