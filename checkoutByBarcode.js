@@ -77,10 +77,12 @@ const post_put = async (authToken, url, checkout, r) => {
       if (checkIn === 'checkin') {
         delete data[d].loanDate;
         delete data[d].userBarcode;
+        delete data[d].expirationDate;
         data[d].checkInDate = today;
       } else {
        dueDate = data[d].dueDate;
        delete data[d].dueDate;
+       delete data[d].expirationDate;
       }
       try {
         console.log(`[${d}] POST ${url} (${data[d].itemBarcode})`);
