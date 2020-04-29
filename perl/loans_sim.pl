@@ -54,7 +54,12 @@ while (<TSV>) {
   $line++;
   next if $line == 1;
   my ($bc, $ldate, $due, $au, $ti, $pname, $userbc) = split /\t/;
-  my $iso_ldate = date_conv("$ldate:00");
+  if ($ldate !~ /\d:\d/) {
+    $ldate = "$ldate 12:00:00";
+  } else {
+    $ldate = "$ldate:00"
+  }
+  my $iso_ldate = date_conv($ldate);
   my $iso_due = date_conv("$due 23:59:59");
   if ($bc && $userbc) {
     my $co = {
