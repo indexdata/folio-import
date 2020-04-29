@@ -74,8 +74,8 @@ const post_put = async (authToken, url, checkout, r) => {
 
     for (d = 0; d < data.length; d++) {
       let dueDate;
-      data[d].loanDate = new Date(data[d].loanDate).toISOString();
-      if (data[d].dueDate) data[d].dueDate = new Date(data[d].dueDate).toISOString();
+      // data[d].loanDate = new Date(data[d].loanDate).toISOString();
+      // if (data[d].dueDate) data[d].dueDate = new Date(data[d].dueDate).toISOString();
       // console.log(data[d]);
       if (checkIn === 'checkin') {
         delete data[d].loanDate;

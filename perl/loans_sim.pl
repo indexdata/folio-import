@@ -4,8 +4,9 @@
 # A users file is required to determine if a user exists and is active.
 
 use JSON;
-use Data::Dumper;
 use Data::UUID;
+use DateTime;
+use Data::Dumper;
 
 binmode(STDOUT, 'utf8');
 
@@ -41,7 +42,7 @@ my $path = $tsv_file;
 $path =~ s/^(.+)\/.+/$1/;
 
 my $sp = '3a40852d-49fd-4df2-a1f9-6e2641a6e91f';
-# my $sp = 'f4ca4f1a-f828-47a4-822e-47f96b29d71d'; # test
+
 my $line = 0;
 my $coc = 0;
 my $checkout = { checkouts => [] };
@@ -53,8 +54,8 @@ while (<TSV>) {
   $line++;
   next if $line == 1;
   my ($bc, $ldate, $due, $au, $ti, $pname, $userbc) = split /\t/;
-  my $iso_ldate = date_conv($ldate);
-  my $iso_due = date_conv("$due 17:00:00Z");
+  my $iso_ldate = date_conv("$ldate:00");
+  my $iso_due = date_conv("$due 23:59:59");
   if ($bc && $userbc) {
     my $co = {
       itemBarcode => $bc,
@@ -98,8 +99,20 @@ sub write_json {
 
 sub date_conv {
   $in = shift;
-  my ($m, $d, $y, $h, $min) = $in =~ /^(\d+)\/(\d+)\/(\d+) (\d+):(\d+)/;
-  my $out = sprintf('%04d-%02d-%02dT%02d:%02d:00.000', $y, $m, $d, $h, $min);
+  my ($m, $d, $y, $h, $min, $sec) = $in =~ /^(\d+)\/(\d+)\/(\d+) (\d+):(\d+):(\d+)/;
+  my $dt = DateTime->new(
+    year => $y,
+    month => $m,
+    day => $d,
+    hour => $h,
+    minute => $min,
+    second => $sec,
+    time_zone => 'America/New_York'
+  );
+  my $iso = $dt->iso8601();
+  my $offset = '-0500';
+  $offset = '-0400' if $dt->is_dst();
+  $out = "$iso.000$offset";
   return $out;
 }
 
