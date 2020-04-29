@@ -12,7 +12,7 @@ binmode(STDOUT, 'utf8');
 if (!$ARGV[1]) {
   die "Usage: $0 <users.json> <loans_tsv_file> [limit]\n";
 }
-my $limit = $ARGV[3] || 100000;
+my $limit = $ARGV[2] || 100000;
 
 my $user_file = shift;
 $/ = '';

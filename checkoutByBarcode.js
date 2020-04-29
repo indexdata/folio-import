@@ -85,7 +85,9 @@ const post_put = async (authToken, url, checkout, r) => {
        delete data[d].expirationDate;
       }
       try {
-        console.log(`[${d}] POST ${url} (${data[d].itemBarcode})`);
+        let uc = '';
+        if (data[d].userBarcode) uc = ` --> ${data[d].userBarcode}`
+        console.log(`[${d}] POST ${url} (${data[d].itemBarcode}${uc})`);
         let loanObj = await post_put(authToken, url, data[d]);
         if (checkIn === 'checkin') added++;
         if (checkIn !== 'checkin') {
