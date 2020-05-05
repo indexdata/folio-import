@@ -67,12 +67,12 @@ while (<TSV>) {
       userBarcode => $userbc,
       servicePointId => $sp,
       loanDate => $iso_ldate,
-      dueDate => $iso_due
+      dueDate => $iso_due,
+      expirationDate => $expiry->{$userbc}
     };
     if ($exists->{$userbc}) {
       push @{ $checkout->{checkouts} }, $co;
       if (!$active->{$userbc}) {
-        $co->{expirationDate} = $expiry->{$userbc};
         push @{ $inactive->{checkouts} }, $co unless $active{$userbc};
       }
     } else {
