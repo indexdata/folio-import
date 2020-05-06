@@ -74,16 +74,23 @@ const post_put = async (authToken, url, checkout, r) => {
 
     for (d = 0; d < data.length; d++) {
       let dueDate;
+      // data[d].loanDate = new Date(data[d].loanDate).toISOString();
+      // if (data[d].dueDate) data[d].dueDate = new Date(data[d].dueDate).toISOString();
+      // console.log(data[d]);
       if (checkIn === 'checkin') {
         delete data[d].loanDate;
         delete data[d].userBarcode;
+        delete data[d].expirationDate;
         data[d].checkInDate = today;
       } else {
        dueDate = data[d].dueDate;
        delete data[d].dueDate;
+       delete data[d].expirationDate;
       }
       try {
-        console.log(`[${d}] POST ${url} (${data[d].itemBarcode})`);
+        let uc = '';
+        if (data[d].userBarcode) uc = ` --> ${data[d].userBarcode}`
+        console.log(`[${d}] POST ${url} (${data[d].itemBarcode}${uc})`);
         let loanObj = await post_put(authToken, url, data[d]);
         if (checkIn === 'checkin') added++;
         if (checkIn !== 'checkin') {
