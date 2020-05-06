@@ -6,7 +6,8 @@ Process the Simmons patron data export to transform into FOLIO users JSON.
        1: One or more data processing problems encountered.
        2: Configuration issues.
 
-Typical invocation: python3 simmons-patron.py -i data/20200417.txt -m uuid-map.txt -c 1000
+Typical invocation:
+python3 simmons-patron.py -i data/20200417.txt -m uuid-map.txt -c 1000
 """
 
 import argparse
@@ -35,7 +36,7 @@ def main():
     parser = argparse.ArgumentParser(
         description="Process the Simmons patron data export to transform into FOLIO users JSON.")
     parser.add_argument("-i", "--input",
-        help="Pathname to input data file (pipe-separated values).")
+        help="Pathname to input data file (tab-separated values).")
     parser.add_argument("-m", "--map",
         help="Pathname to input uuid map file (comma-separated values barcode,uuid).")
     parser.add_argument("-c", "--chunk",
@@ -46,14 +47,14 @@ def main():
         help="Pathname to data output file (JSON).")
     parser.add_argument("-e", "--errors",
         default="errors.json",
-        help="Pathname to processing errors output file (JSON). (Default: errors.json")
+        help="Pathname to processing errors output file (JSON). (Default: %(default)s)")
     parser.add_argument("-s", "--summary",
         default="summary.json",
-        help="Pathname to processing summary output file (JSON). (Default: summary.json")
+        help="Pathname to processing summary output file (JSON). (Default: %(default)s)")
     parser.add_argument("-l", "--loglevel",
         choices=["debug", "info", "warning", "error", "critical"],
         default="warning",
-        help="Logging level. (Default: warning)")
+        help="Logging level. (Default: %(default)s)")
     args = parser.parse_args()
     loglevel = LOGLEVELS.get(args.loglevel.lower(), logging.NOTSET)
     logging.basicConfig(format="%(levelname)s: %(name)s: %(message)s", level=loglevel)
