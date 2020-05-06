@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-# This script will create course reserves json files from a tsv file.
+# This script will create loans json files from a tsv file.
 # A users file is required to determine if a user exists and is active.
 
 use JSON;
