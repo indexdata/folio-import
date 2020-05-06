@@ -1,6 +1,6 @@
 /* 
 This script will grab ids from an existing items collection (most likely harvested using downloadAllItems.js) 
-and match on formerIds.
+and match on hrids.
 
 This is for the purposes of keeping static ids in order to not mess-up any service that is
 depending on them (i.e. course reserves, vufind).
@@ -25,12 +25,12 @@ const static = require(staticRecs);
 const updated = require(newRecs);
 const staticIds = {};
 static.items.forEach(s => {
-  let matchKey = s.formerIds[0];
+  let matchKey = s.hrid;
   staticIds[matchKey] = { id: s.id, hrid: s.hrid, holdingsRecordId: s.holdingsRecordId };
 });
 
 updated.items.forEach(u => {
-  let matchKey = u.formerIds[0];
+  let matchKey = u.hrid;
   if (staticIds[matchKey]) {
     u.id = staticIds[matchKey].id;
     u.hrid = staticIds[matchKey].hrid;

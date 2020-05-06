@@ -1,5 +1,5 @@
 /* 
-This script will grab ids from an existing holdingsRecords collection and match on formerIds.  
+This script will grab ids from an existing holdingsRecords collection and match on hrids.  
 This is for the purposes of keeping static ids in order to not mess-up any service that is
 depending on them (i.e. course reserves, vufind).
 
@@ -18,7 +18,7 @@ if (! (staticRecs && newRecs)) {
 
 const static = require(staticRecs);
 const updated = require(newRecs);
-let mkeys = [ 'formerIds' ];
+let mkeys = [ 'hrid' ];
 if (process.argv[4]) {
   mkeys = process.argv[4].split(/,/);
 }
