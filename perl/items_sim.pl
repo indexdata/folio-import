@@ -217,12 +217,16 @@ while (<RAW>) {
       $hrecs->{$loc_code}->{permanentLocationId} = $folio_locs->{$loc_name} or die "[$iii_num] Can't find permanentLocationId for $loc_code";
       my @url_fields = $marc->field('856');
       foreach (@url_fields) {
+        my $uri = $_->as_string('u');
+        next unless $uri;
         if (!$hrecs->{$loc_code}->{electronicAccess}) {
           $hrecs->{$loc_code}->{electronicAccess} = []; 
         } 
         my $eaObj = {};
-        $eaObj->{uri} = $_->as_string('u');
-        $eaObj->{linkText} = $_->as_string('z');
+        $eaObj->{uri} = $uri;
+        my $lt = $_->as_string('y');
+        $eaObj->{linkText} = $lt if $lt;
+        $eaObj->{publicNote} = $_->as_string('z');
         my $indval = $_->{_ind2};
         my $relname = $rel_ind->{$indval};
         $eaObj->{relationshipId} = $folio_rel->{$relname};
@@ -254,6 +258,10 @@ while (<RAW>) {
     $irec->{copyNumber} = $_->as_string('g');
     $irec->{itemLevelCallNumber} = $callno;
     $irec->{itemLevelCallNumberTypeId} = $cn_type_id;
+    $irec->{effectiveCallNumberComponents} = { callNumber => $callno, typeId => $cn_type_id };
+    if ($hrecs->{$loc_code}->{electronicAccess}) {
+      $irec->{electronicAccess} = $hrecs->{$loc_code}->{electronicAccess};
+    }
     my $status = $_->as_string('s');
     $irec->{status} = { name => $status_map->{$status} || 'Available' };
     $irec->{hrid} = $inum;
