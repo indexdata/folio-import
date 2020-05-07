@@ -54,8 +54,10 @@ const fileNames = process.argv.slice(2);
             .send(data[d]);
           added++;
         } catch (e) {
+          let postErr = e;
+          console.log('  ' + postErr.response.text);
           try {
-            console.log(`  ${e} -- Trying PUT...`);
+            console.log(`  Trying PUT...`);
             let purl = url;
             if (!purl.match(/circulation-rules-storage/)) {
               purl += '/' + data[d].id;
@@ -77,7 +79,7 @@ const fileNames = process.argv.slice(2);
             } catch (e) {
               msg = err1.message;
             }
-            console.log(`ERROR: ${msg}`);
+            console.log(`  ERROR: ${msg}`);
             errors++;
           } 
         }
