@@ -53,7 +53,8 @@ const wait = (ms) => {
     let success = 0;
     let fail = 0;
     for (let x = 0; x < limit; x++) {
-      let recUrl = config.okapi + '/instance-storage/instances' + inData[x].id;
+      let recUrl = config.okapi + '/instance-storage/instances/' + inData[x].id;
+      logger.info(`[${x}] POST ${inData[x].id} to ${actionUrl}`);
       try {
         await superagent
           .post(actionUrl)
@@ -64,15 +65,16 @@ const wait = (ms) => {
         logger.info(`Successfully added record id ${inData[x].id}`);
         success++;
       } catch (e) {
-        logger.warn(e);
-        logger.info('Trying PUT request...');
+        logger.warn(e.response.text);
+        logger.info('  Trying PUT request...');
         try {
           await superagent
             .put(recUrl)
             .send(inData[x])
             .set('x-okapi-token', authToken)
-            .set('content-type', 'application/json');
-          logger.info(`Successfully updated record id ${inData[x].id}`);
+            .set('content-type', 'application/json')
+            .set('accept', 'text/plain');
+          logger.info(`  Successfully updated record id ${inData[x].id}`);
           updated++;
         } catch (e) {
           logger.error(`${inData[x].id}: ${e.response.text}`);

@@ -20,6 +20,7 @@ let method = (argv.m && argv.m.match(/put/i)) ? 'put' : 'post';
 let startRec = 0;
 if (argv.s) {
   startRec = parseInt(argv.s, 10);
+  console.log(`Starting at ${startRec}`);
 }
 
 let collSize = 1000;
