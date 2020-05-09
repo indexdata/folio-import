@@ -57,7 +57,7 @@ const fileNames = process.argv.slice(2);
       "statisticalcodes": "statistical-codes",
       "statisticalcodetypes": "statistical-code-types",
       "permissionsusers": "perms/users",
-      "hridsettings": "hrid-settings-storage/hrid-settings"
+      "hridsettings": "hrid-settings-storage/hrid-settings",
     }
     
     for (let x = 0; x < fileNames.length; x++) {
@@ -67,13 +67,14 @@ const fileNames = process.argv.slice(2);
       if (!path) {
         path = fn;
       }
+      path = path.replace(/\d{5}$/, '');
       let url = `${config.okapi}/${path}`;
       let collStr = fs.readFileSync(`${fileNames[x]}`, 'utf8');
       let data = JSON.parse(collStr);
       let errRecs = [];
       for (d = 0; d < data.length; d++) {
         try {
-          console.log(`POST ${url}...`);
+          console.log(`[${d}] POST ${url}...`);
           let res = await superagent
             .post(url)
             .timeout({ response: 5000 })
@@ -83,7 +84,9 @@ const fileNames = process.argv.slice(2);
             .send(data[d]);
           added++;
         } catch (e) {
-          console.log(e);
+	  if (e.response) {
+            console.log(e.response.text);
+          }
           let err0 = e;
           try {
             let purl = url;
@@ -105,11 +108,11 @@ const fileNames = process.argv.slice(2);
             let err1 = e;
 	          errRecs.push(data[d]);
             try {
-              msg = e.response.res.text;
+              msg = e.response.text;
             } catch (e) {
-              msg = err1.message;
+              msg = err1;
             }
-            console.log(`ERROR: ${msg} -- ${err0} -- ${err1}`);
+            console.log(`ERROR: ${msg}`);
             errors++;
           } 
         }
