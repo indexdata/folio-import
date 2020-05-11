@@ -189,13 +189,15 @@ def main():
                     uuid_actions_map[barcode_item] = uuid_action
                 entry_action['id'] = uuid_action
             # feeFineType
-            fee_fine_type = row['Status'].strip()
-            if fee_fine_type == '':
-                fee_fine_type = 'Lost'
+            # All incoming records will now just be "Legacy Lost Item" regardless.
+            status = row['Status'].strip()
+            fee_fine_type = 'Legacy Lost Item'
+            if status == '':
+                status = fee_fine_type
             try:
-                statuses[fee_fine_type] += 1
+                statuses[status] += 1
             except KeyError:
-                statuses[fee_fine_type] = 1
+                statuses[status] = 1
             try:
                 uuid_type = uuid_types_map[fee_fine_type]
             except KeyError:
