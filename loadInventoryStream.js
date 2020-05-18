@@ -71,6 +71,8 @@ const wait = (ms) => {
         endpoint = '/holdings-storage/holdings';
       } else if (data.holdingsRecordId) {
         endpoint = '/item-storage/items';
+      } else if (data.succeedingInstanceId || data.precedingInstanceId) {
+        endpoint = '/preceding-succeeding-titles';
       } else {
         endpoint = '/instance-storage/instances';
       }

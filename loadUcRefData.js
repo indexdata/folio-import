@@ -65,6 +65,7 @@ const fileNames = process.argv.slice(2);
       "statisticalcodes": "statistical-codes",
       "statisticalcodetypes": "statistical-code-types",
       "suffixes": "orders-storage/configuration/suffixes",
+      "titles": "orders-storage/titles",
       "permissionsusers": "perms/users",
       "hridsettings": "hrid-settings-storage/hrid-settings",
     }
@@ -96,7 +97,6 @@ const fileNames = process.argv.slice(2);
 	  if (e.response) {
             console.log(e.response.text);
           }
-          let err0 = e;
           try {
             let purl = url;
             if (!purl.match(/circulation-rules-storage|hrid-settings/)) {
@@ -112,10 +112,8 @@ const fileNames = process.argv.slice(2);
               .send(data[d]);
             updated++;
           } catch (e) {
-            console.log(e);
             let msg;
-            let err1 = e;
-	          errRecs.push(data[d]);
+	    errRecs.push(data[d]);
             try {
               msg = e.response.text;
             } catch (e) {
