@@ -98,7 +98,7 @@ while (<RAW>) {
       next if $done;
     }
   }
-  last if $found >= 10;
+  # last if $found >= 10;
 }
 
 my $json_out = to_json($out, {utf8 => 1, pretty => 1});
