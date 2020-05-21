@@ -66,19 +66,20 @@ while (<RAW>) {
       }
       foreach (@pre_ids) {
         my $match = $bib_ids->{$_};
-        next if $match eq $hrid;
         $match =~ s/^\.(b\d{7}).*/$1/;
         $hrid =~ s/^\.(b\d{7}).*/$1/;
+        next if $match eq $hrid;
+        print "$hrid --> $match\n";
         if ($match) {
-          print "$hrid\n";
-          print "$_\n";
           $found++;
-          my $inst_id = $hrid2inst->{$match};
+          my $pre_inst_id = $hrid2inst->{$match};
+          my $suc_inst_id = $hrid2inst->{$hrid};
           # print "[$found] RECORD FOUND ($_ -> $match -> $inst_id)\n";
           my $pretitle = $field->as_string('atg');
           $psObj->{title} = $pretitle;
           $psObj->{hrid} = $hrid;
-          $psObj->{precedingInstanceId} = $inst_id;
+          $psObj->{precedingInstanceId} = $pre_inst_id;
+          $psObj->{succeedingInstanceId} = $suc_inst_id;
           $psObj->{identifiers} = [];
           foreach my $sn ($field->subfield('x')) {
             my $identObj = { value => $sn, identifierTypeId => '913300b2-03ed-469a-8179-c1092c991227' };
