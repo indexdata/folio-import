@@ -1,8 +1,9 @@
 #! /usr/bin/perl
 
-use MARC::Record;
-use Data::Dumper;
 use JSON;
+use MARC::Record;
+use File::Basename;
+use Data::Dumper;
 
 binmode STDOUT, ":utf8";
 
@@ -11,10 +12,11 @@ if (! -e $infile) {
   die "Can't find marc file!\n"
 }
 
+my $path = dirname($infile);
+
 my $start = shift || 1;
 
-my $bibids = $infile;
-$bibids =~ s/^(.+)\/.*/$1\/bib_ids.txt/;
+$bibids = "$path/bib_ids.txt";
 open BID, $bibids or die "Can't open bib id file at '$bibids'";
 my $bib_ids = {};
 print "Loading IDs map...\n";
@@ -24,11 +26,9 @@ while (<BID>) {
   $bib_ids->{$b[0]} = $b[1];
 }
 
-
-my $file = $infile;
-$file =~ s/^(.+)\/.*/$1\/inst2holdingsMap.json/;
+my $i2hfile = "$path/inst2holdingsMap.json";
 $/ = '';
-open INST, $file or die "Can't open $file!";
+open INST, $i2hfile or die "Can't open $i2hfile!";
 print "Loading hrid to instanceId map...\n";
 my $txt = <INST>;
 my $hrid2inst = decode_json($txt);
@@ -69,9 +69,9 @@ while (<RAW>) {
         $match =~ s/^\.(b\d{7}).*/$1/;
         $hrid =~ s/^\.(b\d{7}).*/$1/;
         next if $match eq $hrid;
-        print "$hrid --> $match\n";
         if ($match) {
           $found++;
+          print "$found matches found ($hrid --> $_ --> $match)\n";
           my $pre_inst_id = $hrid2inst->{$match};
           my $suc_inst_id = $hrid2inst->{$hrid};
           # print "[$found] RECORD FOUND ($_ -> $match -> $inst_id)\n";
@@ -101,4 +101,9 @@ while (<RAW>) {
   last if $found >= 10;
 }
 
-print to_json($out, {utf8 => 1, pretty => 1});
+my $json_out = to_json($out, {utf8 => 1, pretty => 1});
+my $out_file = "$path/presuc.json";
+print "Writing $found records to $out_file\n";
+open OUT, ">:encoding(UTF-8)", $out_file or die "Can't open $out_file for writing";
+print OUT $json_out;
+close OUT;
