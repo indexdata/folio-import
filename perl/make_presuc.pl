@@ -53,11 +53,11 @@ while (<RAW>) {
   my $marc = MARC::Record->new_from_usmarc($raw);
   my $hrid = $marc->subfield('907', 'a');
   if ($marc->field('780')) {
-    my $psObj = {};
-    my @pre_ids;
     my $done = 0;
     foreach ($marc->field('780')) {
+      my @pre_ids;
       my $field = $_;
+      # print "--------------------\n" . $field->as_formatted() . "\n";
       foreach ($_->subfield('w')) {
         push @pre_ids, $_;
       }
@@ -70,11 +70,12 @@ while (<RAW>) {
         $hrid =~ s/^\.(b\d{7}).*/$1/;
         next if $match eq $hrid;
         if ($match) {
+          my $psObj = {};
           $found++;
-          print "$found matches found ($hrid --> $_ --> $match)\n";
+          print "$found matches found (preceding $match --> $_ --> succeeding $hrid)\n";
           my $pre_inst_id = $hrid2inst->{$match};
           my $suc_inst_id = $hrid2inst->{$hrid};
-          # print "[$found] RECORD FOUND ($_ -> $match -> $inst_id)\n";
+          # print "$pre_inst_id -> $suc_inst_id\n";
           my $pretitle = $field->as_string('atg');
           $psObj->{title} = $pretitle;
           $psObj->{hrid} = $hrid;
@@ -90,12 +91,9 @@ while (<RAW>) {
             push @{ $psObj->{identifiers} }, $identObj;
           }
           push @{ $out->{precedingSucceedingTitles} }, $psObj;
-          # print "$hrid $pretitle\n";
-          $done = 1;
+          last;
         }
-        last if $done;
       }
-      next if $done;
     }
   }
   # last if $found >= 10;
@@ -107,3 +105,5 @@ print "Writing $found records to $out_file\n";
 open OUT, ">:encoding(UTF-8)", $out_file or die "Can't open $out_file for writing";
 print OUT $json_out;
 close OUT;
+
+# print $json_out;
