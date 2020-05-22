@@ -9,4 +9,4 @@ if [ $1 ]
   Q="&query=${1}"
 fi
 
-curl --http1.1 -w '\n' "${OKAPI}/inventory/instances?limit=100${Q}" -H "x-okapi-token: ${TOKEN}"
+curl --http1.1 -w '\n' "${OKAPI}/instance-storage/instances?limit=100${Q}" -H "x-okapi-token: ${TOKEN}"
