@@ -14,6 +14,9 @@
 # This script will output a single instances collection and will be saved to the same
 # directory as the raw marc file.
 
+use strict;
+use warnings;
+
 use MARC::Record;
 use Data::Dumper;
 use JSON;
@@ -57,9 +60,9 @@ sub getRefData {
     if ($@) {
       print "WARN $_ is not valid JSON!\n";
     } else {
-      foreach (keys $json) {
+      foreach (keys %$json) {
         if ($_ ne 'totalRecords') {
-          $refroot = $_;
+          my $refroot = $_;
           $refobj->{$refroot} = {};
           foreach (@{ $json->{$_} }) {
             my $name;
@@ -130,7 +133,7 @@ sub process_entity {
         $d = $field->data();
       }
       push @data, $d;
-      $ent->{applyRulesOnConcatenatedData} = true;
+      $ent->{applyRulesOnConcatenatedData} = JSON::true;
     } elsif ($default || ($func_type =~ /\bset_/ && $params)) {
       my $add = 0;
       if (!$subs) {
@@ -220,7 +223,7 @@ sub process_entity {
       } elsif ($_ eq 'set_instance_format_id') {
         $out = $refdata->{instanceFormats}->{$out} || '';
       } elsif ($_ eq 'set_publisher_role') {
-        $ind2 = $field->indicator(2);
+        my $ind2 = $field->indicator(2);
         $out = $pub_roles->{$ind2} || '';
       } elsif ($_ eq 'capitalize') {
         $out = ucfirst $out;
@@ -345,8 +348,8 @@ foreach (@ARGV) {
       physicalDescriptions => [],
       languages => [],
       notes => [],
-      staffSuppress => false,
-      discoverySuppress => false,
+      staffSuppress => JSON::false,
+      discoverySuppress => JSON::false,
       statisticalCodeIds => [],
       tags => {},
       holdingsRecords2 => [],
@@ -415,12 +418,13 @@ foreach (@ARGV) {
             my $data = process_entity($field, $_);
             next unless $data;
             if ($flavor eq 'array') {
+              my $first_targ_data = $rec->{$targ[0]};
               if ($_->{subFieldSplit}) { # subFieldSplit is only used for one field, 041, which may have a lang string like engfreger.
                 my $val = $_->{subFieldSplit}->{value};
                 my @splitdata = $data =~ /(\w{$val})/g;
-                push $rec->{$targ[0]}, @splitdata;
+                push @$first_targ_data, @splitdata;
               } else {
-                push $rec->{$targ[0]}, $data;
+                push @$first_targ_data, $data;
               }
             } elsif ($flavor eq 'array.object') {
               $data_obj->{$targ[0]}->{$targ[1]} = $data;
@@ -430,9 +434,9 @@ foreach (@ARGV) {
               $rec->{$targ[0]} = $data;
             }
           }
-          foreach (keys $data_obj) {
+          foreach (keys %$data_obj) {
             if ($ftypes->{$_} eq 'array.object') {
-              push $rec->{$_}, $data_obj->{$_};
+              push @{ $rec->{$_} }, $data_obj->{$_};
             }
           }
         }
@@ -457,7 +461,7 @@ foreach (@ARGV) {
     print "Processing #$count " . substr($rec->{title}, 0, 60) . "\n";
   }
   
-  $out = JSON->new->pretty->encode($coll);
+  my $out = JSON->new->pretty->encode($coll);
   # print $out;
   open OUT, ">:encoding(UTF-8)", $save_path;
   print OUT $out;
