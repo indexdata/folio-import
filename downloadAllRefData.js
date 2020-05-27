@@ -86,8 +86,9 @@ let refDir = process.argv[2];
     }
 
     for (let x = 0; x < paths.length; x++) {
+      let saveDir = paths[x].mod.toLowerCase();
       paths[x].path = paths[x].path.replace(/\*/g, '');
-      let fileName = paths[x].path.replace(/\//g, '%2F');
+      let fileName = paths[x].path.replace(/\//g, '__');
       fileName = fileName.replace(/\?.+$/, '');
       console.log(`Fetching ${paths[x].path}...`);
       let url = `${config.okapi}/${paths[x].path}`;
@@ -103,7 +104,13 @@ let refDir = process.argv[2];
           .set('accept', 'application/json')
           .set('x-okapi-token', authToken);
         let jsonStr = JSON.stringify(res.body, null, 2);
-        fs.writeFileSync(`${refDir}/${paths[x].mod}:${fileName}.json`, jsonStr);
+        let fullSaveDir = refDir + saveDir;
+        console.log(fullSaveDir);
+        if (!fs.existsSync(fullSaveDir)) {
+          console.log(`Creating directory for ${saveDir}`);
+          fs.mkdirSync(fullSaveDir);
+        }
+        fs.writeFileSync(`${fullSaveDir}/${fileName}.json`, jsonStr);
         if (paths[x].path == 'service-points') {
           res.body.servicepoints.forEach(sp => {
             paths.push({ path: `calendar/periods/${sp.id}/period?withOpeningDays=true&showPast=true&showExceptional=false`, mod: 'Calendar_module' });
