@@ -55,8 +55,14 @@ let refDir = process.argv[2];
       '/patron-action-session-storage/patron-action-sessions': true,
       '/source-storage/records': true,
       '/source-storage/sourceRecords': true,
+      '/source-storage/snapshots': true,
       '/check-in-storage/check-ins': true,
-      '/scheduled-notice-storage__scheduled-notices': true
+      '/scheduled-notice-storage/scheduled-notices': true,
+      '/accounts': true,
+      '/feefineactions': true,
+      '/coursereserves/reserves': true,
+      '/coursereserves/courses': true,
+      '/coursereserves/courselistings': true
     }
 
     priority = [
