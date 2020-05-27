@@ -26,6 +26,7 @@ const fileNames = process.argv.slice(2);
 
       path = path.replace(/__/g, '/');
       path = path.replace(/\.json$/, '');
+      path = path.replace(/^\d+-/, '');
       let url = `${config.okapi}/${path}`;
       let collStr = fs.readFileSync(`${fileNames[x]}`, 'utf8');
       let coll = JSON.parse(collStr);

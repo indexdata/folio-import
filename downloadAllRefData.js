@@ -56,6 +56,13 @@ let refDir = process.argv[2];
       '/source-storage/records': true,
       '/source-storage/sourceRecords': true
     }
+
+    priority = [
+      'location-units__institutions',
+      'location-units__campuses',
+      'location-units__libraries',
+      'locations'
+    ]
     
     let paths = [];
 
@@ -109,6 +116,10 @@ let refDir = process.argv[2];
         if (!fs.existsSync(fullSaveDir)) {
           console.log(`Creating directory: ${saveDir}`);
           fs.mkdirSync(fullSaveDir);
+        }
+        let p = priority.indexOf(fileName);
+        if (p > -1) {
+          fileName = `${p}-${fileName}`;
         }
         fs.writeFileSync(`${fullSaveDir}/${fileName}.json`, jsonStr);
         if (paths[x].path == 'service-points') {
