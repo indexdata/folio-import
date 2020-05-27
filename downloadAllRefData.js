@@ -44,6 +44,7 @@ let refDir = process.argv[2];
       '/item-storage/items': true,
       '/holdings-storage/holdings': true,
       '/instance-storage/instances': true,
+      '/instance-bulk/ids': true,
       '/shelf-locations': true,
       '/users': true,
       '/proxiesfor': true,
