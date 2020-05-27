@@ -44,6 +44,7 @@ let refDir = process.argv[2];
       '/item-storage/items': true,
       '/holdings-storage/holdings': true,
       '/instance-storage/instances': true,
+      '/shelf-locations': true,
       '/users': true,
       '/proxiesfor': true,
       '/notes': true,
@@ -105,9 +106,8 @@ let refDir = process.argv[2];
           .set('x-okapi-token', authToken);
         let jsonStr = JSON.stringify(res.body, null, 2);
         let fullSaveDir = refDir + saveDir;
-        console.log(fullSaveDir);
         if (!fs.existsSync(fullSaveDir)) {
-          console.log(`Creating directory for ${saveDir}`);
+          console.log(`Creating directory: ${saveDir}`);
           fs.mkdirSync(fullSaveDir);
         }
         fs.writeFileSync(`${fullSaveDir}/${fileName}.json`, jsonStr);
