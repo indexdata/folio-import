@@ -63,6 +63,7 @@ const fileNames = process.argv.slice(2);
       "orderitems": "orders-storage/po-lines",
       "orders": "orders-storage/purchase-orders",
       "ordertemplates": "orders-storage/order-templates",
+      "payments": "feefineactions",
       "permissions": "perms/permissions",
       "prefixes": "orders-storage/configuration/prefixes",
       "proxies": "proxiesfor",
