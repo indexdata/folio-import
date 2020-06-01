@@ -119,7 +119,10 @@ sub process_entity {
     my $params;
     my $tag = $field->tag();
     my $func_type;
-    my $subs = join '', @{ $ent->{subfield} };
+    my $subs;
+    if ($ent->{subfield}) {
+      $subs = join '', @{ $ent->{subfield} };
+    }
     foreach (@rules) {
       foreach (@{ $_->{conditions} }) {
         $func_type = $_->{type};
@@ -400,7 +403,10 @@ foreach (@ARGV) {
               $new_field->add_subfields($code => $sdata );
             }
             $i++;
-            my ($ncode) = @{ $subs[$i] };
+            my $ncode;
+            if ($subs[$i]) {
+              ($ncode) = @{ $subs[$i] };
+            }
             push @marc_fields, $new_field if (index($all_codes, $ncode) != -1 && $new_field->{_tag}) || $ncode eq undef;
           }
           next MARC_FIELD;
@@ -429,8 +435,12 @@ foreach (@ARGV) {
             if ($required[0] && !$field->subfield($required[0])) {
               next;
             }
-            my @targ = split /\./, $_->{target};
-            my $flavor = $ftypes->{$targ[0]};
+            my @targ;
+            my $flavor;
+            if ($_->{target}) {
+              @targ = split /\./, $_->{target};
+              $flavor = $ftypes->{$targ[0]};
+            }
             my $data = process_entity($field, $_);
             next unless $data;
             if ($flavor eq 'array') {
