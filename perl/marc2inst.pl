@@ -110,7 +110,10 @@ sub process_entity {
     my $ent = shift;
     my @data;
     my $out;
-    my @rules = @{ $ent->{rules} };
+    my @rules;
+    if ($ent->{rules}) {
+      @rules = @{ $ent->{rules} };
+    }
     my @funcs;
     my $default;
     my $params;
@@ -134,7 +137,7 @@ sub process_entity {
       }
       push @data, $d;
       $ent->{applyRulesOnConcatenatedData} = JSON::true;
-    } elsif ($default || ($func_type =~ /\bset_/ && $params)) {
+    } elsif ($default || ($func_type && $func_type =~ /\bset_/ && $params)) {
       my $add = 0;
       if (!$subs) {
         $add = 1;
@@ -363,7 +366,17 @@ foreach (@ARGV) {
     my $ldr = $marc->leader();
     my $blevel = substr($ldr, 7, 1);
     my $mode_name = $blvl->{$blevel} || 'Other';
-    $rec->{modeOfIssuanceId} = $refdata->{issuanceModes}->{$mode_name};
+
+    # So somewhere along the ling, FOLIO started returning modes names in lowercase, so we had better accound for that;
+    my $lc_mode_name = lc $mode_name;
+    if ($lc_mode_name eq 'monograph') { $lc_mode_name = 'single unit'}
+    if ($refdata->{issuanceModes}->{$mode_name}) {
+      $rec->{modeOfIssuanceId} = $refdata->{issuanceModes}->{$mode_name};
+    } elsif ($refdata->{issuanceModes}->{$lc_mode_name}) {
+      $rec->{modeOfIssuanceId} = $refdata->{issuanceModes}->{$lc_mode_name};
+    } else {
+      $rec->{modeOfIssuanceId} = $refdata->{issuanceModes}->{unspecified};
+    }
     my @marc_fields = $marc->fields();
     MARC_FIELD: foreach (@marc_fields) {
       my $field = $_;
@@ -409,7 +422,10 @@ foreach (@ARGV) {
           my @entity = @$_;
           my $data_obj = {};
           foreach (@entity) {
-            my @required = @{ $_->{requiredSubfield} };
+            my @required;
+            if ( $_->{requiredSubfield} ) {
+              @required = @{ $_->{requiredSubfield} };
+            }
             if ($required[0] && !$field->subfield($required[0])) {
               next;
             }
@@ -446,19 +462,13 @@ foreach (@ARGV) {
     $rec->{subjects} = dedupe(@{ $rec->{subjects} });
     $rec->{languages} = dedupe(@{ $rec->{languages} });
     $rec->{series} = dedupe(@{ $rec->{series} });
-    # my $clean_rec = {};
-    # foreach my $k (keys %{ $rec }) {
-    #  if ($ftypes->{$k} =~ /^array/ && $rec->{$k}[0]) {
-    #    $clean_rec->{$k} = $rec->{$k};
-    #  } elsif ($ftypes->{$k} =~ /^(string|boolean|object)/){
-    #    $clean_rec->{$k} = $rec->{$k};
-    #  }
-    # }
+    
     if ($save_ids) {
       print IDMAP "$rec->{hrid}\t$rec->{id}\n";
     }
     push @{ $coll->{instances} }, $rec;
     print "Processing #$count " . substr($rec->{title}, 0, 60) . "\n";
+    # last if $count == 10;
   }
   
   my $out = JSON->new->pretty->encode($coll);
