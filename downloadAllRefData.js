@@ -115,6 +115,9 @@ let refDir = process.argv[2];
       } else if (!url.match(/\?/)) {
         url += '?limit=2000';
       } 
+      if (url.match(/data-import-profiles/)) {
+        url += '&withRelations=true';
+      }
       try {
         let res = await superagent
           .get(url)
