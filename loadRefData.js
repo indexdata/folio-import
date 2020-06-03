@@ -18,9 +18,8 @@ const fileNames = process.argv.slice(2);
     for (let x = 0; x < fileNames.length; x++) {
       let refDir = fileNames[x].replace(/^(.+\/).+/, '$1');
       let doneDir = refDir + 'Done';
-      if (!fs.existsSync(doneDir)) {
-        fs.mkdirSync(doneDir);
-      }
+      let errDir = refDir + 'Err';
+      
       let path = fileNames[x].replace(/^.+\//, '');
       let name = path;
 
@@ -44,6 +43,9 @@ const fileNames = process.argv.slice(2);
         data.push(coll);
       }
       for (d = 0; d < data.length; d++) {
+        if (path.match(/data-import-profiles.+Profiles/)) {
+          data[d] = { profile: data[d] };
+        }
         try {
           console.log(`POST ${url}...`);
           let res = await superagent
@@ -85,7 +87,13 @@ const fileNames = process.argv.slice(2);
           } 
         }
       }
-      fs.renameSync(fileNames[x], doneDir + '/' + name);
+      if (errors == 0) {
+        if (!fs.existsSync(doneDir)) fs.mkdirSync(doneDir);
+        fs.renameSync(fileNames[x], doneDir + '/' + name);
+      } else {
+        if (!fs.existsSync(errDir)) fs.mkdirSync(errDir);
+        fs.renameSync(fileNames[x], errDir + '/' + name);
+      }
     } 
     console.log(`Added:   ${added}`);
     console.log(`Updated: ${updated}`);
