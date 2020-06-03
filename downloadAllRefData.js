@@ -37,6 +37,7 @@ let refDir = process.argv[2];
       'https://raw.githubusercontent.com/folio-org/mod-data-import/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-source-record-storage/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-courses/master/descriptors/ModuleDescriptor-template.json',
+      'https://raw.githubusercontent.com/folio-org/mod-data-import-converter-storage/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-custom-fields/master/descriptors/ModuleDescriptor-template.json'
     ]
 
