@@ -5838,7 +5838,7 @@
                   {
                      "conditions" : [
                         {
-                           "type" : "trim_period, trim"
+                           "type" : "remove_ending_punc, trim"
                         }
                      ]
                   }
@@ -5938,7 +5938,7 @@
                   {
                      "conditions" : [
                         {
-                           "type" : "trim_period, trim"
+                           "type" : "remove_ending_punc, trim"
                         }
                      ]
                   }
