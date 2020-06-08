@@ -53,7 +53,7 @@ while (<TSV>) {
   s/\r//g;
   $line++;
   next if $line == 1;
-  my ($bc, $ldate, $due, $au, $ti, $pname, $userbc) = split /\t/;
+  my ($bc, $ldate, $due, $au, $ti, $call, $pname, $userbc) = split /\t/;
   if ($ldate !~ /\d:\d/) {
     $ldate = "$ldate 12:00:00";
   } else {
