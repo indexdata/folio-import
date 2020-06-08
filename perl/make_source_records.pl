@@ -75,7 +75,7 @@ foreach (@ARGV) {
     $srs->{rawRecord} = { id=>uuid(), content=>$raw };
     $srs->{parsedRecord} = { id=>uuid(), content=>$parsed };
     $srs->{externalIdsHolder} = { instanceId=>$id_map->{$control_num} };
-    push $srs_recs->{records}, $srs;
+    push @{ $srs_recs->{records} }, $srs;
   }
   $out = JSON->new->pretty->encode($srs_recs);
   open OUT, ">:encoding(UTF-8)", $save_path;
