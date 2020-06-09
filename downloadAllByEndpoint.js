@@ -1,7 +1,7 @@
 const fs = require('fs');
 const superagent = require('superagent');
 const { getAuthToken } = require('./lib/login');
-let endPoint = process.argv[2];
+let ep = process.argv[2];
 let refDir = process.argv[3];
 let start = parseInt(process.argv[4], 10);
 let limit = parseInt(process.argv[5], 10);
@@ -9,7 +9,7 @@ let limit = parseInt(process.argv[5], 10);
 (async () => {
   try {
     if (!refDir) {
-      throw new Error('Usage: node downloadAllByEndpoint.js <endpoint> <download_dir> [ <start> <stop> ]');
+      throw new Error('Usage: node downloadAllByEndpoint.js <endpoint[.field,field,field...]> <download_dir> [ <start> <stop> ]');
     } else if (!fs.existsSync(refDir)) {
       throw new Error('Reference directory does\'t exist!');
     } else if (!fs.lstatSync(refDir).isDirectory()) {
@@ -20,6 +20,13 @@ let limit = parseInt(process.argv[5], 10);
     const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
 
     refDir = refDir.replace(/\/$/,'');
+
+    let epf = ep.split(/\./);
+    let endPoint = epf[0];
+    let fields = [];
+    if (epf[1]) {
+      fields = epf[1].split(/,/);
+    }
 
     const actionUrl = config.okapi + '/' + endPoint;
     const filename = endPoint.replace(/\//g, '__');
@@ -43,9 +50,19 @@ let limit = parseInt(process.argv[5], 10);
             prop = x;
           }
         }
-        console.log(prop);
         if (!coll[prop]) {
           coll[prop] = [];
+        }
+        if (fields[0]) {
+          for (let r = 0; r < res.body[prop].length; r++) {
+            let rec = res.body[prop][r];
+            let data = {};
+            for (let f = 0; f < fields.length; f++) {
+              let fname = fields[f];
+              data[fname] = rec[fname];
+            }
+            res.body[prop][r] = data;
+          }
         }
         coll[prop] = coll[prop].concat(res.body[prop]);
         totFetch = coll[prop].length;
