@@ -17,7 +17,7 @@ my $path = dirname($infile);
 my $start = shift || 1;
 
 $bibids = "$path/bib_ids.txt";
-open BID, $bibids or die "Can't open bib id file at '$bibids'";
+open BID, $bibids or die "Can't open bib id file at '$bibids'.  HINT: Run index_ids.pl";
 my $bib_ids = {};
 print "Loading IDs map...\n";
 while (<BID>) {
@@ -52,51 +52,55 @@ while (<RAW>) {
   $raw = $_;
   my $marc = MARC::Record->new_from_usmarc($raw);
   my $hrid = $marc->subfield('907', 'a');
+  $hrid =~ s/^\.(b\d{7}).*/$1/;
   if ($marc->field('780')) {
     my $done = 0;
     foreach ($marc->field('780')) {
+      my $psObj = {};
       my @pre_ids;
       my $field = $_;
-      # print "--------------------\n" . $field->as_formatted() . "\n";
+      my $pretitle = $field->as_string('atg');
+      $psObj->{title} = $pretitle;
+      my $suc_inst_id = $hrid2inst->{$hrid};
+      $psObj->{succeedingInstanceId} = $suc_inst_id;
+      $psObj->{identifiers} = [];
+      foreach my $sn ($field->subfield('x')) {
+        my $identObj = { value => $sn, identifierTypeId => '913300b2-03ed-469a-8179-c1092c991227' };
+        push @{ $psObj->{identifiers} }, $identObj;
+      }
+      foreach my $bn ($field->subfield('z')) {
+        my $identObj = { value => $bn, identifierTypeId => '8261054f-be78-422d-bd51-4ed9f33c3422' };
+        push @{ $psObj->{identifiers} }, $identObj;
+      }
       foreach ($_->subfield('w')) {
         push @pre_ids, $_;
       }
       foreach ($_->subfield('x')) {
         push @pre_ids, "(ISSN)$_";
       }
+      my $in_cat = 0;
       foreach (@pre_ids) {
         my $match = $bib_ids->{$_};
         $match =~ s/^\.(b\d{7}).*/$1/;
-        $hrid =~ s/^\.(b\d{7}).*/$1/;
         next if $match eq $hrid;
         if ($match) {
-          my $psObj = {};
           $found++;
           print "$found matches found (preceding $match --> $_ --> succeeding $hrid)\n";
           my $pre_inst_id = $hrid2inst->{$match};
-          my $suc_inst_id = $hrid2inst->{$hrid};
-          # print "$pre_inst_id -> $suc_inst_id\n";
-          my $pretitle = $field->as_string('atg');
-          $psObj->{title} = $pretitle;
           $psObj->{hrid} = $hrid;
           $psObj->{precedingInstanceId} = $pre_inst_id;
-          $psObj->{succeedingInstanceId} = $suc_inst_id;
-          $psObj->{identifiers} = [];
-          foreach my $sn ($field->subfield('x')) {
-            my $identObj = { value => $sn, identifierTypeId => '913300b2-03ed-469a-8179-c1092c991227' };
-            push @{ $psObj->{identifiers} }, $identObj;
-          }
-          foreach my $bn ($field->subfield('z')) {
-            my $identObj = { value => $bn, identifierTypeId => '8261054f-be78-422d-bd51-4ed9f33c3422' };
-            push @{ $psObj->{identifiers} }, $identObj;
-          }
           push @{ $out->{precedingSucceedingTitles} }, $psObj;
+          $in_cat = 1;
           last;
         }
       }
+      if (!$in_cat) {
+        push @{ $out->{precedingSucceedingTitles} }, $psObj;
+        print "Not in cat!\n"
+      }
     }
   }
-  # last if $found >= 10;
+  last if $found >= 10;
 }
 
 my $json_out = to_json($out, {utf8 => 1, pretty => 1});
