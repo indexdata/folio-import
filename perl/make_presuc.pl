@@ -119,21 +119,21 @@ while (<RAW>) {
       push @{ $out->{precedingSucceedingTitles} }, $psObj;
     }
   }
-  last if $found >= 10;
+  # last if $found >= 10;
 }
 
 # Dedupe preceding titles
 my $dedupe = {};
-my $fauxid = 0;
+my $fake_id = 0;
 foreach (@{ $out->{precedingSucceedingTitles} }) {
-  $fuaxid++;
+  $fake_id++;
   my $pre_id = $_->{precedingInstanceId};
   if ($pre_id) {
     if (!$dedupe->{$pre_id} || ($dedupe->{$pre_id} && $_->{succeedingInstanceId})) {
       $dedupe->{$pre_id} = $_;
     }
   } else {
-    $dedupe->{$fauxid} = $_;
+    $dedupe->{$fake_id} = $_;
   }
 }
 $out = { precedingSucceedingTitles => [] };
