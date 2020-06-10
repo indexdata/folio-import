@@ -54,12 +54,11 @@ while (<RAW>) {
   my $hrid = $marc->subfield('907', 'a');
   $hrid =~ s/^\.(b\d{7}).*/$1/;
   if ($marc->field('780')) {
-    my $done = 0;
     foreach ($marc->field('780')) {
       my $psObj = {};
       my @pre_ids;
       my $field = $_;
-      my $pretitle = $field->as_string('atg');
+      my $pretitle = $field->as_string('tg');
       $psObj->{title} = $pretitle;
       my $suc_inst_id = $hrid2inst->{$hrid};
       $psObj->{succeedingInstanceId} = $suc_inst_id;
@@ -96,12 +95,52 @@ while (<RAW>) {
       }
       if (!$in_cat) {
         push @{ $out->{precedingSucceedingTitles} }, $psObj;
-        print "Not in cat!\n"
       }
+    }
+  }
+  if ($marc->field('785')) {
+    foreach ($marc->field('785')) {
+      next if $linked->{$hrid};
+      my $psObj = {};
+      my $field = $_;
+      my $suctitle = $field->as_string('atg');
+      $psObj->{title} = $suctitle;
+      my $pre_inst_id = $hrid2inst->{$hrid};
+      $psObj->{precedingInstanceId} = $pre_inst_id;
+      $psObj->{identifiers} = [];
+      foreach my $sn ($field->subfield('x')) {
+        my $identObj = { value => $sn, identifierTypeId => '913300b2-03ed-469a-8179-c1092c991227' };
+        push @{ $psObj->{identifiers} }, $identObj;
+      }
+      foreach my $bn ($field->subfield('z')) {
+        my $identObj = { value => $bn, identifierTypeId => '8261054f-be78-422d-bd51-4ed9f33c3422' };
+        push @{ $psObj->{identifiers} }, $identObj;
+      }
+      push @{ $out->{precedingSucceedingTitles} }, $psObj;
     }
   }
   last if $found >= 10;
 }
+
+# Dedupe preceding titles
+my $dedupe = {};
+my $fauxid = 0;
+foreach (@{ $out->{precedingSucceedingTitles} }) {
+  $fuaxid++;
+  my $pre_id = $_->{precedingInstanceId};
+  if ($pre_id) {
+    if (!$dedupe->{$pre_id} || ($dedupe->{$pre_id} && $_->{succeedingInstanceId})) {
+      $dedupe->{$pre_id} = $_;
+    }
+  } else {
+    $dedupe->{$fauxid} = $_;
+  }
+}
+$out = { precedingSucceedingTitles => [] };
+foreach (keys %{ $dedupe }) {
+  push @{ $out->{precedingSucceedingTitles} }, $dedupe->{$_};
+}
+$dedup = {};
 
 my $json_out = to_json($out, {utf8 => 1, pretty => 1});
 my $out_file = "$path/presuc.json";
