@@ -23,7 +23,6 @@ const dbName = 'uc';
 	  delete poLine._id;
 	  recs[x].compositePoLines.push(poLine);
         }
-	if (x === 100) { break };
     }
     await client.close();
     fs.writeFileSync(path, JSON.stringify(recs, null, 2));

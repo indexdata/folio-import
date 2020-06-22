@@ -103,9 +103,13 @@ const fileNames = process.argv.slice(2);
             .send(data[d]);
           added++;
         } catch (e) {
+	  errRecs.push(data[d]);
 	  if (e.response) {
             console.log(e.response.text);
+          } else {
+            console.log(e);
           }
+/*
           try {
             let purl = url;
             if (!purl.match(/circulation-rules-storage|hrid-settings/)) {
@@ -131,6 +135,7 @@ const fileNames = process.argv.slice(2);
             console.log(`ERROR: ${msg}`);
             errors++;
           } 
+*/
         }
       }
       if (errRecs.length > 0) {
