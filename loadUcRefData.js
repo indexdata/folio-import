@@ -2,6 +2,7 @@ const fs = require('fs');
 const superagent = require('superagent');
 const { getAuthToken } = require('./lib/login');
 const fileNames = process.argv.slice(2);
+const noPut = process.env.REF_NOPUT;
 
 (async () => {
   let added = 0;
@@ -93,7 +94,7 @@ const fileNames = process.argv.slice(2);
       let errRecs = [];
       for (d = 0; d < data.length; d++) {
         try {
-          console.log(`[${d}] POST ${url}...`);
+          console.log(`[${d}] POST ${data[d].id} to ${url}`);
           let res = await superagent
             .post(url)
             .timeout({ response: 5000 })
@@ -103,39 +104,41 @@ const fileNames = process.argv.slice(2);
             .send(data[d]);
           added++;
         } catch (e) {
-	  errRecs.push(data[d]);
 	  if (e.response) {
             console.log(e.response.text);
           } else {
             console.log(e);
           }
-/*
-          try {
-            let purl = url;
-            if (!purl.match(/circulation-rules-storage|hrid-settings/)) {
-              purl += '/' + data[d].id;
-            }
-            console.log(`  PUT ${purl}...`);
-            let res = await superagent
-              .put(purl)
-              .timeout({ response: 5000 })
-              .set('accept', 'text/plain')
-              .set('x-okapi-token', authToken)
-              .set('content-type', 'application/json')
-              .send(data[d]);
-            updated++;
-          } catch (e) {
-            let msg;
+	  if (noPut) {
 	    errRecs.push(data[d]);
-            try {
-              msg = e.response.text;
-            } catch (e) {
-              msg = err1;
-            }
-            console.log(`ERROR: ${msg}`);
             errors++;
-          } 
-*/
+          } else {
+            try {
+              let purl = url;
+              if (!purl.match(/circulation-rules-storage|hrid-settings/)) {
+                purl += '/' + data[d].id;
+              }
+              console.log(`  PUT ${purl}...`);
+              let res = await superagent
+                .put(purl)
+                .timeout({ response: 5000 })
+                .set('accept', 'text/plain')
+                .set('x-okapi-token', authToken)
+                .set('content-type', 'application/json')
+                .send(data[d]);
+              updated++;
+            } catch (e) {
+              let msg;
+	      errRecs.push(data[d]);
+              try {
+                msg = e.response.text;
+              } catch (e) {
+                msg = err1;
+              }
+              console.log(`ERROR: ${msg}`);
+              errors++;
+            } 
+          }
         }
       }
       if (errRecs.length > 0) {
