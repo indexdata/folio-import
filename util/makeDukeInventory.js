@@ -28,6 +28,7 @@ try {
     console.log(`Rec# ${c}`);
     let json = JSON.parse(line);
     insts.instances.push(json.bibInv);
+    srs.records.push(json.bibSource);
     json.holdings.forEach(h => {
       holds.holdingsRecords.push(h.invHold);
       h.items.forEach(i => {
@@ -40,9 +41,11 @@ try {
     const instFile = `${wd}/${fn}_instances.json`;
     const holdFile = `${wd}/${fn}_holdings.json`;
     const itemFile = `${wd}/${fn}_items.json`;
+    const srsFile = `${wd}/${fn}_srs.json`;
     fs.writeFileSync(instFile, JSON.stringify(insts, null, 2));
     fs.writeFileSync(holdFile, JSON.stringify(holds, null, 2));
     fs.writeFileSync(itemFile, JSON.stringify(items, null, 2));
+    fs.writeFileSync(srsFile, JSON.stringify(srs, null, 2));
   });
   
 
