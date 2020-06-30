@@ -52,6 +52,7 @@ const noPut = process.env.REF_NOPUT;
       "ledgerfiscalyears": "finance-storage/ledger-fiscal-years",
       "ledgers": "finance-storage/ledgers",
       "libraries": "location-units/libraries",
+      "loans": "loan-storage/loans",
       "loantypes": "loan-types",
       "locations": "locations",
       "logins": "authn/credentials",
