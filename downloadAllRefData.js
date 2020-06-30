@@ -38,7 +38,8 @@ let refDir = process.argv[2];
       'https://raw.githubusercontent.com/folio-org/mod-source-record-storage/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-courses/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-data-import-converter-storage/master/descriptors/ModuleDescriptor-template.json',
-      'https://raw.githubusercontent.com/folio-org/mod-custom-fields/master/descriptors/ModuleDescriptor-template.json'
+      'https://raw.githubusercontent.com/folio-org/mod-custom-fields/master/descriptors/ModuleDescriptor-template.json',
+      'https://raw.githubusercontent.com/folio-org/mod-licenses/master/service/src/main/okapi/ModuleDescriptor-template.json'
     ]
 
     const skipList = {
@@ -82,6 +83,7 @@ let refDir = process.argv[2];
         let res = await superagent.get(url);
         let md = JSON.parse(res.text);
         let name = md.name.replace(/ +/g, '_');
+	if (url.match(/mod-licenses/)) name = 'licenses'; // for some reason, mod-licenses doesn't have a name
         let prov = md.provides;
         for (let x = 0; x < prov.length; x++) {
           let hand = prov[x].handlers;
@@ -111,7 +113,9 @@ let refDir = process.argv[2];
       console.log(`Fetching ${paths[x].path}...`);
       let url = `${config.okapi}/${paths[x].path}`;
       if (url.match(/\/permissions/)) {
-        url += '?length=5000'
+        url += '?length=5000';
+      } else if (url.match(/\/licenses\//)) {
+        url += '?perPage=5000';
       } else if (!url.match(/\?/)) {
         url += '?limit=2000';
       } 
