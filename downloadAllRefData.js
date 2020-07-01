@@ -143,7 +143,7 @@ let refDir = process.argv[2];
         fs.writeFileSync(`${fullSaveDir}/${fileName}.json`, jsonStr);
         if (paths[x].path == 'service-points') {
           res.body.servicepoints.forEach(sp => {
-            paths.push({ path: `calendar/periods/${sp.id}/period?withOpeningDays=true&showPast=true&showExceptional=false`, mod: 'Calendar_module' });
+            paths.push({ path: `calendar/periods/${sp.id}/period?withOpeningDays=true&showPast=true&showExceptional=false`, mod: paths[x].mod });
           }) 
         }
         if (paths[x].path == 'organizations-storage/interfaces') {
