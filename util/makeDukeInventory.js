@@ -11,10 +11,7 @@ try {
   const fi = path.parse(jsonlFile);
   const wd = fi.dir;
   const fn = fi.name;
-  const insts = { instances: [] };
-  const holds = { holdingsRecords: [] };
-  const items = { items: [] };
-  const srs = { records: [] };
+  let fileSize = 100;
 
   let c = 0;
 
