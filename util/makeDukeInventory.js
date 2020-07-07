@@ -12,6 +12,7 @@ try {
   const wd = fi.dir;
   const fn = fi.name;
   let fileSize = 100;
+  let srsSize = 50;
   let instFile;
   let holdFile;
   let itemFile;
@@ -19,6 +20,7 @@ try {
 
   let c = 0;
   let fc = 0;
+  let sfc = 0;
   let h = 0;
   let hfc = 0;
   let i = 0;
@@ -34,14 +36,15 @@ try {
     c++;
     console.log(`Rec# ${c}`);
     let cmod = c % fileSize;
+    let smod = c % srsSize;
     let json = JSON.parse(line);
     let inst = JSON.stringify(json.bibInv);
+    let srs = JSON.stringify(json.bibSource);
     if (cmod === 1) {
       let part = fc.toString(10);
       part = part.padStart(pad, '0');
       fc++;
       instFile = `${wd}/${fn}_instances${part}.json`;
-      srsFile = `${wd}/${fn}_srs${part}.json`;
       fs.writeFileSync(instFile, '{ "instances": [ ' + inst);
     }
     else if (cmod === 0) {
@@ -49,6 +52,20 @@ try {
     } else {
       fs.appendFileSync(instFile, ',\n' + inst);
     }
+
+    if (smod === 1) {
+      let part = sfc.toString(10);
+      part = part.padStart(pad, '0');
+      sfc++;
+      srsFile = `${wd}/${fn}_srs${part}.json`;
+      fs.writeFileSync(srsFile, '{ "records": [ ' + srs);
+    }
+    else if (smod === 0) {
+      fs.appendFileSync(srsFile, ',\n' + srs + ' ] }\n');
+    } else {
+      fs.appendFileSync(srsFile, ',\n' + srs);
+    }
+
     json.holdings.forEach(hold => {
       h++;
       let holdings = JSON.stringify(hold.invHold);
