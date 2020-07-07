@@ -13,6 +13,7 @@ try {
   const fn = fi.name;
   let fileSize = 500000;
   let srsSize = 1000;
+  let pad = 8;
   let instFile;
   let holdFile;
   let itemFile;
@@ -25,7 +26,10 @@ try {
   let hfc = 0;
   let i = 0;
   let ifc = 0;
-  let pad = 8;
+  let cmod;
+  let smod;
+  let hmod;
+  let imod;
 
   var rl = readline.createInterface({
     input: fs.createReadStream(jsonlFile),
@@ -35,8 +39,8 @@ try {
   rl.on('line', function (line) {
     c++;
     console.log(`Rec# ${c}`);
-    let cmod = c % fileSize;
-    let smod = c % srsSize;
+    cmod = c % fileSize;
+    smod = c % srsSize;
     let json = JSON.parse(line);
     let inst = JSON.stringify(json.bibInv);
     let srs = JSON.stringify(json.bibSource);
@@ -69,7 +73,7 @@ try {
     json.holdings.forEach(hold => {
       h++;
       let holdings = JSON.stringify(hold.invHold);
-      let hmod = h % fileSize;
+      hmod = h % fileSize;
       if (hmod === 1) {
         let part = hfc.toString(10);
         part = part.padStart(pad, '0');
@@ -86,7 +90,7 @@ try {
       hold.items.forEach(it => {
         i++;
         let item = JSON.stringify(it);
-        let imod = i % fileSize;
+        imod = i % fileSize;
         if (imod === 1) {
           let part = ifc.toString(10);
           part = part.padStart(pad, '0');
@@ -101,30 +105,14 @@ try {
         }
       });
     });
-    /* srs.records.push(json.bibSource);
-    json.holdings.forEach(h => {
-      holds.holdingsRecords.push(h.invHold);
-      h.items.forEach(i => {
-        items.items.push(i);
-      })
-    }) 
-    } */
   });
 
-  /*
   rl.on('close', () => {
-    const instFile = `${wd}/${fn}_instances.json`;
-    const holdFile = `${wd}/${fn}_holdings.json`;
-    const itemFile = `${wd}/${fn}_items.json`;
-    const srsFile = `${wd}/${fn}_srs.json`;
-    fs.writeFileSync(instFile, JSON.stringify(insts, null, 2));
-    fs.writeFileSync(holdFile, JSON.stringify(holds, null, 2));
-    fs.writeFileSync(itemFile, JSON.stringify(items, null, 2));
-    fs.writeFileSync(srsFile, JSON.stringify(srs, null, 2));
+    if (cmod) fs.appendFileSync(instFile, ' ] }\n');
+    if (smod) fs.appendFileSync(srsFile, ' ] }\n');
+    if (hmod) fs.appendFileSync(holdFile, ' ] }\n');
+    if (imod) fs.appendFileSync(itemFile, ' ] }\n');
   });
-  */
-  
-
 
 } catch (e) {
   console.log(e.message);
