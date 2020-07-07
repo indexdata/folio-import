@@ -48,7 +48,7 @@ const wait = (ms) => {
         if (res.body.id) {
           let holdings = res.body;
           holdings.callNumberTypeId = cnType;
-          console.log(`  [${res.body.hrid}] Setting barcode to ${cnType}`);
+          console.log(`  [${res.body.hrid}] Setting callNumberTypeId to ${cnType}`);
           try {
             let purl = `${config.okapi}/holdings-storage/holdings/${id}`;
             console.log(`  PUT to ${purl}`);
