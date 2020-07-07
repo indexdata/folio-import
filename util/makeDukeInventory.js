@@ -22,6 +22,8 @@ try {
   let h = 0;
   let hfc = 0;
   let i = 0;
+  let ifc = 0;
+  let pad = 8;
 
   var rl = readline.createInterface({
     input: fs.createReadStream(jsonlFile),
@@ -36,7 +38,7 @@ try {
     let inst = JSON.stringify(json.bibInv);
     if (cmod === 1) {
       let part = fc.toString(10);
-      part = part.padStart(7, '0');
+      part = part.padStart(pad, '0');
       fc++;
       instFile = `${wd}/${fn}_instances${part}.json`;
       srsFile = `${wd}/${fn}_srs${part}.json`;
@@ -53,7 +55,7 @@ try {
       let hmod = h % fileSize;
       if (hmod === 1) {
         let part = hfc.toString(10);
-        part = part.padStart(7, '0');
+        part = part.padStart(pad, '0');
         hfc++;
         holdFile = `${wd}/${fn}_holdings${part}.json`;
         itemFile = `${wd}/${fn}_items${part}.json`;
@@ -64,6 +66,23 @@ try {
       } else {
         fs.appendFileSync(holdFile, ',\n' + holdings);
       }
+      hold.items.forEach(it => {
+        i++;
+        let item = JSON.stringify(it);
+        let imod = i % fileSize;
+        if (imod === 1) {
+          let part = ifc.toString(10);
+          part = part.padStart(pad, '0');
+          ifc++;
+          itemFile = `${wd}/${fn}_items${part}.json`;
+          fs.writeFileSync(itemFile, '{ "items": [ ' + item);
+        }
+        else if (imod === 0) {
+          fs.appendFileSync(itemFile, ',\n' + item + ' ] }\n');
+        } else {
+          fs.appendFileSync(itemFile, ',\n' + item);
+        }
+      });
     });
     /* srs.records.push(json.bibSource);
     json.holdings.forEach(h => {
