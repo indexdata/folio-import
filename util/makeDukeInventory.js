@@ -11,8 +11,8 @@ try {
   const fi = path.parse(jsonlFile);
   const wd = fi.dir;
   const fn = fi.name;
-  let fileSize = 100;
-  let srsSize = 50;
+  let fileSize = 500000;
+  let srsSize = 1000;
   let instFile;
   let holdFile;
   let itemFile;
