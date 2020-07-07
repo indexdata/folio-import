@@ -16,7 +16,7 @@ let refDir = process.argv[2];
 
     const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
 
-    const mdUrls = [
+    let mdUrls = [
       'https://raw.githubusercontent.com/folio-org/mod-configuration/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-inventory-storage/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-circulation-storage/master/descriptors/ModuleDescriptor-template.json',
@@ -41,6 +41,8 @@ let refDir = process.argv[2];
       'https://raw.githubusercontent.com/folio-org/mod-custom-fields/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-licenses/master/service/src/main/okapi/ModuleDescriptor-template.json'
     ]
+
+    // mdUrls = ['https://raw.githubusercontent.com/folio-org/mod-organizations-storage/master/descriptors/ModuleDescriptor-template.json'];
 
     const skipList = {
       '/item-storage/items': true,
@@ -83,7 +85,7 @@ let refDir = process.argv[2];
         let res = await superagent.get(url);
         let md = JSON.parse(res.text);
         let name = md.name.replace(/ +/g, '_');
-	if (url.match(/mod-licenses/)) name = 'licenses'; // for some reason, mod-licenses doesn't have a name
+	      if (url.match(/mod-licenses/)) name = 'licenses'; // for some reason, mod-licenses doesn't have a name
         let prov = md.provides;
         for (let x = 0; x < prov.length; x++) {
           let hand = prov[x].handlers;
@@ -141,8 +143,13 @@ let refDir = process.argv[2];
         fs.writeFileSync(`${fullSaveDir}/${fileName}.json`, jsonStr);
         if (paths[x].path == 'service-points') {
           res.body.servicepoints.forEach(sp => {
-            paths.push({ path: `calendar/periods/${sp.id}/period?withOpeningDays=true&showPast=true&showExceptional=false`, mod: 'Calendar_module' });
+            paths.push({ path: `calendar/periods/${sp.id}/period?withOpeningDays=true&showPast=true&showExceptional=false`, mod: paths[x].mod });
           }) 
+        }
+        if (paths[x].path == 'organizations-storage/interfaces') {
+          res.body.interfaces.forEach(r => {
+            paths.push({ path: `${paths[x].path}/${r.id}/credentials`, mod: paths[x].mod });
+          })
         }
       } catch (e) {
         try {
