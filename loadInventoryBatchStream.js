@@ -158,9 +158,9 @@ const wait = (ms) => {
       const end = new Date().valueOf();
       const ms = end - start;
       const time = Math.floor(ms / 1000);
-      logger.info(`\nTime:          ${time} sec`);
-      logger.info(`Files added:   ${success} (${collSize} recs per file)`);
-      logger.info(`Failures:      ${fail}\n`);
+      logger.info(`\nTime:            ${time} sec`);
+      logger.info(`Batches added:   ${success} (${collSize} recs per batch)`);
+      logger.info(`Failures:        ${fail}\n`);
     }
   } catch (e) {
     console.error(e.message);
