@@ -42,7 +42,7 @@ const wait = (ms) => {
     const start = new Date().valueOf();
     let inData;
     if (!inFile) {
-      throw new Error('Usage: node loadInstancesBatchStream.js [options -s start, -r root, -b batch size (default 1000)] <file>');
+      throw new Error('Usage: node loadInstancesBatchStream.js [options -s start, -r root, -b batch size (default 1000) -u upsert (true|false)] <file>');
     } else if (!fs.existsSync(inFile)) {
       throw new Error('Can\'t find input file');
     }
