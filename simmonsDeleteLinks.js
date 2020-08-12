@@ -48,9 +48,32 @@ let inFile = process.argv[2];
           .set('x-okapi-token', authToken)
           .set('accept', 'application/json');
         if (res.body.instances) {
-          out.instances = out.instances.concat(res.body.instances);
+          let inst = res.body.instances[0];
+          if (inst.electronicAccess) {
+            let ea = inst.electronicAccess;
+            for (let e = 0; e < ea.length; e++) {
+              if (ea[e].uri.match(/archive.org/)) {
+                ea.splice(e, 1);
+                e--;
+              }
+            }
+          }
+          out.instances.push(inst);
           let iid = res.body.instances[0].id;
-          let url = `${config.okapi}/holdings-storage/holdings?query=instanceId==${iid}`;
+          let url = `${config.okapi}/source-storage/formattedRecords/${iid}?identifier=INSTANCE`;
+          console.log(`Getting source record at ${url}`);
+          try {
+            res = await superagent
+              .get(url)
+              .set('x-okapi-token', authToken)
+              .set('accept', 'application/json');
+            if (res.body) {
+              // out.records = out.records.concat(res.body);
+            }
+          } catch (e) {
+            console.log(e);
+          }
+          url = `${config.okapi}/holdings-storage/holdings?query=instanceId==${iid}`;
           console.log(`Getting holdings records at ${url}`);
           try {
             res = await superagent
@@ -59,7 +82,7 @@ let inFile = process.argv[2];
               .set('accept', 'application/json');
             if (res.body.holdingsRecords) {
               let hr = res.body.holdingsRecords;
-              out.holdingsRecords = out.holdingsRecords.concat(res.body.holdingsRecords);
+              // out.holdingsRecords = out.holdingsRecords.concat(res.body.holdingsRecords);
               for (let h = 0; h < hr.length; h++) {
                 let hid = hr[h].id;
                 let url = `${config.okapi}/item-storage/items?query=holdingsRecordId==${hid}`;
@@ -70,7 +93,7 @@ let inFile = process.argv[2];
                     .set('x-okapi-token', authToken)
                     .set('accept', 'application/json');
                   if (res.body.items) {
-                    out.items = out.items.concat(res.body.items);
+                    // out.items = out.items.concat(res.body.items);
                   }
                 } catch (e) {
                   console.log(e);
@@ -84,8 +107,9 @@ let inFile = process.argv[2];
       } catch (e) {
         console.log(e.response || e);
       } 
-    } 
-    console.log(out);
+    }
+    const jsonOut = JSON.stringify(out, null, 1);
+    console.log(jsonOut);
   } catch (e) {
     console.log(e.message);
   }
