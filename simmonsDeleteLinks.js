@@ -4,6 +4,7 @@
 
 const fs = require('fs');
 const superagent = require('superagent');
+const path = require('path');
 const { getAuthToken } = require('./lib/login');
 let inFile = process.argv[2];
 
@@ -27,6 +28,7 @@ let inFile = process.argv[2];
     }
     console.log(`Processing ${limit} lines...`);
 
+    const workDir = path.dirname(inFile);
 
     const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
 
@@ -40,6 +42,7 @@ let inFile = process.argv[2];
     for (let x = 0; x < limit; x++) {
       let hrid = lines[x];
       hrid = hrid.replace(/\W+/g, '');
+      console.log(`--- ${hrid} ---`);
       let url = `${config.okapi}/instance-storage/instances?query=hrid==${hrid}`;
       console.log(`Getting ${url}`);
       try {
@@ -48,9 +51,10 @@ let inFile = process.argv[2];
           .set('x-okapi-token', authToken)
           .set('accept', 'application/json');
         if (res.body.instances) {
-          let inst = res.body.instances[0];
-          if (inst.electronicAccess) {
-            let ea = inst.electronicAccess;
+
+          let rec = res.body.instances[0];
+          if (rec.electronicAccess) {
+            let ea = rec.electronicAccess;
             for (let e = 0; e < ea.length; e++) {
               if (ea[e].uri.match(/archive.org/)) {
                 ea.splice(e, 1);
@@ -58,7 +62,8 @@ let inFile = process.argv[2];
               }
             }
           }
-          out.instances.push(inst);
+
+          out.instances.push(rec);
           let iid = res.body.instances[0].id;
           let url = `${config.okapi}/source-storage/formattedRecords/${iid}?identifier=INSTANCE`;
           console.log(`Getting source record at ${url}`);
@@ -68,7 +73,7 @@ let inFile = process.argv[2];
               .set('x-okapi-token', authToken)
               .set('accept', 'application/json');
             if (res.body) {
-              // out.records = out.records.concat(res.body);
+              out.records = out.records.concat(res.body);
             }
           } catch (e) {
             console.log(e);
@@ -82,8 +87,18 @@ let inFile = process.argv[2];
               .set('accept', 'application/json');
             if (res.body.holdingsRecords) {
               let hr = res.body.holdingsRecords;
-              // out.holdingsRecords = out.holdingsRecords.concat(res.body.holdingsRecords);
               for (let h = 0; h < hr.length; h++) {
+                let rec = hr[h];
+                if (rec.electronicAccess) {
+                  let ea = rec.electronicAccess;
+                  for (let e = 0; e < ea.length; e++) {
+                    if (ea[e].uri.match(/archive.org/)) {
+                      ea.splice(e, 1);
+                      e--;
+                    }
+                  }
+                }
+                out.holdingsRecords.push(rec);
                 let hid = hr[h].id;
                 let url = `${config.okapi}/item-storage/items?query=holdingsRecordId==${hid}`;
                 console.log(`Getting item records at ${url}`);
@@ -93,7 +108,19 @@ let inFile = process.argv[2];
                     .set('x-okapi-token', authToken)
                     .set('accept', 'application/json');
                   if (res.body.items) {
-                    // out.items = out.items.concat(res.body.items);
+                    for (let i = 0; i < res.body.items.length; i++) {
+                      let rec = res.body.items[i];
+                      if (rec.electronicAccess) {
+                        let ea = rec.electronicAccess;
+                        for (let e = 0; e < ea.length; e++) {
+                          if (ea[e].uri.match(/archive.org/)) {
+                            ea.splice(e, 1);
+                            e--;
+                          }
+                        }
+                      }
+                      out.items.push(rec);
+                    }
                   }
                 } catch (e) {
                   console.log(e);
@@ -109,7 +136,7 @@ let inFile = process.argv[2];
       } 
     }
     const jsonOut = JSON.stringify(out, null, 1);
-    console.log(jsonOut);
+    fs.writeFileSync(`${workDir}/deletedLinks.json`, jsonOut);
   } catch (e) {
     console.log(e.message);
   }
