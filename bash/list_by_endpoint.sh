@@ -8,8 +8,13 @@ EP=$1
 
 if [ -z $EP ]
 then
-  echo "Usage: ${0} <okapi_endpoint>"
+  echo "Usage: ${0} <okapi_endpoint> [<id>]"
   exit
 fi
 
-curl --http1.1 -w '\n' "${OKAPI}/${EP}" -H "x-okapi-token: ${TOKEN}"
+if [ $2 ] 
+then
+  ID="/${2}"
+fi
+
+curl --http1.1 -w '\n' "${OKAPI}/${EP}${ID}" -H "x-okapi-token: ${TOKEN}"

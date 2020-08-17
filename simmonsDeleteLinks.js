@@ -136,7 +136,7 @@ let inFile = process.argv[2];
     fs.writeFileSync(`${workDir}/instances.json`, JSON.stringify(instOut, null, 2));
     fs.writeFileSync(`${workDir}/holdings.json`, JSON.stringify(holdOut, null, 2));
     fs.writeFileSync(`${workDir}/items.json`, JSON.stringify(itemOut, null, 2));
-    fs.writeFileSync(`${workDir}/srs.json`, JSON.stringify(recsOut, null, 2));
+    fs.writeFileSync(`${workDir}/records.json`, JSON.stringify(recsOut, null, 2));
   } catch (e) {
     console.log(e.message);
   }
