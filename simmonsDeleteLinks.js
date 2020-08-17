@@ -32,12 +32,10 @@ let inFile = process.argv[2];
 
     const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
 
-    const out = {
-      instances: [],
-      holdingsRecords: [],
-      items: [],
-      records: []
-    };
+    const instOut = { instances: [] };
+    const holdOut = { holdingsRecords: [] };
+    const itemOut = { items: [] };
+    const recsOut = { records: [] };
     
     for (let x = 0; x < limit; x++) {
       let hrid = lines[x];
@@ -63,7 +61,7 @@ let inFile = process.argv[2];
             }
           }
 
-          out.instances.push(rec);
+          instOut.instances.push(rec);
           let iid = res.body.instances[0].id;
           let url = `${config.okapi}/source-storage/formattedRecords/${iid}?identifier=INSTANCE`;
           console.log(`Getting source record at ${url}`);
@@ -73,7 +71,7 @@ let inFile = process.argv[2];
               .set('x-okapi-token', authToken)
               .set('accept', 'application/json');
             if (res.body) {
-              out.records = out.records.concat(res.body);
+              recsOut.records.push(res.body);
             }
           } catch (e) {
             console.log(e);
@@ -98,7 +96,7 @@ let inFile = process.argv[2];
                     }
                   }
                 }
-                out.holdingsRecords.push(rec);
+                holdOut.holdingsRecords.push(rec);
                 let hid = hr[h].id;
                 let url = `${config.okapi}/item-storage/items?query=holdingsRecordId==${hid}`;
                 console.log(`Getting item records at ${url}`);
@@ -119,7 +117,7 @@ let inFile = process.argv[2];
                           }
                         }
                       }
-                      out.items.push(rec);
+                      itemOut.items.push(rec);
                     }
                   }
                 } catch (e) {
@@ -135,8 +133,10 @@ let inFile = process.argv[2];
         console.log(e.response || e);
       } 
     }
-    const jsonOut = JSON.stringify(out, null, 1);
-    fs.writeFileSync(`${workDir}/deletedLinks.json`, jsonOut);
+    fs.writeFileSync(`${workDir}/instances.json`, JSON.stringify(instOut, null, 2));
+    fs.writeFileSync(`${workDir}/holdings.json`, JSON.stringify(holdOut, null, 2));
+    fs.writeFileSync(`${workDir}/items.json`, JSON.stringify(itemOut, null, 2));
+    fs.writeFileSync(`${workDir}/srs.json`, JSON.stringify(recsOut, null, 2));
   } catch (e) {
     console.log(e.message);
   }
