@@ -4,6 +4,7 @@ options:
 -s start record
 -r root node (an array of folio records)
 -b batch size
+-u upsert (true or false)
 */
 
 const fs = require('fs');
@@ -18,9 +19,13 @@ let inFile = argv._[0];
 let root = (argv.r) ? argv.r + '.*' : '*';
 let method = (argv.m && argv.m.match(/put/i)) ? 'put' : 'post';
 let startRec = 0;
+let upsert = '';
 if (argv.s) {
   startRec = parseInt(argv.s, 10);
   console.log(`Starting at ${startRec}`);
+}
+if (argv.u === 'true') {
+  upsert = '?upsert=true';
 }
 
 let collSize = 1000;
@@ -37,7 +42,7 @@ const wait = (ms) => {
     const start = new Date().valueOf();
     let inData;
     if (!inFile) {
-      throw new Error('Usage: node loadInstancesBatchStream.js [options -s start, -r root, -b batch size (default 1000)] <file>');
+      throw new Error('Usage: node loadInstancesBatchStream.js [options -s start, -r root, -b batch size (default 1000) -u upsert (true|false)] <file>');
     } else if (!fs.existsSync(inFile)) {
       throw new Error('Can\'t find input file');
     }
@@ -73,13 +78,13 @@ const wait = (ms) => {
       let endpoint = null;
       let root = null;
       if (data.holdingsRecords) {
-        endpoint = '/holdings-storage/batch/synchronous';
+        endpoint = '/holdings-storage/batch/synchronous' + upsert;
         root = 'holdingsRecords'
       } else if (data.items) {
-        endpoint = '/item-storage/batch/synchronous';
+        endpoint = '/item-storage/batch/synchronous' + upsert;
         root = 'items';
       } else {
-        endpoint = '/instance-storage/batch/synchronous';
+        endpoint = '/instance-storage/batch/synchronous' + upsert;
         root = 'instances';
       }
       const actionUrl = config.okapi + endpoint;
@@ -153,9 +158,9 @@ const wait = (ms) => {
       const end = new Date().valueOf();
       const ms = end - start;
       const time = Math.floor(ms / 1000);
-      logger.info(`\nTime:          ${time} sec`);
-      logger.info(`Files added:   ${success} (${collSize} recs per file)`);
-      logger.info(`Failures:      ${fail}\n`);
+      logger.info(`\nTime:            ${time} sec`);
+      logger.info(`Batches added:   ${success} (${collSize} recs per batch)`);
+      logger.info(`Failures:        ${fail}\n`);
     }
   } catch (e) {
     console.error(e.message);
