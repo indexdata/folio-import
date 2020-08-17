@@ -42,7 +42,7 @@ let inFile = process.argv[2];
       hrid = hrid.replace(/\W+/g, '');
       console.log(`--- ${hrid} ---`);
       let url = `${config.okapi}/instance-storage/instances?query=hrid==${hrid}`;
-      console.log(`Getting ${url}`);
+      console.log(`[${x}] Getting ${url}`);
       try {
         let res = await superagent
           .get(url)
