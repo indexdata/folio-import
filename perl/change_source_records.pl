@@ -38,6 +38,7 @@ foreach (@{ $in_json->{records} }) {
   print "\r$count";
   my $srs = {};
   my $marc = MARC::Record->new_from_usmarc($raw);
+
   # Do you editing to MARC fields here...
 
   foreach ($marc->field('856')) {
@@ -47,14 +48,14 @@ foreach (@{ $in_json->{records} }) {
   }
 
   # End MARC editing
+
   my $mij = MARC::Record::MiJ->to_mij($marc);
   my $parsed = decode_json($mij);
   $_->{rawRecord}->{content} = $marc->as_usmarc();
   $_->{parsedRecord}->{content} = $parsed;
-  # push @{ $srs_recs->{records} }, $srs;
+  $_->{parsedRecord}->{formattedContent} = $marc->as_formatted();
 }
 my $out = JSON->new->pretty->encode($in_json);
-print $out;
-# open OUT, ">:encoding(UTF-8)", $save_path;
-# print OUT $out;
-# print "\nDone! SRS records saved to $save_path\n";
+open OUT, ">:encoding(UTF-8)", $save_path;
+print OUT $out;
+print "\nDone! $count SRS records saved to $save_path\n";
