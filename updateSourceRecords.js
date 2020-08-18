@@ -23,7 +23,10 @@ let inFile = process.argv[2];
     
     for (let x = 0; x < inData.records.length; x++) {
       let rec = inData.records[x];
-      let url = `${config.okapi}/source-storage/records/${rec.matchedId}`;
+      // let url = `${config.okapi}/source-storage/records/${rec.matchedId}`;
+      let url = `${config.okapi}/source-storage/records/${rec.id}`;
+      delete rec.rawRecord.id;
+      delete rec.parsedRecord.id;
       console.log(`# ${x} PUT to ${url}`);
       try {
         let res = await superagent
