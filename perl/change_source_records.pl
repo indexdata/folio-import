@@ -41,11 +41,33 @@ foreach (@{ $in_json->{records} }) {
 
   # Do you editing to MARC fields here...
 
-  foreach ($marc->field('856')) {
-    if ($_->subfield('u') =~ /archive.org/) {
-      $marc->delete_field($_);
-    }
-  }
+  #### Add hrid to 001 field ####
+
+  my $f001 = $marc->field('001');
+  my $oldcn = $f001->data();
+  my $f003 = $marc->field('003');
+  my $oldorg = $f003->data();
+  my $hrid = $marc->subfield('907', 'a');
+  $hrid =~ s/\.(b.......)./$1/;
+  $f001->update($hrid);
+  $f003->update('CaEvIII'); # Innovative assigned number
+  my $f035 = $marc->field('035');
+  $f035->add_subfields('a', "($oldorg)$oldcn");
+
+  #### Delete 006/007 fields ####
+  
+  my @f006 = $marc->field('006');
+  $marc->delete_field(@f006);
+  my @f007 = $marc->field('007');
+  $marc->delete_field(@f007);
+
+  #### Delete 856 fields where subfield u contains "archive.org" ####
+
+  # foreach ($marc->field('856')) {
+  #  if ($_->subfield('u') =~ /archive.org/) {
+  #    $marc->delete_field($_);
+  #  }
+  # }
 
   # End MARC editing
 
