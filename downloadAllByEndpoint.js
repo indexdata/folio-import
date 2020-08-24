@@ -40,8 +40,12 @@ let limit = parseInt(process.argv[5], 10);
       let prop;
       let url = `${actionUrl}?limit=${perPage}&offset=${offset}`;
       if (actionUrl.match(/\/licenses\//)) {
-	perPage = 100;
-	url = `${actionUrl}?perPage=${perPage}&offset=${offset}&stats=true`;
+	      perPage = 100;
+	      url = `${actionUrl}?perPage=${perPage}&offset=${offset}&stats=true`;
+      } else if (actionUrl.match(/\/perms\//)) {
+        let permStart = offset + 1;
+        perPage = 5000;
+	      url = `${actionUrl}?length=${perPage}&start=${permStart}&stats=true`;
       }
       try {
         let res = await superagent
@@ -83,6 +87,7 @@ let limit = parseInt(process.argv[5], 10);
       }
       offset += perPage;
       console.log(url);
+      if (actionUrl.match(/\/perms\//)) { totRecs = totFetch }
       console.log(`Received ${totFetch} of ${totRecs}...`);
     }
     const fn = `${refDir}/${filename}.json`;
