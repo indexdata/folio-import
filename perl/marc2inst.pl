@@ -243,7 +243,7 @@ sub process_entity {
       } elsif ($_ eq 'set_identifier_type_id_by_value') {
         my $name;
         my $data = $field->subfield('a');
-        if ($data =~ /^(\(OCoLC\)|ocm|ocn|on).*/) {
+        if ($data && $data =~ /^(\(OCoLC\)|ocm|ocn|on).*/) {
           $name = 'OCLC';
         } else {
           $name = 'System control number';
