@@ -239,7 +239,10 @@ sub process_entity {
         my $len = $to - $from;
         $out = substr($out, $from, $len);
       } elsif ($_ eq 'set_instance_type_id') {
-        $out = $refdata->{instanceTypes}->{$out};
+        my $it = $params->{unspecifiedInstanceTypeCode} || $out;
+        $out = $refdata->{instanceTypes}->{$it};
+      } elsif ($_ eq 'set_issuance_mode_id') {
+        $out = '';
       } elsif ($_ eq 'set_identifier_type_id_by_value') {
         my $name;
         my $data = $field->subfield('a');

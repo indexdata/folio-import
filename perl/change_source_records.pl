@@ -56,10 +56,10 @@ foreach (@{ $in_json->{records} }) {
 
   #### Delete 006/007 fields ####
   
-  my @f006 = $marc->field('006');
-  $marc->delete_field(@f006);
-  my @f007 = $marc->field('007');
-  $marc->delete_field(@f007);
+  # my @f006 = $marc->field('006');
+  # $marc->delete_field(@f006);
+  # my @f007 = $marc->field('007');
+  # $marc->delete_field(@f007);
 
   #### Delete 856 fields where subfield u contains "archive.org" ####
 
