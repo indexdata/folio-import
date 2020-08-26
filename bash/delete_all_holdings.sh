@@ -10,7 +10,7 @@ echo
 if [ $YN == y ]
   then
     echo "Deleting all holdings..."
-    curl --http1.1 -w '\n' -X DELETE "${OKAPI}/holdings-storage/holdings" -H "x-okapi-token: ${TOKEN}"
+    curl --http1.1 -w '\n' -X DELETE "${OKAPI}/holdings-storage/holdings" -H "x-okapi-token: ${TOKEN}"  -H "x-okapi-tenant: ${TENANT}"
   else
     echo "Aborting process..."
 fi
