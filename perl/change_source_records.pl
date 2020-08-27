@@ -19,7 +19,7 @@ if (! -e $infile) {
 }
 
 my $save_path = $infile;
-$save_path =~ s/^(.+)\..+$/$1_srs.jsonl/;
+$save_path =~ s/^(.+)\..+$/$1_updated.jsonl/;
 
 
 # open a collection of SRS records
@@ -32,6 +32,8 @@ $in_string = '';
 
 my $count = 0;
 my $ucount = 0;
+
+unlink $save_path;
 open OUT, ">>:encoding(UTF-8)", $save_path;
 
 foreach (@{ $in_json->{records} }) {
