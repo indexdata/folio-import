@@ -42,17 +42,33 @@ foreach (@{ $in_json->{records} }) {
   # Do you editing to MARC fields here...
 
   #### Add hrid to 001 field ####
-
+  my $oldorg = '';
+  my $oldcn = '';
   my $f001 = $marc->field('001');
-  my $oldcn = $f001->data();
-  my $f003 = $marc->field('003');
-  my $oldorg = $f003->data();
-  my $hrid = $marc->subfield('907', 'a');
-  $hrid =~ s/\.(b.......)./$1/;
-  $f001->update($hrid);
-  $f003->update('CaEvIII'); # Innovative assigned number
   my $f035 = $marc->field('035');
-  $f035->add_subfields('a', "($oldorg)$oldcn");
+  my $hrid = $marc->subfield('907', 'a');
+  next unless $hrid;
+  $hrid =~ s/\.(b.......)./$1/;
+  $oldcn = $f001->data();
+  $f001->update($hrid);
+  while (my $f003 = $marc->field('003')) {
+    $oldorg = $f003->data();
+    $marc->delete_field($f003);
+  } 
+  my @nf;
+  $nf[0] = MARC::Field->new('003', 'CaEvIII');
+  $marc->insert_fields_after($f001, @nf);
+  
+  if ($oldorg ne 'OCoLC') {
+    print "\nNon OCLC num found: $oldorg\n";
+    if ($f035) {
+      $f035->add_subfields('a', "($oldorg)$oldcn");
+    } else {
+      my @nf;
+      $nf[0] = MARC::Field->new('035', ' ', ' ', 'a'=>"(MBSi)$oldcn");
+      $marc->insert_fields_ordered(@nf);
+    }
+  }
 
   #### Delete 006/007 fields ####
   
