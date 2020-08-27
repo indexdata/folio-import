@@ -19,7 +19,7 @@ if (! -e $infile) {
 }
 
 my $save_path = $infile;
-$save_path =~ s/^(.+)\..+$/$1_srs.json/;
+$save_path =~ s/^(.+)\..+$/$1_srs.jsonl/;
 
 
 # open a collection of SRS records
@@ -31,6 +31,8 @@ my $in_json = decode_json($in_string);
 $in_string = '';
 
 my $count = 0;
+my $ucount = 0;
+open OUT, ">>:encoding(UTF-8)", $save_path;
 
 foreach (@{ $in_json->{records} }) {
   $count++;
@@ -41,7 +43,7 @@ foreach (@{ $in_json->{records} }) {
 
   # Do you editing to MARC fields here...
 
-  #### Add hrid to 001 field ####
+  #### Simmons Add hrid to 001 field ####
   my $oldorg = '';
   my $oldcn = '';
   my $f001 = $marc->field('001');
@@ -60,7 +62,6 @@ foreach (@{ $in_json->{records} }) {
   $marc->insert_fields_after($f001, @nf);
   
   if ($oldorg ne 'OCoLC') {
-    print "\nNon OCLC num found: $oldorg\n";
     if ($f035) {
       $f035->add_subfields('a', "($oldorg)$oldcn");
     } else {
@@ -91,9 +92,15 @@ foreach (@{ $in_json->{records} }) {
   my $parsed = decode_json($mij);
   $_->{rawRecord}->{content} = $marc->as_usmarc();
   $_->{parsedRecord}->{content} = $parsed;
-  $_->{parsedRecord}->{formattedContent} = $marc->as_formatted();
+
+  # The API should create formattedContent, so the following object is not needed
+  # $_->{parsedRecord}->{formattedContent} = $marc->as_formatted();
+
+  my $out = JSON->new->encode($_);
+  print OUT $out . "\n";
+  $ucount++;
 }
-my $out = JSON->new->pretty->encode($in_json);
-open OUT, ">:encoding(UTF-8)", $save_path;
-print OUT $out;
-print "\nDone! $count SRS records saved to $save_path\n";
+# my $out = JSON->new->pretty->encode($in_json);
+# open OUT, ">:encoding(UTF-8)", $save_path;
+# print OUT $out;
+print "\nDone! $ucount SRS records saved to $save_path\n";
