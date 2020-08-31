@@ -69,6 +69,7 @@ while (<RECS>) {
   
   if ($oldorg ne 'OCoLC' && $oldcn) {
     if ($f035) {
+      $oldorg = 'MBSi' unless $oldorg;
       $f035->add_subfields('a', "($oldorg)$oldcn");
     } else {
       my @nf;
