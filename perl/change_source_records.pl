@@ -20,6 +20,7 @@ if (! -e $infile) {
 
 my $save_path = $infile;
 $save_path =~ s/^(.+)\..+$/$1_updated.jsonl/;
+unlink $save_path;
 
 
 # open a collection of SRS records
