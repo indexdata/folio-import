@@ -50,17 +50,23 @@ while (<RECS>) {
   my $hrid = $marc->subfield('907', 'a');
   next unless $hrid;
   $hrid =~ s/\.(b.......)./$1/;
-  $oldcn = $f001->data();
-  $f001->update($hrid);
+  if ($f001) {
+    $oldcn = $f001->data();
+    $f001->update($hrid);
+  } else {
+    my @cf;
+    $cf[0] = MARC::Field->new('001', $hrid);
+    $marc->insert_fields_ordered(@cf);
+  }
   while (my $f003 = $marc->field('003')) {
     $oldorg = $f003->data();
     $marc->delete_field($f003);
   } 
   my @nf;
   $nf[0] = MARC::Field->new('003', 'CaEvIII');
-  $marc->insert_fields_after($f001, @nf);
+  $marc->insert_fields_ordered(@nf);
   
-  if ($oldorg ne 'OCoLC') {
+  if ($oldorg ne 'OCoLC' && $oldcn) {
     if ($f035) {
       $f035->add_subfields('a', "($oldorg)$oldcn");
     } else {
