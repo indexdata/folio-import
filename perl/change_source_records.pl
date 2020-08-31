@@ -1,6 +1,6 @@
 #! /usr/bin/perl
 
-# Update raw, parsed, and formatted sections of SRS records.
+# Update raw, parsed, sections of SRS records in JSON line format
 
 use strict;
 use warnings;
@@ -12,7 +12,7 @@ use JSON;
 binmode STDOUT, ":utf8";
 $| = 1;
 
-my $infile = shift or die "Usage: ./change_source_records.pl <source_records_file>\n";
+my $infile = shift or die "Usage: ./change_source_records.pl <source_records_file.jsonl>\n";
 
 if (! -e $infile) {
   die "Can't find raw Marc file!\n"
@@ -24,11 +24,6 @@ $save_path =~ s/^(.+)\..+$/$1_updated.jsonl/;
 
 # open a collection of SRS records
 open RECS, $infile or die "Can't open source record file!";
-my $srs_recs = { records=>[] };
-$/ = '';
-my $in_string = <RECS>;
-my $in_json = decode_json($in_string);
-$in_string = '';
 
 my $count = 0;
 my $ucount = 0;
@@ -36,9 +31,11 @@ my $ucount = 0;
 unlink $save_path;
 open OUT, ">>:encoding(UTF-8)", $save_path;
 
-foreach (@{ $in_json->{records} }) {
+while (<RECS>) {
+  chomp;
   $count++;
-  my $raw = $_->{rawRecord}->{content};
+  my $in_json = decode_json($_);
+  my $raw = $in_json->{rawRecord}->{content};
   print "\r$count";
   my $srs = {};
   my $marc = MARC::Record->new_from_usmarc($raw);
@@ -72,6 +69,8 @@ foreach (@{ $in_json->{records} }) {
       $marc->insert_fields_ordered(@nf);
     }
   }
+  $in_json->{rawRecord}->{id} = $in_json->{id};
+  $in_json->{parsedRecord}->{id} = $in_json->{id};
 
   #### Delete 006/007 fields ####
   
@@ -92,13 +91,13 @@ foreach (@{ $in_json->{records} }) {
 
   my $mij = MARC::Record::MiJ->to_mij($marc);
   my $parsed = decode_json($mij);
-  $_->{rawRecord}->{content} = $marc->as_usmarc();
-  $_->{parsedRecord}->{content} = $parsed;
+  $in_json->{rawRecord}->{content} = $marc->as_usmarc();
+  $in_json->{parsedRecord}->{content} = $parsed;
 
   # The API should create formattedContent, so the following object is not needed
-  # $_->{parsedRecord}->{formattedContent} = $marc->as_formatted();
+  # $in_json->{parsedRecord}->{formattedContent} = $marc->as_formatted();
 
-  my $out = JSON->new->encode($_);
+  my $out = JSON->new->encode($in_json);
   print OUT $out . "\n";
   $ucount++;
 }
