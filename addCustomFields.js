@@ -38,7 +38,7 @@ let inFile = process.argv[2];
           try {
             let res = await superagent
               .put(purl)
-              .send(inData)
+              .send(JSON.stringify(inData))
               .set('x-okapi-token', authToken)
               .set('x-okapi-module-id', 'mod-users-17.1.0')
               .set('content-type', 'application/json')
