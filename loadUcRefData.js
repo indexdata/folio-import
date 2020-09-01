@@ -83,6 +83,7 @@ const noPut = process.env.REF_NOPUT;
       "closereasons": "orders/configuration/reasons-for-closure",
       "servicepoints": "service-points",
       "servicepointusers": "service-points-users",
+      "snapshots": "source-storage/snapshots",
       "staffslips": "staff-slips-storage/staff-slips",
       "statisticalcodes": "statistical-codes",
       "statisticalcodetypes": "statistical-code-types",

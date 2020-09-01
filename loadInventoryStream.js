@@ -73,6 +73,8 @@ const wait = (ms) => {
         endpoint = '/item-storage/items';
       } else if (data.succeedingInstanceId || data.precedingInstanceId) {
         endpoint = '/preceding-succeeding-titles';
+      } else if (data.snapshotId) {
+        endpoint = '/source-storage/records';
       } else {
         endpoint = '/instance-storage/instances';
       }
