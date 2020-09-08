@@ -2,7 +2,7 @@ const fs = require('fs');
 const superagent = require('superagent');
 const { getAuthToken } = require('./lib/login');
 const argv = require('minimist')(process.argv.slice(2));
-console.log(argv);
+
 let refDir = argv._[0];
 let size = parseInt(argv.s, 10) || 10000;
 let offset = parseInt(argv.o, 10) || 0;
@@ -21,6 +21,7 @@ let offset = parseInt(argv.o, 10) || 0;
     const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
 
     refDir = refDir.replace(/\/$/,'');
+    const jsonlFile = `${refDir}/records.jsonl`;
 
     const actionUrl = `${config.okapi}/source-storage/records`;
 
@@ -29,6 +30,9 @@ let offset = parseInt(argv.o, 10) || 0;
     let perPage = 1000;
     let part = 0;
     const coll = { records: [] };
+    if (argv.l && fs.existsSync(jsonlFile)) {
+      fs.unlinkSync(jsonlFile)
+    }
     while (totFetch < totRecs) {
       let url = `${actionUrl}?limit=${perPage}&offset=${offset}`;
       console.log(url);
@@ -39,9 +43,18 @@ let offset = parseInt(argv.o, 10) || 0;
           .timeout({response: 120000})
           .set('accept', 'application/json')
           .set('x-okapi-token', authToken);
-        coll.records = coll.records.concat(res.body.records);
+        if (argv.l) {
+          let recs = res.body.records;
+          console.log(`Writing ${recs.length} lines to ${jsonlFile}`)
+          for (let x = 0; x < recs.length; x++) {
+            let rec = JSON.stringify(recs[x]) + '\n';
+            fs.writeFileSync(jsonlFile, rec, { flag: 'a'});
+          }
+        } else {
+          coll.records = coll.records.concat(res.body.records);
+        }
         totFetch += res.body.records.length;
-        totRecs = res.body.totalRecords;
+        totRecs = res.body.totalRecords; 
       } catch (e) {
         try {
           throw new Error(e.response.text);
@@ -52,8 +65,8 @@ let offset = parseInt(argv.o, 10) || 0;
       let endTime = new Date().valueOf();
       let sec = (endTime - startTime) / 1000;
       offset += perPage;
-      console.log(`Received ${totFetch} of ${totRecs} in ${sec} sec`);
-      if (totFetch % size == 0 || totFetch >= totRecs) {
+      console.log(`Received ${totFetch} of ${totRecs} records in ${sec} sec`);
+      if ((totFetch % size == 0 || totFetch >= totRecs) && ! argv.l) {
         let saveSize = coll.records.length;
         let partPadded = part.toString().padStart(5, '0');
         let fn = `${refDir}/records${partPadded}.json`
