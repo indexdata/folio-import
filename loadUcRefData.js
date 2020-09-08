@@ -3,6 +3,7 @@ const superagent = require('superagent');
 const { getAuthToken } = require('./lib/login');
 const fileNames = process.argv.slice(2);
 const noPut = process.env.REF_NOPUT;
+const start = process.env.LOAD_START;
 
 (async () => {
   let added = 0;
@@ -10,7 +11,7 @@ const noPut = process.env.REF_NOPUT;
   let errors = 0;
   try {
     if (fileNames.length === 0) {
-      throw new Error('Usage: node loadUcRefData.js <files>');
+      throw new Error('Usage: node loadUcRefData.js <files>\nNOTE env variables REF_NOPUT, LOAD_START');
     }
     const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
 
@@ -106,7 +107,8 @@ const noPut = process.env.REF_NOPUT;
       let collStr = fs.readFileSync(`${fileNames[x]}`, 'utf8');
       let data = JSON.parse(collStr);
       let errRecs = [];
-      for (d = 0; d < data.length; d++) {
+      let dStart = start || 0;
+      for (d = dStart; d < data.length; d++) {
         try {
           console.log(`[${d}] POST ${data[d].id} to ${url}`);
           let res = await superagent
