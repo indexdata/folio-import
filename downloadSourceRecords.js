@@ -1,14 +1,16 @@
 const fs = require('fs');
 const superagent = require('superagent');
 const { getAuthToken } = require('./lib/login');
-let refDir = process.argv[2];
-let size = parseInt(process.argv[3], 10) || 10000;
-let offset = parseInt(process.argv[4], 10) || 0;
+const argv = require('minimist')(process.argv.slice(2));
+console.log(argv);
+let refDir = argv._[0];
+let size = parseInt(argv.s, 10) || 10000;
+let offset = parseInt(argv.o, 10) || 0;
 
 (async () => {
   try {
     if (!refDir) {
-      throw new Error('Usage: node downloadSourceRecords.js <download_dir> [ <collection_size> [ offset ]]');
+      throw new Error('Usage: node downloadSourceRecords.js [ -s collection size, -l jsonl output, -o offset ] <download_dir>');
     } else if (!fs.existsSync(refDir)) {
       throw new Error('Download directory does\'t exist!');
     } else if (!fs.lstatSync(refDir).isDirectory()) {
@@ -29,6 +31,8 @@ let offset = parseInt(process.argv[4], 10) || 0;
     const coll = { records: [] };
     while (totFetch < totRecs) {
       let url = `${actionUrl}?limit=${perPage}&offset=${offset}`;
+      console.log(url);
+      let startTime = new Date().valueOf();
       try {
         let res = await superagent
           .get(url)
@@ -45,9 +49,10 @@ let offset = parseInt(process.argv[4], 10) || 0;
           throw new Error(e.message);
         }
       }
+      let endTime = new Date().valueOf();
+      let sec = (endTime - startTime) / 1000;
       offset += perPage;
-      console.log(url);
-      console.log(`Received ${totFetch} of ${totRecs}...`);
+      console.log(`Received ${totFetch} of ${totRecs} in ${sec} sec`);
       if (totFetch % size == 0 || totFetch >= totRecs) {
         let saveSize = coll.records.length;
         let partPadded = part.toString().padStart(5, '0');
