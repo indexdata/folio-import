@@ -24,6 +24,7 @@ let offset = parseInt(argv.o, 10) || 0;
     const jsonlFile = `${refDir}/records.jsonl`;
 
     const actionUrl = `${config.okapi}/source-storage/records`;
+    recObj = 'records';
 
     let totFetch = 0 + offset;
     let totRecs = 1000000;
@@ -44,16 +45,16 @@ let offset = parseInt(argv.o, 10) || 0;
           .set('accept', 'application/json')
           .set('x-okapi-token', authToken);
         if (argv.l) {
-          let recs = res.body.records;
+          let recs = res.body[recObj];
           console.log(`Writing ${recs.length} lines to ${jsonlFile}`)
           for (let x = 0; x < recs.length; x++) {
             let rec = JSON.stringify(recs[x]) + '\n';
             fs.writeFileSync(jsonlFile, rec, { flag: 'a'});
           }
         } else {
-          coll.records = coll.records.concat(res.body.records);
+          coll.records = coll.records.concat(res.body[recObj]);
         }
-        totFetch += res.body.records.length;
+        totFetch += res.body[recObj].length;
         totRecs = res.body.totalRecords; 
       } catch (e) {
         try {
