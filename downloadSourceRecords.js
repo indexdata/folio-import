@@ -35,7 +35,7 @@ let offset = parseInt(argv.o, 10) || 0;
       fs.unlinkSync(jsonlFile)
     }
     while (totFetch < totRecs) {
-      let url = `${actionUrl}?limit=${perPage}&offset=${offset}`;
+      let url = `${actionUrl}?state=ACTUAL&limit=${perPage}&offset=${offset}&orderBy=matchedId`;
       console.log(url);
       let startTime = new Date().valueOf();
       try {

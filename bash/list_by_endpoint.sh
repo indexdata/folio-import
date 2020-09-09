@@ -17,4 +17,4 @@ then
   ID="/${2}"
 fi
 
-curl --http1.1 -w '\n' "${OKAPI}/${EP}${ID}" -H "x-okapi-token: ${TOKEN}"
+curl --http1.1 -w '\n' -s "${OKAPI}/${EP}${ID}" -H "x-okapi-token: ${TOKEN}"
