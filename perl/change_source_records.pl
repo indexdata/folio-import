@@ -77,8 +77,8 @@ while (<RECS>) {
       $marc->insert_fields_ordered(@nf);
     }
   }
-  $in_json->{rawRecord}->{id} = $in_json->{id};
-  $in_json->{parsedRecord}->{id} = $in_json->{id};
+  # $in_json->{rawRecord}->{id} = $in_json->{id};
+  # $in_json->{parsedRecord}->{id} = $in_json->{id};
 
   #### Delete 006/007 fields ####
   
