@@ -7,12 +7,13 @@ const superagent = require('superagent');
 const { getAuthToken } = require('./lib/login');
 const readline = require('readline');
 let inFile = process.argv[2];
+let match = process.argv[3] || 'id';
 
 (async () => {
   try {
     let inData;
     if (!inFile) {
-      throw new Error('Usage: node updateSourceRecords.js <source_record_collection.jsonl>');
+      throw new Error('Usage: node updateSourceRecords.js <source_record_collection.jsonl> [ <match field> ]');
     } else if (!fs.existsSync(inFile)) {
       throw new Error('Can\'t find input file');
     }
@@ -33,8 +34,10 @@ let inFile = process.argv[2];
     for await (const line of rl) {
       x++;
       let rec = JSON.parse(line);
-      let url = `${config.okapi}/source-storage/records/${rec.matchedId}`;
+      rec.generation++;
+      let url = `${config.okapi}/source-storage/records/${rec[match]}`;
       console.log(`# ${x} PUT to ${url}`);
+
       try {
         let res = await superagent
           .put(url)
@@ -45,6 +48,7 @@ let inFile = process.argv[2];
       } catch (e) {
         console.log(e.response || e);
       }
+
     } 
   } catch (e) {
     console.log(e.message);
