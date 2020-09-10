@@ -24,7 +24,7 @@ let limit = parseInt(process.argv[4], 10);
 
     let totFetch = 0;
     let totRecs = 10000;
-    let perPage = 500;
+    let perPage = 100;
     let offset = start || 0;
     const coll = { instances: [] };
     while (totFetch < totRecs) {
