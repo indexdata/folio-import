@@ -18,6 +18,8 @@
     return pr;
   };
 
+  You can view changes to the record by using the -t option.  This will display one updated record to the console and not 
+  PUT the changes to change-manager.
 */
 
 const fs = require('fs');
@@ -38,7 +40,7 @@ let scriptFile = process.argv[2];
 (async () => {
   try {
     if (!inFile) {
-      throw new Error('Usage: node updateParsedRecords.js <script file> <file of intances ids>');
+      throw new Error('Usage: node updateParsedRecords.js [-t test] <script file> <file of intances ids>');
     } else if (!fs.existsSync(inFile)) {
       throw new Error('Can\'t find data file');
     } else if (!fs.existsSync(scriptFile)) {
