@@ -93,21 +93,6 @@ let scriptFile = process.argv[2];
         console.log(e.response || e);
       }
       if (test && x === 1) break;
-      if (x === 1) break;
-
-      /*
-
-      try {
-        let res = await superagent
-          .put(url)
-          .send(rec)
-          .set('x-okapi-token', authToken)
-          .set('content-type', 'application/json')
-          .set('accept', 'application/json');
-      } catch (e) {
-        console.log(e.response || e);
-      }
-      */
     } 
   } catch (e) {
     console.log(e.message);
