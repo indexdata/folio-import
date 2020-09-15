@@ -7,7 +7,6 @@ const fs = require('fs');
 const readline = require('readline');
 let inFile = process.argv[3];
 let scriptFile = process.argv[2];
-let outFile = inFile.replace(/^(.+)\..*/, '$1_updated.jsonl');
 
 (async () => {
   try {
@@ -18,6 +17,7 @@ let outFile = inFile.replace(/^(.+)\..*/, '$1_updated.jsonl');
       throw new Error('Can\'t find input file');
     }
 
+    let outFile = inFile.replace(/^(.+)\..*/, '$1_updated.jsonl');
     const editor = require(scriptFile);
     const fileStream = fs.createReadStream(inFile);
     const rl = readline.createInterface({
@@ -34,8 +34,11 @@ let outFile = inFile.replace(/^(.+)\..*/, '$1_updated.jsonl');
       x++;
       let rec = JSON.parse(line);
       console.log(`# ${x} ${rec.id}`);
+      let prUpdated;
 
-      let prUpdated = editor(rec.parsedRecord.content);
+      if (rec.parsedRecord) {
+        prUpdated = editor(rec.parsedRecord.content);
+      }
 
       if (prUpdated) {
         // sort the fields
