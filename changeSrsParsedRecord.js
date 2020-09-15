@@ -50,7 +50,7 @@ let scriptFile = process.argv[2];
           else return 0;
         });
 
-        rec.parsedRecord = prUpdated;
+        rec.parsedRecord.content = prUpdated;
         console.log(`Writing to ${outFile}`);
         let out = JSON.stringify(rec) + '\n';
         fs.writeFileSync(outFile, out, { flag: 'a' });
