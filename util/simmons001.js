@@ -24,6 +24,7 @@ module.exports = (pr) => {
         }
       }
     }
+    if (oldOrg === 'CaEvIII') return null 
   }
 
   if (bnum) {
