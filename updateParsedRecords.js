@@ -72,6 +72,14 @@ let scriptFile = process.argv[2];
           .set('accept', 'application/json');
         let rec = res.body;
         let prUpdated = editor(rec.parsedRecord.content);
+        // sort the fields;
+        prUpdated.fields.sort((a, b) => {
+          aTag = Object.keys(a)[0];
+          bTag = Object.keys(b)[0];
+          if (aTag < bTag) return -1;
+          else if (bTag > bTag) return 1;
+          else return 0;
+        });
         if (test) { 
           console.log(JSON.stringify(prUpdated, null, 2));
         } else {
