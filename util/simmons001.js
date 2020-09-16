@@ -23,7 +23,7 @@ module.exports = (pr) => {
           bnum = sub[code].replace(/^\.(b.......).*/, '$1');
         }
       }
-    }
+    } 
     if (oldOrg === 'CaEvIII') return null 
   }
 
@@ -65,8 +65,6 @@ module.exports = (pr) => {
         }
       }
     }
-    return pr;
-  } else {
-    return null;
   }
+  return pr;
 };
