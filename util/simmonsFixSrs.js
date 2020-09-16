@@ -20,6 +20,8 @@ const ssId = 'b97e2e2b-72d2-463b-a876-1d9ca4e6a9f0';
     }
 
     let outFile = inFile.replace(/^(.+)\..*/, '$1_updated.jsonl');
+    console.log(`Writing to ${outFile}`);
+
     const editor = require(scriptFile);
     const fileStream = fs.createReadStream(inFile);
     const rl = readline.createInterface({
@@ -36,44 +38,48 @@ const ssId = 'b97e2e2b-72d2-463b-a876-1d9ca4e6a9f0';
     for await (const line of rl) {
       x++;
       let rec = JSON.parse(line);
-      console.log(`# ${x} ${rec.id}`);
-
-      rec.generation = 0;
-      rec.snapshotId = ssId;
-      rec.parsedRecord.content.fields.forEach(f => {
-        let tag = Object.keys(f)[0];
-        if (tag === '999') {
-          let subs = f[tag].subfields;
-          subs.forEach(s => {
-            if (s.s) {
-              s.s = ssId;
-            }
-          });
-          console.log(f[tag]);
-        }
-      });
-
-      let prUpdated;
       if (rec.parsedRecord) {
-        prUpdated = editor(rec.parsedRecord.content);
-      }
+        let instId = rec.externalIdsHolder.instanceId;
+        console.log(`# ${x} ${rec.id} (${instId})`);
 
-      if (prUpdated && !seen[rec.id]) {
-        prUpdated.fields.sort((a, b) => {
-          aTag = Object.keys(a)[0];
-          bTag = Object.keys(b)[0];
-          if (aTag < bTag) return -1;
-          else if (bTag > bTag) return 1;
-          else return 0;
+        rec.generation = 0;
+        rec.snapshotId = ssId;
+        
+        hasNine = false;
+        rec.parsedRecord.content.fields.forEach(f => {
+          let tag = Object.keys(f)[0];
+          if (tag === '999') {
+            let subs = f[tag].subfields;
+            subs.forEach(s => {
+              if (s.s) {
+                s.s = ssId;
+              }
+            });
+            hasNine = true;
+          }
         });
+        if (!hasNine) {
+          rec.parsedRecord.content.fields.push({'999': { ind1: 'f', ind2: 'f', subfields: [ { i: instId }, { s: ssId } ] } } )
+        }
 
-        rec.parsedRecord.content = prUpdated;
-        console.log(`Writing to ${outFile}`);
-        let out = JSON.stringify(rec) + '\n';
-        fs.writeFileSync(outFile, out, { flag: 'a' });
+        let prUpdated = editor(rec.parsedRecord.content);
+
+        if (prUpdated && !seen[instId]) {
+          prUpdated.fields.sort((a, b) => {
+            aTag = Object.keys(a)[0];
+            bTag = Object.keys(b)[0];
+            if (aTag < bTag) return -1;
+            else if (bTag > bTag) return 1;
+            else return 0;
+          });
+
+          rec.parsedRecord.content = prUpdated;
+          let out = JSON.stringify(rec) + '\n';
+          fs.writeFileSync(outFile, out, { flag: 'a' });
+        }
+
+        seen[instId] = true;
       }
-
-      seen[rec.id] = true;
     } 
   } catch (e) {
     console.log(e.message);
