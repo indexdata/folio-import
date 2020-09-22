@@ -1,5 +1,5 @@
 /*
-  This script will take a list of instance ids and update its corresponding parsedRecord.
+  This script will take a list of instance ids or hrids and update its corresponding parsedRecord.
   A js script is required to do the editing.  Here is an example of adding "PRTEST" to 
   the end of the 245$a:
   
