@@ -47,6 +47,7 @@ let scriptFile = process.argv[2];
       throw new Error('Can\'t find script file');
     }
     
+    scriptFile = scriptFile.replace(/^([^.])/, './$1');
     const editor = require(scriptFile);
 
     const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
@@ -61,8 +62,21 @@ let scriptFile = process.argv[2];
     });
 
     let x = 0;
-    for await (const id of rl) {
+    for await (let id of rl) {
       x++;
+      if (!id.match(/........-....-....-....-............/)) {
+        let instUrl = `${config.okapi}/instance-storage/instances?query=hrid==${id}`;
+        console.log(`WARN ${id} looks like an hrid, looking up instanceId...`);
+        try {
+          let res = await superagent
+            .get(instUrl)
+            .set('x-okapi-token', authToken)
+            .set('accept', 'application/json');
+          id = res.body.instances[0].id;
+        } catch (e) {
+          console.log(e.response || e);
+        }
+      }
       let url = `${config.okapi}/change-manager/parsedRecords?instanceId=${id}`;
       console.log(`# ${x} GET ${url}`);
       try {
@@ -99,7 +113,7 @@ let scriptFile = process.argv[2];
         }
       } catch (e) {
         console.log(e.response || e);
-      }
+      } 
       if (test && x === 1) break;
     } 
   } catch (e) {
