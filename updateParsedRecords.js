@@ -100,7 +100,7 @@ let scriptFile = process.argv[2];
           rec.parsedRecord.content = prUpdated;
           try {
             let purl = `${config.okapi}/change-manager/parsedRecords/${rec.id}`;
-            console.log(`  PUT to ${purl}`)
+            console.log(`    PUT to ${purl}`)
             let res = await superagent
               .put(purl)
               .send(rec)

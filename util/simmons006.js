@@ -5,14 +5,13 @@
 */
 
 module.exports = (pr) => {
-  // get data
-  let x = 0;
-  for (let field of pr.fields) {
+  for (let x = 0; x < pr.fields.length; x++) {
+    let field = pr.fields[x];
     let tag = Object.keys(field)[0];
     if (tag === '006' || tag === '007') {
       pr.fields.splice(x, 1);
+      x--;
     }
-    x++;
   }
 
   return pr;
