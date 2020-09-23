@@ -25,6 +25,8 @@ $Data::Dumper::Indent = 1;
 
 binmode STDOUT, ":utf8";
 
+my $namespace = $ENV{UUID_NS} || '0000000-0000-0000-0000-0000000000';
+
 my $rules_file = shift;
 my $ref_dir = shift;
 if (! $ARGV[0]) {
@@ -32,9 +34,10 @@ if (! $ARGV[0]) {
 }
 
 sub uuid {
+  my $name = shift;
   my $ug = Data::UUID->new;
   my $uuid = $ug->create();
-  my $uustr = lc($ug->to_string($uuid));
+  my $uustr = lc $ug->create_from_name_str($namespace, $name);
   return $uustr;
 }
 
@@ -218,7 +221,7 @@ sub process_entity {
         $out = $refdata->{instanceNoteTypes}->{$name} or die "Can't find instanceNoteType for $name";
       } elsif ($_ eq 'set_alternative_title_type_id') {
         my $name = $params->{name};
-        $out = $refdata->{alternativeTitleTypes}->{$name} or die "Can't find alternativeTitleType for $name";
+        $out = $refdata->{alternativeTitleTypes}->{$name} || $refdata->{alternativeTitleTypes}->{'Other title'} or die "Can't find alternativeTitleType for $name";
       } elsif ($_ eq 'set_electronic_access_relations_id') {
         my $ind = $field->indicator(2);
         my $name = $relations->{$ind};
@@ -341,7 +344,7 @@ foreach (@ARGV) {
   my $coll = { instances => [] };
   while (<RAW>) {
     my $rec = {
-      id => uuid(),
+      id => '',
       alternativeTitles => [],
       editions => [],
       series => [],
@@ -475,6 +478,9 @@ foreach (@ARGV) {
     $rec->{subjects} = dedupe(@{ $rec->{subjects} });
     $rec->{languages} = dedupe(@{ $rec->{languages} });
     $rec->{series} = dedupe(@{ $rec->{series} });
+    
+    # Assign uuid based on hrid;
+    $rec->{id} = uuid($rec->{hrid});
     
     if ($save_ids) {
       print IDMAP "$rec->{hrid}\t$rec->{id}\n";
