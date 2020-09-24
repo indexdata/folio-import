@@ -23,7 +23,6 @@ my $errfile = $infile;
 $errfile =~ s/(.+)\.\w+$/$1/;
 $errfile = "${errfile}_err.mrc";
 unlink $errfile;
-open ERR, ">>:utf8", $errfile or die "Can't open errfile!";
 
 my $count = 0;
 while (<RAW>) {
@@ -57,14 +56,16 @@ while (<RAW>) {
         unless ($marc->field('035')) {
           my $field = MARC::Field->new('035', ' ', ' ', a=>$one);
           $marc->insert_fields_ordered($field);
-          $marc->delete_fields($one_field);
         }
+        $marc->delete_fields($marc->field('001'));
       }
       my $new_cf = MARC::Field->new('001', $ctrl);
       $marc->insert_fields_ordered($new_cf);
     }
     if (!$marc->field('001')) {
+      open ERR, ">>:utf8", $errfile or die "Can't open errfile!";
       print ERR $marc->as_usmarc();
+      close ERR;
     }
     # print $marc->as_formatted();
     print OUT $marc->as_usmarc();

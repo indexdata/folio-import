@@ -224,7 +224,7 @@ sub process_entity {
         $out = $refdata->{alternativeTitleTypes}->{$name} || $refdata->{alternativeTitleTypes}->{'Other title'} or die "Can't find alternativeTitleType for $name";
       } elsif ($_ eq 'set_electronic_access_relations_id') {
         my $ind = $field->indicator(2);
-        my $name = $relations->{$ind};
+        my $name = $relations->{$ind} || '';
         $out = $refdata->{electronicAccessRelationships}->{$name} || '';
       } elsif ($_ eq 'set_classification_type_id') {
         my $name = $params->{name};
@@ -366,12 +366,15 @@ foreach (@ARGV) {
       tags => {},
       holdingsRecords2 => [],
       natureOfContentTermIds => [],
-      statusId => '52a2ff34-2a12-420d-8539-21aa8d3cf5d8'
+      statusId => '52a2ff34-2a12-420d-8539-21aa8d3cf5d8',
+      source => 'MARC',
+      instanceTypeId => $refdata->{instanceTypes}->{zzz}
     };
     
     $count++;
     my $raw = $_;
     my $marc = MARC::Record->new_from_usmarc($raw);
+    next unless ($marc->title());
     my $ldr = $marc->leader();
     my $blevel = substr($ldr, 7, 1);
     my $mode_name = $blvl->{$blevel} || 'Other';
@@ -390,6 +393,9 @@ foreach (@ARGV) {
     MARC_FIELD: foreach (@marc_fields) {
       my $field = $_;
       my $tag = $_->tag();
+      if (($tag =~ /^(7|1)/ && !$field->subfield('a')) || ($tag == '856' && !$field->subfield('u'))) {
+        next;
+      }
       
       # Let's determine if a subfield is repeatable, if so create append separate marc fields for each subfield;
       foreach (@{ $repeat_subs->{$tag} }) {
@@ -409,11 +415,11 @@ foreach (@ARGV) {
               $new_field->add_subfields($code => $sdata );
             }
             $i++;
-            my $ncode;
+            my @ncode = [''];
             if ($subs[$i]) {
-              ($ncode) = @{ $subs[$i] };
+              @ncode = @{ $subs[$i] };
             }
-            push @marc_fields, $new_field if (index($all_codes, $ncode) != -1 && $new_field->{_tag}) || $ncode eq undef;
+            push @marc_fields, $new_field if (index($all_codes, $ncode[0]) != -1 && $new_field->{_tag}) || $ncode[0] eq undef;
           }
           next MARC_FIELD;
         }
@@ -434,6 +440,9 @@ foreach (@ARGV) {
           my @entity = @$_;
           my $data_obj = {};
           foreach (@entity) {
+            if ($_->{target} =~ /precedingTitle|succeedingTitle/) {
+              next;
+            }
             my @required;
             if ( $_->{requiredSubfield} ) {
               @required = @{ $_->{requiredSubfield} };
