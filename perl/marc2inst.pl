@@ -18,10 +18,8 @@ use strict;
 use warnings;
 
 use MARC::Record;
-use Data::Dumper;
 use JSON;
 use Data::UUID;
-$Data::Dumper::Indent = 1;
 
 binmode STDOUT, ":utf8";
 
@@ -330,12 +328,11 @@ foreach (@ARGV) {
   $save_path =~ s/^(.+)\..+$/$1_instances.json/;
   my $id_map = $infile;
   $id_map =~ s/^(.+)\..+$/$1_instances.map/;
-  my $save_ids = 0;
-  if (! -e $id_map) {
-    open IDMAP, ">>$id_map";
-    print "Creating ID map file...\n";
-    $save_ids = 1;
-  }
+  unlink $id_map;
+  open IDMAP, ">>$id_map";
+  my $err_path = $infile;
+  $err_path =~ s/^(.+)\..+$/$1_err.mrc/;
+  unlink $err_path;
 
   # open a collection of raw marc records
   $/ = "\x1D";
@@ -489,12 +486,17 @@ foreach (@ARGV) {
     $rec->{series} = dedupe(@{ $rec->{series} });
     
     # Assign uuid based on hrid;
-    $rec->{id} = uuid($rec->{hrid});
-    
-    if ($save_ids) {
-      print IDMAP "$rec->{hrid}\t$rec->{id}\n";
+    if ($rec->{hrid}) {
+      $rec->{id} = uuid($rec->{hrid});
+      print IDMAP "$rec->{hrid}|$rec->{id}\n";
+      push @{ $coll->{instances} }, $rec;
+    } else {
+      print "WARN No hrid found. Skipping...";
+      open ERR, ">>:encoding(UTF-8)", $err_path;
+      print ERR $raw;
+      close ERR;
     }
-    push @{ $coll->{instances} }, $rec;
+    
     print "Processing #$count " . substr($rec->{title}, 0, 60) . "\n";
     # last if $count == 10;
   }
