@@ -11,7 +11,10 @@ use Data::UUID;
 binmode STDOUT, ":utf8";
 $| = 1;
 
-my $ctrl_file = shift or die "Usage: ./make_source_records.pl <uuid_map_file> <raw_marc_files>\n";
+if (!$ARGV[1]) {
+  die "Usage: ./make_source_records.pl <uuid_map_file> <raw_marc_files>\n";
+}
+my $ctrl_file = shift;
 
 sub uuid {
   my $ug = Data::UUID->new;
@@ -21,11 +24,14 @@ sub uuid {
 }
 
 sub getIds {
-  local $/ = '';
   open IDS, $ctrl_file or die "Can't open $ctrl_file\n";
-  my $jsonstr = <IDS>;
-  my $json = decode_json($jsonstr);
-  return $json;
+  my $idmap = {};
+  while (<IDS>) {
+    chomp;
+    my ($k, $v) = split(/\|/);
+    $idmap->{$k} = $v;
+  }
+  return $idmap;
 }
 
 my $id_map = getIds();
@@ -70,10 +76,11 @@ foreach (@ARGV) {
     $nine->{'999'}->{'ind2'} = 'f';
     push @{ $parsed->{fields} }, $nine;
     $srs->{snapshotId} = 'TO BE ADDED BY LOADING SCRIPT';
-    $srs->{matchedId} = uuid();
+    $srs->{matchedId} = $srs->{id};
     $srs->{recordType} = 'MARC';
-    $srs->{rawRecord} = { id=>uuid(), content=>$raw };
-    $srs->{parsedRecord} = { id=>uuid(), content=>$parsed };
+    $srs->{generation} = 0;
+    $srs->{rawRecord} = { id=>$srs->{id}, content=>$raw };
+    $srs->{parsedRecord} = { id=>$srs->{id}, content=>$parsed };
     $srs->{externalIdsHolder} = { instanceId=>$id_map->{$control_num} };
     push @{ $srs_recs->{records} }, $srs;
   }
