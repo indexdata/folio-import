@@ -65,6 +65,7 @@ foreach (@ARGV) {
 
   my $save_path = $infile;
   $save_path =~ s/^(.+)\..+$/$1_srs.jsonl/;
+  unlink $save_path;
 
   # open a collection of raw marc records
   $/ = "\x1D";
@@ -83,8 +84,10 @@ foreach (@ARGV) {
     if ($marc->subfield('907','a')) {
       $control_num = $marc->subfield('907','a');
       $control_num =~ s/^.(b\d{7}).$/$1/; # strip out leading period and check digit
+    } elsif ($marc->field('001')) {
+     $control_num = $marc->field('001')->data(); 
     } else {
-     $control_num = $marc->field('001')->{_data} 
+      next;
     }
     next unless $id_map->{$control_num};
     $srs->{id} = uuid();
