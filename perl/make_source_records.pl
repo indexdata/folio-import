@@ -2,6 +2,8 @@
 
 # Create Folio source records from raw marc. 
 
+use strict;
+use warnings;
 use MARC::Record;
 use MARC::Record::MiJ;
 use Data::Dumper;
@@ -36,6 +38,22 @@ sub getIds {
 
 my $id_map = getIds();
 
+# create snapshot object;
+my @t = localtime();
+my $dt = sprintf("%4s-%02d-%02d", $t[5] + 1900, $t[4] + 1, $t[3]);
+my $snap_id = uuid();
+my $snap = {
+  jobExecutionId=>$snap_id,
+  status=>"COMMITTED",
+  processingStartedDate=>"${dt}T00:00:00"
+};
+my $snap_path = $ARGV[0];
+$snap_path =~ s/^(.+)\..+$/$1_snapshot.json/;
+print "Saving snapshot object to $snap_path...\n";
+open SNOUT, ">$snap_path";
+print SNOUT encode_json($snap) . "\n";
+close SNOUT;
+
 foreach (@ARGV) {
   my $infile = $_ or die "Usage: ./marc_source_records.pl <uuid_map_file> <raw_marc_collection>\n";
   if (! -e $infile) {
@@ -46,13 +64,13 @@ foreach (@ARGV) {
   }
 
   my $save_path = $infile;
-  $save_path =~ s/^(.+)\..+$/$1_srs.json/;
+  $save_path =~ s/^(.+)\..+$/$1_srs.jsonl/;
 
   # open a collection of raw marc records
-  my $srs_recs = { records=>[] };
   $/ = "\x1D";
   my $count = 0;
   open RAW, "<:encoding(UTF-8)", $infile;
+  open OUT, ">:encoding(UTF-8)", $save_path;
   while (<RAW>) {
     $count++;
     print "\r$count";
@@ -75,17 +93,14 @@ foreach (@ARGV) {
     $nine->{'999'}->{'ind1'} = 'f';
     $nine->{'999'}->{'ind2'} = 'f';
     push @{ $parsed->{fields} }, $nine;
-    $srs->{snapshotId} = 'TO BE ADDED BY LOADING SCRIPT';
+    $srs->{snapshotId} = $snap_id;
     $srs->{matchedId} = $srs->{id};
     $srs->{recordType} = 'MARC';
     $srs->{generation} = 0;
     $srs->{rawRecord} = { id=>$srs->{id}, content=>$raw };
     $srs->{parsedRecord} = { id=>$srs->{id}, content=>$parsed };
     $srs->{externalIdsHolder} = { instanceId=>$id_map->{$control_num} };
-    push @{ $srs_recs->{records} }, $srs;
+    print OUT encode_json($srs) . "\n";
   }
-  $out = JSON->new->pretty->encode($srs_recs);
-  open OUT, ">:encoding(UTF-8)", $save_path;
-  print OUT $out;
   print "\nDone! SRS records saved to $save_path\n";
 }
