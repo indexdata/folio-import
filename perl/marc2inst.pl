@@ -103,6 +103,23 @@ my $pub_roles = {
   '4' => 'Copyright notice date'
 };
 
+my $rtypes = {
+  'a' => 'txt',
+  'c' => 'ntm',
+  'd' => 'ntm',
+  'e' => 'cri',
+  'f' => 'cri',
+  'm' => 'cop',
+  'g' => 'tdi',
+  'i' => 'spw',
+  'j' => 'prm',
+  'k' => 'sti',
+  'o' => 'xxx',
+  'p' => 'xxx',
+  'r' => 'tdf',
+  't' => 'txt'
+};
+
 $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
 
@@ -240,7 +257,13 @@ sub process_entity {
         my $len = $to - $from;
         $out = substr($out, $from, $len);
       } elsif ($_ eq 'set_instance_type_id') {
-        my $it = $params->{unspecifiedInstanceTypeCode} || $out;
+        my $it;
+        if ($field->tag() gt '009') {
+          $it = $field->subfield('b');
+        }
+        unless ($it) {
+          $it = $params->{unspecifiedInstanceTypeCode}
+        }
         $out = $refdata->{instanceTypes}->{$it};
       } elsif ($_ eq 'set_issuance_mode_id') {
         $out = '';
@@ -365,7 +388,7 @@ foreach (@ARGV) {
       natureOfContentTermIds => [],
       statusId => '52a2ff34-2a12-420d-8539-21aa8d3cf5d8',
       source => 'MARC',
-      instanceTypeId => $refdata->{instanceTypes}->{zzz}
+      instanceTypeId => ''
     };
     
     $count++;
@@ -374,6 +397,9 @@ foreach (@ARGV) {
     next unless ($marc->title());
     my $ldr = $marc->leader();
     my $blevel = substr($ldr, 7, 1);
+    my $type = substr($ldr, 6, 1);
+    my $inst_type = $rtypes->{$type} || 'zzz';
+    $rec->{instanceTypeId} = $refdata->{instanceTypes}->{$inst_type};
     my $mode_name = $blvl->{$blevel} || 'Other';
 
     # So somewhere along the ling, FOLIO started returning modes names in lowercase, so we had better accound for that;
