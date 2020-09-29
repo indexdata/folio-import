@@ -71,7 +71,7 @@ foreach (@ARGV) {
   $/ = "\x1D";
   my $count = 0;
   open RAW, "<:encoding(UTF-8)", $infile;
-  open OUT, ">:encoding(UTF-8)", $save_path;
+  open OUT, ">", $save_path;
   while (<RAW>) {
     $count++;
     print "\r$count";
