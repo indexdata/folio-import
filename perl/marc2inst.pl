@@ -124,165 +124,163 @@ $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
 
 sub process_entity {
-    my $field = shift;
-    my $ent = shift;
-    my @data;
-    my $out;
-    my @rules;
-    if ($ent->{rules}) {
-      @rules = @{ $ent->{rules} };
+  my $field = shift;
+  my $ent = shift;
+  my @data;
+  my $out;
+  my @rules;
+  if ($ent->{rules}) {
+    @rules = @{ $ent->{rules} };
+  }
+  my @funcs;
+  my $default;
+  my $params;
+  my $tag = $field->tag();
+  my $func_type;
+  my $subs;
+  if ($ent->{subfield}) {
+    $subs = join '', @{ $ent->{subfield} };
+  }
+  foreach (@rules) {
+    foreach (@{ $_->{conditions} }) {
+      $func_type = $_->{type};
+      @funcs = split /,\s*/, $_->{type};
+      $params = $_->{parameter};
     }
-    my @funcs;
-    my $default;
-    my $params;
-    my $tag = $field->tag();
-    my $func_type;
-    my $subs;
-    if ($ent->{subfield}) {
-      $subs = join '', @{ $ent->{subfield} };
+    $default = $_->{value};
+  }
+  if ($tag =~ /^00/) {
+    my $d;
+    if ($default) {
+      $d = $default;
+    } else {
+      $d = $field->data();
     }
-    foreach (@rules) {
-      foreach (@{ $_->{conditions} }) {
-        $func_type = $_->{type};
-        @funcs = split /,\s*/, $_->{type};
-        $params = $_->{parameter};
-      }
-      $default = $_->{value};
-    }
-    if ($tag =~ /^00/) {
-      my $d;
-      if ($default) {
-        $d = $default;
-      } else {
-        $d = $field->data();
-      }
-      push @data, $d;
-      $ent->{applyRulesOnConcatenatedData} = JSON::true;
-    } elsif ($default || ($func_type && $func_type =~ /\bset_/ && $params)) {
-      my $add = 0;
-      if (!$subs) {
-        $add = 1;
-      } else {
-        foreach ($field->subfields()) {
-          if ($subs =~ /$_->[0]/ && $_->[1] =~ /\S/) {
-            $add = 1;
-            last;
-          }
+    push @data, $d;
+    $ent->{applyRulesOnConcatenatedData} = JSON::true;
+  } elsif ($default || ($func_type && $func_type =~ /\bset_/ && $params)) {
+    my $add = 0;
+    if (!$subs) {
+      $add = 1;
+    } else {
+      foreach ($field->subfields()) {
+        if ($subs =~ /$_->[0]/ && $_->[1] =~ /\S/) {
+          $add = 1;
+          last;
         }
       }
-      if ($default) {
-        push @data, $default if $add;
-      } else {
-        my $d = processing_funcs('', $field, $params, @funcs);
-        push @data, $d if $add;
+    }
+    if ($default) {
+      push @data, $default if $add;
+    } else {
+      my $d = processing_funcs('', $field, $params, @funcs);
+      push @data, $d if $add;
+    }
+  } else {
+    my $tmp_field = $field->clone();
+    if (!$ent->{applyRulesOnConcatenatedData}) {
+      my $i = 0;
+      my $sf;
+      foreach (@{ $tmp_field->{_subfields} }) {
+        if ($i % 2 && $subs =~ /$sf/) {
+          $_ = processing_funcs($_, $tmp_field, $params, @funcs);
+        } else {
+          $sf = $_;
+        }
+        $i++;
+      }
+    }
+    if ($ent->{subFieldDelimiter}) {
+      foreach (@{ $ent->{subFieldDelimiter} }) {
+        my $subs = join '', @{ $_->{subfields} };
+        push @data, $tmp_field->as_string($subs, $_->{value}) if $subs; 
       }
     } else {
-      my $tmp_field = $field->clone();
-      if (!$ent->{applyRulesOnConcatenatedData}) {
-        my $i = 0;
-        my $sf;
-        foreach (@{ $tmp_field->{_subfields} }) {
-          if ($i % 2 && $subs =~ /$sf/) {
-            $_ = processing_funcs($_, $tmp_field, $params, @funcs);
-          } else {
-            $sf = $_;
-          }
-          $i++;
-        }
-      }
-      if ($ent->{subFieldDelimiter}) {
-        foreach (@{ $ent->{subFieldDelimiter} }) {
-          my $subs = join '', @{ $_->{subfields} };
-          push @data, $tmp_field->as_string($subs, $_->{value}) if $subs; 
-        }
-      } else {
-        push @data, $tmp_field->as_string($subs) if $subs;
-      }
+      push @data, $tmp_field->as_string($subs) if $subs;
     }
-    
-    if ($data[0]) {
-      $out = join ' ', @data;
-      $out = processing_funcs($out, $field, $params, @funcs) if $ent->{applyRulesOnConcatenatedData};
-    }
-    return $out;
   }
+  
+  if ($data[0]) {
+    $out = join ' ', @data;
+    $out = processing_funcs($out, $field, $params, @funcs) if $ent->{applyRulesOnConcatenatedData};
+  }
+  return $out;
+}
 
-  sub processing_funcs {
-    my $out = shift;
-    my $field = shift;
-    my $params = shift;
-    foreach (@_) {
-      if ($_ eq 'trim_period') {
-        $out =~ s/\.\s*$//;
-      } elsif ($_ eq 'trim') {
-        $out =~ s/^\s+|\s+$//g;
-      } elsif ($_ eq 'remove_ending_punc') {
-        $out =~ s/[;:,\/+= ]$//g;
-      } elsif ($_ eq 'remove_prefix_by_indicator') {
-        my $ind = $field->indicator(2);
-        $out = substr($out, $ind);
-      } elsif ($_ eq 'set_identifier_type_id_by_name') {
-        my $name = $params->{name};
-        $out = $refdata->{identifierTypes}->{$name} or die "Can't find identifierType for $name!";
-      } elsif ($_ eq 'set_contributor_name_type_id') {
-        my $name = $params->{name};
-        $out = $refdata->{contributorNameTypes}->{$name} or die "Can't find contributorNameType for $name";
-      } elsif ($_ eq 'set_contributor_type_id') {
-        $out = $refdata->{contributorTypes}->{$out} || '';
-      } elsif ($_ eq 'set_contributor_type_text') {
-        # Not sure what's supposed to happen here...
-      } elsif ($_ eq 'set_note_type_id') {
-        my $name = $params->{name};
-        $out = $refdata->{instanceNoteTypes}->{$name} or die "Can't find instanceNoteType for $name";
-      } elsif ($_ eq 'set_alternative_title_type_id') {
-        my $name = $params->{name};
-        $out = $refdata->{alternativeTitleTypes}->{$name} || $refdata->{alternativeTitleTypes}->{'Other title'} or die "Can't find alternativeTitleType for $name";
-      } elsif ($_ eq 'set_electronic_access_relations_id') {
-        my $ind = $field->indicator(2);
-        my $name = $relations->{$ind} || '';
-        $out = $refdata->{electronicAccessRelationships}->{$name} || '';
-      } elsif ($_ eq 'set_classification_type_id') {
-        my $name = $params->{name};
-        $out = $refdata->{classificationTypes}->{$name} or die "Can't find classificationType for $name";
-      } elsif ($_ eq 'set_instance_format_id') {
-        $out = $refdata->{instanceFormats}->{$out} || '';
-      } elsif ($_ eq 'set_publisher_role') {
-        my $ind2 = $field->indicator(2);
-        $out = $pub_roles->{$ind2} || '';
-      } elsif ($_ eq 'capitalize') {
-        $out = ucfirst $out;
-      } elsif ($_ eq 'char_select') {
-        my $from = $params->{from};
-        my $to = $params->{to};
-        my $len = $to - $from;
-        $out = substr($out, $from, $len);
-      } elsif ($_ eq 'set_instance_type_id') {
-        my $it;
-        if ($field->tag() gt '009') {
-          $it = $field->subfield('b');
-        }
-        unless ($it) {
-          $it = $params->{unspecifiedInstanceTypeCode}
-        }
-        $out = $refdata->{instanceTypes}->{$it};
-      } elsif ($_ eq 'set_issuance_mode_id') {
+sub processing_funcs {
+  my $out = shift;
+  my $field = shift;
+  my $params = shift;
+  foreach (@_) {
+    if ($_ eq 'trim_period') {
+      $out =~ s/\.\s*$//;
+    } elsif ($_ eq 'trim') {
+      $out =~ s/^\s+|\s+$//g;
+    } elsif ($_ eq 'remove_ending_punc') {
+      $out =~ s/[;:,\/+= ]$//g;
+    } elsif ($_ eq 'remove_prefix_by_indicator') {
+      my $ind = $field->indicator(2);
+      $out = substr($out, $ind);
+    } elsif ($_ eq 'set_identifier_type_id_by_name') {
+      my $name = $params->{name};
+      $out = $refdata->{identifierTypes}->{$name} or die "Can't find identifierType for $name!";
+    } elsif ($_ eq 'set_contributor_name_type_id') {
+      my $name = $params->{name};
+      $out = $refdata->{contributorNameTypes}->{$name} or die "Can't find contributorNameType for $name";
+    } elsif ($_ eq 'set_contributor_type_id') {
+      $out = $refdata->{contributorTypes}->{$out} || '';
+    } elsif ($_ eq 'set_contributor_type_text') {
+      # Not sure what's supposed to happen here...
+    } elsif ($_ eq 'set_note_type_id') {
+      my $name = $params->{name};
+      $out = $refdata->{instanceNoteTypes}->{$name} or die "Can't find instanceNoteType for $name";
+    } elsif ($_ eq 'set_alternative_title_type_id') {
+      my $name = $params->{name};
+      $out = $refdata->{alternativeTitleTypes}->{$name} || $refdata->{alternativeTitleTypes}->{'Other title'} or die "Can't find alternativeTitleType for $name";
+    } elsif ($_ eq 'set_electronic_access_relations_id') {
+      my $ind = $field->indicator(2);
+      my $name = $relations->{$ind} || '';
+      $out = $refdata->{electronicAccessRelationships}->{$name} || '';
+    } elsif ($_ eq 'set_classification_type_id') {
+      my $name = $params->{name};
+      $out = $refdata->{classificationTypes}->{$name} or die "Can't find classificationType for $name";
+    } elsif ($_ eq 'set_instance_format_id') {
+      $out = $refdata->{instanceFormats}->{$out} || '';
+    } elsif ($_ eq 'set_publisher_role') {
+      my $ind2 = $field->indicator(2);
+      $out = $pub_roles->{$ind2} || '';
+    } elsif ($_ eq 'capitalize') {
+      $out = ucfirst $out;
+    } elsif ($_ eq 'char_select') {
+      my $from = $params->{from};
+      my $to = $params->{to};
+      my $len = $to - $from;
+      $out = substr($out, $from, $len);
+    } elsif ($_ eq 'set_instance_type_id') {
+      if ($field->tag() gt '009') {
+        my $code = $field->subfield('b');
+        $out = $refdata->{instanceTypes}->{$out};
+      } else {
         $out = '';
-      } elsif ($_ eq 'set_identifier_type_id_by_value') {
-        my $name;
-        my $data = $field->subfield('a');
-        if ($data && $data =~ /^(\(OCoLC\)|ocm|ocn|on).*/) {
-          $name = 'OCLC';
-        } else {
-          $name = 'System control number';
-        }
-        $out = $refdata->{identifierTypes}->{$name} or die "Can't find identifierType for $name";
-      } elsif ($_ eq 'remove_substring') {
-        my $ss = $params->{substring};
-        $out =~ s/$ss//g;
       }
+    } elsif ($_ eq 'set_issuance_mode_id') {
+      $out = '';
+    } elsif ($_ eq 'set_identifier_type_id_by_value') {
+      my $name;
+      my $data = $field->subfield('a');
+      if ($data && $data =~ /^(\(OCoLC\)|ocm|ocn|on).*/) {
+        $name = 'OCLC';
+      } else {
+        $name = 'System control number';
+      }
+      $out = $refdata->{identifierTypes}->{$name} or die "Can't find identifierType for $name";
+    } elsif ($_ eq 'remove_substring') {
+      my $ss = $params->{substring};
+      $out =~ s/$ss//g;
     }
-    return $out;
   }
+  return $out;
+}
 
 my $mapping_rules = getRules($rules_file);
 
