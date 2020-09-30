@@ -66,6 +66,15 @@ my $folio_mtypes = get_ref_data('material-types.json', 'mtypes');
 my $folio_rel = get_ref_data('electronic-access-relationships.json', 'electronicAccessRelationships');
 my $folio_notes = get_ref_data('item-note-types.json', 'itemNoteTypes');
 
+#open collections.tsv map
+my $coll_map = {};
+open COLL, "$refpath/collections.tsv" or die "Can't open collections.tsv file";
+while (<COLL>) {
+  chomp;
+  my ($k, $v, $o) = split(/\t/);
+  $coll_map->{$k} = $v;
+}
+
 # load bib id to instance id map
 my $inst_map_file = $infile;
 $inst_map_file =~ s/\.(mrc|marc)$/_instances.map/;
@@ -126,28 +135,40 @@ my $admin_last = 'Perl';
 # open a collection of raw marc records
 $/ = "\x1D";
 open RAW, "<:encoding(UTF-8)", $infile;
+my $item_seen = {};
 my $hcoll = { holdingsRecords => [] };
 my $icoll = { items => [] };
-my $inum_seen = {};
 my $hcount = 0;
 my $icount = 0;
 my $mcount = 0;
 while (<RAW>) {
+  my $hrec_num = 0;
   my $hrecs = {};
   my $raw = $_;
   my $marc = MARC::Record->new_from_usmarc($raw);
-  my $control_num = $marc->field('001')->as_string();
+  my $control_num; 
+  if ($marc->field('001')) {
+    $control_num = $marc->field('001')->as_string();
+  } else {
+    next;
+  }
   next if !$inst_map->{$control_num};
   my @marc_items = $marc->field('949');
   foreach (@marc_items) {
     my $callno = $_->as_string('e');
     my $loc_code = $_->as_string('g');
+    if (!$loc_code) {
+      print "WARN No location code-- skipping...\n";
+      next;
+    }
+    $loc_code = lc $loc_code;
     my $loc_key = "$loc_code-$callno";
-    print $loc_key . "\n";
     $loc_code =~ s/^\s+|\s+$//g;
+
     # create holdings record if record doesn't already exists for said location
     if (!$hrecs->{$loc_key}) {
-      my $hrid = "$control_num-$loc_key";
+      $hrec_num++;
+      my $hrid = "$control_num-$hrec_num";
       $hrecs->{$loc_key}->{hrid} = $hrid;
       my $uustr = uuid($hrid);
       $hrecs->{$loc_key}->{id} = $uustr;
@@ -179,88 +200,39 @@ while (<RAW>) {
 
     # create item 
     my $irec = {};
-    my $barcode = $_->as_string('b');
-    my $inum = $_->as_string('q');
-    my $hrid;
-    if ($inum) {
-      $hrid = $inum;
-    } else {
-      $hrid = "$control_num-$barcode";
-    }
-    $irec->{id} = uuid($hrid);
-    $inum =~ s/^\.(.{8}).*/$1/;
-    if ($inum_seen->{$inum}) {
-      $inum .= 'd';
-    }
-    $inum_seen->{$inum} = 1;
-    $irec->{holdingsRecordId} = $hrecs->{$loc_key}->{id};
-    $irec->{barcode} = $barcode;
-    # $irec->{volume} = $_->as_string('c');
-    # my $itype_code = $_->as_string('t');
-    # my $itype_name = $itypemap->{$itype_code} || 'Review';
-    # $irec->{materialTypeId} = $folio_mtypes->{$itype_name} or die "[$iii_num] Can't find materialTypeId for $itype_code";
-    $irec->{permanentLoanTypeId} = $loan_type_id;
-    # $irec->{copyNumber} = $_->as_string('g');
-    $irec->{itemLevelCallNumber} = $callno;
-    $irec->{itemLevelCallNumberTypeId} = $cn_type_id;
-    $irec->{effectiveCallNumberComponents} = { callNumber => $callno, typeId => $cn_type_id };
-    if ($hrecs->{$loc_key}->{electronicAccess}) {
-      $irec->{electronicAccess} = $hrecs->{$loc_key}->{electronicAccess};
-    }
-    # my $status = $_->as_string('s');
-    # $irec->{status} = { name => $status_map->{$status} || 'Available' };
-    $irec->{hrid} = $hrid;
-    my $iii_note_type = $_->as_string('o');
-    $irec->{notes} = [];
-    my $note_text = $_->subfield('n');
-    if ($iii_note_type =~ /[gpfosc]/ or ($iii_note_type eq '-' and $note_text)) {
-      my $note = {};
-      my $nval;
-      if ($iii_note_type eq 'g') {
-        $nval = 'Donation';
-      } elsif ($iii_note_type eq 'p') {
-        $nval = 'Personal copy';
-        $nval .= " ($note_text)" if $note_text;
-      } elsif ($iii_note_type eq 'f') {
-        $nval = 'Reserve folder';
-      } elsif ($iii_note_type =~ /[oc-]/) {
-        $nval = $note_text;
-      } elsif ($iii_note_type eq 's') {
-        $nval = 'Suppressed';
+    my $hrid = $_->as_string('q');
+    if ($hrid && !$item_seen->{$hrid}) {
+      $item_seen->{$hrid} = 1;
+      my $barcode = $_->as_string('b');
+      my $coll_code = $_->as_string('c');
+
+      $irec->{id} = uuid($hrid);
+      $irec->{holdingsRecordId} = $hrecs->{$loc_key}->{id};
+      $irec->{barcode} = $barcode;
+      $irec->{volume} = $_->as_string('f');
+      my $coll_name = $coll_map->{$coll_code} || 'Other';
+      $irec->{materialTypeId} = $folio_mtypes->{$coll_name} || $folio_mtypes->{Other};
+      $irec->{permanentLoanTypeId} = $loan_type_id;
+      $irec->{itemLevelCallNumber} = $callno;
+      $irec->{itemLevelCallNumberTypeId} = $cn_type_id;
+      $irec->{effectiveCallNumberComponents} = { callNumber => $callno, typeId => $cn_type_id };
+      if ($hrecs->{$loc_key}->{electronicAccess}) {
+        $irec->{electronicAccess} = $hrecs->{$loc_key}->{electronicAccess};
       }
-      $note->{note} = $nval || "ICODE2: $iii_note_type";
-      my $item_note_label = $item_notes->{$iii_note_type};
-      # $note->{itemNoteTypeId} = $folio_notes->{$item_note_label} or die "[$iii_num] Can't find itemNoteTypeId for $item_note_label";
-      $note->{staffOnly} = "true";
-      push $irec->{notes}, $note;
+      $irec->{status} = { name => 'Available' };
+      $irec->{hrid} = $hrid;
+      $irec->{notes} = [];
+      my $note_text = $_->subfield('h');
+      if ($note_text) {
+        my $note = {};
+        $note->{note} = $note_text;
+        $note->{itemNoteTypeId} = $folio_notes->{Note};
+        $note->{staffOnly} = "true";
+        push $irec->{notes}, $note;
+      }
+      push $icoll->{items}, $irec;
+      $icount++;
     }
-    # if ($status =~ /[sordlbwega^kjx]/) {
-      # my $note = {};
-      # $note->{note} = $status_note->{$status}[1];
-      # my $note_label = $status_note->{$status}[0];
-      # $note->{itemNoteTypeId} = $folio_notes->{$note_label};
-      # $note->{staffOnly} = $status_note->{$status}[2];
-      # push $irec->{notes}, $note; 
-    # }
-    # if ($status eq 'h') {
-      # $irec->{temporaryLocationId} = $folio_locs->{'Reserve Cart'};
-    # }
-    my $checkout_mesg = $_->as_string('m');
-    if ($checkout_mesg) {
-      $irec->{circulationNotes} = [];
-      my $circ_note = {
-        id=>uuid(),
-        noteType=>'Check in',
-        note=>$checkout_mesg,
-        staffOnly=>"true",
-        date=>'2020-02-02'
-      };
-      $circ_note->{source} = { id=>$admin };
-      $circ_note->{source}->{personal} = { lastName=>$admin_last, firstName=>$admin_first };
-      push $irec->{circulationNotes}, $circ_note;
-    }
-    push $icoll->{items}, $irec;
-    $icount++;
   }
   foreach (keys $hrecs) {
     push $hcoll->{holdingsRecords}, $hrecs->{$_};

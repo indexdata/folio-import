@@ -18,13 +18,12 @@ fi
 PATHS='contributor-name-types contributor-types alternative-title-types call-number-types 
   classification-types electronic-access-relationships holdings-note-types holdings-types
   identifier-types ill-policies instance-formats instance-note-types instance-relationship-types
-  instance-statuses instance-types item-damaged-statuses item-note-types loan-types locations location-units
-  material-types modes-of-issuance nature-of-content-terms service-points shelf-locations statistical-code-types
-  statistical-codes'
+  instance-statuses instance-types item-damaged-statuses item-note-types loan-types locations material-types
+  modes-of-issuance nature-of-content-terms service-points shelf-locations statistical-code-types statistical-codes'
 curl
 
 for PATH in $PATHS
   do
     echo "Fetching ${PATH}"
-    curl --http1.1 -o "${REFDIR}/${PATH}.json" -w "\n" "${OKAPI}/${PATH}?limit=100" -H "x-okapi-token: ${TOKEN}"
+    curl --http1.1 -o "${REFDIR}/${PATH}.json" -w "\n" "${OKAPI}/${PATH}?limit=500" -H "x-okapi-token: ${TOKEN}"
 done
