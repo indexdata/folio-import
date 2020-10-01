@@ -87,6 +87,16 @@ while (<INST>) {
 }
 close INST;
 
+my @lt = localtime();
+my $mdate = sprintf("%04d-%02d-%02dT%02d:%02d:%02d-0500", $lt[5] + 1900, $lt[4] + 1, $lt[3], $lt[2], $lt[1], $lt[0]);
+my $user = 'e27cb427-2280-5130-a25e-c762cfc210f7';
+my $metadata = {
+  createdDate => $mdate,
+  createdByUserId => $user,
+  updatedDate => $mdate,
+  updatedByUserId => $user
+};
+
 # set relationship indicator map
 my $rel_ind = {
   '0' => 'Resource',
@@ -96,41 +106,16 @@ my $rel_ind = {
   ' ' => 'No information provided'
 };
 
-# set status map
-my $status_map = {
-  '-' => 'Available',
-  'm' => 'Missing',
-  't' => 'In transit',
-  'i' => "In process",
-  'c' => "In process",
-  '!' => "Awaiting pickup",
-  'o' => 'Available',
-  'h' => 'Available',
-};
-
-# iii item note codes
-my $item_notes = {
-  'p' => 'Provenance',
-  'g' => 'Provenance',
-  'f' => 'Binding',
-  'o' => 'Note',
-  'c' => 'MilleniumData',
-  's' => 'MilleniumData',
-  '-' => 'Note'
-};
-
 my $status_note = {};
 
-# set static callno type to LC
-my $cn_type_id = '95467209-6d7b-468b-94df-0f5d7ad2747d';
+# set static callno type to Dewey 
+my $cn_type_id = '03dd64d0-5626-4ecd-8ece-4531e0069f35';
+
+# set other callno type
+my $other_cn = '6caca63e-5651-4db6-9247-3205156e9699';
 
 # set static loantype to "can circulate"
 my $loan_type_id = '2b94c631-fca9-4892-a730-03ee529ffe27';
-
-# simmons administrator id
-my $admin = '7a816507-d31a-54af-8af4-d9fe3eb48324';
-my $admin_first = 'Script';
-my $admin_last = 'Perl';
 
 # open a collection of raw marc records
 $/ = "\x1D";
@@ -175,7 +160,11 @@ while (<RAW>) {
       $hrecs->{$loc_key}->{instanceId} = $inst_map->{$control_num};
       # print HIDS $inst_map->{$iii_num} . "|" . $uustr . "\n";
       $hrecs->{$loc_key}->{callNumber} = $callno;
-      $hrecs->{$loc_key}->{callNumberTypeId} = $cn_type_id;
+      if ($callno =~ /^\d{3}(\.|$)/) { # dewey
+        $hrecs->{$loc_key}->{callNumberTypeId} = $cn_type_id;
+      } else {
+        $hrecs->{$loc_key}->{callNumberTypeId} = $other_cn;
+      }
       # my $loc_name = $locmap->{$loc_code};
       $hrecs->{$loc_key}->{permanentLocationId} = $folio_locs->{$loc_code} or die "[$control_num] Can't find permanentLocationId for $loc_code";
       my @url_fields = $marc->field('856');
@@ -195,6 +184,7 @@ while (<RAW>) {
         $eaObj->{relationshipId} = $folio_rel->{$relname};
         push $hrecs->{$loc_key}->{electronicAccess}, $eaObj;
       }
+      $hrecs->{$loc_key}->{metadata} = $metadata;
       $hcount++;
     }
 
