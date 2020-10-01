@@ -225,6 +225,7 @@ while (<RAW>) {
         $note->{staffOnly} = "true";
         push $irec->{notes}, $note;
       }
+      $irec->{metadata} = $metadata;
       push $icoll->{items}, $irec;
       $icount++;
     }
