@@ -109,7 +109,10 @@ my $rel_ind = {
 my $status_note = {};
 
 # set static callno type to Dewey 
-my $cn_type_id = '03dd64d0-5626-4ecd-8ece-4531e0069f35';
+my $dewey_cn = '03dd64d0-5626-4ecd-8ece-4531e0069f35';
+
+# set lc callno type
+my $lc_cn = '95467209-6d7b-468b-94df-0f5d7ad2747d';
 
 # set other callno type
 my $other_cn = '6caca63e-5651-4db6-9247-3205156e9699';
@@ -141,6 +144,14 @@ while (<RAW>) {
   my @marc_items = $marc->field('949');
   foreach (@marc_items) {
     my $callno = $_->as_string('e');
+    my $cn_type_id;
+    if ($callno =~ /^\d{3}(\.|$)/) { # dewey
+        $cn_type_id = $dewey_cn;
+      } elsif ($callno =~ /^[A-Z]{1,2}\d/) {
+        $cn_type_id = $lc_cn;
+      } else {
+        $cn_type_id = $other_cn;
+      }
     my $loc_code = $_->as_string('g');
     if (!$loc_code) {
       print "WARN No location code-- skipping...\n";
@@ -158,14 +169,8 @@ while (<RAW>) {
       my $uustr = uuid($hrid);
       $hrecs->{$loc_key}->{id} = $uustr;
       $hrecs->{$loc_key}->{instanceId} = $inst_map->{$control_num};
-      # print HIDS $inst_map->{$iii_num} . "|" . $uustr . "\n";
       $hrecs->{$loc_key}->{callNumber} = $callno;
-      if ($callno =~ /^\d{3}(\.|$)/) { # dewey
-        $hrecs->{$loc_key}->{callNumberTypeId} = $cn_type_id;
-      } else {
-        $hrecs->{$loc_key}->{callNumberTypeId} = $other_cn;
-      }
-      # my $loc_name = $locmap->{$loc_code};
+      $hrecs->{$loc_key}->{callNumberTypeId} = $cn_type_id;
       $hrecs->{$loc_key}->{permanentLocationId} = $folio_locs->{$loc_code} or die "[$control_num] Can't find permanentLocationId for $loc_code";
       my @url_fields = $marc->field('856');
       foreach (@url_fields) {
