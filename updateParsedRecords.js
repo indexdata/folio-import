@@ -38,11 +38,6 @@ process.argv.forEach((a,i) => {
 
 let scriptFile = process.argv[2];
 let inFile = process.argv[3];
-let dir = path.dirname(inFile);
-let bak = `${dir}/parsedRecordsBak.jsonl`;
-if (fs.existsSync(bak)) {
-  fs.unlinkSync(bak);
-}
 
 (async () => {
   try {
@@ -52,6 +47,12 @@ if (fs.existsSync(bak)) {
       throw new Error('Can\'t find data file');
     } else if (!fs.existsSync(scriptFile)) {
       throw new Error('Can\'t find script file');
+    }
+
+    let dir = path.dirname(inFile);
+    let bak = `${dir}/parsedRecordsBak.jsonl`;
+    if (fs.existsSync(bak)) {
+      fs.unlinkSync(bak);
     }
     
     scriptFile = scriptFile.replace(/^([^.])/, './$1');
@@ -121,6 +122,8 @@ if (fs.existsSync(bak)) {
               console.log(e.response || e);
             }
           }
+        } else {
+          console.log('  No changes made...');
         }
       } catch (e) {
         console.log(e.response || e);
