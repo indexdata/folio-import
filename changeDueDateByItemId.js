@@ -36,7 +36,7 @@ let inFile = process.argv[3];
     let x = 0;
     for await (let id of rl) {
       x++;
-      let url = `${config.okapi}/circulation/loans?query=itemId==${id}`;
+      let url = `${config.okapi}/circulation/loans?query=itemId==${id}%20and%20status.name==open`;
       console.log(`# ${x} GET loan ${url}`);
       try {
         let res = await superagent

@@ -38,7 +38,12 @@ const ssId = 'b97e2e2b-72d2-463b-a876-1d9ca4e6a9f0';
     for await (const line of rl) {
       x++;
       let rec = JSON.parse(line);
+      rec.matchedId = rec.id;
+      if (rec.rawRecord) {
+	rec.rawRecord.id = rec.id;
+      }
       if (rec.parsedRecord) {
+	rec.parsedRecord.id = rec.id;
         let instId = rec.externalIdsHolder.instanceId;
         console.log(`# ${x} ${rec.id} (${instId})`);
 
