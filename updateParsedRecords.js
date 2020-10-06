@@ -26,6 +26,7 @@ const fs = require('fs');
 const superagent = require('superagent');
 const { getAuthToken } = require('./lib/login');
 const readline = require('readline');
+const path = require('path');
 
 let test = false;
 process.argv.forEach((a,i) => {
@@ -34,13 +35,19 @@ process.argv.forEach((a,i) => {
     process.argv.splice(i, 1);
   }
 });
-let inFile = process.argv[3];
+
 let scriptFile = process.argv[2];
+let inFile = process.argv[3];
+let dir = path.dirname(inFile);
+let bak = `${dir}/parsedRecordsBak.jsonl`;
+if (fs.existsSync(bak)) {
+  fs.unlinkSync(bak);
+}
 
 (async () => {
   try {
     if (!inFile) {
-      throw new Error('Usage: node updateParsedRecords.js [-t test] <script file> <file of intances ids>');
+      throw new Error('Usage: node updateParsedRecords.js [-t test] <script file> <intanceIds or hrids>');
     } else if (!fs.existsSync(inFile)) {
       throw new Error('Can\'t find data file');
     } else if (!fs.existsSync(scriptFile)) {
@@ -84,31 +91,35 @@ let scriptFile = process.argv[2];
           .get(url)
           .set('x-okapi-token', authToken)
           .set('accept', 'application/json');
+        let bakData = JSON.stringify(res.body);
         let rec = res.body;
         let prUpdated = editor(rec.parsedRecord.content);
-        // sort the fields;
-        prUpdated.fields.sort((a, b) => {
-          aTag = Object.keys(a)[0];
-          bTag = Object.keys(b)[0];
-          if (aTag < bTag) return -1;
-          else if (bTag > bTag) return 1;
-          else return 0;
-        });
-        if (test) { 
-          console.log(JSON.stringify(prUpdated, null, 2));
-        } else {
-          rec.parsedRecord.content = prUpdated;
-          try {
-            let purl = `${config.okapi}/change-manager/parsedRecords/${rec.id}`;
-            console.log(`    PUT to ${purl}`)
-            let res = await superagent
-              .put(purl)
-              .send(rec)
-              .set('x-okapi-token', authToken)
-              .set('content-type', 'application/json')
-              .set('accept', 'application/json');
-          } catch (e) {
-            console.log(e.response || e);
+        if (prUpdated) {
+          prUpdated.fields.sort((a, b) => {
+            aTag = Object.keys(a)[0];
+            bTag = Object.keys(b)[0];
+            if (aTag < bTag) return -1;
+            else if (bTag > bTag) return 1;
+            else return 0;
+          });
+          if (test) { 
+            console.log(JSON.stringify(prUpdated, null, 2));
+          } 
+          else {
+            rec.parsedRecord.content = prUpdated;
+            fs.writeFileSync(bak, bakData + "\n", { flag: 'a' })
+            try {
+              let purl = `${config.okapi}/change-manager/parsedRecords/${rec.id}`;
+              console.log(`    PUT to ${purl}`)
+              let res = await superagent
+                .put(purl)
+                .send(rec)
+                .set('x-okapi-token', authToken)
+                .set('content-type', 'application/json')
+                .set('accept', 'application/json');
+            } catch (e) {
+              console.log(e.response || e);
+            }
           }
         }
       } catch (e) {

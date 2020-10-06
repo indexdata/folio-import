@@ -5,14 +5,19 @@
 */
 
 module.exports = (pr) => {
+  let changed = false;
   for (let x = 0; x < pr.fields.length; x++) {
     let field = pr.fields[x];
     let tag = Object.keys(field)[0];
-    if (tag === '006' || tag === '007') {
+    if ((tag === '006' && field[tag].match(/^m/)) || (tag === '007' && field[tag].match(/^c/))) {
       pr.fields.splice(x, 1);
+      changed = true;
       x--;
     }
   }
-
-  return pr;
+  if (changed) {
+    return pr;
+  } else {
+    return null;
+  }
 };
