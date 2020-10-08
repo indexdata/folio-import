@@ -1,16 +1,20 @@
 const fs = require('fs');
 const superagent = require('superagent');
 const { getAuthToken } = require('./lib/login');
-let refDir = process.argv[2];
-let start = parseInt(process.argv[3], 10);
-let limit = parseInt(process.argv[4], 10);
+const argv = require('minimist')(process.argv.slice(2));
+
+let refDir = argv._[0];
+let start = parseInt(argv.s, 10) || 0;
+let limit = parseInt(argv.l, 10);
+let query = '';
+if (argv.q) query = 'query=' + argv.q + '&';
 
 (async () => {
   try {
     if (!refDir) {
-      throw new Error('Usage: node downloadAllItems.js <download_dir> <start> <stop>');
+      throw new Error('Usage: node downloadAllItems.js [-l limit, -s start, -q query ] <download_dir>');
     } else if (!fs.existsSync(refDir)) {
-      throw new Error('Reference directory does\'t exist!');
+      throw new Error('Download directory does\'t exist!');
     } else if (!fs.lstatSync(refDir).isDirectory()) {
       throw new Error(`${refDir} is not a directory!`)
     }
@@ -28,7 +32,7 @@ let limit = parseInt(process.argv[4], 10);
     let offset = start || 0;
     const coll = { items: [] };
     while (totFetch < totRecs) {
-      let url = `${actionUrl}?limit=${perPage}&offset=${offset}`;
+      let url = `${actionUrl}?${query}limit=${perPage}&offset=${offset}`;
       try {
         let res = await superagent
           .get(url)

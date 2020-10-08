@@ -33,7 +33,7 @@ let limit = parseInt(process.argv[5], 10);
 
     let totFetch = 0;
     let totRecs = 1000000;
-    let perPage = 1000;
+    let perPage = 100;
     let offset = start || 0;
     const coll = {};
     while (totFetch < totRecs) {
