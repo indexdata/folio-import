@@ -6,16 +6,21 @@ const fs = require('fs');
 const superagent = require('superagent');
 const path = require('path');
 const { getAuthToken } = require('./lib/login');
-let inFile = process.argv[2];
-let newId = process.argv[3];
+const argv = require('minimist')(process.argv.slice(2));
+
+let inFile = argv._[1];
+let newId = argv._[0].toString();
+let recType = (argv.t) ? argv.t : 'holdings'; 
 
 (async () => {
   try {
     let inData;
-    if (!newId) {
-      throw new Error('Usage: node simmonsChangeLocations.js <hrid or uuid file> <new locationId> [<limit>]');
+    if (!inFile) {
+      throw new Error('Usage: node simmonsChangeLocations.js [ -t idType (item|holdings), -l limit ] <permamentLocationId> <file of ids or hrids>');
     } else if (!fs.existsSync(inFile)) {
       throw new Error('Can\'t find input file');
+    } else if (!newId.match(/^........-....-....-....-............$/)) {
+      throw new Error(`${newId} is not a proper UUID`);
     } else {
       inData = fs.readFileSync(inFile, 'utf8');
     }
@@ -23,7 +28,7 @@ let newId = process.argv[3];
 
     const lines = inData.split(/\n/);
     lines.pop();
-    let limit = (process.argv[4]) ? parseInt(process.argv[4], 10) : lines.length;
+    let limit = (argv.l) ? parseInt(argv.l, 10) : lines.length;
     if (isNaN(limit)) {
       throw new Error('Limit must be a number.');
     }
@@ -45,35 +50,64 @@ let newId = process.argv[3];
     for (let x = 0; x < limit; x++) {
       let qid = lines[x];
       let url;
-      if (qid.match(/\w{8}-\w{4}-\w{4}-\w{4}-\w{12}/)) {
-        url = `${config.okapi}/holdings-storage/holdings/${qid}` 
+      let path = '';
+      let proceed = true;
+      if (recType === 'item') {
+        path = 'item-storage/items';
       } else {
-        url = `${config.okapi}/holdings-storage/holdings?query=hrid==${qid}`;
+        path = 'holdings-storage/holdings'
       }
-      console.log(`[${x}] Getting ${url}`);
-      try {
-        let res = await superagent
-          .get(url)
-          .set('x-okapi-token', authToken)
-          .set('accept', 'application/json');
-        let hr = (res.body.holdingsRecords) ? res.body.holdingsRecords[0] : res.body;
-        if (hr) {
-          hr.permanentLocationId = newId;
-          let purl = `${config.okapi}/holdings-storage/holdings/${hr.id}`;
-          console.log(`    PUT ${purl}`);
-          try {
-            let res = await superagent
-              .put(url)
-              .set('x-okapi-token', authToken)
-              .set('content-type', 'application/json')
-              .set('accept', 'text/plain')
-              .send(hr);
-          } catch (e) {
-            console.log(e.response || e);
+      if (qid.match(/\w{8}-\w{4}-\w{4}-\w{4}-\w{12}/)) {
+        url = `${config.okapi}/${path}/${qid}` 
+      } else {
+        url = `${config.okapi}/${path}?query=hrid==${qid}`;
+      }
+
+      if (recType === 'item') {
+        console.log(`[${x}] Getting item at ${url}`);
+        try {
+          let res = await superagent
+            .get(url)
+            .set('x-okapi-token', authToken)
+            .set('accept', 'application/json');
+          let hoRecId = (res.body.items) ? res.body.items[0].holdingsRecordId : res.body.holdingsRecordId;
+          url = `${config.okapi}/holdings-storage/holdings/${hoRecId}`;
+        } catch (e) {
+          console.log(e);
+          proceed = false;
+        }
+      }
+
+      if (proceed) {
+        let cc = (recType === 'item') ? '.....' : `[${x}]`;
+        console.log(`${cc} Getting holdings ${url}`);
+        
+        try {
+          let res = await superagent
+            .get(url)
+            .set('x-okapi-token', authToken)
+            .set('accept', 'application/json');
+          let hr = (res.body.holdingsRecords) ? res.body.holdingsRecords[0] : res.body;
+          if (hr) {
+            hr.permanentLocationId = newId;
+            let purl = `${config.okapi}/holdings-storage/holdings/${hr.id}`;
+            console.log(`    PUT ${purl}`);
+            try {
+              let res = await superagent
+                .put(url)
+                .set('x-okapi-token', authToken)
+                .set('content-type', 'application/json')
+                .set('accept', 'text/plain')
+                .send(hr);
+            } catch (e) {
+              console.log(e.response.message || e);
+            }
+          } else {
+            console.log('  WARN Holdings record not found');
           }
-        } 
-      } catch (e) {
-        console.log(e.response || e);
+        } catch (e) {
+          console.log(e.response.message || e);
+        }
       }
     }
   } catch (e) {
