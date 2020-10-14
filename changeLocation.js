@@ -50,64 +50,47 @@ let recType = (argv.t) ? argv.t : 'holdings';
     for (let x = 0; x < limit; x++) {
       let qid = lines[x];
       let url;
-      let path = '';
-      let proceed = true;
-      if (recType === 'item') {
-        path = 'item-storage/items';
-      } else {
-        path = 'holdings-storage/holdings'
-      }
       if (qid.match(/\w{8}-\w{4}-\w{4}-\w{4}-\w{12}/)) {
-        url = `${config.okapi}/${path}/${qid}` 
+        if (recType === 'item') {
+          url = `${config.okapi}/holdings-storage/holdings?query=item.id==${qid}`
+        } else {
+          url = `${config.okapi}/holdings-storage/holdings/${qid}`
+        }
       } else {
-        url = `${config.okapi}/${path}?query=hrid==${qid}`;
-      }
-
-      if (recType === 'item') {
-        console.log(`[${x}] Getting item at ${url}`);
-        try {
-          let res = await superagent
-            .get(url)
-            .set('x-okapi-token', authToken)
-            .set('accept', 'application/json');
-          let hoRecId = (res.body.items) ? res.body.items[0].holdingsRecordId : res.body.holdingsRecordId;
-          url = `${config.okapi}/holdings-storage/holdings/${hoRecId}`;
-        } catch (e) {
-          console.log(e);
-          proceed = false;
+        if (recType === 'item') {
+          url = `${config.okapi}/holdings-storage/holdings?query=item.hrid==${qid}`
+        } else {
+          url = `${config.okapi}/holdings-storage/holdings?query=holdings.hrid=${qid}`
         }
       }
 
-      if (proceed) {
-        let cc = (recType === 'item') ? '.....' : `[${x}]`;
-        console.log(`${cc} Getting holdings ${url}`);
-        
-        try {
-          let res = await superagent
-            .get(url)
-            .set('x-okapi-token', authToken)
-            .set('accept', 'application/json');
-          let hr = (res.body.holdingsRecords) ? res.body.holdingsRecords[0] : res.body;
-          if (hr) {
-            hr.permanentLocationId = newId;
-            let purl = `${config.okapi}/holdings-storage/holdings/${hr.id}`;
-            console.log(`    PUT ${purl}`);
-            try {
-              let res = await superagent
-                .put(url)
-                .set('x-okapi-token', authToken)
-                .set('content-type', 'application/json')
-                .set('accept', 'text/plain')
-                .send(hr);
-            } catch (e) {
-              console.log(e.response.message || e);
-            }
-          } else {
-            console.log('  WARN Holdings record not found');
+      console.log(`[${x}] Getting holdings ${url}`);
+      
+      try {
+        let res = await superagent
+          .get(url)
+          .set('x-okapi-token', authToken)
+          .set('accept', 'application/json');
+        let hr = (res.body.holdingsRecords) ? res.body.holdingsRecords[0] : res.body;
+        if (hr) {
+          hr.permanentLocationId = newId;
+          let purl = `${config.okapi}/holdings-storage/holdings/${hr.id}`;
+          console.log(`    PUT ${purl}`);
+          try {
+            let res = await superagent
+              .put(purl)
+              .set('x-okapi-token', authToken)
+              .set('content-type', 'application/json')
+              .set('accept', 'text/plain')
+              .send(hr);
+          } catch (e) {
+            console.log(e.response.message || e);
           }
-        } catch (e) {
-          console.log(e.response.message || e);
-        }
+        } else {
+          console.log('  WARN Holdings record not found');
+        } 
+      } catch (e) {
+        console.log(e.response.message || e);
       }
     }
   } catch (e) {
