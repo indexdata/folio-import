@@ -9,7 +9,7 @@ const { getAuthToken } = require('./lib/login');
 const argv = require('minimist')(process.argv.slice(2));
 
 let inFile = argv._[1];
-let newId = argv._[0].toString();
+let newId = (argv._[0]) ? argv._[0].toString() : '';
 let recType = (argv.t) ? argv.t : 'holdings'; 
 
 (async () => {
