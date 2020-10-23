@@ -1,9 +1,12 @@
 #! /usr/bin/perl
 
-# Create Folio holdings and items from quasi json files.
+# Create Folio holdings and items from Spokane Sirsi Marc Records.
+# Holdings are created by unique location and call number.
+# Item data is in the 949 field.
 
 use strict;
 use warnings;
+use MARC::Record;
 use Data::Dumper;
 use JSON;
 use Data::UUID;
@@ -13,7 +16,7 @@ binmode STDOUT, ":utf8";
 my $limit = 1000000;
 
 unless ($ARGV[1]) {
-  die "Usage: items_spl.pl <ref_data_path> <holdings_file>\n"
+  die "Usage: items_spl.pl <ref_data_path> <raw_marc_file>\n"
 }
 
 my $refpath = shift;
@@ -25,7 +28,7 @@ if (! -e $infile) {
   die "Can't find input file!\n"
 }
 
-my $namespace = 'dfc59d30-cdad-3d03-9dee-d99117852eab';
+my $namespace = $ENV{UUID_NS} || '0000000-0000-0000-0000-0000000000';
 sub uuid {
   my $name = shift;
   my $ug = Data::UUID->new;
@@ -35,7 +38,7 @@ sub uuid {
 }
 
 my $filename = $infile;
-$filename =~ s/^(.+\/)?(.+)\..+$/$2_pr/;
+$filename =~ s/^(.+\/)?(.+)\..+$/$2/;
 my $batch_path = $1;
 
 sub get_ref_data {
@@ -117,24 +120,9 @@ my $other_cn = '6caca63e-5651-4db6-9247-3205156e9699';
 # set static loantype to "can circulate"
 my $loan_type_id = '2b94c631-fca9-4892-a730-03ee529ffe27';
 
-# create json object
+# open a collection of raw marc records
+$/ = "\x1D";
 open RAW, "<:encoding(UTF-8)", $infile;
-my $jtext;
-while (<RAW>) {
-  s/^\s+//;
-  s/\s+$//;
-  if (/\^\{/) {
-    $jtext = $_;
-  } elsif (/^}/) {
-    $jtext .= $_;
-    my $jobj = decode_json($jtext);
-    print Dumper($jobj);
-  } else {
-    $jtext .= $_
-  }
-}
-
-exit;
 my $item_seen = {};
 my $hcoll = { holdingsRecords => [] };
 my $icoll = { items => [] };
