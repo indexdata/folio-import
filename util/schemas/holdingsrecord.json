@@ -5,7 +5,7 @@
   "properties": {
     "id": {
       "type": "string",
-      "description": "the system assigned unique ID of the holdings record; UUID",
+      "description": "the unique ID of the holdings record; UUID",
       "$ref": "uuid.json"
     },
     "hrid": {
@@ -26,6 +26,7 @@
       "uniqueItems": true
     },
     "instanceId": {
+      "description": "Inventory instances identifier",
       "type": "string",
       "$ref": "uuid.json"
     },
@@ -34,12 +35,24 @@
       "description": "The permanent shelving location in which an item resides.",
       "$ref" : "uuid.json"
     },
+    "permanentLocation": {
+      "description": "The permanent shelving location in which an item resides",
+      "type": "object",
+      "folio:$ref": "location.json",
+      "readonly": true,
+      "folio:isVirtual": true,
+      "folio:linkBase": "locations",
+      "folio:linkFromField": "permanentLocationId",
+      "folio:linkToField": "id",
+      "folio:includedElement": "locations.0"
+    },
     "temporaryLocationId": {
       "type": "string",
       "description": "Temporary location is the temporary location, shelving location, or holding which is a physical place where items are stored, or an Online location.",
       "$ref": "uuid.json"
     },
     "electronicAccess": {
+      "description": "List of electronic access items",
       "type": "array",
       "items": {
         "type": "object",
@@ -93,10 +106,12 @@
       "description": "Indicates the shelving form of title."
     },
     "acquisitionFormat": {
-      "type": "string"
+      "type": "string",
+      "description": "Format of holdings record acquisition"
     },
     "acquisitionMethod": {
-      "type": "string"
+      "type": "string",
+      "description": "Method of holdings record acquisition"
     },
     "receiptStatus": {
       "type": "string",
@@ -112,6 +127,18 @@
             "type": "string",
             "description": "ID of the type of note",
             "$ref" : "uuid.json"
+          },
+          "holdingsNoteType": {
+            "type": "object",
+            "description": "expanded note-type object corresponding to holdingsNoteTypeId",
+            "javaType": "org.folio.rest.jaxrs.model.HoldingsNoteTypeVirtual",
+            "folio:$ref": "holdingsnotetype.json",
+            "readonly": true,
+            "folio:isVirtual": true,
+            "folio:linkBase": "holdings-note-types",
+            "folio:linkFromField": "holdingsNoteTypeId",
+            "folio:linkToField": "id",
+            "folio:includedElement": "holdingsNoteTypes.0"
           },
           "note": {
             "type": "string",
@@ -147,9 +174,11 @@
       "description": "Records information regarding how long we have agreed to keep something."
     },
     "digitizationPolicy": {
+      "description": "Records information regarding digitization aspects.",
       "type": "string"
     },
     "holdingsStatements": {
+      "description": "Notes about action, copy, binding etc.",
       "type": "array",
       "items": {
         "type": "object",
@@ -161,11 +190,16 @@
           "note": {
             "type": "string",
             "description": "Note attached to a holdings statement"
+          },
+          "staffNote": {
+            "type": "string",
+            "description": "Private note attached to a holdings statment"
           }
         }
       }
     },
     "holdingsStatementsForIndexes": {
+      "description": "Holdings record indexes statements",
       "type": "array",
       "items": {
         "type": "object",
@@ -177,11 +211,16 @@
           "note": {
             "type": "string",
             "description": "Note attached to a holdings statement"
+          },
+          "staffNote": {
+            "type": "string",
+            "description": "Private note attached to a holdings statment"
           }
         }
       }
     },
     "holdingsStatementsForSupplements": {
+      "description": "Holdings record supplements statements",
       "type": "array",
       "items": {
         "type": "object",
@@ -193,6 +232,10 @@
           "note": {
             "type": "string",
             "description": "note attached to a holdings statement"
+          },
+          "staffNote": {
+            "type": "string",
+            "description": "Private note attached to a holdings statment"
           }
         }
       }
@@ -206,6 +249,7 @@
       "description": "Text (Number)"
     },
     "receivingHistory": {
+      "description": "Receiving history of holdings record",
       "type": "object",
       "properties": {
         "displayType": {
@@ -214,7 +258,7 @@
         },
         "entries": {
           "type": "array",
-          "description": ".",
+          "description": "Entries of receiving history",
           "items": {
             "type": "object",
             "properties": {
@@ -249,6 +293,7 @@
       "uniqueItems": true
     },
     "holdingsItems": {
+      "description": "Items related to holdings record",
       "type": "array",
       "items": {
         "type": "object",
@@ -261,7 +306,22 @@
       "folio:linkToField": "holdingsRecordId",
       "folio:includedElement": "items"
     },
+    "bareHoldingsItems": {
+      "description": "Items of bareHoldings",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "item.json"
+      },
+      "readonly": true,
+      "folio:isVirtual": true,
+      "folio:linkBase": "item-storage/items",
+      "folio:linkFromField": "id",
+      "folio:linkToField": "holdingsRecordId",
+      "folio:includedElement": "items"
+    },
     "holdingsInstance": {
+      "description": "Instance of holding record",
       "type": "object",
       "folio:$ref": "instance.json",
       "readonly": true,
@@ -281,6 +341,11 @@
       "type": "object",
       "$ref": "raml-util/schemas/metadata.schema",
       "readonly": true
+    },
+    "sourceId": {
+      "description": "(A reference to) the source of a holdings record",
+      "type": "string",
+      "$ref": "uuid.json"
     }
   },
   "additionalProperties": false,

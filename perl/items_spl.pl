@@ -125,6 +125,7 @@ my $jtext;
 while (<RAW>) {
   s/^\s+//;
   s/\s+$//;
+  s/("available_date": )None/$1"None"/;  # This fixes an error in the source json where the string "None" is not quoted!
   if (/^\{/) {
     $jtext = $_;
   } elsif (/^}/) {
