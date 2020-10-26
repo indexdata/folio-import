@@ -104,8 +104,10 @@ const wait = (ms) => {
         success++;
       } catch (e) {
         logger.error(`${date} [${range}] (${slice}): ${e.response.text}`);
-        let rfname = lname.replace(/\.json$/, '');
-        fs.writeFileSync(`${lpath}/${rfname}_${range}_err.json`, JSON.stringify(ldata, null, 2));
+        if (lpath) {
+          let rfname = lname.replace(/\.json$/, '');
+          fs.writeFileSync(`${lpath}/${rfname}_${range}_err.json`, JSON.stringify(ldata, null, 2));
+        }
         fail++;
       }
       await wait(config.delay);
