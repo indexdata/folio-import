@@ -1,6 +1,7 @@
 #! /usr/bin/perl
 
 # Create Folio holdings and items from quasi json files.
+# The instances map needs to be located in the same directory as the holdings records.
 
 use strict;
 use warnings;
@@ -35,7 +36,7 @@ sub uuid {
 }
 
 my $filename = $infile;
-$filename =~ s/^(.+\/)?(.+)\..+$/$2_pr/;
+$filename =~ s/^(.+\/)?(.+)\..+$/$2/;
 my $batch_path = $1;
 
 sub get_ref_data {
@@ -62,6 +63,7 @@ my $folio_locs = get_ref_data('locations.json', 'locations');
 my $folio_mtypes = get_ref_data('material-types.json', 'mtypes');
 my $folio_rel = get_ref_data('electronic-access-relationships.json', 'electronicAccessRelationships');
 my $folio_notes = get_ref_data('item-note-types.json', 'itemNoteTypes');
+my $folio_dmg = get_ref_data('item-damaged-statuses.json', 'itemDamageStatuses');
 
 #open collections.tsv map
 my $coll_map = {};
@@ -73,8 +75,7 @@ while (<COLL>) {
 }
 
 # load bib id to instance id map
-my $inst_map_file = $infile;
-$inst_map_file =~ s/\.(mrc|marc)$/_instances.map/;
+my $inst_map_file = "${batch_path}instances.map";
 my $inst_map = {};
 open INST, "$inst_map_file" or die "Can't find instance id file: $inst_map_file\n";
 while (<INST>) {
@@ -119,128 +120,129 @@ my $loan_type_id = '2b94c631-fca9-4892-a730-03ee529ffe27';
 
 # create json object
 open RAW, "<:encoding(UTF-8)", $infile;
+my $hi = { items => [] };
 my $jtext;
 while (<RAW>) {
   s/^\s+//;
   s/\s+$//;
-  if (/\^\{/) {
+  if (/^\{/) {
     $jtext = $_;
   } elsif (/^}/) {
     $jtext .= $_;
     my $jobj = decode_json($jtext);
-    print Dumper($jobj);
+    push @{ $hi->{items} }, $jobj;
   } else {
     $jtext .= $_
   }
 }
 
-exit;
 my $item_seen = {};
 my $hcoll = { holdingsRecords => [] };
 my $icoll = { items => [] };
 my $hcount = 0;
 my $icount = 0;
 my $mcount = 0;
-while (<RAW>) {
-  my $hrec_num = 0;
+my $hrec_num = {};
+foreach (@{ $hi->{items} }) {
   my $hrecs = {};
-  my $raw = $_;
-  my $marc = MARC::Record->new_from_usmarc($raw);
-  my $control_num; 
-  if ($marc->field('001')) {
-    $control_num = $marc->field('001')->as_string();
-  } else {
+  my $control_num = $_->{'bib#'};
+  $hrec_num->{$control_num}++;
+  if (!$inst_map->{$control_num}) {
+    print "$control_num not found in inst_map\n";
     next;
   }
-  next if !$inst_map->{$control_num};
-  my @marc_items = $marc->field('949');
-  foreach (@marc_items) {
-    my $callno = $_->as_string('e');
-    my $cn_type_id;
-    if ($callno =~ /^\d{3}(\.|$)/) { # dewey
-        $cn_type_id = $dewey_cn;
-      } elsif ($callno =~ /^[A-Z]{1,2}\d/) {
-        $cn_type_id = $lc_cn;
-      } else {
-        $cn_type_id = $other_cn;
-      }
-    my $loc_code = $_->as_string('g');
-    if (!$loc_code) {
-      print "WARN No location code-- skipping...\n";
-      next;
+  my $callno = $_->{call_reconstructed};
+  my $cn_type_id;
+  if ($callno =~ /^\d{3}(\.|$)/) { # dewey
+      $cn_type_id = $dewey_cn;
+    } elsif ($callno =~ /^[A-Z]{1,2}\d/) {
+      $cn_type_id = $lc_cn;
+    } else {
+      $cn_type_id = $other_cn;
     }
-    $loc_code = lc $loc_code;
-    my $loc_key = "$loc_code-$callno";
-    $loc_code =~ s/^\s+|\s+$//g;
+  my $loc_code = $_->{location};
+  if (!$loc_code) {
+    print "WARN No location code-- skipping...\n";
+    next;
+  }
+  $loc_code = lc $loc_code;
+  my $loc_key = "$loc_code-$callno";
+  $loc_code =~ s/^\s+|\s+$//g;
 
-    # create holdings record if record doesn't already exists for said location
-    if (!$hrecs->{$loc_key}) {
-      $hrec_num++;
-      my $hrid = "$control_num-$hrec_num";
-      $hrecs->{$loc_key}->{hrid} = $hrid;
-      my $uustr = uuid($hrid);
-      $hrecs->{$loc_key}->{id} = $uustr;
-      $hrecs->{$loc_key}->{instanceId} = $inst_map->{$control_num};
-      $hrecs->{$loc_key}->{callNumber} = $callno;
-      $hrecs->{$loc_key}->{callNumberTypeId} = $cn_type_id;
-      $hrecs->{$loc_key}->{permanentLocationId} = $folio_locs->{$loc_code} or die "[$control_num] Can't find permanentLocationId for $loc_code";
-      my @url_fields = $marc->field('856');
-      foreach (@url_fields) {
-        my $uri = $_->as_string('u');
-        next unless $uri;
-        if (!$hrecs->{$loc_key}->{electronicAccess}) {
-          $hrecs->{$loc_key}->{electronicAccess} = []; 
-        } 
-        my $eaObj = {};
-        $eaObj->{uri} = $uri;
-        my $lt = $_->as_string('y');
-        $eaObj->{linkText} = $lt if $lt;
-        $eaObj->{publicNote} = $_->as_string('z');
-        my $indval = $_->{_ind2};
-        my $relname = $rel_ind->{$indval};
-        $eaObj->{relationshipId} = $folio_rel->{$relname};
-        push $hrecs->{$loc_key}->{electronicAccess}, $eaObj;
-      }
-      $hrecs->{$loc_key}->{metadata} = $metadata;
-      $hcount++;
+  # create holdings record if record doesn't already exists for said location
+  if (!$hrecs->{$loc_key}) {
+    my $hrid = "$control_num-" . sprintf("%03d", $hrec_num->{$control_num});
+    $hrecs->{$loc_key}->{hrid} = $hrid;
+    my $uustr = uuid($hrid);
+    $hrecs->{$loc_key}->{id} = $uustr;
+    $hrecs->{$loc_key}->{instanceId} = $inst_map->{$control_num};
+    $hrecs->{$loc_key}->{callNumber} = $callno;
+    $hrecs->{$loc_key}->{callNumberTypeId} = $cn_type_id;
+    $hrecs->{$loc_key}->{permanentLocationId} = $folio_locs->{$loc_code} or die "[$control_num] Can't find permanentLocationId for $loc_code";
+    $hrecs->{$loc_key}->{metadata} = $metadata;
+    $hcount++;
+  }
+
+  # create item 
+  my $irec = {};
+  my $hrid = $_->{'item#'};
+  if ($hrid && !$item_seen->{$hrid}) {
+    $item_seen->{$hrid} = 1;
+    my $barcode = $_->{ibarcode};
+    my $coll_code = $_->{collection};
+
+    $irec->{id} = uuid($hrid);
+    $irec->{holdingsRecordId} = $hrecs->{$loc_key}->{id};
+    $irec->{barcode} = $barcode;
+    my $coll_name = $coll_map->{$coll_code} || 'Other';
+    $irec->{materialTypeId} = $folio_mtypes->{$coll_name} || $folio_mtypes->{Other};
+    $irec->{permanentLoanTypeId} = $loan_type_id;
+    $irec->{itemLevelCallNumber} = $callno;
+    $irec->{itemLevelCallNumberTypeId} = $cn_type_id;
+    $irec->{effectiveCallNumberComponents} = { callNumber => $callno, typeId => $cn_type_id };
+    if ($hrecs->{$loc_key}->{electronicAccess}) {
+      $irec->{electronicAccess} = $hrecs->{$loc_key}->{electronicAccess};
+    }
+    my $st = $_->{item_status};
+    my $status = 'Available';
+    if ($st eq 'l') {
+      $status = 'Declared lost';
+    } elsif ($st eq 'w') {
+      $status = 'Withdrawn';
+    } elsif ($st eq 'sr' || $st eq 'dmg') {
+      $status = 'Unknown';
+    } elsif ($st eq 'r') {
+      $status = 'On order';
+    } 
+    $irec->{status} = { name => $status };
+    $irec->{hrid} = $hrid;
+    $irec->{notes} = [];
+    my $note_text = $_->{internal_note};
+    if ($note_text) {
+      my $note = {};
+      $note->{note} = $note_text;
+      $note->{itemNoteTypeId} = $folio_notes->{Note};
+      $note->{staffOnly} = "true";
+      push $irec->{notes}, $note;
+    }
+    my $note_src = $_->{source};
+    if ($note_src) {
+      my $note = {};
+      $note->{note} = $note_src;
+      $note->{itemNoteTypeId} = $folio_notes->{Provenance};
+      $note->{staffOnly} = "true";
+      push $irec->{notes}, $note;
+    }
+    if ($st eq 'dmg') {
+      $irec->{itemDamagedStatusId} = $folio_dmg->{Damaged};
+    }
+    if ($_->{cki_notes}) {
+      $irec->{circulationNotes}->[0] = { note => $_->{cki_notes}, noteType => 'Check in'};
     }
 
-    # create item 
-    my $irec = {};
-    my $hrid = $_->as_string('q');
-    if ($hrid && !$item_seen->{$hrid}) {
-      $item_seen->{$hrid} = 1;
-      my $barcode = $_->as_string('b');
-      my $coll_code = $_->as_string('c');
-
-      $irec->{id} = uuid($hrid);
-      $irec->{holdingsRecordId} = $hrecs->{$loc_key}->{id};
-      $irec->{barcode} = $barcode;
-      $irec->{volume} = $_->as_string('f');
-      my $coll_name = $coll_map->{$coll_code} || 'Other';
-      $irec->{materialTypeId} = $folio_mtypes->{$coll_name} || $folio_mtypes->{Other};
-      $irec->{permanentLoanTypeId} = $loan_type_id;
-      $irec->{itemLevelCallNumber} = $callno;
-      $irec->{itemLevelCallNumberTypeId} = $cn_type_id;
-      $irec->{effectiveCallNumberComponents} = { callNumber => $callno, typeId => $cn_type_id };
-      if ($hrecs->{$loc_key}->{electronicAccess}) {
-        $irec->{electronicAccess} = $hrecs->{$loc_key}->{electronicAccess};
-      }
-      $irec->{status} = { name => 'Available' };
-      $irec->{hrid} = $hrid;
-      $irec->{notes} = [];
-      my $note_text = $_->subfield('h');
-      if ($note_text) {
-        my $note = {};
-        $note->{note} = $note_text;
-        $note->{itemNoteTypeId} = $folio_notes->{Note};
-        $note->{staffOnly} = "true";
-        push $irec->{notes}, $note;
-      }
-      $irec->{metadata} = $metadata;
-      push $icoll->{items}, $irec;
-      $icount++;
-    }
+    $irec->{metadata} = $metadata;
+    push $icoll->{items}, $irec;
+    $icount++;
   }
   foreach (keys $hrecs) {
     push $hcoll->{holdingsRecords}, $hrecs->{$_};
