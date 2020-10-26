@@ -211,7 +211,7 @@ foreach (@{ $hi->{items} }) {
     } elsif ($st eq 'w') {
       $status = 'Withdrawn';
     } elsif ($st eq 'sr' || $st eq 'dmg') {
-      $status = 'Unknown';
+      $status = 'Available';
     } elsif ($st eq 'r') {
       $status = 'On order';
     } 
@@ -229,7 +229,7 @@ foreach (@{ $hi->{items} }) {
     my $note_src = $_->{source};
     if ($note_src) {
       my $note = {};
-      $note->{note} = $note_src;
+      $note->{note} = "Source: $note_src";
       $note->{itemNoteTypeId} = $folio_notes->{Provenance};
       $note->{staffOnly} = "true";
       push $irec->{notes}, $note;
@@ -240,7 +240,9 @@ foreach (@{ $hi->{items} }) {
     if ($_->{cki_notes}) {
       $irec->{circulationNotes}->[0] = { note => $_->{cki_notes}, noteType => 'Check in'};
     }
-
+    if ($_->{staff_only} == 1) {
+      $irec->{discoverySuppress} = "true";
+    }
     $irec->{metadata} = $metadata;
     push $icoll->{items}, $irec;
     $icount++;
