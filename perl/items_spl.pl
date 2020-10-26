@@ -122,9 +122,11 @@ my $loan_type_id = '2b94c631-fca9-4892-a730-03ee529ffe27';
 open RAW, "<:encoding(UTF-8)", $infile;
 my $hi = { items => [] };
 my $jtext;
+print "Creating json objects (this may take a while)...\n";
 while (<RAW>) {
   s/^\s+//;
   s/\s+$//;
+  s/\r|\n|\t/ /g;
   s/("available_date": )None/$1"None"/;  # This fixes an error in the source json where the string "None" is not quoted!
   if (/^\{/) {
     $jtext = $_;
