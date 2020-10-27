@@ -13,5 +13,10 @@
     "superagent": "^5.1.0",
     "uuid": "^3.3.3",
     "winston": "^3.2.1"
-  }
+  },
+  "private": true,
+  "workspaces": [
+    "util",
+    "patrons"
+  ]
 }
