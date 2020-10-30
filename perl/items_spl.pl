@@ -64,6 +64,7 @@ my $folio_mtypes = get_ref_data('material-types.json', 'mtypes');
 my $folio_rel = get_ref_data('electronic-access-relationships.json', 'electronicAccessRelationships');
 my $folio_notes = get_ref_data('item-note-types.json', 'itemNoteTypes');
 my $folio_dmg = get_ref_data('item-damaged-statuses.json', 'itemDamageStatuses');
+my $folio_ltypes = get_ref_data('loan-types.json', 'loantypes');
 
 #open collections.tsv map
 my $coll_map = {};
