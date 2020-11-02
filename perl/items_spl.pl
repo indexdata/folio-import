@@ -105,6 +105,29 @@ my $rel_ind = {
   ' ' => 'No information provided'
 };
 
+# map itypes to loan types
+my $itypes_map = {
+  kitbc => 'Book club bag',
+  ill => 'Inter-library Loan',
+  mag => 'Magazine',
+  nocirc => 'No Circulation',
+  dvda => 'One Week',
+  dvdanf => 'One Week',
+  dvdj => 'One Week',
+  dvdjnf => 'One Week',
+  lot1 => 'One Week',
+  topa => 'One Week No Request',
+  prof => 'Professional Collection',
+  topj => 'Standard No Request',
+  star => 'Standard No Request',
+  techlt => 'Technology - Laptops',
+  omc => 'Withdraw Soon',
+  vhsa => 'Withdraw Soon',
+  tsh => 'Withdraw Soon',
+  kitj => 'Withdraw Soon',
+  vertfil => 'Withdraw Soon'
+};
+
 my $status_note = {};
 
 # set static callno type to Dewey 
@@ -200,7 +223,8 @@ foreach (@{ $hi->{items} }) {
     $irec->{barcode} = $barcode;
     my $coll_name = $coll_map->{$coll_code} || 'Other';
     $irec->{materialTypeId} = $folio_mtypes->{$coll_name} || $folio_mtypes->{Other};
-    $irec->{permanentLoanTypeId} = $loan_type_id;
+    my $lt_label = $itypes_map->{$_->{itype}} || 'Standard Circulation';
+    $irec->{permanentLoanTypeId} = $folio_ltypes->{$lt_label};
     $irec->{itemLevelCallNumber} = $callno;
     $irec->{itemLevelCallNumberTypeId} = $cn_type_id;
     $irec->{effectiveCallNumberComponents} = { callNumber => $callno, typeId => $cn_type_id };
