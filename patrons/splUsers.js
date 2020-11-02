@@ -51,6 +51,7 @@ const getBadJSON = (jsonFile) => {
             userObj[key] = (kv[1].match(/\d/)) ? parseInt(kv[1], 10) : null;
           } else {
             val = val.replace(/^"(.*)"/, '$1');
+            if (val === 'None') val = '';
             userObj[key] = val;
           }
         }
@@ -89,8 +90,6 @@ const daysNow = Math.floor(new Date().valueOf()/1000/86400);
     let ttl = 0;
 
     usersIn.forEach(r => {
-      total++;
-      ttl++;
       let uukey = r["borrower#"].toString();
       let id = uuid(uukey, 'dfc59d30-cdad-3d03-9dee-d99117852eab');
       let expiry = getDateByDays(r.expiration_date);
@@ -129,9 +128,12 @@ const daysNow = Math.floor(new Date().valueOf()/1000/86400);
       };
       user.personal.addresses.push(address);
 
-      user.username = user.barcode ||user.personal.email || user.externalSystemId || user.personal.lastName + user.personal.firstName;
-      records.users.push(user);
-
+      user.username = user.barcode || user.externalSystemId || user.personal.email || user.personal.lastName + user.personal.firstName;
+      if (user.patronGroup) {
+        records.users.push(user);
+        total++;
+      }
+      ttl++;
       if (total === size || ttl === usersIn.length) {
         batch++;
         let set = batch.toString();
@@ -150,8 +152,6 @@ const daysNow = Math.floor(new Date().valueOf()/1000/86400);
       }
 
     });
-
-    
 
   } catch (e) {
     console.error(e.message);
