@@ -9,13 +9,27 @@ const size = (process.argv[3]) ? parseInt(process.argv[3], 10) : 5000;
 const ns = 'dfc59d30-cdad-3d03-9dee-d99117852eab';
 
 const pgroup_map = {
-  r: "Resident",
-  n: "Non-Resident",
+  al: "Adult Limited",
+  b: "Business",
   c: "County",
+  co: "Community",
   cs: "College Student",
-  s: "K-12 Student",
+  de: "Deactivated",
+  dm: "Direct Mail",
+  hs: "Home Service",
+  ill: "Inter-library Loan",
+  jl: "Juvenile Limited",
+  n: "Non-Resident",
+  r: "Resident",
+  ri: "Institition",
+  ro: "Outreach",
+  sc: "City Staff",
+  si: "Internal Only",
   sl: "SPL Staff",
-  ss: "Support"
+  sr: "Self-Registered",
+  ss: "Support",
+  st: "K-12 Student",
+  t: "Teacher"
 };
 
 const getDateByDays = (days) => {
