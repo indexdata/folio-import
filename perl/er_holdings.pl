@@ -65,7 +65,7 @@ while (<RAW>) {
   $hrec->{holdingsTypeId} = $holdings_type_id;
   $hrec->{id} = $uustr;
   $hrec->{instanceId} = $inst_map->{$control_num};
-  my @callnums = $marc->field('050') || null;
+  my @callnums = $marc->field('050') || '';
   my $cn = $callnums[0]->as_string('a') || $callnums[0]->as_string('b') if $callnums[0];
   $hrec->{callNumber} = $cn;
   $hrec->{callNumberTypeId} = $cn_type_id;
@@ -109,7 +109,7 @@ my $hcollection = JSON->new->pretty->encode($hcoll);
 my $holdings_file = "$batch_path/${filename}_holdings.json";
 open HLD, ">:encoding(UTF-8)", $holdings_file;
 print HLD $hcollection;
-print $hcollection;
+# print $hcollection;
 close HLD;
 
 $icoll->{totalRecords} = $icount;
@@ -117,7 +117,7 @@ my $icollection = JSON->new->pretty->encode($icoll);
 my $items_file = "$batch_path/${filename}_items.json";
 open ITM, ">:encoding(UTF-8)", $items_file;
 print ITM $icollection;
-print $icollection;
+# print $icollection;
 close ITM;
 
 print "\nHoldings: $hcount";
