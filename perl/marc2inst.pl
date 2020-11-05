@@ -13,6 +13,8 @@
 #
 # This script will output a single instances collection and will be saved to the same
 # directory as the raw marc file.
+# 
+# To add metadata, set FOLIO_USER_ID to user UUID (e.g. export FOLIO_USER_ID=b8e68b41-5473-5d0c-85c8-f4c4eb391b59)
 
 use strict;
 use warnings;
@@ -30,6 +32,9 @@ my $ref_dir = shift;
 if (! $ARGV[0]) {
   die "Usage: ./marc2inst.pl <mapping_rules> <ref_data_dir> <raw_marc_files>\n";
 }
+
+my @lt = localtime();
+my $mdate = sprintf("%04d-%02d-%02dT%02d:%02d:%02d-0500", $lt[5] + 1900, $lt[4] + 1, $lt[3], $lt[2], $lt[1], $lt[0]);
 
 sub uuid {
   my $name = shift;
@@ -512,6 +517,14 @@ foreach (@ARGV) {
     # Assign uuid based on hrid;
     if ($rec->{hrid}) {
       $rec->{id} = uuid($rec->{hrid});
+      if ($ENV{FOLIO_USER_ID}) {
+        $rec->{metadata} = {
+          createdByUserId=>$ENV{FOLIO_USER_ID},
+          updatedByUserId=>$ENV{FOLIO_USER_ID},
+          createdDate=>$mdate,
+          updatedDate=>$mdate
+        };
+      }
       print IDMAP "$rec->{hrid}|$rec->{id}\n";
       push @{ $coll->{instances} }, $rec;
     } else {
