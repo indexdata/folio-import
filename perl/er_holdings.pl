@@ -36,6 +36,15 @@ while (<INST>) {
   $inst_map->{$k} = $v;
 }
 
+my @lt = localtime();
+my $mdate = sprintf("%04d-%02d-%02dT%02d:%02d:%02d-0500", $lt[5] + 1900, $lt[4] + 1, $lt[3], $lt[2], $lt[1], $lt[0]);
+my $meta = {
+  createdDate=>$mdate,
+  updatedDate=>$mdate,
+  createdByUserId=>$ENV{FOLIO_USER_ID},
+  updatedByUserId=>$ENV{FOLIO_USER_ID}
+};
+
 # set static callno type to LC
 my $cn_type_id = '95467209-6d7b-468b-94df-0f5d7ad2747d';
 
@@ -82,6 +91,7 @@ while (<RAW>) {
     my $lt = $_->as_string('y');
     $eaObj->{linkText} = $lt if $lt;
     $eaObj->{relationshipId} = $relationship_id;
+    $hrec->{metadata} = $meta;
     push $hrec->{electronicAccess}, $eaObj;
   }
   $hcount++;
@@ -96,6 +106,7 @@ while (<RAW>) {
   $item->{permanentLoanTypeId} = $perm_loantype_id;
   $item->{materialTypeId} = $material_type_id;
   $item->{holdingsRecordId} = $uustr;
+  $item->{metadata} = $meta;
 
   push @{ $icoll->{items} }, $item;
   $icount++;
