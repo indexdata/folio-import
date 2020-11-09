@@ -75,7 +75,7 @@ while (<RAW>) {
   $hrec->{id} = $uustr;
   $hrec->{instanceId} = $inst_map->{$control_num};
   my @callnums = $marc->field('050') || '';
-  my $cn = $callnums[0]->as_string('a') || $callnums[0]->as_string('b') if $callnums[0];
+  my $cn = $callnums[0]->as_string('ab') if $callnums[0];
   $hrec->{callNumber} = $cn;
   $hrec->{callNumberTypeId} = $cn_type_id;
   $hrec->{permanentLocationId} = $location_id;
@@ -106,6 +106,8 @@ while (<RAW>) {
   $item->{permanentLoanTypeId} = $perm_loantype_id;
   $item->{materialTypeId} = $material_type_id;
   $item->{holdingsRecordId} = $uustr;
+  $item->{effectiveCallNumberComponents}->{callNumber} = $cn;
+  $item->{effectiveCallNumberComponents}->{typeId} = $cn_type_id;
   $item->{metadata} = $meta;
 
   push @{ $icoll->{items} }, $item;
