@@ -100,18 +100,21 @@ const wait = (ms) => {
             .set('accept', 'text/plain')
             .set('connection', 'keep-alive');
           logger.info(`${date} [${range}] Successfully added record ${slice}`);
-          resolve();
           success++;
+          await wait(config.delay);
+          resolve();
         } catch (e) {
           logger.error(`${date} [${range}] (${slice}): ${e.response.text}`);
           if (lpath) {
             let rfname = lname.replace(/\.json$/, '');
-            fs.writeFileSync(`${lpath}/${rfname}_${range}_err.json`, JSON.stringify(ldata, null, 2));
+            if ($lpath) {
+              fs.writeFileSync(`${lpath}/${rfname}_${range}_err.json`, JSON.stringify(ldata, null, 2));
+            }
           }
           fail++;
-          reject();
+          await wait(config.delay);
+          reject(e.response.text);
         }
-        await wait(config.delay);
       });
     }
 
@@ -122,8 +125,8 @@ const wait = (ms) => {
     });
 
     let ttl = 0
-    let end = 0;
-    let startNum = 1;
+    let endRec = 0;
+    let startNum = startRec;
     let coll = {};
     
     await rl.on('close', async () => {
@@ -132,25 +135,27 @@ const wait = (ms) => {
 
     for await (const line of rl) {
       ttl++;
-      let json = JSON.parse(line);
-      if (json.holdingsRecordId) {
-        if (!coll.items) coll.items = [];
-        coll.items.push(json);
-      } else if (json.instanceId) {
-        if (!coll.holdingsRecords) coll.holdingsRecords = [];
-        coll.holdingsRecords.push(json);
-      } else {
-        if (!coll.instances) coll.instances = [];
-        coll.instances.push(json);
-      }
-      if (ttl%collSize === 0) {
-        try {
-          await runRequest(coll, startNum, ttl);
-        } catch (e) {
-          console.log(e);
+      if (ttl >= startRec) {
+        endRec++;
+        let json = JSON.parse(line);
+        if (json.holdingsRecordId) {
+          if (!coll.items) coll.items = [];
+          coll.items.push(json);
+        } else if (json.instanceId) {
+          if (!coll.holdingsRecords) coll.holdingsRecords = [];
+          coll.holdingsRecords.push(json);
+        } else {
+          if (!coll.instances) coll.instances = [];
+          coll.instances.push(json);
         }
-        startNum = ttl + 1;
-        coll = {};
+        if (endRec%collSize === 0) {
+          try {
+            await runRequest(coll, startNum, ttl);
+          } catch (e) {
+          }
+          startNum = ttl + 1;
+          coll = {};
+        }
       }
     }
 
@@ -158,10 +163,8 @@ const wait = (ms) => {
       try {
         await runRequest(coll, startNum, ttl);
       } catch (e) {
-        console.log(e);
       }
     }
-    
 
     const showStats = () => {
       const end = new Date().valueOf();
@@ -171,6 +174,7 @@ const wait = (ms) => {
       logger.info(`Batches added:   ${success} (${collSize} recs per batch)`);
       logger.info(`Failures:        ${fail}\n`);
     }
+    showStats();
   } catch (e) {
     console.error(e.message);
   } 
