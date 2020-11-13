@@ -16,7 +16,7 @@ const { getAuthToken } = require('./lib/login');
 let inFile = argv._[0];
 let root = (argv.r) ? argv.r + '.*' : '*';
 let method = (argv.m && argv.m.match(/put/i)) ? 'put' : 'post';
-let startRec = 0;
+let startRec = 1;
 let upsert = '';
 if (argv.s) {
   startRec = parseInt(argv.s, 10);
@@ -65,7 +65,17 @@ const wait = (ms) => {
       logger = console;
     }
 
-    const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
+    const res = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password, true);
+    const authToken = res.headers['x-okapi-token'];
+    const userId = res.body.user.id;
+    const now = new Date().toISOString(); 
+
+    const metadata = {
+      createdDate: now,
+      updatedDate: now,
+      createdByUserId: userId,
+      updatedByUserId: userId
+    };
 
     let success = 0;
     let fail = 0;
@@ -138,6 +148,9 @@ const wait = (ms) => {
       if (ttl >= startRec) {
         endRec++;
         let json = JSON.parse(line);
+        if (!json.metadata) {
+          json.metadata = metadata;
+        }
         if (json.holdingsRecordId) {
           if (!coll.items) coll.items = [];
           coll.items.push(json);
