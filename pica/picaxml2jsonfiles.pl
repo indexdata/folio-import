@@ -10,22 +10,30 @@ use JSON;
 use File::Copy;
 use Config::Tiny;
 use Data::Dumper;
-use Data::UUID;
+use UUID::Tiny ':std';
 
 binmode(STDOUT, 'utf8');
 
-my ($style_file, $style_file2, @source_files) = @ARGV;
-if (! $source_files[0]) {
-  die "Usage: ./picaxml2json.pl <stylesheet1> <stylesheet2> <pica_xml_file>";
+my $only_inst = 0;
+my $argv_off = 0;
+foreach (@ARGV) {
+  if (/-i/) {
+    $only_inst = 1;
+    splice(@ARGV, $argv_off, 1);
+  }
+  $argv_off++;
 }
 
-my $namespace = '00000000-0000-0000-0000-000000000000';
+my ($style_file, $style_file2, @source_files) = @ARGV;
+if (! $source_files[0]) {
+  die "Usage: ./picaxml2json.pl [OPTIONS: -i (instances only)] <stylesheet1> <stylesheet2> <pica_xml_file>";
+}
+
 sub uuid {
-  my $name = shift;
-  my $ug = Data::UUID->new;
-  my $uuid = $ug->create();
-  my $uustr = lc $ug->create_from_name_str($namespace, $name);
-  return $uustr;
+  my $msg = shift;
+  my $uuid_bin = create_uuid(UUID_SHA1, UUID_NS_DNS, $msg);
+  my $uuid = uuid_to_string($uuid_bin);
+  return $uuid;
 }
 
 my $json = JSON->new->allow_nonref;
@@ -37,13 +45,15 @@ my $stylesheet2 = $xslt->parse_stylesheet_file($style_file2);
 foreach my $file ( @source_files ) {
   my $path = $file;
   $path =~ s/^(.+)\..*/$1/;
-  my $insts_file = $path . "_instances.json";
-  my $holds_file = $path . "_holdings.json";
-  my $items_file = $path . "_items.json";
+  my $insts_file = $path . "_instances.jsonl";
+  my $holds_file = $path . "_holdings.jsonl";
+  my $items_file = $path . "_items.jsonl";
   unlink $insts_file, $holds_file, $items_file;
   open INSTS, ">>:encoding(UTF-8)", $insts_file;
-  open HOLDS, ">>:encoding(UTF-8)", $holds_file;
-  open ITEMS, ">>:encoding(UTF-8)", $items_file;
+  if (!$only_inst) {
+    open HOLDS, ">>:encoding(UTF-8)", $holds_file;
+    open ITEMS, ">>:encoding(UTF-8)", $items_file;
+  }
   my $source_doc = $parser->parse_file($file);
   my $output1 = $stylesheet->transform($source_doc);
   my $dom = $stylesheet2->transform($output1);
@@ -56,7 +66,7 @@ foreach my $file ( @source_files ) {
     my $icount = 0;
     my $recObj = getElements($rec);
     my $inst_id = uuid($recObj->{hrid});
-    if ($recObj->{holdingsRecords}) {
+    if (!$only_inst && $recObj->{holdingsRecords}) {
       foreach (@{ $recObj->{holdingsRecords} }) {
         $hcount++;
         my $holds_id = uuid($_->{hrid});
@@ -73,16 +83,15 @@ foreach my $file ( @source_files ) {
         $_->{instanceId} = $inst_id;
         $holds .= $json->encode($_) . "\n";
       }
-      delete $recObj->{holdingsRecords};
     }
+    delete $recObj->{holdingsRecords};
     print "#$ttl Processing instanceId $inst_id ($recObj->{hrid})\n";
     $recObj->{id} = $inst_id;
-    # print "Writing 1 instance to $insts_file\n";
     print INSTS $json->encode($recObj) . "\n";
-    # print "Writing $hcount holdings to $holds_file\n";
-    print HOLDS $holds;
-    # print "Writing $icount items to $items_file\n";
-    print ITEMS $items;
+    if (!$only_inst) {
+      print HOLDS $holds;
+      print ITEMS $items;
+    }
   } 
 }
 
