@@ -64,12 +64,6 @@ foreach my $file ( @source_files ) {
     my $items = '';
     my $hcount = 0;
     my $icount = 0;
-    if ($only_inst) {
-      my @hr = $rec->findnodes('//holdingsRecords');
-      if ($hr[0]) {
-        $rec->removeChild($hr[0]);
-      }
-    }
     my $recObj = getElements($rec);
     my $inst_id = uuid($recObj->{hrid});
     if (!$only_inst && $recObj->{holdingsRecords}) {
