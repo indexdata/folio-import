@@ -64,6 +64,12 @@ foreach my $file ( @source_files ) {
     my $items = '';
     my $hcount = 0;
     my $icount = 0;
+    if ($only_inst) {
+      my @hr = $rec->findnodes('//holdingsRecords');
+      if ($hr[0]) {
+        $rec->removeChild($hr[0]);
+      }
+    }
     my $recObj = getElements($rec);
     my $inst_id = uuid($recObj->{hrid});
     if (!$only_inst && $recObj->{holdingsRecords}) {
@@ -107,11 +113,14 @@ sub getElements {
       $out->{$name} = [];
       foreach my $item ($cn[0]->getChildrenByTagName('i')) {
         my @cn = $item->childNodes();
-        if ($cn[0] && $cn[0]->nodeName eq '#text') {
-          push @{ $out->{$name} }, $cn[0]->textContent;
-        } else {
-          push @{ $out->{$name} }, getElements($item);
+        if ($cn[0]) {
+          if ($cn[0]->nodeName eq '#text') {
+            push @{ $out->{$name} }, $cn[0]->textContent;
+          } else {
+            push @{ $out->{$name} }, getElements($item);
+          }
         }
+        
       }
     } elsif ($cn[0]) {
       $out->{$name} = {};
