@@ -117,9 +117,7 @@ const wait = (ms) => {
           logger.error(`${date} [${range}] (${slice}): ${e.response.text}`);
           if (lpath) {
             let rfname = lname.replace(/\.json$/, '');
-            if ($lpath) {
-              fs.writeFileSync(`${lpath}/${rfname}_${range}_err.json`, JSON.stringify(ldata, null, 2));
-            }
+            fs.writeFileSync(`${lpath}/${rfname}_${range}_err.json`, JSON.stringify(ldata, null, 2));
           }
           fail++;
           await wait(config.delay);
