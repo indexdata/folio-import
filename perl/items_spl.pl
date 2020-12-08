@@ -170,8 +170,8 @@ my $hcount = 0;
 my $icount = 0;
 my $mcount = 0;
 my $hrec_num = {};
+my $hrecs = {};
 foreach (@{ $hi->{items} }) {
-  my $hrecs = {};
   my $control_num = $_->{'bib#'};
   $hrec_num->{$control_num}++;
   if (!$inst_map->{$control_num}) {
@@ -193,8 +193,8 @@ foreach (@{ $hi->{items} }) {
     next;
   }
   $loc_code = lc $loc_code;
-  my $loc_key = "$loc_code-$callno";
   $loc_code =~ s/^\s+|\s+$//g;
+  my $loc_key = "$control_num-$loc_code-$callno";
 
   # create holdings record if record doesn't already exists for said location
   if (!$hrecs->{$loc_key}) {
@@ -203,8 +203,10 @@ foreach (@{ $hi->{items} }) {
     my $uustr = uuid($hrid);
     $hrecs->{$loc_key}->{id} = $uustr;
     $hrecs->{$loc_key}->{instanceId} = $inst_map->{$control_num};
-    $hrecs->{$loc_key}->{callNumber} = $callno;
-    $hrecs->{$loc_key}->{callNumberTypeId} = $cn_type_id;
+    if ($callno ne 'None') {
+      $hrecs->{$loc_key}->{callNumber} = $callno;
+      $hrecs->{$loc_key}->{callNumberTypeId} = $cn_type_id;
+    }
     $hrecs->{$loc_key}->{permanentLocationId} = $folio_locs->{$loc_code} or die "[$control_num] Can't find permanentLocationId for $loc_code";
     $hrecs->{$loc_key}->{metadata} = $metadata;
     $hcount++;
@@ -225,9 +227,11 @@ foreach (@{ $hi->{items} }) {
     $irec->{materialTypeId} = $folio_mtypes->{$coll_name} || $folio_mtypes->{Other};
     my $lt_label = $itypes_map->{$_->{itype}} || 'Standard Circulation';
     $irec->{permanentLoanTypeId} = $folio_ltypes->{$lt_label};
-    $irec->{itemLevelCallNumber} = $callno;
-    $irec->{itemLevelCallNumberTypeId} = $cn_type_id;
-    $irec->{effectiveCallNumberComponents} = { callNumber => $callno, typeId => $cn_type_id };
+    if ($callno ne 'None') {
+      $irec->{itemLevelCallNumber} = $callno;
+      $irec->{itemLevelCallNumberTypeId} = $cn_type_id;
+      $irec->{effectiveCallNumberComponents} = { callNumber => $callno, typeId => $cn_type_id };
+    }
     if ($hrecs->{$loc_key}->{electronicAccess}) {
       $irec->{electronicAccess} = $hrecs->{$loc_key}->{electronicAccess};
     }
@@ -243,7 +247,7 @@ foreach (@{ $hi->{items} }) {
       $status = 'On order';
     } 
     $irec->{status} = { name => $status };
-    $irec->{hrid} = $hrid;
+    $irec->{hrid} = "$hrid";
     $irec->{notes} = [];
     my $note_text = $_->{internal_note};
     if ($note_text) {
@@ -274,15 +278,16 @@ foreach (@{ $hi->{items} }) {
     push @{ $icoll->{items} }, $irec;
     $icount++;
   }
-  foreach (keys %$hrecs) {
-    push @{ $hcoll->{holdingsRecords} }, $hrecs->{$_};
-  }
+  
   $mcount++;
   print "# $mcount [$control_num]\n"
 }
+foreach (keys %$hrecs) {
+  push @{ $hcoll->{holdingsRecords} }, $hrecs->{$_};
+}
 
 $hcoll->{totalRecords} = $hcount;
-my $hcollection = JSON->new->pretty->encode($hcoll);
+my $hcollection = JSON->new->canonical->pretty->encode($hcoll);
 my $hold_file = "$batch_path/${filename}_holdings.json";
 open HLD, ">:encoding(UTF-8)", $hold_file;
 print HLD $hcollection;
@@ -290,7 +295,7 @@ print HLD $hcollection;
 close HLD;
 
 $icoll->{totalRecords} = $icount;
-my $icollection = JSON->new->pretty->encode($icoll);
+my $icollection = JSON->new->canonical->pretty->encode($icoll);
 my $items_file = "$batch_path/${filename}_items.json";
 open ITM, ">:encoding(UTF-8)", $items_file;
 print ITM $icollection;
