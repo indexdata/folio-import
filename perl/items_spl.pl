@@ -251,7 +251,7 @@ foreach (@{ $hi->{items} }) {
       $note->{note} = $note_text;
       $note->{itemNoteTypeId} = $folio_notes->{Note};
       $note->{staffOnly} = "true";
-      push $irec->{notes}, $note;
+      push @{ $irec->{notes} }, $note;
     }
     my $note_src = $_->{source};
     if ($note_src) {
@@ -259,7 +259,7 @@ foreach (@{ $hi->{items} }) {
       $note->{note} = "Source: $note_src";
       $note->{itemNoteTypeId} = $folio_notes->{Provenance};
       $note->{staffOnly} = "true";
-      push $irec->{notes}, $note;
+      push @{ $irec->{notes} }, $note;
     }
     if ($st eq 'dmg') {
       $irec->{itemDamagedStatusId} = $folio_dmg->{Damaged};
@@ -271,11 +271,11 @@ foreach (@{ $hi->{items} }) {
       $irec->{discoverySuppress} = "true";
     }
     $irec->{metadata} = $metadata;
-    push $icoll->{items}, $irec;
+    push @{ $icoll->{items} }, $irec;
     $icount++;
   }
-  foreach (keys $hrecs) {
-    push $hcoll->{holdingsRecords}, $hrecs->{$_};
+  foreach (keys %$hrecs) {
+    push @{ $hcoll->{holdingsRecords} }, $hrecs->{$_};
   }
   $mcount++;
   print "# $mcount [$control_num]\n"
