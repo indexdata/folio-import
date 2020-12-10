@@ -180,10 +180,8 @@ foreach (@{ $hi->{items} }) {
   }
   my $callno = $_->{call_reconstructed};
   my $cn_type_id;
-  if ($callno =~ /^\d{3}(\.|$)/) { # dewey
+  if ($callno =~ /^[EJ]?\d{3}(\.|$)/) { # dewey
       $cn_type_id = $dewey_cn;
-    } elsif ($callno =~ /^[A-Z]{1,2}\d/) {
-      $cn_type_id = $lc_cn;
     } else {
       $cn_type_id = $other_cn;
     }
