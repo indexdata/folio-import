@@ -29,7 +29,9 @@ const pgroup_map = {
   sr: "Self-Registered",
   ss: "Support",
   st: "K-12 Student",
-  t: "Teacher"
+  sv: "Service Accounts",
+  t: "Teacher",
+  tt: "Testing Accounts"
 };
 
 const getDateByDays = (days) => {
