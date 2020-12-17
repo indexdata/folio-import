@@ -92,7 +92,6 @@ const daysNow = Math.floor(new Date().valueOf()/1000/86400);
     }
 
     let usersIn = [];
-    let test = []
     try {
       usersIn = require(jsonFile);
     } catch (e) {
@@ -101,9 +100,12 @@ const daysNow = Math.floor(new Date().valueOf()/1000/86400);
     
     const records = {};
     records.users = [];
+    const errors = [];
     let total = 0;
+    let errttl = 0;
     let batch = 0;
     let ttl = 0;
+    let workDir = path.dirname(jsonFile);
 
     usersIn.forEach(r => {
       let uukey = r["borrower#"].toString();
@@ -145,17 +147,19 @@ const daysNow = Math.floor(new Date().valueOf()/1000/86400);
       user.personal.addresses.push(address);
       user.personal.preferredContactTypeId = r.contact_preference;
 
-      user.username = user.barcode || user.externalSystemId || user.personal.email || user.personal.lastName + user.personal.firstName;
-      if (user.patronGroup) {
+      user.username = user.barcode;
+      if (user.patronGroup && user.username) {
         records.users.push(user);
         total++;
+      } else {
+        errors.push(r);
+        errttl++;
       }
       ttl++;
       if (total === size || ttl === usersIn.length) {
         batch++;
         let set = batch.toString();
         set = set.padStart(5, '0');
-        let workDir = path.dirname(jsonFile);
         let fn = path.basename(jsonFile, '.json');
         let savePath = `${workDir}/users_${set}.json`;
         records.totalRecords = total;
@@ -167,8 +171,14 @@ const daysNow = Math.floor(new Date().valueOf()/1000/86400);
         total = 0;
         records.users = [];
       }
-
     });
+    if (errors.length > 0) {
+      console.log(`Errors: ${errttl}`);
+      const errPath = `${workDir}/errors.json`;
+      const errOut = JSON.stringify(errors, null, 2);
+      console.log(`Saving error records to ${errPath}`);
+      fs.writeFileSync(errPath, errOut);
+    }
 
   } catch (e) {
     console.error(e.message);
