@@ -92,6 +92,7 @@ const post_put = async (authToken, url, checkout, r) => {
         if (data[d].userBarcode) uc = ` --> ${data[d].userBarcode}`
         console.log(`[${d}] POST ${url} (${data[d].itemBarcode}${uc})`);
         let loanObj = await post_put(authToken, url, data[d]);
+        if (!loanObj) throw new Error('Can\'t checkout item!');
         if (checkIn === 'checkin') added++;
         if (checkIn !== 'checkin') {
           try {
