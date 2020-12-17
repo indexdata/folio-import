@@ -17,12 +17,15 @@ const pgroup_map = {
   de: "Deactivated",
   dm: "Direct Mail",
   hs: "Home Service",
+  il: "ILL",
   ill: "Inter-library Loan",
   jl: "Juvenile Limited",
   n: "Non-Resident",
+  ol: "Online Only",
   r: "Resident",
   ri: "Institition",
   ro: "Outreach",
+  rt: "Resident Teacher",
   sc: "City Staff",
   si: "Internal Only",
   sl: "SPL Staff",
@@ -100,6 +103,8 @@ const daysNow = Math.floor(new Date().valueOf()/1000/86400);
     
     const records = {};
     records.users = [];
+    const creds = [];
+
     const errors = [];
     let total = 0;
     let errttl = 0;
@@ -150,6 +155,14 @@ const daysNow = Math.floor(new Date().valueOf()/1000/86400);
       user.username = user.barcode;
       if (user.patronGroup && user.username) {
         records.users.push(user);
+        if (r.pin) {
+          let credObj = {
+            userId: user.id,
+            username: user.username,
+            password: r.pin
+          }
+          creds.push(credObj);
+        }
         total++;
       } else {
         errors.push(r);
@@ -172,14 +185,18 @@ const daysNow = Math.floor(new Date().valueOf()/1000/86400);
         records.users = [];
       }
     });
+    if (creds.length > 0) {
+      const credPath = `${workDir}/logins.json`;
+      const credOut = JSON.stringify(creds, null, 2);
+      console.log(`Writing ${creds.length} credentials records to ${credPath}`);
+      fs.writeFileSync(credPath, credOut);
+    }
     if (errors.length > 0) {
-      console.log(`Errors: ${errttl}`);
       const errPath = `${workDir}/errors.json`;
       const errOut = JSON.stringify(errors, null, 2);
-      console.log(`Saving error records to ${errPath}`);
+      console.log(`Writing ${errttl} error records to ${errPath}`);
       fs.writeFileSync(errPath, errOut);
     }
-
   } catch (e) {
     console.error(e.message);
   }
