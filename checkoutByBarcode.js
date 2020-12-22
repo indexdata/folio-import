@@ -1,8 +1,13 @@
 const fs = require('fs');
 const superagent = require('superagent');
+const path = require('path');
 const { getAuthToken } = require('./lib/login');
 const fn = process.argv[2];
 const checkIn = process.argv[3];
+
+const dir = path.dirname(fn);
+const fname = path.basename(fn, '.json');
+let errs = { checkouts: [] };
 
 const wait = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -41,7 +46,7 @@ const post_put = async (authToken, url, checkout, r) => {
         throw new Error(`Too many retries (${r})!`);
       }
     } else {
-      console.log(e.response.text);
+      throw new Error(e.response.text);
     }
   }
 }
@@ -72,6 +77,7 @@ const post_put = async (authToken, url, checkout, r) => {
       today = new Date().toISOString();
     }
 
+
     for (d = 0; d < data.length; d++) {
       let dueDate;
       // data[d].loanDate = new Date(data[d].loanDate).toISOString();
@@ -92,9 +98,8 @@ const post_put = async (authToken, url, checkout, r) => {
         if (data[d].userBarcode) uc = ` --> ${data[d].userBarcode}`
         console.log(`[${d}] POST ${url} (${data[d].itemBarcode}${uc})`);
         let loanObj = await post_put(authToken, url, data[d]);
-        if (!loanObj) throw new Error('Can\'t checkout item!');
         if (checkIn === 'checkin') added++;
-        if (checkIn !== 'checkin') {
+        if (loanObj && checkIn !== 'checkin') {
           try {
             loanObj.dueDate = dueDate;
             loanObj.loanDate = data[d].loanDate;
@@ -123,8 +128,11 @@ const post_put = async (authToken, url, checkout, r) => {
         }
         console.log(m);
         errors++;
+        errs.checkouts.push(data[d]);
       }
     } 
+    const errPath = `${dir}/${fname}_errors.json`;
+    if (!checkIn) fs.writeFileSync(errPath, JSON.stringify(errs, null, 2));
     console.log(`Added:   ${added}`);
     console.log(`Updated: ${updated}`);
     console.log(`Errors:  ${errors}`);
