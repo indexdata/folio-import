@@ -21,7 +21,7 @@ let refDir = process.argv[2];
     const actionUrl = config.okapi + '/users';
 
     let totFetch = 0;
-    let totRecs = 10000;
+    let totRecs = 500000
     let perPage = 1000;
     let offset = 0;
     const coll = { users: [] };
