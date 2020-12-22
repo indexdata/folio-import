@@ -160,7 +160,7 @@ const daysNow = Math.floor(new Date().valueOf()/1000/86400);
         countryId: 'US'
       };
       user.personal.addresses.push(address);
-      user.personal.preferredContactTypeId = r.contact_preference;
+      user.personal.preferredContactTypeId = '002';
 
       user.username = user.barcode;
       if (user.patronGroup && user.username) {
