@@ -2,13 +2,12 @@ const fs = require('fs');
 const uuid = require('uuid/v3');
 const path = require('path');
 const readline = require('readline');
+const { ConsoleTransportOptions } = require('winston/lib/winston/transports');
 
 const jsonFile = process.argv[2];
 const size = (process.argv[3]) ? parseInt(process.argv[3], 10) : 5000;
 
-const ns = 'dfc59d30-cdad-3d03-9dee-d99117852eab';
-
-const pgroup_map = {
+const ptype2group = {
   al: "Adult Limited",
   b: "Business",
   c: "County",
@@ -103,7 +102,8 @@ const daysNow = Math.floor(new Date().valueOf()/1000/86400);
     
     const records = {};
     records.users = [];
-    const creds = [];
+    let creds = [];
+    let perms = { permissionUsers: [] };
 
     const errors = [];
     let total = 0;
@@ -111,6 +111,16 @@ const daysNow = Math.floor(new Date().valueOf()/1000/86400);
     let batch = 0;
     let ttl = 0;
     let workDir = path.dirname(jsonFile);
+
+    const groups = require(`${workDir}/groups.json`);
+    let gmap = {};
+    groups.usergroups.forEach(g => {
+      gmap[g.group] = g.id;
+    });
+    let pgroup_map = {}; 
+    for (let k in ptype2group) {
+      pgroup_map[k] = gmap[ptype2group[k]];
+    }
 
     usersIn.forEach(r => {
       let uukey = r["borrower#"].toString();
@@ -141,7 +151,7 @@ const daysNow = Math.floor(new Date().valueOf()/1000/86400);
       user.personal.addresses = [];
       user.personal.dateOfBirth = getDateByDays(r.birth_date);
       let address = {
-        addressTypeId: 'Home',
+        addressTypeId: '93d3d88d-499b-45d0-9bc7-ac73c3a19880',
         addressLine1: r.borrower_address1,
         addressLine2: r.borrower_address2,
         city: r.borrower_address_city,
@@ -163,6 +173,12 @@ const daysNow = Math.floor(new Date().valueOf()/1000/86400);
           }
           creds.push(credObj);
         }
+        let permObj = {
+          id: uuid(user.id, 'dfc59d30-cdad-3d03-9dee-d99117852eab'),
+          userId: user.id,
+          permissions: []
+        };
+        perms.permissionUsers.push(permObj);
         total++;
       } else {
         errors.push(r);
@@ -190,6 +206,12 @@ const daysNow = Math.floor(new Date().valueOf()/1000/86400);
       const credOut = JSON.stringify(creds, null, 2);
       console.log(`Writing ${creds.length} credentials records to ${credPath}`);
       fs.writeFileSync(credPath, credOut);
+    }
+    if (perms.permissionUsers.length > 0) {
+      const permPath = `${workDir}/perms.json`;
+      const permOut = JSON.stringify(perms, null, 2);
+      console.log(`Writing ${perms.permissionUsers.length} credentials records to ${permPath}`);
+      fs.writeFileSync(permPath, permOut);
     }
     if (errors.length > 0) {
       const errPath = `${workDir}/errors.json`;
