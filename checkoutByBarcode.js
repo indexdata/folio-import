@@ -83,7 +83,6 @@ const post_put = async (authToken, url, checkout, r) => {
 
 
     for (d = offset; d < data.length; d++) {
-      console.log(d);
       let dueDate;
       if (checkIn === 'checkin') {
         delete data[d].loanDate;
