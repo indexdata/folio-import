@@ -1,7 +1,10 @@
 const fs = require('fs');
 const superagent = require('superagent');
 const { getAuthToken } = require('./lib/login');
+
 const inFile = process.argv[2];
+const offset = process.argv[3] ? parseInt(process.argv[3], 10) : 0;
+if (isNaN(offset)) throw new Error(`Limit must be a number!`);
 
 const wait = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -12,7 +15,7 @@ const wait = (ms) => {
   try {
     const start = new Date().valueOf();
     if (!inFile) {
-      throw new Error('Usage: node loadCreds.js <credentials_file>');
+      throw new Error('Usage: node loadCreds.js <credentials_file> [ start ]');
     } else if (!fs.existsSync(inFile)) {
       throw new Error('Can\'t find input file');
     } else {
@@ -26,14 +29,16 @@ const wait = (ms) => {
 
     let success = 0;
     let fail = 0;
-    for (let x = 0; x < creds.length; x++) {
+    for (let x = offset; x < creds.length; x++) {
       const usersUrl = `${config.okapi}/users/${creds[x].userId}`;
+      console.log(x);
       let i = x + 1;
       try {
         /* await superagent
           .get(usersUrl)
           .set('x-okapi-token', authToken)
           .set('accept', 'application/json'); */
+      /*
         try {
           let res = await superagent
             .post(credUrl)
@@ -47,8 +52,8 @@ const wait = (ms) => {
           console.log(e.message);
           fail++;
         }
+      */
       } catch (e) {
-        // console.log(`User with ID ${creds[x].userId} does not exist!`);
         console.log(e.message);
         fail++;
       }
