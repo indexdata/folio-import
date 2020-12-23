@@ -5,8 +5,6 @@ const { getAuthToken } = require('./lib/login');
 const fn = process.argv[2];
 const checkIn = process.argv[3];
 
-const dir = path.dirname(fn);
-const fname = path.basename(fn, '.json');
 let errs = { checkouts: [] };
 
 const wait = (ms) => {
@@ -60,6 +58,10 @@ const post_put = async (authToken, url, checkout, r) => {
     if (!fn) {
       throw new Error('Usage: node checkoutByBarcode.js <checkouts_file> [checkin]');
     }
+
+    const dir = path.dirname(fn);
+    const fname = path.basename(fn, '.json');
+
     const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
 
     const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
