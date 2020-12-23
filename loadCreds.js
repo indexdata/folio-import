@@ -38,7 +38,6 @@ const wait = (ms) => {
           .get(usersUrl)
           .set('x-okapi-token', authToken)
           .set('accept', 'application/json'); */
-      /*
         try {
           let res = await superagent
             .post(credUrl)
@@ -52,7 +51,6 @@ const wait = (ms) => {
           console.log(e.message);
           fail++;
         }
-      */
       } catch (e) {
         console.log(e.message);
         fail++;
