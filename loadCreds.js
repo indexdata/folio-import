@@ -31,7 +31,6 @@ const wait = (ms) => {
     let fail = 0;
     for (let x = offset; x < creds.length; x++) {
       const usersUrl = `${config.okapi}/users/${creds[x].userId}`;
-      console.log(x);
       let i = x + 1;
       try {
         /* await superagent
