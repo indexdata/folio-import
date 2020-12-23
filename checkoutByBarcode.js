@@ -3,7 +3,9 @@ const superagent = require('superagent');
 const path = require('path');
 const { getAuthToken } = require('./lib/login');
 const fn = process.argv[2];
-const checkIn = process.argv[3];
+const checkIn = process.argv[4];
+const offset = process.argv[3] ? parseInt(process.argv[3], 10) : 0;
+if (isNaN(offset)) throw new Error(`Limit must be a number!`);
 
 let errs = { checkouts: [] };
 
@@ -56,7 +58,7 @@ const post_put = async (authToken, url, checkout, r) => {
   let deleted = 0;
   try {
     if (!fn) {
-      throw new Error('Usage: node checkoutByBarcode.js <checkouts_file> [checkin]');
+      throw new Error('Usage: node checkoutByBarcode.js <checkouts_file> [offset] [checkin]');
     }
 
     const dir = path.dirname(fn);
@@ -80,11 +82,9 @@ const post_put = async (authToken, url, checkout, r) => {
     }
 
 
-    for (d = 0; d < data.length; d++) {
+    for (d = offset; d < data.length; d++) {
+      console.log(d);
       let dueDate;
-      // data[d].loanDate = new Date(data[d].loanDate).toISOString();
-      // if (data[d].dueDate) data[d].dueDate = new Date(data[d].dueDate).toISOString();
-      // console.log(data[d]);
       if (checkIn === 'checkin') {
         delete data[d].loanDate;
         delete data[d].userBarcode;
@@ -95,6 +95,7 @@ const post_put = async (authToken, url, checkout, r) => {
        delete data[d].dueDate;
        delete data[d].expirationDate;
       }
+      /*
       try {
         let uc = '';
         if (data[d].userBarcode) uc = ` --> ${data[d].userBarcode}`
@@ -131,7 +132,7 @@ const post_put = async (authToken, url, checkout, r) => {
         console.log(m);
         errors++;
         errs.checkouts.push(data[d]);
-      }
+      } */
     } 
     const errPath = `${dir}/${fname}_errors.json`;
     if (!checkIn) fs.writeFileSync(errPath, JSON.stringify(errs, null, 2));
