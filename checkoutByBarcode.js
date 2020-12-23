@@ -95,7 +95,6 @@ const post_put = async (authToken, url, checkout, r) => {
        delete data[d].dueDate;
        delete data[d].expirationDate;
       }
-      /*
       try {
         let uc = '';
         if (data[d].userBarcode) uc = ` --> ${data[d].userBarcode}`
@@ -132,7 +131,7 @@ const post_put = async (authToken, url, checkout, r) => {
         console.log(m);
         errors++;
         errs.checkouts.push(data[d]);
-      } */
+      }
     } 
     const errPath = `${dir}/${fname}_errors.json`;
     if (!checkIn) fs.writeFileSync(errPath, JSON.stringify(errs, null, 2));
