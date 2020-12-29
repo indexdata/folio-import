@@ -17,7 +17,7 @@ const wait = (ms) => {
   try {
     let inData;
     if (!endpoint) {
-      throw new Error('Usage: node deleteRefDataByEndpoint.js <endpoint> [ object_file ]');
+      throw new Error('Usage: node deleteByEndpoint.js <endpoint> [ object_file ]');
     }
 
     const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');

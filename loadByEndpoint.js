@@ -10,7 +10,7 @@ const fn = process.argv[3];
   let errors = 0;
   try {
     if (!fn) {
-      throw new Error('Usage: node loadRefByEndpoint.js <endpoint> <file>');
+      throw new Error('Usage: node loadByEndpoint.js <endpoint> <file>');
     }
     const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
 
