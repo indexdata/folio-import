@@ -73,6 +73,7 @@ const reqStatus = [
     inRequests = {};
 
     const out = { requests: [] };
+    const userMap = {};
 
     let ttl = 0;
     for (b in bibs) {
@@ -124,8 +125,9 @@ const reqStatus = [
 
             // get item level holds first
             if (itemNum) {
+              console.log(` Creating item level hold ${itemNum}`);
               let item = await items.find(i => i.hrid === itemNum.toString());
-              if (item.id) {
+              if (item) {
                 if (item.status.name === 'Available') {
                   reqObj.requestType = 'Page';
                   item.status.name = 'Paged';
@@ -133,53 +135,68 @@ const reqStatus = [
                   reqObj.requestType = 'Hold';
                 }
                 itemId = item.id;
+              } else {
+                console.log(`    WARN Item with hrid ${itemNum} not found!`);
               }
             } else {
-              // get statuses of each item
-              let last = false;
-              for (let x = 0; x < items.length; x++) {
-                let status = items[x].status.name;
-                let iid = items[x].id;
-                if (!items[x].rcount) {
-                  items[x].rcount === 0;
-                }
-                // if the item has an available status, then let's use it
-                if (icount === 1 || itemNum) {
-                  if (status === 'Available') {
-                    reqObj.requestType = 'Page';
-                    items[x].status.name = 'Paged';
-                  } else {
-                    reqObj.requestType = 'Hold';
+              // if the item has an available status, then let's use it
+              let avItem = await items.find(i => i.status.name === 'Available');
+              if (avItem) {
+                console.log(`  INFO Found an Available item (${avItem.hrid})`);
+                reqObj.requestType = 'Page';
+                avItem.status.name = 'Paged';
+                itemId = avItem.id;
+                avItem.rcount = 1;
+              } else {
+                reqObj.requestType = 'Hold';
+                let last = false;
+
+                // there are no available items, so lets find an item with the fewest requests (rcount)
+                for (let x = 0; x < items.length; x++) {
+                  let status = items[x].status.name;
+                  if (!items[x].rcount) {
+                    items[x].rcount = 0;
                   }
-                } 
-                if (!itemNum) {
-                  itemId = items[x].id;
+                  // we can't place holds on lost or withdrawn items, so let's skip these items
+                  if (status.match(/Missing|Declared lost|Withdrawn/)) {
+                    itemId = null;
+                  } else if (items[x].rcount === 0) {  // 0 requests, let's use it
+                    itemId = items[x].id;
+                    items[x].rcount++;
+                    last = true;
+                  }
+                  if (last) break;
                 }
-                if (last) break;
               }
             }
             reqObj.itemId = itemId;
 
             if (itemId) {
               // get requesterId
-              try {
-                let res = await superagent
-                  .get(uurl)
-                  .set('x-okapi-token', authToken)
-                  .set('accept', 'application/json');
-                if (res.body.totalRecords > 0) {
-                  userId = res.body.users[0].id;
-                  reqObj.requesterId = userId;
+              if (userMap[userNum]) {
+                console.log(`  INFO User # ${userNum} found in cache.`)
+                reqObj.requesterId = userMap[userNum];
+              } else {
+                console.log(`  GET ${uurl}`);
+                try {
+                  let res = await superagent
+                    .get(uurl)
+                    .set('x-okapi-token', authToken)
+                    .set('accept', 'application/json');
+                  if (res.body.totalRecords === 1) {
+                    userId = res.body.users[0].id;
+                    reqObj.requesterId = userId;
+                    userMap[userNum] = userId;
+                  }
+                  else {
+                    console.log(`    WARN No user record found for ${userNum}!`);
+                  }
+                } catch (e) {
+                  // console.log(e.message)
+                  console.log(e);
                 }
-                else {
-                  throw new Error(` ERROR No user record found for ${userNum}!`);
-                }
-              } catch (e) {
-                // console.log(e.message)
-                console.log(e);
               }
             }
-    
             if (userId && itemId) out.requests.push(reqObj);
             await wait(config.delay);
           }
