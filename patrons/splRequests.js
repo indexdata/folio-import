@@ -96,84 +96,93 @@ const reqStatus = [
         const rcount = {};
         const rstatus = {};
         for (let x = 0; x < inData.length ; x++) {
-          let id = uuid(inData[x]['request#'].toString(), 'dfc59d30-cdad-3d03-9dee-d99117852eab');
-          let bibNum = inData[x]['bib#'];
-          let itemNum = inData[x]['item#'];
-          let userNum = inData[x]['borrower#'];
-          let pickupLoc = locMap[inData[x].pickup_location];
-          let reqLoc = locMap[inData[x].request_location];
-          let pos = inData[x].bib_queue_ord;
-          let rdate = getDateByDays(inData[x].request_date);
-          let rtime = getTimeByMinutes(inData[x].request_time);
-          let rtimestamp = rdate.replace(/00:00:00/, rtime);
-          let expiry = inData[x].hold_exp_date ? getDateByDays(inData[x].hold_exp_date) : '';
-          let reqObj = {
-            id: id,
-            requestDate: rtimestamp,
-            fulfilmentPreference: 'Hold Shelf',
-            pickupServicePointId: pickupLoc,
-            position: pos,
-            requestExpirationDate: expiry,
-            status: reqStatus[inData[x].request_status]
-          };
-          
-          let uurl = `${config.okapi}/users?query=externalSystemId==${userNum}`;
-          let itemId;
-          let userId;
+          if (inData[x].request_status < 3) {
+            let id = uuid(inData[x]['request#'].toString(), 'dfc59d30-cdad-3d03-9dee-d99117852eab');
+            let bibNum = inData[x]['bib#'];
+            let itemNum = inData[x]['item#'];
+            let userNum = inData[x]['borrower#'];
+            let pickupLoc = locMap[inData[x].pickup_location];
+            let reqLoc = locMap[inData[x].request_location];
+            let pos = inData[x].bib_queue_ord;
+            let rdate = getDateByDays(inData[x].request_date);
+            let rtime = getTimeByMinutes(inData[x].request_time);
+            let rtimestamp = rdate.replace(/00:00:00/, rtime);
+            let expiry = inData[x].hold_exp_date ? getDateByDays(inData[x].hold_exp_date) : '';
+            let reqObj = {
+              id: id,
+              requestDate: rtimestamp,
+              fulfilmentPreference: 'Hold Shelf',
+              pickupServicePointId: pickupLoc,
+              position: pos,
+              requestExpirationDate: expiry,
+              status: reqStatus[inData[x].request_status]
+            };
+            
+            let uurl = `${config.okapi}/users?query=externalSystemId==${userNum}`;
+            let itemId;
+            let userId;
 
-          // get item level holds first
-          if (itemNum) {
-            let item = items.find(i => {
-              return i.hrid === itemNum.toString();
-            });
-            itemId = item.id;
-          }
-          
-          // get statuses of each item
-          let last = false;
-          for (let x = 0; x < items.length; x++) {
-            let status = items[x].status.name;
-            let iid = items[x].id;
-            if (!items[x].rcount) {
-              items[x].rcount === 0;
-            }
-            // if the item has an available status, then let's use it
-            if (icount === 1 || itemNum) {
-              if (status === 'Available') {
-                reqObj.requestType = 'Page';
-                items[x].status.name = 'Paged';
-              } else {
-                reqObj.requestType = 'Hold';
+            // get item level holds first
+            if (itemNum) {
+              let item = await items.find(i => i.hrid === itemNum.toString());
+              if (item.id) {
+                if (item.status.name === 'Available') {
+                  reqObj.requestType = 'Page';
+                  item.status.name = 'Paged';
+                } else {
+                  reqObj.requestType = 'Hold';
+                }
+                itemId = item.id;
               }
-            } 
-            if (!itemNum) {
-              itemId = items[x].id;
+            } else {
+              // get statuses of each item
+              let last = false;
+              for (let x = 0; x < items.length; x++) {
+                let status = items[x].status.name;
+                let iid = items[x].id;
+                if (!items[x].rcount) {
+                  items[x].rcount === 0;
+                }
+                // if the item has an available status, then let's use it
+                if (icount === 1 || itemNum) {
+                  if (status === 'Available') {
+                    reqObj.requestType = 'Page';
+                    items[x].status.name = 'Paged';
+                  } else {
+                    reqObj.requestType = 'Hold';
+                  }
+                } 
+                if (!itemNum) {
+                  itemId = items[x].id;
+                }
+                if (last) break;
+              }
             }
-            if (last) break;
-          }
-          reqObj.itemId = itemId;
+            reqObj.itemId = itemId;
 
-          if (itemId) {
-            // get requesterId
-            try {
-              let res = await superagent
-                .get(uurl)
-                .set('x-okapi-token', authToken)
-                .set('accept', 'application/json');
-              if (res.body.totalRecords > 0) {
-                userId = res.body.users[0].id;
-                reqObj.requesterId = userId;
+            if (itemId) {
+              // get requesterId
+              try {
+                let res = await superagent
+                  .get(uurl)
+                  .set('x-okapi-token', authToken)
+                  .set('accept', 'application/json');
+                if (res.body.totalRecords > 0) {
+                  userId = res.body.users[0].id;
+                  reqObj.requesterId = userId;
+                }
+                else {
+                  throw new Error(` ERROR No user record found for ${userNum}!`);
+                }
+              } catch (e) {
+                // console.log(e.message)
+                console.log(e);
               }
-              else {
-                throw new Error(` ERROR No user record found for ${userNum}!`);
-              }
-            } catch (e) {
-              console.log(e.message)
             }
+    
+            if (userId && itemId) out.requests.push(reqObj);
+            await wait(config.delay);
           }
-  
-          if (userId && itemId) out.requests.push(reqObj);
-          await wait(config.delay);
         }
       } else {
         throw new Error( `ERROR No items found for Bib# ${b}!`)
@@ -184,6 +193,7 @@ const reqStatus = [
     console.log(`Writing to ${outFile}`);
     fs.writeFileSync(outFile, JSON.stringify(out, null, 2));
   } catch (e) {
-    console.log(e.message);
+    // console.log(e.message);
+    console.log(e);
   }
 })();
