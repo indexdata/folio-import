@@ -92,6 +92,7 @@ const reqStatus = [
     let ttl = 0;
     for (b in bibs) {
       let items = [];
+      let allItems = [];
       let icount = 0;
       let inData = bibs[b];
       let iurl = `${config.okapi}/item-storage/items?query=instance.hrid==${b}&limit=500`;
@@ -102,11 +103,21 @@ const reqStatus = [
           .get(iurl)
           .set('x-okapi-token', authToken)
           .set('accept', 'application/json');
-        items = res.body.items;
+        allItems = res.body.items;
         icount = res.body.totalRecords;
       } catch (e) {
         console.log(e.response || e.message);
       }
+      for (let i = 0; i < allItems.length; i++) {
+        let status = allItems[i].status.name;
+        if (!status.match(/Missing|Declared lost|Withdrawn/)) {
+          allItems[i].rcount = 0;
+          items.push(allItems[i]);
+        } else {
+          console.log(`WARN item ${allItems[i].hrid} has a status of ${status}-- not using`);
+        }
+      }
+
       let iround = 0;
       if (icount > 0) {
         for (let x = 0; x < inData.length ; x++) {
@@ -150,8 +161,9 @@ const reqStatus = [
                 }
                 itemId = item.id;
                 itemHrid = item.hrid;
+                item.rcount++;
               } else {
-                console.log(`[${reqNum}] ERROR Item with hrid ${itemNum} not found!`);
+                console.log(`[${reqNum}] WARN Item with hrid ${itemNum} not found!`);
               }
             } else {
               // if the item has an available status, then let's use it
@@ -162,30 +174,16 @@ const reqStatus = [
                 avItem.status.name = 'Paged';
                 itemId = avItem.id;
                 itemHrid = avItem.hrid;
-                avItem.rcount = 1;
+                avItem.rcount++;
               } else {
                 reqObj.requestType = 'Hold';
-                let last = false;
-
                 // there are no available items, so lets find an item with the fewest requests (rcount)
-                for (let x = 0; x < items.length; x++) {
-                  let status = items[x].status.name;
-                  if (!items[x].rcount) {
-                    items[x].rcount = 0;
-                  }
-                  // we can't place holds on lost or withdrawn items, so let's skip these items
-                  if (status.match(/Missing|Declared lost|Withdrawn/)) {
-                    itemId = null;
-                    console.log(`[${reqNum}] WARN Item has a status of ${status}-- not using`);
-                  } else if (items[x].rcount === iround) {
-                    itemId = items[x].id;
-                    items[x].rcount++;
-                    itemHrid = items[x].hrid;
-                    last = true;
-                  }
-                  if (x + 1 === items.length) iround++;
-                  if (last) break;
-                }
+                items.sort((a, b) => {
+                  return a.rcount - b.rcount
+                });
+                itemId = items[0].id;
+                items[0].rcount++;
+                itemHrid = items[0].hrid;
               }
             }
             reqObj.itemId = itemId;
@@ -219,6 +217,8 @@ const reqStatus = [
             if (userId && itemId) {
               out.requests.push(reqObj);
               console.log(`[${reqNum}] INFO Request successfully created on item ${itemHrid} for user ${userNum}`)
+            } else {
+              console.log(`[${reqNum}] ERROR Request creation failed!`);
             }
             await wait(config.delay);
           } else {
