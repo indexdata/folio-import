@@ -7,8 +7,7 @@ const uuid = require('uuid/v3');
 const path = require('path');
 const superagent = require('superagent');
 const { getAuthToken } = require('../lib/login');
-let inFile = process.argv[3];
-let locFile = process.argv[2];
+let inFile = process.argv[2];
 
 const wait = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -40,35 +39,50 @@ const reqStatus = [
   try {
     let inRequests;
     if (!inFile) {
-      throw new Error('Usage: node splRequests.js <locations file> <hz requests file>');
+      throw new Error('Usage: node splRequests.js <hz requests file>');
     } else if (!fs.existsSync(inFile)) {
       throw new Error('Can\'t find input file');
-    } else if (!fs.existsSync(locFile)) {
-      throw new Error('Can\'t find locations file');
     } else {
       inRequests = require(inFile)
     }
     const config = (fs.existsSync('../config.js')) ? require('../config.js') : require('../config.default.js');
-
-    const locMap = {};
-    const locJson = require(locFile);
-    locJson.locations.forEach(l => {
-      locMap[l.code] = l.primaryServicePoint;
-    });
 
     const dir = path.dirname(inFile);
 
     const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
     
     // gather all requests by bib#
+
+    console.log(`INFO Gathering requests and grouping by bib#...`);
     const bibs = {};
+    let bibttl = 0;
     inRequests.forEach(r => {
       let id = r['bib#'];
       if (!bibs[id]) {
         bibs[id] = [];
+        bibttl++;
       }
       bibs[id].push(r);
     });
+    console.log(`INFO ${bibttl} bibs found...`);
+
+    console.log(`INFO Getting locations...`);
+    const locMap = {};
+    let locttl = 0;
+    try {
+      res = await superagent
+        .get(`${config.okapi}/locations?limit=100`)
+        .set('x-okapi-token', authToken)
+        .set('accept', 'application/json');
+      locJson = res.body;
+      await locJson.locations.forEach(l => {
+        locMap[l.code] = l.primaryServicePoint;
+        locttl++;
+      });
+    } catch (e) {
+      throw new Error(e);
+    }
+    console.log(`INFO ${locttl} locations mapped...`);
 
     inRequests = {};
 
@@ -82,8 +96,8 @@ const reqStatus = [
       let inData = bibs[b];
       let iurl = `${config.okapi}/item-storage/items?query=instance.hrid==${b}&limit=500`;
       ttl++;
+      console.log(`INFO Getting items for bib# ${b}...`);
       try {
-        console.log(`[${ttl}] GET ${iurl}`);
         res = await superagent
           .get(iurl)
           .set('x-okapi-token', authToken)
@@ -93,13 +107,14 @@ const reqStatus = [
       } catch (e) {
         console.log(e.response || e.message);
       }
+      let iround = 0;
       if (icount > 0) {
-        const rcount = {};
-        const rstatus = {};
         for (let x = 0; x < inData.length ; x++) {
+          let itemHrid = '';
+          let reqNum = inData[x]['request#'];
+          console.log(`  INFO Processing request# ${reqNum}`);
           if (inData[x].request_status < 3) {
-            let id = uuid(inData[x]['request#'].toString(), 'dfc59d30-cdad-3d03-9dee-d99117852eab');
-            let bibNum = inData[x]['bib#'];
+            let id = uuid(reqNum.toString(), 'dfc59d30-cdad-3d03-9dee-d99117852eab');
             let itemNum = inData[x]['item#'];
             let userNum = inData[x]['borrower#'];
             let pickupLoc = locMap[inData[x].pickup_location];
@@ -108,7 +123,7 @@ const reqStatus = [
             let rdate = getDateByDays(inData[x].request_date);
             let rtime = getTimeByMinutes(inData[x].request_time);
             let rtimestamp = rdate.replace(/00:00:00/, rtime);
-            let expiry = inData[x].hold_exp_date ? getDateByDays(inData[x].hold_exp_date) : '';
+            let expiry = inData[x].hold_exp_date ? getDateByDays(inData[x].hold_exp_date) : (inData[x].expire_date) ? getDateByDays(inData[x].expire_date) : '';
             let reqObj = {
               id: id,
               requestDate: rtimestamp,
@@ -125,7 +140,7 @@ const reqStatus = [
 
             // get item level holds first
             if (itemNum) {
-              console.log(` Creating item level hold ${itemNum}`);
+              console.log(`    INFO Creating item level hold on ${itemNum}`);
               let item = await items.find(i => i.hrid === itemNum.toString());
               if (item) {
                 if (item.status.name === 'Available') {
@@ -135,24 +150,28 @@ const reqStatus = [
                   reqObj.requestType = 'Hold';
                 }
                 itemId = item.id;
+                itemHrid = item.hrid;
               } else {
-                console.log(`    WARN Item with hrid ${itemNum} not found!`);
+                console.log(`    ERROR Item with hrid ${itemNum} not found!`);
               }
             } else {
               // if the item has an available status, then let's use it
               let avItem = await items.find(i => i.status.name === 'Available');
               if (avItem) {
-                console.log(`  INFO Found an Available item (${avItem.hrid})`);
+                console.log(`    INFO Found an Available item (${avItem.hrid})`);
                 reqObj.requestType = 'Page';
                 avItem.status.name = 'Paged';
                 itemId = avItem.id;
+                itemHrid = avItem.hrid;
                 avItem.rcount = 1;
               } else {
                 reqObj.requestType = 'Hold';
                 let last = false;
 
                 // there are no available items, so lets find an item with the fewest requests (rcount)
+                // console.log(`Round ${iround}`);
                 for (let x = 0; x < items.length; x++) {
+                  // console.log(items[x].rcount);
                   let status = items[x].status.name;
                   if (!items[x].rcount) {
                     items[x].rcount = 0;
@@ -160,11 +179,14 @@ const reqStatus = [
                   // we can't place holds on lost or withdrawn items, so let's skip these items
                   if (status.match(/Missing|Declared lost|Withdrawn/)) {
                     itemId = null;
-                  } else if (items[x].rcount === 0) {  // 0 requests, let's use it
+                    console.log(`    WARN Item has a status of ${status}-- not using`);
+                  } else if (items[x].rcount === iround) {
                     itemId = items[x].id;
                     items[x].rcount++;
+                    itemHrid = items[x].hrid;
                     last = true;
                   }
+                  if (x + 1 === items.length) iround++;
                   if (last) break;
                 }
               }
@@ -174,10 +196,10 @@ const reqStatus = [
             if (itemId) {
               // get requesterId
               if (userMap[userNum]) {
-                console.log(`  INFO User # ${userNum} found in cache.`)
+                console.log(`    INFO User # ${userNum} found in cache.`)
                 reqObj.requesterId = userMap[userNum];
               } else {
-                console.log(`  GET ${uurl}`);
+                console.log(`    INFO Looking up user with externalSystemId ${userNum}`);
                 try {
                   let res = await superagent
                     .get(uurl)
@@ -189,7 +211,7 @@ const reqStatus = [
                     userMap[userNum] = userId;
                   }
                   else {
-                    console.log(`    WARN No user record found for ${userNum}!`);
+                    console.log(`    ERROR No user record found for ${userNum}!`);
                   }
                 } catch (e) {
                   // console.log(e.message)
@@ -197,8 +219,13 @@ const reqStatus = [
                 }
               }
             }
-            if (userId && itemId) out.requests.push(reqObj);
+            if (userId && itemId) {
+              out.requests.push(reqObj);
+              console.log(`    INFO Request successfully created on item ${itemHrid} for user ${userNum}`)
+            }
             await wait(config.delay);
+          } else {
+            console.log(`    WARN Request# ${reqNum} has a cancelled status of "${inData[x].request_status}" -- skipping`);
           }
         }
       } else {
