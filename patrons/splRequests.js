@@ -112,13 +112,12 @@ const reqStatus = [
         for (let x = 0; x < inData.length ; x++) {
           let itemHrid = '';
           let reqNum = inData[x]['request#'];
-          console.log(`  INFO Processing request# ${reqNum}`);
-          if (inData[x].request_status < 3) {
+          console.log(`[${reqNum}] INFO Processing request`);
+          if (inData[x].request_status < 10) {
             let id = uuid(reqNum.toString(), 'dfc59d30-cdad-3d03-9dee-d99117852eab');
             let itemNum = inData[x]['item#'];
             let userNum = inData[x]['borrower#'];
             let pickupLoc = locMap[inData[x].pickup_location];
-            let reqLoc = locMap[inData[x].request_location];
             let pos = inData[x].bib_queue_ord;
             let rdate = getDateByDays(inData[x].request_date);
             let rtime = getTimeByMinutes(inData[x].request_time);
@@ -140,7 +139,7 @@ const reqStatus = [
 
             // get item level holds first
             if (itemNum) {
-              console.log(`    INFO Creating item level hold on ${itemNum}`);
+              console.log(`[${reqNum}] INFO Creating item level hold on ${itemNum}`);
               let item = await items.find(i => i.hrid === itemNum.toString());
               if (item) {
                 if (item.status.name === 'Available') {
@@ -152,13 +151,13 @@ const reqStatus = [
                 itemId = item.id;
                 itemHrid = item.hrid;
               } else {
-                console.log(`    ERROR Item with hrid ${itemNum} not found!`);
+                console.log(`[${reqNum}] ERROR Item with hrid ${itemNum} not found!`);
               }
             } else {
               // if the item has an available status, then let's use it
               let avItem = await items.find(i => i.status.name === 'Available');
               if (avItem) {
-                console.log(`    INFO Found an Available item (${avItem.hrid})`);
+                console.log(`[${reqNum}] INFO Found an Available item (${avItem.hrid})`);
                 reqObj.requestType = 'Page';
                 avItem.status.name = 'Paged';
                 itemId = avItem.id;
@@ -169,9 +168,7 @@ const reqStatus = [
                 let last = false;
 
                 // there are no available items, so lets find an item with the fewest requests (rcount)
-                // console.log(`Round ${iround}`);
                 for (let x = 0; x < items.length; x++) {
-                  // console.log(items[x].rcount);
                   let status = items[x].status.name;
                   if (!items[x].rcount) {
                     items[x].rcount = 0;
@@ -179,7 +176,7 @@ const reqStatus = [
                   // we can't place holds on lost or withdrawn items, so let's skip these items
                   if (status.match(/Missing|Declared lost|Withdrawn/)) {
                     itemId = null;
-                    console.log(`    WARN Item has a status of ${status}-- not using`);
+                    console.log(`[${reqNum}] WARN Item has a status of ${status}-- not using`);
                   } else if (items[x].rcount === iround) {
                     itemId = items[x].id;
                     items[x].rcount++;
@@ -196,10 +193,11 @@ const reqStatus = [
             if (itemId) {
               // get requesterId
               if (userMap[userNum]) {
-                console.log(`    INFO User # ${userNum} found in cache.`)
-                reqObj.requesterId = userMap[userNum];
+                console.log(`[${reqNum}] INFO User # ${userNum} found in cache.`)
+                userId = userMap[userNum];
+                reqObj.requesterId = userId;
               } else {
-                console.log(`    INFO Looking up user with externalSystemId ${userNum}`);
+                console.log(`[${reqNum}] INFO Looking up user with externalSystemId ${userNum}`);
                 try {
                   let res = await superagent
                     .get(uurl)
@@ -211,22 +209,22 @@ const reqStatus = [
                     userMap[userNum] = userId;
                   }
                   else {
-                    console.log(`    ERROR No user record found for ${userNum}!`);
+                    console.log(`[${reqNum}] ERROR No user record found for ${userNum}!`);
                   }
                 } catch (e) {
-                  // console.log(e.message)
                   console.log(e);
                 }
               }
             }
             if (userId && itemId) {
               out.requests.push(reqObj);
-              console.log(`    INFO Request successfully created on item ${itemHrid} for user ${userNum}`)
+              console.log(`[${reqNum}] INFO Request successfully created on item ${itemHrid} for user ${userNum}`)
             }
             await wait(config.delay);
           } else {
-            console.log(`    WARN Request# ${reqNum} has a cancelled status of "${inData[x].request_status}" -- skipping`);
+            console.log(`[${reqNum}] WARN Request has a cancelled status of "${inData[x].request_status}" -- skipping`);
           }
+          console.log('---');
         }
       } else {
         throw new Error( `ERROR No items found for Bib# ${b}!`)
