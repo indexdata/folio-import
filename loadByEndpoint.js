@@ -34,7 +34,7 @@ const fn = process.argv[3];
     }
     for (d = 0; d < data.length; d++) {
       try {
-        console.log(`POST ${url}...`);
+        console.log(`[${d}] POST ${url}...`);
         let res = await superagent
           .post(url)
           .timeout({ response: 5000 })

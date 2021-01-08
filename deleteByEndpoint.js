@@ -55,7 +55,7 @@ const wait = (ms) => {
     console.log(`Deleting ${refData.totalRecords} ${root}...`);
     for (let x = 0; x < refData[root].length; x++) {
       let id = refData[root][x].id;
-      console.log(`Deleting ${id}`);
+      console.log(`[${x}] Deleting ${id}`);
       try {
         await superagent
           .delete(`${deleteUrl}/${id}`)
