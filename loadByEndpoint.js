@@ -45,7 +45,8 @@ const fn = process.argv[3];
         added++;
       } catch (e) {
         try {
-          console.log(`  ${e} -- Trying PUT...`);
+          console.log(e.response.res.text);
+          console.log(`  -- Trying PUT...`);
           let purl = url;
           if (!purl.match(/circulation-rules-storage/)) {
             purl += '/' + data[d].id;

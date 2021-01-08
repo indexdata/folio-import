@@ -118,13 +118,12 @@ const reqStatus = [
         }
       }
 
-      let iround = 0;
       if (icount > 0) {
         for (let x = 0; x < inData.length ; x++) {
           let itemHrid = '';
           let reqNum = inData[x]['request#'];
           console.log(`[${reqNum}] INFO Processing request`);
-          if (inData[x].request_status < 10) {
+          if (inData[x].request_status < 3) {
             let id = uuid(reqNum.toString(), 'dfc59d30-cdad-3d03-9dee-d99117852eab');
             let itemNum = inData[x]['item#'];
             let userNum = inData[x]['borrower#'];
@@ -139,7 +138,7 @@ const reqStatus = [
               requestDate: rtimestamp,
               fulfilmentPreference: 'Hold Shelf',
               pickupServicePointId: pickupLoc,
-              position: pos,
+              // position: pos,
               requestExpirationDate: expiry,
               status: reqStatus[inData[x].request_status]
             };
@@ -177,7 +176,6 @@ const reqStatus = [
                 avItem.rcount++;
               } else {
                 reqObj.requestType = 'Hold';
-                // there are no available items, so lets find an item with the fewest requests (rcount)
                 items.sort((a, b) => {
                   return a.rcount - b.rcount
                 });
