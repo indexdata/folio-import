@@ -176,7 +176,7 @@ const reqStatus = [
                 avItem.rcount++;
               } else {
                 reqObj.requestType = 'Hold';
-                items.sort((a, b) => {
+                await items.sort((a, b) => {
                   return a.rcount - b.rcount
                 });
                 itemId = items[0].id;
