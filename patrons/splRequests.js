@@ -93,7 +93,6 @@ const reqStatus = [
     for (b in bibs) {
       let items = [];
       let allItems = [];
-      let icount = 0;
       let inData = bibs[b];
       let iurl = `${config.okapi}/item-storage/items?query=instance.hrid==${b}&limit=500`;
       ttl++;
@@ -104,7 +103,6 @@ const reqStatus = [
           .set('x-okapi-token', authToken)
           .set('accept', 'application/json');
         allItems = res.body.items;
-        icount = res.body.totalRecords;
       } catch (e) {
         console.log(e.response || e.message);
       }
@@ -117,6 +115,7 @@ const reqStatus = [
           console.log(`WARN item ${allItems[i].hrid} has a status of ${status}-- not using`);
         }
       }
+      let icount = items.length;
 
       if (icount > 0) {
         for (let x = 0; x < inData.length ; x++) {
@@ -225,7 +224,7 @@ const reqStatus = [
           console.log('---');
         }
       } else {
-        throw new Error( `ERROR No items found for Bib# ${b}!`)
+        console.log( `ERROR No items found for Bib# ${b}!`)
       }
     }
     out.totalRecords = out.requests.length;
