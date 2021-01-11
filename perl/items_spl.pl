@@ -152,9 +152,10 @@ while (<RAW>) {
   s/\s+$//;
   s/\r|\n|\t/ /g;
   s/("available_date": )None/$1"None"/;  # This fixes an error in the source json where the string "None" is not quoted!
-  if (/^\{/) {
+  if (/^\s*{/) {
     $jtext = $_;
-  } elsif (/^}/) {
+  } elsif (/^\s*}/) {
+    s/,\s*$//;
     $jtext .= $_;
     my $jobj = decode_json($jtext);
     push @{ $hi->{items} }, $jobj;
@@ -185,6 +186,7 @@ foreach (@{ $hi->{items} }) {
     } else {
       $cn_type_id = $other_cn;
     }
+  my $copy = $_->{copy_reconstructed};
   my $loc_code = $_->{location};
   if (!$loc_code) {
     print "WARN No location code-- skipping...\n";
@@ -201,7 +203,7 @@ foreach (@{ $hi->{items} }) {
     my $uustr = uuid($hrid);
     $hrecs->{$loc_key}->{id} = $uustr;
     $hrecs->{$loc_key}->{instanceId} = $inst_map->{$control_num};
-    if ($callno ne 'None') {
+    if ($callno && $callno ne 'None') {
       $hrecs->{$loc_key}->{callNumber} = $callno;
       $hrecs->{$loc_key}->{callNumberTypeId} = $cn_type_id;
     }
@@ -225,7 +227,10 @@ foreach (@{ $hi->{items} }) {
     $irec->{materialTypeId} = $folio_mtypes->{$coll_name} || $folio_mtypes->{Other};
     my $lt_label = $itypes_map->{$_->{itype}} || 'Standard Circulation';
     $irec->{permanentLoanTypeId} = $folio_ltypes->{$lt_label};
-    if ($callno ne 'None') {
+    if ($copy =~ /\((.+)\)/) {
+      $irec->{chronology} = $1;
+    }
+    if ($callno && $callno ne 'None') {
       $irec->{itemLevelCallNumber} = $callno;
       $irec->{itemLevelCallNumberTypeId} = $cn_type_id;
       $irec->{effectiveCallNumberComponents} = { callNumber => $callno, typeId => $cn_type_id };
