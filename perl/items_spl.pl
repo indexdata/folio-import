@@ -240,7 +240,7 @@ foreach (@{ $hi->{items} }) {
     my $lt_label = $itypes_map->{$itype} || 'Standard Circulation';
     $irec->{permanentLoanTypeId} = $folio_ltypes->{$lt_label};
     
-    if ($itype eq 'mag') {
+    if ($coll_code =~ /mag/) {
       $copy =~ /(.+)\s+\((.+)\)/;
       my $enum = $1 || $copy;
       my $chron = $2;
