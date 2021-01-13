@@ -14,7 +14,7 @@ binmode STDOUT, ":utf8";
 my $limit = 1000000;
 
 unless ($ARGV[1]) {
-  die "Usage: items_spl.pl <ref_data_path> <holdings_file>\n"
+  die "Usage: items_spl.pl <ref_data_path> <holdings_file> [ <status map file> ]\n"
 }
 
 my $refpath = shift;
@@ -25,6 +25,7 @@ my $infile = shift;
 if (! -e $infile) {
   die "Can't find input file!\n"
 }
+my $itemsfile = shift;
 
 my $namespace = 'dfc59d30-cdad-3d03-9dee-d99117852eab';
 sub uuid {
@@ -56,6 +57,16 @@ sub get_ref_data {
   }
   close REF;
   return $ret;
+}
+
+my $status_map = {};
+if ($itemsfile) {
+  open SFILE, $itemsfile or die "Can't open status file\n";
+  while (<SFILE>) {
+    chomp;
+    my ($k, $v) = split(/\|/);
+    $status_map->{$k} = $v;
+  }
 }
 
 # load folio reference data 
@@ -179,7 +190,7 @@ foreach (@{ $hi->{items} }) {
     print "$control_num not found in inst_map\n";
     next;
   }
-  my $callno = $_->{call_reconstructed};
+  my $callno = $_->{call_reconstructed} || '';
   my $cn_type_id;
   if ($callno =~ /^[EJ]?\d{3}(\.|$)/) { # dewey
       $cn_type_id = $dewey_cn;
@@ -219,17 +230,28 @@ foreach (@{ $hi->{items} }) {
     $item_seen->{$hrid} = 1;
     my $barcode = $_->{ibarcode};
     my $coll_code = $_->{collection};
+    my $itype = $_->{itype};
 
     $irec->{id} = uuid($hrid);
     $irec->{holdingsRecordId} = $hrecs->{$loc_key}->{id};
     $irec->{barcode} = $barcode;
     my $coll_name = $coll_map->{$coll_code} || 'Other';
     $irec->{materialTypeId} = $folio_mtypes->{$coll_name} || $folio_mtypes->{Other};
-    my $lt_label = $itypes_map->{$_->{itype}} || 'Standard Circulation';
+    my $lt_label = $itypes_map->{$itype} || 'Standard Circulation';
     $irec->{permanentLoanTypeId} = $folio_ltypes->{$lt_label};
-    if ($copy =~ /\((.+)\)/) {
-      $irec->{chronology} = $1;
+    
+    if ($itype eq 'mag') {
+      $copy =~ /(.+)\s+\((.+)\)/;
+      my $enum = $1 || $copy;
+      my $chron = $2;
+      if ($chron) {
+        $irec->{chronology} = $chron;
+      }
+      $irec->{enumeration} = $enum;
+    } elsif ($copy !~ /^\s*$/) {
+      $irec->{volume} = $copy;
     }
+  
     if ($callno && $callno ne 'None') {
       $irec->{itemLevelCallNumber} = $callno;
       $irec->{itemLevelCallNumberTypeId} = $cn_type_id;
@@ -240,7 +262,9 @@ foreach (@{ $hi->{items} }) {
     }
     my $st = $_->{item_status};
     my $status = 'Available';
-    if ($st eq 'l') {
+    if ($status_map->{$hrid}) {
+      $status = $status_map->{$hrid};  
+    } elsif ($st eq 'l') {
       $status = 'Declared lost';
     } elsif ($st eq 'w') {
       $status = 'Withdrawn';
@@ -249,6 +273,7 @@ foreach (@{ $hi->{items} }) {
     } elsif ($st eq 'r') {
       $status = 'On order';
     } 
+    
     $irec->{status} = { name => $status };
     $irec->{hrid} = "$hrid";
     $irec->{notes} = [];
