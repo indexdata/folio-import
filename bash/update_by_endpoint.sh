@@ -20,7 +20,7 @@ fi
 LN=1;
 while IFS= read -r line
   do
-    UUID=`echo $line | grep -E -o '"id":".+?"' | grep -E -o -m 1 '........-....-....-....-............'`
+    UUID=`echo $line | grep -E -o '"id":"[^"]+' | grep -E -o -m 1 '........-....-....-....-............'`
     echo "Updating # ${LN} -- ${UUID}"
     curl -w '\n' -X PUT --http1.1 "${OKAPI}/${EP}/${UUID}" -H 'content-type: application/json' -H "x-okapi-token: ${TOKEN}" -d "$line"
     LN=$(expr $LN + 1)
