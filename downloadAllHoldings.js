@@ -29,7 +29,7 @@ if (argv.q) query = 'query=' + argv.q + '&';
 
     let totFetch = 0;
     let totRecs = 1000000;
-    let perPage = 100;
+    let perPage = 1000;
     let offset = start || 0;
     const coll = { holdingsRecords: [] };
     while (totFetch < totRecs) {
