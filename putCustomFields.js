@@ -17,6 +17,9 @@ const mod = 'mod-users-17.2.2';
     const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
     let url = `${config.okapi}/custom-fields`;
     let collStr = fs.readFileSync(fn, 'utf8');
+    if (!collStr.match(/customFields/)) {
+      throw new Error('Payload object must contain a "customFields" array property!');
+    }
     console.log(`PUT ${url}...`);
     try {
       let res = await superagent
