@@ -104,6 +104,9 @@ const start = process.env.LOAD_START;
         path = fn;
       }
       path = path.replace(/\d{5}$/, '');
+      if (path === 'custom-fields') {
+        throw new Error('ERROR: Use putCustomFields.js script to load custom-fields!');
+      }
       let url = `${config.okapi}/${path}`;
       let collStr = fs.readFileSync(`${fileNames[x]}`, 'utf8');
       let data = JSON.parse(collStr);
