@@ -31,6 +31,7 @@ const start = process.env.LOAD_START;
       "contacts": "organizations-storage/contacts",
       "contributornametypes": "contributor-name-types",
       "contributortypes": "contributor-types",
+      "customfields": "custom-fields",
       "electronicaccessrelationships": "electronic-access-relationships",
       "fees": "accounts",
       "fiscalyears": "finance-storage/fiscal-years",
@@ -160,7 +161,9 @@ const start = process.env.LOAD_START;
       if (errRecs.length > 0) {
         const fn = fileNames[x].replace(/\.json$/, '_err.json');
         fs.writeFileSync(fn, JSON.stringify(errRecs, null, 2));
-      }
+      } 
+      let doneFn = fileNames[x].replace(/^(.+)\/(.+)/, '$1/x_$2');
+      fs.renameSync(fileNames[x], doneFn);
     } 
     console.log(`Added:   ${added}`);
     console.log(`Updated: ${updated}`);
