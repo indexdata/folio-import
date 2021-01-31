@@ -103,6 +103,9 @@ const start = process.env.LOAD_START;
       let fn = fileNames[x].replace(/^.+\//, '');
       fn = fn.replace(/\.json$/, '');
       let path = epMap[fn];
+      if (fn.match(/^records/)) {
+        path = 'source-storage/records';
+      }
       if (!path) {
         path = fn;
       }
