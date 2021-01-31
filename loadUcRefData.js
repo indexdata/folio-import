@@ -93,6 +93,7 @@ const start = process.env.LOAD_START;
       "statisticalcodetypes": "statistical-code-types",
       "suffixes": "orders/configuration/suffixes",
       "titles": "orders/titles",
+      "userrequestpreferences": "request-preference-storage/request-preference",
       "waivereasons": "waives",
       "permissionsusers": "perms/users",
       "hridsettings": "hrid-settings-storage/hrid-settings",
