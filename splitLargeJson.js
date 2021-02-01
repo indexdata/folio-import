@@ -28,11 +28,16 @@ if (process.argv[4]) {
     let sz = parseInt(size, 10);
     let c = 0;
     let fn;
+    let buff = [];
     stream
       .pipe(JSONStream.parse(root))
       .pipe(es.through(function write(data) {
           let rec = JSON.stringify(data);
           if (c % sz === 0) {
+            if (buff.length > 0) {
+              fs.writeFileSync(fn, buff.join('\n') + '\n', { flag: 'a' });
+              buff = [];
+            }
             let fc = Math.floor(c / sz);
             let fcstr = fc.toString();
             let sufx = fcstr.padStart(5, '0');
@@ -42,10 +47,18 @@ if (process.argv[4]) {
               fs.unlinkSync(fn);
             }
           }
-          fs.writeFileSync(fn, rec + '\n', { flag: 'a' });
+          buff.push(rec);
+          if (buff.length === 100) {
+            fs.writeFileSync(fn, buff.join('\n') + '\n', { flag: 'a' });
+            buff = [];
+          }
           c++;
         }, 
         function end() {
+          if (buff.length > 0) {
+            fs.writeFileSync(fn, buff.join('\n') + '\n', { flag: 'a' });
+            buff = [];
+          }
           this.emit('end')
         })
       ); 
