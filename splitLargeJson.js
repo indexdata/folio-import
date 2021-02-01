@@ -1,3 +1,8 @@
+/*
+  This script will take a json file and split an array (as defined by property), 
+  and write jsonl files with as many lines as defined by size.
+*/
+
 const fs = require('fs');
 const JSONStream = require('JSONStream');
 const es = require('event-stream');
@@ -17,11 +22,6 @@ if (process.argv[4]) {
       throw new Error('Can\'t find input file');
     }
 
-    const smallerObject = (data, es) => {
-      console.log(data);
-      es.resume();
-    }
-  
     const pathRoot = inFile.replace(/\.json$/, '');
 
     const stream = fs.createReadStream(inFile, { encoding: "utf8" });
@@ -31,29 +31,18 @@ if (process.argv[4]) {
     stream
       .pipe(JSONStream.parse(root))
       .pipe(es.through(function write(data) {
-          let rec = JSON.stringify(data, null, 2);
+          let rec = JSON.stringify(data);
           if (c % sz === 0) {
             let fc = Math.floor(c / sz);
             let fcstr = fc.toString();
             let sufx = fcstr.padStart(5, '0');
-            fn = `${pathRoot}${sufx}.json`;
-            rec = '[' + rec;
-            if (root !== '*') {
-              rec = `{ "${process.argv[4]}" : ${rec}`;
-            }
+            fn = `${pathRoot}${sufx}.jsonl`;
+            console.log(`Writing to ${fn}`)
             if (fs.existsSync(fn)) {
               fs.unlinkSync(fn);
             }
           }
-          if ((c + 1) % sz === 0) {
-            rec += ']';
-            if (root !== '*') {
-              rec += '}';
-            }
-          } else {
-            rec += ',';
-          }
-          fs.writeFileSync(fn, rec, { flag: 'a' });
+          fs.writeFileSync(fn, rec + '\n', { flag: 'a' });
           c++;
         }, 
         function end() {
