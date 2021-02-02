@@ -48,7 +48,7 @@ if (process.argv[4]) {
             }
           }
           buff.push(rec);
-          if (buff.length === 100) {
+          if (buff.length === 500) {
             fs.writeFileSync(fn, buff.join('\n') + '\n', { flag: 'a' });
             buff = [];
           }

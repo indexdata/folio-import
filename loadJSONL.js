@@ -69,7 +69,8 @@ let ep = process.argv[2];
         logger.info(`  Successfully added record id ${rec.id}`);
         success++;
       } catch (e) {
-        logger.warn(`  WARN ${e.response.text}`);
+	let errMsg = (e.response.text) ? e.response.text : e;
+        logger.warn(`  WARN ${errMsg}`);
         logger.info('  Trying PUT request...');
         try {
           await superagent

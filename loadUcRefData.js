@@ -33,6 +33,7 @@ const start = process.env.LOAD_START;
       "contributortypes": "contributor-types",
       "customfields": "custom-fields",
       "electronicaccessrelationships": "electronic-access-relationships",
+      "expenseclasses": "finance/expense-classes",
       "fees": "accounts",
       "feetypes": "feefines",
       "fiscalyears": "finance-storage/fiscal-years",
@@ -171,8 +172,8 @@ const start = process.env.LOAD_START;
         const fn = fileNames[x].replace(/\.json$/, '_err.json');
         fs.writeFileSync(fn, JSON.stringify(errRecs, null, 2));
       } 
-      let doneFn = fileNames[x].replace(/^(.+)\/(.+)/, '$1/x_$2');
-      fs.renameSync(fileNames[x], doneFn);
+      // let doneFn = fileNames[x].replace(/^(.+)\/(.+)/, '$1/x_$2');
+      // fs.renameSync(fileNames[x], doneFn);
     } 
     console.log(`Added:   ${added}`);
     console.log(`Updated: ${updated}`);
