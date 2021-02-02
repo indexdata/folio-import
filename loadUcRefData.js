@@ -20,6 +20,7 @@ const start = process.env.LOAD_START;
     const epMap = {
       "addresstypes": "addresstypes",
       "alternativetitletypes": "alternative-title-types",
+      "budgetexpenseclasses": "finance-storage/budget-expense-classes",
       "budgets": "finance-storage/budgets",
       "callnumbertypes": "call-number-types",
       "campuses": "location-units/campuses",
@@ -71,8 +72,8 @@ const start = process.env.LOAD_START;
       "natureofcontentterms": "nature-of-content-terms",
       "organizations": "organizations-storage/organizations",
       "orderinvoices": "orders-storage/order-invoice-relns",
-      "orderitems": "orders/order-lines",
-      "orders": "orders/composite-orders",
+      "orderitems": "orders-storage/po-lines",
+      "orders": "orders-storage/purchase-orders",
       "orders_comp": "orders/composite-orders",
       "ordertemplates": "orders/order-templates",
       "overduefinepolicies": "overdue-fines-policies",
