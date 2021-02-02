@@ -16,6 +16,7 @@ const dbName = 'uc';
     const oi = await db.collection('orderitems');
     for (let x = 0; x < recs.length; x++) {
 	let poId = recs[x].id;
+	console.log(`[${x}] ${poId}`);
 	recs[x].compositePoLines = [];
     	let cursor = await oi.find({ purchaseOrderId: poId });
 	while (await cursor.hasNext()) {
