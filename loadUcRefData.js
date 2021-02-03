@@ -44,6 +44,7 @@ const start = process.env.LOAD_START;
       "groups": "groups",
       "holdingnotetypes": "holdings-note-types",
       "holdingtypes": "holdings-types",
+      "hridsettings": "hrid-settings-storage/hrid-settings",
       "idtypes": "identifier-types",
       "illpolicies": "ill-policies",
       "instanceformats": "instance-formats",
@@ -76,13 +77,16 @@ const start = process.env.LOAD_START;
       "orders": "orders-storage/purchase-orders",
       "orders_comp": "orders/composite-orders",
       "ordertemplates": "orders/order-templates",
+      "ordertransactionsummaries": "finance-storage/order-transaction-summaries",
       "overduefinepolicies": "overdue-fines-policies",
       "patronnoticepolicies": "patron-notice-policy-storage/patron-notice-policies",
       "payments": "feefineactions",
       "paymentmethods": "payments",
       "permissions": "perms/permissions",
+      "permissionsusers": "perms/users",
       "prefixes": "orders/configuration/prefixes",
       "proxies": "proxiesfor",
+      "receivings": "orders/pieces",
       "refundreasons": "refunds",
       "requestpolicies": "request-policy-storage/request-policies",
       "closereasons": "orders/configuration/reasons-for-closure",
@@ -95,10 +99,9 @@ const start = process.env.LOAD_START;
       "statisticalcodetypes": "statistical-code-types",
       "suffixes": "orders/configuration/suffixes",
       "titles": "orders/titles",
+      "transactions": "finance-storage/transactions",
       "userrequestpreferences": "request-preference-storage/request-preference",
-      "waivereasons": "waives",
-      "permissionsusers": "perms/users",
-      "hridsettings": "hrid-settings-storage/hrid-settings",
+      "waivereasons": "waives"
     }
     
     for (let x = 0; x < fileNames.length; x++) {
