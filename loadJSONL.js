@@ -95,6 +95,6 @@ let ep = process.argv[2];
     logger.info(`Records added:   ${success}`);
     logger.info(`Failures:        ${fail}\n`);
   } catch (e) {
-    console.error(e.message);
+    console.error(e);
   }
 })();
