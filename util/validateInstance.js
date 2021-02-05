@@ -7,6 +7,7 @@ const inst = require(inFile);
 const instSchema = JSON.parse(fs.readFileSync('./schemas/instance.json', 'utf8'));
 const uuidSchema = JSON.parse(fs.readFileSync('./schemas/uuid.json', 'utf8'));
 const tagsSchema = JSON.parse(fs.readFileSync('./schemas/tags.schema', 'utf8'));
+const formatSchema = JSON.parse(fs.readFileSync('./schemas/instanceformat.json', 'utf8'));
 const metadataSchema = JSON.parse(fs.readFileSync('./schemas/metadata.schema', 'utf8'));
 const hrSchema = JSON.parse(fs.readFileSync('./schemas/holdingsrecord.json', 'utf8'));
 const itemSchema = JSON.parse(fs.readFileSync('./schemas/item.json', 'utf8'));
@@ -18,6 +19,7 @@ ajv.addSchema(tagsSchema, 'raml-util/schemas/tags.schema');
 ajv.addSchema(metadataSchema, 'raml-util/schemas/metadata.schema');
 ajv.addSchema(hrSchema, 'holdingsrecord.json');
 ajv.addSchema(itemSchema, 'item.json');
+ajv.addSchema(formatSchema, 'instanceformat.json');
 validate = ajv.compile(instSchema);
 
 let ecount = 0;
