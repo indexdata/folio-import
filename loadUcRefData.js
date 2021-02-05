@@ -84,6 +84,7 @@ const start = process.env.LOAD_START;
       "paymentmethods": "payments",
       "permissions": "perms/permissions",
       "permissionsusers": "perms/users",
+      "precedingsucceedingtitles": "preceding-succeeding-titles",
       "prefixes": "orders/configuration/prefixes",
       "proxies": "proxiesfor",
       "receivings": "orders/pieces",
