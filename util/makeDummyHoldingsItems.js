@@ -41,7 +41,7 @@ inst.instances.forEach(i => {
   let ct = '6caca63e-5651-4db6-9247-3205156e9699';
   if (i.classifications[0]) {
     cn = i.classifications[0].classificationNumber;
-    ct = i.classifications[0].classificationTypeId;
+    // ct = i.classifications[0].classificationTypeId;
   } 
   holding.callNumber = cn;
   holding.callNumberTypeId = ct;
