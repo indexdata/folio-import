@@ -24,7 +24,6 @@ let refDir = process.argv[2];
       'https://raw.githubusercontent.com/folio-org/mod-permissions/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-tags/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-notes/master/descriptors/ModuleDescriptor-template.json',
-      // 'https://raw.githubusercontent.com/folio-org/mod-calendar/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-finance-storage/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-organizations-storage/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-orders-storage/master/descriptors/ModuleDescriptor-template.json',
@@ -42,8 +41,6 @@ let refDir = process.argv[2];
       'https://raw.githubusercontent.com/folio-org/mod-licenses/master/service/src/main/okapi/ModuleDescriptor-template.json'
     ]
 
-    // mdUrls = ['https://raw.githubusercontent.com/folio-org/mod-organizations-storage/master/descriptors/ModuleDescriptor-template.json'];
-
     const skipList = {
       '/item-storage/items': true,
       '/holdings-storage/holdings': true,
@@ -55,8 +52,11 @@ let refDir = process.argv[2];
       '/proxiesfor': true,
       '/notes': true,
       '/notify': true,
+      '/inventory-hierarchy/updated-instance-ids': true,
       '/loan-storage/loans': true,
       '/loan-storage/loan-history': true,
+      '/oai-pmh-view/instances': true,
+      '/oai-pmh-view/updatedInstanceIds': true,
       '/orders-storage/order-lines' : true,
       '/orders-storage/orders' : true,
       '/orders-storage/po-lines' : true,
@@ -65,6 +65,7 @@ let refDir = process.argv[2];
       '/request-storage/requests': true,
       '/patron-action-session-storage/patron-action-sessions': true,
       '/source-storage/records': true,
+      '/source-storage/source-records': true,
       '/source-storage/sourceRecords': true,
       '/source-storage/snapshots': true,
       '/check-in-storage/check-ins': true,
@@ -117,7 +118,10 @@ let refDir = process.argv[2];
       let saveDir = paths[x].mod.toLowerCase();
       paths[x].path = paths[x].path.replace(/\*/g, '');
       let fileName = paths[x].path.replace(/\//g, '__');
-      fileName = fileName.replace(/\?.+$/, '');
+      if (!paths[x].path.match(/profileAssociations/)) fileName = fileName.replace(/\?.+$/, '');
+      fileName = fileName.replace(/&/g, '%26');
+      fileName = fileName.replace(/\?/g, '%3F');
+      fileName = fileName.replace(/=/g, '%3D');
       console.log(`Fetching ${paths[x].path}...`);
       let url = `${config.okapi}/${paths[x].path}`;
       if (url.match(/\/permissions/)) {
@@ -129,6 +133,21 @@ let refDir = process.argv[2];
       } 
       if (url.match(/data-import-profiles/)) {
         url += '&withRelations=true';
+      }
+      if (paths[x].path == 'data-import-profiles/profileAssociations') {
+	  let profTypes = [
+		'ACTION_PROFILE_TO_ACTION_PROFILE',
+		'ACTION_PROFILE_TO_MAPPING_PROFILE',
+		'ACTION_PROFILE_TO_MATCH_PROFILE',
+		'JOB_PROFILE_TO_ACTION_PROFILE',
+		'JOB_PROFILE_TO_MATCH_PROFILE',
+		'MATCH_PROFILE_TO_ACTION_PROFILE',
+		'MATCH_PROFILE_TO_MATCH_PROFILE'
+          ];
+	  profTypes.forEach(p => {
+	    let t = p.split(/_TO_/);
+	    paths.push({ path: `${paths[x].path}?master=${t[0]}&detail=${t[1]}`, mod: paths[x].mod });
+	  });
       }
       try {
         let res = await superagent
