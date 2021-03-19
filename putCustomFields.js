@@ -2,7 +2,7 @@ const fs = require('fs');
 const superagent = require('superagent');
 const { getAuthToken } = require('./lib/login');
 const fn = process.argv[2]; 
-const mod = 'mod-users-17.2.2';
+const mod = 'mod-users-17.2.3';
 
 (async () => {
   let added = 0;
