@@ -27,12 +27,16 @@ let ep = process.argv[2];
     if (config.logpath) {
       const lpath = config.logpath;
       const lname = inFile.replace(/.+\//, '');
+      const logFileName = `${lpath}/${lname}.log`;
+      if (fs.existsSync(logFileName)) {
+        fs.unlinkSync(logFileName);
+      }
       logger = winston.createLogger({
         level: 'info',
         format: winston.format.json(),
         defaultMeta: { service: 'user-service' },
         transports: [
-          new winston.transports.File({ filename: `${lpath}/${lname}.log` })
+          new winston.transports.File({ filename: logFileName })
         ]
       });
     } else {
@@ -57,7 +61,8 @@ let ep = process.argv[2];
     for await (const line of rl) {
       x++;
       let rec = JSON.parse(line);
-      logger.info(`[${x}] POST ${rec.id} to ${actionUrl}`);
+      let lDate = new Date();
+      logger.info(`[${x}] ${lDate} POST ${rec.id} to ${actionUrl}`);
       let recUrl = `${actionUrl}/${rec.id}`;
       try {
         await superagent
