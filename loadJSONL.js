@@ -2,6 +2,7 @@ const fs = require('fs');
 const superagent = require('superagent');
 const winston = require('winston');
 const readline = require('readline');
+const path = require('path');
 
 const { getAuthToken } = require('./lib/login');
 let inFile = process.argv[3];
@@ -20,6 +21,13 @@ let ep = process.argv[2];
     let limit = (process.argv[4]) ? parseInt(process.argv[4], 10) : 10000000;
     if (isNaN(limit)) {
       throw new Error('Limit must be a number.');
+    }
+
+    const workingDir = path.dirname(inFile);
+    const baseName = path.basename(inFile, '.jsonl');
+    const errPath = `${workingDir}/${baseName}Err.jsonl`;
+    if (fs.existsSync(errPath)) {
+      fs.unlinkSync(errPath);
     }
     
     var logger;
@@ -88,6 +96,7 @@ let ep = process.argv[2];
           updated++;
         } catch (e) {
           logger.error(`     ERROR ${rec.id}: ${e}`);
+	  fs.writeFileSync(errPath, `${line}\n`, { flag: 'a'});
           fail++;
         }
       }

@@ -37,6 +37,7 @@ const start = process.env.LOAD_START;
       "expenseclasses": "finance/expense-classes",
       "fees": "accounts",
       "feetypes": "feefines",
+      "financegroups": "finance-storage/groups",
       "fiscalyears": "finance-storage/fiscal-years",
       "fixedduedateschedules": "fixed-due-date-schedule-storage/fixed-due-date-schedules",
       "funds": "finance-storage/funds",
