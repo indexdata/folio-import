@@ -39,6 +39,69 @@ const aliasTypeMap = makeMap(inRecs.aliastype, 'aliasTypeID');
 const orgRoleMap = makeMap(inRecs.organizationroleprofile);
 // console.log(orgRoleMap);
 
+inRecs.contact.forEach(c => {
+  con = {}
+  let id = uuid(c.contactID + c.name, ns);
+  con.id = id;
+  con.firstName = c.name.replace(/^(.+) .+/, '$1') || 'Unknown';
+  con.lastName = c.name.replace(/^.+ (.+)/, '$1') || 'Unknown';
+  let notes = [];
+  if (c.title) notes.push(c.title);
+  if (c.noteText) notes.push(c.noteText);
+  if (notes.length > 0) con.notes = notes.join('; ');
+  if (c.addressText) {
+    con.addresses = [];
+    let add = {};
+    add.id = uuid(id + c.addressText, ns);
+    let lines = c.addressText.split(/\n/);
+    add.addressLine1 = lines.shift();
+    let ll = lines.pop();
+    add.addressLine2 = lines.join(', ');
+    if (ll) {
+      add.city = ll.replace(/^(.+?),.*/, '$1');
+      add.stateRegion = ll.replace(/^.*\b([A-Z]{2})\b.*$|.*/, '$1');
+      add.zipCode = ll.replace(/^.*(\d{5}(-\d{4})?).*$|.*/, '$1');
+      add.country = ll.replace(/.*\d{4}[, ]+(.+)$|.*/, '$1');
+    }
+    add.isPrimary = true;
+    con.addresses.push(add);
+  }
+  con.phoneNumbers = [];
+  if (c.phoneNumber) {
+    let ph = {};
+    // ph.id = uuid(id + c.phoneNumber, ns);
+    ph.phoneNumber = c.phoneNumber;
+    ph.isPrimary = true;
+    ph.type = 'Office';
+    con.phoneNumbers.push(ph);
+  }
+  if (c.altPhoneNumber) {
+    let ph = {};
+    // ph.id = uuid(id + c.altPhoneNumber, ns);
+    ph.phoneNumber = c.altPhoneNumber;
+    ph.isPrimary = false;
+    ph.type = 'Other';
+    con.phoneNumbers.push(ph);
+  }
+  if (c.faxNumber) {
+    let ph = {};
+    // ph.id = uuid(id + c.faxNumber, ns);
+    ph.phoneNumber = c.faxNumber;
+    ph.isPrimary = false;
+    ph.type = 'Fax';
+    con.phoneNumbers.push(ph);
+  }
+  if (c.emailAddress) {
+    con.emails = [];
+    let em = {};
+    // em.id = uuid(id + c.emailAddress, ns);
+    em.value = c.emailAddress;
+    em.isPrimary = true;
+    con.emails.push(em);
+  }
+  console.log(con);
+});
+
 inRecs.organization.forEach(o => {
   let org = {}
   let id = o.organizationID;
@@ -79,7 +142,7 @@ inRecs.organization.forEach(o => {
     });
   }
   // console.log(o);
-  console.log(JSON.stringify(org));
+  // console.log(JSON.stringify(org));
 });
 
 
