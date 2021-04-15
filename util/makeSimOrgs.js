@@ -36,7 +36,8 @@ try {
 
 const aliasMap = makeMap(inRecs.alias);
 const aliasTypeMap = makeMap(inRecs.aliastype, 'aliasTypeID');
-// console.log(aliasTypeMap);
+const orgRoleMap = makeMap(inRecs.organizationroleprofile);
+// console.log(orgRoleMap);
 
 inRecs.organization.forEach(o => {
   let org = {}
@@ -61,6 +62,12 @@ inRecs.organization.forEach(o => {
   org.code = code.substr(0, 4) + id;
   org.description = o.accountDetailText;
   org.notes = o.noteText;
+  org.isVendor = false;
+  if (orgRoleMap[id]) {
+    orgRoleMap[id].forEach(r => {
+      if (r.organizationRoleID === '6') org.isVendor = true;
+    });
+  }
   if (aliasMap[id]) {
     org.aliases = [];
     aliasMap[id].forEach(a => {
@@ -72,7 +79,7 @@ inRecs.organization.forEach(o => {
     });
   }
   // console.log(o);
-  console.log(JSON.stringify(org, null, 2));
+  console.log(JSON.stringify(org));
 });
 
 
