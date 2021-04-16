@@ -24,128 +24,163 @@ try {
   let orgs = [];
 
   fns.forEach(fn => {
-    let name = fn.replace(/.+_(.+?)\.csv/, '$1');
-    console.warn(`Creating object: ${name}`);
-    let csv = fs.readFileSync(`${inDir}/${fn}`, 'utf8');
-    csv = csv.replace(/NULL/g, '');
-    inRecs[name] = parse(csv, {
-      columns: true,
-      skip_empty_lines: true
-    });
-  });
-
-const aliasMap = makeMap(inRecs.alias);
-const aliasTypeMap = makeMap(inRecs.aliastype, 'aliasTypeID');
-const orgRoleMap = makeMap(inRecs.organizationroleprofile);
-// console.log(orgRoleMap);
-
-inRecs.contact.forEach(c => {
-  con = {}
-  let id = uuid(c.contactID + c.name, ns);
-  con.id = id;
-  con.firstName = c.name.replace(/^(.+) .+/, '$1') || 'Unknown';
-  con.lastName = c.name.replace(/^.+ (.+)/, '$1') || 'Unknown';
-  let notes = [];
-  if (c.title) notes.push(c.title);
-  if (c.noteText) notes.push(c.noteText);
-  if (notes.length > 0) con.notes = notes.join('; ');
-  if (c.addressText) {
-    con.addresses = [];
-    let add = {};
-    add.id = uuid(id + c.addressText, ns);
-    let lines = c.addressText.split(/\n/);
-    add.addressLine1 = lines.shift();
-    let ll = lines.pop();
-    add.addressLine2 = lines.join(', ');
-    if (ll) {
-      add.city = ll.replace(/^(.+?),.*/, '$1');
-      add.stateRegion = ll.replace(/^.*\b([A-Z]{2})\b.*$|.*/, '$1');
-      add.zipCode = ll.replace(/^.*(\d{5}(-\d{4})?).*$|.*/, '$1');
-      add.country = ll.replace(/.*\d{4}[, ]+(.+)$|.*/, '$1');
+    if (fn.match(/\.csv$/)) {
+      let name = fn.replace(/.+_(.+?)\.csv/, '$1');
+      console.warn(`Creating object: ${name}`);
+      let csv = fs.readFileSync(`${inDir}/${fn}`, 'utf8');
+      csv = csv.replace(/NULL/g, '');
+      inRecs[name] = parse(csv, {
+        columns: true,
+        skip_empty_lines: true
+      });
     }
-    add.isPrimary = true;
-    con.addresses.push(add);
-  }
-  con.phoneNumbers = [];
-  if (c.phoneNumber) {
-    let ph = {};
-    // ph.id = uuid(id + c.phoneNumber, ns);
-    ph.phoneNumber = c.phoneNumber;
-    ph.isPrimary = true;
-    ph.type = 'Office';
-    con.phoneNumbers.push(ph);
-  }
-  if (c.altPhoneNumber) {
-    let ph = {};
-    // ph.id = uuid(id + c.altPhoneNumber, ns);
-    ph.phoneNumber = c.altPhoneNumber;
-    ph.isPrimary = false;
-    ph.type = 'Other';
-    con.phoneNumbers.push(ph);
-  }
-  if (c.faxNumber) {
-    let ph = {};
-    // ph.id = uuid(id + c.faxNumber, ns);
-    ph.phoneNumber = c.faxNumber;
-    ph.isPrimary = false;
-    ph.type = 'Fax';
-    con.phoneNumbers.push(ph);
-  }
-  if (c.emailAddress) {
-    con.emails = [];
-    let em = {};
-    // em.id = uuid(id + c.emailAddress, ns);
-    em.value = c.emailAddress;
-    em.isPrimary = true;
-    con.emails.push(em);
-  }
-  console.log(con);
-});
-
-inRecs.organization.forEach(o => {
-  let org = {}
-  let id = o.organizationID;
-  org.name = o.name;
-  org.id = uuid(id, ns);
-  org.status = 'Active';
-  let code = '';
-  let nameWords = o.name.split(/\W/);
-  nameWords.forEach(nw => {
-    code += nw.replace(/^(.{4}).*/, '$1').toUpperCase();
   });
-  org.urls = [];
-  if (o.companyURL) {
-    url = {
-      id: uuid(o.companURL + id, ns),
-      value: o.companyURL,
-      isPrimary: true
-    };
-    org.urls.push(url);
-  }
-  org.code = code.substr(0, 4) + id;
-  org.description = o.accountDetailText;
-  org.notes = o.noteText;
-  org.isVendor = false;
-  if (orgRoleMap[id]) {
-    orgRoleMap[id].forEach(r => {
-      if (r.organizationRoleID === '6') org.isVendor = true;
-    });
-  }
-  if (aliasMap[id]) {
-    org.aliases = [];
-    aliasMap[id].forEach(a => {
-      let alias = {
-        name: a.name,
-        description: aliasTypeMap[a.aliasTypeID][0].shortName
+
+  const aliasMap = makeMap(inRecs.alias);
+  const aliasTypeMap = makeMap(inRecs.aliastype, 'aliasTypeID');
+  const orgRoleMap = makeMap(inRecs.organizationroleprofile);
+  const roleMap = makeMap(inRecs.contactroleprofile, 'contactID');
+
+  const catMap = {};
+  inRecs.contactrole.forEach(r => {
+    let cat = {}
+    let id = uuid(r.contactRoleID + r.shortName, ns);
+    cat.value = r.shortName;
+    if (r.shortName === 'Accounting') {
+      catMap[r.contactRoleID] = 'ab760714-4185-4859-b0dd-3e72f01c5c52' // Accounting
+    } else if (r.shortName === 'Sales') {
+      catMap[r.contactRoleID] = 'c4d4805e-7ee8-499d-abe6-1b42105d8af8' // Sales
+    } else if (r.shortName === 'Support') {
+      catMap[r.contactRoleID] = '5605ef42-9c35-4b28-bc33-e82e9b6aa1ec' // Tecnical support
+    }else {
+      catMap[r.contactRoleID] = 'f52ceea4-8e35-404b-9ebd-5c7db6613195'; // Customer service
+    }
+  })
+  // console.log(catMap);
+
+  const contactMap = {};
+  inRecs.contact.forEach(c => {
+    con = {}
+    let id = uuid(c.contactID + c.name, ns);
+    con.id = id;
+    let oid = c.organizationID;
+    if (!contactMap[oid]) contactMap[oid] = [];
+    contactMap[oid].push(id);
+    con.firstName = c.name.replace(/^(.+) .+/, '$1') || 'Unknown';
+    con.lastName = c.name.replace(/^.+ (.+)/, '$1') || 'Unknown';
+    let notes = [];
+    if (c.title) notes.push(c.title);
+    if (c.noteText) notes.push(c.noteText);
+    if (notes.length > 0) con.notes = notes.join('; ');
+    if (c.addressText) {
+      con.addresses = [];
+      let add = {};
+      add.id = uuid(id + c.addressText, ns);
+      let lines = c.addressText.split(/\n/);
+      add.addressLine1 = lines.shift();
+      let ll = lines.pop();
+      add.addressLine2 = lines.join(', ');
+      if (ll) {
+        add.city = ll.replace(/^(.+?),.*/, '$1');
+        add.stateRegion = ll.replace(/^.*\b([A-Z]{2})\b.*$|.*/, '$1');
+        add.zipCode = ll.replace(/^.*(\d{5}(-\d{4})?).*$|.*/, '$1');
+        add.country = ll.replace(/.*\d{4}[, ]+(.+)$|.*/, '$1');
       }
-      org.aliases.push(alias);
+      add.isPrimary = true;
+      con.addresses.push(add);
+    }
+    con.phoneNumbers = [];
+    if (c.phoneNumber) {
+      let ph = {};
+      // ph.id = uuid(id + c.phoneNumber, ns);
+      ph.phoneNumber = c.phoneNumber;
+      ph.isPrimary = true;
+      ph.type = 'Office';
+      con.phoneNumbers.push(ph);
+    }
+    if (c.altPhoneNumber) {
+      let ph = {};
+      // ph.id = uuid(id + c.altPhoneNumber, ns);
+      ph.phoneNumber = c.altPhoneNumber;
+      ph.isPrimary = false;
+      ph.type = 'Other';
+      con.phoneNumbers.push(ph);
+    }
+    if (c.faxNumber) {
+      let ph = {};
+      // ph.id = uuid(id + c.faxNumber, ns);
+      ph.phoneNumber = c.faxNumber;
+      ph.isPrimary = false;
+      ph.type = 'Fax';
+      con.phoneNumbers.push(ph);
+    }
+    if (c.emailAddress) {
+      con.emails = [];
+      let em = {};
+      // em.id = uuid(id + c.emailAddress, ns);
+      em.value = c.emailAddress;
+      em.isPrimary = true;
+      con.emails.push(em);
+    }
+    if (roleMap[c.contactID]) {
+      con.categories = [];
+      roleMap[c.contactID].forEach(r => {
+        con.categories.push(catMap[r.contactRoleID]);
+      });
+    }
+    // console.log(con);
+  });
+
+  inRecs.organization.forEach(o => {
+    let org = {}
+    let id = o.organizationID;
+    org.name = o.name;
+    org.id = uuid(id, ns);
+    org.status = 'Active';
+    org.language = 'eng';
+    let code = '';
+    let nameWords = o.name.split(/\W/);
+    nameWords.forEach(nw => {
+      code += nw.replace(/^(.{4}).*/, '$1').toUpperCase();
     });
-  }
-  // console.log(o);
-  // console.log(JSON.stringify(org));
-});
-
-
+    org.urls = [];
+    if (o.companyURL) {
+      url = {
+        id: uuid(o.companURL + id, ns),
+        value: o.companyURL,
+        isPrimary: true,
+        language: 'eng'
+      };
+      org.urls.push(url);
+    }
+    org.code = code.substr(0, 4) + id;
+    org.description = o.accountDetailText;
+    org.notes = o.noteText;
+    org.isVendor = false;
+    if (orgRoleMap[id]) {
+      orgRoleMap[id].forEach(r => {
+        if (r.organizationRoleID === '6') org.isVendor = true;
+      });
+    }
+    if (aliasMap[id]) {
+      org.aliases = [];
+      aliasMap[id].forEach(a => {
+        let alias = {
+          name: a.name,
+          description: aliasTypeMap[a.aliasTypeID][0].shortName
+        }
+        org.aliases.push(alias);
+      });
+    }
+    if (contactMap[id]) {
+      org.contacts = [];
+      contactMap[id].forEach(c => {
+        org.contacts.push(c);
+      });
+    }
+    // console.log(o);
+    console.log(JSON.stringify(org, null, 2));
+  });
 } catch (e) {
-  console.log(`${e}`);
+  console.log(e);
 }
