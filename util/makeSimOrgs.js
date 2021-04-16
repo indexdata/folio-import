@@ -35,7 +35,7 @@ try {
   fns.forEach(fn => {
     if (fn.match(/\.csv$/)) {
       let name = fn.replace(/.+_(.+?)\.csv/, '$1');
-      console.warn(`Creating object: ${name}`);
+      // console.warn(`Creating object: ${name}`);
       let csv = fs.readFileSync(`${inDir}/${fn}`, 'utf8');
       csv = csv.replace(/NULL/g, '');
       inRecs[name] = parse(csv, {
@@ -70,7 +70,7 @@ try {
   const contactMap = {};
   inRecs.contact.forEach(c => {
     con = {}
-    let id = uuid(c.contactID + c.name, ns);
+    let id = uuid(c.contactID + 'contactID', ns);
     con.id = id;
     let oid = c.organizationID;
     if (!contactMap[oid]) contactMap[oid] = [];
@@ -140,6 +140,45 @@ try {
     writer('contacts', con);
   });
 
+  // create interface objects and map;
+  ifaceMap = {}
+  ifaceTypes = {
+    '1': 'Admin',
+    '2': 'Other',
+    '3': 'Other',
+    '4': 'Reports',
+    '5': 'Other',
+    '6': 'Other'
+  }
+  inRecs.externallogin.forEach(i => {
+    let iface = {};
+    let id = uuid(i.externalLoginID + 'externalLoginID', ns);
+    if (!ifaceMap[i.organizationID]) ifaceMap[i.organizationID] = [];
+    ifaceMap[i.organizationID].push(id);
+    iface.id = id;
+    iface.name = `Interface ${i.externalLoginID}`;
+    if (i.loginURL) {
+      iface.uri = i.loginURL;
+      iface.deliveryMethod = 'Online';
+    } else {
+      iface.deliveryMethod = 'Other';
+    }
+    if (i.noteText) iface.notes = i.noteText;
+    iface.available = true;
+    iface.type = [ ifaceTypes[i.externalLoginTypeID] ];
+
+    // create credentials object
+    if (i.username && i.password) {
+      let cred = {};
+      cred.id = uuid(id, ns);
+      cred.interfaceId = id;
+      cred.username = i.username;
+      cred.password = i.password;
+      writer('credentials', cred);
+    }
+    writer('interfaces', iface);
+  });
+
   // create organizations object
   inRecs.organization.forEach(o => {
     let org = {}
@@ -186,6 +225,12 @@ try {
       org.contacts = [];
       contactMap[id].forEach(c => {
         org.contacts.push(c);
+      });
+    }
+    if (ifaceMap[id]) {
+      org.interfaces = [];
+      ifaceMap[id].forEach(i => {
+        org.interfaces.push(i);
       });
     }
     writer('organizations', org);
