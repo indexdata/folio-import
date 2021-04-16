@@ -214,7 +214,7 @@ try {
       org.aliases = [];
       aliasMap[id].forEach(a => {
         let alias = {
-          name: a.name,
+          value: a.name,
           description: aliasTypeMap[a.aliasTypeID][0].shortName
         }
         org.aliases.push(alias);
@@ -237,6 +237,7 @@ try {
       let note = {
         id: uuid(id + 'note', ns),
         domain: 'organizations',
+        typeId: 'b4f58cfb-6b87-44d6-abc2-4d1eb49781a9', // general
         title: o.noteText.replace(/(\S+ \S+ \S+).*/s, '$1...'),
         content: o.noteText,
         links: [{ type: 'organization', id: org.id }]
