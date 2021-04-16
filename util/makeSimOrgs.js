@@ -23,6 +23,15 @@ try {
   const inRecs = {};
   let orgs = [];
 
+  let fileSeen = {};
+
+  const writer = (name, data) => {
+    let outFile = `${inDir}/${name}.jsonl`;
+    if (!fileSeen[outFile] && fs.existsSync(outFile)) fs.unlinkSync(outFile);
+    fs.writeFileSync(outFile, JSON.stringify(data) + '\n', { flag: 'a' });
+    fileSeen[outFile] = 1;
+  }
+
   fns.forEach(fn => {
     if (fn.match(/\.csv$/)) {
       let name = fn.replace(/.+_(.+?)\.csv/, '$1');
@@ -56,8 +65,8 @@ try {
       catMap[r.contactRoleID] = 'f52ceea4-8e35-404b-9ebd-5c7db6613195'; // Customer service
     }
   })
-  // console.log(catMap);
 
+  // create contacts objects and map
   const contactMap = {};
   inRecs.contact.forEach(c => {
     con = {}
@@ -128,9 +137,10 @@ try {
         con.categories.push(catMap[r.contactRoleID]);
       });
     }
-    // console.log(con);
+    writer('contacts', con);
   });
 
+  // create organizations object
   inRecs.organization.forEach(o => {
     let org = {}
     let id = o.organizationID;
@@ -178,8 +188,7 @@ try {
         org.contacts.push(c);
       });
     }
-    // console.log(o);
-    console.log(JSON.stringify(org, null, 2));
+    writer('organizations', org);
   });
 } catch (e) {
   console.log(e);
