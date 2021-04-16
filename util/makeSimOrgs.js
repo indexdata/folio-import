@@ -204,7 +204,6 @@ try {
     }
     org.code = code.substr(0, 4) + id;
     org.description = o.accountDetailText;
-    org.notes = o.noteText;
     org.isVendor = false;
     if (orgRoleMap[id]) {
       orgRoleMap[id].forEach(r => {
@@ -234,6 +233,16 @@ try {
       });
     }
     writer('organizations', org);
+    if (o.noteText) {
+      let note = {
+        id: uuid(id + 'note', ns),
+        domain: 'organizations',
+        title: o.noteText.replace(/(\S+ \S+ \S+).*/s, '$1...'),
+        content: o.noteText,
+        links: [{ type: 'organization', id: org.id }]
+      };
+      writer('notes', note);
+    }
   });
 } catch (e) {
   console.log(e);
