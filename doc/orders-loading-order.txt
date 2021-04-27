@@ -1,4 +1,4 @@
-Finance
+Finance first...
 
 * expenseclasses
 * fundtypes
@@ -9,6 +9,9 @@ Finance
 * funds
 * budgets
 * budgetexpenseclasses
+
+Then orders...
+
 * orders
 * orderitems (PO lines)
 * titles (titles get created twice-- must delete titles when PO lines (orderitems) are load)
