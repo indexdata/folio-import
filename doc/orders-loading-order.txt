@@ -14,8 +14,7 @@ Then orders...
 
 * orders
 * orderitems (PO lines)
-* titles (titles get created twice-- must delete titles when PO lines (orderitems) are load)
+* titles (titles get created twice-- must delete titles after PO lines (orderitems) are loaded)
 * pieces
-* transactions
 * ordertransactionsummaries
-
+* transactions
