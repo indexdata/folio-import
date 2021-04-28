@@ -4,6 +4,7 @@ const { getAuthToken } = require('./lib/login');
 const fileNames = process.argv.slice(2);
 const noPut = process.env.REF_NOPUT;
 const start = process.env.LOAD_START;
+const doPut = process.env.REF_PUT;
 
 (async () => {
   let added = 0;
@@ -42,6 +43,7 @@ const start = process.env.LOAD_START;
       "fixedduedateschedules": "fixed-due-date-schedule-storage/fixed-due-date-schedules",
       "funds": "finance-storage/funds",
       "fundtypes": "finance-storage/fund-types",
+      "groupfundfiscalyears": "finance/group-fund-fiscal-years",
       "groups": "groups",
       "holdingnotetypes": "holdings-note-types",
       "holdingtypes": "holdings-types",
@@ -127,6 +129,7 @@ const start = process.env.LOAD_START;
       let dStart = start || 0;
       for (d = dStart; d < data.length; d++) {
         try {
+	  if (doPut) throw new Error('Running PUT request only');
           console.log(`[${d}] POST ${data[d].id} to ${url}`);
           let res = await superagent
             .post(url)
