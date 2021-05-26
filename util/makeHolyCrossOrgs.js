@@ -59,8 +59,6 @@ try {
     groupedRecs[r.id].push(r);
   });
 
-  console.log(groupedRecs[506807141559]);
-
   const aliasMap = makeMap(inRecs.alias);
   const aliasTypeMap = makeMap(inRecs.aliastype, 'aliasTypeID');
   const orgRoleMap = makeMap(inRecs.organizationroleprofile);
@@ -201,6 +199,19 @@ try {
     });
   }
 
+  // note maker 
+  const makeNote = (text, id) => {
+    let note = {
+      id: uuid(id + 'note', ns),
+      domain: 'organizations',
+      typeId: 'e491e0d5-695d-468b-8d8d-7cb7ce48a981', // general
+      title: (text.match(/^Former id/)) ? 'Former Identifiers' : text.replace(/(\S+ \S+ \S+).*/s, '$1...'),
+      content: text,
+      links: [{ type: 'organization', id: id }]
+    };
+    writer('notes', note);
+  }
+
   // create organizations object
   let i = 0;
   for (const id in groupedRecs) {
@@ -215,8 +226,10 @@ try {
     org.code = o.code;
     org.addresses = [];
     org.phoneNumbers = [];
+    org.emails = [];
     let phSeen = {};
     let faxSeen = {};
+    let emSeen = {};
     groupedRecs[id].forEach((r, index) => {
       // get addresses
       let addr = {};
@@ -247,43 +260,47 @@ try {
         if (!faxSeen[r.fax]) org.phoneNumbers.push(fax);
         faxSeen[r.fax] = 1;
       }
+
+      // get emails
+      if (r.email) {
+        let vals = r.email.split(/; */);
+        vals.forEach(e => {
+          let em = {};
+          em.value = e;
+          em.isPrimary = (org.emails.length > 0) ? false : true;
+          if (!emSeen[e]) org.emails.push(em);
+          emSeen[e] = 1;
+        });
+      }
     });
-    org.urls = [];
-    if (o.companyURL) {
-      url = {
-        id: uuid(o.companURL + id, ns),
-        value: o.companyURL,
-        isPrimary: true,
-        language: 'eng'
-      };
+    if (o.url) {
+      org.urls = [];
+      url = {};
+      url.value = (o.url.match(/^(http|ftp):\/\//)) ? o.url : 'http://' + o.url;
+      url.isPrimary = true;
       org.urls.push(url);
     }
-    if (contactMap[id]) {
-      org.contacts = [];
-      contactMap[id].forEach(c => {
-        org.contacts.push(c);
-      });
+    org.accounts = [];
+    if (o.account_num) {
+      acc = {};
+      acc.accountNo = o.account_num;
+      acc.name = o.vendor_name;
+      acc.accountStatus = 'Active';
+      acc.libraryCode = 'HC';
+      acc.libraryEdiCode = 'HC';
+      acc.paymentMethod ='Cash';
+      org.accounts.push(acc);
     }
-    if (ifaceMap[id]) {
-      org.interfaces = [];
-      ifaceMap[id].forEach(i => {
-        org.interfaces.push(i);
-      });
-    }
+  
+    // create notes
+    makeNote(`Former identifiers ${o.id}, ${o.record_num}`, org.id);
+    if (o.note1) makeNote(o.note1, org.id + 'note1');
+    if (o.note2) makeNote(o.note2, org.id + 'note2');
+    if (o.note3) makeNote(o.note3, org.id + 'note3');
+
     writer('organizations', org);
-    console.log(org);
-    if (o.noteText) {
-      let note = {
-        id: uuid(id + 'note', ns),
-        domain: 'organizations',
-        typeId: 'b4f58cfb-6b87-44d6-abc2-4d1eb49781a9', // general
-        title: o.noteText.replace(/(\S+ \S+ \S+).*/s, '$1...'),
-        content: o.noteText,
-        links: [{ type: 'organization', id: org.id }]
-      };
-      writer('notes', note);
-    }
-    if (i === 5) break;
+
+    // if (i === 5) break;
   }
 } catch (e) {
   console.log(e);
