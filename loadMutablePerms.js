@@ -60,6 +60,7 @@ const wait = (ms) => {
       delete inData[x].grantedTo;
       delete inData[x].dummy;
       delete inData[x].metadata;
+      delete inData[x].deprecated;
       try {
         await superagent
           .post(actionUrl)
