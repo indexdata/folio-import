@@ -14,6 +14,17 @@ const fs = require('fs');
 const uuid = require('uuid/v5');
 const path = require('path');
 
+const countryCodes = {
+  canada: 'CAN',
+  england: 'GBR',
+  france: 'FRA',
+  germany: 'DEU',
+  spain: 'ESP',
+  uk: 'GBR',
+  'united kingdom': 'GBR',
+  usa: 'USA'
+}
+
 const fn = process.argv[2];
 const ns = '8f4a5c7a-2c6e-4171-a57e-d038642b3b9c';
 
@@ -200,9 +211,9 @@ try {
   }
 
   // note maker 
-  const makeNote = (text, id) => {
+  const makeNote = (text, id, type) => {
     let note = {
-      id: uuid(id + 'note', ns),
+      id: uuid(id + type, ns),
       domain: 'organizations',
       typeId: 'e491e0d5-695d-468b-8d8d-7cb7ce48a981', // general
       title: (text.match(/^Former id/)) ? 'Former Identifiers' : text.replace(/(\S+ \S+ \S+).*/s, '$1...'),
@@ -220,7 +231,7 @@ try {
     let org = {}
     org.name = o.vendor_name;
     org.id = uuid(id, ns);
-    org.status = o.status;
+    org.status = o.Status;
     org.language = 'eng';
     org.isVendor = true;
     org.code = o.code;
@@ -239,7 +250,7 @@ try {
       addr.city = r.city;
       addr.stateRegion = r.region;
       addr.zipCode = (r.postal_code) ? r.postal_code.padStart(5, '0') : '';
-      addr.country = r.country;
+      addr.country = countryCodes[r.country.toLowerCase()];
       addr.isPrimary = (index === 0) ? true : false;
       org.addresses.push(addr);
       
@@ -293,10 +304,10 @@ try {
     }
   
     // create notes
-    makeNote(`Former identifiers ${o.id}, ${o.record_num}`, org.id);
-    if (o.note1) makeNote(o.note1, org.id + 'note1');
-    if (o.note2) makeNote(o.note2, org.id + 'note2');
-    if (o.note3) makeNote(o.note3, org.id + 'note3');
+    makeNote(`Former identifiers ${o.id}, ${o.record_num}`, org.id, 'formerIds');
+    if (o.note1) makeNote(o.note1, org.id, 'note1');
+    if (o.note2) makeNote(o.note2, org.id, 'note2');
+    if (o.note3) makeNote(o.note3, org.id, 'note3');
 
     writer('organizations', org);
 
