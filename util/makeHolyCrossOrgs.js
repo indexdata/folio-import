@@ -22,7 +22,10 @@ const countryCodes = {
   spain: 'ESP',
   uk: 'GBR',
   'united kingdom': 'GBR',
-  usa: 'USA'
+  usa: 'USA',
+  italy: 'ITA',
+  ireland: 'IRL',
+  india: 'IND'
 }
 
 const fn = process.argv[2];
@@ -215,7 +218,7 @@ try {
     let note = {
       id: uuid(id + type, ns),
       domain: 'organizations',
-      typeId: 'e491e0d5-695d-468b-8d8d-7cb7ce48a981', // general
+      typeId: '77be02da-ca4e-4339-8c2b-c179a8483023',
       title: (text.match(/^Former id/)) ? 'Former Identifiers' : text.replace(/(\S+ \S+ \S+).*/s, '$1...'),
       content: text,
       links: [{ type: 'organization', id: id }]
@@ -231,7 +234,7 @@ try {
     let org = {}
     org.name = o.vendor_name;
     org.id = uuid(id, ns);
-    org.status = o.Status;
+    org.status = 'Active';
     org.language = 'eng';
     org.isVendor = true;
     org.code = o.code;
@@ -250,7 +253,9 @@ try {
       addr.city = r.city;
       addr.stateRegion = r.region;
       addr.zipCode = (r.postal_code) ? r.postal_code.padStart(5, '0') : '';
-      addr.country = countryCodes[r.country.toLowerCase()];
+      let normCountry = r.country.toLowerCase();
+      addr.country = countryCodes[normCountry];
+      if (normCountry && !countryCodes[normCountry]) console.log(`WARN No country code for "${normCountry}" found it map.`)
       addr.isPrimary = (index === 0) ? true : false;
       org.addresses.push(addr);
       
