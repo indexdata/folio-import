@@ -28,7 +28,7 @@ let limit = parseInt(process.argv[5], 10);
       fields = epf[1].split(/,/);
     }
 
-    const actionUrl = config.okapi + '/' + endPoint;
+    const actionUrl = config.okapi + '/' + endPoint + '?query=id=*%20sortBy%20id';
     const filename = endPoint.replace(/\//g, '__');
 
     let totFetch = 0;
@@ -38,15 +38,14 @@ let limit = parseInt(process.argv[5], 10);
     const coll = {};
     while (totFetch < totRecs) {
       let prop;
-      let url = `${actionUrl}?limit=${perPage}&offset=${offset}`;
+      let url = `${actionUrl}&limit=${perPage}&offset=${offset}`;
       if (actionUrl.match(/\/licenses\//)) {
 	      perPage = 100;
-	      url = `${actionUrl}?perPage=${perPage}&offset=${offset}&stats=true`;
+	      url = `${actionUrl}&perPage=${perPage}&offset=${offset}&stats=true`;
       } else if (actionUrl.match(/\/perms\//)) {
         let permStart = offset + 1;
         perPage = 5000;
-	      url = `${actionUrl}?length=${perPage}&start=${permStart}&stats=true`;
-      }
+	      url = `${actionUrl}&length=${perPage}&start=${permStart}&stats=true`;      }
       try {
         let res = await superagent
           .get(url)

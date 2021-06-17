@@ -43,7 +43,7 @@ const wait = (ms) => {
       console.log(`Deleting ${id}`);
       try {
         await superagent
-          .delete(`${config.okapi}/source-storage/snapshots/${id}/records`)
+          .delete(`${config.okapi}/source-storage/snapshots/${id}`)
           .set('accept', 'text/plain')
           .set('x-okapi-tenant', config.tenant)
           .set('x-okapi-token', authToken);

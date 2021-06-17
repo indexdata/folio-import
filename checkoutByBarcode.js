@@ -97,8 +97,10 @@ const post_put = async (authToken, url, checkout, r) => {
       try {
         let uc = '';
         if (data[d].userBarcode) uc = ` --> ${data[d].userBarcode}`
+	let postData = Object.assign({}, data[d]);
+	delete postData.loanDate;
         console.log(`[${d}] POST ${url} (${data[d].itemBarcode}${uc})`);
-        let loanObj = await post_put(authToken, url, data[d]);
+        let loanObj = await post_put(authToken, url, postData);
         if (checkIn === 'checkin') added++;
         if (loanObj && checkIn !== 'checkin') {
           try {
