@@ -197,7 +197,7 @@ foreach (@{ $hi->{items} }) {
     } else {
       $cn_type_id = $other_cn;
     }
-  my $copy = $_->{copy_reconstructed};
+  my $copy = $_->{copy_reconstructed} || '';
   my $loc_code = $_->{location};
   if (!$loc_code) {
     print "WARN No location code-- skipping...\n";
