@@ -32,6 +32,20 @@ try {
     fileSeen[outFile] = 1;
   }
 
+  const custProp = (name, value, cProp) => {
+    let prop = {};
+    prop[name] = [];
+    let cp = {
+      value: value
+    }
+    prop[name].push(cp);
+    if (value) {
+      cProp[name] = prop[name];
+    } else {
+      cProp[name] = '';
+    }
+  }
+
   fns.forEach(fn => {
     if (fn.match(/\.csv$/)) {
       let name = fn.replace(/\.csv/, '');
@@ -78,15 +92,12 @@ try {
       owner: { id: owner }
     }
     a.periods.push(period);
-    a.customProperties = {};
-    if (r['Resource URL']) {
-      a.customProperties.resourceURL = [];
-      let cp = {
-        value: r['Resource URL']
-      }
-      a.customProperties.resourceURL.push(cp);
-    }
+    let cProp = {};
+    custProp('resourceURL', r['Resource URL'], cProp);
+    custProp('resourceAltURL', r['resourceAltURL'], cProp);
+    a.customProperties = cProp;
     console.log(a);
+
     writer('resources', a);
   });
 
