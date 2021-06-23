@@ -96,6 +96,12 @@ try {
     custProp('resourceURL', r['Resource URL'], cProp);
     custProp('resourceAltURL', r['resourceAltURL'], cProp);
     a.customProperties = cProp;
+    a.orgs = [];
+    let org = {
+      org: { orgsUuid: '404df83e-1656-48a2-96e6-0c7d76fc783a' },
+      role: 'vendor'
+    };
+    a.orgs.push(org);
     console.log(a);
 
     writer('resources', a);
