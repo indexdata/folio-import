@@ -46,8 +46,48 @@ try {
     }
   });
 
-  inRecs.resourceResources.forEach(r => {
-    console.log(r.resourceID);
+  let acount = 0;
+  inRecs.resourceResources.forEach((r) => {
+    acount++;
+    let a = {};
+    let rid = r.resourceID
+    a.id = uuid(rid, ns);
+    a.name = r['Agreements/Name'];
+    a.description = r['Agreements/Description'];
+    a.renewalPriority = {
+      label: 'For review',
+      value: 'for_review'
+    };
+    a.agreementStatus = {
+      label: r['Agreements/Status'],
+      value: r['Agreements/Status'].toLowerCase()
+    }
+    a.periods = [];
+    let owner = 'b8cd8aa9-d535-4f63-80d2-5260fb875b10';
+    let startDate = '';
+    if (r['subscriptionStartDate']) {
+      startDate = new Date(r['subscriptionStartDate']).toISOString().replace(/T.+$/, '');
+    }
+    let endDate = '';
+    if (r['subscriptionEndDate'].match(/^[12]/)) {
+      endDate = new Date(r['subscriptionEndDate']).toISOString().replace(/T.+$/, '');
+    }
+    let period = {
+      startDate: startDate,
+      endDate: endDate,
+      owner: { id: owner }
+    }
+    a.periods.push(period);
+    a.customProperties = {};
+    if (r['Resource URL']) {
+      a.customProperties.resourceURL = [];
+      let cp = {
+        value: r['Resource URL']
+      }
+      a.customProperties.resourceURL.push(cp);
+    }
+    console.log(a);
+    writer('resources', a);
   });
 
 } catch (e) {
