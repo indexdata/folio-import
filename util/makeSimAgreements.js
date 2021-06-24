@@ -5,8 +5,14 @@ const uuid = require('uuid/v5');
 const inDir = process.argv[2];
 const ns = '49619de6-63fe-47e9-a07b-698a313dc9e8';
 
+const orgsObj = require(`${inDir}/organizations.json`);
+const orgsMap = {};
+orgsObj.organizations.forEach(o => {
+  orgsMap[o.name] = o;
+});
+
 const makeMap = (coll, key) => {
-  if (!key) key = 'organizationID';
+  if (!key) key = 'resourceID';
   newColl = {};
   coll.forEach(r => {
     let oid = r[key];
@@ -60,6 +66,9 @@ try {
     }
   });
 
+
+  aliasMap = makeMap(inRecs.alias);
+
   let acount = 0;
   inRecs.resourceResources.forEach((r) => {
     acount++;
@@ -96,14 +105,26 @@ try {
     custProp('resourceURL', r['Resource URL'], cProp);
     custProp('resourceAltURL', r['resourceAltURL'], cProp);
     a.customProperties = cProp;
-    a.orgs = [];
-    let org = {
-      org: { orgsUuid: '404df83e-1656-48a2-96e6-0c7d76fc783a' },
-      role: 'vendor'
-    };
-    a.orgs.push(org);
-    console.log(a);
+    let orgObj = orgsMap[r['Organization']];
+    if (orgObj) {
+      a.orgs = [];
+      let org = {
+        org: { 
+          orgsUuid: orgObj.id,
+          name: orgObj.name
+        },
+        role: 'vendor'
+      };
+      a.orgs.push(org);
+    }
+    if (aliasMap[rid]) {
+      a.alternateNames = [];
+      aliasMap[rid].forEach(alias => {
+        a.alternateNames.push({ name: alias['Agreements/Alternative Name'] });
+      });
+    }
 
+    console.log(a);
     writer('resources', a);
   });
 
