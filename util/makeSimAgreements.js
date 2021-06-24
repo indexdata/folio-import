@@ -66,8 +66,19 @@ try {
     }
   });
 
-
   aliasMap = makeMap(inRecs.alias);
+  notesMap = makeMap(inRecs.noteResource);
+  // make notesType object
+  const noteTypeMap = {};
+  for (k in notesMap) {
+    notesMap[k].forEach(nt => {
+      if (nt.noteType) noteTypeMap[nt.noteType] = uuid(nt.noteType, ns);
+    });
+  }
+  for (n in noteTypeMap) {
+    let noteType = { id: noteTypeMap[n], name: n };
+    writer('note-types', noteType);
+  }
 
   let acount = 0;
   inRecs.resourceResources.forEach((r) => {
