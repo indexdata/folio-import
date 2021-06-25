@@ -38,8 +38,12 @@ try {
     fileSeen[outFile] = 1;
   }
 
-  const custProp = (name, value, cProp) => {
+  const custProp = (name, value, cProp, isPick) => {
     let prop = {};
+    if (isPick) {
+      value = value.toLowerCase();
+      value = value.replace(/ /g, '_');
+    }
     prop[name] = [];
     let cp = {
       value: value
@@ -67,6 +71,7 @@ try {
   });
 
   aliasMap = makeMap(inRecs.alias);
+  payMap = makeMap(inRecs.payments);
   resNoteMap = makeMap(inRecs.noteResource);
   // console.log(resNoteMap);
   // return;
@@ -100,7 +105,6 @@ try {
       value: r['Agreements/Status'].toLowerCase()
     }
     a.periods = [];
-    let owner = 'b8cd8aa9-d535-4f63-80d2-5260fb875b10';
     let startDate = '';
     if (r['subscriptionStartDate']) {
       startDate = new Date(r['subscriptionStartDate']).toISOString().replace(/T.+$/, '');
@@ -112,7 +116,7 @@ try {
     let period = {
       startDate: startDate,
       endDate: endDate,
-      owner: { id: owner }
+      owner: { id: a.id }
     }
     a.periods.push(period);
     let cProp = {};
@@ -125,6 +129,15 @@ try {
       });
       custProp('resourceNote', resNotes.join('\n\n'), cProp);
     }
+    custProp('acquisitionType', r.acquisitionType, cProp, true);
+    custProp('userLimit', r['Simultaneous User Limit'], cProp);
+    custProp('accessMethod', r['Access Method'], cProp, true);
+    custProp('authenticationUsernamePassword', r['authenticationUserPassword'], cProp);
+    custProp('instanceHRID', r['Bib Record'], cProp);
+    custProp('MARCsourceURL', r['MARC URL'], cProp);
+    custProp('marcSource', r['MARC Source'], cProp, true);
+    custProp('catalogingLevel', r['Cataloging Level'], cProp, true);
+    custProp('catalogUsernamePassword', r['Record Source Login'], cProp);
 
     a.customProperties = cProp;
     let orgObj = orgsMap[r['Organization']];
@@ -143,6 +156,17 @@ try {
       a.alternateNames = [];
       aliasMap[rid].forEach(alias => {
         a.alternateNames.push({ name: alias['Agreements/Alternative Name'] });
+      });
+    }
+    if (payMap[rid]) {
+      payMap[rid].forEach(p => {
+        let ent = {};
+        ent.id = uuid(p.resourcePaymentID + 'resourcePaymentID', ns)
+        ent.description = p['Agreement Line/Description'];
+        ent.owner = a.name;
+        ent.type = 'detached';
+        ent.suppressFromDiscovery = false;
+        writer('entitlements', ent);
       });
     }
 
