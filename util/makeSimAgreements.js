@@ -68,7 +68,8 @@ try {
 
   aliasMap = makeMap(inRecs.alias);
   notesMap = makeMap(inRecs.noteResource);
-  // make notesType object
+
+  // make notes-types object
   const noteTypeMap = {};
   for (k in notesMap) {
     notesMap[k].forEach(nt => {
@@ -103,7 +104,7 @@ try {
       startDate = new Date(r['subscriptionStartDate']).toISOString().replace(/T.+$/, '');
     }
     let endDate = '';
-    if (r['subscriptionEndDate'].match(/^[12]/)) {
+    if (r['subscriptionEndDate'].match(/^[1-9]/)) {
       endDate = new Date(r['subscriptionEndDate']).toISOString().replace(/T.+$/, '');
     }
     let period = {
