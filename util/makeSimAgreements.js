@@ -67,19 +67,21 @@ try {
   });
 
   aliasMap = makeMap(inRecs.alias);
-  notesMap = makeMap(inRecs.noteResource);
+  resNoteMap = makeMap(inRecs.noteResource);
+  // console.log(resNoteMap);
+  // return;
 
-  // make notes-types object
+  /* make notes-types object
   const noteTypeMap = {};
   for (k in notesMap) {
     notesMap[k].forEach(nt => {
       if (nt.noteType) noteTypeMap[nt.noteType] = uuid(nt.noteType, ns);
     });
-  }
+  } 
   for (n in noteTypeMap) {
     let noteType = { id: noteTypeMap[n], name: n };
     writer('note-types', noteType);
-  }
+  } */
 
   let acount = 0;
   inRecs.resourceResources.forEach((r) => {
@@ -116,6 +118,14 @@ try {
     let cProp = {};
     custProp('resourceURL', r['Resource URL'], cProp);
     custProp('resourceAltURL', r['resourceAltURL'], cProp);
+    if (resNoteMap[rid]) {
+      let resNotes = [];
+      resNoteMap[rid].forEach(rn => {
+        resNotes.push(`${rn.noteType}: ${rn.note}`);
+      });
+      custProp('resourceNote', resNotes.join('\n\n'), cProp);
+    }
+
     a.customProperties = cProp;
     let orgObj = orgsMap[r['Organization']];
     if (orgObj) {
@@ -136,7 +146,7 @@ try {
       });
     }
 
-    console.log(a);
+    // console.log(a);
     writer('resources', a);
   });
 
