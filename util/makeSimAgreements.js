@@ -1,5 +1,6 @@
 const parse = require('csv-parse/lib/sync');
 const fs = require('fs');
+const { fileURLToPath } = require('url');
 const uuid = require('uuid/v5');
 
 const inDir = process.argv[2];
@@ -73,7 +74,6 @@ try {
   aliasMap = makeMap(inRecs.alias);
   payMap = makeMap(inRecs.payments);
   catNoteMap = makeMap(inRecs.noteCataloging);
-  console.log(catNoteMap);
   resNoteMap = makeMap(inRecs.noteResource);
   // console.log(resNoteMap);
   // return;
@@ -182,10 +182,44 @@ try {
         writer('entitlements', ent);
       });
     }
-
-    // console.log(a);
     writer('resources', a);
   });
+
+  const makeLine = (sheet, owner, titleField, fromField, toField) => {
+    inRecs[sheet].forEach(r => {
+      let ent = {};
+      ent.owner = owner;
+      ent.type = 'detached';
+      ent.suppressFromDiscovery = false;
+      ent.desciption = r[titleField];
+      let from = r[fromField];
+      if (from) {
+        try {
+            from = new Date(from).toISOString();
+            from = from.replace(/T.+$/, '');
+        } catch (e) {
+          console.log(`${e}: ${from}`);
+        }
+      }
+      ent.activeFrom = from;
+      let to = r[toField];
+      if (to) {
+        try {
+          to = new Date(to).toISOString();
+          to = to.replace(/T.+$/, '');
+        } catch (e) {
+          console.log(`${e}: ${to}`);
+        }
+      }
+      ent.activeTo = to;
+      let note = `${r.description2} ${r.systemNumber} ${r.resourceNote} ${r.resourcePayment}`;
+      ent.note = note.trim();
+      writer('entitlements', ent);
+    });
+  }
+
+  makeLine('resourceKanopy', 'Kanopy', 'Kanopy Agreement (resourceID 237)/Agreement Line [n]/Description', 'Kanopy Agreement/Agreement Line [n]/Active from', 'Kanopy Agreement/Agreement Line [n]/Active to');
+  makeLine('resourceSwank', 'Swank', 'Swank Agreement (resourceID 543)/Agreement Line [n]/Description', 'Swank Agreement/Agreement Line [n]/Active from', 'Swank Agreement/Agreement Line [n]/Active to');
 
 } catch (e) {
   console.log(e);
