@@ -72,6 +72,8 @@ try {
 
   aliasMap = makeMap(inRecs.alias);
   payMap = makeMap(inRecs.payments);
+  catNoteMap = makeMap(inRecs.noteCataloging);
+  console.log(catNoteMap);
   resNoteMap = makeMap(inRecs.noteResource);
   // console.log(resNoteMap);
   // return;
@@ -129,6 +131,13 @@ try {
       });
       custProp('resourceNote', resNotes.join('\n\n'), cProp);
     }
+    if (catNoteMap[rid]) {
+      let catNotes = [];
+      catNoteMap[rid].forEach(cn => {
+        catNotes.push(cn.catalogingNote);
+      });
+      custProp('catalogingNotes', catNotes.join('\n\n'), cProp);
+    }
     custProp('acquisitionType', r.acquisitionType, cProp, true);
     custProp('userLimit', r['Simultaneous User Limit'], cProp);
     custProp('accessMethod', r['Access Method'], cProp, true);
@@ -138,6 +147,10 @@ try {
     custProp('marcSource', r['MARC Source'], cProp, true);
     custProp('catalogingLevel', r['Cataloging Level'], cProp, true);
     custProp('catalogUsernamePassword', r['Record Source Login'], cProp);
+    custProp('notificationType', r['Notification Type'], cProp)
+    let ocHold = 'no';
+    if (r['OCLC Holdings'] === 'Yes') ocHold = 'yes'
+    custProp('OCLCHoldings', ocHold, cProp);
 
     a.customProperties = cProp;
     let orgObj = orgsMap[r['Organization']];
