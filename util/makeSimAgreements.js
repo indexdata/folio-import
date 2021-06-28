@@ -191,7 +191,7 @@ try {
       ent.owner = owner;
       ent.type = 'detached';
       ent.suppressFromDiscovery = false;
-      ent.desciption = r[titleField];
+      ent.description = r[titleField];
       let from = r[fromField];
       if (from) {
         try {
