@@ -44,6 +44,7 @@ try {
     if (isPick) {
       value = value.toLowerCase();
       value = value.replace(/[- ]/g, '_');
+      value = value.replace(/[()]/g, '');
     }
     prop[name] = [];
     let cp = {
