@@ -6,11 +6,7 @@ const uuid = require('uuid/v5');
 const inDir = process.argv[2];
 const ns = '49619de6-63fe-47e9-a07b-698a313dc9e8';
 
-const orgsObj = require(`${inDir}/organizations.json`);
-const orgsMap = {};
-orgsObj.organizations.forEach(o => {
-  orgsMap[o.name] = o;
-});
+
 
 const makeMap = (coll, key) => {
   if (!key) key = 'resourceID';
@@ -26,6 +22,11 @@ const makeMap = (coll, key) => {
 
 try {
   if (!inDir) throw new Error(`Usage: node makeSimAgreements.js <working_directory>`);
+  const orgsObj = require(`${inDir}/organizations.json`);
+  const orgsMap = {};
+  orgsObj.organizations.forEach(o => {
+    orgsMap[o.name] = o;
+  });
   const fns = fs.readdirSync(inDir);
   const inRecs = {};
   let orgs = [];
