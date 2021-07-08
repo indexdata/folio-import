@@ -20,7 +20,7 @@ fi
 LN=1;
 while IFS= read -r line
   do
-    UUID=`echo $line | grep -E -o '"id":"[^"]+' | grep -E -o -m 1 '........-....-....-....-............'`
+    UUID=`echo $line | sed -E 's/.*"id":"([^"]*).*/\1/'`
     echo "Deleting # ${LN} -- ${UUID}"
     curl -w '\n' -X DELETE --http1.1 "${OKAPI}/${EP}/${UUID}" -H "x-okapi-token: ${TOKEN}" 
     LN=$(expr $LN + 1)
