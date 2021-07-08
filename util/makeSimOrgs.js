@@ -35,7 +35,7 @@ try {
   fns.forEach(fn => {
     if (fn.match(/\.csv$/)) {
       let name = fn.replace(/.+_(.+?)\.csv/, '$1');
-      // console.warn(`Creating object: ${name}`);
+      console.warn(`Creating object: ${name}`);
       let csv = fs.readFileSync(`${inDir}/${fn}`, 'utf8');
       csv = csv.replace(/NULL/g, '');
       inRecs[name] = parse(csv, {
@@ -156,7 +156,7 @@ try {
     if (!ifaceMap[i.organizationID]) ifaceMap[i.organizationID] = [];
     ifaceMap[i.organizationID].push(id);
     iface.id = id;
-    iface.name = `Interface ${i.externalLoginID}`;
+    iface.name = i.interfaceName;
     if (i.loginURL) {
       iface.uri = i.loginURL;
       iface.deliveryMethod = 'Online';
