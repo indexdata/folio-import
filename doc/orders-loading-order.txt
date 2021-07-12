@@ -11,7 +11,6 @@ Finance first...
 * groupfundfiscalyears
 * financegroups
 * budgetgroups
-* batchgroups
 
 Then orders...
 
@@ -20,4 +19,11 @@ Then orders...
 * titles (titles get created twice-- must delete titles after PO lines (orderitems) are loaded)
 * pieces
 * ordertransactionsummaries
+
+Back to finance...
+
 * transactions
+
+Finally, invoices...
+
+* batchgroups
