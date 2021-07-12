@@ -21,7 +21,9 @@ const doPut = process.env.REF_PUT;
     const epMap = {
       "addresstypes": "addresstypes",
       "alternativetitletypes": "alternative-title-types",
+      "batchgroups": "batch-group-storage/batch-groups",
       "budgetexpenseclasses": "finance-storage/budget-expense-classes",
+      "budgetgroups": "finance-storage/group-fund-fiscal-years",
       "budgets": "finance-storage/budgets",
       "callnumbertypes": "call-number-types",
       "campuses": "location-units/campuses",
