@@ -3,13 +3,15 @@ Finance first...
 * expenseclasses
 * fundtypes
 * closereasons
-* financegroups
 * fiscalyears
 * ledgers
 * funds
 * budgets
 * budgetexpenseclasses
 * groupfundfiscalyears
+* financegroups
+* budgetgroups
+* batchgroups
 
 Then orders...
 
