@@ -62,6 +62,8 @@ const doPut = process.env.REF_PUT;
       "institutions": "location-units/institutions",
       "interfacecredentials": "organizations-storage/interfaces/{id}/credentials",
       "interfaces": "organizations-storage/interfaces",
+      "invoices": "invoice-storage/invoices",
+      "invoiceitems": "invoice-storage/invoice-lines",
       "invoicetransactionsummaries": "finance-storage/invoice-transaction-summaries",
       "itemdamagedstatuses": "item-damaged-statuses",
       "itemnotetypes": "item-note-types",
@@ -109,6 +111,8 @@ const doPut = process.env.REF_PUT;
       "titles": "orders/titles",
       "transactions": "finance-storage/transactions",
       "userrequestpreferences": "request-preference-storage/request-preference",
+      "vouchers": "voucher-storage/vouchers",
+      "voucheritems": "voucher-storage/voucher-lines",
       "waivereasons": "waives"
     }
     
