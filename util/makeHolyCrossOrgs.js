@@ -257,7 +257,9 @@ try {
       addr.country = countryCodes[normCountry];
       if (normCountry && !countryCodes[normCountry]) console.log(`WARN No country code for "${normCountry}" found it map.`)
       addr.isPrimary = (index === 0) ? true : false;
-      org.addresses.push(addr);
+      if (addr.addressLine1) {
+        org.addresses.push(addr);
+      }
       
       // get phone numbers
       let ph = {};
