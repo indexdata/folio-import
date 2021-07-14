@@ -1,10 +1,11 @@
 /*
-  Download up to 1000 records from an okapi endpoint and delete each by id, or read from a json file of red data
-  and do the same.
+  Download up to 1000 records from an okapi endpoint and delete each by id, or read from a json/jsonl file
+  and do the same (this is good for "undoing" loads).
 */
 
 const fs = require('fs');
 const superagent = require('superagent');
+const readline = require('readline');
 const { getAuthToken } = require('./lib/login');
 let endpoint = process.argv[2];
 const objFile = process.argv[3];
@@ -27,10 +28,23 @@ const wait = (ms) => {
     endpoint = endpoint.replace(/^\//, '');
     const getUrl = config.okapi + '/' + endpoint + '?limit=1000';
     const deleteUrl = config.okapi + '/' + endpoint;
-    let refData;
+    let refData = {};
 
     if (objFile) {
-      refData = JSON.parse(fs.readFileSync(objFile, 'utf8'));
+      try {
+        refData = JSON.parse(fs.readFileSync(objFile, 'utf8'));
+      } catch (e) {
+        const fileStream = fs.createReadStream(objFile);
+        const rl = readline.createInterface({
+          input: fileStream,
+          crlfDelay: Infinity
+        });
+        refData.records = [];
+        for await (const line of rl) {
+          inObj = JSON.parse(line);
+          refData.records.push(inObj);
+        }
+      }
     } else {
       try {
         const res = await superagent
@@ -43,7 +57,7 @@ const wait = (ms) => {
         console.log(e);
       }
     }
-    
+
     let root;
     const firstLevel = Object.keys(refData);
     firstLevel.forEach(l => {
