@@ -12,4 +12,4 @@ then
   exit
 fi
 
-curl --http1.1 -w '\n' -s "${OKAPI}/instance-storage/instances?query=identifiers=${IID}" -H "x-okapi-token: ${TOKEN}"
+curl --http1.1 -w '\n' -s "${OKAPI}/instance-storage/instances?limit=100&query=identifiers=${IID}" -H "x-okapi-token: ${TOKEN}"
