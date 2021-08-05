@@ -8,7 +8,7 @@ EP=$1;
 UFILE=$2;
 if [ -z $UFILE ]
   then
-    echo 'Usage: ./update_by_endpoint <endpoint> <jsonl_file>'
+    echo 'Usage: ./put.sh <endpoint> <jsonl_file>'
     exit
 fi
 if [ ! -f $UFILE ]

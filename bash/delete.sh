@@ -8,7 +8,7 @@ EP=$1;
 UFILE=$2;
 if [ -z $UFILE ]
   then
-    echo 'Usage: ./load_by_endpoint <endpoint> <jsonl_file>'
+    echo "Usage: $0 <endpoint> <jsonl_file>"
     exit
 fi
 if [ ! -f $UFILE ]
@@ -20,9 +20,9 @@ fi
 LN=1;
 while IFS= read -r line
   do
-    echo "Loading # ${LN}"
-    echo $line > .okapi/payload
-    curl -w '\n' --http1.1 "${OKAPI}/${EP}" -H 'content-type: application/json' -H "x-okapi-token: ${TOKEN}" -d @.okapi/payload
+    UUID=`echo $line | sed -E 's/.*"id":"([^"]*).*/\1/'`
+    echo "Deleting # ${LN} -- ${UUID}"
+    curl -w '\n' -X DELETE --http1.1 "${OKAPI}/${EP}/${UUID}" -H "x-okapi-token: ${TOKEN}" 
     LN=$(expr $LN + 1)
 done < $UFILE
 
