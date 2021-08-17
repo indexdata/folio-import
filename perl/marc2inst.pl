@@ -225,6 +225,9 @@ sub processing_funcs {
       $out =~ s/[;:,\/+= ]$//g;
     } elsif ($_ eq 'remove_prefix_by_indicator') {
       my $ind = $field->indicator(2);
+      if ($ind eq ' ') {
+        $ind = 0;
+      }
       $out = substr($out, $ind);
     } elsif ($_ eq 'set_identifier_type_id_by_name') {
       my $name = $params->{name};
@@ -351,7 +354,8 @@ foreach (@ARGV) {
   }
 
   my $save_path = $infile;
-  $save_path =~ s/^(.+)\..+$/$1_instances.json/;
+  $save_path =~ s/^(.+)\..+$/$1_instances.jsonl/;
+  unlink $save_path;
   my $id_map = $infile;
   $id_map =~ s/^(.+)\..+$/$1_instances.map/;
   unlink $id_map;
@@ -364,6 +368,7 @@ foreach (@ARGV) {
   $/ = "\x1D";
   my $count = 0;
   open RAW, "<:encoding(UTF-8)", $infile;
+  open OUT, ">>:encoding(UTF-8)", $save_path;
   my $coll = { instances => [] };
   while (<RAW>) {
     my $rec = {
@@ -445,7 +450,7 @@ foreach (@ARGV) {
             if ($subs[$i]) {
               @ncode = @{ $subs[$i] };
             }
-            push @marc_fields, $new_field if (index($all_codes, $ncode[0]) != -1 && $new_field->{_tag}) || $ncode[0] eq undef;
+            push @marc_fields, $new_field if (index($all_codes, $ncode[0]) != -1 && $new_field->{_tag}) || !$ncode[0];
           }
           next MARC_FIELD;
         }
@@ -526,7 +531,8 @@ foreach (@ARGV) {
         };
       }
       print IDMAP "$rec->{hrid}|$rec->{id}\n";
-      push @{ $coll->{instances} }, $rec;
+      my $out = JSON->new->encode($rec);
+      print OUT $out . "\n";
     } else {
       print "WARN No hrid found. Skipping...";
       open ERR, ">>:encoding(UTF-8)", $err_path;
@@ -534,14 +540,11 @@ foreach (@ARGV) {
       close ERR;
     }
     
-    print "Processing #$count " . substr($rec->{title}, 0, 60) . "\n";
+    if ($count % 1000 == 0) {
+      print "Processing #$count (" . $rec->{hrid} . ")\n";
+    }
     # last if $count == 10;
   }
-  
-  my $out = JSON->new->pretty->encode($coll);
-  # print $out;
-  open OUT, ">:encoding(UTF-8)", $save_path;
-  print OUT $out;
   print "\nDone! $count instance records saved to $save_path\n";
 }
 
