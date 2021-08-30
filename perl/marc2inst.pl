@@ -548,9 +548,9 @@ foreach (@ARGV) {
       my $out = JSON->new->encode($rec);
       print OUT $out . "\n";
 
-      # &make_srs($raw, $rec->{id}, $snapshot_id, $srs_file);
+      &make_srs($marc, $raw, $rec->{id}, $rec->{hrid}, $snapshot_id, $srs_file);
     } else {
-      print "WARN No hrid found. Skipping...";
+      print "WARN No hrid found. Skipping...\n";
       open ERR, ">>:encoding(UTF-8)", $err_path;
       print ERR $raw;
       close ERR;
@@ -559,7 +559,7 @@ foreach (@ARGV) {
     if ($count % 1000 == 0) {
       print "Processing #$count (" . $rec->{hrid} . ")\n";
     }
-    # last if $count == 10;
+    # last if $count == 500;
   }
   print "\nDone! $count instance records saved to $save_path\n";
 }
@@ -594,23 +594,29 @@ sub make_snapshot {
 }
 
 sub make_srs {
+    my $marc = shift;
     my $raw = shift;
     my $iid = shift;
+    my $hrid = shift;
     my $snap_id = shift;
     my $srs_file = shift;
     my $srs = {};
-    my $marc = MARC::Record->new_from_usmarc($raw);
+
+    my $control = $marc->field('001');
+    my $new_ctrl_field = MARC::Field->new('001', $hrid);
+    if ($control) {
+      my $sys_num = $control->data();
+      if ($sys_num ne $hrid) {
+        my $field = MARC::Field->new('035', ' ', ' ', a=>$sys_num);
+        $marc->insert_fields_ordered($field);
+        $control->replace_with($new_ctrl_field);
+      }
+    } else {
+      $marc->insert_fields_ordered($new_ctrl_field);
+    }
     my $mij = MARC::Record::MiJ->to_mij($marc);
     my $parsed = decode_json($mij);
-    my $control_num;
-    if ($marc->subfield('907','a')) {
-      $control_num = $marc->subfield('907','a');
-      $control_num =~ s/^.(b\d{7}).$/$1/; # strip out leading period and check digit
-    } elsif ($marc->field('001')) {
-      $control_num = $marc->field('001')->data(); 
-    } else {
-      next;
-    }
+    
     $srs->{id} = uuid($iid);
     my $nine = {};
     $nine->{'999'} = { subfields=>[ { 'i'=>$iid }, { 's'=>$srs->{id} } ] };
