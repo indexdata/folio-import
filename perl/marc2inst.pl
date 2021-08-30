@@ -415,7 +415,12 @@ foreach (@ARGV) {
     
     $count++;
     my $raw = $_;
-    my $marc = MARC::Record->new_from_usmarc($raw);
+    my $marc;
+    my $ok = eval {
+      $marc = MARC::Record->new_from_usmarc($raw);
+      1;
+    };
+    next unless $ok;
     next unless ($marc->title());
     my $ldr = $marc->leader();
     my $blevel = substr($ldr, 7, 1);
@@ -534,27 +539,23 @@ foreach (@ARGV) {
     $rec->{series} = dedupe(@{ $rec->{series} });
     
     # Assign uuid based on hrid;
-    if ($rec->{hrid}) {
-      $rec->{id} = uuid($rec->{hrid});
-      if ($ENV{FOLIO_USER_ID}) {
-        $rec->{metadata} = {
-          createdByUserId=>$ENV{FOLIO_USER_ID},
-          updatedByUserId=>$ENV{FOLIO_USER_ID},
-          createdDate=>$mdate,
-          updatedDate=>$mdate
-        };
-      }
-      print IDMAP "$rec->{hrid}|$rec->{id}\n";
-      my $out = JSON->new->encode($rec);
-      print OUT $out . "\n";
-
-      &make_srs($marc, $raw, $rec->{id}, $rec->{hrid}, $snapshot_id, $srs_file);
-    } else {
-      print "WARN No hrid found. Skipping...\n";
-      open ERR, ">>:encoding(UTF-8)", $err_path;
-      print ERR $raw;
-      close ERR;
+    if (!$rec->{hrid}) {
+      $rec->{hrid} = sprintf("%4s%010d", "marc", $count);
     }
+    $rec->{id} = uuid($rec->{hrid});
+    if ($ENV{FOLIO_USER_ID}) {
+      $rec->{metadata} = {
+        createdByUserId=>$ENV{FOLIO_USER_ID},
+        updatedByUserId=>$ENV{FOLIO_USER_ID},
+        createdDate=>$mdate,
+        updatedDate=>$mdate
+      };
+    }
+    print IDMAP "$rec->{hrid}|$rec->{id}\n";
+    my $out = JSON->new->encode($rec);
+    print OUT $out . "\n";
+
+    &make_srs($marc, $raw, $rec->{id}, $rec->{hrid}, $snapshot_id, $srs_file);
     
     if ($count % 1000 == 0) {
       print "Processing #$count (" . $rec->{hrid} . ")\n";
