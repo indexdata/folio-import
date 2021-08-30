@@ -20,6 +20,7 @@ use strict;
 use warnings;
 
 use MARC::Record;
+use MARC::Record::MiJ;
 use JSON;
 use Data::UUID;
 
@@ -356,19 +357,32 @@ foreach (@ARGV) {
   my $save_path = $infile;
   $save_path =~ s/^(.+)\..+$/$1_instances.jsonl/;
   unlink $save_path;
+
   my $id_map = $infile;
   $id_map =~ s/^(.+)\..+$/$1_instances.map/;
   unlink $id_map;
+
+  my $snap_file = $infile;
+  $snap_file =~ s/^(.+)\..+$/$1_snapshot.jsonl/;
+  unlink $snap_file;
+
+  my $srs_file = $infile;
+  $srs_file =~ s/^(.+)\..+$/$1_srs.jsonl/;
+  unlink $srs_file;
+  
   open IDMAP, ">>$id_map";
   my $err_path = $infile;
   $err_path =~ s/^(.+)\..+$/$1_err.mrc/;
   unlink $err_path;
 
+  my $snapshot_id = make_snapshot($snap_file);
+  
   # open a collection of raw marc records
   $/ = "\x1D";
   my $count = 0;
   open RAW, "<:encoding(UTF-8)", $infile;
   open OUT, ">>:encoding(UTF-8)", $save_path;
+  open SRSOUT, ">>:encoding(UTF-8)", $srs_file;
   my $coll = { instances => [] };
   while (<RAW>) {
     my $rec = {
@@ -533,6 +547,8 @@ foreach (@ARGV) {
       print IDMAP "$rec->{hrid}|$rec->{id}\n";
       my $out = JSON->new->encode($rec);
       print OUT $out . "\n";
+
+      # &make_srs($raw, $rec->{id}, $snapshot_id, $srs_file);
     } else {
       print "WARN No hrid found. Skipping...";
       open ERR, ">>:encoding(UTF-8)", $err_path;
@@ -558,4 +574,55 @@ sub dedupe {
     }
   }
   return [ @out ];
+}
+
+sub make_snapshot {
+  my $snap_path = shift;
+  my @t = localtime();
+  my $dt = sprintf("%4s-%02d-%02d", $t[5] + 1900, $t[4] + 1, $t[3]);
+  my $snap_id = uuid($dt);
+  my $snap = {
+    jobExecutionId=>$snap_id,
+    status=>"COMMITTED",
+    processingStartedDate=>"${dt}T00:00:00"
+  };
+  print "Saving snapshot object to $snap_path...\n";
+  open SNOUT, ">$snap_path";
+  print SNOUT JSON->new->encode($snap) . "\n";
+  close SNOUT;
+  return $snap_id;
+}
+
+sub make_srs {
+    my $raw = shift;
+    my $iid = shift;
+    my $snap_id = shift;
+    my $srs_file = shift;
+    my $srs = {};
+    my $marc = MARC::Record->new_from_usmarc($raw);
+    my $mij = MARC::Record::MiJ->to_mij($marc);
+    my $parsed = decode_json($mij);
+    my $control_num;
+    if ($marc->subfield('907','a')) {
+      $control_num = $marc->subfield('907','a');
+      $control_num =~ s/^.(b\d{7}).$/$1/; # strip out leading period and check digit
+    } elsif ($marc->field('001')) {
+      $control_num = $marc->field('001')->data(); 
+    } else {
+      next;
+    }
+    $srs->{id} = uuid($iid);
+    my $nine = {};
+    $nine->{'999'} = { subfields=>[ { 'i'=>$iid }, { 's'=>$srs->{id} } ] };
+    $nine->{'999'}->{'ind1'} = 'f';
+    $nine->{'999'}->{'ind2'} = 'f';
+    push @{ $parsed->{fields} }, $nine;
+    $srs->{snapshotId} = $snap_id;
+    $srs->{matchedId} = $srs->{id};
+    $srs->{recordType} = 'MARC';
+    $srs->{generation} = 0;
+    $srs->{rawRecord} = { id=>$srs->{id}, content=>$raw };
+    $srs->{parsedRecord} = { id=>$srs->{id}, content=>$parsed };
+    $srs->{externalIdsHolder} = { instanceId=>$iid };
+    print SRSOUT JSON->new->encode($srs) . "\n";
 }
