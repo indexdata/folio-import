@@ -229,7 +229,9 @@ sub processing_funcs {
       if ($ind eq ' ') {
         $ind = 0;
       }
-      $out = substr($out, $ind);
+      if ($ind > 0 && length($out) > $ind) {
+        $out = substr($out, $ind);
+      }
     } elsif ($_ eq 'set_identifier_type_id_by_name') {
       my $name = $params->{name};
       $out = $refdata->{identifierTypes}->{$name} or die "Can't find identifierType for $name!";
@@ -264,7 +266,9 @@ sub processing_funcs {
       my $from = $params->{from};
       my $to = $params->{to};
       my $len = $to - $from;
-      $out = substr($out, $from, $len);
+      if (length($out) > $from) {
+        $out = substr($out, $from, $len);
+      }
     } elsif ($_ eq 'set_instance_type_id') {
       if ($field->tag() gt '009') {
         my $code = $field->subfield('b');
