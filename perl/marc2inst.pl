@@ -386,10 +386,12 @@ foreach (@ARGV) {
   open RAW, "<:encoding(UTF-8)", $infile;
   open my $OUT, ">>:encoding(UTF-8)", $save_path;
   open my $SRSOUT, ">>:encoding(UTF-8)", $srs_file;
+  open ERROUT, ">>", $err_path;
   open IDMAP, ">>$id_map";
   my $inst_recs;
   my $srs_recs;
   my $idmap_lines;
+  my $success = 0;
   my $hrids = {};
   my $coll = { instances => [] };
   while (<RAW>) {
@@ -565,9 +567,13 @@ foreach (@ARGV) {
       $inst_recs .= JSON->new->canonical->encode($rec) . "\n";
       $srs_recs .= JSON->new->canonical->encode(make_srs($marc, $raw, $rec->{id}, $rec->{hrid}, $snapshot_id, $srs_file)) . "\n";
       $idmap_lines .= "$rec->{hrid}|$rec->{id}\n";
+      $hrids->{$hrid} = 1;
+      $success++;
+    } else {
+      print ERROUT $raw;
     }
     
-    if ($count % 1000 == 0 || eof RAW) {
+    if ($success % 1000 == 0 || eof RAW) {
       print "Processed #$count (" . $rec->{hrid} . ")\n";
       write_objects($OUT, $inst_recs);
       $inst_recs = '';
@@ -578,9 +584,8 @@ foreach (@ARGV) {
       print IDMAP $idmap_lines;
       $idmap_lines = '';
     }
-    last if $count == 5000;
   }
-  print "\nDone! $count instance records saved to $save_path\n";
+  print "\nDone!\n$count records processed\n$success instance records saved to $save_path\n";
 }
 
 sub write_objects {
