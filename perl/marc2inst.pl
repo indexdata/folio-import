@@ -370,7 +370,6 @@ foreach (@ARGV) {
   $srs_file =~ s/^(.+)\..+$/$1_srs.jsonl/;
   unlink $srs_file;
   
-  open IDMAP, ">>$id_map";
   my $err_path = $infile;
   $err_path =~ s/^(.+)\..+$/$1_err.mrc/;
   unlink $err_path;
@@ -381,8 +380,13 @@ foreach (@ARGV) {
   $/ = "\x1D";
   my $count = 0;
   open RAW, "<:encoding(UTF-8)", $infile;
-  open OUT, ">>:encoding(UTF-8)", $save_path;
-  open SRSOUT, ">>:encoding(UTF-8)", $srs_file;
+  open my $OUT, ">>:encoding(UTF-8)", $save_path;
+  open my $SRSOUT, ">>:encoding(UTF-8)", $srs_file;
+  open IDMAP, ">>$id_map";
+  my $inst_recs;
+  my $srs_recs;
+  my $idmap_lines;
+  my $hrids = {};
   my $coll = { instances => [] };
   while (<RAW>) {
     my $rec = {
@@ -540,29 +544,45 @@ foreach (@ARGV) {
     
     # Assign uuid based on hrid;
     if (!$rec->{hrid}) {
-      $rec->{hrid} = sprintf("%4s%010d", "marc", $count);
+      $rec->{hrid} = sprintf("%4s%010d", "marc", $count);  # if there is no hrid, make one up.
     }
-    $rec->{id} = uuid($rec->{hrid});
-    if ($ENV{FOLIO_USER_ID}) {
-      $rec->{metadata} = {
-        createdByUserId=>$ENV{FOLIO_USER_ID},
-        updatedByUserId=>$ENV{FOLIO_USER_ID},
-        createdDate=>$mdate,
-        updatedDate=>$mdate
-      };
+    my $hrid = $rec->{hrid};
+    if (!$hrids->{$hrid}) {
+      $rec->{id} = uuid($rec->{hrid});
+      # set FOLIO_USER_ID environment variable to create the following metadata object.
+      if ($ENV{FOLIO_USER_ID}) {
+        $rec->{metadata} = {
+          createdByUserId=>$ENV{FOLIO_USER_ID},
+          updatedByUserId=>$ENV{FOLIO_USER_ID},
+          createdDate=>$mdate,
+          updatedDate=>$mdate
+        };
+      }
+      $inst_recs .= JSON->new->canonical->encode($rec) . "\n";
+      $srs_recs .= JSON->new->canonical->encode(make_srs($marc, $raw, $rec->{id}, $rec->{hrid}, $snapshot_id, $srs_file)) . "\n";
+      $idmap_lines .= "$rec->{hrid}|$rec->{id}\n";
     }
-    print IDMAP "$rec->{hrid}|$rec->{id}\n";
-    my $out = JSON->new->encode($rec);
-    print OUT $out . "\n";
-
-    &make_srs($marc, $raw, $rec->{id}, $rec->{hrid}, $snapshot_id, $srs_file);
     
-    if ($count % 1000 == 0) {
-      print "Processing #$count (" . $rec->{hrid} . ")\n";
+    if ($count % 1000 == 0 || eof RAW) {
+      print "Processed #$count (" . $rec->{hrid} . ")\n";
+      write_objects($OUT, $inst_recs);
+      $inst_recs = '';
+
+      write_objects($SRSOUT, $srs_recs);
+      $srs_recs = '';
+
+      print IDMAP $idmap_lines;
+      $idmap_lines = '';
     }
-    # last if $count == 500;
+    last if $count == 5000;
   }
   print "\nDone! $count instance records saved to $save_path\n";
+}
+
+sub write_objects {
+  my $fh = shift;
+  my $recs = shift;
+  print $fh $recs;
 }
 
 sub dedupe {
@@ -631,5 +651,5 @@ sub make_srs {
     $srs->{rawRecord} = { id=>$srs->{id}, content=>$raw };
     $srs->{parsedRecord} = { id=>$srs->{id}, content=>$parsed };
     $srs->{externalIdsHolder} = { instanceId=>$iid };
-    print SRSOUT JSON->new->encode($srs) . "\n";
+    return $srs;
 }
