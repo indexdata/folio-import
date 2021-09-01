@@ -162,7 +162,10 @@ const daysNow = Math.floor(new Date().valueOf()/1000/86400);
       user.personal.addresses.push(address);
       user.personal.preferredContactTypeId = '002';
 
-      user.username = user.barcode || uukey;
+      if (!user.barcode) {
+        user.barcode = uukey;
+      }
+      user.username = user.barcode;
       if (user.patronGroup && user.username) {
         records.users.push(user);
         if (r.pin) {
