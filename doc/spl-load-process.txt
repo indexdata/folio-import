@@ -1,0 +1,68 @@
+Spokane Public Library data conversion and loading process
+
+Data files are located in the hz-okapi project under the assets directory.
+These files come in different formats: .mrc .json and a Horizon flavor of
+JSON that is usual broken.
+
+1.  Load all settings (ref data) if needed.  Currently locations, service-points, etc.
+    get saved off as a previous system's settings and loaded into a new system.
+
+2.  Instances (and SRS):
+
+    a.  Concatenate the group*.mrc files into a single large file.
+            ex: cat group*.mrc >> large-file.mrc
+
+    b.  Convert large marc file to utf8.
+            ex: yaz-marcdump -f marc8 -t utf8 -o marc large-file.mrc > utf8.mrc
+
+    NOTE: The marc files do not have the record ID in the 001 but mostly the 035.
+    We need to run a script to "fix" this file by moving the record ID to the 001.
+
+    c.  Fix the utf8 encoded marc file by running /perl/marc_ctrl_fix.pl
+
+    d.  Download inventory reference data by running ./reference_inventory.sh (in /bash)
+
+    e.  Run /perl/marc2inst.pl to create instances and SRS records.
+            You will need to have a local copy of the FOLIO mapping rules
+            and inventory reference data to run the above script. The script
+            creates JSONL files for instances and SRS.  It will also create a
+            snapshot object and instances map file (previous system ID to FOLIO uuid)
+
+    f.  Use loadJSONL.js to load instances.
+            ex: node loadJSONL.js instance-storage/instances data/instances.jsonl
+
+    g.  Add the snapshot.jsonl file to FOLIO.
+            ex: node loadJSONL.js source-storage/snapshots data/snapshot.jsonl
+
+    h.  Load SRS objects.
+            ex: node loadJSONL.js source-storage/records data/srs.jsonl
+
+    NOTE: When loading instances and SRS, it may be a good idea to run several processes
+    at the same time.  Use the Unix split command on the jsonl file.  This will create many 
+    smaller files.  There is a script called run_inventory.sh that will run a
+    background process for every file in a glob.
+            ex: ./run_inventory.sh data/xa*
+
+2. Holdings and items:
+
+    a.  As above, concatenate the hz-holdings-*.json files into one large file.
+
+    b.  There needs to be a collection.tsv file located in the same directory as
+    as the reference data (previously downloaded).  There is a collections.json file
+    located in the assets directory.  This file needs to be converted to TSV first by
+    using jq.
+
+        ex: jq -r '.mtypes[] | .code + "\t" + .name' collections.json > /refdir/collections.tsv
+
+    c.  Run /per/items_spl.pl to convert the Horizon holdings to Folio holdings and items.
+            ex: ./items_spl.pl /refdir/ large-holdings.json file.
+
+    d.  Load with loadInventorySyncStream.js (or convert the holdings and items files to
+        JSONL format and use the multi-process runner ./run_inventory.sh).
+        NOTE: The holdings and items files may be split using the splitLargeJson.js script
+
+3.  Users.
+
+    a.  Concatenate hz-users-*.json files to create one large users file.
+
+    b.  Run splUsers.js script (/patron directory)
