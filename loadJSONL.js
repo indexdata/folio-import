@@ -12,7 +12,7 @@ let ep = process.argv[2];
   try {
     const start = new Date().valueOf();
     if (!inFile) {
-      throw new Error('Usage: node loadJSONL.js <endpoint> <jsonl_file> [ <limit> ]');
+      throw 'Usage: node loadJSONL.js <endpoint> <jsonl_file> [ <limit> ]\nNOTE: set PUT_ONLY=1 env variable to run PUT requests only';
     } else if (!fs.existsSync(inFile)) {
       throw new Error('Can\'t find input file');
     } 
@@ -73,6 +73,7 @@ let ep = process.argv[2];
       logger.info(`[${x}] ${lDate} POST ${rec.id} to ${actionUrl}`);
       let recUrl = `${actionUrl}/${rec.id}`;
       try {
+	if (process.env.PUT_ONLY) throw 'INFO -- PUT requests only';
         await superagent
           .post(actionUrl)
           .send(rec)
@@ -82,7 +83,7 @@ let ep = process.argv[2];
         logger.info(`  Successfully added record id ${rec.id}`);
         success++;
       } catch (e) {
-	let errMsg = (e.response.text) ? e.response.text : e;
+	let errMsg = (e.response) ? e.response.text : e;
         logger.warn(`  WARN ${errMsg}`);
         logger.info('  Trying PUT request...');
         try {
