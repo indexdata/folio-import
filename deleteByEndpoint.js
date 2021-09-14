@@ -71,17 +71,17 @@ const wait = (ms) => {
       let id = refData[root][x].id;
       console.log(`[${x}] Deleting ${id}`);
       try {
-        await superagent
+      	await superagent
           .delete(`${deleteUrl}/${id}`)
           .set('accept', 'text/plain')
           .set('x-okapi-tenant', config.tenant)
           .set('x-okapi-token', authToken);
       } catch (e) {
-        console.error(e.response.text);
+        console.log(e.response.text);
       }
       await wait(config.delay);
     }
   } catch (e) {
-    console.error(e.message);
+    console.log(e.message);
   }
 })();
