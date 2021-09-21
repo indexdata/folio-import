@@ -1,0 +1,59 @@
+{
+  "servicepoints" : [ {
+    "id" : "c4c90014-c8c9-4ade-8f24-b5e313319f4b",
+    "name" : "Circ Desk 2",
+    "code" : "cd2",
+    "discoveryDisplayName" : "Circulation Desk -- Back Entrance",
+    "pickupLocation" : true,
+    "holdShelfExpiryPeriod" : {
+      "duration" : 5,
+      "intervalId" : "Days"
+    },
+    "staffSlips" : [ ],
+    "metadata" : {
+      "createdDate" : "2021-07-27T17:40:00.585+00:00",
+      "updatedDate" : "2021-07-27T17:40:00.585+00:00"
+    }
+  }, {
+    "id" : "7c5abc9f-f3d7-4856-b8d7-6712462ca007",
+    "name" : "Online",
+    "code" : "Online",
+    "discoveryDisplayName" : "Online",
+    "shelvingLagTime" : 0,
+    "pickupLocation" : false,
+    "staffSlips" : [ ],
+    "metadata" : {
+      "createdDate" : "2021-07-27T17:40:00.603+00:00",
+      "updatedDate" : "2021-07-27T17:40:00.603+00:00"
+    }
+  }, {
+    "id" : "3a40852d-49fd-4df2-a1f9-6e2641a6e91f",
+    "name" : "East Entrance Circ Desk",
+    "code" : "ecd1",
+    "discoveryDisplayName" : "Circulation Desk -- East Entrance",
+    "pickupLocation" : true,
+    "holdShelfExpiryPeriod" : {
+      "duration" : 3,
+      "intervalId" : "Weeks"
+    },
+    "staffSlips" : [ {
+      "id" : "6a6e72f0-69da-4b4c-8254-7154679e9d88",
+      "printByDefault" : true
+    }, {
+      "id" : "8812bae1-2738-442c-bc20-fe4bb38a11f8",
+      "printByDefault" : true
+    }, {
+      "id" : "1ed55c5c-64d9-40eb-8b80-7438a262288b",
+      "printByDefault" : true
+    }, {
+      "id" : "f838cdaf-555a-473f-abf1-f35ef6ab8ae1",
+      "printByDefault" : true
+    } ],
+    "metadata" : {
+      "createdDate" : "2021-07-27T17:40:00.614+00:00",
+      "updatedDate" : "2021-08-17T19:24:20.938+00:00",
+      "updatedByUserId" : "fe48a3d4-fdc6-579e-81ca-bbf6e41fcc64"
+    }
+  } ],
+  "totalRecords" : 3
+}

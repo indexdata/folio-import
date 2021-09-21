@@ -1,0 +1,9 @@
+[settings]
+bib_id_field=907$a
+item_rec_tag=945
+id_map=
+
+[mapping]
+y=hrid
+i=barcode
+l=permanentLocationId
