@@ -95,6 +95,7 @@ try {
   });
 
   const today = new Date().valueOf();
+  let count = 0;
 
   const fileStream = fs.createReadStream(patronFile);
   const rl = readline.createInterface({
@@ -102,6 +103,7 @@ try {
     crlfDelay: Infinity
   });
   rl.on('line', l => {
+    count++;
     let patRec = JSON.parse(l);
     let pid = patRec.id.toString();
     let fixedFields = {};
@@ -155,9 +157,20 @@ try {
 
     fs.writeFileSync(outPath, JSON.stringify(user) + '\n', { flag: 'as' });
   
+    if (count % 1000 === 0) {
+      console.log(`Processed ${count} records...`);
+    }
     //console.log(varFields);
     //console.log(JSON.stringify(user, null, 2));
   });
+  rl.on('close', () => {
+    const t = (new Date().valueOf() - today) / 1000;
+    console.log('------------');
+    console.log('Finished!');
+    console.log(`Saved ${count} users to ${outPath}`);
+    console.log(`Time: ${t} secs.`);
+  })
+
 } catch (e) {
   console.log(e);
 }
