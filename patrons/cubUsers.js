@@ -51,6 +51,23 @@ const parseAddress = (saddr, type, primary) => {
   return addresses;
 }
 
+const makeNote = (mesg, userId) => {
+  const note = {
+    id: uuid(userId + mesg, ns),
+    content: mesg,
+    domain: 'users',
+    title:  mesg.substring(0, 20) + '...',
+    typeId: '9957a203-0d07-4cc1-ae0d-95058312d709',
+    links: [
+      {
+        type: 'user',
+        id: userId
+      }
+    ]
+  }
+  return note;
+}
+
 try {
 
   if (!patronFile) throw 'Usage: node cubUsers.js <ref_directory> <sierra_patron_file>';
@@ -60,7 +77,9 @@ try {
   const fileExt = path.extname(patronFile);
   const fileName = path.basename(patronFile, fileExt);
   const outPath = `${saveDir}/folio-${fileName}.jsonl`;
+  const notePath = `${saveDir}/notes-${fileName}.jsonl`;
   if (fs.existsSync(outPath)) fs.unlinkSync(outPath);
+  if (fs.existsSync(notePath)) fs.unlinkSync(notePath);
 
   refDir = refDir.replace(/\/$/, '');
 
@@ -96,6 +115,7 @@ try {
 
   const today = new Date().valueOf();
   let count = 0;
+  let ncount = 0;
 
   const fileStream = fs.createReadStream(patronFile);
   const rl = readline.createInterface({
@@ -134,6 +154,7 @@ try {
       username: (varFields.r && varFields.r[0]) ? varFields.r[0] : pid,
       patronGroup: groupMap[fixedFields['P TYPE']],
       expirationDate: fixedFields['EXP DATE'],
+      enrollmentDate: fixedFields['CREATED'],
       active: active,
       personal: {
         lastName: name[0],
@@ -143,6 +164,7 @@ try {
         phone: (varFields.p) ? varFields.p[0] : '',
         mobilePhone: (varFields.t) ? varFields.t[0] : '',
         addresses: [],
+        preferredContactTypeId: '002'
       }
     }
     if (varFields.b && varFields.b[0]) {
@@ -153,6 +175,13 @@ try {
     }
     if (varFields.a) {
       user.personal.addresses = user.personal.addresses.concat(parseAddress(varFields.a, atypeMap['Work'], false));
+    }
+    if (varFields.x) {
+      for (let n = 0; n < varFields.x.length; n++) {
+        ncount++;
+        let note = makeNote(varFields.x[n], user.id);
+        fs.writeFileSync(notePath, JSON.stringify(note) + '\n', { flag: 'as' });
+      }
     }
 
     fs.writeFileSync(outPath, JSON.stringify(user) + '\n', { flag: 'as' });
@@ -168,6 +197,7 @@ try {
     console.log('------------');
     console.log('Finished!');
     console.log(`Saved ${count} users to ${outPath}`);
+    console.log(`Saved ${ncount} notes to ${notePath}`);
     console.log(`Time: ${t} secs.`);
   })
 
