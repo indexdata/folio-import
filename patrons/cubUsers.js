@@ -1,14 +1,93 @@
 const readline = require('readline');
 const fs = require('fs');
+const path = require('path');
 const uuid = require('uuid/v5');
 
 const ns = '70c937ca-c54a-49cd-8c89-6edcf336e9ff';
-const patronFile = process.argv[2];
+let refDir = process.argv[2];
+const patronFile = process.argv[3];
+
+// ptypes are groups derived from the P TYPE fixed field.  Use this for testing.
+const ptypes = {
+  '0': 'P TYPE 0',
+  '1': 'P TYPE 1',
+  '2': 'P TYPE 2',
+  '3': 'P TYPE 3',
+  '4': 'P TYPE 4',
+  '5': 'P TYPE 5',
+  '6': 'P TYPE 6',
+  '7': 'P TYPE 7',
+  '9': 'P TYPE 9',
+  '10': 'P TYPE 10',
+  '11': 'P TYPE 11',
+  '13': 'P TYPE 13',
+  '16': 'P TYPE 16',
+  '23': 'P TYPE 23',
+  '24': 'P TYPE 24',
+  '29': 'P TYPE 29',
+  '30': 'P TYPE 30',
+  '202': 'P TYPE 202'
+}
+
+
+
+const parseAddress = (saddr, type, primary) => {
+  let addresses = [];
+  for (let x = 0; x < saddr.length; x++) {
+    let parts = saddr[x].split(/\$/);
+    let addr = {};
+    addr.addressLine1 = parts[0]
+    let country = parts[2];
+    if (parts[1]) {
+      addr.city = parts[1].replace(/,? ?[A-Z]{2} .*$/, '');
+      addr.region = parts[1].replace(/.+([A-Z]{2}) \d{5}.*/, '$1');
+      addr.postalCode = parts[1].replace(/.*(\d{5}(-\d{4})?)/, '$1');
+    }
+    addr.type = type;
+    addr.primary = primary;
+    addresses.push(addr);
+  }
+  return addresses;
+}
 
 try {
 
-  if (!patronFile) throw 'Usage: node cubUsers.js <sierra_patron_file>';
-  if (!fs.existsSync(patronFile)) throw `Can't find patron file "${patronFile}"!`;
+  if (!patronFile) throw 'Usage: node cubUsers.js <ref_directory> <sierra_patron_file>';
+  if (!fs.existsSync(refDir)) throw `Can't find ref data directory: ${refDir}!`;
+  if (!fs.existsSync(patronFile)) throw `Can't find patron file: ${patronFile}!`;
+  const saveDir = path.dirname(patronFile);
+
+  refDir = refDir.replace(/\/$/, '');
+
+  const groupMap = {};
+  // this block will create groups objects (to loaded into FOLIO) and a groupMap for creating users objects
+
+  let groupFile = `${saveDir}/groups.jsonl`;
+  console.log(`Creating user groups and saving as ${groupFile}`);
+  if (fs.existsSync(groupFile)) fs.unlinkSync(groupFile);
+  for (let pt in ptypes) {
+    let group = {
+      id: uuid(pt, ns),
+      group: 'ptype' + pt,
+      desc: ptypes[pt]
+    }
+    fs.writeFileSync(groupFile, JSON.stringify(group) + "\n", { flag: 'as' });
+    groupMap[pt] = group.id;
+  }
+
+  /* map folio groups from file
+  const groups = require(`${refDir}/groups.json`);
+  groups.usergroups.forEach(g => {
+    groupMap[g.group] = g.id;
+  });
+  */
+
+  // map folio addresstyes from file
+  const atypes = require(`${refDir}/addresstypes.json`);
+  let atypeMap = {};
+  atypes.addressTypes.forEach(a => {
+    atypeMap[a.addressType] = a.id;
+  });
 
   const fileStream = fs.createReadStream(patronFile);
   const rl = readline.createInterface({
@@ -42,6 +121,7 @@ try {
       externalSystemId: pid,
       barcode: (varFields.b) ? varFields.b[0] : '',
       username: (varFields.r) ? varFields.r[0] : '',
+      patronGroup: groupMap[fixedFields['P TYPE']],
       personal: {
         lastName: name[0],
         firstName: name[1],
@@ -49,11 +129,19 @@ try {
         email: (varFields.z) ? varFields.z[0] : '',
         phone: (varFields.p) ? varFields.p[0] : '',
         mobilePhone: (varFields.t) ? varFields.t[0] : '',
-        address: [],
+        addresses: [],
       }
     }
-    // console.log(varFields);
-    console.log(user);
+    if (varFields.h) {
+      user.personal.addresses = parseAddress(varFields.h, atypeMap['Home'], true);
+    }
+    if (varFields.a) {
+      user.personal.addresses = user.personal.addresses.concat(parseAddress(varFields.a, atypeMap['Work'], false));
+    }
+
+  
+    //console.log(varFields);
+    console.log(JSON.stringify(user, null, 2));
   });
 } catch (e) {
   console.log(e);
