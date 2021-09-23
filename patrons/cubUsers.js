@@ -43,9 +43,10 @@ const parseAddress = (saddr, type, primary) => {
       addr.region = parts[1].replace(/.+([A-Z]{2}) \d{5}.*/, '$1');
       addr.postalCode = parts[1].replace(/.*(\d{5}(-\d{4})?)/, '$1');
     }
-    addr.type = type;
-    addr.primary = primary;
+    addr.addressTypeId = type;
+    addr.primaryAddress = primary;
     addresses.push(addr);
+    break;
   }
   return addresses;
 }
@@ -56,6 +57,10 @@ try {
   if (!fs.existsSync(refDir)) throw `Can't find ref data directory: ${refDir}!`;
   if (!fs.existsSync(patronFile)) throw `Can't find patron file: ${patronFile}!`;
   const saveDir = path.dirname(patronFile);
+  const fileExt = path.extname(patronFile);
+  const fileName = path.basename(patronFile, fileExt);
+  const outPath = `${saveDir}/folio-${fileName}.jsonl`;
+  if (fs.existsSync(outPath)) fs.unlinkSync(outPath);
 
   refDir = refDir.replace(/\/$/, '');
 
@@ -89,6 +94,8 @@ try {
     atypeMap[a.addressType] = a.id;
   });
 
+  const today = new Date().valueOf();
+
   const fileStream = fs.createReadStream(patronFile);
   const rl = readline.createInterface({
     input: fileStream,
@@ -115,13 +122,17 @@ try {
     if (varFields.n) {
       name = varFields.n[0].split(/, | /);
     }
+    let active = true;
+    let exptime = new Date(fixedFields['EXP DATE']).valueOf();
+    if (exptime < today) active = false;
 
     user = {
       id: uuid(pid, ns),
       externalSystemId: pid,
-      barcode: (varFields.b) ? varFields.b[0] : '',
-      username: (varFields.r) ? varFields.r[0] : '',
+      username: (varFields.r && varFields.r[0]) ? varFields.r[0] : pid,
       patronGroup: groupMap[fixedFields['P TYPE']],
+      expirationDate: fixedFields['EXP DATE'],
+      active: active,
       personal: {
         lastName: name[0],
         firstName: name[1],
@@ -132,6 +143,9 @@ try {
         addresses: [],
       }
     }
+    if (varFields.b && varFields.b[0]) {
+      user.barcode = varFields.b[0];
+    }
     if (varFields.h) {
       user.personal.addresses = parseAddress(varFields.h, atypeMap['Home'], true);
     }
@@ -139,9 +153,10 @@ try {
       user.personal.addresses = user.personal.addresses.concat(parseAddress(varFields.a, atypeMap['Work'], false));
     }
 
+    fs.writeFileSync(outPath, JSON.stringify(user) + '\n', { flag: 'as' });
   
     //console.log(varFields);
-    console.log(JSON.stringify(user, null, 2));
+    //console.log(JSON.stringify(user, null, 2));
   });
 } catch (e) {
   console.log(e);
