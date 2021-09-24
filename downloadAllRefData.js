@@ -72,6 +72,7 @@ let refDir = process.argv[2];
       '/scheduled-notice-storage/scheduled-notices': true,
       '/accounts': true,
       '/feefineactions': true,
+      '/organizations-storage/interfaces': true,
       '/coursereserves/reserves': true,
       '/coursereserves/courses': true,
       '/coursereserves/courselistings': true
