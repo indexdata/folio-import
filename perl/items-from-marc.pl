@@ -17,6 +17,8 @@ my $mrcfile = shift;
 if (!$mrcfile) {
   die "Usage: ./items-from-marc.pl <profile> <marc_record_file>\n";
 }
+my $json = JSON->new;
+$json->canonical();
 
 my $pro = Config::Tiny->read($profile_path);
 print Dumper($pro);
@@ -75,12 +77,18 @@ my $ftypes = {
 $/ = "\x1D";
 open RAW, $mrcfile;
 my $count = 0;
+my $icount = 0;
+my $hcount = 0;
 while (<RAW>) {
   $count++;
   my $raw = $_;
   my $marc = MARC::Record->new_from_usmarc($raw);
   my $bid = '';
   if ($bidfield =~ /^00/) {
+    my $ctrlfield = $marc->field($bidfield);
+    if ($ctrlfield) {
+      $bid = $ctrlfield->data();
+    }
   } else {
     my ($t, $s) = split(/\$/, $bidfield);
     $bid = $marc->subfield($t, $s);
@@ -99,9 +107,18 @@ while (<RAW>) {
           }
       }
     }
-    print Dumper($folitem);
+    if ($folitem->{hrid}) {
+      $icount++;
+      $folitem->{id} = uuid($folitem->{hrid});
+      my $iout = $json->pretty->encode($folitem);
+      print "$iout";
+    }
   } 
 }
+
+print "Finished!";
+print "Marc records in: $count\n";
+print "Item records out: $icount\n";
 
 sub uuid {
   my $text = shift;
