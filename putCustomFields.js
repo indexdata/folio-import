@@ -1,8 +1,8 @@
 const fs = require('fs');
 const superagent = require('superagent');
 const { getAuthToken } = require('./lib/login');
-const fn = process.argv[2]; 
-const mod = 'mod-users-17.3.0';
+const fn = process.argv[3]; 
+const mod = process.argv[2];
 
 (async () => {
   let added = 0;
@@ -10,7 +10,7 @@ const mod = 'mod-users-17.3.0';
   let errors = 0;
   try {
     if (!fn) {
-      throw new Error('Usage: node putCustomFields.js <file>\nNOTE: Module set to ' + mod);
+      throw new Error('Usage: node putCustomFields.js <mod-users version> <file>\nNOTE: Module set to ' + mod);
     }
     const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
 

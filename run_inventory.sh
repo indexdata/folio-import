@@ -9,5 +9,5 @@ fi
 for f in $@
 do
 	LNAME=$(echo $f | sed -E 's/^.*\///')	
-	node loadInventorySyncJSONL.js $f log/$LNAME.info &
+	node loadInventorySyncJSONL.js $f > log/$LNAME.info &
 done
