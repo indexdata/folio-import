@@ -17,14 +17,24 @@ my $mrcfile = shift;
 if (!$mrcfile) {
   die "Usage: ./items-from-marc.pl <profile> <marc_record_file>\n";
 }
+
+my $fname = basename($mrcfile, '.mrc', '.marc', '.out', '.dat');
+my $savedir = dirname($mrcfile);
+my $hpath = "$savedir/$fname-holdings.jsonl";
+my $ipath = "$savedir/$fname-items.jsonl";
+unlink $hpath;
+unlink $ipath;
+open HOUT, ">>", $hpath or die "Can't write to $hpath!";
+open IOUT, ">>", $ipath or die "Can't write to $ipath!";
+
 my $json = JSON->new;
 $json->canonical();
 
 my $pro = Config::Tiny->read($profile_path);
-print Dumper($pro);
 my $bidfield = $pro->{settings}->{bib_id_field};
 my $itemtag = $pro->{settings}->{item_rec_tag};
-my $map = $pro->{mapping};
+my $imap = $pro->{mapping};
+
 my $ftypes = {
   accessionNumber=>"string",
   barcode=>"string",
@@ -91,33 +101,71 @@ while (<RAW>) {
     }
   } else {
     my ($t, $s) = split(/\$/, $bidfield);
-    $bid = $marc->subfield($t, $s);
+    $bid = ($marc->subfield($t, $s))[0];
   }
+  if ($pro->{settings}->{strip_leading_dot} && $pro->{settings}->{strip_leading_dot} eq "y") {
+    $bid =~ s/^\.//;
+  }
+  if ($pro->{settings}->{strip_check_digit} && $pro->{settings}->{strip_check_digit} eq "y") {
+    $bid =~ s/\w$//;
+  }
+  my $hseen = {};
+  my $hid = '';
   foreach my $item ($marc->field($itemtag)) {
+    my $holdings = {};
     my $folitem = {};
-    foreach my $sf (sort keys %$map) {
-      my $folfield = $map->{$sf};
+    my $hkey = '';
+    foreach my $sf (keys %{ $imap }) {
+      my @col = split(/\|/, $imap->{$sf});
+      my $folfield = $col[0];
+      my $type = $col[1];
+      my $repeat = $col[2];
         foreach my $data ($item->subfield($sf)) {
-          if ($ftypes->{$folfield} eq "array") {
-            $folitem->{$folfield} = [] if !$folitem->{folfield};
-            push @{ $folitem->{$folfield} }, $data;
-          } else {
-            $folitem->{$folfield} = $data;
-            last;
+          $data =~ s/\s+$//;
+          if ($type =~ /i/) {
+            if ($repeat eq "y") {
+              $folitem->{$folfield} = [] if !$folitem->{folfield};
+              push @{ $folitem->{$folfield} }, $data;
+            } else {
+              $folitem->{$folfield} = $data;
+              last;
+            }
+          }
+          if ($type =~ /h/) {
+            if ($folfield eq 'permanentLocationId') {
+              $hkey = "$bid-$data";
+              if (!$hseen->{$hkey}) {
+                $holdings->{$folfield} = $data;
+                $holdings->{hrid} = $hkey;
+                $holdings->{id} = uuid($hkey);
+                $holdings->{instanceId} = $bid;
+                $hid = $holdings->{id};
+                $hseen->{$hkey} = 1;
+              } else {
+                $hseen->{$hkey}++;
+              }
+            }
           }
       }
     }
+    if ($hseen->{$hkey} && $hseen->{$hkey} == 1) {
+      $hcount++;
+      my $hout = $json->encode($holdings);
+      print HOUT $hout . "\n";
+    }
     if ($folitem->{hrid}) {
       $icount++;
+      $folitem->{holdingsRecordId} = $hid;
       $folitem->{id} = uuid($folitem->{hrid});
-      my $iout = $json->pretty->encode($folitem);
-      print "$iout";
+      my $iout = $json->encode($folitem);
+      print IOUT $iout . "\n";
     }
   } 
 }
 
 print "Finished!";
 print "Marc records in: $count\n";
+print "Holdings records out: $hcount\n";
 print "Item records out: $icount\n";
 
 sub uuid {
