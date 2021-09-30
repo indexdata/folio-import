@@ -22,7 +22,8 @@ use warnings;
 use MARC::Record;
 use MARC::Record::MiJ;
 use JSON;
-use Data::UUID;
+use UUID::Tiny ':std';
+use MARC::Charset 'marc8_to_utf8';
 
 binmode STDOUT, ":utf8";
 
@@ -38,11 +39,9 @@ my @lt = localtime();
 my $mdate = sprintf("%04d-%02d-%02dT%02d:%02d:%02d-0500", $lt[5] + 1900, $lt[4] + 1, $lt[3], $lt[2], $lt[1], $lt[0]);
 
 sub uuid {
-  my $name = shift;
-  my $ug = Data::UUID->new;
-  my $uuid = $ug->create();
-  my $uustr = lc $ug->create_from_name_str($namespace, $name);
-  return $uustr;
+  my $text = shift;
+  my $uuid = create_uuid_as_string(UUID_V5, $text);
+  return $uuid;
 }
 
 sub getRules {
@@ -386,7 +385,7 @@ foreach (@ARGV) {
   open RAW, "<:encoding(UTF-8)", $infile;
   open my $OUT, ">>:encoding(UTF-8)", $save_path;
   open my $SRSOUT, ">>:encoding(UTF-8)", $srs_file;
-  open ERROUT, ">>", $err_path;
+  open ERROUT, ">>:encoding(UTF-8)", $err_path;
   open IDMAP, ">>$id_map";
   my $inst_recs;
   my $srs_recs;
@@ -424,7 +423,12 @@ foreach (@ARGV) {
     };
     
     $count++;
-    my $raw = $_;
+    my $raw;
+    if ($_ =~ /^\d{5}....a/) {
+      $raw = $_
+    } else {
+      $raw = marc8_to_utf8($_);
+    }
     my $marc;
     my $ok = eval {
       $marc = MARC::Record->new_from_usmarc($raw);
@@ -439,7 +443,6 @@ foreach (@ARGV) {
     $rec->{instanceTypeId} = $refdata->{instanceTypes}->{$inst_type};
     my $mode_name = $blvl->{$blevel} || 'Other';
 
-    # So somewhere along the ling, FOLIO started returning modes names in lowercase, so we had better accound for that;
     my $lc_mode_name = lc $mode_name;
     if ($lc_mode_name eq 'monograph') { $lc_mode_name = 'single unit'}
     if ($refdata->{issuanceModes}->{$mode_name}) {
