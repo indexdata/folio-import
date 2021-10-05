@@ -24,6 +24,7 @@ use MARC::Record::MiJ;
 use JSON;
 use UUID::Tiny ':std';
 use MARC::Charset 'marc8_to_utf8';
+use Data::Dumper;
 
 binmode STDOUT, ":utf8";
 
@@ -83,10 +84,13 @@ sub getRefData {
           $refobj->{$refroot} = {};
           foreach (@{ $json->{$_} }) {
             my $name;
-            if ($refroot =~ /^(instanceTypes|contributorTypes|instanceFormats)$/) {
+            if ($refroot =~ /^(instanceTypes|contributorTypes|instanceFormats|locations)$/) {
               $name = $_->{code};
             } else {
               $name = $_->{name};
+            }
+            if ($refroot eq 'locations') {
+              $name =~ s/^.+\///;
             }
             my $id = $_->{id};
             $refobj->{$refroot}->{$name} = $id;
@@ -595,7 +599,7 @@ foreach (@ARGV) {
       $success++;
 
       # make holdings and items
-      make_hi($marc, $rec->{id}, $rec->{hrid});
+      make_hi($marc, $rec->{id}, $rec->{hrid}, $type, $blevel);
 
     } else {
       print ERROUT $raw;
@@ -620,6 +624,8 @@ sub make_hi {
   my $marc = shift;
   my $bid = shift;
   my $bhrid = shift;
+  my $type = shift;
+  my $blevel = shift;
   my $hseen = {};
   my $hid = '';
   print "Creating holdings for bib# $bhrid\n";
@@ -637,14 +643,14 @@ sub make_hi {
     my $loc = $item->subfield('l');
     $loc =~ s/(\s*$)//;
     my $hkey = "$bhrid-$loc";
-
+    my $locid = $refdata->{locations}->{$loc};
     # make holdings record;
     if (!$hseen->{$hkey}) {
       $hid = uuid($hkey);
       $hrec->{id} = $hid;
       $hrec->{hrid} = $hkey;
       $hrec->{instanceId} = $bid;
-      $hrec->{permanentLocationId} = $loc;
+      $hrec->{permanentLocationId} = $locid;
       $hrec->{callNumber} = $cn;
       $hrec->{callNumberTypeId} = $cntypes->{$cntag} || '';
       my $hout = $json->pretty->encode($hrec);
@@ -661,6 +667,10 @@ sub make_hi {
       $irec->{holdingsRecordId} = $hid;
       $irec->{hrid} = $iid;
       $irec->{barcode} = $item->subfield('i') || '';
+      $irec->{volume} = $item->subfield('c') || '';
+      $irec->{permanentLoanTypeId} = $refdata->{loantypes}->{'Can circulate'};
+      $irec->{materialTypeId} = $refdata->{mtypes}->{unspecified};  # defaulting to unspecified, should be determined by $t
+      $irec->{status} = { name => 'Available' };  # defaulting to Available for now.  Status code is $s
       my $iout = $json->pretty->encode($irec);
       print $iout;
     }
