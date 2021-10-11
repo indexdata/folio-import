@@ -24,6 +24,7 @@ use MARC::Record::MiJ;
 use JSON;
 use UUID::Tiny ':std';
 use MARC::Charset 'marc8_to_utf8';
+use Time::Piece;
 use Data::Dumper;
 
 binmode STDOUT, ":utf8";
@@ -102,6 +103,41 @@ sub getRefData {
  return $refobj;
 }
 
+sub makeMapFromTsv {
+  my $refdir = shift;
+  my $refdata = shift;
+  my $tsvmap = {};
+  foreach (<$refdir/*.tsv>) {
+    my $prop = $_;
+    $prop =~ s/^(.+\/)?(.+?)\.tsv/$2/;
+    open my $tsv, $_ or die "Can't open $_";
+    my $l = 0;
+    while (<$tsv>) {
+      $l++;
+      next if $l == 1;
+      chomp;
+      s/\s+$//;
+      my @col = split(/\t/);
+      my $code = $col[0];
+      my $name = $col[2] || '';
+      if ($prop eq 'statuses') {
+        $tsvmap->{$prop}->{$code} = $name;
+      } else {
+        if ($prop eq 'locations') {
+          $name = $col[1];
+          $name =~ s/^.+\///;
+        }
+        $tsvmap->{$prop}->{$code} = $refdata->{$prop}->{$name};
+      }
+    }
+  }
+ return $tsvmap;
+}
+
+$ref_dir =~ s/\/$//;
+my $refdata = getRefData($ref_dir);
+my $sierra2folio = makeMapFromTsv($ref_dir, $refdata);
+
 my $blvl = {
   'm' => 'Monograph',
   'i' => 'Integrating Resource',
@@ -139,9 +175,6 @@ my $rtypes = {
   'r' => 'tdf',
   't' => 'txt'
 };
-
-$ref_dir =~ s/\/$//;
-my $refdata = getRefData($ref_dir);
 
 sub process_entity {
   my $field = shift;
@@ -395,12 +428,12 @@ foreach (@ARGV) {
   my $holdings_path = $infile;
   $holdings_path =~ s/^(.+)\..+$/$1_holdings.jsonl/;
   unlink $holdings_path;
-  open my $HOUT, ">>:encoding(UTF-8)", $holdings_path;
+  open HOUT, ">>:encoding(UTF-8)", $holdings_path;
 
   my $items_path = $infile;
   $items_path =~ s/^(.+)\..+$/$1_items.jsonl/;
   unlink $items_path;
-  open my $IOUT, ">>:encoding(UTF-8)", $items_path;
+  open IOUT, ">>:encoding(UTF-8)", $items_path;
 
   my $snapshot_id = make_snapshot($snap_file);
   
@@ -640,10 +673,10 @@ sub make_hi {
     }
   }
   foreach my $item ($marc->field($itemtag)) {
-    my $loc = $item->subfield('l');
+    my $loc = $item->subfield('l') || '';
     $loc =~ s/(\s*$)//;
     my $hkey = "$bhrid-$loc";
-    my $locid = $refdata->{locations}->{$loc};
+    my $locid = $sierra2folio->{locations}->{$loc} || '53cf956f-c1df-410b-8bea-27f712cca7c0';  # defaults to Norlin Stacks
     # make holdings record;
     if (!$hseen->{$hkey}) {
       $hid = uuid($hkey);
@@ -653,14 +686,18 @@ sub make_hi {
       $hrec->{permanentLocationId} = $locid;
       $hrec->{callNumber} = $cn;
       $hrec->{callNumberTypeId} = $cntypes->{$cntag} || '';
-      my $hout = $json->pretty->encode($hrec);
-      print $hout;
+      my $hout = $json->encode($hrec) . "\n";
+      print HOUT $hout;
       $hseen->{$hkey} = 1;
     }
 
     # make item record;
     my $irec = {};
     my $iid = $item->subfield('y');
+    my $itype = $item->subfield('t');
+    my $status = $item->subfield('s') || '';
+    my @msgs = $item->subfield('m');
+    $status =~ s/\s+$//;
     if ($iid) {
       $iid =~ s/^\.//;
       $irec->{id} = uuid($iid);
@@ -669,10 +706,25 @@ sub make_hi {
       $irec->{barcode} = $item->subfield('i') || '';
       $irec->{volume} = $item->subfield('c') || '';
       $irec->{permanentLoanTypeId} = $refdata->{loantypes}->{'Can circulate'};
-      $irec->{materialTypeId} = $refdata->{mtypes}->{unspecified};  # defaulting to unspecified, should be determined by $t
-      $irec->{status} = { name => 'Available' };  # defaulting to Available for now.  Status code is $s
-      my $iout = $json->pretty->encode($irec);
-      print $iout;
+      $irec->{materialTypeId} = $sierra2folio->{mtypes}->{$itype} || '71fbd940-1027-40a6-8a48-49b44d795e46'; # defaulting to unspecified
+      $irec->{status}->{name} = $sierra2folio->{statuses}->{$status} || 'Available'; # defaulting to available;
+      foreach (@msgs) {
+        if (!$irec->{circulationNotes}) { $irec->{circulationNotes} = [] }
+        my $cnobj = {};
+        $cnobj->{note} = $_;
+        $cnobj->{noteType} = 'Check out';
+        if (/IN TRANSIT/) {
+          $irec->{status}->{name} = 'In Transit';
+          s/^(.+): ?.+/$1/;
+          $irec->{status}->{date} = $_;
+          # my $t = Time::Piece->strptime($_, "%a %b %d %Y %I:%M%p");
+          # $irec->{status}->{date} = $t->strftime("%Y-%m-%dT%I:%M:00");
+        } else {
+          push @{ $irec->{circulationNotes} }, $cnobj;
+        }
+      }
+      my $iout = $json->encode($irec) . "\n";
+      print IOUT $iout
     }
   }
 }
