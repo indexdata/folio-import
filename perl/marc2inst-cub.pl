@@ -733,7 +733,12 @@ sub make_hi {
       $irec->{holdingsRecordId} = $hid;
       $irec->{hrid} = $iid;
       $irec->{barcode} = $item->subfield('i') || '';
-      $irec->{volume} = $item->subfield('c') || '';
+      if ($blevel eq 's') {
+        $irec->{enumeration} = $item->subfield('c') || '';
+      } else {
+        $irec->{volume} = $item->subfield('c') || '';
+      }
+      $irec->{copyNumber} = $item->subfield('g') || '';
       $irec->{permanentLoanTypeId} = $refdata->{loantypes}->{'Can circulate'};
       $irec->{materialTypeId} = $sierra2folio->{mtypes}->{$itype} || '71fbd940-1027-40a6-8a48-49b44d795e46'; # defaulting to unspecified
       $irec->{status}->{name} = $sierra2folio->{statuses}->{$status} || 'Available'; # defaulting to available;
@@ -742,12 +747,18 @@ sub make_hi {
         my $cnobj = {};
         $cnobj->{note} = $_;
         $cnobj->{noteType} = 'Check out';
+        $cnobj->{staffOnly} = 'true';
+        $cnobj->{date} = "" . localtime;
+        $cnobj->{source} = {
+          id => 'ba213137-b641-4da7-aee2-9f2296e8bbf7',
+          personal => { firstName => 'Index', lastName => 'Data' }
+        };
         if (/IN TRANSIT/) {
-          $irec->{status}->{name} = 'In Transit';
+          $irec->{status}->{name} = 'In transit';
           s/^(.+): ?.+/$1/;
-          $irec->{status}->{date} = $_;
-          # my $t = Time::Piece->strptime($_, "%a %b %d %Y %I:%M%p");
-          # $irec->{status}->{date} = $t->strftime("%Y-%m-%dT%I:%M:00");
+          # $irec->{status}->{date} = $_;
+          # my $t = Time::Piece->strptime($_, "%a %b %d %Y %I:%M");
+          # $irec->{status}->{date} = $t->strftime("%Y-%m-%d");
         } else {
           push @{ $irec->{circulationNotes} }, $cnobj;
         }
