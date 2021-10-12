@@ -655,7 +655,7 @@ foreach (@ARGV) {
     }
     
     if ($success % 1000 == 0 || eof RAW) {
-      print "Processed #$count (" . $rec->{hrid} . ") [ instances: $count, holdings: $hcount, items: $icount ]\n";
+      print "Processed #$count (" . $rec->{hrid} . ") [ instances: $success, holdings: $hcount, items: $icount ]\n";
       write_objects($OUT, $inst_recs);
       $inst_recs = '';
 
@@ -668,7 +668,7 @@ foreach (@ARGV) {
   }
   my $tt = time() - $start;
   print "\nDone!\n$count Marc records processed in $tt seconds";
-  print "\nInstances: $count ($save_path)";
+  print "\nInstances: $success ($save_path)";
   print "\nHoldings:  $hcount ($holdings_path)";
   print "\nItems:     $icount ($items_path)";
   print "\nErrors:    $errcount\n";
