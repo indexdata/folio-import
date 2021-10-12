@@ -404,6 +404,12 @@ foreach (@ARGV) {
   } elsif (! -e $rules_file) {
     die "Can't find mapping rules file!";
   }
+  
+  my $count = 0;
+  my $icount = 0;
+  my $hcount = 0;
+  my $errcount = 0;
+  my $start = time();
 
   my $save_path = $infile;
   $save_path =~ s/^(.+)\..+$/$1_instances.jsonl/;
@@ -428,22 +434,21 @@ foreach (@ARGV) {
   my $holdings_path = $infile;
   $holdings_path =~ s/^(.+)\..+$/$1_holdings.jsonl/;
   unlink $holdings_path;
-  open HOUT, ">>:encoding(UTF-8)", $holdings_path;
+  open my $HOUT, ">>:encoding(UTF-8)", $holdings_path;
 
   my $items_path = $infile;
   $items_path =~ s/^(.+)\..+$/$1_items.jsonl/;
   unlink $items_path;
-  open IOUT, ">>:encoding(UTF-8)", $items_path;
+  open my $IOUT, ">>:encoding(UTF-8)", $items_path;
 
   my $snapshot_id = make_snapshot($snap_file);
   
   # open a collection of raw marc records
   $/ = "\x1D";
-  my $count = 0;
+ 
   open RAW, "<:encoding(UTF-8)", $infile;
   open my $OUT, ">>:encoding(UTF-8)", $save_path;
   open my $SRSOUT, ">>:encoding(UTF-8)", $srs_file;
-  open ERROUT, ">>:encoding(UTF-8)", $err_path;
   open IDMAP, ">>$id_map";
   my $inst_recs;
   my $srs_recs;
@@ -632,14 +637,25 @@ foreach (@ARGV) {
       $success++;
 
       # make holdings and items
-      make_hi($marc, $rec->{id}, $rec->{hrid}, $type, $blevel);
+      my $hi = make_hi($marc, $rec->{id}, $rec->{hrid}, $type, $blevel);
+      if ($hi->{holdings}) {
+        write_objects($HOUT, $hi->{holdings});
+        $hcount += $hi->{hcount};
+      }
+      if ($hi->{items}) {
+        write_objects($IOUT, $hi->{items});
+        $icount += $hi->{icount};
+      }
 
     } else {
+      open ERROUT, ">>:encoding(UTF-8)", $err_path;
       print ERROUT $raw;
+      close ERROUT;
+      $errcount++;
     }
     
     if ($success % 1000 == 0 || eof RAW) {
-      print "Processed #$count (" . $rec->{hrid} . ")\n";
+      print "Processed #$count (" . $rec->{hrid} . ") [ instances: $count, holdings: $hcount, items: $icount ]\n";
       write_objects($OUT, $inst_recs);
       $inst_recs = '';
 
@@ -650,7 +666,12 @@ foreach (@ARGV) {
       $idmap_lines = '';
     }
   }
-  print "\nDone!\n$count records processed\n$success instance records saved to $save_path\n";
+  my $tt = time() - $start;
+  print "\nDone!\n$count Marc records processed in $tt seconds";
+  print "\nInstances: $count ($save_path)";
+  print "\nHoldings:  $hcount ($holdings_path)";
+  print "\nItems:     $icount ($items_path)";
+  print "\nErrors:    $errcount\n";
 }
 
 sub make_hi {
@@ -661,10 +682,14 @@ sub make_hi {
   my $blevel = shift;
   my $hseen = {};
   my $hid = '';
-  print "Creating holdings for bib# $bhrid\n";
+  # print "Creating holdings for bib# $bhrid\n";
   my $hrec = {};
   my $cn = '';
   my $cntag = '';
+  my $holdings = '';
+  my $items = '';
+  my $hcount = 0;
+  my $icount = 0;
   foreach (@cntags) {
     if ($marc->field($_)) {
       $cn = $marc->field($_)->as_string('ab', ' ');
@@ -674,9 +699,10 @@ sub make_hi {
   }
   foreach my $item ($marc->field($itemtag)) {
     my $loc = $item->subfield('l') || '';
+    next if !$loc;
     $loc =~ s/(\s*$)//;
     my $hkey = "$bhrid-$loc";
-    my $locid = $sierra2folio->{locations}->{$loc} || '53cf956f-c1df-410b-8bea-27f712cca7c0';  # defaults to Norlin Stacks
+    my $locid = $sierra2folio->{locations}->{$loc} || '53cf956f-c1df-410b-8bea-27f712cca7c0'; # defaults to Norlin Stacks
     # make holdings record;
     if (!$hseen->{$hkey}) {
       $hid = uuid($hkey);
@@ -684,11 +710,14 @@ sub make_hi {
       $hrec->{hrid} = $hkey;
       $hrec->{instanceId} = $bid;
       $hrec->{permanentLocationId} = $locid;
-      $hrec->{callNumber} = $cn;
-      $hrec->{callNumberTypeId} = $cntypes->{$cntag} || '';
-      my $hout = $json->encode($hrec) . "\n";
-      print HOUT $hout;
+      if ($cn) {
+        $hrec->{callNumber} = $cn;
+        $hrec->{callNumberTypeId} = $cntypes->{$cntag} || '6caca63e-5651-4db6-9247-3205156e9699'; #other
+      }
+      my $hout = $json->encode($hrec);
+      $holdings .= $hout . "\n";
       $hseen->{$hkey} = 1;
+      $hcount++;
     }
 
     # make item record;
@@ -723,10 +752,17 @@ sub make_hi {
           push @{ $irec->{circulationNotes} }, $cnobj;
         }
       }
-      my $iout = $json->encode($irec) . "\n";
-      print IOUT $iout
+      my $iout = $json->encode($irec);
+      $items .= $iout . "\n";
+      $icount++;
     }
   }
+  return {
+    holdings => $holdings,
+    items => $items,
+    hcount => $hcount,
+    icount => $icount
+  };
 }
 
 sub write_objects {
