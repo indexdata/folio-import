@@ -452,6 +452,8 @@ foreach (@ARGV) {
   open IDMAP, ">>$id_map";
   my $inst_recs;
   my $srs_recs;
+  my $hold_recs;
+  my $item_recs;
   my $idmap_lines;
   my $success = 0;
   my $hrids = {};
@@ -639,11 +641,11 @@ foreach (@ARGV) {
       # make holdings and items
       my $hi = make_hi($marc, $rec->{id}, $rec->{hrid}, $type, $blevel);
       if ($hi->{holdings}) {
-        write_objects($HOUT, $hi->{holdings});
+        $hold_recs .= $hi->{holdings};
         $hcount += $hi->{hcount};
       }
       if ($hi->{items}) {
-        write_objects($IOUT, $hi->{items});
+        $item_recs .= $hi->{items};
         $icount += $hi->{icount};
       }
 
@@ -654,13 +656,20 @@ foreach (@ARGV) {
       $errcount++;
     }
     
-    if ($success % 1000 == 0 || eof RAW) {
-      print "Processed #$count (" . $rec->{hrid} . ") [ instances: $success, holdings: $hcount, items: $icount ]\n";
+    if ($success % 10000 == 0 || eof RAW) {
+      my $tt = time() - $start;
+      print "Processed #$count (" . $rec->{hrid} . ") [ instances: $success, holdings: $hcount, items: $icount, time: $tt secs ]\n";
       write_objects($OUT, $inst_recs);
       $inst_recs = '';
 
       write_objects($SRSOUT, $srs_recs);
       $srs_recs = '';
+
+      write_objects($HOUT, $hold_recs);
+      $hold_recs = '';
+
+      write_objects($IOUT, $item_recs);
+      $item_recs = '';
 
       print IDMAP $idmap_lines;
       $idmap_lines = '';
