@@ -621,8 +621,10 @@ foreach (@ARGV) {
       $rec->{hrid} = sprintf("%4s%010d", "marc", $count);  # if there is no hrid, make one up.
     }
     my $hrid = $rec->{hrid};
+    $hrid =~ s/.$//;
+    $rec->{hrid} = $hrid;
     if (!$hrids->{$hrid}) {
-      $rec->{id} = uuid($rec->{hrid});
+      $rec->{id} = uuid($hrid);
       # set FOLIO_USER_ID environment variable to create the following metadata object.
       if ($ENV{FOLIO_USER_ID}) {
         $rec->{metadata} = {
