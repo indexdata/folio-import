@@ -38,11 +38,13 @@ let refDir = process.argv[2];
       'https://raw.githubusercontent.com/folio-org/mod-courses/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-data-import-converter-storage/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-custom-fields/master/descriptors/ModuleDescriptor-template.json',
-      'https://raw.githubusercontent.com/folio-org/mod-licenses/master/service/src/main/okapi/ModuleDescriptor-template.json'
+      'https://raw.githubusercontent.com/folio-org/mod-licenses/master/service/src/main/okapi/ModuleDescriptor-template.json',
+      'https://raw.githubusercontent.com/folio-org/mod-source-record-manager/3451d3059baefb07bc822574552e5bde58ffae71/descriptors/ModuleDescriptor-template.json'
     ]
 
     const skipList = {
       '/item-storage/items': true,
+      '/inventory-view/instances': true,
       '/holdings-storage/holdings': true,
       '/instance-storage/instances': true,
       '/instance-bulk/ids': true,
@@ -50,6 +52,7 @@ let refDir = process.argv[2];
       '/shelf-locations': true,
       '/users': true,
       '/proxiesfor': true,
+      '/patron-action-session-storage/expired-session-patron-ids': true,
       '/notes': true,
       '/notify': true,
       '/inventory-hierarchy/updated-instance-ids': true,
@@ -72,6 +75,10 @@ let refDir = process.argv[2];
       '/scheduled-notice-storage/scheduled-notices': true,
       '/accounts': true,
       '/feefineactions': true,
+      '/metadata-provider/logs': true,
+      '/change-manager/parsedRecords': true,
+      '/source-storage/stream/records': true,
+      '/source-storage/stream/source-records': true,
       '/organizations-storage/interfaces': true,
       '/coursereserves/reserves': true,
       '/coursereserves/courses': true,
