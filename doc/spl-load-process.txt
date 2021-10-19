@@ -64,7 +64,7 @@ JSON that is usual broken.
         JSONL format and use the multi-process runner ./run_inventory.sh).
         NOTE: The holdings and items files may be split using the splitLargeJson.js script
 
-3.  Users.
+3.  Users:
 
     a.  Concatenate hz-users-*.json files to create one large users file.
 
@@ -73,6 +73,81 @@ JSON that is usual broken.
 
     c.  Now run loadByEndpoint.js on users.json files.  Perhaps all of these users files
         could be concatenated into several larger ones and the use the run_load_endpoint.sh 
-        to run 5 or 10 jobs in the background.  NOTE: The reason why so many users files get
-        created is because I used to use mod-user-import.  There were some issues with this
-        module in the past, so now splUsers.js now creates FOLIO users objects instead.
+        and run 5 or 10 jobs in the background.
+
+4.  Loans:
+
+    a.  Loans data from Spokane are located in the assets directory as hz-loans-(whatever).  Concatenate
+        all loans objects into one loans.json files using jq.
+
+        ex: jq '[.[]]' hz-loans-\(* > working_dir/loans.json
+
+    b.  First download all users from FOLIO using the downloadAllUsers.js script.
+        
+        ex: node downloadAllUsers.js <working_directory>
+
+    c.  Get service points with downloadAllByEndpoint.js
+
+        ex: node downloadAllByEndpoint.js service-points <working_directory>
+
+    d.  Run createSplCheckout.js in the /patrons/ directory.
+
+        ex: node createSplCheckout.js <working_dir>/service-points.json <working_dir>/users.json <working_dir>/spokane/circ/loans.json
+
+        The output from this script will create three files:
+        
+                * checkouts.json (load this file)
+                * inactive_checkouts.json (user for active toggle)
+                * notfound_checkouts.json (do not load-- users are not found for these checkouts)
+
+    e.  The checkouts.json file contains loans for active and inactive users.  FOLIO doesn't allow checkouts to
+        to inactive users, so these need to be made temporarily active.  Run usersActiveToggle.js to do this.
+
+        ex: node usersActiveToggle.js <working_dir>/inactive_checkouts.json
+
+    f.  Use the checkoutByBarcode.js script on the checkouts.json file.
+
+        ex: node checkoutByBarcode.js <working_dir>/checkouts.json
+
+    g.  Run usersActiveToggle.js again to reset inactive users to inactive.
+
+5.  Requests:
+
+    Requests are stored in the /assets/ directory as hz-requests.json.
+
+    a.  Run splRequests.js to create FOLIO requests objects.
+
+        ex: node splRequests <working_dir>/hz-requests.json
+
+        This script will contact FOLIO to check the status of certain items.  It will also
+        try to place requests on items in a round robin fashion, first checking for available items,
+        then items with the least amount of holds.  This process will take some time to run.
+
+        NOTE: Do not run multiple processes while during this step.
+
+    b.  Use loadRequests.js to load the output from the previous process.
+        
+        ex: node loadRequests.js <working_dir>/requests.json
+
+        NOTE: These request objects need to be run in order.  Please run a single process.
+
+6.  Fines: (TODO)
+
+    Fines are located in the /assets/ directory as hz-ledger.json 
+
+7.  Organizations: (TODO)
+
+    There is an old file in /assets/ named organizations-2020-12-01.json.  This looks Like
+    a collection of FOLIO organization objects.  I don't know if there is anything to do except load?
+
+8.  Orders: (TODO)
+
+    There is an orders.py script here: https://gitlab.com/spokanepubliclibrary/hz-okapi/-/blob/master/scripts/orders.py 
+    Perhaps this does something?
+
+9.  Invoices (TODO)
+
+
+     
+
+    
