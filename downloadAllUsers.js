@@ -22,7 +22,7 @@ let refDir = process.argv[2];
 
     let totFetch = 0;
     let totRecs = 500000
-    let perPage = 1000;
+    let perPage = 5000;
     let offset = 0;
     const coll = { users: [] };
     while (totFetch < totRecs) {
