@@ -28,10 +28,10 @@ JSON that is usual broken.
             creates JSONL files for instances and SRS.  It will also create a
             snapshot object and instances map file (previous system ID to FOLIO uuid)
 
-    f.  Use loadJSONL.js to load instances.
-            ex: node loadJSONL.js instance-storage/instances data/instances.jsonl
+    f.  Use loadInventorySyncJSONL.js to load instances.
+            ex: node loadInventorySyncJSONL.js data/instances.jsonl
 
-    g.  Add the snapshot.jsonl file to FOLIO.
+    g.  Run loadJSONL.js to add snapshot.jsonl.
             ex: node loadJSONL.js source-storage/snapshots data/snapshot.jsonl
 
     h.  Load SRS objects.
@@ -42,6 +42,9 @@ JSON that is usual broken.
     smaller files.  There is a script called run_inventory.sh that will run a
     background process for every file in a glob.
             ex: ./run_inventory.sh data/xa*
+
+    Likewise, there is the run_load_jsonl.sh script that will load several jsonl files as a
+    background process.
 
 2. Holdings and items:
 
@@ -54,7 +57,7 @@ JSON that is usual broken.
 
         ex: jq -r '.mtypes[] | .code + "\t" + .name' collections.json > /refdir/collections.tsv
 
-    c.  Run /per/items_spl.pl to convert the Horizon holdings to Folio holdings and items.
+    c.  Run /perl/items_spl.pl to convert the Horizon holdings to Folio holdings and items.
             ex: ./items_spl.pl /refdir/ large-holdings.json file.
 
     d.  Load with loadInventorySyncStream.js (or convert the holdings and items files to
@@ -65,4 +68,11 @@ JSON that is usual broken.
 
     a.  Concatenate hz-users-*.json files to create one large users file.
 
-    b.  Run splUsers.js script (/patron directory)
+    b.  Run splUsers.js script (located in the /patron directory).  This process
+        will create users files in addition to permissions and logins collections.
+
+    c.  Now run loadByEndpoint.js on users.json files.  Perhaps all of these users files
+        could be concatenated into several larger ones and the use the run_load_endpoint.sh 
+        to run 5 or 10 jobs in the background.  NOTE: The reason why so many users files get
+        created is because I used to use mod-user-import.  There were some issues with this
+        module in the past, so now splUsers.js now creates FOLIO users objects instead.
