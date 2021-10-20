@@ -13,7 +13,7 @@ JSON that is usual broken.
             ex: cat group*.mrc >> large-file.mrc
 
     b.  Convert large marc file to utf8.
-            ex: yaz-marcdump -f marc8 -t utf8 -o marc large-file.mrc > utf8.mrc
+            ex: yaz-marcdump -f marc8 -t utf8 -o marc -l 9=97 large-file.mrc > utf8.mrc
 
     NOTE: The marc files do not have the record ID in the 001 but mostly the 035.
     We need to run a script to "fix" this file by moving the record ID to the 001.
