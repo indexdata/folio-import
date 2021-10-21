@@ -67,7 +67,7 @@ const fileNames = process.argv.slice(2);
           try {
             console.log(`  Trying PUT...`);
             let purl = url;
-            if (!purl.match(/circulation-rules-storage/)) {
+            if (!purl.match(/circulation-rules-storage|mapping-rules/)) {
               purl += '/' + data[d].id;
             }
             console.log(`  PUT ${purl}...`);
