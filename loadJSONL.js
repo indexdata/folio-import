@@ -73,7 +73,7 @@ let ep = process.argv[2];
       let rec = JSON.parse(line);
       let lDate = new Date();
       logger.info(`[${x}] ${lDate} POST ${rec.id} to ${actionUrl}`);
-      let recUrl = `${actionUrl}/${rec.id}`;
+      let recUrl = (actionUrl.match(/mapping-rules/)) ? actionUrl : `${actionUrl}/${rec.id}`;
       try {
 	if (process.env.PUT_ONLY) throw 'INFO -- PUT requests only';
         await superagent
