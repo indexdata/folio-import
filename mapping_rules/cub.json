@@ -6060,6 +6060,64 @@
          ]
       }
    ],
+   "740": [
+      {
+         "entity": [
+            {
+               "applyRulesOnConcatenatedData": true,
+               "description": "Alternative Title id",
+               "rules": [
+                  {
+                     "conditions": [
+                        {
+                           "parameter": {
+                              "name": "Other title"
+                           },
+                           "type": "set_alternative_title_type_id"
+                        }
+                     ]
+                  }
+               ],
+               "subfield": [
+                  "a",
+                  "n",
+                  "p",
+                  "h"
+               ],
+               "target": "alternativeTitles.alternativeTitleTypeId"
+            },
+            {
+               "applyRulesOnConcatenatedData": true,
+               "description": "Alternative Title",
+               "rules": [
+                  {
+                     "conditions": [
+                        {
+                           "type": "remove_ending_punc, trim"
+                        }
+                     ]
+                  }
+               ],
+               "subfield": [
+                  "a",
+                  "n",
+                  "p",
+                  "d",
+                  "f",
+                  "g",
+                  "h",
+                  "k",
+                  "l",
+                  "m",
+                  "o",
+                  "r",
+                  "s"
+               ],
+               "target": "alternativeTitles.alternativeTitle"
+            }
+         ]
+      }
+   ],
    "800" : [
       {
          "applyRulesOnConcatenatedData" : true,
