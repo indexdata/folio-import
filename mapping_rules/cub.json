@@ -747,6 +747,42 @@
          ]
       }
    ],
+   "099": [
+      {
+         "entity": [
+            {
+               "applyRulesOnConcatenatedData": true,
+               "description": "Type local classification",
+               "rules": [
+                  {
+                     "conditions": [
+                        {
+                           "parameter": {
+                              "name": "LC (local)"
+                           },
+                           "type": "set_classification_type_id"
+                        }
+                     ]
+                  }
+               ],
+               "subfield": [
+                  "a",
+                  "b"
+               ],
+               "target": "classifications.classificationTypeId"
+            },
+            {
+               "applyRulesOnConcatenatedData": true,
+               "description": "LC local classification",
+               "subfield": [
+                  "a",
+                  "b"
+               ],
+               "target": "classifications.classificationNumber"
+            }
+         ]
+      }
+   ],
    "100" : [
       {
          "entity" : [
