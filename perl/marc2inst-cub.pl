@@ -380,7 +380,8 @@ my $ftypes = {
   natureOfContentTermIds => 'array.string'
 };
 
-# We need to know upfront which tags support repeated subfields.
+# We need to know upfront which tags support repeated subfields or require preprocessing (think 880s).
+my $field_replace = {};
 my $repeat_subs = {};
 foreach (keys %{ $mapping_rules }) {
   my $rtag = $_;
@@ -391,6 +392,15 @@ foreach (keys %{ $mapping_rules }) {
       foreach (@{ $conf->{entity} }) {
         push @{ $repeat_subs->{$rtag} }, $_->{subfield}->[0] if $_->{target} !~ /Id$/;
       }
+    }
+    if ($_->{fieldReplacementBy3Digits}) {
+      my $frules = {};
+      foreach (@{ $_->{fieldReplacementRule} }) {
+        $frules->{$_->{sourceDigits}} = $_->{targetField};
+      }
+      $_->{frules} = $frules;
+      $field_replace->{$rtag} = $_;
+      delete $mapping_rules->{$rtag};
     }
   }
 }
@@ -521,6 +531,16 @@ foreach (@ARGV) {
     MARC_FIELD: foreach (@marc_fields) {
       my $field = $_;
       my $tag = $_->tag();
+      my $fr = $field_replace->{$tag} || '';
+      if ($fr) {
+        my $sf = $fr->{subfield}[0];
+        my $sdata = $field->subfield($sf);
+        $sdata =~ s/^(\d{3}).*/$1/;
+        my $rtag = $fr->{frules}->{$sdata} || $sdata;
+        $field->set_tag($rtag);
+        push @marc_fields, $field;
+        next;
+      }
       if (($tag =~ /^(7|1)/ && !$field->subfield('a')) || ($tag == '856' && !$field->subfield('u'))) {
         next;
       }
