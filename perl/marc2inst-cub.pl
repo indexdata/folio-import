@@ -30,7 +30,7 @@ use Data::Dumper;
 binmode STDOUT, ":utf8";
 
 my $itemtag = '945';
-my @cntags = ('050', '090', '092', '086', '099');  # call number tags;
+my @cntags = ('099', '090', '050', '092', '086');  # call number tags;
 my $cntypes = {
   '050' => '95467209-6d7b-468b-94df-0f5d7ad2747d',
   '086' => 'fc388041-6cd0-4806-8a74-ebe3b9ab4c6e',
