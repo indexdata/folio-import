@@ -339,6 +339,12 @@ sub processing_funcs {
     } elsif ($_ eq 'remove_substring') {
       my $ss = $params->{substring};
       $out =~ s/$ss//g;
+    } elsif ($_ eq 'set_note_staff_only_via_indicator') {
+      if ($field->indicator(1) eq '1') {
+        $out = 'true';
+      } else {
+        $out = 'false';
+      }
     }
   }
   return $out;
