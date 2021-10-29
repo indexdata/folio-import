@@ -119,13 +119,13 @@ sub makeMapFromTsv {
       s/\s+$//;
       my @col = split(/\t/);
       my $code = $col[0];
-      my $name = $col[2] || '';
+      my $name = $col[1] || '';
       if ($prop eq 'statuses') {
+        $name =~ s/.*map .*/Unknown/;
         $tsvmap->{$prop}->{$code} = $name;
       } else {
-        if ($prop eq 'locations') {
+        if ($prop eq 'mtypes') {
           $name = $col[1];
-          $name =~ s/^.+\///;
         }
         $tsvmap->{$prop}->{$code} = $refdata->{$prop}->{$name};
       }
@@ -137,6 +137,8 @@ sub makeMapFromTsv {
 $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
 my $sierra2folio = makeMapFromTsv($ref_dir, $refdata);
+
+# print Dumper($sierra2folio); exit;
 
 my $blvl = {
   'm' => 'Monograph',
@@ -641,10 +643,11 @@ foreach (@ARGV) {
       $rec->{hrid} = sprintf("%4s%010d", "marc", $count);  # if there is no hrid, make one up.
     }
     my $hrid = $rec->{hrid};
-    $hrid =~ s/.$//;
+    $hrid =~ s/^\.(.+).$/$1/;
     $rec->{hrid} = $hrid;
     if (!$hrids->{$hrid} && $marc->title()) {
       # set FOLIO_USER_ID environment variable to create the following metadata object.
+      $rec->{id} = uuid($hrid);
       if ($ENV{FOLIO_USER_ID}) {
         $rec->{metadata} = {
           createdByUserId=>$ENV{FOLIO_USER_ID},
@@ -731,7 +734,7 @@ sub make_hi {
     next if !$loc;
     $loc =~ s/(\s*$)//;
     my $hkey = "$bhrid-$loc";
-    my $locid = $sierra2folio->{locations}->{$loc} || '53cf956f-c1df-410b-8bea-27f712cca7c0'; # defaults to Norlin Stacks
+    my $locid = $refdata->{locations}->{$loc} || 'ce414bfd-ae34-4aae-be48-47d2825f1418'; # defaults to Unmapped location
     # make holdings record;
     if (!$hseen->{$hkey}) {
       $hid = uuid($hkey);
@@ -755,6 +758,7 @@ sub make_hi {
     my $itype = $item->subfield('t');
     my $status = $item->subfield('s') || '';
     my @msgs = $item->subfield('m');
+    my @notes = $item->subfield('n');
     $status =~ s/\s+$//;
     if ($iid) {
       $iid =~ s/^\.//;
@@ -770,7 +774,7 @@ sub make_hi {
       $irec->{copyNumber} = $item->subfield('g') || '';
       $irec->{permanentLoanTypeId} = $refdata->{loantypes}->{'Can circulate'};
       $irec->{materialTypeId} = $sierra2folio->{mtypes}->{$itype} || '71fbd940-1027-40a6-8a48-49b44d795e46'; # defaulting to unspecified
-      $irec->{status}->{name} = $sierra2folio->{statuses}->{$status} || 'Available'; # defaulting to available;
+      $irec->{status}->{name} = $sierra2folio->{statuses}->{$status} || 'Unknown'; # defaulting to available;
       foreach (@msgs) {
         if (!$irec->{circulationNotes}) { $irec->{circulationNotes} = [] }
         my $cnobj = {};
@@ -791,6 +795,19 @@ sub make_hi {
         } else {
           push @{ $irec->{circulationNotes} }, $cnobj;
         }
+      }
+      foreach (@notes) {
+        if (!$irec->{notes}) { $irec->{notes} = [] }
+        my $nobj = {};
+        $nobj->{note} = $_;
+        $nobj->{noteTypeId} = '8d0a5eca-25de-4391-81a9-236eeefdd20b';  # Note
+        $nobj->{staffOnly} = 'true';
+        push @{ $irec->{notes} }, $nobj;
+      }
+      if ($item->subfield('o') && $item->subfield('o') eq 'n') {
+        $irec->{discoverySuppress} = 'true';
+      } else {
+        $irec->{discoverySuppress} = 'false';
       }
       my $iout = $json->encode($irec);
       $items .= $iout . "\n";
