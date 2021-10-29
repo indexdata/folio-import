@@ -168,8 +168,12 @@ while (<RAW>) {
   } elsif (/^\s*}/) {
     s/,\s*$//;
     $jtext .= $_;
-    my $jobj = decode_json($jtext);
-    push @{ $hi->{items} }, $jobj;
+    my $jobj = eval { decode_json($jtext) };
+    if ($@) {
+	print "WARN bad json-- skipping...\n$jtext\n";
+    } else {
+    	push @{ $hi->{items} }, $jobj;
+    }
   } else {
     $jtext .= $_
   }
