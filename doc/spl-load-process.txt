@@ -83,7 +83,7 @@ JSON that is usual broken.
     a.  Loans data from Spokane are located in the assets directory as hz-loans-(whatever).  Concatenate
         all loans objects into one loans.json files using jq.
 
-        ex: jq '[.[]]' hz-loans-\(* > working_dir/loans.json
+        ex: jq '.[]' ../hz-okapi/assets/json/hz-loans-\(* | jq -s . > hz-loans.json
 
     b.  First download all users from FOLIO using the downloadAllUsers.js script.
         
