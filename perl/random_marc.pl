@@ -4,7 +4,8 @@
 
 my $stop = shift;
 my $nth = shift;
-my $marc_file = shift or die "Usage ./random_marc.pl <stop_count> <nth_record> <file>\n";
+my $marc_file = shift or die "Usage ./random_marc.pl <stop_count> <nth_record> <file> [ <start_rec> ]\n";
+my $start = shift || 0;
 my $out_file = $marc_file;
 $out_file =~ s/(.+)\/.*/$1/;
 $out_file .= "/random.mrc";
@@ -16,7 +17,7 @@ open IN, $marc_file or die "Can't open $marc_file!";
 my $c = 0;
 my $ttl = 0;
 while (<IN>) {
-  if ($c % $nth == 0) {
+  if ($c % $nth == 0 && $c >= $start) {
     print OUT $_;
     $ttl++;
   }
