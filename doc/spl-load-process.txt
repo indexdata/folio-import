@@ -67,11 +67,14 @@ JSON that is usual broken.
 3.  Users:
 
     a.  Concatenate hz-users-*.json files to create one large users file.
+    
+    b.  Get groups.json from FOLIO and save it to the same directory as the large hz-users file.
+            ex:  node downloadAllByEndpoint.js groups ../spl_data/users/
 
-    b.  Run splUsers.js script (located in the /patron directory).  This process
+    c.  Run splUsers.js script (located in the /patron directory).  This process
         will create users files in addition to permissions and logins collections.
 
-    c.  Now run loadByEndpoint.js on users.json files.  Perhaps all of these users files
+    d.  Now run loadByEndpoint.js on users.json files.  Perhaps all of these users files
         could be concatenated into several larger ones and the use the run_load_endpoint.sh 
         and run 5 or 10 jobs in the background.
 
