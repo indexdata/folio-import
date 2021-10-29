@@ -46,7 +46,7 @@ try {
 
   let active = {};
   users.users.forEach(u => {
-    active[u.barcode] = u.active;
+    active[u.barcode] = { active: u.active, expirationDate: u.expirationDate };
   });
 
   const records = {};
@@ -65,7 +65,8 @@ try {
     loan.servicePointId = spMap[r.cko_location] || spMap.ill;
     if (active[r.bbarcode] !== undefined) {
       records.checkouts.push(loan);
-      if (active[r.bbarcode] === false) {
+      if (active[r.bbarcode].active === false) {
+	loan.expirationDate = active[r.bbarcode].expirationDate;
         inactive.checkouts.push(loan);
       }
     } else {

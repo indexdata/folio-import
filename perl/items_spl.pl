@@ -158,6 +158,7 @@ open RAW, "<:encoding(UTF-8)", $infile;
 my $hi = { items => [] };
 my $jtext;
 print "Creating json objects (this may take a while)...\n";
+my $ppc = 0;
 while (<RAW>) {
   s/^\s+//;
   s/\s+$//;
@@ -177,6 +178,7 @@ while (<RAW>) {
   } else {
     $jtext .= $_
   }
+  $ppc++;
 }
 
 my $item_seen = {};
@@ -241,6 +243,7 @@ foreach (@{ $hi->{items} }) {
     $irec->{barcode} = $barcode;
     my $coll_name = $coll_map->{$coll_code} || 'Other';
     $irec->{materialTypeId} = $folio_mtypes->{$coll_name} || $folio_mtypes->{Other};
+    if (!$irec->{materialTypeId}) { die "There is no material type match for $coll_code!" }
     my $lt_label = $itypes_map->{$itype} || 'Standard Circulation';
     $irec->{permanentLoanTypeId} = $folio_ltypes->{$lt_label};
     

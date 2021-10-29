@@ -40,7 +40,7 @@ const tf = process.argv[3];
             let purl = `${config.okapi}/users/${user.id}`;
             if (!user.active || tf === true) {
               user.active = true;
-              user.expirationDate = '2021-08-31T00:00:00.000+0000'
+              user.expirationDate = '2025-12-31T00:00:00.000+0000'
             } else {
               user.active = false;
               user.expirationDate = data[d].expirationDate;
