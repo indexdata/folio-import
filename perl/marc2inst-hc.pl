@@ -895,10 +895,10 @@ sub make_srs {
     push @{ $parsed->{fields} }, $nine;
     $srs->{snapshotId} = $snap_id;
     $srs->{matchedId} = $srs->{id};
-    $srs->{recordType} = 'MARC';
+    $srs->{recordType} = 'MARC_BIB';
     $srs->{generation} = 0;
     $srs->{rawRecord} = { id=>$srs->{id}, content=>$raw };
     $srs->{parsedRecord} = { id=>$srs->{id}, content=>$parsed };
-    $srs->{externalIdsHolder} = { instanceId=>$iid };
+    $srs->{externalIdsHolder} = { instanceId=>$iid, instanceHrid=>$hrid };
     return $srs;
 }
