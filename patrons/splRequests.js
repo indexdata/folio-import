@@ -50,7 +50,13 @@ const reqStatus = [
     const dir = path.dirname(inFile);
 
     const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
-    
+
+    const reqUrl = `${config.okapi}/request-storage/requests`;
+    let succ = 0;
+    let fail = 0;
+    let canc = 0;
+    let nobib = 0;
+
     // gather all requests by bib#
 
     console.log(`INFO Gathering requests and grouping by bib#...`);
@@ -104,7 +110,7 @@ const reqStatus = [
           .set('accept', 'application/json');
         allItems = res.body.items;
       } catch (e) {
-        console.log(e.response || e.message);
+        console.log(e.response.text || e.message);
       }
       for (let i = 0; i < allItems.length; i++) {
         let status = allItems[i].status.name;
@@ -213,26 +219,42 @@ const reqStatus = [
             }
             if (userId && itemId) {
               out.requests.push(reqObj);
-              console.log(`[${reqNum}] INFO Request successfully created on item ${itemHrid} for user ${userNum}`)
+              try {
+                console.log(`POST ${reqObj.id} to ${reqUrl}`);
+                await superagent
+                  .post(reqUrl)
+                  .send(reqObj)
+                  .set('x-okapi-token', authToken)
+                console.log(`[${reqNum}] INFO Request successfully created on item ${itemHrid} for user ${userNum}`)
+                succ++;
+              } catch (e) {
+                console.log(e.response.text);
+                fail++;
+              }
             } else {
               console.log(`[${reqNum}] ERROR Request creation failed!`);
+              fail++
             }
             await wait(config.delay);
           } else {
             console.log(`[${reqNum}] WARN Request has a cancelled status of "${inData[x].request_status}" -- skipping`);
+            canc++;
           }
           console.log('---');
         }
       } else {
         console.log( `ERROR No items found for Bib# ${b}!`)
+        $nobib++
       }
     }
-    out.totalRecords = out.requests.length;
-    const outFile = `${dir}/requests.json`;
-    console.log(`Writing to ${outFile}`);
-    fs.writeFileSync(outFile, JSON.stringify(out, null, 2));
+    console.log('Done!');
+    console.log('-------------');
+    console.log(`Added: ${succ}`);
+    console.log(`Failed: ${fail}`);
+    console.log(`No Bib: ${nobib}`);
+    console.log(`Canceled: ${canc}`);
+    console.log('-------------');
   } catch (e) {
-    // console.log(e.message);
     console.log(e);
   }
 })();
