@@ -244,7 +244,7 @@ const reqStatus = [
         }
       } else {
         console.log( `ERROR No items found for Bib# ${b}!`)
-        $nobib++
+        nobib++
       }
     }
     console.log('Done!');
