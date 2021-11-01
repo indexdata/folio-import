@@ -92,15 +92,15 @@ const reqStatus = [
 
     inRequests = {};
 
-    const out = { requests: [] };
     const userMap = {};
 
     let ttl = 0;
     for (b in bibs) {
       let items = [];
       let allItems = [];
+      let title;
       let inData = bibs[b];
-      let iurl = `${config.okapi}/item-storage/items?query=instance.hrid==${b}&limit=500`;
+      let iurl = `${config.okapi}/inventory/items?query=instance.hrid==${b}&limit=500`;
       ttl++;
       console.log(`INFO Getting items for bib# ${b}...`);
       try {
@@ -117,6 +117,7 @@ const reqStatus = [
         if (!status.match(/Missing|Declared lost|Withdrawn/)) {
           allItems[i].rcount = 0;
           items.push(allItems[i]);
+          title = allItems[i].title;
         } else {
           console.log(`WARN item ${allItems[i].hrid} has a status of ${status}-- not using`);
         }
@@ -126,6 +127,7 @@ const reqStatus = [
       if (icount > 0) {
         for (let x = 0; x < inData.length ; x++) {
           let itemHrid = '';
+          let barcode = '';
           let reqNum = inData[x]['request#'];
           console.log(`[${reqNum}] INFO Processing request`);
           if (inData[x].request_status < 3) {
@@ -143,7 +145,6 @@ const reqStatus = [
               requestDate: rtimestamp,
               fulfilmentPreference: 'Hold Shelf',
               pickupServicePointId: pickupLoc,
-              // position: pos,
               requestExpirationDate: expiry,
               status: reqStatus[inData[x].request_status]
             };
@@ -178,6 +179,7 @@ const reqStatus = [
                 avItem.status.name = 'Paged';
                 itemId = avItem.id;
                 itemHrid = avItem.hrid;
+                barcode = avItem.barcode;
                 avItem.rcount++;
               } else {
                 reqObj.requestType = 'Hold';
@@ -187,6 +189,7 @@ const reqStatus = [
                 itemId = items[0].id;
                 items[0].rcount++;
                 itemHrid = items[0].hrid;
+                barcode = items[0].barcode;
               }
             }
             reqObj.itemId = itemId;
@@ -218,7 +221,8 @@ const reqStatus = [
               }
             }
             if (userId && itemId) {
-              out.requests.push(reqObj);
+              reqObj.item = { title: title, barcode: barcode };
+              console.log(reqObj);
               try {
                 console.log(`POST ${reqObj.id} to ${reqUrl}`);
                 await superagent
