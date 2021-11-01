@@ -337,6 +337,12 @@ sub processing_funcs {
     } elsif ($_ eq 'remove_substring') {
       my $ss = $params->{substring};
       $out =~ s/$ss//g;
+    } elsif ($_ eq 'set_note_staff_only_via_indicator') {
+      if ($field->indicator(1) eq '1') {
+        $out = 'true';
+      } else {
+        $out = 'false';
+      }
     }
   }
   return $out;
@@ -510,7 +516,7 @@ foreach (@ARGV) {
       1;
     };
     next unless $ok;
-    next unless ($marc->title());
+    # next unless ($marc->title());
     my $ldr = $marc->leader();
     my $blevel = substr($ldr, 7, 1);
     my $type = substr($ldr, 6, 1);
@@ -643,9 +649,9 @@ foreach (@ARGV) {
     my $hrid = $rec->{hrid};
     $hrid =~ s/.$//;
     $rec->{hrid} = $hrid;
-    if (!$hrids->{$hrid}) {
-      $rec->{id} = uuid($hrid);
+    if (!$hrids->{$hrid} && $marc->title()) {
       # set FOLIO_USER_ID environment variable to create the following metadata object.
+      $rec->{id} = uuid($hrid);
       if ($ENV{FOLIO_USER_ID}) {
         $rec->{metadata} = {
           createdByUserId=>$ENV{FOLIO_USER_ID},
@@ -678,7 +684,7 @@ foreach (@ARGV) {
       $errcount++;
     }
     
-    if ($success % 10000 == 0 || eof RAW) {
+    if (eof RAW || $success % 10000 == 0) {
       my $tt = time() - $start;
       print "Processed #$count (" . $rec->{hrid} . ") [ instances: $success, holdings: $hcount, items: $icount, time: $tt secs ]\n";
       write_objects($OUT, $inst_recs);
@@ -757,6 +763,7 @@ sub make_hi {
     my $itype = $item->subfield('t');
     my $status = $item->subfield('s') || '';
     my @msgs = $item->subfield('m');
+    my @notes = $item->subfield('n');
     $status =~ s/\s+$//;
     if ($iid) {
       $iid =~ s/^\.//;
@@ -793,6 +800,19 @@ sub make_hi {
         } else {
           push @{ $irec->{circulationNotes} }, $cnobj;
         }
+      }
+      foreach (@notes) {
+        if (!$irec->{notes}) { $irec->{notes} = [] }
+        my $nobj = {};
+        $nobj->{note} = $_;
+        $nobj->{noteTypeId} = '8d0a5eca-25de-4391-81a9-236eeefdd20b';  # Note
+        $nobj->{staffOnly} = 'true';
+        push @{ $irec->{notes} }, $nobj;
+      }
+      if ($item->subfield('o') && $item->subfield('o') eq 'n') {
+        $irec->{discoverySuppress} = 'true';
+      } else {
+        $irec->{discoverySuppress} = 'false';
       }
       my $iout = $json->encode($irec);
       $items .= $iout . "\n";
