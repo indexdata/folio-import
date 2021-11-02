@@ -442,6 +442,11 @@ foreach (@ARGV) {
   my $srs_file = $infile;
   $srs_file =~ s/^(.+)\..+$/$1_srs.jsonl/;
   unlink $srs_file;
+
+  my $presuc_file = $infile;
+  $presuc_file =~ s/^(.+)\..+$/$1_presuc.jsonl/;
+  unlink $presuc_file;
+  open my $PSOUT, ">>:encoding(UTF-8)", $presuc_file;
   
   my $err_path = $infile;
   $err_path =~ s/^(.+)\..+$/$1_err.mrc/;
@@ -676,6 +681,36 @@ foreach (@ARGV) {
         $item_recs .= $hi->{items};
         $icount += $hi->{icount};
       }
+
+      # make preceding succeding titles
+      foreach my $f ($marc->field('78[05]')) {
+        my $presuc = {};
+        $presuc->{title} = $f->as_string('ast');
+        if ($f->tag() eq '780') {
+          $presuc->{precedingInstanceId} = 'PRECEDING_INSTANCE' # dummy number
+        } else {
+          $presuc->{succeedingInstanceId} = 'SUCCEEDING_INSTANCE' # dummy number
+        }
+        foreach my $sf (('w', 'x')) {
+          my $idtype = $refdata->{identifierTypes}->{'Other standard identifier'};
+          foreach ($f->subfield($sf)) {
+            if (/OCoLC|ocm|ocn/) {
+              $idtype = $refdata->{identifierTypes}->{'OCLC'};
+            } elsif (/DLC/) {
+              $idtype = $refdata->{identifierTypes}->{'LCCN'};
+            } elsif (/^\d{4}-[0-9Xx]{4}/) {
+              $idtype = $refdata->{identifierTypes}->{'ISSN'};
+            } elsif (/^[0-9Xx]{10,13}/) {
+              $idtype = $refdata->{identifierTypes}->{'ISBN'};
+            }
+            my $idObj = { value=>$_, identifierTypeId=>$idtype };
+            push @{ $presuc->{identifiers} }, $idObj;
+          }
+        }
+        print Dumper($presuc);
+        write_objects($PSOUT, $json->encode($presuc) . "\n");
+      }
+
 
     } else {
       open ERROUT, ">>:encoding(UTF-8)", $err_path;
