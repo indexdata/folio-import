@@ -424,6 +424,7 @@ foreach (@ARGV) {
   my $count = 0;
   my $icount = 0;
   my $hcount = 0;
+  my $pcount = 0;
   my $errcount = 0;
   my $start = time();
 
@@ -707,8 +708,8 @@ foreach (@ARGV) {
             push @{ $presuc->{identifiers} }, $idObj;
           }
         }
-        print Dumper($presuc);
         write_objects($PSOUT, $json->encode($presuc) . "\n");
+        $pcount++;
       }
 
 
@@ -743,6 +744,7 @@ foreach (@ARGV) {
   print "\nInstances: $success ($save_path)";
   print "\nHoldings:  $hcount ($holdings_path)";
   print "\nItems:     $icount ($items_path)";
+  print "\nPreSuc:    $pcount ($presuc_file)";
   print "\nErrors:    $errcount\n";
 }
 
