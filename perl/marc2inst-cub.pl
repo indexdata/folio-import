@@ -25,6 +25,7 @@ use JSON;
 use UUID::Tiny ':std';
 use MARC::Charset 'marc8_to_utf8';
 use Time::Piece;
+use LWP::UserAgent;
 use Data::Dumper;
 
 binmode STDOUT, ":utf8";
@@ -38,6 +39,15 @@ my $cntypes = {
   '092' => '6caca63e-5651-4db6-9247-3205156e9699',
   '099' => '6caca63e-5651-4db6-9247-3205156e9699',
 };
+
+# this stuff is for querying couchDB for items and holdings
+my $ua = LWP::UserAgent->new(timeout => 10);
+my $creds = 'admin:admin';
+my $couchbase = "http://$creds\@localhost:5984";
+my $iurl = "$couchbase/cub-items/_find";
+my $hurl = "$couchbase/cub-holdings/_find";
+
+
 
 my $rules_file = shift;
 my $ref_dir = shift;
@@ -771,8 +781,10 @@ sub make_hi {
       last;
     }
   }
-  foreach my $item ($marc->field($itemtag)) {
-    my $loc = $item->subfield('l') || '';
+  my $i = couchQuery($iurl, $bhrid); 
+  foreach my $item (@ { $i->{docs} }) {
+    my $loc = $item->{fixedFields}->{79}->{value} || '';
+    print "$loc\n";
     next if !$loc;
     $loc =~ s/(\s*$)//;
     my $hkey = "$bhrid-$loc";
@@ -796,7 +808,8 @@ sub make_hi {
 
     # make item record;
     my $irec = {};
-    my $iid = $item->subfield('y');
+    my $iid = $item->{_id};
+    print $iid;
     my $itype = $item->subfield('t');
     my $status = $item->subfield('s') || '';
     my @msgs = $item->subfield('m');
@@ -862,6 +875,21 @@ sub make_hi {
     hcount => $hcount,
     icount => $icount
   };
+}
+
+sub couchQuery {
+  my $url = shift;
+  my $bibid = shift;
+  $bibid =~ s/^b//;
+  my $q = '{"selector":{"bibId":{"$eq":"' . $bibid . '"}},"limit":5000}';
+  print "$q\n";
+  my $res = $ua->post($url, Content => $q, 'Content-type' => 'application/json');
+  if ($res->is_success) {
+      return $json->decode($res->decoded_content);
+  }
+  else {
+      die $res->status_line;
+  }
 }
 
 sub write_objects {
