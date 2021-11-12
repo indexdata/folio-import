@@ -134,9 +134,65 @@ JSON that is usual broken.
 
         NOTE: These request objects need to be run in order.  Please run a single process.
 
-6.  Fines: (TODO)
+6.  Fines:
 
-    Fines are located in the /assets/ directory as hz-ledger.json 
+    a.  Get copy of the data:
+
+        cp /data/spl/hz-okapi/assets/json/hz-ledger.json /data/spl/feesfines
+
+    b.  Get service points reference data:
+
+        cd ~/folio-import
+        # ensure appropriate config.js
+        node downloadAllByEndpoint.js service-points /data/spl/feesfines
+
+    c.  Get map of users:
+
+        node downloadAllUsers.js /data/spl/feesfines
+        cat /data/spl/feesfines/users.json \
+          | jq -r '.users[] | select(has("externalSystemId")) | [ .externalSystemId, .id ] | @tsv' \
+          > /data/spl/feesfines/users-map.tsv
+
+    d.  Get map of items:
+
+        node downloadAllItems.js /data/spl/feesfines
+        cat /data/spl/feesfines/items.json \
+          | jq -r '.items[] | [ .hrid, .id ] | @tsv' \
+          > /data/spl/feesfines/items-map.tsv
+
+    e.  Run the transformation:
+
+        cd /data/spl/feesfines
+        python3 ~/folio-import/python/spl-feesfines/spl_feesfines.py \
+          -u users-map.tsv -m items-map.tsv -v verbs-map.tsv -p service-points.json \
+          -i hz-ledger.json
+
+    f.  Inspect the summary and errors output:
+
+        ex: cat errors-feesfines.json | jq '.[] | select(.errors[] | match("uuid_user:")) | .borrower' | sort -u -n
+        ex: cat errors-feesfines.json | jq '.[].errors[]' | egrep -v 'uuid_user: missing|uuid_item: missing' | sort -u
+
+    g.  Load the accounts:
+
+        cd ~/folio-import
+        node loadByEndpoint.js accounts /data/spl/feesfines/feesfines-accounts.json \
+          > log/spl/feesfines-accounts.txt
+        # Inspect log for errors. Should only be from potential network glitches.
+        # Isolate records to new data file, and load those missing ones.
+
+    h.  Load the associated actions:
+
+        node loadByEndpoint.js feefineactions /data/spl/feesfines/feesfines-actions.json \
+          > log/spl/feesfines-actions.txt
+        # Inspect log for errors. As above.
+
+    i.  Load the transactions:
+
+        cd bash
+        cp ~/charles/folio-import/bash/login-spokane-test.sh .
+        ./login-spokane-test.sh
+        ./load_feesfines_transactions.sh /data/spl/feesfines/feesfines-transactions.jsonl
+        # Inspect log for errors.
 
 7.  Organizations: (TODO)
 
