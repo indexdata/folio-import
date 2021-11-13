@@ -784,11 +784,15 @@ sub make_hi {
   my $i = couchQuery($iurl, $bhrid); 
   foreach my $item (@ { $i->{docs} }) {
     my $loc = $item->{fixedFields}->{79}->{value} || '';
-    print "$loc\n";
     next if !$loc;
     $loc =~ s/(\s*$)//;
     my $hkey = "$bhrid-$loc";
     my $locid = $sierra2folio->{locations}->{$loc} || '53cf956f-c1df-410b-8bea-27f712cca7c0'; # defaults to Norlin Stacks
+    my $vf = {};
+    foreach (@{ $item->{varFields} }) {
+      my $ftag = $_->{fieldTag};
+      push @{ $vf->{$ftag} }, $_->{content};
+    }
     # make holdings record;
     if (!$hseen->{$hkey}) {
       $hid = uuid($hkey);
@@ -809,28 +813,29 @@ sub make_hi {
     # make item record;
     my $irec = {};
     my $iid = $item->{_id};
-    print $iid;
-    my $itype = $item->subfield('t');
-    my $status = $item->subfield('s') || '';
-    my @msgs = $item->subfield('m');
-    my @notes = $item->subfield('n');
+    my $itype = $item->{fixedFields}->{79}->{value};
+    my $status = $item->{fixedFields}->{79}->{value} || '';
+    my @msgs = $vf->{m};
+    my @notes;
+    push @notes, @{ $vf->{x} } if $vf->{x};
+    push @notes, @{ $vf->{w} } if $vf->{w};
     $status =~ s/\s+$//;
     if ($iid) {
       $iid =~ s/^\.//;
       $irec->{id} = uuid($iid);
       $irec->{holdingsRecordId} = $hid;
-      $irec->{hrid} = $iid;
-      $irec->{barcode} = $item->subfield('i') || '';
+      $irec->{hrid} = "i$iid";
+      $irec->{barcode} = $vf->{b}[0] || '';
       if ($blevel eq 's') {
-        $irec->{enumeration} = $item->subfield('c') || '';
+        $irec->{enumeration} = $vf->{v}[0] || '';
       } else {
-        $irec->{volume} = $item->subfield('c') || '';
+        $irec->{volume} = $vf->{v}[0] || '';
       }
-      $irec->{copyNumber} = $item->subfield('g') || '';
+      $irec->{copyNumber} = $item->{fixedFields}->{58}->{value} || '';
       $irec->{permanentLoanTypeId} = $refdata->{loantypes}->{'Can circulate'};
       $irec->{materialTypeId} = $sierra2folio->{mtypes}->{$itype} || '71fbd940-1027-40a6-8a48-49b44d795e46'; # defaulting to unspecified
       $irec->{status}->{name} = $sierra2folio->{statuses}->{$status} || 'Available'; # defaulting to available;
-      foreach (@msgs) {
+      foreach (@{ $vf->{m} }) {
         if (!$irec->{circulationNotes}) { $irec->{circulationNotes} = [] }
         my $cnobj = {};
         $cnobj->{note} = $_;
@@ -859,7 +864,8 @@ sub make_hi {
         $nobj->{staffOnly} = 'true';
         push @{ $irec->{notes} }, $nobj;
       }
-      if ($item->subfield('o') && $item->subfield('o') eq 'n') {
+      my $icode2 = $item->{fixedFields}->{60}->{value};
+      if ($icode2 eq 'n') {
         $irec->{discoverySuppress} = 'true';
       } else {
         $irec->{discoverySuppress} = 'false';
@@ -882,7 +888,6 @@ sub couchQuery {
   my $bibid = shift;
   $bibid =~ s/^b//;
   my $q = '{"selector":{"bibId":{"$eq":"' . $bibid . '"}},"limit":5000}';
-  print "$q\n";
   my $res = $ua->post($url, Content => $q, 'Content-type' => 'application/json');
   if ($res->is_success) {
       return $json->decode($res->decoded_content);
