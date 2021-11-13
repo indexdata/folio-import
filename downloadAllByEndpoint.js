@@ -28,8 +28,11 @@ let limit = parseInt(process.argv[5], 10);
       fields = epf[1].split(/,/);
     }
 
-    let actionUrl = config.okapi + '/' + endPoint + '?query=id=*%20sortBy%20id';
-    const filename = endPoint.replace(/\//g, '__');
+    let queryStr = '?query=id=*%20sortBy%20id';
+    if (endPoint.match(/query=/)) queryStr = '';
+    let actionUrl = config.okapi + '/' + endPoint + queryStr;
+    let filename = endPoint.replace(/\//g, '__');
+    filename = filename.replace(/\?.+/, '');
 
     let totFetch = 0;
     let totRecs = 1000000;
