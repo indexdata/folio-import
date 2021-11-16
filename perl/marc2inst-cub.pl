@@ -785,7 +785,7 @@ sub make_hi {
   # find and make serials holdings
   if ($blevel eq 's') {
     my $h = couchQuery($hurl, $bhrid);
-    foreach (@ { $h->{docs} }) {
+    foreach (@{ $h->{docs} }) {
       my $loc = $_->{fixedFields}->{40}->{value};
       $loc =~ s/\s+//;
       my $hrid = "c" . $_->{_id} . "-$loc";
@@ -796,8 +796,47 @@ sub make_hi {
         permanentLocationId => $sierra2folio->{locations}->{$loc} || '53cf956f-c1df-410b-8bea-27f712cca7c0',
         instanceId => $bid,
         holdingsTypeId => 'e6da6c98-6dd0-41bc-8b4b-cfd4bbd9c3ae', #serial
-        sourceId => 'b0761399-f354-428e-a395-d50801851243' #sierra
+        sourceId => 'f32d531e-df79-46b3-8932-cdd35f7a2264', #folio
+        
       };
+      if ($cn) {
+        $sh->{callNumber} = $cn;
+        $sh->{callNumberTypeId} = $cntype;
+      }
+      my $varFields = {};
+      foreach my $vf (@{ $_->{varFields} }) {
+        my $tag = $vf->{marcTag} || '000';
+        if ($tag !~ /^00/) {
+          my @subs = ($vf->{subfields}) ? @{ $vf->{subfields} } : ();
+          my $sfs = {};
+          foreach (@subs) {
+            my $t = $_->{tag};
+            my $c = $_->{content};
+            push @{ $sfs->{$t} }, $c;
+          }
+          push @{ $varFields->{$tag} }, $sfs;
+        }
+      }
+      my $pat;
+      foreach my $capt (@{ $varFields->{853} }) {
+        my $l = $capt->{8}[0];
+        delete $capt->{8};
+        foreach (keys %{ $capt }) {
+          $pat->{$l}->{$_} = $capt->{$_}[0];
+        }
+      }
+      foreach my $st (@{ $varFields->{863} }) {
+        my $ob = {};
+        if ($st->{a}) {
+          $ob->{statement} = $pat->{1}->{a} . " " . $st->{a}[0];
+        }
+        if ($st->{i}) {
+          my $cron = $pat->{1}->{i} || 'x';
+          $cron =~ s/\w+/$st->{i}[0]/;
+          $ob->{statement} .= ", $cron";
+        }
+        push @{ $sh->{holdingsStatements} }, $ob;
+      }
       my $hout = $json->encode($sh);
       $holdings .= $hout . "\n";
       $hcount++;
@@ -825,7 +864,7 @@ sub make_hi {
       $hrec->{instanceId} = $bid;
       $hrec->{permanentLocationId} = $locid;
       $hrec->{holdingsTypeId} = '03c9c400-b9e3-4a07-ac0e-05ab470233ed'; # monograph
-      $hrec->{sourceId} = 'b0761399-f354-428e-a395-d50801851243'; # sierra
+      $hrec->{sourceId} = 'f32d531e-df79-46b3-8932-cdd35f7a2264'; # folio
       if ($cn) {
         $hrec->{callNumber} = $cn;
         $hrec->{callNumberTypeId} = $cntype;
