@@ -769,7 +769,7 @@ sub make_hi {
   # print "Creating holdings for bib# $bhrid\n";
   my $hrec = {};
   my $cn = '';
-  my $cntag = '';
+  my $cntype = '';
   my $holdings = '';
   my $items = '';
   my $hcount = 0;
@@ -777,11 +777,35 @@ sub make_hi {
   foreach (@cntags) {
     if ($marc->field($_)) {
       $cn = $marc->field($_)->as_string('ab', ' ');
-      $cntag = $_;
+      $cntype = $cntypes->{$_} || '6caca63e-5651-4db6-9247-3205156e9699'; #other
       last;
     }
   }
-  my $i = couchQuery($iurl, $bhrid); 
+
+  # find and make serials holdings
+  if ($blevel eq 's') {
+    my $h = couchQuery($hurl, $bhrid);
+    foreach (@ { $h->{docs} }) {
+      my $loc = $_->{fixedFields}->{40}->{value};
+      $loc =~ s/\s+//;
+      my $hrid = "c" . $_->{_id} . "-$loc";
+      my $id = uuid($hrid);
+      my $sh = {
+        id => $id,
+        hrid => $hrid,
+        permanentLocationId => $sierra2folio->{locations}->{$loc} || '53cf956f-c1df-410b-8bea-27f712cca7c0',
+        instanceId => $bid,
+        holdingsTypeId => 'e6da6c98-6dd0-41bc-8b4b-cfd4bbd9c3ae', #serial
+        sourceId => 'b0761399-f354-428e-a395-d50801851243' #sierra
+      };
+      my $hout = $json->encode($sh);
+      $holdings .= $hout . "\n";
+      $hcount++;
+    }
+  }
+  
+  # print Dumper($h);
+  my $i = couchQuery($iurl, $bhrid);
   foreach my $item (@ { $i->{docs} }) {
     my $loc = $item->{fixedFields}->{79}->{value} || '';
     next if !$loc;
@@ -793,16 +817,18 @@ sub make_hi {
       my $ftag = $_->{fieldTag};
       push @{ $vf->{$ftag} }, $_->{content};
     }
-    # make holdings record;
+    # make holdings record from item;
     if (!$hseen->{$hkey}) {
       $hid = uuid($hkey);
       $hrec->{id} = $hid;
       $hrec->{hrid} = $hkey;
       $hrec->{instanceId} = $bid;
       $hrec->{permanentLocationId} = $locid;
+      $hrec->{holdingsTypeId} = '03c9c400-b9e3-4a07-ac0e-05ab470233ed'; # monograph
+      $hrec->{sourceId} = 'b0761399-f354-428e-a395-d50801851243'; # sierra
       if ($cn) {
         $hrec->{callNumber} = $cn;
-        $hrec->{callNumberTypeId} = $cntypes->{$cntag} || '6caca63e-5651-4db6-9247-3205156e9699'; #other
+        $hrec->{callNumberTypeId} = $cntype;
       }
       my $hout = $json->encode($hrec);
       $holdings .= $hout . "\n";
