@@ -443,7 +443,7 @@ foreach (@ARGV) {
   unlink $save_path;
 
   my $id_map = $infile;
-  $id_map =~ s/^(.+)\..+$/$1-map.tsv/;
+  $id_map =~ s/^(.+)\..+$/$1_map.tsv/;
   unlink $id_map;
 
   my $snap_file = $infile;
@@ -463,15 +463,15 @@ foreach (@ARGV) {
   $err_path =~ s/^(.+)\..+$/$1_err.mrc/;
   unlink $err_path;
 
-  # my $holdings_path = $infile;
-  # $holdings_path =~ s/^(.+)\..+$/$1_holdings.jsonl/;
-  # unlink $holdings_path;
-  # open my $HOUT, ">>:encoding(UTF-8)", $holdings_path;
+  my $holdings_path = $infile;
+  $holdings_path =~ s/^(.+)\..+$/$1_holdings.jsonl/;
+  unlink $holdings_path;
+  open my $HOUT, ">>:encoding(UTF-8)", $holdings_path;
 
-  # my $items_path = $infile;
-  # $items_path =~ s/^(.+)\..+$/$1_items.jsonl/;
-  # unlink $items_path;
-  # open my $IOUT, ">>:encoding(UTF-8)", $items_path;
+  my $items_path = $infile;
+  $items_path =~ s/^(.+)\..+$/$1_items.jsonl/;
+  unlink $items_path;
+  open my $IOUT, ">>:encoding(UTF-8)", $items_path;
 
   my $snapshot_id = make_snapshot($snap_file);
   
@@ -481,7 +481,7 @@ foreach (@ARGV) {
   open RAW, "<:encoding(UTF-8)", $infile;
   open my $OUT, ">>:encoding(UTF-8)", $save_path;
   open my $SRSOUT, ">>:encoding(UTF-8)", $srs_file;
-  open IDMAP, ">>:encoding(UTF-8)", $id_map";
+  open IDMAP, ">>$id_map";
   my $inst_recs;
   my $srs_recs;
   my $hold_recs;
@@ -556,13 +556,11 @@ foreach (@ARGV) {
       my $fr = $field_replace->{$tag} || '';
       if ($fr) {
         my $sf = $fr->{subfield}[0];
-        my $sdata = $field->subfield($sf) || '';
-        if ($sdata =~ /^\d{3}/) {
-          $sdata =~ s/^(\d{3}).*/$1/;
-          my $rtag = $fr->{frules}->{$sdata} || $sdata;
-          $field->set_tag($rtag);
-          push @marc_fields, $field;
-        }
+        my $sdata = $field->subfield($sf);
+        $sdata =~ s/^(\d{3}).*/$1/;
+        my $rtag = $fr->{frules}->{$sdata} || $sdata;
+        $field->set_tag($rtag);
+        push @marc_fields, $field;
         next;
       }
       if (($tag =~ /^(7|1)/ && !$field->subfield('a')) || ($tag == '856' && !$field->subfield('u'))) {
@@ -680,29 +678,20 @@ foreach (@ARGV) {
       }
       $inst_recs .= $json->encode($rec) . "\n";
       $srs_recs .= $json->encode(make_srs($marc, $raw, $rec->{id}, $rec->{hrid}, $snapshot_id, $srs_file)) . "\n";
-      my $cntag = '';
-      my $cn = '';
-      foreach (@cntags) {
-        if ($marc->field($_)) {
-          $cn = $marc->field($_)->as_string('ab', ' ');
-          $cntag = $_;
-        last;
-        }
-      }
-      $idmap_lines .= "$rec->{hrid}\t$rec->{id}\t$cn\t$cntag\n";
+      $idmap_lines .= "$rec->{hrid}\t$rec->{id}\n";
       $hrids->{$hrid} = 1;
       $success++;
 
       # make holdings and items
-      # my $hi = make_hi($marc, $rec->{id}, $rec->{hrid}, $type, $blevel);
-      # if ($hi->{holdings}) {
-        # $hold_recs .= $hi->{holdings};
-        # $hcount += $hi->{hcount};
-      # }
-      # if ($hi->{items}) {
-        # $item_recs .= $hi->{items};
-        # $icount += $hi->{icount};
-      # }
+      my $hi = make_hi($marc, $rec->{id}, $rec->{hrid}, $type, $blevel);
+      if ($hi->{holdings}) {
+        $hold_recs .= $hi->{holdings};
+        $hcount += $hi->{hcount};
+      }
+      if ($hi->{items}) {
+        $item_recs .= $hi->{items};
+        $icount += $hi->{icount};
+      }
 
       # make preceding succeding titles
       foreach my $f ($marc->field('78[05]')) {
@@ -750,11 +739,11 @@ foreach (@ARGV) {
       write_objects($SRSOUT, $srs_recs);
       $srs_recs = '';
 
-      # write_objects($HOUT, $hold_recs);
-      # $hold_recs = '';
+      write_objects($HOUT, $hold_recs);
+      $hold_recs = '';
 
-      # write_objects($IOUT, $item_recs);
-      # $item_recs = '';
+      write_objects($IOUT, $item_recs);
+      $item_recs = '';
 
       print IDMAP $idmap_lines;
       $idmap_lines = '';
