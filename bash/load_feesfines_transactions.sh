@@ -39,13 +39,14 @@ output_pn="/tmp/load_feesfines_transactions.json"
 if [ ! -d 'log' ]; then
   mkdir 'log'
 fi
-date_start_utc_compact=$(date -u "+%Y%m%d")
+date_start_utc_compact=$(date -u "+%Y%m%d%H%M")
 log_fn="log/feesfines-transactions-${date_start_utc_compact}.txt"
 echo "Input file: $input_fn" > $log_fn
 
-line_num=0;
+line_num=0
+problem_count=0
 while IFS= read -r line; do
-  line_num=$(expr $line_num + 1)
+  ((line_num++))
   date_utc=$(date -u "+%Y-%m-%d %H:%M:%S")
   verb=$(echo $line | jq -r '.verb')
   account_id=$(echo $line | jq -r '.accountId')
@@ -58,17 +59,20 @@ while IFS= read -r line; do
   if [ "$status" != "200" ] && [ "$status" != "422" ]; then
     msg=$(cat $output_pn)
     echo "ERROR: #${line_num}: $status: ${msg}" >> $log_fn
+    ((problem_count++))
     continue
   fi
   if [ "$status" == "422" ]; then
     msg=$(cat $output_pn | jq -r '.errorMessage')
     echo "ERROR: #${line_num}: $status: ${msg}" >> $log_fn
+    ((problem_count++))
     continue
   fi
   status=$(${cmd_curl} -s -S -w "%{http_code}" "${endpoint}/${verb}" -d @.okapi/payload -o $output_pn)
   if [ "$status" != "201" ] && [ "$status" != "422" ]; then
     msg=$(cat $output_pn)
     echo "ERROR: #${line_num}: $status: ${msg}" >> $log_fn
+    ((problem_count++))
     continue
   fi
   if [ "$status" == "422" ]; then
@@ -77,7 +81,10 @@ while IFS= read -r line; do
       msg=$(cat $output_pn)
     fi
     echo "ERROR: #${line_num}: $status: ${msg}" >> $log_fn
+    ((problem_count++))
     continue
   fi
   echo ${status} >> $log_fn
 done < $input_fn
+
+echo "${problem_count} problems. See $log_fn"
