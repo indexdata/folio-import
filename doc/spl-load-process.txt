@@ -186,11 +186,16 @@ JSON that is usual broken.
           > log/spl/feesfines-actions.txt
         # Inspect log for errors. As above.
 
-    i.  Load the transactions:
+    i.  Load the adjustment actions:
 
         cd bash
         cp ~/charles/folio-import/bash/login-spokane-test.sh .
         ./login-spokane-test.sh
+        ./load_feesfines_adjustments.sh /data/spl/feesfines/feesfines-adjustments.jsonl
+        # Inspect log for errors.
+        
+    j.  Load the transactions:
+
         ./load_feesfines_transactions.sh /data/spl/feesfines/feesfines-transactions.jsonl
         # Inspect log for errors.
 
