@@ -812,31 +812,18 @@ sub make_hi {
           foreach (@subs) {
             my $t = $_->{tag};
             my $c = $_->{content};
-            push @{ $sfs->{$t} }, $c;
+            if ($tag =~ /^8[56][345]/) {
+              $sfs->{$t} = $c;
+            } else {
+              push @{ $sfs->{$t} }, $c;
+            }
           }
           push @{ $varFields->{$tag} }, $sfs;
         }
       }
-      my $pat;
-      foreach my $capt (@{ $varFields->{853} }) {
-        my $l = $capt->{8}[0];
-        delete $capt->{8};
-        foreach (keys %{ $capt }) {
-          $pat->{$l}->{$_} = $capt->{$_}[0];
-        }
-      }
-      foreach my $st (@{ $varFields->{863} }) {
-        my $ob = {};
-        if ($st->{a}) {
-          $ob->{statement} = $pat->{1}->{a} . " " . $st->{a}[0];
-        }
-        if ($st->{i}) {
-          my $cron = $pat->{1}->{i} || 'x';
-          $cron =~ s/\w+/$st->{i}[0]/;
-          $ob->{statement} .= ", $cron";
-        }
-        push @{ $sh->{holdingsStatements} }, $ob;
-      }
+      print Dumper($varFields);
+      my @matches = grep { $_->{'8'} =~ /^1/ } @{ $varFields->{863} };
+      print Dumper(@matches);
       my $hout = $json->encode($sh);
       $holdings .= $hout . "\n";
       $hcount++;

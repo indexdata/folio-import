@@ -17,6 +17,7 @@ open IN, $marc_file or die "Can't open $marc_file!";
 my $c = 0;
 my $ttl = 0;
 while (<IN>) {
+  next if /^00[0-5]/;
   if ($c % $nth == 0 && $c >= $start) {
     print OUT $_;
     $ttl++;

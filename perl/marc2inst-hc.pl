@@ -38,6 +38,7 @@ my $cntypes = {
   '092' => '6caca63e-5651-4db6-9247-3205156e9699',
   '099' => '6caca63e-5651-4db6-9247-3205156e9699',
 };
+my $version = '2';
 
 my $rules_file = shift;
 my $ref_dir = shift;
@@ -653,7 +654,7 @@ foreach (@ARGV) {
     $rec->{hrid} = $hrid;
     if (!$hrids->{$hrid} && $marc->title()) {
       # set FOLIO_USER_ID environment variable to create the following metadata object.
-      $rec->{id} = uuid($hrid);
+      $rec->{id} = uuid($hrid . $version);
       if ($ENV{FOLIO_USER_ID}) {
         $rec->{metadata} = {
           createdByUserId=>$ENV{FOLIO_USER_ID},
