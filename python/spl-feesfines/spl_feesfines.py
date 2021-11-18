@@ -60,6 +60,9 @@ def main():
     parser.add_argument("-a", "--output-actions",
         default="feesfines-actions.json",
         help="Pathname to data output-actions file (JSON). (Default: %(default)s)")
+    parser.add_argument("-j", "--output-adjustments",
+        default="feesfines-adjustments.jsonl",
+        help="Pathname to data output-transactions file (JSONL). (Default: %(default)s)")
     parser.add_argument("-t", "--output-transactions",
         default="feesfines-transactions.jsonl",
         help="Pathname to data output-transactions file (JSONL). (Default: %(default)s)")
@@ -156,6 +159,7 @@ def main():
     errors_list = []
     entries_account = []
     entries_action = []
+    entries_adjustment = []
     entries_transaction = []
     critical_count = 0
     statuses = {}
@@ -250,7 +254,7 @@ def main():
         reference_str = str(reference)
         # comment
         comment, errors = get_value(record, 'comment')
-        msg_comment = 'block={} date={} comment={}'.format(block, action_date, comment)
+        msg_comment = 'block={} date={} item={} comment={}'.format(block, action_date, item, comment)
         if not has_critical:
             # accountId
             references_account.append(reference_str)
@@ -265,6 +269,7 @@ def main():
                 entry_account = {}
                 entry_action = {}
                 # actionId
+                #FIXME: use reference_ord for next dry-run
                 references_action.append(reference_str)
                 try:
                     uuid_action = uuid_map_actions[reference_str]
@@ -306,6 +311,33 @@ def main():
                 entry_account['feeFineId'] = 'cf238f9f-7018-47b7-b815-bb2db798e19f'
                 entries_account.append(entry_account)
                 entries_action.append(entry_action)
+            elif block in ['adjdbt']:
+                # This is an adjustment action.
+                # We need to query the account and compute the balance before loading it.
+                entry_adjustment = {}
+                reference_ord = reference_str + '_' + str(ord_num)
+                references_action.append(reference_ord)
+                try:
+                    uuid_action = uuid_map_actions[reference_ord]
+                except KeyError:
+                    #if args.loglevel == "debug":
+                    #    do_debug(record_num, reference_str, 'Generated new UUID for reference actionId: {}'.format(reference_str))
+                    uuid_action = str(uuid.uuid4())
+                    uuid_map_actions[reference_ord] = uuid_action
+                entry_adjustment['userId'] = uuid_user
+                entry_adjustment['id'] = uuid_action
+                entry_adjustment['accountId'] = uuid_account
+                entry_adjustment['amountAction'] = money
+                entry_adjustment['balance'] = money
+                entry_adjustment['dateAction'] = action_date_time
+                entry_adjustment['createdAt'] = name_service_point
+                entry_adjustment['source'] = 'Administrator, Spokane'
+                entry_adjustment['transactionInformation'] = 'reference={} ord={}'.format(reference_str, ord_num)
+                entry_adjustment['comments'] = msg_comment
+                # Additional universal action properties
+                entry_adjustment['typeAction'] = 'Migrated action'
+                entry_adjustment['notify'] = False
+                entries_adjustment.append(entry_adjustment)
             else:
                 # This is a subsequent transaction.
                 entry_transaction = {}
@@ -315,10 +347,13 @@ def main():
                 transaction['amount'] = str(abs(money))
                 transaction['servicePointId'] = uuid_service_point
                 transaction['transactionInfo'] = 'reference={} ord={}'.format(reference_str, ord_num)
+                if block == 'adjcr':
+                    transaction['paymentMethod'] = 'Correction'
+                else:
+                    transaction['paymentMethod'] = 'Not known'
                 transaction['comments'] = msg_comment
                 # Additional universal transaction properties
                 transaction['userName'] = 'Administrator, Spokane'
-                transaction['paymentMethod'] = 'Not known'
                 transaction['notifyPatron'] = False
                 entry_transaction['data'] = transaction
                 entries_transaction.append(entry_transaction)
@@ -346,6 +381,7 @@ def main():
       'numErrorRecordsCritical': critical_count,
       'numValidAccountEntries': len(entries_account),
       'numValidActionEntries': len(entries_action),
+      'numValidAdjustmentEntries': len(entries_adjustment),
       'numValidTransactionEntries': len(entries_transaction),
       'feeFineTypes': statuses
     }
@@ -362,6 +398,10 @@ def main():
         records['totalRecords'] = len(entries_action)
         output_fh.write( json.dumps(records, sort_keys=False, indent=2, separators=(',', ': ')) )
         output_fh.write('\n')
+    with open(args.output_adjustments, 'w') as output_fh:
+        for entry in entries_adjustment:
+            json.dump(entry, output_fh)
+            output_fh.write('\n')
     with open(args.output_transactions, 'w') as output_fh:
         for entry in entries_transaction:
             json.dump(entry, output_fh)
