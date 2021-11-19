@@ -188,6 +188,12 @@ try {
   });
 
   const makeLine = (sheet, owner, titleField, fromField, toField) => {
+    console.log(sheet);
+    for (let key in inRecs[sheet][0]) {
+      if (key.match(/Agreement/)) titleField = key;
+      if (key.match(/Active from/)) fromField = key;
+      if (key.match(/Active to/)) toField = key;      
+    }
     inRecs[sheet].forEach(r => {
       let ent = {};
       ent.owner = owner;
@@ -220,8 +226,21 @@ try {
     });
   }
 
-  makeLine('resourceKanopy', 'Kanopy', 'Kanopy Agreement (resourceID 237)/Agreement Line [n]/Description', 'Kanopy Agreement/Agreement Line [n]/Active from', 'Kanopy Agreement/Agreement Line [n]/Active to');
-  makeLine('resourceSwank', 'Swank', 'Swank Agreement (resourceID 543)/Agreement Line [n]/Description', 'Swank Agreement/Agreement Line [n]/Active from', 'Swank Agreement/Agreement Line [n]/Active to');
+  makeLine('resourceKanopy', 'Kanopy');
+  makeLine('resourceSwank', 'Swank');
+  makeLine('resourceAlexander', 'Alexander Street');
+  makeLine('resourceDocuseek', 'Docuseek');
+  makeLine('resourceFilmPlatform', 'Film Platform');
+  makeLine('resourceFod', 'Films on Demand');
+  makeLine('resourceGoodDocs', 'Good Docs');
+  makeLine('resourceInsight', 'Insight Media');
+  makeLine('resourceNcherm', 'NCHERM');
+  makeLine('resourceNewDay', 'New Day');
+  makeLine('resourcePsychotherapy', 'Psychotherapy.NET');
+  makeLine('resourceTugg', 'Tugg');
+  makeLine('resourceWorldTrust', 'World Trust');
+  // makeLine('resourceKanopy', 'Kanopy', 'Kanopy Agreement (resourceID 237)/Agreement Line [n]/Description', 'Kanopy Agreement/Agreement Line [n]/Active from', 'Kanopy Agreement/Agreement Line [n]/Active to');
+  // makeLine('resourceSwank', 'Swank', 'Swank Agreement (resourceID 543)/Agreement Line [n]/Description', 'Swank Agreement/Agreement Line [n]/Active from', 'Swank Agreement/Agreement Line [n]/Active to');
 
 } catch (e) {
   console.log(e);
