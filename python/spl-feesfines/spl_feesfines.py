@@ -354,6 +354,7 @@ def main():
                         pass
                     else:
                         entry_account['callNumber'] = call_number
+                    entry_account['title'] = 'item hrid={}'.format(str(item))
                 entry_account['amount'] = money
                 entry_account['remaining'] = money
                 entry_action['userId'] = uuid_user
