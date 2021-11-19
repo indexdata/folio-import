@@ -8,7 +8,8 @@ Process the Spokane feesfines data export to transform into FOLIO JSON.
 
 Typical invocation:
 python3 spl_feesfines.py \
-  -u users-map.tsv -m items-map.tsv -v verbs-map.tsv -p service-points.json \
+  -u users-map.tsv -m items.json -v verbs-map.tsv \
+  -c locations.json -y material-types.json -p service-points.json \
   -i hz-ledger.json -l debug
 """
 
@@ -19,6 +20,7 @@ import json
 import logging
 import os
 from pathlib import Path
+import pprint
 import sys
 import uuid
 
@@ -44,13 +46,19 @@ def main():
         help="Pathname to UUID map of users externalSystemId (TSV).")
     parser.add_argument("-m", "--map-items",
         required=True,
-        help="Pathname to UUID map of items hrid (TSV).")
+        help="Pathname to items data (JSON).")
     parser.add_argument("-v", "--map-verbs",
         required=True,
         help="Pathname to map of blocks to API verbs (TSV).")
+    parser.add_argument("-c", "--map-locations",
+        required=True,
+        help="Pathname to reference data locations (JSON).")
+    parser.add_argument("-y", "--map-materialtypes",
+        required=True,
+        help="Pathname to reference data material-types (JSON).")
     parser.add_argument("-p", "--map-servicepoints",
         required=True,
-        help="Pathname to reference data servicepoints (JSON).")
+        help="Pathname to reference data service-points (JSON).")
     parser.add_argument("-f", "--map-ff",
         default="uuids-ff.json",
         help="Pathname to UUID map of feesfines reference,id (JSON). Will be created on first run. (Default: %(default)s)")
@@ -96,7 +104,25 @@ def main():
     if not os.path.exists(input_pn):
         logger.critical("Specified input map items file not found: %s", input_pn)
         return 2
-    uuid_map_items = load_map_tsv(input_pn)
+    with open(input_pn) as input_fh:
+        items_json = json.load(input_fh)
+    map_items = {}
+    for item_entry in items_json['items']:
+        item_hrid = item_entry['hrid']
+        try:
+            map_items[item_hrid]
+        except KeyError:
+            map_items[item_hrid] = {}
+            map_items[item_hrid]['id'] = item_entry['id']
+            map_items[item_hrid]['barcode'] = item_entry['barcode']
+            map_items[item_hrid]['effectiveLocationId'] = item_entry['effectiveLocationId']
+            map_items[item_hrid]['holdingsRecordId'] = item_entry['holdingsRecordId']
+            map_items[item_hrid]['materialTypeId'] = item_entry['materialTypeId']
+            try:
+                map_items[item_hrid]['itemLevelCallNumber'] = item_entry['itemLevelCallNumber']
+            except KeyError:
+                pass
+    items_json.clear()
     if args.map_users.startswith("~"):
         input_pn = os.path.expanduser(args.map_users)
     else:
@@ -113,12 +139,44 @@ def main():
         logger.critical("Specified input map blocks to verbs file not found: %s", input_pn)
         return 2
     map_verbs = load_map_tsv(input_pn)
+    if args.map_locations.startswith("~"):
+        input_pn = os.path.expanduser(args.map_locations)
+    else:
+        input_pn = args.map_locations
+    if not os.path.exists(input_pn):
+        logger.critical("Specified input reference data locations file not found: %s", input_pn)
+        return 2
+    with open(input_pn) as input_fh:
+        loc_json = json.load(input_fh)
+    map_locations = {}
+    for loc_entry in loc_json['locations']:
+        try:
+            map_locations[loc_entry['id']]
+        except KeyError:
+            map_locations[loc_entry['id']] = loc_entry['name']
+    loc_json.clear()
+    if args.map_materialtypes.startswith("~"):
+        input_pn = os.path.expanduser(args.map_materialtypes)
+    else:
+        input_pn = args.map_materialtypes
+    if not os.path.exists(input_pn):
+        logger.critical("Specified input reference data material-types file not found: %s", input_pn)
+        return 2
+    with open(input_pn) as input_fh:
+        mt_json = json.load(input_fh)
+    map_materialtypes = {}
+    for mt_entry in mt_json['mtypes']:
+        try:
+            map_materialtypes[mt_entry['id']]
+        except KeyError:
+            map_materialtypes[mt_entry['id']] = mt_entry['name']
+    mt_json.clear()
     if args.map_servicepoints.startswith("~"):
         input_pn = os.path.expanduser(args.map_servicepoints)
     else:
         input_pn = args.map_servicepoints
     if not os.path.exists(input_pn):
-        logger.critical("Specified input reference data servicepoints file not found: %s", input_pn)
+        logger.critical("Specified input reference data service-points file not found: %s", input_pn)
         return 2
     with open(input_pn) as input_fh:
         sp_json = json.load(input_fh)
@@ -131,6 +189,7 @@ def main():
             map_servicepoints[sp_code] = {}
             map_servicepoints[sp_code]['id'] = sp_entry['id']
             map_servicepoints[sp_code]['name'] = sp_entry['name']
+    sp_json.clear()
     if args.map_ff.startswith("~"):
         uuids = os.path.expanduser(args.map_ff)
     else:
@@ -194,7 +253,7 @@ def main():
         else:
             if item:
                 try:
-                    uuid_item = uuid_map_items[str(item)]
+                    uuid_item = map_items[str(item)]['id']
                 except KeyError:
                     data_errors.append('uuid_item: missing: {}'.format(item))
         # date
