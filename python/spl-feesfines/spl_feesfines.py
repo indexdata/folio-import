@@ -341,6 +341,19 @@ def main():
                 entry_account['id'] = uuid_account
                 if uuid_item:
                     entry_account['itemId'] = uuid_item
+                    entry_account['barcode'] = map_items[str(item)]['barcode']
+                    entry_account['holdingsRecordId'] = map_items[str(item)]['holdingsRecordId']
+                    uuid_material_type = map_items[str(item)]['materialTypeId']
+                    entry_account['materialType'] = map_materialtypes[uuid_material_type]
+                    entry_account['materialTypeId'] = uuid_material_type
+                    uuid_location = map_items[str(item)]['effectiveLocationId']
+                    entry_account['location'] = map_locations[uuid_location]
+                    try:
+                        call_number = map_items[str(item)]['itemLevelCallNumber']
+                    except KeyError:
+                        pass
+                    else:
+                        entry_account['callNumber'] = call_number
                 entry_account['amount'] = money
                 entry_account['remaining'] = money
                 entry_action['userId'] = uuid_user
