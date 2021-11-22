@@ -125,15 +125,10 @@ JSON that is usual broken.
 
         This script will contact FOLIO to check the status of certain items.  It will also
         try to place requests on items in a round robin fashion, first checking for available items,
-        then items with the least amount of holds.  This process will take some time to run.
+        then items with the least amount of holds.  This process will load the request objects
+        into FOLIO instead of creating and objects file.
 
         NOTE: Do not run multiple processes while during this step.
-
-    b.  Use loadRequests.js to load the output from the previous process.
-        
-        ex: node loadRequests.js <working_dir>/requests.json
-
-        NOTE: These request objects need to be run in order.  Please run a single process.
 
 6.  Fines:
 
