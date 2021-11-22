@@ -93,11 +93,11 @@ const fileNames = process.argv.slice(2);
         }
       }
       if (errors == 0) {
-        if (!fs.existsSync(doneDir)) fs.mkdirSync(doneDir);
-        fs.renameSync(fileNames[x], doneDir + '/' + name);
+        // if (!fs.existsSync(doneDir)) fs.mkdirSync(doneDir);
+        // fs.renameSync(fileNames[x], doneDir + '/' + name);
       } else {
-        if (!fs.existsSync(errDir)) fs.mkdirSync(errDir);
-        fs.renameSync(fileNames[x], errDir + '/' + name);
+        // if (!fs.existsSync(errDir)) fs.mkdirSync(errDir);
+        // fs.renameSync(fileNames[x], errDir + '/' + name);
       }
     } 
     console.log(`Added:   ${added}`);
