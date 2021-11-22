@@ -311,6 +311,7 @@ def main():
         ord_str = str(ord_num)
         reference, errors = get_value(record, 'reference#')
         reference_str = str(reference)
+        reference_ord = reference_str + '_' + str(ord_num)
         # comment
         comment, errors = get_value(record, 'comment')
         msg_comment = 'block={} date={} item={} comment={}'.format(block, action_date, item, comment)
@@ -328,15 +329,14 @@ def main():
                 entry_account = {}
                 entry_action = {}
                 # actionId
-                #FIXME: use reference_ord for next dry-run
-                references_action.append(reference_str)
+                references_action.append(reference_ord)
                 try:
-                    uuid_action = uuid_map_actions[reference_str]
+                    uuid_action = uuid_map_actions[reference_ord]
                 except KeyError:
                     #if args.loglevel == "debug":
                     #    do_debug(record_num, reference_str, 'Generated new UUID for reference actionId: {}'.format(reference_str))
                     uuid_action = str(uuid.uuid4())
-                    uuid_map_actions[reference_str] = uuid_action
+                    uuid_map_actions[reference_ord] = uuid_action
                 entry_account['userId'] = uuid_user
                 entry_account['id'] = uuid_account
                 if uuid_item:
@@ -388,7 +388,6 @@ def main():
                 # This is an adjustment action.
                 # We need to query the account and compute the balance before loading it.
                 entry_adjustment = {}
-                reference_ord = reference_str + '_' + str(ord_num)
                 references_action.append(reference_ord)
                 try:
                     uuid_action = uuid_map_actions[reference_ord]
