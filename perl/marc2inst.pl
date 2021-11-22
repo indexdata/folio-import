@@ -662,6 +662,6 @@ sub make_srs {
     $srs->{generation} = 0;
     $srs->{rawRecord} = { id=>$srs->{id}, content=>$raw };
     $srs->{parsedRecord} = { id=>$srs->{id}, content=>$parsed };
-    $srs->{externalIdsHolder} = { instanceId=>$iid, instanceHrid=$hrid };
+    $srs->{externalIdsHolder} = { instanceId=>$iid, instanceHrid=>$hrid };
     return $srs;
 }
