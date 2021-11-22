@@ -1,0 +1,89 @@
+assets = hz-okapi/assets
+inv = inventory
+mrc = bibs.mrc
+enc = utf8.mrc
+wd = ~/folio-import
+ten = spokane-test
+ref = /data/spl/ref
+refinv = $(ref)/inventory_storage_module
+refcir = $(ref)/circulation_storage_module
+
+.ONESHELL:
+
+remove-default-ref:
+	cd $(wd)
+	grep $(ten) config.js
+	node deleteByEndpoint.js locations
+	node deleteByEndpoint.js location-units/libraries
+	node deleteByEndpoint.js location-units/campuses
+	node deleteByEndpoint.js location-units/institutions
+	node deleteByEndpoint.js service-points
+	node deleteByEndpoint.js groups
+
+load-locations:
+	cd $(wd)
+	grep $(ten) config.js
+	node loadRefData.js $(refinv)/service-points.json
+	node loadRefData.js $(refinv)/*location*.json
+
+load-groups:
+	cd $(wd)
+	grep $(ten) config.js
+	node loadRefData.js $(ref)/users/groups.json
+
+load-circ-ref:
+	cd $(wd)
+	grep $(ten) config.js
+	node loadRefData.js $(refcir)/*.json
+
+load-feesfines-ref:
+	cd $(wd)
+	grep $(ten) config.js
+	node loadRefData.js $(ref)/feesfines/*.json
+
+load-configurations:
+	cd $(wd)
+	grep $(ten) config.js
+	node loadRefData.js $(ref)/configuration/*entries*json
+
+load-templates:
+	cd $(wd)
+	grep $(ten) config.js
+	node loadRefData.js $(ref)/template_engine_module/*.json
+
+all-ref:
+	cd $(wd)
+	grep $(ten) config.js
+	node loadRefData.js $(refinv)/service-points.json\
+	       	$(refinv)/*location*.json\
+	       	$(ref)/users/groups.json $(refcir)/*.json\
+	        $(ref)/feesfines/*.json\
+	        $(ref)/configuration/*entries*json\
+	        $(ref)/template_engine_module/*.json
+
+marc: $(assets)/marc/gr*.mrc
+	mkdir $(inv)
+	cat $(assets)/marc/gr*.mrc > $(inv)/$(mrc)
+	@echo Generating record count...
+	yaz-marcdump $(inv)/$(mrc) | grep -P '^\d{5}' -c > $(inv)/count
+	@cat $(inv)/count
+	@echo Converting to utf8
+	yaz-marcdump -f marc8 -t utf8 -o marc -l 9=97 $(inv)/$(mrc) > $(inv)/$(enc)
+	$(wd)/perl/marc_ctrl_fix.pl $(inv)/$(enc)
+
+instances: $(inv)/$(enc)
+	@echo Getting fresh reference data...
+	$(wd)/bash/login-spokane-test.sh
+	$(wd)/bash/reference_inventory.sh $(inv)/ref
+	$(wd)/perl/marc2inst.pl $(wd)/mapping_rules/spl.json $(inv)/ref/ $(inv)/utf8_fixed.mrc
+	cd $(inv); split -l 25000 utf8_fixed_instances.jsonl inst
+
+holdings-items: $(inv)/$(enc)
+	jq -r '.mtypes[] | .code + "\t" + .name' $(assets)/json/collections.json > $(inv)/ref/collections.tsv
+	cat $(assets)/json/hz-holdings-*.json > $(inv)/holdings.json
+	mv $(inv)/*.map $(inv)/instances.map
+	$(wd)/perl/items_spl.pl $(inv)/ref/ $(inv)/holdings.json 
+	cd $(inv); split -l 25000 utf8_fixed_instances.jsonl inst
+
+clean-$(inv):
+	rm -rf $(inv)
