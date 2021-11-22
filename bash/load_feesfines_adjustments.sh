@@ -48,7 +48,7 @@ problem_count=0
 while IFS= read -r line; do
   ((line_num++))
   date_utc=$(date -u "+%Y-%m-%d %H:%M:%S")
-  date_utc_folio=$(date -u "+%Y-%m-%dT%H:%M:%S")
+  date_utc_folio=$(date -u "+%Y-%m-%dT%H:%M:%S.000+00:00")
   accountId=$(echo $line | jq -r '.accountId')
   amountAction=$(echo $line | jq -r '.amountAction')
   endpoint="${OKAPI}/accounts/${accountId}"
@@ -64,35 +64,13 @@ while IFS= read -r line; do
     account_data=$(cat $output_pn)
     remaining=$(echo ${account_data} | jq -r '.remaining')
     new_balance=$(echo "scale=2; $remaining + $amountAction" | bc)
-    amount=$(echo ${account_data} | jq -r '.amount')
-    userId=$(echo ${account_data} | jq -r '.userId')
-    itemId=$(echo ${account_data} | jq -r '.itemId')
-    feeFineOwner=$(echo ${account_data} | jq -r '.feeFineOwner')
-    ownerId=$(echo ${account_data} | jq -r '.ownerId')
-    dateCreated=$(echo ${account_data} | jq -r '.dateCreated')
-    status=$(echo ${account_data} | jq -r '.status')
-    paymentStatus=$(echo ${account_data} | jq -r '.paymentStatus')
-    feeFineType=$(echo ${account_data} | jq -r '.feeFineType')
-    feeFineId=$(echo ${account_data} | jq -r '.feeFineId')
-    updated_account_data=$(cat <<EOJ
-{
-  "userId": "${userId}",
-  "id": "${userId}",
-  "itemId": "${itemId}",
-  "amount": ${amount},
-  "remaining": ${new_balance},
-  "feeFineOwner": "${feeFineOwner}",
-  "ownerId": "${ownerId}",
-  "dateCreated": "${dateCreated}",
-  "dateUpdated": "${date_utc_folio}.000+00:00",
-  "status": ${status},
-  "paymentStatus": ${paymentStatus},
-  "feeFineType": "${feeFineType}",
-  "feeFineId": "${feeFineId}"
-}
-EOJ
-)
-    updated_action_data=$(echo ${line} | sed "s/\"balance\": [0-9.]*,/\"balance\": ${new_balance},/")
+    updated_account_data=$(echo ${account_data} \
+      | sed -E -e "s/\"remaining\" ?: [0-9.]*,/\"remaining\": ${new_balance},/" \
+        -e "s/\"dateUpdated\" ?: [^,]*,/\"dateUpdated\": \"${date_utc_folio}\",/"
+    )
+    updated_action_data=$(echo ${line} \
+      | sed -E -e "s/\"balance\" ?: [0-9.]*,/\"balance\": ${new_balance},/"
+    )
   fi
   echo "PUT account remaining=${new_balance} (was ${remaining}) ..." >> $log_fn
   status=$(${cmd_curl} -X PUT -s -S -w "%{http_code}" "${endpoint}" -d "${updated_account_data}" -o $output_pn)
