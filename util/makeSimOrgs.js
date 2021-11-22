@@ -150,8 +150,13 @@ try {
     '5': 'Other',
     '6': 'Other'
   }
+  let fauxId = 1000;
   inRecs.externallogin.forEach(i => {
     let iface = {};
+    if (!i.externalLoginID.match(/\d/)) {
+      i.externalLoginID = fauxId.toString();
+      fauxId++;
+    }
     let id = uuid(i.externalLoginID + 'externalLoginID', ns);
     if (!ifaceMap[i.organizationID]) ifaceMap[i.organizationID] = [];
     ifaceMap[i.organizationID].push(id);
@@ -204,7 +209,7 @@ try {
     }
     org.code = code.substr(0, 4) + id;
     org.description = o.accountDetailText;
-    org.isVendor = false;
+    org.isVendor = true;
     if (orgRoleMap[id]) {
       orgRoleMap[id].forEach(r => {
         if (r.organizationRoleID === '6') org.isVendor = true;
