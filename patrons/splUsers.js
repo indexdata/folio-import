@@ -5,7 +5,7 @@ const readline = require('readline');
 const { ConsoleTransportOptions } = require('winston/lib/winston/transports');
 
 const jsonFile = process.argv[2];
-const size = (process.argv[3]) ? parseInt(process.argv[3], 10) : 5000;
+const size = (process.argv[3]) ? parseInt(process.argv[3], 10) : 500000;
 
 const ptype2group = {
   al: "Adult Limited",
