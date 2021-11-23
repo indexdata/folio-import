@@ -96,7 +96,7 @@ JSON that is usual broken.
 
     d.  Run createSplCheckout.js in the /patrons/ directory.
 
-        ex: node createSplCheckout.js <working_dir>/service-points.json <working_dir>/users.json <working_dir>/spokane/circ/loans.json
+        ex: node splCheckouts.js <working_dir>/service-points.json <working_dir>/users.json <working_dir>/spokane/circ/loans.json
 
         The output from this script will create three files:
         
