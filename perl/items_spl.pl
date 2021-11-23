@@ -182,8 +182,8 @@ while (<RAW>) {
 }
 
 my $item_seen = {};
-my $hcoll = { holdingsRecords => [] };
-my $icoll = { items => [] };
+my $hcoll = '';
+my $icoll = '';
 my $hcount = 0;
 my $icount = 0;
 my $mcount = 0;
@@ -310,31 +310,25 @@ foreach (@{ $hi->{items} }) {
       $irec->{discoverySuppress} = "true";
     }
     $irec->{metadata} = $metadata;
-    push @{ $icoll->{items} }, $irec;
+    $icoll .= JSON->new->canonical->encode($irec) . "\n";
     $icount++;
   }
   
   $mcount++;
-  print "# $mcount [$control_num]\n"
+  print "# $mcount [$control_num]\n" if $mcount % 500 == 0;
 }
 foreach (keys %$hrecs) {
-  push @{ $hcoll->{holdingsRecords} }, $hrecs->{$_};
+  $hcoll .= JSON->new->canonical->encode($hrecs->{$_}) . "\n";
 }
 
-$hcoll->{totalRecords} = $hcount;
-my $hcollection = JSON->new->canonical->pretty->encode($hcoll);
-my $hold_file = "$batch_path/${filename}_holdings.json";
+my $hold_file = "$batch_path/${filename}_holdings.jsonl";
 open HLD, ">:encoding(UTF-8)", $hold_file;
-print HLD $hcollection;
-# print $hcollection;
+print HLD $hcoll;
 close HLD;
 
-$icoll->{totalRecords} = $icount;
-my $icollection = JSON->new->canonical->pretty->encode($icoll);
-my $items_file = "$batch_path/${filename}_items.json";
+my $items_file = "$batch_path/${filename}_items.jsonl";
 open ITM, ">:encoding(UTF-8)", $items_file;
-print ITM $icollection;
-# print $icollection;
+print ITM $icoll;
 close ITM;
 
 print "\nHoldings: $hcount";
