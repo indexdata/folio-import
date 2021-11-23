@@ -245,7 +245,7 @@ foreach (@{ $hi->{items} }) {
     $irec->{materialTypeId} = $folio_mtypes->{$coll_name} || $folio_mtypes->{Other};
     if (!$irec->{materialTypeId}) { die "There is no material type match for $coll_code!" }
     my $lt_label = $itypes_map->{$itype} || 'Standard Circulation';
-    $irec->{permanentLoanTypeId} = $folio_ltypes->{$lt_label};
+    $irec->{permanentLoanTypeId} = $folio_ltypes->{$lt_label} || $loan_type_id;
     
     if ($coll_code =~ /mag/) {
       $copy =~ /(.+)\s+\((.+)\)/;
