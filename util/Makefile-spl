@@ -1,5 +1,6 @@
 assets = hz-okapi/assets
-inv = inventory
+inv = /data/spl/inventory
+users = /data/spl/users
 mrc = bibs.mrc
 enc = utf8.mrc
 wd = ~/folio-import
@@ -7,59 +8,44 @@ ten = spokane-test
 ref = /data/spl/ref
 refinv = $(ref)/inventory_storage_module
 refcir = $(ref)/circulation_storage_module
-
-.ONESHELL:
+log = log
 
 remove-default-ref:
-	cd $(wd)
-	grep $(ten) config.js
-	node deleteByEndpoint.js locations
-	node deleteByEndpoint.js location-units/libraries
-	node deleteByEndpoint.js location-units/campuses
-	node deleteByEndpoint.js location-units/institutions
-	node deleteByEndpoint.js service-points
-	node deleteByEndpoint.js groups
+	cd $(wd); grep $(ten) config.js
+	cd $(wd); node deleteByEndpoint.js locations
+	cd $(wd); node deleteByEndpoint.js location-units/libraries
+	cd $(wd); node deleteByEndpoint.js location-units/campuses
+	cd $(wd); node deleteByEndpoint.js location-units/institutions
+	cd $(wd); node deleteByEndpoint.js service-points
+	cd $(wd); node deleteByEndpoint.js groups
 
-load-locations:
-	cd $(wd)
-	grep $(ten) config.js
-	node loadRefData.js $(refinv)/service-points.json
-	node loadRefData.js $(refinv)/*location*.json
+inventory-ref:
+	cd $(wd); grep $(ten) config.js
+	cd $(wd); node loadRefData.js \
+		$(refinv)/service-points.json \
+	       	$(refinv)/*location*.json \
+		$(refinv)/material-types.json \
+		$(refinv)/loan-types.json
 
-load-groups:
-	cd $(wd)
-	grep $(ten) config.js
-	node loadRefData.js $(ref)/users/groups.json
+groups:
+	cd $(wd); grep $(ten) config.js
+	cd $(wd); node loadRefData.js $(ref)/users/groups.json
 
-load-circ-ref:
-	cd $(wd)
-	grep $(ten) config.js
-	node loadRefData.js $(refcir)/*.json
+circ-ref:
+	cd $(wd); grep $(ten) config.js
+	cd $(wd); node loadRefData.js $(refcir)/*.json
 
-load-feesfines-ref:
-	cd $(wd)
-	grep $(ten) config.js
-	node loadRefData.js $(ref)/feesfines/*.json
+feesfines-ref:
+	cd $(wd); grep $(ten) config.js
+	cd $(wd); node loadRefData.js $(ref)/feesfines/*.json
 
-load-configurations:
-	cd $(wd)
-	grep $(ten) config.js
-	node loadRefData.js $(ref)/configuration/*entries*json
+configurations:
+	cd $(wd); grep $(ten) config.js
+	cd $(wd); node loadRefData.js $(ref)/configuration/*entries*json
 
-load-templates:
-	cd $(wd)
-	grep $(ten) config.js
-	node loadRefData.js $(ref)/template_engine_module/*.json
-
-all-ref:
-	cd $(wd)
-	grep $(ten) config.js
-	node loadRefData.js $(refinv)/service-points.json\
-	       	$(refinv)/*location*.json\
-	       	$(ref)/users/groups.json $(refcir)/*.json\
-	        $(ref)/feesfines/*.json\
-	        $(ref)/configuration/*entries*json\
-	        $(ref)/template_engine_module/*.json
+templates:
+	cd $(wd); grep $(ten) config.js
+	cd $(wd); node loadRefData.js $(ref)/template_engine_module/*.json
 
 marc: $(assets)/marc/gr*.mrc
 	mkdir $(inv)
@@ -80,10 +66,24 @@ instances: $(inv)/$(enc)
 
 holdings-items: $(inv)/$(enc)
 	jq -r '.mtypes[] | .code + "\t" + .name' $(assets)/json/collections.json > $(inv)/ref/collections.tsv
-	cat $(assets)/json/hz-holdings-*.json > $(inv)/holdings.json
-	mv $(inv)/*.map $(inv)/instances.map
-	$(wd)/perl/items_spl.pl $(inv)/ref/ $(inv)/holdings.json 
-	cd $(inv); split -l 25000 utf8_fixed_instances.jsonl inst
+	cat $(assets)/json/hz-holdings-\(*.json > $(inv)/holdings.json
+	if [ ! -e "$(inv)/instances.map" ]; then mv $(inv)/*.map $(inv)/instances.map; fi
+	$(wd)/perl/items_spl.pl $(inv)/ref/ $(inv)/holdings.json > $(log)/makeholdings.log
+	cd $(inv); split -l 30000 holdings_holdings.jsonl h
+	cd $(inv); split -l 40000 holdings_items.jsonl it
 
-clean-$(inv):
+users: $(assets)/json/hz-users-*
+	mkdir $(users)
+	cat $(assets)/json/hz-users-* > $(users)/hz-users.json
+	cd $(wd)/bash; ./login-spokane-test.sh
+	cd $(wd)/bash; ./reference_users.sh $(users)/
+	cd $(wd)/patrons; node splUsers.js $(users)/hz-users.json 
+	cd $(wd); node splitLargeJson 50000 $(users)/users_00001.json users
+	cd $(wd); node splitLargeJson 50000 $(users)/perms.json permissionUsers
+	cd $(wd); node splitLargeJson 50000 $(users)/logins.json 
+
+clean-inventory:
 	rm -rf $(inv)
+
+clean-users:
+	rm -rf $(users)
