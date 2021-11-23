@@ -1,6 +1,7 @@
 assets = hz-okapi/assets
 inv = /data/spl/inventory
 users = /data/spl/users
+loans = /data/spl/loans
 mrc = bibs.mrc
 enc = utf8.mrc
 wd = ~/folio-import
@@ -78,12 +79,31 @@ users: $(assets)/json/hz-users-*
 	cd $(wd)/bash; ./login-spokane-test.sh
 	cd $(wd)/bash; ./reference_users.sh $(users)/
 	cd $(wd)/patrons; node splUsers.js $(users)/hz-users.json 
+	cd $(wd); grep $(ten) config.js
 	cd $(wd); node splitLargeJson 50000 $(users)/users_00001.json users
 	cd $(wd); node splitLargeJson 50000 $(users)/perms.json permissionUsers
 	cd $(wd); node splitLargeJson 50000 $(users)/logins.json 
+
+loans: $(assets)/json/hz-loans-\(*
+	mkdir $(loans)
+	jq '.[]' $(assets)/json/hz-loans-\(* | jq -s . > $(loans)/hz-loans.json
+	cd $(wd); grep $(ten) config.js
+	@echo --- Downloading users...
+	cd $(wd); node downloadAllUsers.js $(loans)
+	@echo --- Downloading service-points...
+	cd $(wd); node downloadAllByEndpoint.js service-points $(loans)
+	@echo --- Creating checkout objects...
+	cd $(wd)/patrons; node splCheckouts.js $(loans)/service-points.json $(loans)/users.json $(loans)/hz-loans.json
+
+toggle-inactive-users: $(loans)/inactive_checkouts.json
+	cd $(wd); node usersActiveToggle.js $(loans)/inactive_checkouts.json
+	@echo --- You are now set to run checkoutByBarcode.js ---
 
 clean-inventory:
 	rm -rf $(inv)
 
 clean-users:
 	rm -rf $(users)
+
+clean-loans:
+	rm -rf $(loans)
