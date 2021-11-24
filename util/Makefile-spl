@@ -27,7 +27,7 @@ inventory-ref:
 	cd $(wd); grep $(ten) config.js
 	cd $(wd); node loadRefData.js \
 		$(refinv)/service-points.json \
-	       	$(refinv)/*location*.json \
+		$(refinv)/*location*.json \
 		$(refinv)/material-types.json \
 		$(refinv)/loan-types.json \
 		$(refinv)/calendar*.json
@@ -82,11 +82,11 @@ users: $(assets)/json/hz-users-*
 	cat $(assets)/json/hz-users-* > $(users)/hz-users.json
 	cd $(wd)/bash; ./login-spokane-test.sh
 	cd $(wd)/bash; ./reference_users.sh $(users)/
-	cd $(wd)/patrons; node splUsers.js $(users)/hz-users.json 
+	cd $(wd)/patrons; node splUsers.js $(users)/hz-users.json
 	cd $(wd); grep $(ten) config.js
 	cd $(wd); node splitLargeJson 50000 $(users)/users_00001.json users
 	cd $(wd); node splitLargeJson 50000 $(users)/perms.json permissionUsers
-	cd $(wd); node splitLargeJson 50000 $(users)/logins.json 
+	cd $(wd); node splitLargeJson 50000 $(users)/logins.json
 
 loans: $(assets)/json/hz-loans-\(*
 	mkdir $(loans)
