@@ -2,6 +2,7 @@ assets = hz-okapi/assets
 inv = /data/spl/inventory
 users = /data/spl/users
 loans = /data/spl/loans
+feesfines = /data/spl/feesfines
 mrc = bibs.mrc
 enc = utf8.mrc
 wd = ~/folio-import
@@ -12,7 +13,7 @@ refcir = $(ref)/circulation_storage_module
 log = log
 
 help:
-	@echo "Usage: make [ help | remove-default-ref | inventory-ref | groups | circ-ref | feesfines-ref | configurations | templates | marc | instances | holdings-items | users | loans | toggle-inactive-users | requests | clean-inventory | clean-users | clean-loans | clean-requests ]"
+	@echo "Usage: make [ help | remove-default-ref | inventory-ref | groups | circ-ref | feesfines-ref | configurations | templates | marc | instances | holdings-items | users | loans | toggle-inactive-users | requests | feesfines | feesfines-transform | clean-inventory | clean-users | clean-loans | clean-requests ]"
 
 remove-default-ref:
 	cd $(wd); grep $(ten) config.js
@@ -108,6 +109,28 @@ requests: $(assets)/json/hz-requests.json
 	mkdir requests
 	cp $(assets)/json/hz-requests.json requests/requests.json
 	grep 'request#' requests/requests.json -c > requests/count;
+
+feesfines:
+	@echo --- Preparing feesfines ...
+	@echo --- Downloading some reference data ...
+	cd $(wd); node downloadAllByEndpoint.js locations $(feesfines)
+	cd $(wd); node downloadAllByEndpoint.js material-types $(feesfines)
+	cd $(wd); node downloadAllByEndpoint.js service-points $(feesfines)
+	@echo --- Get the map of users ...
+	cd $(wd); node downloadAllUsers.js $(feesfines)
+	cat $(feesfines)/users.json \
+		| jq -r '.users[] | select(has("externalSystemId")) | [ .externalSystemId, .id ] | @tsv' \
+		> $(feesfines)/users-map.tsv
+	@echo --- Get the items data ...
+	cd $(wd); node downloadAllItems.js $(feesfines)
+
+feesfines-transform: feesfines
+	@echo --- Doing $@ ...
+	cd $(feesfines); python3 $(wd)/python/spl-feesfines/spl_feesfines.py \
+		-u users-map.tsv -m items.json -v verbs-map.tsv \
+		-c locations.json -y material-types.json -p service-points.json \
+		-l debug \
+		-i /data/spl/hz-okapi/assets/json/hz-ledger.json
 
 clean-inventory:
 	rm -rf $(inv)
