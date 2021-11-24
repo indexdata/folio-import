@@ -126,7 +126,7 @@ JSON that is usual broken.
         This script will contact FOLIO to check the status of certain items.  It will also
         try to place requests on items in a round robin fashion, first checking for available items,
         then items with the least amount of holds.  This process will load the request objects
-        into FOLIO instead of creating and objects file.
+        into FOLIO instead of creating an objects file.
 
         NOTE: Do not run multiple processes while during this step.
 
