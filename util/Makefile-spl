@@ -11,6 +11,9 @@ refinv = $(ref)/inventory_storage_module
 refcir = $(ref)/circulation_storage_module
 log = log
 
+help:
+	@echo "Usage: make [ help | remove-default-ref | inventory-ref | groups | circ-ref | feesfines-ref | configurations | templates | marc | instances | holdings-items | users | loans | toggle-inactive-users | requests | clean-inventory | clean-users | clean-loans | clean-requests ]"
+
 remove-default-ref:
 	cd $(wd); grep $(ten) config.js
 	cd $(wd); node deleteByEndpoint.js locations
@@ -26,7 +29,8 @@ inventory-ref:
 		$(refinv)/service-points.json \
 	       	$(refinv)/*location*.json \
 		$(refinv)/material-types.json \
-		$(refinv)/loan-types.json
+		$(refinv)/loan-types.json \
+		$(refinv)/calendar*.json
 
 groups:
 	cd $(wd); grep $(ten) config.js
@@ -98,6 +102,12 @@ loans: $(assets)/json/hz-loans-\(*
 toggle-inactive-users: $(loans)/inactive_checkouts.json
 	cd $(wd); node usersActiveToggle.js $(loans)/inactive_checkouts.json
 	@echo --- You are now set to run checkoutByBarcode.js ---
+	@echo --- Make sure to run this rule again after loans are loaded ---
+
+requests: $(assets)/json/hz-requests.json
+	mkdir requests
+	cp $(assets)/json/hz-requests.json requests/requests.json
+	grep 'request#' requests/requests.json -c > requests/count;
 
 clean-inventory:
 	rm -rf $(inv)
@@ -107,3 +117,6 @@ clean-users:
 
 clean-loans:
 	rm -rf $(loans)
+
+clean-requests:
+	rm -rf requests
