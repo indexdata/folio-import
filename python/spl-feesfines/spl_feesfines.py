@@ -1,11 +1,6 @@
 """
 Process the Spokane feesfines data export to transform into FOLIO JSON.
 
-   Returns:
-       0: Success.
-       1: One or more data processing problems encountered.
-       2: Configuration issues.
-
 Typical invocation:
 python3 spl_feesfines.py \
   -u users-map.tsv -m items.json -v verbs-map.tsv \
@@ -493,7 +488,7 @@ def main():
         output_fh.write('\n')
     # Finalise
     if critical_count > 0:
-        exit_code = 1
+        logger.debug("%s Records not transformed. See %s", critical_count, args.errors)
     logging.shutdown()
     return exit_code
 

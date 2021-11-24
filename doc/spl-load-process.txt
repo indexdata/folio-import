@@ -171,6 +171,7 @@ JSON that is usual broken.
     g.  Load the accounts:
 
         cd ~/folio-import
+        mkdir -p log/spl
         node loadByEndpoint.js accounts /data/spl/feesfines/feesfines-accounts.json \
           > log/spl/feesfines-accounts.txt
         # Inspect log for errors. Should only be from potential network glitches.
