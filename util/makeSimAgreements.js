@@ -189,16 +189,18 @@ try {
 
   const makeLine = (sheet, owner, titleField, fromField, toField) => {
     for (let key in inRecs[sheet][0]) {
-      if (key.match(/Agreement/)) titleField = key;
+      if (key.match(/Description/)) titleField = key;
       if (key.match(/Active from/)) fromField = key;
       if (key.match(/Active to/)) toField = key;      
     }
+    console.log(titleField);
     inRecs[sheet].forEach(r => {
       let ent = {};
       ent.owner = owner;
       ent.type = 'detached';
       ent.suppressFromDiscovery = false;
       ent.description = r[titleField];
+      console.log(ent.description);
       let from = r[fromField];
       if (from) {
         try {
