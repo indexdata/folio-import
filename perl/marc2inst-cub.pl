@@ -46,8 +46,9 @@ my $creds = 'admin:admin';
 my $couchbase = "http://$creds\@localhost:5984";
 my $iurl = "$couchbase/cub-items/_find";
 my $hurl = "$couchbase/cub-holdings/_find";
-
-
+my $tp = localtime();
+my @months = ('');
+push @months, $tp->mon_list();
 
 my $rules_file = shift;
 my $ref_dir = shift;
@@ -797,7 +798,6 @@ sub make_hi {
         instanceId => $bid,
         holdingsTypeId => 'e6da6c98-6dd0-41bc-8b4b-cfd4bbd9c3ae', #serial
         sourceId => 'f32d531e-df79-46b3-8932-cdd35f7a2264', #folio
-        
       };
       if ($cn) {
         $sh->{callNumber} = $cn;
@@ -818,13 +818,27 @@ sub make_hi {
               push @{ $sfs->{$t} }, $c;
             }
           }
+          # $tag .= $sfs->{8} if $tag =~ /^85[345]/;
           push @{ $varFields->{$tag} }, $sfs;
         }
       }
       print Dumper($varFields);
-      my @matches = grep { $_->{'8'} =~ /^1/ } @{ $varFields->{863} };
-      print Dumper(@matches);
+      foreach my $tag (('863', '864', '865')) {
+        my $ctag = $tag;
+        $ctag =~ s/6/5/;
+        foreach (@{ $varFields->{$tag} }) {
+          my $m = $_->{8};
+          $m =~ s/\..+//;
+          my @matches = grep { $_->{'8'} =~ /^$m/ } @{ $varFields->{$ctag} };
+          my $cap = $matches[0];
+          foreach (keys %{ $_ }) {
+            print "$cap->{$_}\n";
+          }
+          print Dumper($_);
+        }
+      }
       my $hout = $json->encode($sh);
+      # print $json->pretty->encode($sh);
       $holdings .= $hout . "\n";
       $hcount++;
     }
@@ -951,7 +965,7 @@ sub couchQuery {
 
 sub write_objects {
   my $fh = shift;
-  my $recs = shift;
+  my $recs = shift || '';
   print $fh $recs;
 }
 
