@@ -7,6 +7,7 @@ const fs = require('fs');
 const superagent = require('superagent');
 const readline = require('readline');
 const { getAuthToken } = require('./lib/login');
+const { getCipherInfo } = require('crypto');
 let endpoint = process.argv[2];
 const objFile = process.argv[3];
 
@@ -26,9 +27,13 @@ const wait = (ms) => {
     const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
 
     endpoint = endpoint.replace(/^\//, '');
-    const getUrl = config.okapi + '/' + endpoint + '?limit=1000';
+    let getUrl = config.okapi + '/' + endpoint + '?limit=1000';
+    if (endpoint.match(/^erm\//)) {
+      getUrl = config.okapi + '/' + endpoint + '?perPage=100&stats=true';
+    }
     const deleteUrl = config.okapi + '/' + endpoint;
     let refData = {};
+    console.log(getUrl);
 
     if (objFile) {
       try {
@@ -66,6 +71,7 @@ const wait = (ms) => {
       }
     });
 
+    if (endpoint.match(/^erm\//)) root = 'results';
     console.log(`Deleting ${refData.totalRecords} ${root}...`);
     for (let x = 0; x < refData[root].length; x++) {
       let id = refData[root][x].id;
