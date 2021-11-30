@@ -826,15 +826,24 @@ sub make_hi {
       foreach my $tag (('863', '864', '865')) {
         my $ctag = $tag;
         $ctag =~ s/6/5/;
-        foreach (@{ $varFields->{$tag} }) {
-          my $m = $_->{8};
+        foreach my $obj (@{ $varFields->{$tag} }) {
+          my $m = $obj->{8};
           $m =~ s/\..+//;
-          my @matches = grep { $_->{'8'} =~ /^$m/ } @{ $varFields->{$ctag} };
+          my @matches = grep { $obj->{'8'} =~ /^$m/ } @{ $varFields->{$ctag} };
           my $cap = $matches[0];
-          foreach (keys %{ $_ }) {
-            print "$cap->{$_}\n";
+          my @m;
+          my @y;
+          foreach my $sf (keys %{ $obj }) {
+            foreach (split('-', $obj->{$sf})) {
+              if ($cap->{$sf} eq '(month)') {
+                push @m, @months[$_];
+              } elsif ($cap->{$sf} eq '(year)') {
+                push @y, $_;
+              }
+            }
           }
-          print Dumper($_);
+          print Dumper($obj);
+          print "$m[0] $y[0]\n";
         }
       }
       my $hout = $json->encode($sh);
