@@ -58,11 +58,11 @@ def main():
         default="uuids-ff.json",
         help="Pathname to UUID map of feesfines reference,id (JSON). Will be created on first run. (Default: %(default)s)")
     parser.add_argument("-o", "--output-accounts",
-        default="feesfines-accounts.json",
-        help="Pathname to data output-accounts file (JSON). (Default: %(default)s)")
+        default="feesfines-accounts.jsonl",
+        help="Pathname to data output-accounts file (JSONL). (Default: %(default)s)")
     parser.add_argument("-a", "--output-actions",
-        default="feesfines-actions.json",
-        help="Pathname to data output-actions file (JSON). (Default: %(default)s)")
+        default="feesfines-actions.jsonl",
+        help="Pathname to data output-actions file (JSONL). (Default: %(default)s)")
     parser.add_argument("-j", "--output-adjustments",
         default="feesfines-adjustments.jsonl",
         help="Pathname to data output-transactions file (JSONL). (Default: %(default)s)")
@@ -454,17 +454,13 @@ def main():
     }
     logger.debug("Writing output files.")
     with open(args.output_accounts, 'w') as output_fh:
-        records = {}
-        records['accounts'] = entries_account
-        records['totalRecords'] = len(entries_account)
-        output_fh.write( json.dumps(records, sort_keys=False, indent=2, separators=(',', ': ')) )
-        output_fh.write('\n')
+        for entry in entries_account:
+            json.dump(entry, output_fh)
+            output_fh.write('\n')
     with open(args.output_actions, 'w') as output_fh:
-        records = {}
-        records['feefineactions'] = entries_action
-        records['totalRecords'] = len(entries_action)
-        output_fh.write( json.dumps(records, sort_keys=False, indent=2, separators=(',', ': ')) )
-        output_fh.write('\n')
+        for entry in entries_action:
+            json.dump(entry, output_fh)
+            output_fh.write('\n')
     with open(args.output_adjustments, 'w') as output_fh:
         for entry in entries_adjustment:
             json.dump(entry, output_fh)
