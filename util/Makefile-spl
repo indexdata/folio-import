@@ -112,6 +112,8 @@ requests: $(assets)/json/hz-requests.json
 
 feesfines:
 	@echo --- Preparing feesfines ...
+	cd $(wd); grep $(ten) config.js
+	mkdir $(feesfines); chgrp admin $(feesfines); chmod g+s $(feesfines)
 	@echo --- Downloading some reference data ...
 	cd $(wd); node downloadAllByEndpoint.js locations $(feesfines)
 	cd $(wd); node downloadAllByEndpoint.js material-types $(feesfines)
@@ -123,6 +125,9 @@ feesfines:
 		> $(feesfines)/users-map.tsv
 	@echo --- Get the items data ...
 	cd $(wd); node downloadAllItems.js $(feesfines)
+	@echo --- Copy other data ...
+	cp $(wd)/python/spl-feesfines/verbs-map.tsv $(feesfines)
+	cp /data/dcrossley/spl-feesfines/uuids-ff*.json $(feesfines)
 
 feesfines-transform: feesfines
 	@echo --- Doing $@ ...
@@ -131,6 +136,7 @@ feesfines-transform: feesfines
 		-c locations.json -y material-types.json -p service-points.json \
 		-l debug \
 		-i /data/spl/hz-okapi/assets/json/hz-ledger.json
+	cp -p $(feesfines)/uuids-ff.json /data/dcrossley/spl-feesfines
 
 clean-inventory:
 	rm -rf $(inv)
@@ -143,3 +149,6 @@ clean-loans:
 
 clean-requests:
 	rm -rf requests
+
+clean-feesfines:
+	rm -rf $(feesfines)

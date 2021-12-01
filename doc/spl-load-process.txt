@@ -132,9 +132,10 @@ JSON that is usual broken.
 
 6.  Fines:
 
-    a.  Get copy of the data:
+    a.  Get copy of some supporting data:
 
-        cp /data/spl/hz-okapi/assets/json/hz-ledger.json /data/spl/feesfines
+        cp ~/folio-import/python/spl-feesfines/verbs-map.tsv /data/spl/feesfines
+        cp /data/dcrossley/spl-feesfines/uuids-ff*.json /data/spl/feesfines
 
     b.  Get some reference data:
 
@@ -161,7 +162,8 @@ JSON that is usual broken.
         python3 ~/folio-import/python/spl-feesfines/spl_feesfines.py \
           -u users-map.tsv -m items.json -v verbs-map.tsv \
           -c locations.json -y material-types.json -p service-points.json \
-          -l debug -i hz-ledger.json
+          -l debug \
+          -i /data/spl/hz-okapi/assets/json/hz-ledger.json
 
     f.  Inspect the summary and errors output:
 
@@ -172,15 +174,13 @@ JSON that is usual broken.
 
         cd ~/folio-import
         mkdir -p log/spl
-        node loadByEndpoint.js accounts /data/spl/feesfines/feesfines-accounts.json \
-          > log/spl/feesfines-accounts.txt
+        node loadJSONL.js accounts /data/spl/feesfines/feesfines-accounts.jsonl
         # Inspect log for errors. Should only be from potential network glitches.
         # Isolate records to new data file, and load those missing ones.
 
     h.  Load the associated actions:
 
-        node loadByEndpoint.js feefineactions /data/spl/feesfines/feesfines-actions.json \
-          > log/spl/feesfines-actions.txt
+        node loadJSONL.js feefineactions /data/spl/feesfines/feesfines-actions.jsonl
         # Inspect log for errors. As above.
 
     i.  Load the adjustment actions:
