@@ -132,6 +132,8 @@ JSON that is usual broken.
 
 6.  Fines:
 
+    Steps a-d are done via Makefile 'make feesfines-assess' to obtain data and do some basic verification.
+
     a.  Get copy of some supporting data:
 
         cp ~/folio-import/python/spl-feesfines/verbs-map.tsv /data/spl/feesfines
@@ -186,8 +188,7 @@ JSON that is usual broken.
     i.  Load the adjustment actions:
 
         cd bash
-        cp ~/charles/folio-import/bash/login-spokane-test.sh .
-        ./login-spokane-test.sh
+        ./login-spokane.sh  # or login-spokane-test.sh
         ./load_feesfines_adjustments.sh /data/spl/feesfines/feesfines-adjustments.jsonl
         # Inspect log for errors.
 
