@@ -3,6 +3,7 @@ inv = /data/spl/inventory
 users = /data/spl/users
 loans = /data/spl/loans
 feesfines = /data/spl/feesfines
+feesfines-input = /data/spl/hz-okapi/assets/json/hz-ledger.json
 mrc = bibs.mrc
 enc = utf8.mrc
 wd = ~/folio-import
@@ -13,7 +14,7 @@ refcir = $(ref)/circulation_storage_module
 log = log
 
 help:
-	@echo "Usage: make [ help | remove-default-ref | inventory-ref | groups | circ-ref | feesfines-ref | configurations | templates | marc | instances | holdings-items | users | loans | toggle-inactive-users | requests | feesfines | feesfines-transform | clean-inventory | clean-users | clean-loans | clean-requests ]"
+	@echo "Usage: make [ help | remove-default-ref | inventory-ref | groups | circ-ref | feesfines-ref | configurations | templates | marc | instances | holdings-items | users | loans | toggle-inactive-users | requests | feesfines | feesfines-assess | feesfines-transform | clean-inventory | clean-users | clean-loans | clean-requests ]"
 
 remove-default-ref:
 	cd $(wd); grep $(ten) config.js
@@ -111,7 +112,7 @@ requests: $(assets)/json/hz-requests.json
 	grep 'request#' requests/requests.json -c > requests/count;
 
 feesfines:
-	@echo --- Preparing feesfines ...
+	@echo --- Getting system data for feesfines ...
 	cd $(wd); grep $(ten) config.js
 	mkdir $(feesfines); chgrp admin $(feesfines); chmod g+s $(feesfines)
 	@echo --- Downloading some reference data ...
@@ -125,18 +126,27 @@ feesfines:
 		> $(feesfines)/users-map.tsv
 	@echo --- Get the items data ...
 	cd $(wd); node downloadAllItems.js $(feesfines)
-	@echo --- Copy other data ...
-	cp $(wd)/python/spl-feesfines/verbs-map.tsv $(feesfines)
-	cp /data/dcrossley/spl-feesfines/uuids-ff*.json $(feesfines)
 
-feesfines-transform: feesfines
+feesfines-assess: feesfines
+	@echo --- Assessing feesfines data ...
+	@echo --- Count input records ...
+	jq 'length' $(feesfines-input)
+	@echo --- Copy support data ...
+	cp $(wd)/python/spl-feesfines/verbs-map.tsv $(feesfines)
+	@echo --- Showing any unique blocks which are missing from the verbs map ...
+	cd $(feesfines); jq -r '.[] | .block' $(feesfines-input) | sort -u > ledger-blocks-unique.txt
+	cd $(feesfines); cat verbs-map.tsv | cut -f 1 | comm -23 ledger-blocks-unique.txt -
+
+feesfines-transform: feesfines-assess
 	@echo --- Doing $@ ...
+	cp /data/dcrossley/spl-feesfines/uuids-ff.json $(feesfines)
 	cd $(feesfines); python3 $(wd)/python/spl-feesfines/spl_feesfines.py \
 		-u users-map.tsv -m items.json -v verbs-map.tsv \
 		-c locations.json -y material-types.json -p service-points.json \
 		-l debug \
-		-i /data/spl/hz-okapi/assets/json/hz-ledger.json
+		-i $(feesfines-input)
 	cp -p $(feesfines)/uuids-ff.json /data/dcrossley/spl-feesfines
+	cat $(feesfines)/summary-feesfines.json | grep "num"
 
 clean-inventory:
 	rm -rf $(inv)
