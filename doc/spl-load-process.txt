@@ -7,6 +7,25 @@ JSON that is usual broken.
 0.  Load all settings (ref data) if needed.  Currently locations, service-points, etc.
     get saved off as a previous system's settings and loaded into a new system.
 
+    a. Download the reference data from the current system.
+       cd ~/folio-import
+       # ensure appropriate config.js e.g. spokane-test
+       node downloadAllRefData.js /data/spl/ref/
+
+    b. Adjust Makefile config. Ensure appropriate login details, for test or production:
+       ~/folio-import/config.js and ~/folio-import/bash/login-spokane.sh 
+       cp ~/folio-import/Makefile-spl /data/spl/Makefile  # and adjust the "ten" variable
+
+    c. Remove the default reference data.
+       This is done with Makefile 'make remove-default-ref'
+
+    d. Load reference data.
+       This is done with Makefile early sections up to 'templates'
+
+    e. Refresh the source data.
+       cd /data/spl/hz-okapi
+       git pull
+
 1.  Instances (and SRS):
 
     a.  Concatenate the group*.mrc files into a single large file.
