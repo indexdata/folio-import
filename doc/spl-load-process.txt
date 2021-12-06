@@ -28,6 +28,9 @@ JSON that is usual broken.
 
 1.  Instances (and SRS):
 
+    Steps a-c are done via Makefile 'make marc'
+    Steps d-e are done via Makefile 'make instances'
+
     a.  Concatenate the group*.mrc files into a single large file.
             ex: cat group*.mrc >> large-file.mrc
 
@@ -66,7 +69,9 @@ JSON that is usual broken.
     Likewise, there is the run_load_jsonl.sh script that will load several jsonl files as a
     background process.
 
-2. Holdings and items:
+2.  Holdings and items:
+
+    Steps a-c are done via Makefile 'make holdings-items'
 
     a.  As above, concatenate the hz-holdings-*.json files into one large file.
 
@@ -85,6 +90,8 @@ JSON that is usual broken.
         NOTE: The holdings and items files may be split using the splitLargeJson.js script
 
 3.  Users:
+
+    Steps a-c are done via Makefile 'make users'
 
     a.  Concatenate hz-users-*.json files to create one large users file.
     
