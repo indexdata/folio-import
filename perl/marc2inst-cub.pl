@@ -787,6 +787,7 @@ sub make_hi {
   if ($blevel eq 's') {
     my $h = couchQuery($hurl, $bhrid);
     foreach (@{ $h->{docs} }) {
+      my $include = 0;
       my $loc = $_->{fixedFields}->{40}->{value};
       $loc =~ s/\s+//;
       my $hrid = "c" . $_->{_id} . "-$loc";
@@ -803,53 +804,62 @@ sub make_hi {
         $sh->{callNumber} = $cn;
         $sh->{callNumberTypeId} = $cntype;
       }
-      my $varFields = {};
       foreach my $vf (@{ $_->{varFields} }) {
-        my $tag = $vf->{marcTag} || '000';
-        if ($tag !~ /^00/) {
-          my @subs = ($vf->{subfields}) ? @{ $vf->{subfields} } : ();
-          my $sfs = {};
-          foreach (@subs) {
-            my $t = $_->{tag};
-            my $c = $_->{content};
-            if ($tag =~ /^8[56][345]/) {
-              $sfs->{$t} = $c;
-            } else {
-              push @{ $sfs->{$t} }, $c;
+        my $tag = $vf->{marcTag} || '';
+        if ($tag =~ /86[678]/) {
+          my $obj = {};
+          foreach my $sf (@{ $vf->{subfields} }) {
+            my $code = $sf->{tag};
+            my $val = $sf->{content};
+            if ($code eq 'a') {
+              $obj->{statement} = $val;
+            } elsif ($code eq 'x') {
+              $obj->{staffNote} = $val;
+            } elsif ($code eq 'z') {
+              $obj->{note} = $val;
             }
           }
-          # $tag .= $sfs->{8} if $tag =~ /^85[345]/;
-          push @{ $varFields->{$tag} }, $sfs;
-        }
-      }
-      print Dumper($varFields);
-      foreach my $tag (('863', '864', '865')) {
-        my $ctag = $tag;
-        $ctag =~ s/6/5/;
-        foreach my $obj (@{ $varFields->{$tag} }) {
-          my $m = $obj->{8};
-          $m =~ s/\..+//;
-          my @matches = grep { $obj->{'8'} =~ /^$m/ } @{ $varFields->{$ctag} };
-          my $cap = $matches[0];
-          my @m;
-          my @y;
-          foreach my $sf (keys %{ $obj }) {
-            foreach (split('-', $obj->{$sf})) {
-              if ($cap->{$sf} eq '(month)') {
-                push @m, @months[$_];
-              } elsif ($cap->{$sf} eq '(year)') {
-                push @y, $_;
+          if ($obj->{statement}) {
+            if ($tag eq '866') {
+              push @{ $sh->{holdingsStatements} }, $obj;
+            } elsif ($tag eq '867') {
+              push @{ $sh->{holdingsStatementsForSupplements} }, $obj;
+            } elsif ($tag eq '868') {
+              push @{ $sh->{holdingsStatementsForIndexes} }, $obj;
+            }
+            $include = 1;
+          }
+        } elsif ($tag eq '856') {
+          my $obj = {};
+          my $rel = $vf->{ind2};
+          foreach my $sf (@{ $vf->{subfields} }) {
+            my $code = $sf->{tag};
+            my $val = $sf->{content};
+            if ($code eq 'z') {
+              my $uri = $val;
+              my $note = $val;
+              $uri =~ s/.*href=(\S+?) ?>.*/$1/;
+              $obj->{uri} = $uri;
+              $note =~ s/.+?> ?(.+?) ?<.+/$1/;
+              $obj->{publicNote} = $note;
+              my $rel_str = $relations->{$rel};
+              if ($refdata->{electronicAccessRelationships}->{$rel_str}) {
+                $obj->{relationshipId} = $refdata->{electronicAccessRelationships}->{$rel_str};
               }
             }
           }
-          print Dumper($obj);
-          print "$m[0] $y[0]\n";
+          if ($obj->{uri}) {
+            push @{ $sh->{electronicAccess} }, $obj;
+            $include = 1;
+          }
         }
       }
-      my $hout = $json->encode($sh);
       # print $json->pretty->encode($sh);
-      $holdings .= $hout . "\n";
-      $hcount++;
+      if ($include) {
+        my $hout = $json->encode($sh);
+        $holdings .= $hout . "\n";
+        $hcount++;
+      }
     }
   }
   
