@@ -4,6 +4,8 @@ Data files are located in the hz-okapi project under the assets directory.
 These files come in different formats: .mrc .json and a Horizon flavor of
 JSON that is usual broken.
 
+Some notes about use of [screen](https://github.com/indexdata/id-folio-infrastructure/blob/master/runbooks/screen.md) 
+
 0.  Load all settings (ref data) if needed.  Currently locations, service-points, etc.
     get saved off as a previous system's settings and loaded into a new system.
 
