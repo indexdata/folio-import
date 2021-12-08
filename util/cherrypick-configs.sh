@@ -6,4 +6,4 @@ then
 	exit
 fi
 
-jq '.configs[] | select(.configName=="saml" or .configName=="email" or .module=="USERSBL" or .module=="NCIP" or .module=="edge-sip2")' $1 -c
+jq '.configs[] | select(.configName=="saml" or .configName=="email" or .module=="USERSBL" or .module=="NCIP" or .module=="edge-sip2" or .module=="ORDERS")' $1 -c
