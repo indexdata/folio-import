@@ -7,8 +7,7 @@ feesfines-input = /data/spl/hz-okapi/assets/json/hz-ledger.json
 mrc = bibs.mrc
 enc = utf8.mrc
 wd = ~/folio-import
-ten = spokane-test
-#ten = spokane
+ten = spokane
 ref = /data/spl/ref
 refinv = $(ref)/inventory_storage_module
 refcir = $(ref)/circulation_storage_module
@@ -83,6 +82,9 @@ holdings-items: $(inv)/$(enc)
 users: $(assets)/json/hz-users-*
 	mkdir $(users)
 	cat $(assets)/json/hz-users-* > $(users)/hz-users.json
+	grep 'borrower#' $(users)/hz-users.json -c > $(users)/count
+	@echo 'Record count:'
+	cat $(users)/count
 	cd $(wd)/bash; ./login-$(ten).sh
 	cd $(wd)/bash; ./reference_users.sh $(users)/
 	cd $(wd)/patrons; node splUsers.js $(users)/hz-users.json
