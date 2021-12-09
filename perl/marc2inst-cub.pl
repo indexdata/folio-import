@@ -533,6 +533,7 @@ foreach (@ARGV) {
       1;
     };
     next unless $ok;
+    my $srsmarc = $marc;
     # next unless ($marc->title());
     my $ldr = $marc->leader();
     my $blevel = substr($ldr, 7, 1);
@@ -560,9 +561,11 @@ foreach (@ARGV) {
         my $sdata = $field->subfield($sf);
         $sdata =~ s/^(\d{3}).*/$1/;
         my $rtag = $fr->{frules}->{$sdata} || $sdata;
-        $field->set_tag($rtag);
-        push @marc_fields, $field;
-        next;
+	if ($rtag =~ /^\w{3}$/) {
+       	  $field->set_tag($rtag);
+          push @marc_fields, $field;
+          next;
+	}
       }
       if (($tag =~ /^(7|1)/ && !$field->subfield('a')) || ($tag == '856' && !$field->subfield('u'))) {
         next;
@@ -678,7 +681,7 @@ foreach (@ARGV) {
         };
       }
       $inst_recs .= $json->encode($rec) . "\n";
-      $srs_recs .= $json->encode(make_srs($marc, $raw, $rec->{id}, $rec->{hrid}, $snapshot_id, $srs_file)) . "\n";
+      $srs_recs .= $json->encode(make_srs($srsmarc, $raw, $rec->{id}, $rec->{hrid}, $snapshot_id, $srs_file)) . "\n";
       $idmap_lines .= "$rec->{hrid}\t$rec->{id}\n";
       $hrids->{$hrid} = 1;
       $success++;
@@ -731,7 +734,7 @@ foreach (@ARGV) {
       $errcount++;
     }
     
-    if (eof RAW || $success % 10000 == 0) {
+    if (eof RAW || $success % 1000 == 0) {
       my $tt = time() - $start;
       print "Processed #$count (" . $rec->{hrid} . ") [ instances: $success, holdings: $hcount, items: $icount, time: $tt secs ]\n";
       write_objects($OUT, $inst_recs);
