@@ -166,6 +166,8 @@ Some notes about use of [screen](https://github.com/indexdata/id-folio-infrastru
 6.  Fines:
 
     Steps a-d are done via Makefile 'make feesfines-assess' to obtain data and do some basic verification.
+    Step e is done via Makefile 'make feesfines-transform'
+    Steps f-j are manual steps to load the various data.
 
     a.  Get copy of some supporting data:
 
@@ -224,11 +226,13 @@ Some notes about use of [screen](https://github.com/indexdata/id-folio-infrastru
         ./login-spokane.sh  # or login-spokane-test.sh
         ./load_feesfines_adjustments.sh /data/spl/feesfines/feesfines-adjustments.jsonl
         # Inspect log for errors.
+        # Do not re-load any, as balances are calculated.
 
     j.  Load the transactions:
 
         ./load_feesfines_transactions.sh /data/spl/feesfines/feesfines-transactions.jsonl
         # Inspect log for errors.
+        # Do not re-load any, as balances are calculated.
 
 7.  Organizations: (TODO)
 
