@@ -109,6 +109,11 @@ Some notes about use of [screen](https://github.com/indexdata/id-folio-infrastru
 
 4.  Loans:
 
+    Steps a-d are done via Makefile 'make loans'
+    Step e is done via Makefile 'make toggle-inactive-users'
+    Then do step f, as instructed
+    Step g is done via Makefile 'make toggle-inactive-users'
+
     a.  Loans data from Spokane are located in the assets directory as hz-loans-(whatever).  Concatenate
         all loans objects into one loans.json files using jq.
 
