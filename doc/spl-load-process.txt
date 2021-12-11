@@ -104,19 +104,24 @@ Some notes about use of [screen](https://github.com/indexdata/id-folio-infrastru
 3.  Users:
 
     Steps a-c are done via Makefile 'make users'
-
+    Step d is done with Makefile 'make users'
+    
     a.  Concatenate hz-users-*.json files to create one large users file.
     
     b.  Get groups.json from FOLIO and save it to the same directory as the large hz-users file.
             ex:  node downloadAllByEndpoint.js groups ../spl_data/users/
 
     c.  Run splUsers.js script (located in the /patrons directory).  This process
-        will create users files in addition to permissions and logins collections.
+        will create a file of users objects called users_00001.json in addition to permissions and logins.
 
-    d.  Now run loadByEndpoint.js on users.json files.  Perhaps all of these users files
-        could be concatenated into several larger ones and the use the run_load_endpoint.sh 
-        and run 5 or 10 jobs in the background.
-
+    d.  Run node splitLargeJson.js to create multiple files.
+    
+    e.  Run ./run_load_jsonl.sh users users*jsonl to load users.
+    
+    f.  After users are loaded, run ./run_load_jsonl.sh perms*jsonl
+    
+    g.  While perms are loading, feel free to run ./run_load_jsonl.sh logins*jsonl
+    
 4.  Loans:
 
     Steps a-d are done via Makefile 'make loans'
