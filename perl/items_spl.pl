@@ -279,6 +279,16 @@ foreach (@{ $hi->{items} }) {
       $status = 'Available';
     } elsif ($st eq 'r') {
       $status = 'On order';
+    } elsif ($st eq 'a') {
+      $status = 'Unavailable';
+    } elsif ($st eq 'c') {
+      $status = 'Claimed returned';
+    } elsif ($st eq 't' || $st eq 'n') {
+      $status = 'In process';
+    } elsif ($st eq 'm') {
+      $status = 'Long missing';
+    } elsif ($st eq 'iluo') {
+      $status = 'Restricted';
     } 
     
     $irec->{status} = { name => $status };
