@@ -28,6 +28,16 @@ Some notes about use of [screen](https://github.com/indexdata/id-folio-infrastru
        cd /data/spl/hz-okapi
        git pull
 
+    f. Configure workspace.
+       cd ~
+       ln -s /data/spl spl
+       cd ~/folio-import
+       cp configs/js/spokane.js config.js
+       # in config.js use: logpath: '../spl/log'
+       cp configs/bash/login-spokane.sh bash
+       cd bash
+       ln -s /data/spl/log log
+
 1.  Instances (and SRS):
 
     Steps a-c are done via Makefile 'make marc'
@@ -210,14 +220,15 @@ Some notes about use of [screen](https://github.com/indexdata/id-folio-infrastru
     g.  Load the accounts:
 
         cd ~/folio-import
-        mkdir -p log/spl
         node loadJSONL.js accounts /data/spl/feesfines/feesfines-accounts.jsonl
+        tail -4 /data/spl/log/feesfines-accounts.jsonl.log
         # Inspect log for errors. Should only be from potential network glitches.
         # Isolate records to new data file, and load those missing ones.
 
     h.  Load the associated actions:
 
         node loadJSONL.js feefineactions /data/spl/feesfines/feesfines-actions.jsonl
+        tail -4 /data/spl/log/feesfines-actions.jsonl.log
         # Inspect log for errors. As above.
 
     i.  Load the adjustment actions:

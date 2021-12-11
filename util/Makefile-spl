@@ -117,7 +117,7 @@ requests: $(assets)/json/hz-requests.json
 feesfines:
 	@echo --- Getting system data for feesfines ...
 	cd $(wd); grep "$(ten)-okapi" config.js
-	mkdir $(feesfines); chgrp admin $(feesfines); chmod g+s $(feesfines)
+	mkdir $(feesfines)
 	@echo --- Downloading some reference data ...
 	cd $(wd); node downloadAllByEndpoint.js locations $(feesfines)
 	cd $(wd); node downloadAllByEndpoint.js material-types $(feesfines)
