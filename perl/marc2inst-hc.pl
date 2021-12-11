@@ -38,7 +38,7 @@ my $cntypes = {
   '092' => '6caca63e-5651-4db6-9247-3205156e9699',
   '099' => '6caca63e-5651-4db6-9247-3205156e9699',
 };
-my $version = '2';
+my $version = '3';
 
 my $rules_file = shift;
 my $ref_dir = shift;
@@ -435,7 +435,7 @@ foreach (@ARGV) {
   unlink $save_path;
 
   my $id_map = $infile;
-  $id_map =~ s/^(.+)\..+$/$1_instances.map/;
+  $id_map =~ s/^(.+)\..+$/$1.map/;
   unlink $id_map;
 
   my $snap_file = $infile;
@@ -518,7 +518,11 @@ foreach (@ARGV) {
       $marc = MARC::Record->new_from_usmarc($raw);
       1;
     };
+    my $srsmarc = $marc;
     next unless $ok;
+    if ($marc->field('880')) {
+      $srsmarc = MARC::Record->new_from_usmarc($raw);
+    }
     # next unless ($marc->title());
     my $ldr = $marc->leader();
     my $blevel = substr($ldr, 7, 1);
@@ -664,7 +668,7 @@ foreach (@ARGV) {
         };
       }
       $inst_recs .= $json->encode($rec) . "\n";
-      $srs_recs .= $json->encode(make_srs($marc, $raw, $rec->{id}, $rec->{hrid}, $snapshot_id, $srs_file)) . "\n";
+      $srs_recs .= $json->encode(make_srs($srsmarc, $raw, $rec->{id}, $rec->{hrid}, $snapshot_id, $srs_file)) . "\n";
       $idmap_lines .= "$rec->{hrid}|$rec->{id}\n";
       $hrids->{$hrid} = 1;
       $success++;
