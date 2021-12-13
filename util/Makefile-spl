@@ -81,6 +81,7 @@ holdings-items: $(inv)/$(enc)
 
 users: $(assets)/json/hz-users-*
 	mkdir $(users)
+	cd $(wd); node downloadAllByEndpoint.js groups $(users)
 	cat $(assets)/json/hz-users-* > $(users)/hz-users.json
 	grep 'borrower#' $(users)/hz-users.json -c > $(users)/count
 	@echo 'Record count:'
