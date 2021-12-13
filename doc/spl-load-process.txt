@@ -10,8 +10,8 @@ Phase 1:
 - Do the reference data, Step 1 Instances and SRS, Step 2 Holdings and items, Step 3 Users
 
 Phase 2:
-- Adjust the Makefile "assets" path, Step 0b
-- Aupdate the source repo, Step 0e
+- Adjust the Makefile "assets" path if necessary, Step 0b
+- Update the source repo, Step 0e
 - Additional instances and holdings are not expected.
   If there is a diff set of holdings, then:
   - mkdir inventory; cp -r 2021-12-08/inventory/ref inventory
@@ -123,8 +123,7 @@ Some notes about use of [screen](https://github.com/indexdata/id-folio-infrastru
 
 3.  Users:
 
-    Steps a-c are done via Makefile 'make users'
-    Step d is done with Makefile 'make users'
+    Steps a-d are done via Makefile 'make users'
     
     a.  Concatenate hz-users-*.json files to create one large users file.
     
@@ -136,11 +135,11 @@ Some notes about use of [screen](https://github.com/indexdata/id-folio-infrastru
 
     d.  Run node splitLargeJson.js to create multiple files.
     
-    e.  Run ./run_load_jsonl.sh users users*jsonl to load users.
+    e.  Run load users: ./run_load_jsonl.sh users users*jsonl
     
-    f.  After users are loaded, run ./run_load_jsonl.sh perms*jsonl
+    f.  After users are loaded: ./run_load_jsonl.sh perms/users perms*jsonl
     
-    g.  While perms are loading, feel free to run ./run_load_jsonl.sh logins*jsonl
+    g.  While perms are loading: ./run_load_jsonl.sh authn/credentials logins*jsonl
     
 4.  Loans:
 
