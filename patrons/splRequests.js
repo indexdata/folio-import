@@ -35,6 +35,12 @@ const reqStatus = [
   'Closed - Cancelled'
 ];
 
+const noReq = {
+  "36c95abf-8fe9-4ae3-acba-e9f09afbbcdd": 1,
+  "499a8c00-d5cc-4d00-8183-1f56b1ce44eb": 1,
+  "26cfae66-9559-4956-a965-76d8d84ae079": 1
+};
+
 (async () => {
   try {
     let inRequests;
@@ -56,6 +62,7 @@ const reqStatus = [
     let fail = 0;
     let canc = 0;
     let nobib = 0;
+    let skipcount = 0;
 
     // gather all requests by bib#
 
@@ -113,14 +120,18 @@ const reqStatus = [
         console.log(e.response.text || e.message);
       }
       for (let i = 0; i < allItems.length; i++) {
-        let status = allItems[i].status.name;
-        if (!status.match(/Missing|Declared lost|Withdrawn/)) {
+        let item = allItems[i];
+        let status = item.status.name;
+        let lt = item.permanentLoanType.id;
+        if (status.match(/Missing|Declared lost|Withdrawn/)) {
+          console.log(`WARN item ${item.hrid} has a status of ${status}-- not using`);
+        } else if (noReq[lt]) {
+          console.log(`WARN iten ${item.hrid} has a loan type of "${item.permanentLoanType.name}"-- not using`)
+        } else {
           allItems[i].rcount = 0;
           items.push(allItems[i]);
           title = allItems[i].title;
-        } else {
-          console.log(`WARN item ${allItems[i].hrid} has a status of ${status}-- not using`);
-        }
+        } 
       }
       let icount = items.length;
 
@@ -146,7 +157,8 @@ const reqStatus = [
               fulfilmentPreference: 'Hold Shelf',
               pickupServicePointId: pickupLoc,
               requestExpirationDate: expiry,
-              status: reqStatus[inData[x].request_status]
+              status: reqStatus[inData[x].request_status],
+              position: pos
             };
             
             let uurl = `${config.okapi}/users?query=externalSystemId==${userNum}`;
@@ -220,26 +232,47 @@ const reqStatus = [
                 }
               }
             }
-            if (userId && itemId) {
-              reqObj.item = { title: title, barcode: barcode };
+            let skip = false;
+            if (reqObj.status.match(/Awaiting/) && itemId && userId) {
               console.log(reqObj);
+              // make sure that item has not already been checked out to user
+              let url = `${config.okapi}/loan-storage/loans?query=itemId==${itemId}%20AND%20userId=${userId}`;
               try {
-                console.log(`POST ${reqObj.id} to ${reqUrl}`);
-                await superagent
-                  .post(reqUrl)
-                  .send(reqObj)
+                let res = await superagent
+                  .get(url)
                   .set('x-okapi-token', authToken)
-                console.log(`[${reqNum}] INFO Request successfully created on item ${itemHrid} for user ${userNum}`)
-                succ++;
+                if (res.body.totalRecords === 1) {
+                  console.log(`WARN User ${userId} already has itemId ${itemId} checked out-- skipping...`)
+                  skip = true;
+                }
               } catch (e) {
-                console.log(e.response.text);
-                fail++;
+                console.log(e);
+              } 
+            }
+            if (!skip) {
+              if (userId && itemId) {
+                reqObj.item = { title: title, barcode: barcode };
+                try {
+                  console.log(`POST ${reqObj.id} to ${reqUrl}`);
+                  /*
+                  await superagent
+                    .post(reqUrl)
+                    .send(reqObj)
+                    .set('x-okapi-token', authToken)
+                  console.log(`[${reqNum}] INFO Request successfully created on item ${itemHrid} for user ${userNum}`)
+                  */
+                  succ++;
+                } catch (e) {
+                  console.log(e.response.text);
+                  fail++;
+                }
+              } else {
+                console.log(`[${reqNum}] ERROR Request creation failed!`);
+                fail++
               }
             } else {
-              console.log(`[${reqNum}] ERROR Request creation failed!`);
-              fail++
+              skipcount++;
             }
-            await wait(config.delay);
           } else {
             console.log(`[${reqNum}] WARN Request has a cancelled status of "${inData[x].request_status}" -- skipping`);
             canc++;
@@ -257,6 +290,7 @@ const reqStatus = [
     console.log(`Failed: ${fail}`);
     console.log(`No Bib: ${nobib}`);
     console.log(`Canceled: ${canc}`);
+    console.log(`Checked out to User: ${skipcount}`);
     console.log('-------------');
   } catch (e) {
     console.log(e);
