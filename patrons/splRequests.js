@@ -234,7 +234,6 @@ const noReq = {
             }
             let skip = false;
             if (reqObj.status.match(/Awaiting/) && itemId && userId) {
-              console.log(reqObj);
               // make sure that item has not already been checked out to user
               let url = `${config.okapi}/loan-storage/loans?query=itemId==${itemId}%20AND%20userId=${userId}`;
               try {
@@ -254,13 +253,11 @@ const noReq = {
                 reqObj.item = { title: title, barcode: barcode };
                 try {
                   console.log(`POST ${reqObj.id} to ${reqUrl}`);
-                  /*
                   await superagent
                     .post(reqUrl)
                     .send(reqObj)
                     .set('x-okapi-token', authToken)
                   console.log(`[${reqNum}] INFO Request successfully created on item ${itemHrid} for user ${userNum}`)
-                  */
                   succ++;
                 } catch (e) {
                   console.log(e.response.text);
