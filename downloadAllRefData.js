@@ -39,7 +39,9 @@ let refDir = process.argv[2];
       'https://raw.githubusercontent.com/folio-org/mod-data-import-converter-storage/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-custom-fields/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-licenses/master/service/src/main/okapi/ModuleDescriptor-template.json',
-      'https://raw.githubusercontent.com/folio-org/mod-source-record-manager/3451d3059baefb07bc822574552e5bde58ffae71/descriptors/ModuleDescriptor-template.json'
+      'https://raw.githubusercontent.com/folio-org/mod-patron-blocks/master/descriptors/ModuleDescriptor-template.json',
+      'https://raw.githubusercontent.com/folio-org/mod-source-record-manager/3451d3059baefb07bc822574552e5bde58ffae71/descriptors/ModuleDescriptor-template.json',
+      'https://raw.githubusercontent.com/folio-org/mod-remote-storage/master/descriptors/ModuleDescriptor-template.json'
     ]
 
     const skipList = {

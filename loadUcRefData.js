@@ -98,6 +98,7 @@ const doPut = process.env.REF_PUT;
       "receivings": "orders/pieces",
       "refundreasons": "refunds",
       "requestpolicies": "request-policy-storage/request-policies",
+      "requests": "request-storage/requests",
       "closereasons": "orders/configuration/reasons-for-closure",
       "schedulednotices": "scheduled-notice-storage/scheduled-notices",
       "servicepoints": "service-points",
