@@ -29,37 +29,31 @@ if (process.argv[4]) {
     let c = 0;
     let fn;
     let buff = [];
+    let writeStream;
     stream
       .pipe(JSONStream.parse(root))
       .pipe(es.through(function write(data) {
           let rec = JSON.stringify(data);
           if (c % sz === 0) {
-            if (buff.length > 0) {
-              fs.writeFileSync(fn, buff.join('\n') + '\n', { flag: 'a' });
-              buff = [];
-            }
             let fc = Math.floor(c / sz);
             let fcstr = fc.toString();
             let sufx = fcstr.padStart(5, '0');
             fn = `${pathRoot}${sufx}.jsonl`;
-            console.log(`Writing to ${fn}`)
             if (fs.existsSync(fn)) {
               fs.unlinkSync(fn);
             }
+            console.log(`Writing to ${fn}`)
+            if (writeStream) {
+              writeStream.close();
+            }
+            writeStream = fs.createWriteStream(fn);
           }
-          buff.push(rec);
-          if (buff.length === 500) {
-            fs.writeFileSync(fn, buff.join('\n') + '\n', { flag: 'a' });
-            buff = [];
-          }
+          writeStream.write(rec + '\n', 'utf8');
           c++;
         }, 
         function end() {
-          if (buff.length > 0) {
-            fs.writeFileSync(fn, buff.join('\n') + '\n', { flag: 'a' });
-            buff = [];
-          }
-          this.emit('end')
+          writeStream.close();
+          this.emit('end');
         })
       ); 
 
