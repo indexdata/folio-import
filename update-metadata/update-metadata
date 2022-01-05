@@ -1,0 +1,277 @@
+#!/usr/bin/env perl
+
+=head1 NAME
+
+update-metadata: Update metadata elements in various record types
+
+=head1 SYNOPSIS
+
+Use to update the C<metadata> and other date elements at the database
+level for various record types in a FOLIO system, in the case of a
+migration process that has overwritten dates that need to be
+preserved.
+
+Source files should be in JSONL, one object per line.
+
+    update-metadata --tenant mylibrary --db-credentials .mylibrary_creds.json --file instances.jsonl --type inventory_instance
+
+For complete command line options, try C<update-metadata --help>.
+
+=head1 DEPENDENCIES
+
+=over 4
+
+=item Please, a relatively modern Perl 5 distribution (5.26+)
+
+=item L<DBI> (1.640+) with L<DBD::Pg> (3.10.5+)
+
+=item L<JSON> (4.03+)
+
+=back
+
+=cut
+
+use strict;
+use warnings;
+
+use Getopt::Long;
+use Pod::Usage;
+use JSON;
+use DBI;
+
+$| = 1;
+
+# for debugging
+use Data::Dumper;
+binmode(STDOUT,":utf8");
+
+=head1 OPTIONS
+
+=over 4
+
+=item B<-h|--help>
+
+Prints a brief help message and exits.
+
+=item B<-t|--tenant> I<tenantId>
+
+I<Required.> The tenant ID in the FOLIO environment
+
+=item B<--db-credentials> I<filename>
+
+I<Required.> Path to a simple database credentials file in JSON. The
+file should look like this:
+
+    {
+      "host": "postgres.example.com",
+      "port": 5432,
+      "username": "folio_user",
+      "password": "mysecretpassword",
+      "database": "my_database"
+    }
+
+=item B<-f|--file> I<filename>
+
+I<Required.> Path to a JSONL file, or fileglob. Note that if using a
+glob expression the argument must be quoted to avoid shell expansion.
+
+=item B<--type> I<record_type>
+
+I<Required.> The type of FOLIO record to update. Supported record
+types:
+
+=over 4
+
+=item C<inventory_instance>
+
+=item C<inventory_holdingsrecord>
+
+=item C<inventory_item>
+
+=item C<user>
+
+=item C<proxy>
+
+=item C<account>
+
+=item C<loan>
+
+=item C<request>
+
+=back
+
+=item B<--transaction-boundary> I<records>
+
+The number of records per transaction. Defaults to all records in one
+transaction.
+
+=item B<--no-vacuum>
+
+If this option is present, the C<VACUUM ANALYZE> step of the program
+will be skipped. Not recommended except in development. 
+
+=back
+
+=cut
+
+my %opt;
+GetOptions(\%opt,
+           'help',
+           'tenant|t=s',
+           'db-credentials=s',
+           'file|f=s',
+           'type=s',
+           'transaction-boundary:i',
+           'no-vacuum') or pod2usage;
+
+pod2usage( -exitval => 1, -verbose => 1 ) if $opt{help};
+pod2usage('Missing required "--tenant" option') unless $opt{tenant};
+pod2usage('Missing required "--db-credentials" option') unless $opt{'db-credentials'};
+pod2usage('Missing required "--file" option') unless $opt{file};
+pod2usage('Missing required "--type" option') unless $opt{type};
+my $transaction_boundary = $opt{'transaction-boundary'}?$opt{'transaction-boundary'}:0;
+my $log_increment = 50000;
+my @files = glob ${opt{file}};
+my $table_name;
+if ($opt{type} eq 'inventory_instance') {
+  $table_name = "${opt{tenant}}_mod_inventory_storage.instance";
+} elsif ($opt{type} eq 'inventory_holdingsrecord') {
+  $table_name = "${opt{tenant}}_mod_inventory_storage.holdings_record";
+} elsif ($opt{type} eq 'inventory_item') {
+  $table_name = "${opt{tenant}}_mod_inventory_storage.item";
+} elsif ($opt{type} eq 'user') {
+  $table_name = "${opt{tenant}}_mod_users.users";
+} elsif ($opt{type} eq 'proxy') {
+  $table_name = "${opt{tenant}}_mod_users.proxyfor";
+} elsif ($opt{type} eq 'request') {
+  $table_name = "${opt{tenant}}_mod_circulation_storage.request";
+} elsif ($opt{type} eq 'loan') {
+  $table_name = "${opt{tenant}}_mod_circulation_storage.loan";
+} elsif ($opt{type} eq 'account') {
+  $table_name = "${opt{tenant}}_mod_feesfines.accounts";
+} else {
+  die "Unsupported type $opt{type}\n";
+}
+
+# Get DBH
+my $db_credentials_json = slurp($opt{'db-credentials'});
+my $db_credentials_ref = decode_json($db_credentials_json);
+my $dbh = DBI->connect("dbi:Pg:dbname=$$db_credentials_ref{database};host=$$db_credentials_ref{host};port=$$db_credentials_ref{port}",$$db_credentials_ref{username},$$db_credentials_ref{password},{ AutoCommit => 0 })
+  or die "Error connecting to database: $DBI::errstr\n";
+my $dbh_vacuum = DBI->connect("dbi:Pg:dbname=$$db_credentials_ref{database};host=$$db_credentials_ref{host};port=$$db_credentials_ref{port}",$$db_credentials_ref{username},$$db_credentials_ref{password},{ AutoCommit => 1 })
+  or die "Error connecting to database: $DBI::errstr\n";
+
+# Prepared statements
+# Records are pretty consistent. Only inventory instance has an extra property to set
+# Need two forms of update statement to account for records with and without createdByUserId
+my ($update_sql,$update_sql_2);
+if ($opt{type} eq 'inventory_instance') {
+  $update_sql = <<EOF;
+UPDATE $table_name
+  SET creation_date = ?,
+    jsonb = jsonb_set(jsonb_set(jsonb, '{metadata}', ?), '{statusUpdatedDate}', ?)
+WHERE id = ?
+EOF
+  $update_sql_2 = <<EOF;
+UPDATE $table_name
+  SET creation_date = ?,
+    created_by = ?, 
+    jsonb = jsonb_set(jsonb_set(jsonb, '{metadata}', ?), '{statusUpdatedDate}', ?)
+WHERE id = ?
+EOF
+} else {
+  $update_sql = <<EOF;
+UPDATE $table_name
+  SET creation_date = ?,
+    jsonb = jsonb_set(jsonb, '{metadata}', ?)
+WHERE id = ?
+EOF
+  $update_sql_2 = <<EOF;
+UPDATE $table_name
+  SET creation_date = ?,
+    created_by = ?, 
+    jsonb = jsonb_set(jsonb, '{metadata}', ?)
+WHERE id = ?
+EOF
+}
+
+my $sth_update = $dbh->prepare($update_sql);
+my $sth_update_2 = $update_sql_2?$dbh->prepare($update_sql_2):undef;
+my $record_count = 0;
+unless ($opt{'no-vacuum'}) {
+  print localtime() . " Running VACUUM ANALYZE...\n";
+  $dbh_vacuum->do("VACUUM ANALYZE $table_name");
+  print localtime() . " VACUUM ANALYZE complete\n";
+}
+foreach my $file (@files) {
+  print localtime() . " Processing $file...\n";
+  open(my $fh,'<:encoding(UTF-8)',$file) or warn "Can't open $file: $!\n";
+  while (<$fh>) {
+    chomp;
+    my $record = eval { from_json($_); };
+    if ($@) {
+      warn "Error reading record from file: $@\n";
+      next;
+    }
+    if ($transaction_boundary != 0 &&
+        $record_count != 0 &&
+        $record_count % $transaction_boundary == 0) {
+      $dbh->commit;
+      print localtime() . " Committed ($record_count total records)\n";
+    } elsif ($record_count != 0 && $record_count % $log_increment == 0) {
+      print localtime() . " $record_count record(s) processed\n";
+    }
+    if ($opt{type} eq 'inventory_instance') {
+      if ($$record{metadata}{createdByUserId}) {
+        $sth_update_2->execute($$record{metadata}{createdDate},
+                               $$record{metadata}{createdByUserId},
+                               to_json($$record{metadata}),
+                               "\"$$record{statusUpdatedDate}\"",
+                               $$record{id});
+      } else {
+        $sth_update->execute($$record{metadata}{createdDate},
+                             to_json($$record{metadata}),
+                             "\"$$record{statusUpdatedDate}\"",
+                             $$record{id});
+      }
+    } else {
+      if ($$record{metadata}{createdByUserId}) {
+        $sth_update_2->execute($$record{metadata}{createdDate},
+                               $$record{metadata}{createdByUserId},
+                               to_json($$record{metadata}),
+                               $$record{id});
+      } else {
+        $sth_update->execute($$record{metadata}{createdDate},
+                             to_json($$record{metadata}),
+                             $$record{id});
+      }
+    }      
+    $record_count++;
+  }
+}
+print localtime() . " Final transaction commit...\n";
+$dbh->commit;
+$dbh->disconnect; # manual disconnect to close automatically opened transaction
+print localtime() . " Finished! $record_count record(s) processed\n";
+unless ($opt{'no-vacuum'}) {
+  print localtime() . " Running VACUUM ANALYZE...\n";
+  $dbh_vacuum->do("VACUUM ANALYZE $table_name");
+  print localtime() . " VACUUM ANALYZE complete\n";
+}
+
+exit;
+
+sub slurp {
+  my $file = shift;
+  open my $fh, '<', $file or die "Unable to open $file: $!\n";
+  local $/ = undef;
+  my $cont = <$fh>;
+  close $fh;
+  return $cont;
+}
+
+=head1 NOTES
+
+The README.md file is generated using L<pod2markdown>.
+
+=cut
