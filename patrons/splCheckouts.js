@@ -53,24 +53,30 @@ try {
   records.checkouts = [];
   const inactive = { checkouts: [] };
   const notFound = { checkouts: [] };
+  const noDueDate = [];
   let total = 0;
 
   loans.forEach(r => {
+    // console.log(r);
     total++;
-    let loan = {};
-    loan.itemBarcode = r.ibarcode;
-    loan.userBarcode = r.bbarcode;
-    loan.loanDate = getDateByDays(r.last_cko_date);
-    loan.dueDate = getDateByDays(r.due_date);
-    loan.servicePointId = spMap[r.cko_location] || spMap.ill;
-    if (active[r.bbarcode] !== undefined) {
-      records.checkouts.push(loan);
-      if (active[r.bbarcode].active === false) {
-	loan.expirationDate = active[r.bbarcode].expirationDate;
-        inactive.checkouts.push(loan);
+    if (Number.isInteger(r.due_date)) {
+      let loan = {};
+      loan.itemBarcode = r.ibarcode;
+      loan.userBarcode = r.bbarcode;
+      loan.loanDate = getDateByDays(r.last_cko_date);
+      loan.dueDate = getDateByDays(r.due_date);
+      loan.servicePointId = spMap[r.cko_location] || spMap.ill;
+      if (active[r.bbarcode] !== undefined) {
+        records.checkouts.push(loan);
+        if (active[r.bbarcode].active === false) {
+          loan.expirationDate = active[r.bbarcode].expirationDate;
+          inactive.checkouts.push(loan);
+        }
+      } else {
+        notFound.checkouts.push(loan);
       }
     } else {
-      notFound.checkouts.push(loan);
+      noDueDate.push(r); 
     }
   });
 
@@ -91,6 +97,11 @@ try {
   console.log(`Writing ${notFound.totalRecords} to ${nfPath}...`);
   fs.writeFileSync(nfPath, JSON.stringify(notFound, null, 2));
 
+  let nddPath = `${workDir}/noduedates.json`;
+  let nddTotal = noDueDate.length;
+  console.log(`Writing ${nddTotal} to ${nddPath}...`);
+  fs.writeFileSync(nddPath, JSON.stringify(noDueDate, null, 2));
+
 } catch (e) {
-  console.error(e.message);
+  console.error(e);
 }
