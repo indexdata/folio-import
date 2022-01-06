@@ -1,7 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const jsonFile = process.argv[4];
+const jsonFile = process.argv[5];
+const itemsFile = process.argv[3];
 const usersFile = process.argv[3];
 const spFile = process.argv[2];
 
@@ -15,7 +16,7 @@ const daysNow = Math.floor(new Date().valueOf()/1000/86400);
 
 try {
   if (jsonFile === undefined) {
-    throw new Error('Usage: $ node createSplCheckout.js <service points file> <users file> <loans file>');
+    throw new Error('Usage: $ node createSplCheckout.js <service points file> <users file> <item file> <loans file>');
   }
   if (!fs.existsSync(jsonFile)) {
     throw new Error('Can\'t find loans file');
@@ -25,6 +26,9 @@ try {
   }
   if (!fs.existsSync(usersFile)) {
     throw new Error('Can\'t find users file');
+  }
+  if (!fs.existsSync(itemsFile)) {
+    throw new Error('Can\'t find items file');
   }
 
   const getDateByDays = (days) => {
@@ -41,13 +45,22 @@ try {
   });
 
   const loans = require(jsonFile);
-  const users = require(usersFile);
-  delete require.cache[require.resolve(usersFile), require.resolve(jsonFile)];
+  let users = require(usersFile);
+  let inItems = require(itemsFile);
+  delete require.cache[require.resolve(itemsFile), require.resolve(usersFile), require.resolve(jsonFile)];
 
   let active = {};
+  console.log('Parsing users...');
   users.users.forEach(u => {
-    active[u.barcode] = { active: u.active, expirationDate: u.expirationDate };
+    active[u.barcode] = { active: u.active, expirationDate: u.expirationDate, userId: u.id };
   });
+  users = {};
+  let items = {};
+  console.log('Parsing items...');
+  inItems.items.forEach(i => {
+    items[i.barcode] = i.id;
+  });
+  inItems = {};
 
   const records = {};
   records.checkouts = [];
@@ -61,6 +74,7 @@ try {
     total++;
     if (Number.isInteger(r.due_date)) {
       let loan = {};
+      let loanObj = {};
       loan.itemBarcode = r.ibarcode;
       loan.userBarcode = r.bbarcode;
       loan.loanDate = getDateByDays(r.last_cko_date);
@@ -68,6 +82,8 @@ try {
       loan.servicePointId = spMap[r.cko_location] || spMap.ill;
       if (active[r.bbarcode] !== undefined) {
         records.checkouts.push(loan);
+        loanObj.userId = active[r.bbarcode].userId;
+        console.log(loanObj);
         if (active[r.bbarcode].active === false) {
           loan.expirationDate = active[r.bbarcode].expirationDate;
           inactive.checkouts.push(loan);
