@@ -123,7 +123,7 @@ const jsonFile = process.argv[2];
           if (updateItemFlag) {
             let iurl = `${config.okapi}/item-storage/items/${loan.itemId}`;
             console.log(`INFO Updating item record at ${iurl}`)
-            // await putData(iurl, authToken, item);
+            await putData(iurl, authToken, item);
             itemchanged++;
           }
         } else {
