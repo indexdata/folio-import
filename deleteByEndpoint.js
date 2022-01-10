@@ -37,6 +37,7 @@ const wait = (ms) => {
 
     if (objFile) {
       try {
+        if (objFile.match(/\.jsonl$/)) throw new Error('Looks like a JSONL file.');
         refData = JSON.parse(fs.readFileSync(objFile, 'utf8'));
       } catch (e) {
         const fileStream = fs.createReadStream(objFile);
