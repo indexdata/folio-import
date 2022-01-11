@@ -4,6 +4,7 @@ const path = require('path');
 const uuid = require('uuid/v5');
 const superagent = require('superagent');
 const { getAuthToken } = require('../lib/login');
+const { post } = require('superagent');
 
 const jsonFile = process.argv[2];
 
@@ -47,9 +48,23 @@ const jsonFile = process.argv[2];
           .send(payload);
         return res.body;
       } catch (e) {
-        throw new Error(e);
+          throw new Error(e);
       }
     }
+
+    const postData = async (url, authToken, payload) => {
+      console.log(payload);
+      try {
+        const res = await superagent
+          .post(url)
+          .set('x-okapi-token', authToken)
+          .set('content-type', 'application/json')
+          .send(payload);
+        return res.body;
+      } catch (e) {
+        throw new Error(e);
+      }
+    }    
 
     const config = (fs.existsSync('../config.js')) ? require('../config.js') : require('../config.default.js');
 
@@ -103,7 +118,7 @@ const jsonFile = process.argv[2];
             if (!item.lastCheckIn) {
               loan.itemId = item.id;
               if (item.status.name === 'Available') {
-                item.status.name = 'Checked out';
+                item.status.name = 'Declared lost';
                 updateItemFlag = 1;
               }
             } else {
@@ -118,6 +133,7 @@ const jsonFile = process.argv[2];
           loan.dueDate = getDateByDays(r.due_date);
           loan.checkoutServicePointId = spMap[r.cko_location] || spMap.ill;
           loan.action = 'checkedout';
+          loan.status = { name: 'closed' };
           loan.id = uuid(loan.userId + loan.itemId, '00000000-0000-0000-0000-000000000000');
           loan.loanPolicyId = 'd9cd0bed-1b49-4b5e-a7bd-064b8d177231';
           if (updateItemFlag) {
@@ -132,6 +148,7 @@ const jsonFile = process.argv[2];
         }
         if (loan.itemId) {
           fs.writeFileSync(outFile, JSON.stringify(loan) + '\n', { flag: 'a' });
+          await postData(`${config.okapi}/loan-storage/loans`, authToken, loan);
           success++;
         }
       }
