@@ -46,6 +46,11 @@ while (<RAW>) {
       $marc->leader($ldr);
       $marc->delete_fields($z);
     }
+    if (!$marc->field('008')) {
+      my $e = "220101s2022    xxxa   j      000 0beng  ";
+      my $f = MARC::Field->new('008', $e);
+      $marc->insert_fields_ordered($f);
+    }
     if ($ofield) {
       my $ctrl = $ofield->subfield('a');
       $marc->delete_fields($ofield);
