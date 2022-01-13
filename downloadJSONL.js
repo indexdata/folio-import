@@ -1,7 +1,7 @@
 const fs = require('fs');
 const superagent = require('superagent');
 const { getAuthToken } = require('./lib/login');
-let ep = process.argv[2];
+let endPoint = process.argv[2];
 let refDir = process.argv[3];
 let start = parseInt(process.argv[4], 10);
 let limit = parseInt(process.argv[5], 10);
@@ -21,15 +21,15 @@ let limit = parseInt(process.argv[5], 10);
 
     refDir = refDir.replace(/\/$/,'');
 
-    let endPoint = ep;
+    endPoint = endPoint.replace(/^\//, '');
 
     let queryStr = '?query=id=*%20sortBy%20id';
     if (endPoint.match(/query=/)) queryStr = '';
     let actionUrl = config.okapi + '/' + endPoint + queryStr;
-    let filename = endPoint.replace(/\//g, '__');
+    let filename = endPoint.replace(/^.+?\//g, '');
     filename = filename.replace(/\?.+/, '');
 
-    const fn = `${refDir}/${filename}.json`;
+    const fn = `${refDir}/${filename}.jsonl`;
     if (fs.existsSync(fn)) {
       fs.unlinkSync(fn);
     }
