@@ -29,7 +29,7 @@ my $count = 0;
 while (<RAW>) {
   my $err = 0;
   $count++;
-  print "$count\n";
+  print "Processed $count\n" if $count % 1000 == 0;
   $raw = $_;
   my $org = '';
   my $marc;
@@ -40,6 +40,12 @@ while (<RAW>) {
     1;
   };
   if ($ok) {
+    if ($marc->field('000')) {
+      my $z = $marc->field('000');
+      my $ldr = $z->data();
+      $marc->leader($ldr);
+      $marc->delete_fields($z);
+    }
     if ($ofield) {
       my $ctrl = $ofield->subfield('a');
       $marc->delete_fields($ofield);
