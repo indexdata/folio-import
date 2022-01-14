@@ -134,11 +134,11 @@ const v = 'v2';
           loan.dueDate = getDateByDays(r.due_date);
           loan.checkoutServicePointId = spMap[r.cko_location] || spMap.ill;
           loan.action = 'declaredLost';
-          if (item.status.name === 'Claimed returned') {
-            loan.action = 'claimedReturn';
+          if (item.status && item.status.name === 'Claimed returned') {
+            loan.action = 'claimedReturned';
           }
           let sn = 'open';
-          if (item.status.name !== 'Declared lost') {
+          if (item.status && item.status.name !== 'Declared lost') {
             sn = 'closed';
           }
           loan.status = { name: sn };
