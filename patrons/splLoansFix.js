@@ -7,6 +7,7 @@ const { getAuthToken } = require('../lib/login');
 const { post } = require('superagent');
 
 const jsonFile = process.argv[2];
+const v = 'v2';
 
 (async () => {
   try {
@@ -35,7 +36,7 @@ const jsonFile = process.argv[2];
           .set('x-okapi-token', authToken);
           return res.body;
       } catch (e) {
-        throw new Error(e);
+        console.log(`${e}`);
       }
     }
 
@@ -48,7 +49,7 @@ const jsonFile = process.argv[2];
           .send(payload);
         return res.body;
       } catch (e) {
-          throw new Error(e);
+        console.log(`${e}`);
       }
     }
 
@@ -62,7 +63,7 @@ const jsonFile = process.argv[2];
           .send(payload);
         return res.body;
       } catch (e) {
-        throw new Error(e);
+        console.log(`${e}`);
       }
     }    
 
@@ -132,10 +133,19 @@ const jsonFile = process.argv[2];
           loan.loanDate = getDateByDays(r.last_cko_date);
           loan.dueDate = getDateByDays(r.due_date);
           loan.checkoutServicePointId = spMap[r.cko_location] || spMap.ill;
-          loan.action = 'checkedout';
-          loan.status = { name: 'closed' };
-          loan.id = uuid(loan.userId + loan.itemId, '00000000-0000-0000-0000-000000000000');
+          loan.action = 'declaredLost';
+          if (item.status && item.status.name === 'Claimed returned') {
+            loan.action = 'claimedReturned';
+          }
+          let sn = 'closed';
+          if (item.status && item.status.name.match(/Declared|Claimed/)) {
+            sn = 'open';
+          }
+          loan.status = { name: sn };
+          loan.id = uuid(loan.userId + loan.itemId + v, '00000000-0000-0000-0000-000000000000');
           loan.loanPolicyId = 'd9cd0bed-1b49-4b5e-a7bd-064b8d177231';
+          loan.lostItemPolicyId = 'c7d3b34c-69e6-4aea-ae36-d3a7ccf97d20';
+          if (item.status) loan.itemStatus = item.status.name;
           if (updateItemFlag) {
             let iurl = `${config.okapi}/item-storage/items/${loan.itemId}`;
             console.log(`INFO Updating item record at ${iurl}`)
@@ -147,8 +157,9 @@ const jsonFile = process.argv[2];
           nouser++;
         }
         if (loan.itemId) {
+
           fs.writeFileSync(outFile, JSON.stringify(loan) + '\n', { flag: 'a' });
-          await postData(`${config.okapi}/loan-storage/loans`, authToken, loan);
+          // await postData(`${config.okapi}/loan-storage/loans`, authToken, loan);
           success++;
         }
       }

@@ -13,11 +13,18 @@ if (! -e $infile) {
 
 $/ = "\x1D";
 open RAW, "<:encoding(UTF-8)", $infile;
+
 my $outfile = $infile;
 $outfile =~ s/(.+)\.\w+$/$1/;
 $outfile = "${outfile}_fixed.mrc";
 unlink $outfile;
 open OUT, ">>:utf8", $outfile or die "Can't open outfile!";
+
+my $itemfile = $infile;
+$itemfile =~ s/(.+)\.\w+$/$1/;
+$itemfile = "${itemfile}_items.tsv";
+unlink $itemfile;
+open ITMS, ">>:utf8", $itemfile or die "Can't open outfile!";
 
 my $errfile = $infile;
 $errfile =~ s/(.+)\.\w+$/$1/;
@@ -82,6 +89,14 @@ while (<RAW>) {
       open ERR, ">>:utf8", $errfile or die "Can't open errfile!";
       print ERR $marc->as_usmarc();
       close ERR;
+    }
+    foreach ($marc->field('949')) {
+      my $iid = $_->subfield('q');
+      my $bc = $_->subfield('b');
+      my $mt = $_->subfield('c');
+      my $lo = $_->subfield('g');
+      my $cn = $_->subfield('e');
+      print ITMS "$iid\t$bc\t$lo\t$cn\t$mt\n" if $iid;
     }
     # print $marc->as_formatted();
     print OUT $marc->as_usmarc();
