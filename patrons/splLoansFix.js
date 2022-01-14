@@ -145,7 +145,7 @@ const v = 'v2';
           loan.id = uuid(loan.userId + loan.itemId + v, '00000000-0000-0000-0000-000000000000');
           loan.loanPolicyId = 'd9cd0bed-1b49-4b5e-a7bd-064b8d177231';
           loan.lostItemPolicyId = 'c7d3b34c-69e6-4aea-ae36-d3a7ccf97d20';
-          loan.itemStatus = item.status.name;
+          if (item.status) loan.itemStatus = item.status.name;
           if (updateItemFlag) {
             let iurl = `${config.okapi}/item-storage/items/${loan.itemId}`;
             console.log(`INFO Updating item record at ${iurl}`)
@@ -157,8 +157,9 @@ const v = 'v2';
           nouser++;
         }
         if (loan.itemId) {
+
           fs.writeFileSync(outFile, JSON.stringify(loan) + '\n', { flag: 'a' });
-          await postData(`${config.okapi}/loan-storage/loans`, authToken, loan);
+          // await postData(`${config.okapi}/loan-storage/loans`, authToken, loan);
           success++;
         }
       }
