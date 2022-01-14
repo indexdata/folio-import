@@ -137,9 +137,9 @@ const v = 'v2';
           if (item.status && item.status.name === 'Claimed returned') {
             loan.action = 'claimedReturned';
           }
-          let sn = 'open';
-          if (item.status && item.status.name !== 'Declared lost') {
-            sn = 'closed';
+          let sn = 'closed';
+          if (item.status && item.status.name.match(/Declared|Claimed/)) {
+            sn = 'open';
           }
           loan.status = { name: sn };
           loan.id = uuid(loan.userId + loan.itemId + v, '00000000-0000-0000-0000-000000000000');
