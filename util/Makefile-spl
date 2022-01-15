@@ -130,6 +130,9 @@ feesfines:
 		> $(feesfines)/users-map.tsv
 	@echo --- Get the items data ...
 	cd $(wd); node downloadAllItems.js $(feesfines)
+	@echo --- Get the loans data ...
+	cd $(wd); node downloadAllByEndpoint.js loan-storage/loans $(feesfines)
+	cd $(feesfines); mv loan-storage__loans.json loans.json
 
 feesfines-assess: feesfines
 	@echo --- Assessing feesfines data ...
@@ -145,7 +148,7 @@ feesfines-transform: feesfines-assess
 	@echo --- Doing $@ ...
 	cp /data/dcrossley/spl-feesfines/uuids-ff.json $(feesfines)
 	cd $(feesfines); python3 $(wd)/python/spl-feesfines/spl_feesfines.py \
-		-u users-map.tsv -m items.json -v verbs-map.tsv \
+		-u users-map.tsv -m items.json -n loans.json -v verbs-map.tsv \
 		-c locations.json -y material-types.json -p service-points.json \
 		-l debug \
 		-i $(feesfines-input)
