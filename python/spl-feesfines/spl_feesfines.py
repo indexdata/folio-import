@@ -112,7 +112,10 @@ def main():
         except KeyError:
             map_items[item_hrid] = {}
             map_items[item_hrid]['id'] = item_entry['id']
-            map_items[item_hrid]['barcode'] = item_entry['barcode']
+            try:
+                map_items[item_hrid]['barcode'] = item_entry['barcode']
+            except KeyError:
+                pass
             map_items[item_hrid]['effectiveLocationId'] = item_entry['effectiveLocationId']
             map_items[item_hrid]['holdingsRecordId'] = item_entry['holdingsRecordId']
             map_items[item_hrid]['materialTypeId'] = item_entry['materialTypeId']
@@ -371,7 +374,10 @@ def main():
                             data_errors.extend(errors)
                         else:
                             entry_account['loanId'] = loan_uuid
-                    entry_account['barcode'] = map_items[str(item)]['barcode']
+                    try:
+                        entry_account['barcode'] = map_items[str(item)]['barcode']
+                    except KeyError:
+                        pass
                     entry_account['holdingsRecordId'] = map_items[str(item)]['holdingsRecordId']
                     uuid_material_type = map_items[str(item)]['materialTypeId']
                     entry_account['materialType'] = map_materialtypes[uuid_material_type]
