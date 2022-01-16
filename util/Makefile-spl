@@ -14,7 +14,7 @@ refcir = $(ref)/circulation_storage_module
 log = log
 
 help:
-	@echo "Usage: make [ help | remove-default-ref | inventory-ref | groups | circ-ref | feesfines-ref | configurations | templates | marc | instances | holdings-items | users | loans | toggle-inactive-users | requests | feesfines | feesfines-assess | feesfines-transform | clean-inventory | clean-users | clean-loans | clean-requests ]"
+	@echo "Usage: make [ help | remove-default-ref | inventory-ref | groups | circ-ref | feesfines-ref | configurations | templates | marc | instances | holdings-items | users | loans | toggle-inactive-users | requests | feesfines | feesfines-assess | feesfines-transform | clean-feesfines | clean-inventory | clean-users | clean-loans | clean-requests ]"
 
 remove-default-ref:
 	cd $(wd); grep "$(ten)-okapi" config.js
@@ -132,7 +132,8 @@ feesfines:
 	cd $(wd); node downloadAllItems.js $(feesfines)
 	@echo --- Get the loans data ...
 	cd $(wd); node downloadAllByEndpoint.js loan-storage/loans $(feesfines)
-	cd $(feesfines); mv loan-storage__loans.json loans.json
+	cd $(feesfines); jq '{loans: [ .loans[] | select(has("userId")) ]}' loan-storage__loans.json \
+		> loans.json
 
 feesfines-assess: feesfines
 	@echo --- Assessing feesfines data ...
