@@ -130,6 +130,9 @@ feesfines:
 		> $(feesfines)/users-map.tsv
 	@echo --- Get the items data ...
 	cd $(wd); node downloadAllItems.js $(feesfines)
+	@echo --- Get the loans data ...
+	cd $(wd); node downloadAllByEndpoint.js loan-storage/loans $(feesfines)
+	cd $(feesfines); mv loan-storage__loans.json loans.json
 
 feesfines-assess: feesfines
 	@echo --- Assessing feesfines data ...
@@ -145,12 +148,28 @@ feesfines-transform: feesfines-assess
 	@echo --- Doing $@ ...
 	cp /data/dcrossley/spl-feesfines/uuids-ff.json $(feesfines)
 	cd $(feesfines); python3 $(wd)/python/spl-feesfines/spl_feesfines.py \
-		-u users-map.tsv -m items.json -v verbs-map.tsv \
+		-u users-map.tsv -m items.json -n loans.json -v verbs-map.tsv \
 		-c locations.json -y material-types.json -p service-points.json \
 		-l debug \
 		-i $(feesfines-input)
 	cp -p $(feesfines)/uuids-ff.json /data/dcrossley/spl-feesfines
 	cat $(feesfines)/summary-feesfines.json | grep "num"
+
+feesfines-test-transform: feesfines-assess
+	@echo --- Doing $@ ...
+	cp /data/dcrossley/spl-feesfines/uuids-ff-test.json $(feesfines)
+	cd $(feesfines); python3 $(wd)/python/spl-feesfines/spl_feesfines.py \
+		-u users-map.tsv -m items.json -n loans.json -v verbs-map.tsv \
+		-c locations.json -y material-types.json -p service-points.json \
+		-o feesfines-accounts-test.jsonl -a feesfines-actions-test.jsonl \
+		-j feesfines-adjustments-test.jsonl -t feesfines-transactions-test.jsonl \
+		-e errors-feesfines-test.json -s summary-feesfines-test.json \
+		-f uuids-ff-test.json -l debug \
+		-i /data/dcrossley/spl-feesfines/hz-ledger-test-6.json
+	cp -p $(feesfines)/uuids-ff-test.json /data/dcrossley/spl-feesfines
+	cat $(feesfines)/summary-feesfines-test.json | grep "num"
+
+.PHONY: feesfines-test-transform
 
 clean-inventory:
 	rm -rf $(inv)

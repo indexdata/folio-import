@@ -3,7 +3,7 @@ Process the Spokane feesfines data export to transform into FOLIO JSON.
 
 Typical invocation:
 python3 spl_feesfines.py \
-  -u users-map.tsv -m items.json -v verbs-map.tsv \
+  -u users-map.tsv -m items.json -n loans.json -v verbs-map.tsv \
   -c locations.json -y material-types.json -p service-points.json \
   -i hz-ledger.json -l debug
 """
@@ -42,6 +42,9 @@ def main():
     parser.add_argument("-m", "--map-items",
         required=True,
         help="Pathname to items data (JSON).")
+    parser.add_argument("-n", "--map-loans",
+        required=True,
+        help="Pathname to loans data (JSON).")
     parser.add_argument("-v", "--map-verbs",
         required=True,
         help="Pathname to map of blocks to API verbs (TSV).")
@@ -109,7 +112,10 @@ def main():
         except KeyError:
             map_items[item_hrid] = {}
             map_items[item_hrid]['id'] = item_entry['id']
-            map_items[item_hrid]['barcode'] = item_entry['barcode']
+            try:
+                map_items[item_hrid]['barcode'] = item_entry['barcode']
+            except KeyError:
+                pass
             map_items[item_hrid]['effectiveLocationId'] = item_entry['effectiveLocationId']
             map_items[item_hrid]['holdingsRecordId'] = item_entry['holdingsRecordId']
             map_items[item_hrid]['materialTypeId'] = item_entry['materialTypeId']
@@ -118,6 +124,28 @@ def main():
             except KeyError:
                 pass
     items_json.clear()
+    if args.map_loans.startswith("~"):
+        input_pn = os.path.expanduser(args.map_loans)
+    else:
+        input_pn = args.map_loans
+    if not os.path.exists(input_pn):
+        logger.critical("Specified input map items file not found: %s", input_pn)
+        return 2
+    with open(input_pn) as input_fh:
+        loans_json = json.load(input_fh)
+    map_loans = {}
+    for loan_entry in loans_json['loans']:
+        loan_user = loan_entry['userId']
+        try:
+            map_loans[loan_user]
+        except KeyError:
+            map_loans[loan_user] = []
+        finally:
+            loan_packet = {}
+            loan_packet['loanId'] = loan_entry['id']
+            loan_packet['itemId'] = loan_entry['itemId']
+            map_loans[loan_user].append(loan_packet)
+    loans_json.clear()
     if args.map_users.startswith("~"):
         input_pn = os.path.expanduser(args.map_users)
     else:
@@ -336,7 +364,20 @@ def main():
                 entry_account['id'] = uuid_account
                 if uuid_item:
                     entry_account['itemId'] = uuid_item
-                    entry_account['barcode'] = map_items[str(item)]['barcode']
+                    try:
+                        map_loans[uuid_user]
+                    except KeyError:
+                        data_errors.append('loan: user has no loans: itemId: {}'.format(uuid_item))
+                    else:
+                        loan_uuid, errors = lookup_loan(map_loans, uuid_user, uuid_item)
+                        if errors:
+                            data_errors.extend(errors)
+                        else:
+                            entry_account['loanId'] = loan_uuid
+                    try:
+                        entry_account['barcode'] = map_items[str(item)]['barcode']
+                    except KeyError:
+                        pass
                     entry_account['holdingsRecordId'] = map_items[str(item)]['holdingsRecordId']
                     uuid_material_type = map_items[str(item)]['materialTypeId']
                     entry_account['materialType'] = map_materialtypes[uuid_material_type]
@@ -535,6 +576,29 @@ def serial_date_to_utc_string(serial_date, full=True):
         new_date = datetime.date(1970,1,1) + datetime.timedelta(serial_date)
         new_date_str = new_date.isoformat()
     return new_date_str
+
+def lookup_loan(map_loans, user, item):
+    """
+    Lookup the map of loans. Return the loanId for the itemId.
+    """
+    errors = []
+    value = ''
+    found = False
+    multiple = False
+    for entry in map_loans[user]:
+        if entry['itemId'] == item:
+            if found:
+                multiple = True
+                msg = 'loan: multiple for itemId: {}'.format(item)
+                errors.append(msg)
+                value = ''
+            else:
+                found = True
+                value = entry['loanId']
+    if not found:
+        msg = 'loan: not found for itemId: {}'.format(item)
+        errors.append(msg)
+    return value, errors
 
 def do_debug(record_num, reference, message):
     """

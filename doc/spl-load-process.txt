@@ -199,9 +199,10 @@ Some notes about use of [screen](https://github.com/indexdata/id-folio-infrastru
 
 6.  Fines:
 
-    Steps a-d are done via Makefile 'make feesfines-assess' to obtain data and do some basic verification.
-    Step e is done via Makefile 'make feesfines-transform'
-    Steps f-j are manual steps to load the various data.
+    Steps a-e are done via Makefile 'make feesfines-assess' to obtain data and do some basic verification.
+    Step f is done via Makefile 'make feesfines-transform'
+    Steps g-k are manual steps to load the various data.
+    Step l is a manual step to subsequently add missing loans.
 
     a.  Get copy of some supporting data:
 
@@ -227,21 +228,28 @@ Some notes about use of [screen](https://github.com/indexdata/id-folio-infrastru
 
         node downloadAllItems.js /data/spl/feesfines
 
-    e.  Run the transformation:
+    e.  Get the loans data:
+
+        node downloadAllByEndpoint.js loan-storage/loan /data/spl/feesfines
+        mv /data/spl/feesfines/loan-storage__loans.json /data/spl/feesfines/loans.json
+
+    f.  Run the transformation:
 
         cd /data/spl/feesfines
         python3 ~/folio-import/python/spl-feesfines/spl_feesfines.py \
-          -u users-map.tsv -m items.json -v verbs-map.tsv \
+          -u users-map.tsv -m items.json -n loans.json -v verbs-map.tsv \
           -c locations.json -y material-types.json -p service-points.json \
           -l debug \
           -i /data/spl/hz-okapi/assets/json/hz-ledger.json
 
-    f.  Inspect the summary and errors output:
+    g.  Inspect the summary and errors output:
 
-        ex: cat errors-feesfines.json | jq '.[] | select(.errors[] | match("uuid_user:")) | .borrower' | sort -u -n
-        ex: cat errors-feesfines.json | jq '.[].errors[]' | egrep -v 'uuid_user: missing|uuid_item: missing' | sort -u
+        cat feesfines/errors-feesfines.json | jq '.[] | select(.errors[] | match("uuid_user:")) | .borrower' \
+          | sort -u -n
+        cat feesfines/errors-feesfines.json | jq '.[].errors[]' \
+          | egrep -v 'uuid_user: missing|uuid_item: missing' | sort -u
 
-    g.  Load the accounts:
+    h.  Load the accounts:
 
         cd ~/folio-import
         node loadJSONL.js accounts /data/spl/feesfines/feesfines-accounts.jsonl
@@ -249,13 +257,13 @@ Some notes about use of [screen](https://github.com/indexdata/id-folio-infrastru
         # Inspect log for errors. Should only be from potential network glitches.
         # Isolate records to new data file, and load those missing ones.
 
-    h.  Load the associated actions:
+    i.  Load the associated actions:
 
         node loadJSONL.js feefineactions /data/spl/feesfines/feesfines-actions.jsonl
         tail -4 /data/spl/log/feesfines-actions.jsonl.log
         # Inspect log for errors. As above.
 
-    i.  Load the adjustment actions:
+    j.  Load the adjustment actions:
 
         cd bash
         ./login-spokane.sh  # or login-spokane-test.sh
@@ -263,11 +271,20 @@ Some notes about use of [screen](https://github.com/indexdata/id-folio-infrastru
         # Inspect log for errors.
         # Do not re-load any, as balances are calculated.
 
-    j.  Load the transactions:
+    k.  Load the transactions:
 
         ./load_feesfines_transactions.sh /data/spl/feesfines/feesfines-transactions.jsonl
         # Inspect log for errors.
         # Do not re-load any, as balances are calculated.
+
+    l.  Load missing loans:
+
+        Some loans data were not delivered in the first round.
+        Do steps a-f again to prepare.
+        Then this step retrieves each feesfines account and appends the loanId.
+        Will skip if already has a loanId, so this step could be repeated if needed.
+
+        ./load_feesfines_loans.sh /data/spl/feesfines/feesfines-accounts.jsonl
 
 7.  Organizations: (TODO)
 
