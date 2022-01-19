@@ -52,7 +52,7 @@ const ns = 'e35dff4e-9035-4d6a-b621-3d42578f81c7';
         let obj = {
           id: id,
           name: c[2],
-          code: 'TEST' + c[3],
+          code: c[3],
           description: c[5],
           periodStart: start,
           periodEnd: end
