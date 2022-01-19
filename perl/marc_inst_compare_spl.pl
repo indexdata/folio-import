@@ -47,34 +47,6 @@ $itemfile = "${itemfile}_items_match.tsv";
 unlink $itemfile;
 open ITMS, ">>:utf8", $itemfile or die "Can't open items file for writing!";
 
-my $locmap = {
-  # dt => "4a928175-1456-4cb4-b60e-36386ac0ff9c",
-  ou => "9d6bdafd-d70a-470e-a76e-490312665432",
-  elec => "6bf60302-5ad5-4002-9755-84c0043ec07c",
-  mail => "fcd976a0-5114-4676-a73f-42fbb63335c8",
-  ill => "735a60af-f702-4d05-97fa-7d0a242a0983",
-  hy => "60902c62-ae49-4668-965e-fe5acd43da23",
-  pl => "0d8bcede-ef17-4a3f-93fa-50a37e83b0bf",
-  dt => "0d8bcede-ef17-4a3f-93fa-50a37e83b0bf",
-  # wc => "b0a69eda-dea6-4d6c-8ee7-321531171dc4",
-  # so => "445853d2-d20d-4973-9fa5-54fdfdb9466c",
-  sh => "8ee1c82a-828e-40e5-a26d-c3bc88d4a25e",
-  it => "8ee1c82a-828e-40e5-a26d-c3bc88d4a25e",
-  wc => "8ee1c82a-828e-40e5-a26d-c3bc88d4a25e",
-  spsshaw => "16832d9c-6a55-4e08-a002-1d64c6e7d4f8",
-  ss => "b35a974a-06ce-49fd-897b-4c970fdd72d3",
-  lp => "61e95485-8ea3-4792-a09f-aa7441210109",
-  so => "61e95485-8ea3-4792-a09f-aa7441210109",
-  es => "61e95485-8ea3-4792-a09f-aa7441210109",
-  #it => "9077ba27-83bf-4854-9322-cc0ccf6eaaed",
-  spl-bo => "e339f248-2289-4418-bb24-bf38fa837588",
-  on => "af52afd9-55ad-4f99-baeb-a8aaef1c236e",
-  os => "b6e72323-3ca3-4ab7-abb4-d28aaf57db2a",
-  # es => "91c54a1c-4f0a-472d-b2ae-39b1282d926b",
-  nt => "a8c1ccfb-d4f5-48cc-aaa9-f607a29288ca",
-  spsglov => "4109ce59-4ff8-4c99-8918-8e9aec9d732d"
-};
-
 $/ = "\x1D";
 open RAW, "<:encoding(UTF-8)", $infile;
 
@@ -101,8 +73,7 @@ while (<RAW>) {
       my $mt = $_->subfield('c');
       my $lo = $_->subfield('g');
       my $cn = $_->subfield('e');
-      my $loc = ($locmap->{$lo}) ? $locmap->{$lo} : $lo;
-      print ITMS "$iid\t$bc\t$loc\t$cn\t$mt\t$inst_id\n" if $iid;
+      print ITMS "$iid\t$bc\t$lo\t$cn\t$mt\t$inst_id\n" if $iid;
     }
   } else {
     print NOUT $raw;
