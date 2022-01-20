@@ -146,7 +146,7 @@ while (<RAW>) {
         $_->update(g => $locid);
       }
       if ($mt) {
-        $matid = $colmap->{$mt} || $mt;
+        $matid = $colmap->{$mt} || 'eb9436f3-2302-468f-b0b9-e133983307a5';
         $_->update(c => $matid);
       }
       print ITMS "$iid\t$bc\t$lo\t$locid\t$cn\t$mt\t$matid\n" if $iid;
