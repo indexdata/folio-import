@@ -1,3 +1,15 @@
+/*
+  TSV Schema:
+  0: acqusition unit ID
+  1: acqusition unit name
+  2: fiscal year name <required>
+  3: fiscal year code <required>
+  4: 
+  5: description
+  6: start date <required>
+  7: end date <required>
+*/
+
 const fs = require('fs');
 const readline = require('readline');
 const path = require('path');
