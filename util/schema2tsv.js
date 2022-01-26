@@ -44,7 +44,7 @@ const makeLines = (props, parent, parLabel) => {
 	}
 }
 
-const props = schema.properties;
+const props = schema.properties || [ schema ];
 
 console.log(`Folio field\tFolio object\tRequired\tDescription\tChoices\tValue type\tSource field (MARC or other)\tNotes`);
 makeLines(props)
