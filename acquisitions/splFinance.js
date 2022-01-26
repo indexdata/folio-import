@@ -42,6 +42,12 @@ const inFiles = {
     const ldFile = dir + '/ledgers.jsonl';
     if (fs.existsSync(ldFile)) fs.unlinkSync(ldFile);
 
+    const grFile = dir + '/groups.jsonl';
+    if (fs.existsSync(grFile)) fs.unlinkSync(grFile);
+
+    const fnFile = dir + '/funds.jsonl';
+    if (fs.existsSync(fnFile)) fs.unlinkSync(fnFile);
+
     // make fiscal year object
     const fyId = uuid(fyCode, ns);
     fyObj = {
@@ -73,23 +79,45 @@ const inFiles = {
     writeObj(ldFile, ldObj);
 
     // make groups and funds
-    const groups = [];
-    const funds = [];
+    grCount = 0;
+    fnCount = 0;
+    grSeen = {};
+    fnSeen = {};
+    funds = [];
     hz.funds.forEach(h => {
-      if (h.is_budget) {
+      let id = h.item_key.toString();
+      if (!h.is_budget) {
         let group = {};
-        group.id = uuid(h.descr, ns);
-        group.code = h.descr;
-        groups.push(group);
+        if (!grSeen[id]) {
+          group.id = uuid(id, ns);
+          group.code = h.descr;
+          group.name = `${h.descr} (${id})`;
+          group.status = 'Active';
+          writeObj(grFile, group);
+          grCount++;
+          grSeen[id] = group.id;
+        }
       } else {
-
+        let fund = {};
+        if (!fnSeen[id]) {
+          fund.id = uuid(id, ns);
+          fund.code = h.descr;
+          fund.ledgerId = ldId;
+          fund.status = 'Active';
+          writeObj(fnFile, fund);
+          fnCount++;
+          fnSeen[id] = fund.id;
+        }
       }
     });
-    console.log(groups);
+    // link fund to group
+    
 
     console.log('---------------------');
-    console.log('Fiscal Yr Created:', fyCount);
-    console.log('Ledgers Created  :', ldCount);
+    console.log('Fiscal Years:', fyCount);
+    console.log('Ledgers     :', ldCount);
+    console.log('Groups      :', grCount);
+    console.log('Funds       :', fnCount);
   } catch (e) {
     console.log(e);
   }
