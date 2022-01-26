@@ -16,9 +16,8 @@ const path = require('path');
 const uuid = require('uuid/v5');
 const argv = require('minimist')(process.argv.slice(2));
 
-console.log(argv);
-
 const ns = 'e35dff4e-9035-4d6a-b621-3d42578f81c7';
+const series = 'FYFY';
 
 (async () => {
   try {
@@ -75,7 +74,8 @@ const ns = 'e35dff4e-9035-4d6a-b621-3d42578f81c7';
           code: c[3],
           description: c[5],
           periodStart: start,
-          periodEnd: end
+          periodEnd: end,
+          series: series
         }
         if (acqUnits[uname]) {
           obj.acqUnitIds = [ acqUnits[uname] ];
