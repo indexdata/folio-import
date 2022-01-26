@@ -24,7 +24,8 @@ let files = {
   fy: 'fiscal-years.jsonl',
   ledgers: 'ledgers.jsonl',
   groups: 'groups.jsonl',
-  funds: 'funds.jsonl'
+  funds: 'funds.jsonl',
+  groupfy: 'group-fund-fiscal-year.jsonl'
 };
 
 const col = { a:0, b:1, c:2, d:3, e:4, f:5, g:6, h:7, i:8, j:9, k:10, l:11, m:12, n:13, o:14, p:15, q:16, r:17, 
@@ -62,6 +63,7 @@ const col = { a:0, b:1, c:2, d:3, e:4, f:5, g:6, h:7, i:8, j:9, k:10, l:11, m:12
     let ldCount = 0;
     let fnCount = 0;
     let grCount = 0;
+    let gffyCount = 0;
 
     const series = (argv.s) ? argv.s : 'FY';
     let fyid = '';
@@ -155,19 +157,35 @@ const col = { a:0, b:1, c:2, d:3, e:4, f:5, g:6, h:7, i:8, j:9, k:10, l:11, m:12
         x++;
         if (x > sl) {
           let c = line.split(/\t/);
-          let groupIds = [];
-          let groups = [ c[col.o], c[col.p], c[col.q] ];
-          groups.forEach(g => {
-            if (g) {
-              if (!groupMap[g]) groupMap[g] = uuid('group' + g, ns);
-              groupIds.push(groupMap[g]);
-            }
-          });
           let code = c[0];
           let name = c[1];
           let ledgerName = c[11];
           let externalAccountNo = c[6];
           let id = uuid(code, ns);
+
+          let groups = [c[col.o], c[col.p], c[col.q]];
+          groups.forEach(g => {
+            if (g) {
+              let code = g.toLocaleLowerCase();
+              code = code.replace(/\W+/g, '_');
+              if (!groupMap[code]) {
+                groupMap[code] = {
+                  id: uuid('group' + code, ns),
+                  name: g
+                }
+              }
+
+              // create group fund fiscal year object
+              let fyObj = {
+                id: uuid(code + id, ns),
+                groupId: groupMap[code].id,
+                fundId: id,
+                fiscalYearId: fyid
+              };
+              writeObj(files.groupfy, fyObj);
+              gffyCount++;
+            }
+          });
           if (ledgerMap[ledgerName]) {
             let obj = {
               id: id,
@@ -191,14 +209,12 @@ const col = { a:0, b:1, c:2, d:3, e:4, f:5, g:6, h:7, i:8, j:9, k:10, l:11, m:12
 
     // create groups
     for (let g in groupMap) {
-      let code = g.toLocaleLowerCase();
-      code = code.replace(/\W+/g, '_');
       let obj = {
-        id: groupMap[g],
-        name: g,
-        code: code,
+        id: groupMap[g].id,
+        name: groupMap[g].name,
+        code: g,
         status: 'Active'
-      }
+      };
       writeObj(files.groups, obj);
       grCount++;
     }
@@ -209,6 +225,7 @@ const col = { a:0, b:1, c:2, d:3, e:4, f:5, g:6, h:7, i:8, j:9, k:10, l:11, m:12
     console.log('Ledgers   :', ldCount);
     console.log('Funds     :', fnCount);
     console.log('Groups    :', grCount); 
+    console.log('Group FYs :', gffyCount); 
   } catch (e) {
     console.log(e);
   }
