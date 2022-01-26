@@ -27,6 +27,9 @@ let files = {
   funds: 'funds.jsonl'
 };
 
+const col = { a:0, b:1, c:2, d:3, e:4, f:5, g:6, h:7, i:8, j:9, k:10, l:11, m:12, n:13, o:14, p:15, q:16, r:17, 
+  s:18, t:19, u:20, v:21, w:22, x:23, y:24, z:25, aa:26, ab:27, ac:28, ad:29, ae:30, af:31, ag:32, ah:33, ai:34, aj:35, ak:36 };
+
 (async () => {
   try {
     const inFile = argv._[0];
@@ -58,6 +61,7 @@ let files = {
     let fyCount = 0;
     let ldCount = 0;
     let fnCount = 0;
+    let grCount = 0;
 
     const series = (argv.s) ? argv.s : 'FY';
     let fyid = '';
@@ -139,6 +143,7 @@ let files = {
     }
     
     // create funds
+    const groupMap = {};
     if (argv.f) {
       const fileStream = fs.createReadStream(argv.f);
       const rl = readline.createInterface({
@@ -150,24 +155,31 @@ let files = {
         x++;
         if (x > sl) {
           let c = line.split(/\t/);
+          let groupIds = [];
+          let groups = [ c[col.o], c[col.p], c[col.q] ];
+          groups.forEach(g => {
+            if (g) {
+              if (!groupMap[g]) groupMap[g] = uuid('group' + g, ns);
+              groupIds.push(groupMap[g]);
+            }
+          });
           let code = c[0];
           let name = c[1];
           let ledgerName = c[11];
           let externalAccountNo = c[6];
           let id = uuid(code, ns);
-          if (ledgerName) {
+          if (ledgerMap[ledgerName]) {
             let obj = {
               id: id,
               code: code,
               name: name,
               ledgerId: ledgerMap[ledgerName],
               acqUnitIds: [ acqUnits[c[13]] ],
-              fundStatus: 'Active'
+              fundStatus: 'Active',
             };
             let au = c[13];
             if (au) obj.acqUnitIds = [ acqUnits[au] ];
             if (externalAccountNo) obj.externalAccountNo = externalAccountNo;
-            console.log(obj);
             writeObj(files.funds, obj);
             fnCount++;
           } else {
@@ -177,11 +189,26 @@ let files = {
       }
     }
 
+    // create groups
+    for (let g in groupMap) {
+      let code = g.toLocaleLowerCase();
+      code = code.replace(/\W+/g, '_');
+      let obj = {
+        id: groupMap[g],
+        name: g,
+        code: code,
+        status: 'Active'
+      }
+      writeObj(files.groups, obj);
+      grCount++;
+    }
+
     console.log('---------------------');
-    console.log('Acq Units Created:', auCount);
-    console.log('Fiscal Yr Created:', fyCount);
-    console.log('Ledgers Created  :', ldCount);
-    console.log('Fundes Created   :', fnCount);
+    console.log('Acq Units :', auCount);
+    console.log('Fiscal Yrs:', fyCount);
+    console.log('Ledgers   :', ldCount);
+    console.log('Funds     :', fnCount);
+    console.log('Groups    :', grCount); 
   } catch (e) {
     console.log(e);
   }
