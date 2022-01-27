@@ -9,6 +9,15 @@ const fyCode = 'FY' + fyear;
 const inFiles = {
   funds: 'budget_heirarchy.json'
 };
+let files = {
+  units: 'acq-units.jsonl',
+  fy: 'fiscal-years.jsonl',
+  ledgers: 'ledgers.jsonl',
+  groups: 'groups.jsonl',
+  funds: 'funds.jsonl',
+  groupfy: 'group-fund-fiscal-year.jsonl',
+  budget: 'budgets.jsonl'
+};
 
 
 (async () => {
@@ -31,22 +40,16 @@ const inFiles = {
       hz.funds = require(inFile);
     }
 
+    for (let f in files) {
+      let file = dir + '/' + files[f];
+      if (fs.existsSync(file)) fs.unlinkSync(file);
+      files[f] = file;
+    }
+
     const writeObj = (fn, data) => {
       const jsonStr = JSON.stringify(data);
       fs.writeFileSync(fn, jsonStr + '\n', { flag: 'a' });
     }
-
-    const fyFile = dir + '/fiscal-years.jsonl';
-    if (fs.existsSync(fyFile)) fs.unlinkSync(fyFile);
-
-    const ldFile = dir + '/ledgers.jsonl';
-    if (fs.existsSync(ldFile)) fs.unlinkSync(ldFile);
-
-    const grFile = dir + '/groups.jsonl';
-    if (fs.existsSync(grFile)) fs.unlinkSync(grFile);
-
-    const fnFile = dir + '/funds.jsonl';
-    if (fs.existsSync(fnFile)) fs.unlinkSync(fnFile);
 
     // make fiscal year object
     const fyId = uuid(fyCode, ns);
@@ -61,7 +64,7 @@ const inFiles = {
     };
     fyObj.description = 'Fiscal year ' + fyear;
     let fyCount = 1;
-    writeObj(fyFile, fyObj);
+    writeObj(files.fy, fyObj);
 
     // make ledger
     const ldCode = 'SPL';
@@ -76,14 +79,16 @@ const inFiles = {
       restrictExpenditures: true
     }
     let ldCount = 1;
-    writeObj(ldFile, ldObj);
+    writeObj(files.ledgers, ldObj);
 
     // make groups and funds
-    grCount = 0;
-    fnCount = 0;
-    grSeen = {};
-    fnSeen = {};
-    funds = [];
+    let grCount = 0;
+    let fnCount = 0;
+    let fgCount = 0;
+    const grSeen = {};
+    const fnSeen = {};
+    const groupMap = {};
+    const fundMap = {};
     hz.funds.forEach(h => {
       let id = h.item_key.toString();
       if (!h.is_budget) {
@@ -93,31 +98,58 @@ const inFiles = {
           group.code = h.descr;
           group.name = `${h.descr} (${id})`;
           group.status = 'Active';
-          writeObj(grFile, group);
+          writeObj(files.groups, group);
           grCount++;
           grSeen[id] = group.id;
+          groupMap[id] = group.id;
         }
       } else {
         let fund = {};
+        let budget = {};
         if (!fnSeen[id]) {
           fund.id = uuid(id, ns);
           fund.code = h.descr;
+          fund.name = h.descr;
           fund.ledgerId = ldId;
-          fund.status = 'Active';
-          writeObj(fnFile, fund);
+          fund.fundStatus = 'Active';
+          writeObj(files.funds, fund);
           fnCount++;
           fnSeen[id] = fund.id;
+          fundMap[fund.id] = h.parent_item_key;
+
+          // create budget
+          budget.id = uuid('budget' + id, ns);
+          budget.name = h.descr;
+          budget.budgetStatus = 'Active';
+          budget.fundId = fund.id;
+          budget.fiscalYearId = fyId;
+          budget.initialAllocation = 10000;
+          writeObj(files.budget, budget);
         }
       }
     });
-    // link fund to group
+
+    // create group fund fiscal year object
+    for (let f in fundMap) {
+      let parent = fundMap[f];
+      let fyObj = {
+        id: uuid(f, ns),
+        groupId: groupMap[parent],
+        fundId: f,
+        fiscalYearId: fyId
+      };
+      console.log(fyObj);
+      writeObj(files.groupfy, fyObj);
+      fgCount++;
+    }
     
 
     console.log('---------------------');
-    console.log('Fiscal Years:', fyCount);
-    console.log('Ledgers     :', ldCount);
-    console.log('Groups      :', grCount);
-    console.log('Funds       :', fnCount);
+    console.log('Fiscal Years  :', fyCount);
+    console.log('Ledgers       :', ldCount);
+    console.log('Groups        :', grCount);
+    console.log('Funds         :', fnCount);
+    console.log('Fund Group FY :', fnCount);
   } catch (e) {
     console.log(e);
   }
