@@ -52,6 +52,8 @@ TODO: Do we need to verify anything before proceeding?
 QUERY: Should those many files be aggregated into a few sets?
 Otherwise will be 14 for the multi-process runner.
 
+I think we're optomized at 6 processes, so maybe some of thoses files should be joined.
+
 ```
 ./run_inventory.sh data/*bulk-instance.jsonl
 ```
@@ -59,6 +61,8 @@ Otherwise will be 14 for the multi-process runner.
 ## Load SRS
 
 QUERY: Should those many files be aggregated into sets: 0-bulk-instance.jsonl 1-bulk-instance.json etc.?
+
+Yes, like above, let's shoot for 6 files.
 
 ```
 ./run_load_jsonl.sh source-storage/records data/*bulk-source*.jsonl
@@ -68,6 +72,8 @@ QUERY: Should those many files be aggregated into sets: 0-bulk-instance.jsonl 1-
 
 QUERY: Should those many files be aggregated into a few sets? As above.
 
+Yes.
+
 ```
 ./run_inventory.sh data/*bulk-holdings.jsonl
 ```
@@ -75,6 +81,8 @@ QUERY: Should those many files be aggregated into a few sets? As above.
 ## Load items
 
 QUERY: Should those many files be aggregated into a few sets? As above.
+
+Yes.
 
 ```
 ./run_inventory.sh data/*bulk-items.jsonl
