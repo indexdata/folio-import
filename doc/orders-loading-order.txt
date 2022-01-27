@@ -27,3 +27,33 @@ Back to finance...
 Finally, invoices...
 
 * batchgroups
+
+
+Endpoint order:
+
+organizations-storage/categories
+organizations-storage/contacts
+organizations-storage/organizations
+organizations-storage/interfaces
+finance/expense-classes
+finance-storage/fund-types
+finance-storage/fiscal-years
+finance-storage/ledgers
+finance-storage/funds
+finance-storage/budgets
+finance-storage/budget-expense-classes
+finance-storage/groups
+finance-storage/group-fund-fiscal-years
+orders/configuration/reasons-for-closure
+orders-storage/purchase-orders
+orders-storage/po-lines
+orders-storage/titles
+orders-storage/titles
+orders-storage/pieces
+finance-storage/order-transaction-summaries
+finance-storage/transactions
+batch-group-storage/batch-groups
+invoice-storage/invoices
+invoice-storage/invoice-lines
+voucher-storage/vouchers
+voucher-storage/voucher-lines
