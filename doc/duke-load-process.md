@@ -83,3 +83,8 @@ QUERY: Should those many files be aggregated into a few sets? As above.
 ## Load bound-with
 
 TODO: ???
+
+## Migration documentation
+
+Create a Gdoc and link to the ticket.
+
