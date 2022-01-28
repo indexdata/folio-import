@@ -4,11 +4,13 @@ const uuid = require('uuid/v5');
 const ns = 'e35dff4e-9035-4d6a-b621-3d42578f81c7';
 const inFiles = {
   po: 'po.json',
-  vendors: 'hz-vendors.json'
+  vendors: 'hz-vendors.json',
+  hzvend: 'vendor.json'
 };
 let files = {
   po: 'purchase-orders.jsonl',
-  lines: 'po-lines.jsonl'
+  lines: 'po-lines.jsonl',
+  orgs: 'orgs-not-found.jsonl'
 };
 const shipToId = 'd6900d6a-a7ce-469f-80da-bd599a16c137';
 const billToId = 'd6900d6a-a7ce-469f-80da-bd599a16c137';
@@ -34,12 +36,19 @@ const billToId = 'd6900d6a-a7ce-469f-80da-bd599a16c137';
       hz[f] = require(inFile);
     }
 
-    let orgMap = {}
+    newVendMap = {};
+    hz.hzvend.forEach(v => {
+      let vid = v['vendor#'];
+      newVendMap[vid] = v;
+    });
+
+    /*
     for (let k in hz.vendors) {
       let h = hz.vendors[k].hz;
       let i = hz.vendors[k].id;
       if (h) orgMap[h] = i;
     }
+    */
 
     for (let f in files) {
       let file = dir + '/' + files[f];
@@ -53,7 +62,8 @@ const billToId = 'd6900d6a-a7ce-469f-80da-bd599a16c137';
     }
 
     ttl = {
-      po: 0
+      po: 0,
+      orgs: 0
     };
 
     // create po
@@ -67,7 +77,25 @@ const billToId = 'd6900d6a-a7ce-469f-80da-bd599a16c137';
       obj.approved = true;
       obj.approvedById = 'ecab315b-a6d1-3ef5-9af7-922ba4ec4088';
       obj.approvalDate = new Date(p.last_update_date).toISOString();
-      obj.vendor = orgMap[p['vendor#']]; 
+      let venId = p['vendor#'];
+      let orgId = hz.vendors[venId];
+      if (orgId) {
+        obj.vendor = hz.vendors[venId]; 
+      } else {
+        console.log('WARN Vendor not found in map:', venId);
+        console.log('INFO Creating vendor object...');
+        let ven = {};
+        let newVen = newVendMap[venId];
+        let vid = newVen['vendor#'];
+        ven.id = uuid('v' + vid, ns);
+        ven.name = newVen.name;
+        ven.code = newVen.vendor;
+        ven.status = 'Active';
+        writeObj(files.orgs, ven)
+        hz.vendors[venId] = ven.id;
+        obj.vendor = ven.id;
+        ttl.orgs++;
+      }
       obj.notes = [];
       if (p.descr) obj.notes.push(p.descr);
       if (p.vendor_note) obj.notes.push('Vendor note: ' + p.vendor_note);
