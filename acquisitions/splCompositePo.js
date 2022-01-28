@@ -9,12 +9,18 @@ const inFiles = {
   hzvend: 'vendor.json'
 };
 let files = {
+  comp: 'composite-orders.jsonl',
   po: 'purchase-orders.jsonl',
   lines: 'po-lines.jsonl',
   orgs: 'orgs-not-found.jsonl'
 };
 const shipToId = 'd6900d6a-a7ce-469f-80da-bd599a16c137';
 const billToId = 'd6900d6a-a7ce-469f-80da-bd599a16c137';
+const locs = {
+  ss: 'b35a974a-06ce-49fd-897b-4c970fdd72d3',
+  dt: '4a928175-1456-4cb4-b60e-36386ac0ff9c'
+};
+const mtype = 'eb9436f3-2302-468f-b0b9-e133983307a5';
 
 
 (async () => {
@@ -117,18 +123,18 @@ const billToId = 'd6900d6a-a7ce-469f-80da-bd599a16c137';
       obj.dateOrdered = new Date(p.creation_date).toISOString();
       obj.billTo = billToId;
       obj.shipTo = shipToId;
-      writeObj(files.po, obj);
       ttl.po++;
 
       // make po_line;
       const test = {"27865":1, "27867":1, "27868":1, "27869":1, "27870":1, "27871":1, "27872":1, "27873":1, "27874":1, "27875":1};
       let lines = linesMap[poNum];
+      obj.compositePoLines = [];
       if (lines && test[poNum]) {
         lines.forEach(l => {
           let lineNum = l.line.toString();
           let poLine = poNum + '-' + lineNum;
           let id = uuid(poLine, ns);
-          lo = {
+          let lo = {
             id: id,
             poLineNumber: poLine,
             orderFormat: 'Physical Resource',
@@ -146,15 +152,29 @@ const billToId = 'd6900d6a-a7ce-469f-80da-bd599a16c137';
             discount: dis,
             discountType: 'percentage',
             quantityPhysical: 1
+          };
+          locObj = {
+            locationId: locs[p.location],
+            quantity: 1,
+            quantityPhysical: 1
+          };
+          phyObj = {
+            materialType: mtype,
+            createInventory: 'None',
+            volumes: []
           }
           lo.cost = costObj;
+          lo.locations = [ locObj ];
+          lo.physical = phyObj;
           console.log(lo);
-          writeObj(files.lines, lo);
+          obj.compositePoLines.push(lo);
+          // writeObj(files.lines, lo);
           ttl.lines++;
         });
       } else {
         // console.log('WARN PO line not found:', poNum);
       }
+      writeObj(files.comp, obj);
     });
 
     console.log('-----------------------------');
