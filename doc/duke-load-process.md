@@ -7,18 +7,10 @@ Index Data staff will load to FOLIO.
 
 ## Configure workspace
 
-TODO: Someone with power:
-```
-mkdir /data/duke
-chmod g+s /data/duke
-chgrp admin /data/duke
-mkdir /data/duke/log
-```
+Add some env for the rest of this procedure:
 
-Add some env for the rest of this procedure
 ```
-# export LOG_DUKE=/data/duke/log
-export LOG_DUKE=/data/spl/log/duke
+export DATA_DUKE=/data/duke
 ```
 
 TODO: Fix duke-dev passwords
@@ -30,29 +22,46 @@ cp configs/js/duke-dev.js config.js
 # in config.js use: logpath: '/data/duke/log'
 cp configs/bash/login-duke-dev.sh bash
 
-ln -sf /data/sftpusers/duke data
-ln -sf ${LOG_DUKE} log
+ln -sf ${DATA_DUKE} data
+ln -sf ${DATA_DUKE}/log log
 ```
 
-## Assess data
+## Assess and prepare data
 
 ```
 ssh dev-bastion  # i.e. as your user
 cd /data/sftpusers/duke
 
 # List the types of data file
-ls *.jsonl | sed -E 's/\.jsonl//; s/^[0-9]+-//; s/-[0-9]+$//' \
-  | sort | uniq > ${LOG_DUKE}/filenames.txt
+ls *bulk*.jsonl | sed -E 's/\.jsonl//; s/^[0-9]+-//; s/-[0-9]+$//' \
+  | sort | uniq > ${DATA_DUKE}/log/filenames.txt
 ```
 
-TODO: Do we need to verify anything before proceeding?
+Do initial verification:
+
+```
+/data/duke/verify-delivered.sh *bulk*.jsonl
+```
+
+Aggregate the data as proper JSONL and verify.
+
+TODO: If the sequence number of the files is important, then need to aggregate-and-split differently. The current filenames do not sort in sequence.
+
+```
+jq -c '.[]' *bulk-instance.jsonl > ${DATA_DUKE}/all-instances.jsonl
+jq -c '.[]' *bulk-source*.jsonl > ${DATA_DUKE}/all-source.jsonl
+jq -c '.[]' *bulk-holdings.jsonl > ${DATA_DUKE}/all-holdings.jsonl
+jq -c '.[]' *bulk-items.jsonl > ${DATA_DUKE}/all-items.jsonl
+jq -c '.[]' *bulk-bound-with.jsonl > ${DATA_DUKE}/all-bound-with.jsonl
+```
+
+TODO: Split into sets of 6 data files ready for the multi-process runner (optimised for 6).
+
+TODO: Do we need to verify anything more before proceeding?
+
+TODO: Fix the following instructions to use the aggregated-and-split data files.
 
 ## Load instances
-
-QUERY: Should those many files be aggregated into a few sets?
-Otherwise will be 14 for the multi-process runner.
-
-I think we're optomized at 6 processes, so maybe some of thoses files should be joined.
 
 ```
 ./run_inventory.sh data/*bulk-instance.jsonl
@@ -60,29 +69,17 @@ I think we're optomized at 6 processes, so maybe some of thoses files should be 
 
 ## Load SRS
 
-QUERY: Should those many files be aggregated into sets: 0-bulk-instance.jsonl 1-bulk-instance.json etc.?
-
-Yes, like above, let's shoot for 6 files.
-
 ```
 ./run_load_jsonl.sh source-storage/records data/*bulk-source*.jsonl
 ```
 
 ## Load holdings
 
-QUERY: Should those many files be aggregated into a few sets? As above.
-
-Yes.
-
 ```
 ./run_inventory.sh data/*bulk-holdings.jsonl
 ```
 
 ## Load items
-
-QUERY: Should those many files be aggregated into a few sets? As above.
-
-Yes.
 
 ```
 ./run_inventory.sh data/*bulk-items.jsonl
