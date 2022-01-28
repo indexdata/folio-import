@@ -4,6 +4,7 @@ const uuid = require('uuid/v5');
 const ns = 'e35dff4e-9035-4d6a-b621-3d42578f81c7';
 const inFiles = {
   po: 'po.json',
+  lines: 'po_line.json',
   vendors: 'hz-vendors.json',
   hzvend: 'vendor.json'
 };
@@ -42,6 +43,14 @@ const billToId = 'd6900d6a-a7ce-469f-80da-bd599a16c137';
       newVendMap[vid] = v;
     });
 
+    linesMap = {};;
+    hz.lines.forEach(l => {
+      let poNum = l['po#'];
+      if (!linesMap[poNum]) linesMap[poNum] = [];
+      linesMap[poNum].push(l);
+    });
+    delete require.cache[hz.lines];
+
     /*
     for (let k in hz.vendors) {
       let h = hz.vendors[k].hz;
@@ -63,6 +72,7 @@ const billToId = 'd6900d6a-a7ce-469f-80da-bd599a16c137';
 
     ttl = {
       po: 0,
+      lines: 0,
       orgs: 0
     };
 
@@ -70,13 +80,16 @@ const billToId = 'd6900d6a-a7ce-469f-80da-bd599a16c137';
     
     hz.po.forEach(p => {
       let obj = {};
-      let idStr = p['po#'].toString();
+      let poNum = p['po#'].toString();
+      let idStr = poNum;
       obj.id = uuid(idStr, ns);
       obj.poNumber = p.po_number;
       obj.orderType = 'One-Time';
       obj.approved = true;
       obj.approvedById = 'ecab315b-a6d1-3ef5-9af7-922ba4ec4088';
       obj.approvalDate = new Date(p.last_update_date).toISOString();
+      obj.reEncumber = true;
+      obj.workflowStatus = 'Open'; 
       let venId = p['vendor#'];
       let orgId = hz.vendors[venId];
       if (orgId) {
@@ -104,6 +117,37 @@ const billToId = 'd6900d6a-a7ce-469f-80da-bd599a16c137';
       obj.shipTo = shipToId;
       writeObj(files.po, obj);
       ttl.po++;
+
+      // make po_line;
+      const test = {"27865":1, "27867":1, "27868":1, "27869":1, "27870":1, "27871":1, "27872":1, "27873":1, "27874":1, "27875":1};
+      let lines = linesMap[poNum];
+      if (lines && test[poNum]) {
+        lines.forEach(l => {
+          let lineNum = l.line.toString();
+          let poLine = poNum + '-' + lineNum;
+          let id = uuid(poLine, ns);
+          let lo = {
+            id: id,
+            poLineNumber: poLine,
+            orderFormat: 'Physical Resource',
+            source: "User",
+            purchaseOrderId: obj.id,
+            titleOrPackage: l.title
+          };
+          costObj = {
+            currency: 'USD',
+            listUnitPrice: l.unit_price,
+            discount: 0,
+            quantityPhysical: 1
+          }
+          lo.cost = costObj;
+          console.log(lo);
+          writeObj(files.lines, lo);
+          ttl.lines++;
+        });
+      } else {
+        // console.log('WARN PO line not found:', poNum);
+      }
     });
 
     console.log('-----------------------------');
