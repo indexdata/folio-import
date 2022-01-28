@@ -126,10 +126,10 @@ const mtype = 'eb9436f3-2302-468f-b0b9-e133983307a5';
       ttl.po++;
 
       // make po_line;
-      const test = {"27865":1, "27867":1, "27868":1, "27869":1, "27870":1, "27871":1, "27872":1, "27873":1, "27874":1, "27875":1};
+      // const test = {"27865":1, "27867":1, "27868":1, "27869":1, "27870":1, "27871":1, "27872":1, "27873":1, "27874":1, "27875":1};
       let lines = linesMap[poNum];
       obj.compositePoLines = [];
-      if (lines && test[poNum]) {
+      if (lines) {
         lines.forEach(l => {
           let lineNum = l.line.toString();
           let poLine = poNum + '-' + lineNum;
@@ -166,14 +166,11 @@ const mtype = 'eb9436f3-2302-468f-b0b9-e133983307a5';
           lo.cost = costObj;
           lo.locations = [ locObj ];
           lo.physical = phyObj;
-          console.log(lo);
           obj.compositePoLines.push(lo);
-          // writeObj(files.lines, lo);
           ttl.lines++;
+          // console.log(lo);
         });
-      } else {
-        // console.log('WARN PO line not found:', poNum);
-      }
+      } 
       writeObj(files.comp, obj);
     });
 
