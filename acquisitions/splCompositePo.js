@@ -6,7 +6,8 @@ const inFiles = {
   po: 'po.json',
   lines: 'po_line.json',
   vendors: 'hz-vendors.json',
-  hzvend: 'vendor.json'
+  hzvend: 'vendor.json',
+  instmap: 'instances-map.json'
 };
 let files = {
   comp: 'composite-orders.jsonl',
@@ -145,6 +146,40 @@ const mtype = 'eb9436f3-2302-468f-b0b9-e133983307a5';
             receiptStatus: 'Awaiting Receipt',
             paymentStatus: 'Pending'
           };
+          let bid = l['bib#'];
+          if (bid && hz.instmap[bid]) { lo.instanceId = hz.instmap[bid] }
+          if (l.edition) { lo.edition = l.edition }
+          if (l.author) {
+            let cobj = {
+              contributor: l.author,
+              contributorNameTypeId: '2b94c631-fca9-4892-a730-03ee529ffe2a'
+            }
+            lo.contributors = [ cobj ];
+          }
+          if (l.publisher) { lo.publisher = l.publisher }
+          if (l.isbn || l.issn || l.workslip_note) {
+            let dobj = { productIds: [] };
+            if (l.isbn && l.isbn.match(/^[0-9xX]{10,13}.*/)) {
+              let bn = l.isbn.replace(/^([0-9xX]+).*/, '$1');
+              let isbnObj = {
+                productId: bn,
+                productIdType: '8261054f-be78-422d-bd51-4ed9f33c3422'
+              }
+              dobj.productIds.push(isbnObj);
+            }
+            if (l.issn && l.issn.match(/^[0-9]{4}-[0-9X]/)) {
+              let sn = l.issn.replace(/^([0-9Xx-]{9}).*/, '$1');
+              let issnObj = {
+                productId: sn,
+                productIdType: '913300b2-03ed-469a-8179-c1092c991227'
+              }
+              dobj.productIds.push(issnObj);
+            }
+            if (l.workslip_note && l.workslip_note.match(/\S/)) {
+              dobj.receivingNote = l.workslip_note;
+            }
+            lo.details = dobj;
+          }
           let dis = (l.vendor_discount) ? l.vendor_discount * 100 : 0;
           costObj = {
             currency: 'USD',
