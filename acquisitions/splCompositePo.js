@@ -21,7 +21,7 @@ let files = {
 };
 const shipToId = 'd6900d6a-a7ce-469f-80da-bd599a16c137';
 const billToId = 'd6900d6a-a7ce-469f-80da-bd599a16c137';
-const mtype = 'eb9436f3-2302-468f-b0b9-e133983307a5';
+const mtype = '71fbd940-1027-40a6-8a48-49b44d795e46';
 
 
 (async () => {
