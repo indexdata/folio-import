@@ -7,8 +7,12 @@ const inFiles = {
   lines: 'po_line.json',
   vendors: 'hz-vendors.json',
   hzvend: 'vendor.json',
-  instmap: 'instances-map.json'
+  instmap: 'instances-map.json',
+  lineitems: 'po_line_item.json',
+  budget: 'po_line_item_budget.json',
+  loc: 'locations.json'
 };
+if (process.env.TESTPO) inFiles.po = 'testpo.json';
 let files = {
   comp: 'composite-orders.jsonl',
   po: 'purchase-orders.jsonl',
@@ -17,10 +21,6 @@ let files = {
 };
 const shipToId = 'd6900d6a-a7ce-469f-80da-bd599a16c137';
 const billToId = 'd6900d6a-a7ce-469f-80da-bd599a16c137';
-const locs = {
-  ss: 'b35a974a-06ce-49fd-897b-4c970fdd72d3',
-  dt: '4a928175-1456-4cb4-b60e-36386ac0ff9c'
-};
 const mtype = 'eb9436f3-2302-468f-b0b9-e133983307a5';
 
 
@@ -50,7 +50,7 @@ const mtype = 'eb9436f3-2302-468f-b0b9-e133983307a5';
       newVendMap[vid] = v;
     });
 
-    linesMap = {};;
+    linesMap = {};
     hz.lines.forEach(l => {
       let poNum = l['po#'];
       if (!linesMap[poNum]) linesMap[poNum] = [];
@@ -58,13 +58,25 @@ const mtype = 'eb9436f3-2302-468f-b0b9-e133983307a5';
     });
     delete require.cache[hz.lines];
 
-    /*
-    for (let k in hz.vendors) {
-      let h = hz.vendors[k].hz;
-      let i = hz.vendors[k].id;
-      if (h) orgMap[h] = i;
-    }
-    */
+    lineItems = {};
+    hz.lineitems.forEach(i => {
+      let po = i['po#'];
+      let key = po + '-' + i.line;
+      if (!lineItems[key]) lineItems[key] = [];
+      lineItems[key].push(i);
+    });
+    delete require.cache[hz.lineItems];
+
+    budMap = {};
+    hz.budget.forEach(b => {
+      let lineNum = `${b['po#']}-${b.line}`;
+    });
+    delete require.cache[hz.budget];
+
+    locMap = {};
+    hz.loc.locations.forEach(l => {
+      locMap[l.code] = l.id;
+    });
 
     for (let f in files) {
       let file = dir + '/' + files[f];
@@ -181,25 +193,41 @@ const mtype = 'eb9436f3-2302-468f-b0b9-e133983307a5';
             lo.details = dobj;
           }
           let dis = (l.vendor_discount) ? l.vendor_discount * 100 : 0;
+
+          lo.locations = [];
+          let physicalCount = 0;
+          let lcount = {};
+          if (lineItems[poLine]) {
+            lineItems[poLine].forEach(li => {
+              let loc = locMap[li.location];
+              if (!lcount[loc]) lcount[loc] = 0;
+              lcount[loc]++;
+              physicalCount++;
+            });
+            for (let li in lcount) {
+              locObj = {
+                locationId: li,
+                quantity: lcount[li],
+                quantityPhysical: lcount[li]
+              };
+              lo.locations.push(locObj);
+            }
+          }
           costObj = {
             currency: 'USD',
             listUnitPrice: l.unit_price,
             discount: dis,
             discountType: 'percentage',
-            quantityPhysical: 1
-          };
-          locObj = {
-            locationId: locs[p.location],
-            quantity: 1,
-            quantityPhysical: 1
+            quantityPhysical: physicalCount
           };
           phyObj = {
             materialType: mtype,
             createInventory: 'None',
             volumes: []
-          }
+          };
+          distObj = {
+          };
           lo.cost = costObj;
-          lo.locations = [ locObj ];
           lo.physical = phyObj;
           obj.compositePoLines.push(lo);
           ttl.lines++;
