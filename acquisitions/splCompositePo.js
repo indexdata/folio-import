@@ -1,3 +1,4 @@
+const { split } = require('event-stream');
 const fs = require('fs');
 const uuid = require('uuid/v5');
 
@@ -10,7 +11,8 @@ const inFiles = {
   instmap: 'instances-map.json',
   lineitems: 'po_line_item.json',
   budget: 'po_line_item_budget.json',
-  loc: 'locations.json'
+  loc: 'locations.json',
+  funds: 'funds.json'
 };
 if (process.env.TESTPO) inFiles.po = 'testpo.json';
 let files = {
@@ -44,13 +46,13 @@ const mtype = '71fbd940-1027-40a6-8a48-49b44d795e46';
       hz[f] = require(inFile);
     }
 
-    newVendMap = {};
+    const newVendMap = {};
     hz.hzvend.forEach(v => {
       let vid = v['vendor#'];
       newVendMap[vid] = v;
     });
 
-    linesMap = {};
+    const linesMap = {};
     hz.lines.forEach(l => {
       let poNum = l['po#'];
       if (!linesMap[poNum]) linesMap[poNum] = [];
@@ -67,15 +69,28 @@ const mtype = '71fbd940-1027-40a6-8a48-49b44d795e46';
     });
     delete require.cache[hz.lineItems];
 
-    budMap = {};
+    const budMap = {};
     hz.budget.forEach(b => {
       let lineNum = `${b['po#']}-${b.line}`;
+      if (!budMap[lineNum]) budMap[lineNum] = b.budget.replace(/^(.+?)\..*/, '$1');
     });
     delete require.cache[hz.budget];
 
-    locMap = {};
+    const locMap = {};
     hz.loc.locations.forEach(l => {
       locMap[l.code] = l.id;
+    });
+
+    const fundMap = {};
+    const fundIn = fs.readFileSync(dir + '/fundmap.tsv', { encoding: 'utf8' });
+    fundIn.split(/\n/).forEach(l => {
+      let col = l.split(/\t/)
+      fundMap[col[0]] = col[1];
+    });
+
+    const folioFunds = {};
+    hz.funds.funds.forEach(f => {
+      folioFunds[f.code] = f.id;
     });
 
     for (let f in files) {
@@ -139,7 +154,6 @@ const mtype = '71fbd940-1027-40a6-8a48-49b44d795e46';
       ttl.po++;
 
       // make po_line;
-      // const test = {"27865":1, "27867":1, "27868":1, "27869":1, "27870":1, "27871":1, "27872":1, "27873":1, "27874":1, "27875":1};
       let lines = linesMap[poNum];
       obj.compositePoLines = [];
       if (lines) {
@@ -225,10 +239,17 @@ const mtype = '71fbd940-1027-40a6-8a48-49b44d795e46';
             createInventory: 'None',
             volumes: []
           };
+          let fundCode = budMap[poLine];
+          let folioFundCode = fundMap[fundCode];
           distObj = {
+            code: folioFundCode,
+            fundId: folioFunds[folioFundCode],
+            distributionType: 'percentage',
+            value: 100
           };
           lo.cost = costObj;
           lo.physical = phyObj;
+          // if (distObj.fundId) lo.fundDistribution = [ distObj ];
           obj.compositePoLines.push(lo);
           ttl.lines++;
           // console.log(lo);
