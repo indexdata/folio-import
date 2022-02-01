@@ -255,15 +255,19 @@ const isbnCheck = (isbn) => {
           lo.locations = [];
           let physicalCount = 0;
           let lcount = {};
+          let paid = false;
           if (lineItems[poLine]) {
             lineItems[poLine].forEach(li => {
-              let loc = locMap[li.location];
-              if (!lcount[loc]) lcount[loc] = 0;
-              lcount[loc]++;
-              physicalCount++;
-              let piecesMap = {};
-              piecesMap[li['item#']] = { poLineId: id, titleId: lo.instanceId, locationId: loc };
-              writeObj(files.piecesmap, piecesMap);
+              if (!li.receive_date) paid = true;
+              if (1) {
+                let loc = locMap[li.location];
+                if (!lcount[loc]) lcount[loc] = 0;
+                lcount[loc]++;
+                physicalCount++;
+                let piecesMap = {};
+                piecesMap[li['item#']] = { poLineId: id, titleId: lo.instanceId, locationId: loc };
+                writeObj(files.piecesmap, piecesMap);
+              }
             });
             for (let li in lcount) {
               locObj = {
@@ -276,7 +280,7 @@ const isbnCheck = (isbn) => {
           }
           costObj = {
             currency: 'USD',
-            listUnitPrice: l.unit_price,
+            listUnitPrice: l.unit_price || 0,
             discount: dis,
             discountType: 'percentage',
             quantityPhysical: physicalCount
@@ -297,6 +301,10 @@ const isbnCheck = (isbn) => {
           lo.cost = costObj;
           lo.physical = phyObj;
           if (distObj.fundId) lo.fundDistribution = [ distObj ];
+          if (paid) {
+            lo.paymentStatus = 'Fully Paid';
+            lo.receiptStatus = 'Fully Received';
+          }
           obj.compositePoLines.push(lo);
           ttl.lines++;
         });
