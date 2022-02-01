@@ -43,8 +43,6 @@ Do initial basic verification:
 
 Aggregate the data and verify.
 
-TODO: If the sequence number of the files is important, then need to aggregate-and-split differently. The current filenames do not sort in sequence.
-
 ```
 jq -c '.[]' *bulk-instance.jsonl > ${DATA_DUKE}/all-instances.jsonl
 jq -c '.[]' *bulk-source*.jsonl > ${DATA_DUKE}/all-source.jsonl
@@ -53,33 +51,39 @@ jq -c '.[]' *bulk-items.jsonl > ${DATA_DUKE}/all-items.jsonl
 jq -c '.[]' *bulk-bound-with.jsonl > ${DATA_DUKE}/all-bound-with.jsonl
 ```
 
-Split into sets of 6 data files ready for the multi-process runner (optimised for 6).
-split -d --number=l/6 all-instances.jsonl instance
+Split into sets of data files ready for the multi-process runner (e.g. optimised for six instances of mod-inventory-storage).
 
-TODO: Fix the following instructions to use the aggregated-and-split data files.
+TODO: Do some other verification.
 
 ## Load instances
 
 ```
-./run_inventory.sh data-duke/instance*
+split -d --number=l/6 ${DATA_DUKE}/all-instances.jsonl ${DATA_DUKE}/instance
+./run_inventory_upsert.sh data-duke/instance*
 ```
 
 ## Load SRS
 
 ```
-./run_load_jsonl.sh source-storage/records data-duke/*bulk-source*.jsonl
+sed -E 's/"snapshotId":"TO BE ADDED"/"snapshotId":"b756e7e5-ef54-47a4-b4e4-626ca5480a50"/' \
+  ${DATA_DUKE}/all-source.jsonl > ${DATA_DUKE}/all-srs.jsonl
+split -d --number=l/3 ${DATA_DUKE}/all-srs.jsonl ${DATA_DUKE}/srs
+node loadJSONL.js source-storage/snapshots data-duke/snapshot-srs.jsonl
+./run_load_jsonl.sh source-storage/records data-duke/srs0*
 ```
 
 ## Load holdings
 
 ```
-./run_inventory.sh data-duke/*bulk-holdings.jsonl
+split -d --number=l/6 ${DATA_DUKE}/all-holdings.jsonl ${DATA_DUKE}/holding
+./run_inventory_upsert.sh data-duke/holding*
 ```
 
 ## Load items
 
 ```
-./run_inventory.sh data-duke/*bulk-items.jsonl
+split -d --number=l/6 ${DATA_DUKE}/all-items.jsonl ${DATA_DUKE}/item
+./run_inventory_upsert.sh data-duke/item*
 ```
 
 ## Load bound-with
