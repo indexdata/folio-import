@@ -12,19 +12,61 @@ const inFiles = {
   lineitems: 'po_line_item.json',
   budget: 'po_line_item_budget.json',
   loc: 'locations.json',
-  funds: 'funds.json'
+  funds: 'finance-storage__funds.json'
 };
 if (process.env.TESTPO) inFiles.po = 'testpo.json';
 let files = {
   comp: 'composite-orders.jsonl',
   po: 'purchase-orders.jsonl',
   lines: 'po-lines.jsonl',
-  orgs: 'orgs-not-found.jsonl'
+  orgs: 'orgs-not-found.jsonl',
+  piecesmap: 'piecesMap.jsonl'
 };
 const shipToId = 'd6900d6a-a7ce-469f-80da-bd599a16c137';
 const billToId = 'd6900d6a-a7ce-469f-80da-bd599a16c137';
 const mtype = '71fbd940-1027-40a6-8a48-49b44d795e46';
 
+const isbnCheck = (isbn) => {
+  isbn = isbn.replace(/-/g, '');
+  let digits = isbn.split('');
+  let len = digits.length;
+  let checkDigit = digits.pop();
+  checkDigit = checkDigit.replace(/[Xx]/, '10');
+  let sums = 0;
+  let dcount = 0;
+  let multiplier = 0;
+  let ten = 10;
+  let check;
+  digits.forEach(d => {
+    dcount++;
+    n = parseInt(d, 10);
+    if (len === 13) {
+      if (dcount % 2 === 0) {
+        multiplier = 3;
+      } else {
+        multiplier = 1;
+      }
+      let prod = n * multiplier;
+      sums += prod;
+    } else {
+      sums += ten * n;
+      ten--;
+    }
+  });
+  if (len === 13) {
+    let rem = sums % 10;
+    check = 10 - rem;
+    if (rem === 0) check = 0;
+  } else {
+    let rem = sums % 11;
+    check = 11 - rem;
+  }
+  if (check === parseInt(checkDigit, 10)) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 (async () => {
   try {
@@ -187,11 +229,13 @@ const mtype = '71fbd940-1027-40a6-8a48-49b44d795e46';
             let dobj = { productIds: [] };
             if (l.isbn && l.isbn.match(/^[0-9xX]{10,13}.*/)) {
               let bn = l.isbn.replace(/^([0-9xX]+).*/, '$1');
-              let isbnObj = {
-                productId: bn,
-                productIdType: '8261054f-be78-422d-bd51-4ed9f33c3422'
+              if (isbnCheck(bn)) {
+                let isbnObj = {
+                  productId: bn,
+                  productIdType: '8261054f-be78-422d-bd51-4ed9f33c3422'
+                }
+                dobj.productIds.push(isbnObj);
               }
-              dobj.productIds.push(isbnObj);
             }
             if (l.issn && l.issn.match(/^[0-9]{4}-[0-9X]/)) {
               let sn = l.issn.replace(/^([0-9Xx-]{9}).*/, '$1');
@@ -217,6 +261,9 @@ const mtype = '71fbd940-1027-40a6-8a48-49b44d795e46';
               if (!lcount[loc]) lcount[loc] = 0;
               lcount[loc]++;
               physicalCount++;
+              let piecesMap = {};
+              piecesMap[li['item#']] = { poLineId: id, titleId: lo.instanceId, locationId: loc };
+              writeObj(files.piecesmap, piecesMap);
             });
             for (let li in lcount) {
               locObj = {
@@ -249,10 +296,9 @@ const mtype = '71fbd940-1027-40a6-8a48-49b44d795e46';
           };
           lo.cost = costObj;
           lo.physical = phyObj;
-          // if (distObj.fundId) lo.fundDistribution = [ distObj ];
+          if (distObj.fundId) lo.fundDistribution = [ distObj ];
           obj.compositePoLines.push(lo);
           ttl.lines++;
-          // console.log(lo);
         });
       } 
       writeObj(files.comp, obj);
