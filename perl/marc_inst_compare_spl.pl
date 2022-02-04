@@ -43,7 +43,7 @@ open NOUT, ">>:utf8", $nomatchfile or die "Can't open NO match file for writing!
 
 my $itemfile = $infile;
 $itemfile =~ s/(.+)\.\w+$/$1/;
-$itemfile = "${itemfile}_items_match.tsv";
+$itemfile = "${itemfile}_items_all.tsv";
 unlink $itemfile;
 open ITMS, ">>:utf8", $itemfile or die "Can't open items file for writing!";
 
@@ -63,21 +63,21 @@ while (<RAW>) {
     $ctrlnum = $marc->field('001')->data();
     1;
   };
-  if ($imap->{$ctrlnum}) {
-    my $inst_id = $imap->{$ctrlnum};
+  my $inst_id = $imap->{$ctrlnum} || '';
+  if ($inst_id) {
     $m++;
     print OUT $raw;
-    foreach ($marc->field('949')) {
-      my $iid = $_->subfield('q');
-      my $bc = $_->subfield('b');
-      my $mt = $_->subfield('c');
-      my $lo = $_->subfield('g');
-      my $cn = $_->subfield('e');
-      print ITMS "$iid\t$bc\t$lo\t$cn\t$mt\t$inst_id\n" if $iid;
-    }
   } else {
     print NOUT $raw;
     $nm++;
+  }
+  foreach ($marc->field('949')) {
+    my $iid = $_->subfield('q');
+    my $bc = $_->subfield('b');
+    my $mt = $_->subfield('c');
+    my $lo = $_->subfield('g');
+    my $cn = $_->subfield('e');
+    print ITMS "$iid\t$bc\t$lo\t$cn\t$mt\t$inst_id\n" if $iid;
   }
 }
 print "-----------\n";
