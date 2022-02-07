@@ -1,0 +1,189 @@
+{
+  "ALA": {
+    "id": "dfcfca5c-8c02-3f9f-9fa1-6c4cb98d357b",
+    "hz": 20
+  },
+  "BT": {
+    "id": "941c99dc-caa3-348b-8e9a-778b8e193df1",
+    "hz": 100
+  },
+  "BTE": {
+    "id": "b3376485-0021-3684-9939-b4905d6709e4",
+    "hz": 101
+  },
+  "BUC": {
+    "id": "07605475-2ce5-3155-be35-ca4421c3ebbe",
+    "hz": 102
+  },
+  "CCH": {
+    "id": "7dc973ab-a11f-331f-a0e4-cb7fe0f71808",
+    "hz": 119
+  },
+  "LAWTON": {
+    "id": "8a65ef73-a6b0-300a-9cca-63a5ef5494f5",
+    "hz": 353
+  },
+  "CENTER": {
+    "id": "ad2d222f-aeda-3c4b-894f-42d0d084e901",
+    "hz": 124
+  },
+  "COLE": {
+    "id": "8c12d093-6c9e-33de-be92-b5c03a93edf1",
+    "hz": 139
+  },
+  "EBSCO": {
+    "id": "46541c87-841f-346d-b265-eb68e453566d",
+    "hz": 187
+  },
+  "CENGAGE": {
+    "id": "bcc12f87-6604-316c-b511-e67a1530bc07",
+    "hz": 234
+  },
+  "GREY": {
+    "id": "0c0c634e-2a36-3df7-9de7-939c44ce1114",
+    "hz": 249
+  },
+  "INGRAM": {
+    "id": "f439a3a4-31be-3bd8-a4a6-e823fcc3cebc",
+    "hz": 286
+  },
+  "C2ER": {
+    "id": "e123a4b4-45ba-31c7-9dce-eb6610aa26d4",
+    "hz": 127
+  },
+  "DAVENPORT": {
+    "id": "e1efac6b-c5db-3212-9fa3-bbd7786f03e3",
+    "hz": 172
+  },
+  "FOUNDATION": {
+    "id": "397aef21-1c75-3e66-816c-c7ca40073cb1"
+  },
+  "GPO": {
+    "id": "226e0b9a-2780-3ce0-84b7-b33878748c3e",
+    "hz": 244
+  },
+  "INFOUSA": {
+    "id": "bd40c2b7-a228-3840-8348-8ff632490575",
+    "hz": 282
+  },
+  "JOURNAL": {
+    "id": "893f9d51-c1f7-38af-badf-85edff79fb02",
+    "hz": 305
+  },
+  "KSPS": {
+    "id": "36ff496f-35e7-389a-bf7f-c828c8ed86ec",
+    "hz": 312
+  },
+  "MIDWEST": {
+    "id": "e55a9d86-4f62-3bc5-abcd-37cb6f745b97",
+    "hz": 369
+  },
+  "MORNINGSTAR": {
+    "id": "97088fdb-d963-3c1c-8fa1-89fa5137c03f",
+    "hz": 378
+  },
+  "OFFICE": {
+    "id": "ff0f592c-bf91-3126-b683-689a6fdd2f0c",
+    "hz": 434
+  },
+  "CITY": {
+    "id": "d1163325-76cb-3174-b73b-c28f79289185",
+    "hz": 469
+  },
+  "RECORDED": {
+    "id": "b7316ec4-b0d5-39e4-8354-39ebe60dd01f",
+    "hz": 488
+  },
+  "SCHOLASTIC": {
+    "id": "66aeeee4-f7e0-3f64-9608-4efa580f73e0",
+    "hz": 504
+  },
+  "WEST": {
+    "id": "00539619-cda5-3f95-a72a-6e538403d2ad",
+    "hz": 612
+  },
+  "MILLIMAN": {
+    "id": "62632a95-e118-3624-ac00-515e7b660320",
+    "hz": 371
+  },
+  "NOMIS": {
+    "id": "45b5e515-2ab1-3c3f-afbe-6765fd2a272f",
+    "hz": 413
+  },
+  "OMNIGRAPHICS": {
+    "id": "cdc79be5-0655-3b17-9610-82b7d3ebe212",
+    "hz": 439
+  },
+  "PROQUEST": {
+    "id": "63c71713-906d-3782-a4bb-5b9ca21e73fd",
+    "hz": 472
+  },
+  "ROCKWELL": {
+    "id": "039d396c-1b0f-3de4-bc3e-ad563e005a69",
+    "hz": 492
+  },
+  "SPOKESMAN": {
+    "id": "9f5ee556-a91e-3a9e-92bd-04b509c1ed14",
+    "hz": 532
+  },
+  "PAPER": {
+    "id": "1570338f-de68-3aad-a425-81828f741437",
+    "hz": 660
+  },
+  "NEWPORT": {
+    "id": "adc31990-2bf4-329f-b367-2a9b153b3e87",
+    "hz": 736
+  },
+  "IBISWORLD": {
+    "id": "970dd96b-e930-3d30-8526-715780dc00a7",
+    "hz": 756
+  },
+  "STATISTA": {
+    "id": "5741448e-7ca0-39e5-8873-cd5b6f895501",
+    "hz": 760
+  },
+  "BTP": {
+    "id": "c2f841b2-6eb8-3444-ba1a-86789954afb9",
+    "hz": 768
+  },
+  "LINKEDIN": {
+    "id": "2ae9c9a4-a62a-333c-aecc-bf10c2258aa0",
+    "hz": 772
+  },
+  "BTPC": {
+    "id": "deafd0b9-d7c2-3ac8-bc4b-1ae253adc2f1",
+    "hz": 775
+  },
+  "KIOSK": {
+    "id": "1262a657-ca0f-3d32-9db9-3dbd00e4171f",
+    "hz": 781
+  },
+  "OVERDRIVE": {
+    "id": "c4515156-a98f-3778-b5c5-0a763090bdfe",
+    "hz": 748
+  },
+  "JUNIOR": {
+    "id": "14387c69-3b3d-3f36-abfc-6f1374c7b32c",
+    "hz": 758
+  },
+  "TRIBAL": {
+    "id": "5713b321-6407-35b1-95b2-88c4230c4d24",
+    "hz": 765
+  },
+  "BTPA": {
+    "id": "dca59dd5-6a7d-31d2-87e5-110eab1f1aa9",
+    "hz": 771
+  },
+  "TUMBLEWEED": {
+    "id": "d655ff74-1356-3a7c-b0d1-11308af0a95f",
+    "hz": 773
+  },
+  "BTPAV": {
+    "id": "da7aa9b5-2de8-3021-a6a5-f808a84fcc8e",
+    "hz": 776
+  },
+  "ATOZ": {
+    "id": "20605417-93f4-38f5-a1e2-d34b81543e81",
+    "hz": 784
+  }
+}
