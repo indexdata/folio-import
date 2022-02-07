@@ -114,9 +114,15 @@ const isbnCheck = (isbn) => {
     const budMap = {};
     hz.budget.forEach(b => {
       let lineNum = `${b['po#']}-${b.line}`;
-      if (!budMap[lineNum]) budMap[lineNum] = b.budget.replace(/^(.+?)\..*/, '$1');
+      if (!budMap[lineNum]) {
+        budMap[lineNum] = {};
+        budMap[lineNum].code = b.budget.replace(/^(.+?)\..*/, '$1');
+        budMap[lineNum].year = b.budget.replace(/^.+?\.(.+)/, '$1');
+      }
     });
     delete require.cache[hz.budget];
+    console.log(budMap);
+    return;
 
     const locMap = {};
     hz.loc.locations.forEach(l => {
@@ -290,8 +296,8 @@ const isbnCheck = (isbn) => {
             createInventory: 'None',
             volumes: []
           };
-          let fundCode = budMap[poLine];
-          let folioFundCode = fundMap[fundCode];
+          let fundCode = (budMap[poLine]) ? budMap[poLine].code : '';
+          let folioFundCode = fundMap[fundCode] || '';
           distObj = {
             code: folioFundCode,
             fundId: folioFunds[folioFundCode],
