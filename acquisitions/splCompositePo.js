@@ -1,6 +1,7 @@
 const { split } = require('event-stream');
 const fs = require('fs');
 const uuid = require('uuid/v5');
+const { markAsUntransferable } = require('worker_threads');
 
 const ns = 'e35dff4e-9035-4d6a-b621-3d42578f81c7';
 const inFiles = {
@@ -20,7 +21,8 @@ let files = {
   po: 'purchase-orders.jsonl',
   lines: 'po-lines.jsonl',
   orgs: 'orgs-not-found.jsonl',
-  piecesmap: 'piecesMap.jsonl'
+  piecesmap: 'piecesMap.jsonl',
+  notes: 'notes.jsonl'
 };
 const shipToId = 'd6900d6a-a7ce-469f-80da-bd599a16c137';
 const billToId = 'd6900d6a-a7ce-469f-80da-bd599a16c137';
@@ -67,6 +69,17 @@ const isbnCheck = (isbn) => {
     return false;
   }
 }
+
+const makeNote = (content, poLineId, type) => {
+  const note = {};
+  note.id = uuid(poLineId + type, ns);
+  note.content = `<div>${content}</div>`;
+  note.domain = 'orders';
+  note.links = [{ type: 'poLine', id: poLineId }];
+  note.title = type;
+  note.typeId = '66c718fa-d999-4cf8-9256-396fac481b6e';
+  return note;
+};
 
 (async () => {
   try {
@@ -115,14 +128,16 @@ const isbnCheck = (isbn) => {
     hz.budget.forEach(b => {
       let lineNum = `${b['po#']}-${b.line}`;
       if (!budMap[lineNum]) {
-        budMap[lineNum] = {};
-        budMap[lineNum].code = b.budget.replace(/^(.+?)\..*/, '$1');
-        budMap[lineNum].year = b.budget.replace(/^.+?\.(.+)/, '$1');
+        let yr = b.budget.replace(/^.+?\.(.+)/, '$1');
+        if (yr < '2007') yr = '2007';
+        let code = b.budget.replace(/^(.+?)\..*/, '$1');
+        if (yr !== '2022') {
+          code = 'm' + yr;
+        }
+        budMap[lineNum] = code;
       }
     });
     delete require.cache[hz.budget];
-    console.log(budMap);
-    return;
 
     const locMap = {};
     hz.loc.locations.forEach(l => {
@@ -132,8 +147,9 @@ const isbnCheck = (isbn) => {
     const fundMap = {};
     const fundIn = fs.readFileSync(dir + '/fundmap.tsv', { encoding: 'utf8' });
     fundIn.split(/\n/).forEach(l => {
-      let col = l.split(/\t/)
-      fundMap[col[0]] = col[1];
+      l = l.trim();
+      let col = l.split(/\t/);
+      if (col[0]) fundMap[col[0]] = col[1];
     });
 
     const folioFunds = {};
@@ -155,7 +171,8 @@ const isbnCheck = (isbn) => {
     ttl = {
       po: 0,
       lines: 0,
-      orgs: 0
+      orgs: 0,
+      notes: 0
     };
 
     // create po
@@ -296,7 +313,7 @@ const isbnCheck = (isbn) => {
             createInventory: 'None',
             volumes: []
           };
-          let fundCode = (budMap[poLine]) ? budMap[poLine].code : '';
+          let fundCode = budMap[poLine] || '';
           let folioFundCode = fundMap[fundCode] || '';
           distObj = {
             code: folioFundCode,
@@ -310,6 +327,16 @@ const isbnCheck = (isbn) => {
           if (paid) {
             lo.paymentStatus = 'Fully Paid';
             lo.receiptStatus = 'Fully Received';
+          }
+          if (l.internal_note) {
+            let note = makeNote(l.internal_note, id, 'Internal note');
+            writeObj(files.notes, note);
+            ttl.notes++;
+          }
+          if (l.order_note) {
+            let note = makeNote(l.order_note, id, 'Order note');
+            writeObj(files.notes, note);
+            ttl.notes++;
           }
           obj.compositePoLines.push(lo);
           ttl.lines++;
