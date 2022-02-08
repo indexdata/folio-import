@@ -14,6 +14,6 @@ let ep = process.argv[2];
 	.set('x-okapi-token', authToken);
     console.log(JSON.stringify(res.body, null, 2));
   } catch (e) {
-    console.log(e);
+    console.log(`${e}`);
   }
 })();
