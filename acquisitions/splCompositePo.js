@@ -279,18 +279,26 @@ const makeNote = (content, poLineId, type) => {
           let physicalCount = 0;
           let lcount = {};
           let paid = false;
+          let partPaid = false;
+          let cancel = true;
+          let rdate = '';
           if (lineItems[poLine]) {
             lineItems[poLine].forEach(li => {
-              if (!li.receive_date) paid = true;
-              if (1) {
-                let loc = locMap[li.location];
-                if (!lcount[loc]) lcount[loc] = 0;
-                lcount[loc]++;
-                physicalCount++;
-                let piecesMap = {};
-                piecesMap[li['item#']] = { poLineId: id, titleId: lo.instanceId, locationId: loc };
-                writeObj(files.piecesmap, piecesMap);
+              if (li.po_activity_type !== 'cancel') {
+                cancel = false;
               }
+              if (li.receive_date) { 
+                paid = true;
+                rdate = li.receive_date;
+              }
+              if (!li.receive_date && paid) partPaid = true;
+              let loc = locMap[li.location];
+              if (!lcount[loc]) lcount[loc] = 0;
+              lcount[loc]++;
+              physicalCount++;
+              let piecesMap = {};
+              piecesMap[li['item#']] = { poLineId: id, titleId: lo.instanceId, locationId: loc };
+              writeObj(files.piecesmap, piecesMap);
             });
             for (let li in lcount) {
               locObj = {
@@ -323,11 +331,21 @@ const makeNote = (content, poLineId, type) => {
           };
           lo.cost = costObj;
           lo.physical = phyObj;
-          if (distObj.fundId) lo.fundDistribution = [ distObj ];
-          if (paid) {
+          if (cancel) {
+            lo.paymentStatus = 'Cancelled';
+            lo.receiptStatus = 'Cancelled';
+          } else if (partPaid) {
+            lo.paymentStatus = 'Partially Paid';
+            lo.receiptStatus = 'Partially Received';
+          } else if (paid) {
             lo.paymentStatus = 'Fully Paid';
             lo.receiptStatus = 'Fully Received';
+            lo.receiptDate = rdate;
+          } else {
+            lo.paymentStatus = 'Pending';
+            lo.receiptStatus = 'Pending';
           }
+          if (distObj.fundId && !cancel) lo.fundDistribution = [distObj];
           if (l.internal_note) {
             let note = makeNote(l.internal_note, id, 'Internal note');
             writeObj(files.notes, note);
