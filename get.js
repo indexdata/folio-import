@@ -7,7 +7,7 @@ let ep = process.argv[2];
   const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
   const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
   let url = `${config.okapi}/${ep}`;
-  console.log('GET', url);
+  console.warn('GET', url);
   try {
     const res = await superagent
 	.get(url)
