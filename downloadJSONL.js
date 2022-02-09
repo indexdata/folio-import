@@ -5,6 +5,8 @@ let endPoint = process.argv[2];
 let refDir = process.argv[3];
 let start = parseInt(process.argv[4], 10);
 let limit = parseInt(process.argv[5], 10);
+let fn;
+let writeStream;
 
 (async () => {
   try {
@@ -27,12 +29,12 @@ let limit = parseInt(process.argv[5], 10);
     let filename = endPoint.replace(/\//g, '__');
     filename = filename.replace(/\?.+/, '');
 
-    const fn = `${refDir}/${filename}.jsonl`;
+    fn = `${refDir}/${filename}.jsonl`;
     if (fs.existsSync(fn)) {
       fs.unlinkSync(fn);
     }
     console.log(`Writing to ${fn}`);
-    let writeStream = fs.createWriteStream(fn);
+    writeStream = fs.createWriteStream(fn);
 
     let totFetch = 0;
     let totRecs = 1000000;
@@ -85,5 +87,6 @@ let limit = parseInt(process.argv[5], 10);
     }
   } catch (e) {
     console.error(e.message);
+    if (writeStream) fs.unlinkSync(fn);
   }
 })();
