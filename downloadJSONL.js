@@ -24,7 +24,7 @@ let limit = parseInt(process.argv[5], 10);
     endPoint = endPoint.replace(/^\//, '');
 
     let actionUrl = config.okapi + '/' + endPoint;
-    let filename = endPoint.replace(/^.+?\//g, '');
+    let filename = endPoint.replace(/\//g, '__');
     filename = filename.replace(/\?.+/, '');
 
     const fn = `${refDir}/${filename}.jsonl`;
