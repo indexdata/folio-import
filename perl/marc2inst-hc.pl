@@ -39,6 +39,7 @@ my $cntypes = {
   '099' => '6caca63e-5651-4db6-9247-3205156e9699',
 };
 my $version = '3';
+my $isls = 'MWH';
 
 my $rules_file = shift;
 my $ref_dir = shift;
@@ -518,6 +519,29 @@ foreach (@ARGV) {
       $marc = MARC::Record->new_from_usmarc($raw);
       1;
     };
+    
+    # lets move the 001 to 035
+    # $marc->delete_fields($marc->field('001'));  
+    # $marc->delete_fields($marc->field('003'));
+    my $iiinum = $marc->subfield('907', 'a');
+    if ($marc->field('001')) {
+      my $in_ctrl = $marc->field('001')->data();
+      my $in_ctrl_type = $marc->field('003')->data() || '';
+      my $id_data = "($in_ctrl_type)$in_ctrl";
+      my $field = MARC::Field->new('035', ' ', ' ', 'a' => $id_data);
+      $marc->insert_fields_ordered($field);
+      $marc->field('001')->update($iiinum);
+      $marc->field('003')->update($isls);
+    } else {
+      my $field = MARC::Field->new('001', $iiinum);
+      $marc->insert_fields_ordered($field);
+      if ($marc->field('003')) {
+        $marc->field('003')->update($isls);
+      } else {
+        my $field = MARC::Field->new('003', $isls);
+        $marc->insert_fields_ordered($field); 
+      }
+    }
     my $srsmarc = $marc;
     next unless $ok;
     if ($marc->field('880')) {
@@ -836,7 +860,7 @@ sub make_hi {
 sub write_objects {
   my $fh = shift;
   my $recs = shift;
-  print $fh $recs;
+  print $fh $recs if $recs;
 }
 
 sub dedupe {
