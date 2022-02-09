@@ -23,6 +23,11 @@ let writeStream;
 
     refDir = refDir.replace(/\/$/,'');
 
+    if (endPoint.match(/^.x/)) {
+      endPoint = endPoint.replace(/^.x\//, '');
+      endPoint = endPoint.replace(/__/, '/');
+    }
+
     endPoint = endPoint.replace(/^\//, '');
 
     let actionUrl = config.okapi + '/' + endPoint;
