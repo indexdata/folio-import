@@ -38,7 +38,7 @@ my $cntypes = {
   '092' => '6caca63e-5651-4db6-9247-3205156e9699',
   '099' => '6caca63e-5651-4db6-9247-3205156e9699',
 };
-my $version = '3';
+my $version = '4';
 my $isls = 'MWH';
 
 my $rules_file = shift;
@@ -126,7 +126,7 @@ sub makeMapFromTsv {
         $name =~ s/.*map .*/Unknown/;
         $tsvmap->{$prop}->{$code} = $name;
       } else {
-        if ($prop eq 'mtypes') {
+        if ($prop =~ /mtypes|holdings-types/) {
           $name = $col[1];
         }
         $tsvmap->{$prop}->{$code} = $refdata->{$prop}->{$name};
@@ -139,8 +139,9 @@ sub makeMapFromTsv {
 $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
 my $sierra2folio = makeMapFromTsv($ref_dir, $refdata);
-
 # print Dumper($sierra2folio); exit;
+# print Dumper($refdata); exit;
+
 
 my $blvl = {
   'm' => 'Monograph',
@@ -285,7 +286,7 @@ sub processing_funcs {
       }
     } elsif ($_ eq 'set_identifier_type_id_by_name') {
       my $name = $params->{name};
-      $out = $refdata->{identifierTypes}->{$name} or die "Can't find identifierType for $name!";
+      $out = $refdata->{identifierTypes}->{$name} || '2e8b3b6c-0e7d-4e48-bca2-b0b23b376af5' 
     } elsif ($_ eq 'set_contributor_name_type_id') {
       my $name = $params->{name};
       $out = $refdata->{contributorNameTypes}->{$name} or die "Can't find contributorNameType for $name";
@@ -469,7 +470,7 @@ foreach (@ARGV) {
   open RAW, "<:encoding(UTF-8)", $infile;
   open my $OUT, ">>:encoding(UTF-8)", $save_path;
   open my $SRSOUT, ">>:encoding(UTF-8)", $srs_file;
-  open IDMAP, ">>$id_map";
+  open IDMAP, ">>:encoding(UTF-8)", $id_map;
   my $inst_recs;
   my $srs_recs;
   my $hold_recs;
@@ -519,17 +520,24 @@ foreach (@ARGV) {
       $marc = MARC::Record->new_from_usmarc($raw);
       1;
     };
-    
+    next unless $ok;
+
     # lets move the 001 to 035
-    my $iiinum = $marc->subfield('907', 'a');
+    my $iiinum = ($marc->field('907')) ? $marc->subfield('907', 'a') : '';
+    $iiinum =~ s/.(.+).$/$1/;
     if ($marc->field('001')) {
       my $in_ctrl = $marc->field('001')->data();
-      my $in_ctrl_type = $marc->field('003')->data() || '';
+      my $in_ctrl_type = ($marc->field('003')) ? $marc->field('003')->data() : '';
       my $id_data = "($in_ctrl_type)$in_ctrl";
       my $field = MARC::Field->new('035', ' ', ' ', 'a' => $id_data);
       $marc->insert_fields_ordered($field);
       $marc->field('001')->update($iiinum);
-      $marc->field('003')->update($isls);
+      if ($marc->field('003')) {
+        $marc->field('003')->update($isls);
+      } else {
+        my $field = MARC::Field->new('003', $isls);
+        $marc->insert_fields_ordered($field);  
+      }
     } else {
       my $field = MARC::Field->new('001', $iiinum);
       $marc->insert_fields_ordered($field);
@@ -547,11 +555,9 @@ foreach (@ARGV) {
     }
 
     my $srsmarc = $marc;
-    next unless $ok;
     if ($marc->field('880')) {
       $srsmarc = MARC::Record->new_from_usmarc($raw);
     }
-    # next unless ($marc->title());
     my $ldr = $marc->leader();
     my $blevel = substr($ldr, 7, 1);
     my $type = substr($ldr, 6, 1);
@@ -682,8 +688,6 @@ foreach (@ARGV) {
       $rec->{hrid} = sprintf("%4s%010d", "marc", $count);  # if there is no hrid, make one up.
     }
     my $hrid = $rec->{hrid};
-    $hrid =~ s/^\.(.+).$/$1/;
-    $rec->{hrid} = $hrid;
     if (!$hrids->{$hrid} && $marc->title()) {
       # set FOLIO_USER_ID environment variable to create the following metadata object.
       $rec->{id} = uuid($hrid . $version);
@@ -695,14 +699,27 @@ foreach (@ARGV) {
           updatedDate=>$mdate
         };
       }
+      my $cn = '';
+      my $cntag = '';
+      foreach (@cntags) {
+        if ($marc->field($_)) {
+          $cn = $marc->field($_)->as_string('ab', ' ');
+          $cntag = $_;
+          last;
+        }
+      }
+      my $htype = ($marc->field('998')) ? $marc->subfield('998', 'd') : '';
+      $htype =~ s/\s*$//;
+      my $htype_id = $sierra2folio->{holdingsTypes}->{$htype} || '';
       $inst_recs .= $json->encode($rec) . "\n";
       $srs_recs .= $json->encode(make_srs($srsmarc, $raw, $rec->{id}, $rec->{hrid}, $snapshot_id, $srs_file)) . "\n";
-      $idmap_lines .= "$rec->{hrid}|$rec->{id}\n";
+      my $ctype = $cntypes->{$cntag} || '';
+      $idmap_lines .= "$rec->{hrid}|$rec->{id}|$cn|$ctype|$htype_id\n";
       $hrids->{$hrid} = 1;
       $success++;
 
       # make holdings and items
-      my $hi = make_hi($marc, $rec->{id}, $rec->{hrid}, $type, $blevel);
+      my $hi = make_hi($marc, $rec->{id}, $rec->{hrid}, $type, $blevel, $cn, $cntag, $htype_id);
       if ($hi->{holdings}) {
         $hold_recs .= $hi->{holdings};
         $hcount += $hi->{hcount};
@@ -751,23 +768,18 @@ sub make_hi {
   my $bhrid = shift;
   my $type = shift;
   my $blevel = shift;
+  my $cn = shift;
+  my $cntag = shift;
+  my $htype_id = shift;
   my $hseen = {};
   my $hid = '';
-  # print "Creating holdings for bib# $bhrid\n";
   my $hrec = {};
-  my $cn = '';
-  my $cntag = '';
   my $holdings = '';
   my $items = '';
   my $hcount = 0;
   my $icount = 0;
-  foreach (@cntags) {
-    if ($marc->field($_)) {
-      $cn = $marc->field($_)->as_string('ab', ' ');
-      $cntag = $_;
-      last;
-    }
-  }
+  
+  
   foreach my $item ($marc->field($itemtag)) {
     my $loc = $item->subfield('l') || '';
     next if !$loc;
@@ -778,6 +790,7 @@ sub make_hi {
     if (!$hseen->{$hkey}) {
       $hid = uuid($hkey);
       $hrec->{id} = $hid;
+      $hrec->{holdingsTypeId} = $htype_id if $htype_id;
       $hrec->{hrid} = $hkey;
       $hrec->{instanceId} = $bid;
       $hrec->{permanentLocationId} = $locid;
@@ -908,18 +921,20 @@ sub make_srs {
     my $srs_file = shift;
     my $srs = {};
 
-    my $control = $marc->field('001');
-    my $new_ctrl_field = MARC::Field->new('001', $hrid);
-    if ($control) {
-      my $sys_num = $control->data();
-      if ($sys_num ne $hrid) {
-        my $field = MARC::Field->new('035', ' ', ' ', a=>$sys_num);
-        $marc->insert_fields_ordered($field);
-        $control->replace_with($new_ctrl_field);
-      }
-    } else {
-      $marc->insert_fields_ordered($new_ctrl_field);
-    }
+    #### this control number stuff is preprocessed in the <RAW> block.
+    # my $control = $marc->field('001');
+    # my $new_ctrl_field = MARC::Field->new('001', $hrid);
+    # if ($control) {
+    #  my $sys_num = $control->data();
+    #  if ($sys_num ne $hrid) {
+    #    my $field = MARC::Field->new('035', ' ', ' ', a=>$sys_num);
+    #   $marc->insert_fields_ordered($field);
+    #    $control->replace_with($new_ctrl_field);
+    #  }
+    # } else {
+    #  $marc->insert_fields_ordered($new_ctrl_field);
+    # }
+
     my $mij = MARC::Record::MiJ->to_mij($marc);
     my $parsed = decode_json($mij);
     
