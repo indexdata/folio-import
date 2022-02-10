@@ -1,0 +1,20 @@
+code	folio name	user_defined_category_id	display_order	name
+-		12	0	
+f	MS Map	12	7	MS MAP
+g	DVD/Video	12	8	DVD/VIDEO
+d	MS Music	12	5	MS MUSIC
+e	Print Map	12	6	PRINT MAP
+@	Ebooks	12	1	EBOOKS
+b	Archival Material	12	3	ARCHIVAL MATL
+c	Printed Music	12	4	PRINTED MUSIC
+a	Printed Material	12	2	PRINTED MATL
+o	Kit	12	13	KIT
+m	Computer File	12	12	COMPUTER FILE
+j	Sound Recording	12	10	SOUND RECORD
+k	2-D Graphic	12	11	2-D GRAPHIC
+i	Spoken Record	12	9	SPOKEN RECORD
+u	Ejournal	12	18	EJOURNAL
+t	Manuscript	12	17	MANUSCRIPT
+s	Print Journal	12	16	PRINT JOURNAL
+r	3-D Object	12	15	3-D OBJECT
+p	Mixed Materials	12	14	MIXED MAT
