@@ -521,8 +521,6 @@ foreach (@ARGV) {
     };
     
     # lets move the 001 to 035
-    # $marc->delete_fields($marc->field('001'));  
-    # $marc->delete_fields($marc->field('003'));
     my $iiinum = $marc->subfield('907', 'a');
     if ($marc->field('001')) {
       my $in_ctrl = $marc->field('001')->data();
@@ -542,6 +540,12 @@ foreach (@ARGV) {
         $marc->insert_fields_ordered($field); 
       }
     }
+
+    # III specific mapping for discoverySuppress
+    if ($marc->subfield('998', 'e') eq 'n') {
+      $rec->{discoverySuppress} = JSON::true;
+    }
+
     my $srsmarc = $marc;
     next unless $ok;
     if ($marc->field('880')) {
@@ -777,6 +781,9 @@ sub make_hi {
       $hrec->{hrid} = $hkey;
       $hrec->{instanceId} = $bid;
       $hrec->{permanentLocationId} = $locid;
+      if ($item->subfield('a') && $item->subfield('a') =~ /\w/) {
+        $cn = $item->subfield('a');
+      }
       if ($cn) {
         $hrec->{callNumber} = $cn;
         $hrec->{callNumberTypeId} = $cntypes->{$cntag} || '6caca63e-5651-4db6-9247-3205156e9699'; #other
@@ -807,7 +814,7 @@ sub make_hi {
         $irec->{volume} = $item->subfield('c') || '';
       }
       $irec->{copyNumber} = $item->subfield('g') || '';
-      $irec->{permanentLoanTypeId} = $refdata->{loantypes}->{'Can circulate'};
+      $irec->{permanentLoanTypeId} = $refdata->{loantypes}->{'Can Circulate'};
       $irec->{materialTypeId} = $sierra2folio->{mtypes}->{$itype} || '71fbd940-1027-40a6-8a48-49b44d795e46'; # defaulting to unspecified
       $irec->{status}->{name} = $sierra2folio->{statuses}->{$status} || 'Unknown'; # defaulting to available;
       foreach (@msgs) {
@@ -835,7 +842,7 @@ sub make_hi {
         if (!$irec->{notes}) { $irec->{notes} = [] }
         my $nobj = {};
         $nobj->{note} = $_;
-        $nobj->{noteTypeId} = '8d0a5eca-25de-4391-81a9-236eeefdd20b';  # Note
+        $nobj->{itemNoteTypeId} = '8d0a5eca-25de-4391-81a9-236eeefdd20b';  # Note
         $nobj->{staffOnly} = 'true';
         push @{ $irec->{notes} }, $nobj;
       }
