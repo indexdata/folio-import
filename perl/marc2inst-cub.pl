@@ -25,7 +25,6 @@ use JSON;
 use UUID::Tiny ':std';
 use MARC::Charset 'marc8_to_utf8';
 use Time::Piece;
-use LWP::UserAgent;
 use Data::Dumper;
 
 binmode STDOUT, ":utf8";
@@ -39,16 +38,8 @@ my $cntypes = {
   '092' => '6caca63e-5651-4db6-9247-3205156e9699',
   '099' => '6caca63e-5651-4db6-9247-3205156e9699',
 };
-
-# this stuff is for querying couchDB for items and holdings
-my $ua = LWP::UserAgent->new(timeout => 10);
-my $creds = 'admin:admin';
-my $couchbase = "http://$creds\@localhost:5984";
-my $iurl = "$couchbase/cub-items/_find";
-my $hurl = "$couchbase/cub-holdings/_find";
-my $tp = localtime();
-my @months = ('');
-push @months, $tp->mon_list();
+my $version = '1';
+my $isls = 'CoU';
 
 my $rules_file = shift;
 my $ref_dir = shift;
@@ -130,13 +121,13 @@ sub makeMapFromTsv {
       s/\s+$//;
       my @col = split(/\t/);
       my $code = $col[0];
-      my $name = $col[2] || '';
+      my $name = $col[1] || '';
       if ($prop eq 'statuses') {
+        $name =~ s/.*map .*/Unknown/;
         $tsvmap->{$prop}->{$code} = $name;
       } else {
-        if ($prop eq 'locations') {
+        if ($prop =~ /mtypes|holdings-types/) {
           $name = $col[1];
-          $name =~ s/^.+\///;
         }
         $tsvmap->{$prop}->{$code} = $refdata->{$prop}->{$name};
       }
@@ -148,6 +139,9 @@ sub makeMapFromTsv {
 $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
 my $sierra2folio = makeMapFromTsv($ref_dir, $refdata);
+# print Dumper($sierra2folio); exit;
+# print Dumper($refdata); exit;
+
 
 my $blvl = {
   'm' => 'Monograph',
@@ -292,7 +286,7 @@ sub processing_funcs {
       }
     } elsif ($_ eq 'set_identifier_type_id_by_name') {
       my $name = $params->{name};
-      $out = $refdata->{identifierTypes}->{$name} or die "Can't find identifierType for $name!";
+      $out = $refdata->{identifierTypes}->{$name} || '2e8b3b6c-0e7d-4e48-bca2-b0b23b376af5' 
     } elsif ($_ eq 'set_contributor_name_type_id') {
       my $name = $params->{name};
       $out = $refdata->{contributorNameTypes}->{$name} or die "Can't find contributorNameType for $name";
@@ -435,7 +429,6 @@ foreach (@ARGV) {
   my $count = 0;
   my $icount = 0;
   my $hcount = 0;
-  my $pcount = 0;
   my $errcount = 0;
   my $start = time();
 
@@ -444,7 +437,7 @@ foreach (@ARGV) {
   unlink $save_path;
 
   my $id_map = $infile;
-  $id_map =~ s/^(.+)\..+$/$1_map.tsv/;
+  $id_map =~ s/^(.+)\..+$/$1.map/;
   unlink $id_map;
 
   my $snap_file = $infile;
@@ -454,25 +447,29 @@ foreach (@ARGV) {
   my $srs_file = $infile;
   $srs_file =~ s/^(.+)\..+$/$1_srs.jsonl/;
   unlink $srs_file;
-
-  my $presuc_file = $infile;
-  $presuc_file =~ s/^(.+)\..+$/$1_presuc.jsonl/;
-  unlink $presuc_file;
-  open my $PSOUT, ">>:encoding(UTF-8)", $presuc_file;
   
   my $err_path = $infile;
   $err_path =~ s/^(.+)\..+$/$1_err.mrc/;
   unlink $err_path;
 
-  my $holdings_path = $infile;
-  $holdings_path =~ s/^(.+)\..+$/$1_holdings.jsonl/;
-  unlink $holdings_path;
-  open my $HOUT, ">>:encoding(UTF-8)", $holdings_path;
+  my $presuc_file = $infile;
+  $presuc_file =~ s/^(.+)\..+$/$1_presuc.jsonl/;
+  unlink $presuc_file;
+  open my $PSOUT, ">>:encoding(UTF-8)", $presuc_file;
 
+  my $holdings_path = $infile;
   my $items_path = $infile;
-  $items_path =~ s/^(.+)\..+$/$1_items.jsonl/;
-  unlink $items_path;
-  open my $IOUT, ">>:encoding(UTF-8)", $items_path;
+  my $HOUT;
+  my $IOUT;
+  if ($itemtag) {
+    $holdings_path =~ s/^(.+)\..+$/$1_holdings.jsonl/;
+    unlink $holdings_path;
+    open $HOUT, ">>:encoding(UTF-8)", $holdings_path;
+
+    $items_path =~ s/^(.+)\..+$/$1_items.jsonl/;
+    unlink $items_path;
+    open $IOUT, ">>:encoding(UTF-8)", $items_path;
+  }
 
   my $snapshot_id = make_snapshot($snap_file);
   
@@ -482,13 +479,14 @@ foreach (@ARGV) {
   open RAW, "<:encoding(UTF-8)", $infile;
   open my $OUT, ">>:encoding(UTF-8)", $save_path;
   open my $SRSOUT, ">>:encoding(UTF-8)", $srs_file;
-  open IDMAP, ">>$id_map";
+  open IDMAP, ">>:encoding(UTF-8)", $id_map;
   my $inst_recs;
   my $srs_recs;
   my $hold_recs;
   my $item_recs;
-  my $idmap_lines;
+  my $idmap_lines = '';
   my $success = 0;
+  my $pcount = 0;
   my $hrids = {};
   my $coll = { instances => [] };
   while (<RAW>) {
@@ -533,8 +531,43 @@ foreach (@ARGV) {
       1;
     };
     next unless $ok;
+
+    # lets move the 001 to 035
+    my $iiinum = ($marc->field('907')) ? $marc->subfield('907', 'a') : '';
+    $iiinum =~ s/.(.+).$/$1/;
+    if ($marc->field('001')) {
+      my $in_ctrl = $marc->field('001')->data();
+      my $in_ctrl_type = ($marc->field('003')) ? $marc->field('003')->data() : '';
+      my $id_data = ($in_ctrl_type) ? "($in_ctrl_type)$in_ctrl" : $in_ctrl;
+      my $field = MARC::Field->new('035', ' ', ' ', 'a' => $id_data);
+      $marc->insert_fields_ordered($field);
+      $marc->field('001')->update($iiinum);
+      if ($marc->field('003')) {
+        $marc->field('003')->update($isls);
+      } else {
+        my $field = MARC::Field->new('003', $isls);
+        $marc->insert_fields_ordered($field);  
+      }
+    } else {
+      my $field = MARC::Field->new('001', $iiinum);
+      $marc->insert_fields_ordered($field);
+      if ($marc->field('003')) {
+        $marc->field('003')->update($isls);
+      } else {
+        my $field = MARC::Field->new('003', $isls);
+        $marc->insert_fields_ordered($field); 
+      }
+    }
+
+    # III specific mapping for discoverySuppress
+    if ($marc->subfield('998', 'e') eq 'n') {
+      $rec->{discoverySuppress} = JSON::true;
+    }
+
     my $srsmarc = $marc;
-    # next unless ($marc->title());
+    if ($marc->field('880')) {
+      $srsmarc = MARC::Record->new_from_usmarc($raw);
+    }
     my $ldr = $marc->leader();
     my $blevel = substr($ldr, 7, 1);
     my $type = substr($ldr, 6, 1);
@@ -553,19 +586,18 @@ foreach (@ARGV) {
     }
     my @marc_fields = $marc->fields();
     MARC_FIELD: foreach (@marc_fields) {
-      my $field = $_;
       my $tag = $_->tag();
+      next unless $mapping_rules->{$tag};  # No need to iterate through tags that aren't in the mapping rules
+      my $field = $_;
       my $fr = $field_replace->{$tag} || '';
       if ($fr) {
         my $sf = $fr->{subfield}[0];
         my $sdata = $field->subfield($sf);
         $sdata =~ s/^(\d{3}).*/$1/;
         my $rtag = $fr->{frules}->{$sdata} || $sdata;
-	if ($rtag =~ /^\w{3}$/) {
-       	  $field->set_tag($rtag);
-          push @marc_fields, $field;
-          next;
-	}
+        $field->set_tag($rtag);
+        push @marc_fields, $field;
+        next;
       }
       if (($tag =~ /^(7|1)/ && !$field->subfield('a')) || ($tag == '856' && !$field->subfield('u'))) {
         next;
@@ -667,11 +699,9 @@ foreach (@ARGV) {
       $rec->{hrid} = sprintf("%4s%010d", "marc", $count);  # if there is no hrid, make one up.
     }
     my $hrid = $rec->{hrid};
-    $hrid =~ s/.$//;
-    $rec->{hrid} = $hrid;
     if (!$hrids->{$hrid} && $marc->title()) {
       # set FOLIO_USER_ID environment variable to create the following metadata object.
-      $rec->{id} = uuid($hrid);
+      $rec->{id} = uuid($hrid . $version);
       if ($ENV{FOLIO_USER_ID}) {
         $rec->{metadata} = {
           createdByUserId=>$ENV{FOLIO_USER_ID},
@@ -680,21 +710,33 @@ foreach (@ARGV) {
           updatedDate=>$mdate
         };
       }
+      my $cn = '';
+      my $cntag = '';
+      foreach (@cntags) {
+        if ($marc->field($_)) {
+          $cn = $marc->field($_)->as_string('ab', ' ');
+          $cntag = $_;
+          last;
+        }
+      }
       $inst_recs .= $json->encode($rec) . "\n";
       $srs_recs .= $json->encode(make_srs($srsmarc, $raw, $rec->{id}, $rec->{hrid}, $snapshot_id, $srs_file)) . "\n";
-      $idmap_lines .= "$rec->{hrid}\t$rec->{id}\n";
+      my $ctype = $cntypes->{$cntag} || '';
+      $idmap_lines .= "$rec->{hrid}|$rec->{id}|$cn|$ctype\n";
       $hrids->{$hrid} = 1;
       $success++;
 
       # make holdings and items
-      my $hi = make_hi($marc, $rec->{id}, $rec->{hrid}, $type, $blevel);
-      if ($hi->{holdings}) {
-        $hold_recs .= $hi->{holdings};
-        $hcount += $hi->{hcount};
-      }
-      if ($hi->{items}) {
-        $item_recs .= $hi->{items};
-        $icount += $hi->{icount};
+      if ($itemtag) {
+        my $hi = make_hi($marc, $rec->{id}, $rec->{hrid}, $type, $blevel, $cn, $cntag);
+        if ($hi->{holdings}) {
+          $hold_recs .= $hi->{holdings};
+          $hcount += $hi->{hcount};
+        }
+        if ($hi->{items}) {
+          $item_recs .= $hi->{items};
+          $icount += $hi->{icount};
+        }
       }
 
       # make preceding succeding titles
@@ -733,8 +775,7 @@ foreach (@ARGV) {
       close ERROUT;
       $errcount++;
     }
-    
-    if (eof RAW || $success % 1000 == 0) {
+    if (eof RAW || $success % 10000 == 0) {
       my $tt = time() - $start;
       print "Processed #$count (" . $rec->{hrid} . ") [ instances: $success, holdings: $hcount, items: $icount, time: $tt secs ]\n";
       write_objects($OUT, $inst_recs);
@@ -743,11 +784,12 @@ foreach (@ARGV) {
       write_objects($SRSOUT, $srs_recs);
       $srs_recs = '';
 
-      write_objects($HOUT, $hold_recs);
-      $hold_recs = '';
-
-      write_objects($IOUT, $item_recs);
-      $item_recs = '';
+      if ($itemtag) {
+        write_objects($HOUT, $hold_recs);
+        $hold_recs = '';
+        write_objects($IOUT, $item_recs);
+        $item_recs = '';
+      }
 
       print IDMAP $idmap_lines;
       $idmap_lines = '';
@@ -756,8 +798,10 @@ foreach (@ARGV) {
   my $tt = time() - $start;
   print "\nDone!\n$count Marc records processed in $tt seconds";
   print "\nInstances: $success ($save_path)";
-  print "\nHoldings:  $hcount ($holdings_path)";
-  print "\nItems:     $icount ($items_path)";
+  if ($itemtag) {
+    print "\nHoldings:  $hcount ($holdings_path)";
+    print "\nItems:     $icount ($items_path)";
+  }
   print "\nPreSuc:    $pcount ($presuc_file)";
   print "\nErrors:    $errcount\n";
 }
@@ -768,129 +812,34 @@ sub make_hi {
   my $bhrid = shift;
   my $type = shift;
   my $blevel = shift;
+  my $cn = shift;
+  my $cntag = shift;
+  my $htype_id = shift;
   my $hseen = {};
   my $hid = '';
-  # print "Creating holdings for bib# $bhrid\n";
   my $hrec = {};
-  my $cn = '';
-  my $cntype = '';
   my $holdings = '';
   my $items = '';
   my $hcount = 0;
   my $icount = 0;
-  foreach (@cntags) {
-    if ($marc->field($_)) {
-      $cn = $marc->field($_)->as_string('ab', ' ');
-      $cntype = $cntypes->{$_} || '6caca63e-5651-4db6-9247-3205156e9699'; #other
-      last;
-    }
-  }
-
-  # find and make serials holdings
-  if ($blevel eq 's') {
-    my $h = couchQuery($hurl, $bhrid);
-    foreach (@{ $h->{docs} }) {
-      my $include = 0;
-      my $loc = $_->{fixedFields}->{40}->{value};
-      $loc =~ s/\s+//;
-      my $hrid = "c" . $_->{_id} . "-$loc";
-      my $id = uuid($hrid);
-      my $sh = {
-        id => $id,
-        hrid => $hrid,
-        permanentLocationId => $sierra2folio->{locations}->{$loc} || '53cf956f-c1df-410b-8bea-27f712cca7c0',
-        instanceId => $bid,
-        holdingsTypeId => 'e6da6c98-6dd0-41bc-8b4b-cfd4bbd9c3ae', #serial
-        sourceId => 'f32d531e-df79-46b3-8932-cdd35f7a2264', #folio
-      };
-      if ($cn) {
-        $sh->{callNumber} = $cn;
-        $sh->{callNumberTypeId} = $cntype;
-      }
-      foreach my $vf (@{ $_->{varFields} }) {
-        my $tag = $vf->{marcTag} || '';
-        if ($tag =~ /86[678]/) {
-          my $obj = {};
-          foreach my $sf (@{ $vf->{subfields} }) {
-            my $code = $sf->{tag};
-            my $val = $sf->{content};
-            if ($code eq 'a') {
-              $obj->{statement} = $val;
-            } elsif ($code eq 'x') {
-              $obj->{staffNote} = $val;
-            } elsif ($code eq 'z') {
-              $obj->{note} = $val;
-            }
-          }
-          if ($obj->{statement}) {
-            if ($tag eq '866') {
-              push @{ $sh->{holdingsStatements} }, $obj;
-            } elsif ($tag eq '867') {
-              push @{ $sh->{holdingsStatementsForSupplements} }, $obj;
-            } elsif ($tag eq '868') {
-              push @{ $sh->{holdingsStatementsForIndexes} }, $obj;
-            }
-            $include = 1;
-          }
-        } elsif ($tag eq '856') {
-          my $obj = {};
-          my $rel = $vf->{ind2};
-          foreach my $sf (@{ $vf->{subfields} }) {
-            my $code = $sf->{tag};
-            my $val = $sf->{content};
-            if ($code eq 'z') {
-              my $uri = $val;
-              my $note = $val;
-              $uri =~ s/.*href=(\S+?) ?>.*/$1/;
-              $obj->{uri} = $uri;
-              $note =~ s/.+?> ?(.+?) ?<.+/$1/;
-              $obj->{publicNote} = $note;
-              my $rel_str = $relations->{$rel};
-              if ($refdata->{electronicAccessRelationships}->{$rel_str}) {
-                $obj->{relationshipId} = $refdata->{electronicAccessRelationships}->{$rel_str};
-              }
-            }
-          }
-          if ($obj->{uri}) {
-            push @{ $sh->{electronicAccess} }, $obj;
-            $include = 1;
-          }
-        }
-      }
-      # print $json->pretty->encode($sh);
-      if ($include) {
-        my $hout = $json->encode($sh);
-        $holdings .= $hout . "\n";
-        $hcount++;
-      }
-    }
-  }
   
-  # print Dumper($h);
-  my $i = couchQuery($iurl, $bhrid);
-  foreach my $item (@ { $i->{docs} }) {
-    my $loc = $item->{fixedFields}->{79}->{value} || '';
+  
+  foreach my $item ($marc->field($itemtag)) {
+    my $loc = $item->subfield('l') || '';
     next if !$loc;
     $loc =~ s/(\s*$)//;
     my $hkey = "$bhrid-$loc";
     my $locid = $sierra2folio->{locations}->{$loc} || '53cf956f-c1df-410b-8bea-27f712cca7c0'; # defaults to Norlin Stacks
-    my $vf = {};
-    foreach (@{ $item->{varFields} }) {
-      my $ftag = $_->{fieldTag};
-      push @{ $vf->{$ftag} }, $_->{content};
-    }
-    # make holdings record from item;
+    # make holdings record;
     if (!$hseen->{$hkey}) {
       $hid = uuid($hkey);
       $hrec->{id} = $hid;
       $hrec->{hrid} = $hkey;
       $hrec->{instanceId} = $bid;
       $hrec->{permanentLocationId} = $locid;
-      $hrec->{holdingsTypeId} = '03c9c400-b9e3-4a07-ac0e-05ab470233ed'; # monograph
-      $hrec->{sourceId} = 'f32d531e-df79-46b3-8932-cdd35f7a2264'; # folio
       if ($cn) {
         $hrec->{callNumber} = $cn;
-        $hrec->{callNumberTypeId} = $cntype;
+        $hrec->{callNumberTypeId} = $cntypes->{$cntag} || '6caca63e-5651-4db6-9247-3205156e9699'; #other
       }
       my $hout = $json->encode($hrec);
       $holdings .= $hout . "\n";
@@ -900,30 +849,28 @@ sub make_hi {
 
     # make item record;
     my $irec = {};
-    my $iid = $item->{_id};
-    my $itype = $item->{fixedFields}->{79}->{value};
-    my $status = $item->{fixedFields}->{79}->{value} || '';
-    my @msgs = $vf->{m};
-    my @notes;
-    push @notes, @{ $vf->{x} } if $vf->{x};
-    push @notes, @{ $vf->{w} } if $vf->{w};
+    my $iid = $item->subfield('y');
+    my $itype = $item->subfield('t');
+    my $status = $item->subfield('s') || '';
+    my @msgs = $item->subfield('m');
+    my @notes = $item->subfield('n');
     $status =~ s/\s+$//;
     if ($iid) {
       $iid =~ s/^\.//;
       $irec->{id} = uuid($iid);
       $irec->{holdingsRecordId} = $hid;
-      $irec->{hrid} = "i$iid";
-      $irec->{barcode} = $vf->{b}[0] || '';
+      $irec->{hrid} = $iid;
+      $irec->{barcode} = $item->subfield('i') || '';
       if ($blevel eq 's') {
-        $irec->{enumeration} = $vf->{v}[0] || '';
+        $irec->{enumeration} = $item->subfield('c') || '';
       } else {
-        $irec->{volume} = $vf->{v}[0] || '';
+        $irec->{volume} = $item->subfield('c') || '';
       }
-      $irec->{copyNumber} = $item->{fixedFields}->{58}->{value} || '';
+      $irec->{copyNumber} = $item->subfield('g') || '';
       $irec->{permanentLoanTypeId} = $refdata->{loantypes}->{'Can circulate'};
       $irec->{materialTypeId} = $sierra2folio->{mtypes}->{$itype} || '71fbd940-1027-40a6-8a48-49b44d795e46'; # defaulting to unspecified
       $irec->{status}->{name} = $sierra2folio->{statuses}->{$status} || 'Available'; # defaulting to available;
-      foreach (@{ $vf->{m} }) {
+      foreach (@msgs) {
         if (!$irec->{circulationNotes}) { $irec->{circulationNotes} = [] }
         my $cnobj = {};
         $cnobj->{note} = $_;
@@ -952,8 +899,7 @@ sub make_hi {
         $nobj->{staffOnly} = 'true';
         push @{ $irec->{notes} }, $nobj;
       }
-      my $icode2 = $item->{fixedFields}->{60}->{value};
-      if ($icode2 eq 'n') {
+      if ($item->subfield('o') && $item->subfield('o') eq 'n') {
         $irec->{discoverySuppress} = 'true';
       } else {
         $irec->{discoverySuppress} = 'false';
@@ -971,24 +917,10 @@ sub make_hi {
   };
 }
 
-sub couchQuery {
-  my $url = shift;
-  my $bibid = shift;
-  $bibid =~ s/^b//;
-  my $q = '{"selector":{"bibId":{"$eq":"' . $bibid . '"}},"limit":5000}';
-  my $res = $ua->post($url, Content => $q, 'Content-type' => 'application/json');
-  if ($res->is_success) {
-      return $json->decode($res->decoded_content);
-  }
-  else {
-      die $res->status_line;
-  }
-}
-
 sub write_objects {
   my $fh = shift;
-  my $recs = shift || '';
-  print $fh $recs;
+  my $recs = shift;
+  print $fh $recs if $recs;
 }
 
 sub dedupe {
@@ -1029,18 +961,20 @@ sub make_srs {
     my $srs_file = shift;
     my $srs = {};
 
-    my $control = $marc->field('001');
-    my $new_ctrl_field = MARC::Field->new('001', $hrid);
-    if ($control) {
-      my $sys_num = $control->data();
-      if ($sys_num ne $hrid) {
-        my $field = MARC::Field->new('035', ' ', ' ', a=>$sys_num);
-        $marc->insert_fields_ordered($field);
-        $control->replace_with($new_ctrl_field);
-      }
-    } else {
-      $marc->insert_fields_ordered($new_ctrl_field);
-    }
+    #### this control number stuff is preprocessed in the <RAW> block.
+    # my $control = $marc->field('001');
+    # my $new_ctrl_field = MARC::Field->new('001', $hrid);
+    # if ($control) {
+    #  my $sys_num = $control->data();
+    #  if ($sys_num ne $hrid) {
+    #    my $field = MARC::Field->new('035', ' ', ' ', a=>$sys_num);
+    #   $marc->insert_fields_ordered($field);
+    #    $control->replace_with($new_ctrl_field);
+    #  }
+    # } else {
+    #  $marc->insert_fields_ordered($new_ctrl_field);
+    # }
+
     my $mij = MARC::Record::MiJ->to_mij($marc);
     my $parsed = decode_json($mij);
     
