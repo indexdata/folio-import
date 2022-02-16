@@ -114,13 +114,10 @@ while (<MAP>) {
   $mi++;
   print "  $mi map lines read\n" if $mi % 1000000 == 0;
   chomp;
-  my @d = split(/\|/);
-  $inst_map->{$d[0]} = {
-    id => $d[1],
-    cn => $d[2],
-    ct => $d[3]
-  };
+  my @d = split(/\|/, $_, 2);
+  $inst_map->{$d[0]} = $d[1];
 }
+print Dumper($inst_map->{b6891144});
 close MAP;
 
 $ref_dir =~ s/\/$//;
