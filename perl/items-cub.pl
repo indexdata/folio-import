@@ -117,7 +117,6 @@ while (<MAP>) {
   my @d = split(/\|/, $_, 2);
   $inst_map->{$d[0]} = $d[1];
 }
-print Dumper($inst_map->{b6891144});
 close MAP;
 
 $ref_dir =~ s/\/$//;
@@ -146,8 +145,17 @@ foreach (@ARGV) {
 
   while (<IN>) { 
     chomp;
-    print $_ . "\n";
+    my $obj = $json->decode($_);
+    my $it_bid = $obj->{bibIds}->[0];
+    my $bid = "b$it_bid";
+    my $psv = $inst_map->{$bid};
+    my @b = split(/\|/, $psv);
+    my $out = make_hi($b[0], $bid, '', '');
+    print Dumper($out);
+    $count++;
+    last if $count == 10;
   } 
+  close IN;
 }
 exit;
 
