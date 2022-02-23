@@ -528,7 +528,7 @@ foreach (@ARGV) {
     if ($marc->field('001')) {
       my $in_ctrl = $marc->field('001')->data();
       my $in_ctrl_type = ($marc->field('003')) ? $marc->field('003')->data() : '';
-      my $id_data = "($in_ctrl_type)$in_ctrl";
+      my $id_data = ($in_ctrl_type) ? "($in_ctrl_type)$in_ctrl" : $in_ctrl;
       my $field = MARC::Field->new('035', ' ', ' ', 'a' => $id_data);
       $marc->insert_fields_ordered($field);
       $marc->field('001')->update($iiinum);

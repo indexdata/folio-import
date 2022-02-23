@@ -26,9 +26,11 @@ if (! $ARGV[0]) {
   die "Usage: ./items-hc.pl <ref_data_dir> <instances_tsv_map_file> <iii_holdings_jsonl_file>\n";
 }
 
+
 my $json = JSON->new;
 $json->canonical();
 
+my $start = time();
 my @lt = localtime();
 my $mdate = sprintf("%04d-%02d-%02dT%02d:%02d:%02d-0500", $lt[5] + 1900, $lt[4] + 1, $lt[3], $lt[2], $lt[1], $lt[0]);
 
@@ -130,11 +132,18 @@ my $relations = {
   '3' => 'No information provided'
 };
 
+my $ttl = 0;
+
 foreach (@ARGV) {
   my $infile = $_;
   if (! -e $infile) {
     die "Can't find Sierra holdings file!";
   } 
+  my $dir = dirname($map_file);
+  my $fn = basename($map_file, '.map');
+  my $outfile = "$dir/$fn-iii-holdings.jsonl";
+  unlink $outfile;
+  open my $OUT, ">>", $outfile;
 
   my $count = 0;
   my $hcount = 0;
@@ -143,6 +152,7 @@ foreach (@ARGV) {
  
   open IN, $infile;
 
+  my $seen = {};
   while (<IN>) { 
     chomp;
     my $obj = $json->decode($_);
@@ -170,6 +180,8 @@ foreach (@ARGV) {
     my $ff = $obj->{fixedFields};
     my $h = {};
     my $hid = "c" . $obj->{id};
+    next if $seen->{$hid};
+    $seen->{$hid} = 1;
     my $loc_code = $ff->{40}->{value} || 'xxxxx';
     $h->{id} = uuid($hid);
     $h->{hrid} = $hid;
@@ -216,12 +228,16 @@ foreach (@ARGV) {
       }
     }
     
-    my $hr = $json->pretty->encode($h);
-    print $hr;
+    my $hr = $json->encode($h);
+    write_objects($OUT, $hr . "\n");
     $count++;
+    $ttl++;
   } 
   close IN;
 }
+my $end = time;
+my $secs = $end - $start;
+print "\n$ttl Sierra holdings processed in $secs secs.\n\n";
 
 sub make_statment {
   my $text = shift;
