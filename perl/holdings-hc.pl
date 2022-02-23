@@ -191,12 +191,45 @@ foreach (@ARGV) {
         push @{ $h->{notes} }, make_notes($t, $_);
       }
     }
+    foreach my $t ('863', '864', '865') {
+      foreach my $f (@{ $vf->{$t} }) {
+        my @data;
+        my @notes;
+        for my $s ('a' .. 'z') {
+          if ($f->{$s}) {
+            if ($s =~ /[mnz]/) {
+              push @notes, $f->{$s};
+            } else {
+              push @data, $f->{$s};
+            }
+          }
+        }
+        my $text = join ', ', @data;
+        my $note = join ', ', @notes;
+        my $htype = 'holdingsStatements';
+        if ($t eq '864') {
+          $htype = 'holdingsStatementsForSupplements';
+        } elsif ($t eq '865') {
+          $htype = 'holdingsStatementsForIndexes';
+        }
+        push @{ $h->{$htype} }, make_statment($text, $note);
+      }
+    }
     
     my $hr = $json->pretty->encode($h);
     print $hr;
     $count++;
   } 
   close IN;
+}
+
+sub make_statment {
+  my $text = shift;
+  my $note = shift;
+  my $s = {};
+  $s->{statement} = $text;
+  $s->{note} = $note if $note;
+  return $s;
 }
 
 sub make_notes {
