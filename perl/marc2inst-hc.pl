@@ -581,7 +581,7 @@ foreach (@ARGV) {
       my $fr = $field_replace->{$tag} || '';
       if ($fr) {
         my $sf = $fr->{subfield}[0];
-        my $sdata = $field->subfield($sf);
+        my $sdata = $field->subfield($sf) || next;
         $sdata =~ s/^(\d{3}).*/$1/;
         my $rtag = $fr->{frules}->{$sdata} || $sdata;
         $field->set_tag($rtag);
