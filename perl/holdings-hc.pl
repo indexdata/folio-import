@@ -183,6 +183,7 @@ foreach (@ARGV) {
     next if $seen->{$hid};
     $seen->{$hid} = 1;
     my $loc_code = $ff->{40}->{value} || 'xxxxx';
+    $loc_code =~ s/ +$//;
     $h->{id} = uuid($hid);
     $h->{hrid} = $hid;
     $h->{instanceId} = $b[0];
