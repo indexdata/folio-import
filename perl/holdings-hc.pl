@@ -141,9 +141,14 @@ foreach (@ARGV) {
   } 
   my $dir = dirname($map_file);
   my $fn = basename($map_file, '.map');
-  my $outfile = "$dir/$fn-iii-holdings.jsonl";
+
+  my $outfile = "$dir/${fn}_iii_holdings.jsonl";
   unlink $outfile;
   open my $OUT, ">>", $outfile;
+
+  my $itemfile = "$dir/${fn}_iii_holdings_items.jsonl";
+  unlink $itemfile;
+  open my $IOUT, ">>", $itemfile;
 
   my $count = 0;
   my $hcount = 0;
@@ -231,6 +236,18 @@ foreach (@ARGV) {
     
     my $hr = $json->encode($h);
     write_objects($OUT, $hr . "\n");
+
+    # make dummy items
+    my $itm = {};
+    $itm->{holdingsRecordId} = $h->{id};
+    $itm->{hrid} = $h->{hrid} . 'item';
+    $itm->{id} = uuid($itm->{hrid});
+    $itm->{materialTypeId} = '392bc101-5ec1-46bc-9f1a-7bfa899ce67d'; # other
+    $itm->{permanentLoanTypeId} = 'aecb53e1-46ec-40db-b268-a90b7e76cd16'; # non circulating
+    $itm->{status}->{name} = 'Restricted';
+    my $ir = $json->encode($itm);
+    write_objects($IOUT, $ir . "\n");
+
     $count++;
     $ttl++;
   } 
