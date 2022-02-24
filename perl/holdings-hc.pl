@@ -253,7 +253,7 @@ sub make_notes {
   my $type = shift;
   my $note = shift;
   my $n = { note=>$note };
-  $n->{holdingsNoteTypeId} = '77be02da-ca4e-4339-8c2b-c179a8483023'; #general
+  $n->{holdingsNoteTypeId} = 'b160f13a-ddba-4053-b9c4-60ec5ea45d56'; # note
   if ($type eq 'z') {
     $n->{staffOnly} = JSON::true;
   } else {
