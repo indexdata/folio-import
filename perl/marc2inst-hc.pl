@@ -96,6 +96,7 @@ sub getRefData {
               $name =~ s/^.+\///;
             }
             my $id = $_->{id};
+            $name =~ s/\s+$//;
             $refobj->{$refroot}->{$name} = $id;
           }
         }
@@ -126,8 +127,12 @@ sub makeMapFromTsv {
         $name =~ s/.*map .*/Unknown/;
         $tsvmap->{$prop}->{$code} = $name;
       } else {
-        if ($prop =~ /mtypes|holdings-types/) {
+        if ($prop =~ /holdings-types/) {
           $name = $col[1];
+        } elsif ($prop =~ /mtypes/) {
+          $name = $col[2];
+        } elsif ($prop =~ /loantypes/) {
+          $name = $col[3];
         }
         $tsvmap->{$prop}->{$code} = $refdata->{$prop}->{$name};
       }
@@ -827,8 +832,8 @@ sub make_hi {
         $irec->{volume} = $item->subfield('c') || '';
       }
       $irec->{copyNumber} = $item->subfield('g') || '';
-      $irec->{permanentLoanTypeId} = $refdata->{loantypes}->{'Can Circulate'};
-      $irec->{materialTypeId} = $sierra2folio->{mtypes}->{$itype} || '71fbd940-1027-40a6-8a48-49b44d795e46'; # defaulting to unspecified
+      $irec->{permanentLoanTypeId} = $sierra2folio->{loantypes}->{$itype} || $refdata->{loantypes}->{'Can Circulate'};
+      $irec->{materialTypeId} = $sierra2folio->{mtypes}->{$itype} || $refdata->{mtypes}->{Other} || die "No material type found for itype $itype\n";
       $irec->{status}->{name} = $sierra2folio->{statuses}->{$status} || 'Unknown'; # defaulting to available;
       foreach (@msgs) {
         if (!$irec->{circulationNotes}) { $irec->{circulationNotes} = [] }
