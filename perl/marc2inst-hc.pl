@@ -39,7 +39,7 @@ my $cntypes = {
   '099' => '6caca63e-5651-4db6-9247-3205156e9699',
 };
 my $version = '4';
-my $isls = 'MWH';
+my $isil = 'MWH';
 
 my $rules_file = shift;
 my $ref_dir = shift;
@@ -55,7 +55,7 @@ my $mdate = sprintf("%04d-%02d-%02dT%02d:%02d:%02d-0500", $lt[5] + 1900, $lt[4] 
 
 sub uuid {
   my $text = shift;
-  my $uuid = create_uuid_as_string(UUID_V5, $text);
+  my $uuid = create_uuid_as_string(UUID_V5, $text . $isil . $version);
   return $uuid;
 }
 
@@ -538,18 +538,18 @@ foreach (@ARGV) {
       $marc->insert_fields_ordered($field);
       $marc->field('001')->update($iiinum);
       if ($marc->field('003')) {
-        $marc->field('003')->update($isls);
+        $marc->field('003')->update($isil);
       } else {
-        my $field = MARC::Field->new('003', $isls);
+        my $field = MARC::Field->new('003', $isil);
         $marc->insert_fields_ordered($field);  
       }
     } else {
       my $field = MARC::Field->new('001', $iiinum);
       $marc->insert_fields_ordered($field);
       if ($marc->field('003')) {
-        $marc->field('003')->update($isls);
+        $marc->field('003')->update($isil);
       } else {
-        my $field = MARC::Field->new('003', $isls);
+        my $field = MARC::Field->new('003', $isil);
         $marc->insert_fields_ordered($field); 
       }
     }
@@ -695,7 +695,7 @@ foreach (@ARGV) {
     my $hrid = $rec->{hrid};
     if (!$hrids->{$hrid} && $marc->title()) {
       # set FOLIO_USER_ID environment variable to create the following metadata object.
-      $rec->{id} = uuid($hrid . $version);
+      $rec->{id} = uuid($hrid);
       if ($ENV{FOLIO_USER_ID}) {
         $rec->{metadata} = {
           createdByUserId=>$ENV{FOLIO_USER_ID},
@@ -943,7 +943,7 @@ sub make_srs {
     my $mij = MARC::Record::MiJ->to_mij($marc);
     my $parsed = decode_json($mij);
     
-    $srs->{id} = uuid($iid);
+    $srs->{id} = uuid($iid . 'srs');
     my $nine = {};
     $nine->{'999'} = { subfields=>[ { 'i'=>$iid }, { 's'=>$srs->{id} } ] };
     $nine->{'999'}->{'ind1'} = 'f';
