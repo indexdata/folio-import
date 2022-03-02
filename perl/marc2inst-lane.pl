@@ -32,6 +32,7 @@ binmode STDOUT, ":utf8";
 
 my $version = '1';
 my $isil = 'CSt-L';
+my $srstype = 'MARC';
 
 my $rules_file = shift;
 my $ref_dir = shift;
@@ -524,7 +525,7 @@ foreach (@ARGV) {
 
     my $srsmarc = $marc;
     if ($marc->field('880')) {
-      $srsmarc = MARC::Record->new_from_usmarc($raw);
+      $srsmarc = $marc->clone();
     }
     my $ldr = $marc->leader();
     my $blevel = substr($ldr, 7, 1);
@@ -915,7 +916,7 @@ sub make_srs {
     push @{ $parsed->{fields} }, $nine;
     $srs->{snapshotId} = $snap_id;
     $srs->{matchedId} = $srs->{id};
-    $srs->{recordType} = 'MARC_BIB';
+    $srs->{recordType} = $srstype;
     $srs->{generation} = 0;
     $srs->{rawRecord} = { id=>$srs->{id}, content=>$raw };
     $srs->{parsedRecord} = { id=>$srs->{id}, content=>$parsed };
