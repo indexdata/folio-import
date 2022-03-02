@@ -123,6 +123,7 @@ while (<MAP>) {
   $inst_map->{$d[0]} = $d[1];
 }
 close MAP;
+print "-------------------------------\n";
 
 $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
@@ -135,6 +136,11 @@ my $relations = {
   '3' => 'No information provided'
 };
 
+my $count = 0;
+my $hcount = 0;
+my $icount = 0;
+my $start = time();
+
 foreach (@ARGV) {
   my $infile = $_;
   if (! -e $infile) {
@@ -142,6 +148,7 @@ foreach (@ARGV) {
   } 
   my $dir = dirname($infile);
   my $fn = basename($infile, '.jsonl', '.json');
+  my $rawfn = basename($infile);
 
   for (keys %{ $files }) {
     my $n = $files->{$_};
@@ -153,10 +160,6 @@ foreach (@ARGV) {
   open my $HOUT, '>>:encoding(UTF-8)', $files->{h};
   open my $IOUT, '>>:encoding(UTF-8)', $files->{i};
   
-  my $count = 0;
-  my $hcount = 0;
-  my $icount = 0;
-  my $start = time();
   my $hseen = {};
   my $iseen = {};
  
@@ -168,6 +171,10 @@ foreach (@ARGV) {
     my $it_bid = $obj->{bibIds}->[0];
     my $bid = "b$it_bid";
     my $psv = $inst_map->{$bid};
+    if (!$psv) {
+      print "WARN No map entry found for $bid (item: $obj->{id})\n";
+      next;
+    }
     my @b = split(/\|/, $psv);
     my $out = make_hi($obj, $b[0], $bid, $b[1], $b[2], $hseen);
     write_objects($HOUT, $out->{holdings});
@@ -175,6 +182,9 @@ foreach (@ARGV) {
     $count++;
     $hcount += $out->{hcount};
     $icount += $out->{icount};
+    if ($count % 10000 == 0) {
+      print "$count items processed [ holdings: $hcount, items: $icount, file: $rawfn]\n"
+    }
   } 
   close IN;
   my $end = time() - $start;
