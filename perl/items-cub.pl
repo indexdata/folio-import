@@ -150,15 +150,16 @@ foreach (@ARGV) {
   my $fn = basename($infile, '.jsonl', '.json');
   my $rawfn = basename($infile);
 
+  my $paths = {};
   for (keys %{ $files }) {
     my $n = $files->{$_};
     my $path = "$dir/$fn-$n";
-    $files->{$_} = $path;
+    $paths->{$_} = $path;
     unlink $path;
   }
 
-  open my $HOUT, '>>:encoding(UTF-8)', $files->{h};
-  open my $IOUT, '>>:encoding(UTF-8)', $files->{i};
+  open HOUT, '>>:encoding(UTF-8)', $paths->{h} or die "Can't open $paths->{h} for writing\n";
+  open IOUT, '>>:encoding(UTF-8)', $paths->{i} or die "Can't open $paths->{h} for writing\n";
   
   my $hseen = {};
   my $iseen = {};
@@ -177,8 +178,8 @@ foreach (@ARGV) {
     }
     my @b = split(/\|/, $psv);
     my $out = make_hi($obj, $b[0], $bid, $b[1], $b[2], $hseen);
-    write_objects($HOUT, $out->{holdings});
-    write_objects($IOUT, $out->{items});
+    print HOUT $out->{holdings};
+    print IOUT $out->{items};
     $count++;
     $hcount += $out->{hcount};
     $icount += $out->{icount};
@@ -187,12 +188,12 @@ foreach (@ARGV) {
     }
   } 
   close IN;
-  my $end = time() - $start;
-  print "---------------------------\n";
-  print "$count items processed in $end secs\n";
-  print "Holdings: $hcount\n";
-  print "Items:    $icount\n";
 }
+my $end = time() - $start;
+print "---------------------------\n";
+print "$count items processed in $end secs\n";
+print "Holdings: $hcount\n";
+print "Items:    $icount\n";
 
 sub make_hi {
   my $item = shift;
@@ -388,12 +389,6 @@ sub make_hi {
     hcount => $hcount,
     icount => $icount
   };
-}
-
-sub write_objects {
-  my $fh = shift;
-  my $recs = shift || '';
-  print $fh $recs;
 }
 
 sub dedupe {
