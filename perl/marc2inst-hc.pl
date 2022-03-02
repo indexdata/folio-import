@@ -561,7 +561,7 @@ foreach (@ARGV) {
 
     my $srsmarc = $marc;
     if ($marc->field('880')) {
-      $srsmarc = MARC::Record->new_from_usmarc($raw);
+      $srsmarc = $marc->clone();
     }
     my $ldr = $marc->leader();
     my $blevel = substr($ldr, 7, 1);
