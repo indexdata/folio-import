@@ -26,6 +26,11 @@ if (! $ARGV[0]) {
   die "Usage: ./items-cub.pl <ref_data_dir> <instances_tsv_map_file> <item_jsonl_file>\n";
 }
 
+my $files = {
+  h => 'holdings.jsonl',
+  i => 'items.jsonl'
+};
+
 my $json = JSON->new;
 $json->canonical();
 
@@ -135,11 +140,25 @@ foreach (@ARGV) {
   if (! -e $infile) {
     die "Can't find Sierra items file!";
   } 
+  my $dir = dirname($infile);
+  my $fn = basename($infile, '.jsonl', '.json');
 
+  for (keys %{ $files }) {
+    my $n = $files->{$_};
+    my $path = "$dir/$fn-$n";
+    $files->{$_} = $path;
+    unlink $path;
+  }
+
+  open my $HOUT, '>>:encoding(UTF-8)', $files->{h};
+  open my $IOUT, '>>:encoding(UTF-8)', $files->{i};
+  
   my $count = 0;
   my $hcount = 0;
-  my $errcount = 0;
+  my $icount = 0;
   my $start = time();
+  my $hseen = {};
+  my $iseen = {};
  
   open IN, $infile;
 
@@ -150,26 +169,31 @@ foreach (@ARGV) {
     my $bid = "b$it_bid";
     my $psv = $inst_map->{$bid};
     my @b = split(/\|/, $psv);
-    my $out = make_hi($b[0], $bid, '', '');
-    print Dumper($out);
+    my $out = make_hi($obj, $b[0], $bid, $b[1], $b[2], $hseen);
+    write_objects($HOUT, $out->{holdings});
+    write_objects($IOUT, $out->{items});
     $count++;
-    last if $count == 10;
+    $hcount += $out->{hcount};
+    $icount += $out->{icount};
   } 
   close IN;
+  my $end = time() - $start;
+  print "---------------------------\n";
+  print "$count items processed in $end secs\n";
+  print "Holdings: $hcount\n";
+  print "Items:    $icount\n";
 }
-exit;
 
 sub make_hi {
+  my $item = shift;
   my $bid = shift;
   my $bhrid = shift;
-  my $type = shift;
-  my $blevel = shift;
-  my $hseen = {};
+  my $cn = shift || '';
+  my $cntype = shift || '';
+  my $hseen = shift;
+  my $blevel = shift || '';
   my $hid = '';
-  # print "Creating holdings for bib# $bhrid\n";
   my $hrec = {};
-  my $cn = '';
-  my $cntype = '';
   my $holdings = '';
   my $items = '';
   my $hcount = 0;
@@ -255,102 +279,98 @@ sub make_hi {
     }
   }
   
-  # print Dumper($h);
-  my $i = { docs=>[] };
-  foreach my $item (@ { $i->{docs} }) {
-    my $loc = $item->{fixedFields}->{79}->{value} || '';
-    next if !$loc;
-    $loc =~ s/(\s*$)//;
-    my $hkey = "$bhrid-$loc";
-    my $locid = $sierra2folio->{locations}->{$loc} || '53cf956f-c1df-410b-8bea-27f712cca7c0'; # defaults to Norlin Stacks
-    my $vf = {};
-    foreach (@{ $item->{varFields} }) {
-      my $ftag = $_->{fieldTag};
-      push @{ $vf->{$ftag} }, $_->{content};
+  my $loc = $item->{fixedFields}->{79}->{value} || '';
+  next if !$loc;
+  $loc =~ s/(\s*$)//;
+  my $hkey = "$bhrid-$loc";
+  my $locid = $sierra2folio->{locations}->{$loc} || '53cf956f-c1df-410b-8bea-27f712cca7c0'; # defaults to Norlin Stacks
+  my $vf = {};
+  foreach (@{ $item->{varFields} }) {
+    my $ftag = $_->{fieldTag};
+    push @{ $vf->{$ftag} }, $_->{content};
+  }
+  # make holdings record from item;
+  if (!$hseen->{$hkey}) {
+    $hid = uuid($hkey);
+    $hrec->{id} = $hid;
+    $hrec->{hrid} = $hkey;
+    $hrec->{instanceId} = $bid;
+    $hrec->{permanentLocationId} = $locid;
+    $hrec->{holdingsTypeId} = '03c9c400-b9e3-4a07-ac0e-05ab470233ed'; # monograph
+    $hrec->{sourceId} = 'f32d531e-df79-46b3-8932-cdd35f7a2264'; # folio
+    if ($cn) {
+      $hrec->{callNumber} = $cn;
+      $hrec->{callNumberTypeId} = $cntype;
     }
-    # make holdings record from item;
-    if (!$hseen->{$hkey}) {
-      $hid = uuid($hkey);
-      $hrec->{id} = $hid;
-      $hrec->{hrid} = $hkey;
-      $hrec->{instanceId} = $bid;
-      $hrec->{permanentLocationId} = $locid;
-      $hrec->{holdingsTypeId} = '03c9c400-b9e3-4a07-ac0e-05ab470233ed'; # monograph
-      $hrec->{sourceId} = 'f32d531e-df79-46b3-8932-cdd35f7a2264'; # folio
-      if ($cn) {
-        $hrec->{callNumber} = $cn;
-        $hrec->{callNumberTypeId} = $cntype;
-      }
-      my $hout = $json->encode($hrec);
-      $holdings .= $hout . "\n";
-      $hseen->{$hkey} = 1;
-      $hcount++;
-    }
+    my $hout = $json->encode($hrec);
+    $holdings .= $hout . "\n";
+    $hseen->{$hkey} = 1;
+    $hcount++;
+  }
 
-    # make item record;
-    my $irec = {};
-    my $iid = $item->{_id};
-    my $itype = $item->{fixedFields}->{79}->{value};
-    my $status = $item->{fixedFields}->{79}->{value} || '';
-    my @msgs = $vf->{m};
-    my @notes;
-    push @notes, @{ $vf->{x} } if $vf->{x};
-    push @notes, @{ $vf->{w} } if $vf->{w};
-    $status =~ s/\s+$//;
-    if ($iid) {
-      $iid =~ s/^\.//;
-      $irec->{id} = uuid($iid);
-      $irec->{holdingsRecordId} = $hid;
-      $irec->{hrid} = "i$iid";
-      $irec->{barcode} = $vf->{b}[0] || '';
-      if ($blevel eq 's') {
-        $irec->{enumeration} = $vf->{v}[0] || '';
-      } else {
-        $irec->{volume} = $vf->{v}[0] || '';
-      }
-      $irec->{copyNumber} = $item->{fixedFields}->{58}->{value} || '';
-      $irec->{permanentLoanTypeId} = $refdata->{loantypes}->{'Can circulate'};
-      $irec->{materialTypeId} = $sierra2folio->{mtypes}->{$itype} || '71fbd940-1027-40a6-8a48-49b44d795e46'; # defaulting to unspecified
-      $irec->{status}->{name} = $sierra2folio->{statuses}->{$status} || 'Available'; # defaulting to available;
-      foreach (@{ $vf->{m} }) {
-        if (!$irec->{circulationNotes}) { $irec->{circulationNotes} = [] }
-        my $cnobj = {};
-        $cnobj->{note} = $_;
-        $cnobj->{noteType} = 'Check out';
-        $cnobj->{staffOnly} = 'true';
-        $cnobj->{date} = "" . localtime;
-        $cnobj->{source} = {
-          id => 'ba213137-b641-4da7-aee2-9f2296e8bbf7',
-          personal => { firstName => 'Index', lastName => 'Data' }
-        };
-        if (/IN TRANSIT/) {
-          $irec->{status}->{name} = 'In transit';
-          s/^(.+): ?.+/$1/;
-          # $irec->{status}->{date} = $_;
-          # my $t = Time::Piece->strptime($_, "%a %b %d %Y %I:%M");
-          # $irec->{status}->{date} = $t->strftime("%Y-%m-%d");
-        } else {
-          push @{ $irec->{circulationNotes} }, $cnobj;
-        }
-      }
-      foreach (@notes) {
-        if (!$irec->{notes}) { $irec->{notes} = [] }
-        my $nobj = {};
-        $nobj->{note} = $_;
-        $nobj->{noteTypeId} = '8d0a5eca-25de-4391-81a9-236eeefdd20b';  # Note
-        $nobj->{staffOnly} = 'true';
-        push @{ $irec->{notes} }, $nobj;
-      }
-      my $icode2 = $item->{fixedFields}->{60}->{value};
-      if ($icode2 eq 'n') {
-        $irec->{discoverySuppress} = 'true';
-      } else {
-        $irec->{discoverySuppress} = 'false';
-      }
-      my $iout = $json->encode($irec);
-      $items .= $iout . "\n";
-      $icount++;
+  # make item record;
+  my $irec = {};
+  my $iid = $item->{id};
+  my $itype = $item->{fixedFields}->{79}->{value};
+  my $status = $item->{fixedFields}->{79}->{value} || '';
+  my @msgs = $vf->{m};
+  my @notes;
+  push @notes, @{ $vf->{x} } if $vf->{x};
+  push @notes, @{ $vf->{w} } if $vf->{w};
+  $status =~ s/\s+$//;
+  if ($iid) {
+    $iid =~ s/^\.//;
+    $irec->{id} = uuid($iid);
+    $irec->{holdingsRecordId} = $hid;
+    $irec->{hrid} = "i$iid";
+    $irec->{barcode} = $vf->{b}[0] || '';
+    if ($blevel eq 's') {
+      $irec->{enumeration} = $vf->{v}[0] || '';
+    } else {
+      $irec->{volume} = $vf->{v}[0] || '';
     }
+    $irec->{copyNumber} = $item->{fixedFields}->{58}->{value} || '';
+    $irec->{permanentLoanTypeId} = $refdata->{loantypes}->{'Can circulate'};
+    $irec->{materialTypeId} = $sierra2folio->{mtypes}->{$itype} || '71fbd940-1027-40a6-8a48-49b44d795e46'; # defaulting to unspecified
+    $irec->{status}->{name} = $sierra2folio->{statuses}->{$status} || 'Available'; # defaulting to available;
+    foreach (@{ $vf->{m} }) {
+      if (!$irec->{circulationNotes}) { $irec->{circulationNotes} = [] }
+      my $cnobj = {};
+      $cnobj->{note} = $_;
+      $cnobj->{noteType} = 'Check out';
+      $cnobj->{staffOnly} = 'true';
+      $cnobj->{date} = "" . localtime;
+      $cnobj->{source} = {
+        id => 'ba213137-b641-4da7-aee2-9f2296e8bbf7',
+        personal => { firstName => 'Index', lastName => 'Data' }
+      };
+      if (/IN TRANSIT/) {
+        $irec->{status}->{name} = 'In transit';
+        s/^(.+): ?.+/$1/;
+        # $irec->{status}->{date} = $_;
+        # my $t = Time::Piece->strptime($_, "%a %b %d %Y %I:%M");
+        # $irec->{status}->{date} = $t->strftime("%Y-%m-%d");
+      } else {
+        push @{ $irec->{circulationNotes} }, $cnobj;
+      }
+    }
+    foreach (@notes) {
+      if (!$irec->{notes}) { $irec->{notes} = [] }
+      my $nobj = {};
+      $nobj->{note} = $_;
+      $nobj->{noteTypeId} = '8d0a5eca-25de-4391-81a9-236eeefdd20b';  # Note
+      $nobj->{staffOnly} = 'true';
+      push @{ $irec->{notes} }, $nobj;
+    }
+    my $icode2 = $item->{fixedFields}->{60}->{value};
+    if ($icode2 eq 'n') {
+      $irec->{discoverySuppress} = 'true';
+    } else {
+      $irec->{discoverySuppress} = 'false';
+    }
+    my $iout = $json->encode($irec);
+    $items .= $iout . "\n";
+    $icount++;
   }
   return {
     holdings => $holdings,
