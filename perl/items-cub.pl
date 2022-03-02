@@ -355,15 +355,7 @@ sub make_hi {
         id => 'ba213137-b641-4da7-aee2-9f2296e8bbf7',
         personal => { firstName => 'Index', lastName => 'Data' }
       };
-      if (/IN TRANSIT/) {
-        $irec->{status}->{name} = 'In transit';
-        s/^(.+): ?.+/$1/;
-        # $irec->{status}->{date} = $_;
-        # my $t = Time::Piece->strptime($_, "%a %b %d %Y %I:%M");
-        # $irec->{status}->{date} = $t->strftime("%Y-%m-%d");
-      } else {
-        push @{ $irec->{circulationNotes} }, $cnobj;
-      }
+      push @{ $irec->{circulationNotes} }, $cnobj;
     }
     foreach (@notes) {
       if (!$irec->{notes}) { $irec->{notes} = [] }
