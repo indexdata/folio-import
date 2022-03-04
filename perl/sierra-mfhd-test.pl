@@ -15,6 +15,25 @@ open IN, "<:encoding(UTF-8)", $infile or die "There was a problem opening $infil
 my $json = JSON->new;
 $json->canonical();
 
+my $months = {
+  '01' => 'Jan.',
+  '02' => 'Feb.',
+  '03' => 'Mar.',
+  '04' => "Apr.",
+  '05' => 'May',
+  '06' => 'Jun.',
+  '07' => 'Jul.',
+  '08' => 'Aug.',
+  '09' => 'Sep.',
+  '10' => 'Oct.',
+  '11' => 'Nov.',
+  '12' => 'Dec.',
+  '21' => 'Spring',
+  '22' => 'Summer',
+  '23' => 'Autumn',
+  '24' => 'Winter'
+};
+
 while (<IN>) {
   my $h = $json->decode($_);
   my $field = parse($h);
@@ -38,16 +57,31 @@ while (<IN>) {
             @{ $splits->{$c} } = split(/-/, $enum->{$c});
           }
         }
-        my @ranges;
+        my @parts;
         foreach (0, 1) {
           my $el = $_;
-          my @st;
+          my @enumparts;
+          my @cronparts;
           foreach (@codes) {
-            push @st, $pat->{$_} . $splits->{$_}[$el] if /[a-h]/;
+            if (/[a-h]/) {
+              push @enumparts, $pat->{$_} . $splits->{$_}[$el];
+            } else {
+              my $p = $pat->{$_};
+              my $v = $splits->{$_}[$el];
+              if ($p =~ /year/) {
+                push @cronparts, $v;
+              } elsif ($p =~ /month|season/) {
+                my $m = $months->{$v} || $v;
+                unshift @cronparts, $m;
+              }
+            }
           }
-          my $line = join ':', @st;
-          print $line . "\n";
+          my $enumpart = join ':', @enumparts;
+          my $cronpart = join ' ', @cronparts;
+          push @parts, "$enumpart ($cronpart)";
         }
+        my $statement = join ' - ', @parts;
+        print "$statement\n";
       }
     }
   }
