@@ -105,13 +105,10 @@ sub statement {
           } 
         }
         my $statement = join ' - ', @parts;
-        if ($etag == 863) {
-          push @{ $out->{866} }, $statement;
-        } elsif ($etag == 864) {
-          push @{ $out->{867} }, $statement;
-        } else {
-          push @{ $out->{868} }, $statement;
-        }
+        my $snote = $enum->{x} || '';
+        my $note = $enum->{z} || '';
+        my $otag = ($etag == 863) ? '866' : ($etag == 864) ? '867' : '868';
+        push @{ $out->{$otag} }, { text=>$statement, staffnote=>$snote, note=>$note };
       }
     }
   }
