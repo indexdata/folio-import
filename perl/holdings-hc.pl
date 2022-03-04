@@ -26,6 +26,24 @@ if (! $ARGV[0]) {
   die "Usage: ./items-hc.pl <ref_data_dir> <instances_tsv_map_file> <iii_holdings_jsonl_file>\n";
 }
 
+my $months = {
+  '01' => 'Jan.',
+  '02' => 'Feb.',
+  '03' => 'Mar.',
+  '04' => "Apr.",
+  '05' => 'May',
+  '06' => 'Jun.',
+  '07' => 'Jul.',
+  '08' => 'Aug.',
+  '09' => 'Sep.',
+  '10' => 'Oct.',
+  '11' => 'Nov.',
+  '12' => 'Dec.',
+  '21' => 'Spring',
+  '22' => 'Summer',
+  '23' => 'Autumn',
+  '24' => 'Winter'
+};
 
 my $json = JSON->new;
 $json->canonical();
@@ -209,28 +227,44 @@ foreach (@ARGV) {
         push @{ $h->{notes} }, make_notes($t, $_);
       }
     }
-    foreach my $t ('863', '864', '865') {
-      foreach my $f (@{ $vf->{$t} }) {
-        my @data;
-        my @notes;
-        for my $s ('a' .. 'z') {
-          if ($f->{$s}) {
-            if ($s =~ /[mnz]/) {
-              push @notes, $f->{$s};
-            } else {
-              push @data, $f->{$s};
+
+    my $hs = statement($obj);
+    foreach my $t ('866', '867', '868') {
+      my $htype = 'holdingsStatements';
+      if ($t eq '867') {
+        $htype = 'holdingsStatementsForSupplements';
+      } elsif ($t eq '868') {
+        $htype = 'holdingsStatementsForIndexes';
+      }
+      foreach my $f (@{ $hs->{$t}}) {
+        push @{ $h->{$htype} }, make_statement($f->{text}, $f->{note});
+      }
+    }
+
+    if (0) {
+      foreach my $t ('863', '864', '865') {
+        foreach my $f (@{ $vf->{$t} }) {
+          my @data;
+          my @notes;
+          for my $s ('a' .. 'z') {
+            if ($f->{$s}) {
+              if ($s =~ /[mnz]/) {
+                push @notes, $f->{$s};
+              } else {
+                push @data, $f->{$s};
+              }
             }
           }
+          my $text = join ', ', @data;
+          my $note = join ', ', @notes;
+          my $htype = 'holdingsStatements';
+          if ($t eq '864') {
+            $htype = 'holdingsStatementsForSupplements';
+          } elsif ($t eq '865') {
+            $htype = 'holdingsStatementsForIndexes';
+          }
+          push @{ $h->{$htype} }, make_statment($text, $note);
         }
-        my $text = join ', ', @data;
-        my $note = join ', ', @notes;
-        my $htype = 'holdingsStatements';
-        if ($t eq '864') {
-          $htype = 'holdingsStatementsForSupplements';
-        } elsif ($t eq '865') {
-          $htype = 'holdingsStatementsForIndexes';
-        }
-        push @{ $h->{$htype} }, make_statment($text, $note);
       }
     }
     
@@ -257,12 +291,139 @@ my $end = time;
 my $secs = $end - $start;
 print "\n$ttl Sierra holdings processed in $secs secs.\n\n";
 
-sub make_statment {
+sub statement {
+  my $h = shift;
+  my $field = parse($h);
+  my $out = {
+    '866' => [],
+    '867' => [],
+    '868' => []
+  };
+  foreach (863, 864, 865) {
+    my $etag = $_;
+    my $ptag = $etag - 10;
+    foreach (keys %{ $field->{$etag} }) {
+      my $link = $_;
+      my $pat = $field->{$ptag}->{$link}[0];
+      # print Dumper($pat);
+      my @txt;
+      foreach (@{ $field->{$etag}->{$link} }) {
+        my $enum = $_;
+        # print Dumper($_);
+        my $splits = {};
+        my @codes;
+        foreach (sort keys %{ $enum }) {
+          my $c = $_;
+          if ($c =~ /^[a-m]$/ && $enum->{$c}) {
+            push @codes, $c;
+            @{ $splits->{$c} } = split(/-/, $enum->{$c});
+          }
+        }
+        my @parts;
+        foreach (0, 1) {
+          my $el = $_;
+          my @enumparts;
+          my @cronparts;
+          foreach (@codes) {
+            next unless $splits->{$_}[$el];
+            if (/[a-h]/) {
+              push @enumparts, $pat->{$_} . $splits->{$_}[$el];
+            } else {
+              my $p = $pat->{$_};
+              my $v = $splits->{$_}[$el];
+              if ($p =~ /year/) {
+                push @cronparts, $v;
+              } elsif ($p =~ /month|season/) {
+                my $m = $months->{$v} || $v;
+                unshift @cronparts, $m;
+              } if ($p =~ /day/) {
+                if ($cronparts[0]) {
+                  splice @cronparts, 1, 0, "$v,";
+                } else {
+                  unshift @cronparts, "$v,";
+                }
+
+              } 
+            }
+          }
+          my $enumpart = join ':', @enumparts;
+          my $cronpart = join ' ', @cronparts;
+          if ($enumpart && $cronpart) {
+            push @parts, "$enumpart ($cronpart)";
+          } elsif ($cronpart) {
+            push @parts, $cronpart;
+          } 
+        }
+        my $statement = join ' - ', @parts;
+        my $snote = $enum->{x} || '';
+        my $note = $enum->{z} || '';
+        my $otag = ($etag == 863) ? '866' : ($etag == 864) ? '867' : '868';
+        push @{ $out->{$otag} }, { text=>$statement, staffnote=>$snote, note=>$note };
+      }
+    }
+  }
+  foreach ('866', '867', '868') {
+    my $stag = $_;
+    if ($field->{$stag}) {
+      $out->{$stag} = [];
+      foreach (keys %{ $field->{$stag} }) {
+        my $k = $_;
+        foreach (@{ $field->{$stag}->{$k} }) {
+          my $snote = $_->{x} || '';
+          my $note = $_->{z} || '';
+          my $text = $_->{a} || '';
+          push @{ $out->{$stag} }, { text=>$text, staffnote=>$snote, note=>$note };
+        }
+      }
+    }
+  }
+  return $out;
+}
+
+sub parse {
+  my $h = shift;
+  my $vf = $h->{varFields};
+  my $field = {};
+  foreach my $v (@{ $vf }) {
+    my $tag = $v->{marcTag} || '';
+    if ($tag && $tag gt '009') {
+      my $sub = {};
+      my @ord;
+      my @txt;
+      my $num;
+      foreach my $s (@{ $v->{subfields} }) {
+        my $code = $s->{tag};
+        my $val = $s->{content};
+        if ($code eq '8') {
+          $num = $val;
+          $num =~ s/\..+//;
+        }
+        $sub->{$code} = $val;
+        push @ord, $code, $val;
+      }
+      $sub->{ind1} = $v->{ind1};
+      $sub->{ind2} = $v->{ind2};
+      push @{ $sub->{arr} }, @ord;
+      if ($num) {
+        push @{ $field->{$tag}->{$num} }, $sub;
+      } else {
+        eval { push @{ $field->{$tag} }, $sub };
+      } 
+    } elsif ($v->{fieldTag} eq '_') {
+      $field->{leader} = $v->{content};
+    }
+  }
+  return $field;
+}
+
+sub make_statement {
   my $text = shift;
   my $note = shift;
+  my $snote = shift;
   my $s = {};
   $s->{statement} = $text;
   $s->{note} = $note if $note;
+  $s->{staffNote} = $snote if $snote;
   return $s;
 }
 

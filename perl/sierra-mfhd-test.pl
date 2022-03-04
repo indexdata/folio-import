@@ -119,7 +119,10 @@ sub statement {
       foreach (keys %{ $field->{$stag} }) {
         my $k = $_;
         foreach (@{ $field->{$stag}->{$k} }) {
-          push @{ $out->{$stag} }, $_->{a};
+          my $snote = $_->{x} || '';
+          my $note = $_->{z} || '';
+          my $text = $_->{a} || '';
+          push @{ $out->{$stag} }, { text=>$text, staffnote=>$snote, note=>$note };
         }
       }
     }
