@@ -36,8 +36,20 @@ my $months = {
 
 while (<IN>) {
   my $h = $json->decode($_);
+  print $h->{bibIds}[0] . " --------------------\n";
+  my $s = statement($h);
+  print Dumper($s);
+}
+
+sub statement {
+  my $h = shift;
   my $field = parse($h);
-  foreach (863) {
+  my $out = {
+    '866' => [],
+    '867' => [],
+    '868' => []
+  };
+  foreach (863, 864, 865) {
     my $etag = $_;
     my $ptag = $etag - 10;
     foreach (keys %{ $field->{$etag} }) {
@@ -63,6 +75,7 @@ while (<IN>) {
           my @enumparts;
           my @cronparts;
           foreach (@codes) {
+            next unless $splits->{$_}[$el];
             if (/[a-h]/) {
               push @enumparts, $pat->{$_} . $splits->{$_}[$el];
             } else {
@@ -73,18 +86,48 @@ while (<IN>) {
               } elsif ($p =~ /month|season/) {
                 my $m = $months->{$v} || $v;
                 unshift @cronparts, $m;
-              }
+              } if ($p =~ /day/) {
+                if ($cronparts[0]) {
+                  splice @cronparts, 1, 0, "$v,";
+                } else {
+                  unshift @cronparts, "$v,";
+                }
+
+              } 
             }
           }
           my $enumpart = join ':', @enumparts;
           my $cronpart = join ' ', @cronparts;
-          push @parts, "$enumpart ($cronpart)";
+          if ($enumpart && $cronpart) {
+            push @parts, "$enumpart ($cronpart)";
+          } elsif ($cronpart) {
+            push @parts, $cronpart;
+          } 
         }
         my $statement = join ' - ', @parts;
-        print "$statement\n";
+        if ($etag == 863) {
+          push @{ $out->{866} }, $statement;
+        } elsif ($etag == 864) {
+          push @{ $out->{867} }, $statement;
+        } else {
+          push @{ $out->{868} }, $statement;
+        }
       }
     }
   }
+  foreach ('866', '867', '868') {
+    my $stag = $_;
+    if ($field->{$stag}) {
+      $out->{$stag} = [];
+      foreach (keys %{ $field->{$stag} }) {
+        my $k = $_;
+        foreach (@{ $field->{$stag}->{$k} }) {
+          push @{ $out->{$stag} }, $_->{a};
+        }
+      }
+    }
+  }
+  return $out;
 }
 
 sub parse {
@@ -114,7 +157,7 @@ sub parse {
       if ($num) {
         push @{ $field->{$tag}->{$num} }, $sub;
       } else {
-        push @{ $field->{$tag} }, $sub;
+        eval { push @{ $field->{$tag} }, $sub };
       } 
     } elsif ($v->{fieldTag} eq '_') {
       $field->{leader} = $v->{content};
