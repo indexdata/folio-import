@@ -18,6 +18,11 @@ use Time::Piece;
 use File::Basename;
 use Data::Dumper;
 
+my $version = '4';
+$version = '';
+my $isil = 'MWH';
+$isil = '';
+
 binmode STDOUT, ":utf8";
 
 my $ref_dir = shift;
@@ -54,7 +59,7 @@ my $mdate = sprintf("%04d-%02d-%02dT%02d:%02d:%02d-0500", $lt[5] + 1900, $lt[4] 
 
 sub uuid {
   my $text = shift;
-  my $uuid = create_uuid_as_string(UUID_V5, $text);
+  my $uuid = create_uuid_as_string(UUID_V5, $text . $isil . $version);
   return $uuid;
 }
 
@@ -206,9 +211,11 @@ foreach (@ARGV) {
     next if $seen->{$hid};
     $seen->{$hid} = 1;
     my $loc_code = $ff->{40}->{value} || 'xxxxx';
-    $loc_code =~ s/ +$//;
-    $h->{id} = uuid($hid);
-    $h->{hrid} = $hid;
+    $loc_code =~ s/\s*$//;
+    my $hkey = "$bid-$loc_code";
+    print "$hkey\n";
+    $h->{id} = uuid($hkey);
+    $h->{hrid} = $hkey;
     $h->{instanceId} = $b[0];
     my $loc_id = $refdata->{locations}->{$loc_code} || $refdata->{locations}->{xxxxx};
     $h->{permanentLocationId} = $loc_id;
