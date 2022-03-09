@@ -7,30 +7,6 @@ const ns = '70c937ca-c54a-49cd-8c89-6edcf336e9ff';
 let refDir = process.argv[2];
 const patronFile = process.argv[3];
 
-// ptypes are groups derived from the P TYPE fixed field.  Use this for testing.
-const ptypes = {
-  '0': 'P TYPE 0',
-  '1': 'P TYPE 1',
-  '2': 'P TYPE 2',
-  '3': 'P TYPE 3',
-  '4': 'P TYPE 4',
-  '5': 'P TYPE 5',
-  '6': 'P TYPE 6',
-  '7': 'P TYPE 7',
-  '9': 'P TYPE 9',
-  '10': 'P TYPE 10',
-  '11': 'P TYPE 11',
-  '13': 'P TYPE 13',
-  '16': 'P TYPE 16',
-  '23': 'P TYPE 23',
-  '24': 'P TYPE 24',
-  '29': 'P TYPE 29',
-  '30': 'P TYPE 30',
-  '202': 'P TYPE 202'
-}
-
-
-
 const parseAddress = (saddr, type, primary) => {
   let addresses = [];
   for (let x = 0; x < saddr.length; x++) {
@@ -68,10 +44,10 @@ const makeNote = (mesg, userId) => {
   return note;
 }
 
-try {
+if (!fs.existsSync(refDir)) throw `Can't find ref data directory: ${refDir}!`;
 
+try {
   if (!patronFile) throw 'Usage: node cubUsers.js <ref_directory> <sierra_patron_file>';
-  if (!fs.existsSync(refDir)) throw `Can't find ref data directory: ${refDir}!`;
   if (!fs.existsSync(patronFile)) throw `Can't find patron file: ${patronFile}!`;
   const saveDir = path.dirname(patronFile);
   const fileExt = path.extname(patronFile);
@@ -84,27 +60,31 @@ try {
   refDir = refDir.replace(/\/$/, '');
 
   const groupMap = {};
-  // this block will create groups objects (to loaded into FOLIO) and a groupMap for creating users objects
 
-  let groupFile = `${saveDir}/groups.jsonl`;
-  console.log(`Creating user groups and saving as ${groupFile}`);
-  if (fs.existsSync(groupFile)) fs.unlinkSync(groupFile);
-  for (let pt in ptypes) {
-    let group = {
-      id: uuid(pt, ns),
-      group: 'ptype' + pt,
-      desc: ptypes[pt]
-    }
-    fs.writeFileSync(groupFile, JSON.stringify(group) + "\n", { flag: 'as' });
-    groupMap[pt] = group.id;
-  }
-
-  /* map folio groups from file
+  // map folio groups from file
   const groups = require(`${refDir}/groups.json`);
   groups.usergroups.forEach(g => {
     groupMap[g.group] = g.id;
   });
-  */
+  
+  // map ptypes from tsv file
+  const ptypeGroup = {};
+  let tsv = fs.readFileSync(`${refDir}/ptypes.tsv`, { encoding: 'utf8' });
+  tsv.split(/\n/).forEach(l => {
+    l = l.trim();
+    if (l) {
+      let c = l.split(/\t/);
+      let ptype = c[0].trim();
+      let pcode3 = c[1].trim();
+      let k = `${ptype}_${pcode3}`;
+      let gname = c[2];
+      if (groupMap[gname]) {
+        ptypeGroup[k] = groupMap[gname];
+      } else {
+        console.log(`WARN patron group "${gname}" not found...`);
+      }
+    }
+  });
 
   // map folio addresstyes from file
   const atypes = require(`${refDir}/addresstypes.json`);
@@ -147,12 +127,15 @@ try {
     let active = true;
     let exptime = new Date(fixedFields['EXP DATE']).valueOf();
     if (exptime < today) active = false;
-
+    let ptype = fixedFields['P TYPE'].trim();
+    let pcode3 = fixedFields.PCODE3.trim();
+    let groupKey = ptype + '_' + pcode3;
+    let groupId = (ptypeGroup[groupKey]) ? ptypeGroup[groupKey] : ptypeGroup[ptype + '_*'];
     user = {
       id: uuid(pid, ns),
       externalSystemId: pid,
       username: (varFields.r && varFields.r[0]) ? varFields.r[0] : pid,
-      patronGroup: groupMap[fixedFields['P TYPE']],
+      patronGroup: groupId || `No group ID found for PTYPE ${ptype} PCODE3 ${pcode3}`,
       expirationDate: fixedFields['EXP DATE'],
       enrollmentDate: fixedFields['CREATED'],
       active: active,
@@ -189,8 +172,6 @@ try {
     if (count % 1000 === 0) {
       console.log(`Processed ${count} records...`);
     }
-    //console.log(varFields);
-    //console.log(JSON.stringify(user, null, 2));
   });
   rl.on('close', () => {
     const t = (new Date().valueOf() - today) / 1000;
