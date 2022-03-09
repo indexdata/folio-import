@@ -2,6 +2,7 @@ const readline = require('readline');
 const fs = require('fs');
 const path = require('path');
 const uuid = require('uuid/v5');
+const { user } = require('pg/lib/defaults');
 
 const ns = '70c937ca-c54a-49cd-8c89-6edcf336e9ff';
 let refDir = process.argv[2];
@@ -27,13 +28,13 @@ const parseAddress = (saddr, type, primary) => {
   return addresses;
 }
 
-const makeNote = (mesg, userId) => {
+const makeNote = (mesg, userId, noteTypeId) => {
   const note = {
     id: uuid(userId + mesg, ns),
     content: mesg,
     domain: 'users',
     title:  mesg.substring(0, 20) + '...',
-    typeId: '9957a203-0d07-4cc1-ae0d-95058312d709',
+    typeId: noteTypeId,
     links: [
       {
         type: 'user',
@@ -54,8 +55,10 @@ try {
   const fileName = path.basename(patronFile, fileExt);
   const outPath = `${saveDir}/folio-${fileName}.jsonl`;
   const notePath = `${saveDir}/notes-${fileName}.jsonl`;
+  const permPath = `${saveDir}/permusers-${fileName}.jsonl`;
   if (fs.existsSync(outPath)) fs.unlinkSync(outPath);
   if (fs.existsSync(notePath)) fs.unlinkSync(notePath);
+  if (fs.existsSync(permPath)) fs.unlinkSync(permPath);
 
   refDir = refDir.replace(/\/$/, '');
 
@@ -66,6 +69,8 @@ try {
   groups.usergroups.forEach(g => {
     groupMap[g.group] = g.id;
   });
+  let staff = groupMap['Library Departments'];
+  if (!staff) throw("Can't find 'staff' patron group!");
   
   // map ptypes from tsv file
   const ptypeGroup = {};
@@ -93,9 +98,19 @@ try {
     atypeMap[a.addressType] = a.id;
   });
 
+  const ntypes = require(`${refDir}/note-types.json`);
+  let ntypeMap = {};
+  ntypes.noteTypes.forEach(n => {
+    ntypeMap[n.name] = n.id;
+  });
+  const noteType = 'General note';
+  let noteTypeId = ntypeMap[noteType];
+  if (!noteTypeId) throw(`Note type ID for "${noteType}" not found!`);
+
   const today = new Date().valueOf();
   let count = 0;
   let ncount = 0;
+  let pcount = 0;
 
   const fileStream = fs.createReadStream(patronFile);
   const rl = readline.createInterface({
@@ -131,7 +146,7 @@ try {
     let pcode3 = fixedFields.PCODE3.trim();
     let groupKey = ptype + '_' + pcode3;
     let groupId = (ptypeGroup[groupKey]) ? ptypeGroup[groupKey] : ptypeGroup[ptype + '_*'];
-    user = {
+    let user = {
       id: uuid(pid, ns),
       externalSystemId: pid,
       username: (varFields.r && varFields.r[0]) ? varFields.r[0] : pid,
@@ -162,12 +177,24 @@ try {
     if (varFields.x) {
       for (let n = 0; n < varFields.x.length; n++) {
         ncount++;
-        let note = makeNote(varFields.x[n], user.id);
+        let note = makeNote(varFields.x[n], user.id, noteTypeId);
         fs.writeFileSync(notePath, JSON.stringify(note) + '\n', { flag: 'as' });
       }
     }
 
     fs.writeFileSync(outPath, JSON.stringify(user) + '\n', { flag: 'as' });
+    if (groupId !== staff) {
+      let uid = user.id;
+      let pu = {
+        id: uuid(uid, ns),
+        userId: uid
+      }
+      fs.writeFileSync(permPath, JSON.stringify(pu) + '\n', { flag: 'as' });
+      pcount++;
+    } else if (user.personal.lastName === 'Fuller') {
+      console.log(user);
+    }
+    
   
     if (count % 1000 === 0) {
       console.log(`Processed ${count} records...`);
@@ -179,6 +206,7 @@ try {
     console.log('Finished!');
     console.log(`Saved ${count} users to ${outPath}`);
     console.log(`Saved ${ncount} notes to ${notePath}`);
+    console.log(`Saved ${pcount} permusers to ${permPath}`);
     console.log(`Time: ${t} secs.`);
   })
 
