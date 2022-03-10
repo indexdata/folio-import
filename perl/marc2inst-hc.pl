@@ -55,7 +55,8 @@ my $mdate = sprintf("%04d-%02d-%02dT%02d:%02d:%02d-0500", $lt[5] + 1900, $lt[4] 
 
 sub uuid {
   my $text = shift;
-  my $uuid = create_uuid_as_string(UUID_V5, $text . $isil . $version);
+  # my $uuid = create_uuid_as_string(UUID_V5, $text . $isil . $version);
+  my $uuid = create_uuid_as_string(UUID_V5, $text . $version);
   return $uuid;
 }
 
@@ -799,9 +800,15 @@ sub make_hi {
       $hrec->{hrid} = $hkey;
       $hrec->{instanceId} = $bid;
       $hrec->{permanentLocationId} = $locid;
-      if ($item->subfield('a') && $item->subfield('a') =~ /\w/) {
-        $cn = $item->subfield('a');
+      my $cna = $item->subfield('a') || '';
+      my $cnb = $item->subfield('b') || '';
+      if ($cna && $cna =~ /\w/) {
+        $cn = $cna;
+        if ($cnb =~ /\w/) {
+          $cn .= " $cnb";
+        }
       }
+      $cn =~ s/\s*$//;
       if ($cn) {
         $hrec->{callNumber} = $cn;
         $hrec->{callNumberTypeId} = $cntypes->{$cntag} || '6caca63e-5651-4db6-9247-3205156e9699'; #other
