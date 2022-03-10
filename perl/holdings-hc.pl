@@ -213,7 +213,6 @@ foreach (@ARGV) {
     my $loc_code = $ff->{40}->{value} || 'xxxxx';
     $loc_code =~ s/\s*$//;
     my $hkey = "$bid-$loc_code";
-    print "$hkey\n";
     $h->{id} = uuid($hkey);
     $h->{hrid} = $hkey;
     $h->{instanceId} = $b[0];
@@ -312,11 +311,8 @@ sub statement {
     foreach (keys %{ $field->{$etag} }) {
       my $link = $_;
       my $pat = $field->{$ptag}->{$link}[0];
-      # print Dumper($pat);
-      my @txt;
       foreach (@{ $field->{$etag}->{$link} }) {
         my $enum = $_;
-        # print Dumper($_);
         my $splits = {};
         my @codes;
         foreach (sort keys %{ $enum }) {
@@ -327,19 +323,24 @@ sub statement {
           }
         }
         my @parts;
+        my $preyear;
         foreach (0, 1) {
           my $el = $_;
           my @enumparts;
           my @cronparts;
           foreach (@codes) {
-            next unless $splits->{$_}[$el];
+            if (!$splits->{$_}[$el]) {
+              next;
+            }
             if (/[a-h]/) {
               push @enumparts, $pat->{$_} . $splits->{$_}[$el];
             } else {
               my $p = $pat->{$_};
-              my $v = $splits->{$_}[$el];
+              my $v = $splits->{$_}[$el] || $splits->{$_}[0];
+              
               if ($p =~ /year/) {
                 push @cronparts, $v;
+                $preyear = $v;
               } elsif ($p =~ /month|season/) {
                 my $m = $months->{$v} || $v;
                 unshift @cronparts, $m;
@@ -349,9 +350,12 @@ sub statement {
                 } else {
                   unshift @cronparts, "$v,";
                 }
-
               } 
             }
+          }
+          # check to see if the last cronpart contains a year, if not, add the year from the previous element
+          if ($cronparts[0] && $cronparts[-1] !~ /\d{4}/) {
+            push @cronparts, $preyear;
           }
           my $enumpart = join ':', @enumparts;
           my $cronpart = join ' ', @cronparts;
@@ -396,7 +400,6 @@ sub parse {
     if ($tag && $tag gt '009') {
       my $sub = {};
       my @ord;
-      my @txt;
       my $num;
       foreach my $s (@{ $v->{subfields} }) {
         my $code = $s->{tag};
