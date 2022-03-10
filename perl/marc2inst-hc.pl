@@ -840,8 +840,8 @@ sub make_hi {
       }
       $irec->{copyNumber} = $item->subfield('g') || '';
       $irec->{permanentLoanTypeId} = $sierra2folio->{loantypes}->{$itype} || $refdata->{loantypes}->{'Can Circulate'};
-      if ($loc =~ /^hdn/ && $itype eq '0') {
-        $irec->{materialTypeId} = $refdata->{loantypes}->{'Non Circulating'};
+      if ($loc =~ /^hdn/ && $itype == '0') {
+        $irec->{permanentLoanTypeId} = $refdata->{loantypes}->{'Short Term Loan'};
       }
       $irec->{materialTypeId} = $sierra2folio->{mtypes}->{$itype} || $refdata->{mtypes}->{Other} || die "No material type found for itype $itype\n";
       $irec->{status}->{name} = $sierra2folio->{statuses}->{$status} || 'Unknown'; # defaulting to available;
