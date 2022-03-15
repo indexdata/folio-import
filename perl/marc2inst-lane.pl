@@ -32,7 +32,9 @@ binmode STDOUT, ":utf8";
 
 my $version = '1';
 my $isil = 'CSt-L';
+my $prefix = 'L';
 my $srstype = 'MARC';
+my @hnotes = qw(852z 907abcdefixy 931a 9613anwx 963adfghklnpqsw 9663abcdeqrw 9673aberw 990a);
 
 my $rules_file = shift;
 my $ref_dir = shift;
@@ -97,7 +99,11 @@ sub getRefData {
               $name = $_->{name};
             }
             if ($refroot eq 'locations') {
-              $name =~ s/^.+\///;
+              if ($name !~ /^LANE/) {
+                next;
+              } else {
+                $name =~ s/^LANE-//;
+              }
             }
             my $id = $_->{id};
             $name =~ s/\s+$//;
@@ -130,16 +136,14 @@ sub makeMapFromTsv {
       if ($prop eq 'statuses') {
         $name =~ s/.*map .*/Unknown/;
         $tsvmap->{$prop}->{$code} = $name;
-      } else {
-        if ($prop =~ /holdings-types/) {
-          $name = $col[1];
-        } elsif ($prop =~ /mtypes/) {
-          $name = $col[2];
-        } elsif ($prop =~ /loantypes/) {
-          $name = $col[3];
-        }
-        $tsvmap->{$prop}->{$code} = $refdata->{$prop}->{$name};
-      }
+      } elsif ($prop =~ /holdings-types/) {
+        $name = $col[1];
+      } elsif ($prop =~ /mtypes/) {
+        $name = $col[2];
+      } elsif ($prop =~ /loantypes/) {
+        $name = $col[3];
+      }      
+      $tsvmap->{$prop}->{$code} = $refdata->{$prop}->{$name};
     }
   }
  return $tsvmap;
@@ -149,7 +153,7 @@ $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
 my $tofolio = makeMapFromTsv($ref_dir, $refdata);
 # print Dumper($tofolio); exit;
-# print Dumper($refdata); exit;
+# print Dumper($refdata->{locations}); exit;
 
 
 my $blvl = {
@@ -467,253 +471,254 @@ foreach (@ARGV) {
   open my $SRSOUT, ">>:encoding(UTF-8)", $paths->{srs};
   open IDMAP, ">>:encoding(UTF-8)", $paths->{imap};
   my $inst_recs;
-  my $hrecs;
   my $srs_recs;
+  my $hrecs;
   my $item_recs;
   my $idmap_lines;
   my $success = 0;
   my $hrids = {};
-  my $coll = { instances => [] };
+  my $rec;
   while (<RAW>) {
     if (/^\d{5}.[uvxy] /) {
-      print "Holdings record found at $count\n";
-      $hrecs .= make_holdings($_) . "\n";
+      my $h .= make_holdings($_) . "\n";
+      $hrecs .= $h;
       $hcount++;
-      next;
-    }
-    my $rec = {
-      id => '',
-      alternativeTitles => [],
-      editions => [],
-      series => [],
-      identifiers => [],
-      contributors => [],
-      subjects => [],
-      classifications => [],
-      publication => [],
-      publicationFrequency => [],
-      publicationRange => [],
-      electronicAccess => [],
-      instanceFormatIds => [],
-      physicalDescriptions => [],
-      languages => [],
-      notes => [],
-      staffSuppress => JSON::false,
-      discoverySuppress => JSON::false,
-      statisticalCodeIds => [],
-      tags => {},
-      holdingsRecords2 => [],
-      natureOfContentTermIds => [],
-      statusId => '52a2ff34-2a12-420d-8539-21aa8d3cf5d8',
-      source => 'MARC',
-      instanceTypeId => ''
-    };
-    
-    $count++;
-    my $raw;
-    if ($_ =~ /^\d{5}....a/) {
-      $raw = $_
     } else {
-      $raw = marc8_to_utf8($_);
-    }
-    my $marc;
-    my $ok = eval {
-      $marc = MARC::Record->new_from_usmarc($raw);
-      1;
-    };
-    next unless $ok;
-
-    # lets add an "L" in to the front of the 001
-    if ($marc->field('001')) {
-      my $in_ctrl = $marc->field('001')->data();
-      $marc->field('001')->update("L$in_ctrl");
-    }
-
-    my $srsmarc = $marc;
-    if ($marc->field('880')) {
-      $srsmarc = $marc->clone();
-    }
-    my $ldr = $marc->leader();
-    my $blevel = substr($ldr, 7, 1);
-    my $type = substr($ldr, 6, 1);
-    my $inst_type = $rtypes->{$type} || 'zzz';
-    $rec->{instanceTypeId} = $refdata->{instanceTypes}->{$inst_type};
-    my $mode_name = $blvl->{$blevel} || 'Other';
-
-    my $lc_mode_name = lc $mode_name;
-    if ($lc_mode_name eq 'monograph') { $lc_mode_name = 'single unit'}
-    if ($refdata->{issuanceModes}->{$mode_name}) {
-      $rec->{modeOfIssuanceId} = $refdata->{issuanceModes}->{$mode_name};
-    } elsif ($refdata->{issuanceModes}->{$lc_mode_name}) {
-      $rec->{modeOfIssuanceId} = $refdata->{issuanceModes}->{$lc_mode_name};
-    } else {
-      $rec->{modeOfIssuanceId} = $refdata->{issuanceModes}->{unspecified};
-    }
-    my @marc_fields = $marc->fields();
-    MARC_FIELD: foreach (@marc_fields) {
-      my $field = $_;
-      my $tag = $_->tag();
-      my $fr = $field_replace->{$tag} || '';
-      if ($fr) {
-        my $sf = $fr->{subfield}[0];
-        my $sdata = $field->subfield($sf) || next;
-        $sdata =~ s/^(\d{3}).*/$1/;
-        my $rtag = $fr->{frules}->{$sdata} || $sdata;
-        $field->set_tag($rtag);
-        push @marc_fields, $field;
-        next;
-      }
-      if (($tag =~ /^(7|1)/ && !$field->subfield('a')) || ($tag == '856' && !$field->subfield('u'))) {
-        next;
-      }
+      $rec = {
+        id => '',
+        alternativeTitles => [],
+        editions => [],
+        series => [],
+        identifiers => [],
+        contributors => [],
+        subjects => [],
+        classifications => [],
+        publication => [],
+        publicationFrequency => [],
+        publicationRange => [],
+        electronicAccess => [],
+        instanceFormatIds => [],
+        physicalDescriptions => [],
+        languages => [],
+        notes => [],
+        staffSuppress => JSON::false,
+        discoverySuppress => JSON::false,
+        statisticalCodeIds => [],
+        tags => {},
+        holdingsRecords2 => [],
+        natureOfContentTermIds => [],
+        statusId => '52a2ff34-2a12-420d-8539-21aa8d3cf5d8',
+        source => 'MARC',
+        instanceTypeId => ''
+      };
       
-      # Let's determine if a subfield is repeatable, if so create append separate marc fields for each subfield;
-      foreach (@{ $repeat_subs->{$tag} }) {
-        my $main_code = $_;
-        my $all_codes = join '', @{ $repeat_subs->{$tag} };
-        my @sf = $field->subfield($main_code);
-        my $occurence = @sf;
-        if ($occurence > 1) {
-          my $new_field = {};
-          my $i = 0;
-          my @subs = $field->subfields();
-          foreach (@subs) {
-            my ($code, $sdata) = @$_;
-            if ($code eq $main_code) {
-              $new_field = MARC::Field->new($tag, $field->{_ind1}, $field->{_ind2}, $code => $sdata);
-            } elsif ($new_field->{_tag}) {
-              $new_field->add_subfields($code => $sdata );
-            }
-            $i++;
-            my @ncode = [''];
-            if ($subs[$i]) {
-              @ncode = @{ $subs[$i] };
-            }
-            push @marc_fields, $new_field if (index($all_codes, $ncode[0]) != -1 && $new_field->{_tag}) || !$ncode[0];
-          }
-          next MARC_FIELD;
-        }
+      $count++;
+      my $raw;
+      if ($_ =~ /^\d{5}....a/) {
+        $raw = $_
+      } else {
+        $raw = marc8_to_utf8($_);
       }
-      my $fld_conf = $mapping_rules->{$tag};
-      my @entities;
-      if ($fld_conf) {
-        if ($fld_conf->[0]->{entity}) {
-          foreach (@{ $fld_conf }) {
-            if ($_->{entity}) {
-              push @entities, $_->{entity};
-            }
-          }
-        } else {
-          @entities = $fld_conf;
+      my $marc;
+      my $ok = eval {
+        $marc = MARC::Record->new_from_usmarc($raw);
+        1;
+      };
+      next unless $ok;
+
+      # lets add an "L" in to the front of the 001
+      if ($marc->field('001')) {
+        my $in_ctrl = $marc->field('001')->data();
+        $marc->field('001')->update("$prefix$in_ctrl");
+      }
+
+      my $srsmarc = $marc;
+      if ($marc->field('880')) {
+        $srsmarc = $marc->clone();
+      }
+      my $ldr = $marc->leader();
+      my $blevel = substr($ldr, 7, 1);
+      my $type = substr($ldr, 6, 1);
+      my $inst_type = $rtypes->{$type} || 'zzz';
+      $rec->{instanceTypeId} = $refdata->{instanceTypes}->{$inst_type};
+      my $mode_name = $blvl->{$blevel} || 'Other';
+
+      my $lc_mode_name = lc $mode_name;
+      if ($lc_mode_name eq 'monograph') { $lc_mode_name = 'single unit'}
+      if ($refdata->{issuanceModes}->{$mode_name}) {
+        $rec->{modeOfIssuanceId} = $refdata->{issuanceModes}->{$mode_name};
+      } elsif ($refdata->{issuanceModes}->{$lc_mode_name}) {
+        $rec->{modeOfIssuanceId} = $refdata->{issuanceModes}->{$lc_mode_name};
+      } else {
+        $rec->{modeOfIssuanceId} = $refdata->{issuanceModes}->{unspecified};
+      }
+      my @marc_fields = $marc->fields();
+      MARC_FIELD: foreach (@marc_fields) {
+        my $field = $_;
+        my $tag = $_->tag();
+        my $fr = $field_replace->{$tag} || '';
+        if ($fr) {
+          my $sf = $fr->{subfield}[0];
+          my $sdata = $field->subfield($sf) || next;
+          $sdata =~ s/^(\d{3}).*/$1/;
+          my $rtag = $fr->{frules}->{$sdata} || $sdata;
+          $field->set_tag($rtag);
+          push @marc_fields, $field;
+          next;
         }
-        foreach (@entities) {
-          my @entity = @$_;
-          my $data_obj = {};
-          foreach (@entity) {
-            if ($_->{target} =~ /precedingTitle|succeedingTitle/) {
-              next;
-            }
-            my @required;
-            if ( $_->{requiredSubfield} ) {
-              @required = @{ $_->{requiredSubfield} };
-            }
-            if ($required[0] && !$field->subfield($required[0])) {
-              next;
-            }
-            my @targ;
-            my $flavor;
-            if ($_->{target}) {
-              @targ = split /\./, $_->{target};
-              $flavor = $ftypes->{$targ[0]};
-            }
-            my $data = process_entity($field, $_);
-            next unless $data;
-            if ($flavor eq 'array') {
-              my $first_targ_data = $rec->{$targ[0]};
-              if ($_->{subFieldSplit}) { # subFieldSplit is only used for one field, 041, which may have a lang string like engfreger.
-                my $val = $_->{subFieldSplit}->{value};
-                my @splitdata = $data =~ /(\w{$val})/g;
-                push @$first_targ_data, @splitdata;
-              } else {
-                push @$first_targ_data, $data;
+        if (($tag =~ /^(7|1)/ && !$field->subfield('a')) || ($tag == '856' && !$field->subfield('u'))) {
+          next;
+        }
+        
+        # Let's determine if a subfield is repeatable, if so create append separate marc fields for each subfield;
+        foreach (@{ $repeat_subs->{$tag} }) {
+          my $main_code = $_;
+          my $all_codes = join '', @{ $repeat_subs->{$tag} };
+          my @sf = $field->subfield($main_code);
+          my $occurence = @sf;
+          if ($occurence > 1) {
+            my $new_field = {};
+            my $i = 0;
+            my @subs = $field->subfields();
+            foreach (@subs) {
+              my ($code, $sdata) = @$_;
+              if ($code eq $main_code) {
+                $new_field = MARC::Field->new($tag, $field->{_ind1}, $field->{_ind2}, $code => $sdata);
+              } elsif ($new_field->{_tag}) {
+                $new_field->add_subfields($code => $sdata );
               }
-            } elsif ($flavor eq 'array.object') {
-              $data_obj->{$targ[0]}->{$targ[1]} = $data;
-            } elsif ($flavor eq 'object') {
-            } elsif ($flavor eq 'boolean') {
-            } else {
-              $rec->{$targ[0]} = $data;
+              $i++;
+              my @ncode = [''];
+              if ($subs[$i]) {
+                @ncode = @{ $subs[$i] };
+              }
+              push @marc_fields, $new_field if (index($all_codes, $ncode[0]) != -1 && $new_field->{_tag}) || !$ncode[0];
             }
+            next MARC_FIELD;
           }
-          foreach (keys %$data_obj) {
-            if ($ftypes->{$_} eq 'array.object') {
-              push @{ $rec->{$_} }, $data_obj->{$_};
+        }
+        my $fld_conf = $mapping_rules->{$tag};
+        my @entities;
+        if ($fld_conf) {
+          if ($fld_conf->[0]->{entity}) {
+            foreach (@{ $fld_conf }) {
+              if ($_->{entity}) {
+                push @entities, $_->{entity};
+              }
+            }
+          } else {
+            @entities = $fld_conf;
+          }
+          foreach (@entities) {
+            my @entity = @$_;
+            my $data_obj = {};
+            foreach (@entity) {
+              if ($_->{target} =~ /precedingTitle|succeedingTitle/) {
+                next;
+              }
+              my @required;
+              if ( $_->{requiredSubfield} ) {
+                @required = @{ $_->{requiredSubfield} };
+              }
+              if ($required[0] && !$field->subfield($required[0])) {
+                next;
+              }
+              my @targ;
+              my $flavor;
+              if ($_->{target}) {
+                @targ = split /\./, $_->{target};
+                $flavor = $ftypes->{$targ[0]};
+              }
+              my $data = process_entity($field, $_);
+              next unless $data;
+              if ($flavor eq 'array') {
+                my $first_targ_data = $rec->{$targ[0]};
+                if ($_->{subFieldSplit}) { # subFieldSplit is only used for one field, 041, which may have a lang string like engfreger.
+                  my $val = $_->{subFieldSplit}->{value};
+                  my @splitdata = $data =~ /(\w{$val})/g;
+                  push @$first_targ_data, @splitdata;
+                } else {
+                  push @$first_targ_data, $data;
+                }
+              } elsif ($flavor eq 'array.object') {
+                $data_obj->{$targ[0]}->{$targ[1]} = $data;
+              } elsif ($flavor eq 'object') {
+              } elsif ($flavor eq 'boolean') {
+              } else {
+                $rec->{$targ[0]} = $data;
+              }
+            }
+            foreach (keys %$data_obj) {
+              if ($ftypes->{$_} eq 'array.object') {
+                push @{ $rec->{$_} }, $data_obj->{$_};
+              }
             }
           }
         }
       }
-    }
-    # Do some some record checking and cleaning
-    $rec->{subjects} = dedupe(@{ $rec->{subjects} });
-    $rec->{languages} = dedupe(@{ $rec->{languages} });
-    $rec->{series} = dedupe(@{ $rec->{series} });
-    
-    # Assign uuid based on hrid;
-    if (!$rec->{hrid}) {
-      $rec->{hrid} = sprintf("%4s%010d", "marc", $count);  # if there is no hrid, make one up.
-    }
-    my $hrid = $rec->{hrid};
-    if (!$hrids->{$hrid} && $marc->title()) {
-      # set FOLIO_USER_ID environment variable to create the following metadata object.
-      $rec->{id} = uuid($hrid);
-      if ($ENV{FOLIO_USER_ID}) {
-        $rec->{metadata} = {
-          createdByUserId=>$ENV{FOLIO_USER_ID},
-          updatedByUserId=>$ENV{FOLIO_USER_ID},
-          createdDate=>$mdate,
-          updatedDate=>$mdate
-        };
+      # Do some some record checking and cleaning
+      $rec->{subjects} = dedupe(@{ $rec->{subjects} });
+      $rec->{languages} = dedupe(@{ $rec->{languages} });
+      $rec->{series} = dedupe(@{ $rec->{series} });
+      
+      # Assign uuid based on hrid;
+      if (!$rec->{hrid}) {
+        # $rec->{hrid} = sprintf("%4s%010d", "marc", $count);  # if there is no hrid, make one up.
+        die "No HRID found in record $count";
       }
-      $inst_recs .= $json->encode($rec) . "\n";
-      $srs_recs .= $json->encode(make_srs($srsmarc, $raw, $rec->{id}, $rec->{hrid}, $snapshot_id, $paths->{srs})) . "\n";
-      $idmap_lines .= "$rec->{hrid}\t$rec->{id}\n";
-      $hrids->{$hrid} = 1;
-      $success++;
+      my $hrid = $rec->{hrid};
+      if (!$hrids->{$hrid} && $marc->title()) {
+        # set FOLIO_USER_ID environment variable to create the following metadata object.
+        $rec->{id} = uuid($hrid);
+        if ($ENV{FOLIO_USER_ID}) {
+          $rec->{metadata} = {
+            createdByUserId=>$ENV{FOLIO_USER_ID},
+            updatedByUserId=>$ENV{FOLIO_USER_ID},
+            createdDate=>$mdate,
+            updatedDate=>$mdate
+          };
+        }
+        $inst_recs .= $json->encode($rec) . "\n";
+        $srs_recs .= $json->encode(make_srs($srsmarc, $raw, $rec->{id}, $rec->{hrid}, $snapshot_id, $paths->{srs})) . "\n";
+        $idmap_lines .= "$rec->{hrid}\t$rec->{id}\n";
+        $hrids->{$hrid} = 1;
+        $success++;
 
-      # make preceding succeding titles
-      foreach my $f ($marc->field('78[05]')) {
-        my $presuc = {};
-        $presuc->{title} = $f->as_string('ast');
-        if ($f->tag() eq '780') {
-          $presuc->{precedingInstanceId} = 'PRECEDING_INSTANCE' # dummy number
-        } else {
-          $presuc->{succeedingInstanceId} = 'SUCCEEDING_INSTANCE' # dummy number
-        }
-        foreach my $sf (('w', 'x')) {
-          my $idtype = $refdata->{identifierTypes}->{'Other standard identifier'};
-          foreach ($f->subfield($sf)) {
-            if (/OCoLC|ocm|ocn/) {
-              $idtype = $refdata->{identifierTypes}->{'OCLC'};
-            } elsif (/DLC/) {
-              $idtype = $refdata->{identifierTypes}->{'LCCN'};
-            } elsif (/^\d{4}-[0-9Xx]{4}/) {
-              $idtype = $refdata->{identifierTypes}->{'ISSN'};
-            } elsif (/^[0-9Xx]{10,13}/) {
-              $idtype = $refdata->{identifierTypes}->{'ISBN'};
-            }
-            my $idObj = { value=>$_, identifierTypeId=>$idtype };
-            push @{ $presuc->{identifiers} }, $idObj;
+        # make preceding succeding titles
+        foreach my $f ($marc->field('78[05]')) {
+          my $presuc = {};
+          $presuc->{title} = $f->as_string('ast');
+          if ($f->tag() eq '780') {
+            $presuc->{precedingInstanceId} = 'PRECEDING_INSTANCE' # dummy number
+          } else {
+            $presuc->{succeedingInstanceId} = 'SUCCEEDING_INSTANCE' # dummy number
           }
+          foreach my $sf (('w', 'x')) {
+            my $idtype = $refdata->{identifierTypes}->{'Other standard identifier'};
+            foreach ($f->subfield($sf)) {
+              if (/OCoLC|ocm|ocn/) {
+                $idtype = $refdata->{identifierTypes}->{'OCLC'};
+              } elsif (/DLC/) {
+                $idtype = $refdata->{identifierTypes}->{'LCCN'};
+              } elsif (/^\d{4}-[0-9Xx]{4}/) {
+                $idtype = $refdata->{identifierTypes}->{'ISSN'};
+              } elsif (/^[0-9Xx]{10,13}/) {
+                $idtype = $refdata->{identifierTypes}->{'ISBN'};
+              }
+              my $idObj = { value=>$_, identifierTypeId=>$idtype };
+              push @{ $presuc->{identifiers} }, $idObj;
+            }
+          }
+          write_objects($PSOUT, $json->encode($presuc) . "\n");
+          $pcount++;
         }
-        write_objects($PSOUT, $json->encode($presuc) . "\n");
-        $pcount++;
-      }
 
-    } else {
-      open ERROUT, ">>:encoding(UTF-8)", $paths->{err};
-      print ERROUT $raw;
-      close ERROUT;
-      $errcount++;
+      } else {
+        open ERROUT, ">>:encoding(UTF-8)", $paths->{err};
+        print ERROUT $raw;
+        close ERROUT;
+        $errcount++;
+      }
     }
     if (eof RAW || $success % 10000 == 0) {
       my $tt = time() - $start;
@@ -749,13 +754,95 @@ sub make_holdings {
   };
   my $id = $marc->field('001')->data();
   my $bid = $marc->field('004')->data();
-  my $hrid = "L$id";
+  my $lfield = $marc->field('852');
+  my $loc = $lfield->as_string('b');
+  my $cn = $lfield->as_string('hi');
+  my $cntype = $lfield->indicator(1);
+  my $cntype_str = '';
+  if ($cntype eq '0') {
+    $cntype_str = 'Library of Congress classification'; 
+  } elsif ($cntype eq '1') {
+    $cntype_str = 'Dewey Decimal classification';
+  } elsif ($cntype eq '3') {
+    $cntype_str = 'Superintendent of Documents classification';
+  } elsif ($cntype eq '5') {
+    $cntype_str = 'Title';
+  } elsif ($cntype eq '6') {
+    $cntype_str = 'Shelved separately';
+  } else {
+    $cntype_str = 'Other scheme';
+  }
+  my @f655 = $marc->field('655');
+
+  $bid = "$prefix$bid";
+  my $hrid = "$prefix$id";
   my $hr = {};
   $hr->{id} = uuid($hrid);
   $hr->{instanceId} = uuid($bid);
   $hr->{hrid} = $hrid;
+  $hr->{permanentLocationId} = $refdata->{locations}->{$loc} || die "ERROR FOLIO location not found for $loc!";
+  $hr->{callNumber} = $cn;
+  $hr->{callNumberTypeId} = $refdata->{callNumberTypes}->{$cntype_str} if $cntype_str =~ /\w/;
+  $hr->{discoverySuppress} = JSON::false;
+  foreach (@f655) {
+    my $val = $_->as_string('a');
+    if ($_->{_ind1} eq '7' && $_->{_ind2} eq '7' && $val eq 'Suppressed') {
+      $hr->{discoverySuppress} = JSON::true; 
+    }
+  }
+  foreach (@hnotes) {
+    my ($tag, $subs) = /^(\d\d\d)(.+)/;
+    my $staff = 0;
+    if ($tag =~ /963|966|967|990/) {
+      $staff = 1;
+    }
+    my @notes = make_notes($marc, $tag, $subs, '', $staff);
+    if (@notes) {
+      push @{ $hr->{notes} }, @notes;
+    }
+  }
+  
   my $out = $json->encode($hr);
   return $out;
+}
+
+sub make_notes {
+  my $marc = shift;
+  my $tag = shift;
+  my $subs = shift;
+  my $type = shift || 'Note';
+  my $staff = shift;
+  my @notes;
+  foreach ($marc->field($tag)) {
+    my $text = $_->as_string($subs);
+    if ($text) {
+      my $n = {};
+      $n->{note} = $text;
+      $n->{holdingsNoteTypeId} = $refdata->{holdingsNoteTypes}->{$type};
+      if ($staff) {
+        $n->{staffOnly} = JSON::true;
+      } else {
+        $n->{staffOnly} = JSON::false;
+      }
+      push @notes, $n;
+    }
+  }
+  return @notes;
+}
+
+sub make_xnotes {
+  my $note = shift;
+  my $type = shift || 'Note';
+  my $staff = shift;
+  my $n = {};
+  $n->{note} = $note;
+  $n->{holdingsNoteTypeId} = $refdata->{holdingsNoteTypes}->{$type};
+  if ($staff) {
+    $n->{staffOnly} = JSON::true;
+  } else {
+    $n->{staffOnly} = JSON::false;
+  }
+  return $n;
 }
 
 sub write_objects {
