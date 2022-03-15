@@ -773,6 +773,7 @@ sub make_holdings {
     $cntype_str = 'Other scheme';
   }
   my @f655 = $marc->field('655');
+  my @f866 = $marc->field('866');
 
   $bid = "$prefix$bid";
   my $hrid = "$prefix$id";
@@ -797,11 +798,19 @@ sub make_holdings {
       $staff = 1;
     }
     my @notes = make_notes($marc, $tag, $subs, '', $staff);
-    if (@notes) {
+    if ($notes[0]) {
       push @{ $hr->{notes} }, @notes;
     }
   }
-  
+  foreach (@f866) {
+    my $text = $_->as_string('vy');
+    if ($text) {
+      my $n = $_->as_string('z') || '';
+      my $s = make_statement($text, $n);
+      push @{ $hr->{holdingsStatements} }, $s;
+    }
+  }
+
   my $out = $json->encode($hr);
   return $out;
 }
@@ -830,19 +839,15 @@ sub make_notes {
   return @notes;
 }
 
-sub make_xnotes {
+sub make_statement {
+  my $text = shift;
   my $note = shift;
-  my $type = shift || 'Note';
-  my $staff = shift;
-  my $n = {};
-  $n->{note} = $note;
-  $n->{holdingsNoteTypeId} = $refdata->{holdingsNoteTypes}->{$type};
-  if ($staff) {
-    $n->{staffOnly} = JSON::true;
-  } else {
-    $n->{staffOnly} = JSON::false;
-  }
-  return $n;
+  my $snote = shift;
+  my $s = {};
+  $s->{statement} = $text;
+  $s->{note} = $note if $note;
+  $s->{staffNote} = $snote if $snote;
+  return $s;
 }
 
 sub write_objects {
