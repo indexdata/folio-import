@@ -773,7 +773,6 @@ sub make_holdings {
     $cntype_str = 'Other scheme';
   }
   my @f655 = $marc->field('655');
-  my @f866 = $marc->field('866');
 
   $bid = "$prefix$bid";
   my $hrid = "$prefix$id";
@@ -802,12 +801,26 @@ sub make_holdings {
       push @{ $hr->{notes} }, @notes;
     }
   }
-  foreach (@f866) {
+  foreach ($marc->field('866')) {
     my $text = $_->as_string('vy');
     if ($text) {
       my $n = $_->as_string('z') || '';
       my $s = make_statement($text, $n);
       push @{ $hr->{holdingsStatements} }, $s;
+    }
+  }
+  foreach ($marc->field('856')) {
+    my $u = $_->as_string('u');
+    if ($u) {
+      my $lt = $_->as_string('z');
+      my $pn = $_->as_string('ir');
+      my $rel = $_->{_ind2};
+      my $relstr = $relations->{$rel} || 'No information provided';
+      my $ea = { uri => $u };
+      $ea->{linkText} = $lt if $lt;
+      $ea->{publicNote} = $pn if $pn;
+      $ea->{relationshipId} = $refdata->{electronicAccessRelationships}->{$relstr};
+      push @{ $hr->{electronicAccess} }, $ea;
     }
   }
 
