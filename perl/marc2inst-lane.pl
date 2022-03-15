@@ -467,14 +467,20 @@ foreach (@ARGV) {
   open my $SRSOUT, ">>:encoding(UTF-8)", $paths->{srs};
   open IDMAP, ">>:encoding(UTF-8)", $paths->{imap};
   my $inst_recs;
+  my $hrecs;
   my $srs_recs;
-  my $hold_recs;
   my $item_recs;
   my $idmap_lines;
   my $success = 0;
   my $hrids = {};
   my $coll = { instances => [] };
   while (<RAW>) {
+    if (/^\d{5}.[uvxy] /) {
+      print "Holdings record found at $count\n";
+      $hrecs .= make_holdings($_) . "\n";
+      $hcount++;
+      next;
+    }
     my $rec = {
       id => '',
       alternativeTitles => [],
@@ -703,18 +709,6 @@ foreach (@ARGV) {
         $pcount++;
       }
 
-      # make holdings and items
-      my $hi = {};
-      # my $hi = make_hi($marc, $rec->{id}, $rec->{hrid}, $type, $blevel);
-      if ($hi->{holdings}) {
-        $hold_recs .= $hi->{holdings};
-        $hcount += $hi->{hcount};
-      }
-      if ($hi->{items}) {
-        $item_recs .= $hi->{items};
-        $icount += $hi->{icount};
-      }
-
     } else {
       open ERROUT, ">>:encoding(UTF-8)", $paths->{err};
       print ERROUT $raw;
@@ -730,14 +724,13 @@ foreach (@ARGV) {
       write_objects($SRSOUT, $srs_recs);
       $srs_recs = '';
 
-      write_objects($HOUT, $hold_recs);
-      $hold_recs = '';
-
-      write_objects($IOUT, $item_recs);
-      $item_recs = '';
-
       print IDMAP $idmap_lines;
       $idmap_lines = '';
+
+      if ($hrecs) {
+        print $HOUT $hrecs;
+        $hrecs = '';
+      }
     }
   }
   my $tt = time() - $start;
@@ -749,116 +742,20 @@ foreach (@ARGV) {
   print "\nErrors:    $errcount\n";
 }
 
-sub make_hi {
-  my $marc = shift;
-  my $bid = shift;
-  my $bhrid = shift;
-  my $type = shift;
-  my $blevel = shift;
-  my $hseen = {};
-  my $hid = '';
-  my $hrec = {};
-  my $holdings = '';
-  my $items = '';
-  my $hcount = 0;
-  my $icount = 0;
-  my $cn = '';
-  my $itemtag = '999'; 
-  
-  foreach my $item ($marc->field($itemtag)) {
-    my $loc = $item->subfield('l') || '';
-    next if !$loc;
-    $loc =~ s/(\s*$)//;
-    my $hkey = "$bhrid-$loc";
-    my $locid = $refdata->{locations}->{$loc} || 'ce414bfd-ae34-4aae-be48-47d2825f1418'; # defaults to Unmapped location
-    # make holdings record;
-    if (!$hseen->{$hkey}) {
-      $hid = uuid($hkey);
-      $hrec->{id} = $hid;
-      # $hrec->{holdingsTypeId} = ''
-      $hrec->{instanceId} = $bid;
-      $hrec->{permanentLocationId} = $locid;
-      if ($item->subfield('a') && $item->subfield('a') =~ /\w/) {
-        $cn = $item->subfield('a');
-      }
-      if ($cn) {
-        $hrec->{callNumber} = $cn;
-        $hrec->{callNumberTypeId} = '6caca63e-5651-4db6-9247-3205156e9699'; #other
-      }
-      my $hout = $json->encode($hrec);
-      $holdings .= $hout . "\n";
-      $hseen->{$hkey} = 1;
-      $hcount++;
-    }
-
-    # make item record;
-    my $irec = {};
-    my $iid = $item->subfield('y');
-    my $itype = $item->subfield('t');
-    my $status = $item->subfield('s') || '';
-    my @msgs = $item->subfield('m');
-    my @notes = $item->subfield('n');
-    $status =~ s/\s+$//;
-    if ($iid) {
-      $iid =~ s/^\.//;
-      $irec->{id} = uuid($iid);
-      $irec->{holdingsRecordId} = $hid;
-      $irec->{hrid} = $iid;
-      $irec->{barcode} = $item->subfield('i') || '';
-      if ($blevel eq 's') {
-        $irec->{enumeration} = $item->subfield('c') || '';
-      } else {
-        $irec->{volume} = $item->subfield('c') || '';
-      }
-      $irec->{copyNumber} = $item->subfield('g') || '';
-      $irec->{permanentLoanTypeId} = $tofolio->{loantypes}->{$itype} || $refdata->{loantypes}->{'Can Circulate'};
-      $irec->{materialTypeId} = $tofolio->{mtypes}->{$itype} || $refdata->{mtypes}->{Other} || die "No material type found for itype $itype\n";
-      $irec->{status}->{name} = $tofolio->{statuses}->{$status} || 'Unknown'; # defaulting to available;
-      foreach (@msgs) {
-        if (!$irec->{circulationNotes}) { $irec->{circulationNotes} = [] }
-        my $cnobj = {};
-        $cnobj->{note} = $_;
-        $cnobj->{noteType} = 'Check out';
-        $cnobj->{staffOnly} = 'true';
-        $cnobj->{date} = "" . localtime;
-        $cnobj->{source} = {
-          id => 'ba213137-b641-4da7-aee2-9f2296e8bbf7',
-          personal => { firstName => 'Index', lastName => 'Data' }
-        };
-        if (/IN TRANSIT/) {
-          $irec->{status}->{name} = 'In transit';
-          s/^(.+): ?.+/$1/;
-          # $irec->{status}->{date} = $_;
-          # my $t = Time::Piece->strptime($_, "%a %b %d %Y %I:%M");
-          # $irec->{status}->{date} = $t->strftime("%Y-%m-%d");
-        } else {
-          push @{ $irec->{circulationNotes} }, $cnobj;
-        }
-      }
-      foreach (@notes) {
-        if (!$irec->{notes}) { $irec->{notes} = [] }
-        my $nobj = {};
-        $nobj->{note} = $_;
-        $nobj->{itemNoteTypeId} = '8d0a5eca-25de-4391-81a9-236eeefdd20b';  # Note
-        $nobj->{staffOnly} = 'true';
-        push @{ $irec->{notes} }, $nobj;
-      }
-      if ($item->subfield('o') && $item->subfield('o') eq 'n') {
-        $irec->{discoverySuppress} = 'true';
-      } else {
-        $irec->{discoverySuppress} = 'false';
-      }
-      my $iout = $json->encode($irec);
-      $items .= $iout . "\n";
-      $icount++;
-    }
-  }
-  return {
-    holdings => $holdings,
-    items => $items,
-    hcount => $hcount,
-    icount => $icount
+sub make_holdings {
+  my $raw = shift;
+  my $marc = eval { 
+    MARC::Record->new_from_usmarc($raw)
   };
+  my $id = $marc->field('001')->data();
+  my $bid = $marc->field('004')->data();
+  my $hrid = "L$id";
+  my $hr = {};
+  $hr->{id} = uuid($hrid);
+  $hr->{instanceId} = uuid($bid);
+  $hr->{hrid} = $hrid;
+  my $out = $json->encode($hr);
+  return $out;
 }
 
 sub write_objects {
