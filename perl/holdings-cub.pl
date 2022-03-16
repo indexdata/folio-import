@@ -196,14 +196,15 @@ foreach (@ARGV) {
     foreach my $f (@{ $obj->{varFields} }) {
       my $t = $f->{marcTag};
       my $ft = $f->{fieldTag};
+      my $ind1 = $f->{ind1};
+      my $ind2 = $f->{ind2};
       if ($t && $t gt '009') {
-        my $subs = {};
+        my $subs = { ind1 => $f->{ind1}, ind2 => $f->{ind2} };
         foreach my $sf (@{ $f->{subfields} }) {
           my $c = $sf->{tag};
           $subs->{$c} = $sf->{content};
         }
         push @{ $vf->{$t} }, $subs;
-      } elsif ($ft) {
         push @{ $vf->{$ft} }, $f->{content};
       }
     }
@@ -216,18 +217,14 @@ foreach (@ARGV) {
     $loc_code =~ s/\s*$//;
     my $hkey = "$bid-$loc_code";
     $h->{id} = uuid($hkey);
+    $h->{formerIds} = [ $obj->{id} ];
     $h->{hrid} = $hkey;
     $h->{instanceId} = $b[0];
     my $loc_id = $refdata->{locations}->{$loc_code} || $refdata->{locations}->{UNMAPPED};
     $h->{permanentLocationId} = $loc_id;
     # $h->{holdingsTypeId} = $b[3];
-    my $cn = $vf->{'090'}->[0]->{a} || '';
-    if ($cn) {
-      $h->{callNumberTypeId} = '95467209-6d7b-468b-94df-0f5d7ad2747d' # LC
-    } else {
-      $cn = $b[1];
-      $h->{callNumberTypeId} = '6caca63e-5651-4db6-9247-3205156e9699' if $cn; # other
-    }
+    my $cn = $b[1];
+    $h->{callNumberTypeId} = $b[2] || '6caca63e-5651-4db6-9247-3205156e9699'; #other
     $h->{callNumber} = $cn if $cn;
     $h->{discoverySuppress} = ($ff->{118}->{value} ne '-') ? JSON::true : JSON::false ;
     foreach my $t ('n', 'z') {
@@ -275,6 +272,18 @@ foreach (@ARGV) {
         }
       }
     }
+
+    foreach my $e (@{ $vf->{856} }) {
+      my $uri = $e->{z};
+      my $ltext = $e->{z};
+      $uri =~ s/^.+(http.+?) >.+/$1/;
+      $ltext =~ s/.+>\s*(.+) <.+/$1/;
+      my $rcode = $e->{ind2};
+      my $rtext = $relations->{$rcode};
+      my $rel = $refdata->{electronicAccessRelationships}->{$rtext} || $refdata->{electronicAccessRelationships}->{'No information provided'};
+      my $er = { uri => $uri, linkText => $ltext, relationshipId => $rel };
+      push @{ $h->{electronicAccess} }, $er;
+    }
     
     my $hr = $json->encode($h);
     write_objects($OUT, $hr . "\n");
@@ -315,7 +324,6 @@ sub statement {
       my $pat = $field->{$ptag}->{$link}[0];
       foreach (@{ $field->{$etag}->{$link} }) {
         my $enum = $_;
-        print Dumper($enum);
         my $splits = {};
         my @codes;
         my $open = 0;
