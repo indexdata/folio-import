@@ -315,8 +315,12 @@ sub statement {
         my $enum = $_;
         my $splits = {};
         my @codes;
+        my $open = 0;
         foreach (sort keys %{ $enum }) {
           my $c = $_;
+          if ($enum->{$c} =~ /-$/) { 
+            $open = 1;
+          }
           if ($c =~ /^[a-m]$/ && $enum->{$c}) {
             push @codes, $c;
             @{ $splits->{$c} } = split(/-/, $enum->{$c});
@@ -333,7 +337,12 @@ sub statement {
               next;
             }
             if (/[a-h]/) {
-              push @enumparts, $pat->{$_} . $splits->{$_}[$el];
+              my $suf = $pat->{$_};
+              if ($suf =~ /\(year\)/) {
+                $suf = '';
+              } elsif ($suf =~ /\(month|season\)/) {
+                $suf = $months->($suf);
+              }
             } else {
               my $p = $pat->{$_};
               my $v = $splits->{$_}[$el] || $splits->{$_}[0];
@@ -363,9 +372,12 @@ sub statement {
             push @parts, "$enumpart ($cronpart)";
           } elsif ($cronpart) {
             push @parts, $cronpart;
-          } 
+          } elsif ($enumpart) {
+            push @parts, $enumpart;
+          }
         }
         my $statement = join ' - ', @parts;
+        $statement .= '-' if $open;
         my $snote = $enum->{x} || '';
         my $note = $enum->{z} || '';
         my $otag = ($etag == 863) ? '866' : ($etag == 864) ? '867' : '868';
