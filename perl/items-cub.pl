@@ -123,7 +123,6 @@ while (<MAP>) {
   $inst_map->{$d[0]} = $d[1];
 }
 close MAP;
-print "-------------------------------\n";
 
 $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
@@ -210,91 +209,12 @@ sub make_hi {
   my $hcount = 0;
   my $icount = 0;
 
-  # find and make serials holdings
-  if ($blevel eq 's') {
-    my $h = { docs=>[] };
-    foreach (@{ $h->{docs} }) {
-      my $include = 0;
-      my $loc = $_->{fixedFields}->{40}->{value};
-      $loc =~ s/\s+//;
-      my $hrid = "c" . $_->{_id} . "-$loc";
-      my $id = uuid($hrid);
-      my $sh = {
-        id => $id,
-        hrid => $hrid,
-        permanentLocationId => $sierra2folio->{locations}->{$loc} || '53cf956f-c1df-410b-8bea-27f712cca7c0',
-        instanceId => $bid,
-        holdingsTypeId => 'e6da6c98-6dd0-41bc-8b4b-cfd4bbd9c3ae', #serial
-        sourceId => 'f32d531e-df79-46b3-8932-cdd35f7a2264', #folio
-      };
-      if ($cn) {
-        $sh->{callNumber} = $cn;
-        $sh->{callNumberTypeId} = $cntype;
-      }
-      foreach my $vf (@{ $_->{varFields} }) {
-        my $tag = $vf->{marcTag} || '';
-        if ($tag =~ /86[678]/) {
-          my $obj = {};
-          foreach my $sf (@{ $vf->{subfields} }) {
-            my $code = $sf->{tag};
-            my $val = $sf->{content};
-            if ($code eq 'a') {
-              $obj->{statement} = $val;
-            } elsif ($code eq 'x') {
-              $obj->{staffNote} = $val;
-            } elsif ($code eq 'z') {
-              $obj->{note} = $val;
-            }
-          }
-          if ($obj->{statement}) {
-            if ($tag eq '866') {
-              push @{ $sh->{holdingsStatements} }, $obj;
-            } elsif ($tag eq '867') {
-              push @{ $sh->{holdingsStatementsForSupplements} }, $obj;
-            } elsif ($tag eq '868') {
-              push @{ $sh->{holdingsStatementsForIndexes} }, $obj;
-            }
-            $include = 1;
-          }
-        } elsif ($tag eq '856') {
-          my $obj = {};
-          my $rel = $vf->{ind2};
-          foreach my $sf (@{ $vf->{subfields} }) {
-            my $code = $sf->{tag};
-            my $val = $sf->{content};
-            if ($code eq 'z') {
-              my $uri = $val;
-              my $note = $val;
-              $uri =~ s/.*href=(\S+?) ?>.*/$1/;
-              $obj->{uri} = $uri;
-              $note =~ s/.+?> ?(.+?) ?<.+/$1/;
-              $obj->{publicNote} = $note;
-              my $rel_str = $relations->{$rel};
-              if ($refdata->{electronicAccessRelationships}->{$rel_str}) {
-                $obj->{relationshipId} = $refdata->{electronicAccessRelationships}->{$rel_str};
-              }
-            }
-          }
-          if ($obj->{uri}) {
-            push @{ $sh->{electronicAccess} }, $obj;
-            $include = 1;
-          }
-        }
-      }
-      # print $json->pretty->encode($sh);
-      if ($include) {
-        my $hout = $json->encode($sh);
-        $holdings .= $hout . "\n";
-        $hcount++;
-      }
-    }
-  }
-  
   my $loc = $item->{fixedFields}->{79}->{value} || '';
   next if !$loc;
   $loc =~ s/(\s*$)//;
   my $hkey = "$bhrid-$loc";
-  my $locid = $sierra2folio->{locations}->{$loc} || '53cf956f-c1df-410b-8bea-27f712cca7c0'; # defaults to Norlin Stacks
+  $hid = uuid($hkey);
+  my $locid = $sierra2folio->{locations}->{$loc} || '761db5ed-d29d-4e2e-83d1-c6dfd1426cfd'; # defaults to Unmapped location.
   my $vf = {};
   foreach (@{ $item->{varFields} }) {
     my $ftag = $_->{fieldTag};
@@ -302,7 +222,6 @@ sub make_hi {
   }
   # make holdings record from item;
   if (!$hseen->{$hkey}) {
-    $hid = uuid($hkey);
     $hrec->{id} = $hid;
     $hrec->{hrid} = $hkey;
     $hrec->{instanceId} = $bid;
@@ -332,7 +251,7 @@ sub make_hi {
   if ($iid) {
     $iid =~ s/^\.//;
     $irec->{id} = uuid($iid);
-    $irec->{holdingsRecordId} = $hid;
+    $irec->{holdingsRecordId} = $hid || die "No holdings record ID found for $iid";
     $irec->{hrid} = "i$iid";
     $irec->{barcode} = $vf->{b}[0] || '';
     if ($blevel eq 's') {
