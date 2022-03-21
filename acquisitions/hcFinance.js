@@ -50,7 +50,8 @@ let files = {
     let ldCount = 0;
     let fnCount = 0;
     let grCount = 0;
-    let gffyCount = 0;    
+    let gffyCount = 0;
+    let ttl = 0;
 
     const units = require(`${refDir}/units.json`);
     let unitId = '';
@@ -82,19 +83,38 @@ let files = {
       }
     });
 
-    console.log(ledgerId);
-
     let csv = fs.readFileSync(inFile, 'utf8');
     let inRecs = parse(csv, {
       columns: true,
       skip_empty_lines: true
     });
 
-    // console.log(inRecs);
+    // writeObj(`${dir}/sierra_funds.jsonl`, inRecs);
 
-    
+    let seen = {};
+    inRecs.forEach(r => {
+      ttl++;
+      let code = r.fund_code;
+      let id = uuid(code, ns);
+      if (!seen[code]) {
+        let fr = {
+          id: id,
+          code: code,
+          name: r.name,
+          fundStatus: 'Active',
+          ledgerId: ledgerId,
+          acqUnitIds: [ unitId ]
+        }
+        writeObj(files.funds, fr);
+        fnCount++;
+      } else {
+        // console.log(`WARN Duplicate fund code "${code}"`);
+      }
+      seen[code] = 1;
+    });
 
     console.log('---------------------');
+    console.log('Lines Proc:', ttl);
     console.log('Acq Units :', auCount);
     console.log('Fiscal Yrs:', fyCount);
     console.log('Ledgers   :', ldCount);
