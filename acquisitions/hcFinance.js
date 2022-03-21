@@ -17,9 +17,8 @@ let files = {
   units: 'acq-units.jsonl',
   fy: 'fiscal-years.jsonl',
   ledgers: 'ledgers.jsonl',
-  groups: 'groups.jsonl',
   funds: 'funds.jsonl',
-  groupfy: 'group-fund-fiscal-year.jsonl'
+  budgets: 'budgets.jsonl'
 };
 
 (async () => {
@@ -49,8 +48,7 @@ let files = {
     let fyCount = 0;
     let ldCount = 0;
     let fnCount = 0;
-    let grCount = 0;
-    let gffyCount = 0;
+    let bdCount = 0;
     let ttl = 0;
 
     const units = require(`${refDir}/units.json`);
@@ -91,6 +89,7 @@ let files = {
 
     // writeObj(`${dir}/sierra_funds.jsonl`, inRecs);
 
+    // Create funds and budgets objects;
     let seen = {};
     inRecs.forEach(r => {
       ttl++;
@@ -107,6 +106,25 @@ let files = {
         }
         writeObj(files.funds, fr);
         fnCount++;
+
+        // make budget
+        let budgetName = `${code}-${fiscalYear}`;
+        let budgetId = uuid(budgetName, ns);
+        let bd = {
+          id: budgetId,
+          name: budgetName,
+          fundId: id,
+          fiscalYearId: fyId,
+          budgetStatus: 'Active',
+          acqUnitIds: [ unitId ]
+        }
+        bd.initialAllocation = parseInt(r.appropriation, 10) / 10;
+        bd.expenditures = parseInt(r.expenditure, 10) / 10;
+        bd.encumbered = parseInt(r.encumbrance, 10) / 10;
+        
+        writeObj(files.budgets, bd);
+        bdCount++;
+
       } else {
         // console.log(`WARN Duplicate fund code "${code}"`);
       }
@@ -119,8 +137,7 @@ let files = {
     console.log('Fiscal Yrs:', fyCount);
     console.log('Ledgers   :', ldCount);
     console.log('Funds     :', fnCount);
-    console.log('Groups    :', grCount); 
-    console.log('Group FYs :', gffyCount); 
+    console.log('Budgets   :', bdCount); 
   } catch (e) {
     console.log(e);
   }
