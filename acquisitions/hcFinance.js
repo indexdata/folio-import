@@ -101,7 +101,7 @@ let files = {
       ttl++;
       let code = r.fund_code;
       let id = uuid(code, ns);
-      if (!seen[code]) {
+      if (code && !seen[code]) {
         let fr = {
           id: id,
           code: code,
@@ -112,6 +112,8 @@ let files = {
         }
         let fundTypeId = typesMap[r.fund_type];
         if (fundTypeId) fr.fundTypeId = fundTypeId;
+        if (r.note1) fr.description = 'note1: ' + r.note1;
+        if (r.note2) fr.description += '; note2: ' + r.note2;
         writeObj(files.funds, fr);
         fnCount++;
 
@@ -128,7 +130,7 @@ let files = {
         }
 
         if (r.appropriation) bd.initialAllocation = parseInt(r.appropriation, 10) / 10;
-        // bd.expenditures = parseInt(r.expenditure, 10) / 10;
+        // if (r.expenditure) bd.expenditures = parseInt(r.expenditure, 10) / 10;
         // bd.encumbered = parseInt(r.encumbrance, 10) / 10;
         
         writeObj(files.budgets, bd);
