@@ -33,6 +33,7 @@ binmode STDOUT, ":utf8";
 my $version = '1';
 my $isil = 'CSt-L';
 my $prefix = 'L';
+my $hprefix = "${prefix}H";
 my $srstype = 'MARC';
 my @hnotes = qw(852z 907abcdefixy 931a 9613anwx 963adfghklnpqsw 9663abcdeqrw 9673aberw 990a);
 
@@ -41,6 +42,7 @@ my $ref_dir = shift;
 if (! $ARGV[0]) {
   die "Usage: ./marc2inst.pl <mapping_rules> <ref_data_dir> <raw_marc_files>\n";
 }
+my $dir = dirname($ARGV[0]);
 
 my $json = JSON->new;
 $json->canonical();
@@ -57,6 +59,14 @@ my $files = {
   snap => 'snapshot.jsonl',
   presuc => 'presuc.jsonl',
   err => 'err.mrc'
+};
+
+my $ifiles = {
+  items => 'items.tsv',
+  statcodes => 'statcodes.tsv',
+  statuses => 'statuses.tsv',
+  notes => 'notes.tsv',
+  barcoces => 'barcodes.tsv'
 };
 
 sub uuid {
@@ -155,6 +165,23 @@ my $tofolio = makeMapFromTsv($ref_dir, $refdata);
 # print Dumper($tofolio); exit;
 # print Dumper($refdata->{locations}); exit;
 
+my $items = {};
+sub mapItems {
+  foreach (sort keys %{ $ifiles }) {
+    my $prop = $_;
+    my $fn = $ifiles->{$_};
+    my $path = "$dir/$fn";
+    open ITD, "<:encoding(UTF-8)", $path;
+    while (<ITD>) {
+      chomp;
+      my @d = split(/\t/);
+      $items->{$prop}->{$d[0]} = $_;
+    }
+  }
+}
+mapItems();
+print Dumper($items->{notes});
+exit;
 
 my $blvl = {
   'm' => 'Monograph',
@@ -775,7 +802,7 @@ sub make_holdings {
   my @f655 = $marc->field('655');
 
   $bid = "$prefix$bid";
-  my $hrid = "$prefix$id";
+  my $hrid = "$hprefix$id";
   my $hr = {};
   $hr->{id} = uuid($hrid);
   $hr->{instanceId} = uuid($bid);
