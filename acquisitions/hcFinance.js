@@ -61,6 +61,12 @@ let files = {
       }
     });
 
+    const ftypes = require(`${refDir}/fund-types.json`);
+    const typesMap = {};
+    ftypes.fundTypes.forEach(d => {
+      typesMap[d.name] = d.id;
+    });
+
     const fys = require(`${refDir}/fiscal-years.json`);
     let fyId = '';
     fys.fiscalYears.forEach(d => {
@@ -102,8 +108,10 @@ let files = {
           name: r.name,
           fundStatus: 'Active',
           ledgerId: ledgerId,
-          acqUnitIds: [ unitId ]
+          acqUnitIds: [ unitId ],
         }
+        let fundTypeId = typesMap[r.fund_type];
+        if (fundTypeId) fr.fundTypeId = fundTypeId;
         writeObj(files.funds, fr);
         fnCount++;
 
@@ -116,17 +124,18 @@ let files = {
           fundId: id,
           fiscalYearId: fyId,
           budgetStatus: 'Active',
-          acqUnitIds: [ unitId ]
+          acqUnitIds: [ unitId ],
         }
-        bd.initialAllocation = parseInt(r.appropriation, 10) / 10;
-        bd.expenditures = parseInt(r.expenditure, 10) / 10;
-        bd.encumbered = parseInt(r.encumbrance, 10) / 10;
+
+        if (r.appropriation) bd.initialAllocation = parseInt(r.appropriation, 10) / 10;
+        // bd.expenditures = parseInt(r.expenditure, 10) / 10;
+        // bd.encumbered = parseInt(r.encumbrance, 10) / 10;
         
         writeObj(files.budgets, bd);
         bdCount++;
 
       } else {
-        // console.log(`WARN Duplicate fund code "${code}"`);
+        console.log(`WARN Duplicate fund code "${code}"`);
       }
       seen[code] = 1;
     });
