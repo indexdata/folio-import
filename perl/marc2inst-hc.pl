@@ -422,6 +422,8 @@ foreach (keys %{ $mapping_rules }) {
   }
 }
 
+my $bc_seen = {};
+
 foreach (@ARGV) {
   my $infile = $_;
   if (! -e $infile) {
@@ -532,28 +534,20 @@ foreach (@ARGV) {
     my $iiinum = ($marc->field('907')) ? $marc->subfield('907', 'a') : '';
     $iiinum =~ s/.(.+).$/$1/;
     if ($marc->field('001')) {
-      my $in_ctrl = $marc->field('001')->data();
-      my $in_ctrl_type = ($marc->field('003')) ? $marc->field('003')->data() : '';
-      my $id_data = ($in_ctrl_type) ? "($in_ctrl_type)$in_ctrl" : $in_ctrl;
-      my $field = MARC::Field->new('035', ' ', ' ', 'a' => $id_data);
-      $marc->insert_fields_ordered($field);
-      $marc->field('001')->update($iiinum);
-      if ($marc->field('003')) {
-        $marc->field('003')->update($isil);
-      } else {
-        my $field = MARC::Field->new('003', $isil);
-        $marc->insert_fields_ordered($field);  
+      foreach ($marc->field('001')) {
+        my $in_ctrl = $_->data();
+        my $id_data_type = ($marc->field('003')) ? $marc->field('003')->data() : '';
+        my $id_data = ($id_data_type) ? "($id_data_type)$in_ctrl" : $in_ctrl;
+        my $field = MARC::Field->new('035', ' ', ' ', 'a' => $id_data);
+        $marc->insert_fields_ordered($field);
       }
-    } else {
-      my $field = MARC::Field->new('001', $iiinum);
-      $marc->insert_fields_ordered($field);
-      if ($marc->field('003')) {
-        $marc->field('003')->update($isil);
-      } else {
-        my $field = MARC::Field->new('003', $isil);
-        $marc->insert_fields_ordered($field); 
-      }
+    $marc->delete_fields($marc->field('001'));
+    $marc->delete_fields($marc->field('003'));
     }
+    my $cfield = MARC::Field->new('001', $iiinum);
+    $marc->insert_fields_ordered($cfield);
+    $cfield = MARC::Field->new('003', $isil);
+    $marc->insert_fields_ordered($cfield); 
 
     # III specific mapping for discoverySuppress
     if ($marc->subfield('998', 'e') eq 'n') {
@@ -785,7 +779,6 @@ sub make_hi {
   my $hcount = 0;
   my $icount = 0;
   
-  
   foreach my $item ($marc->field($itemtag)) {
     my $loc = $item->subfield('l') || '';
     next if !$loc;
@@ -826,13 +819,19 @@ sub make_hi {
     my $status = $item->subfield('s') || '';
     my @msgs = $item->subfield('m');
     my @notes = $item->subfield('n');
+    my $barcode = $item->subfield('i') || '';
     $status =~ s/\s+$//;
     if ($iid) {
       $iid =~ s/^\.//;
       $irec->{id} = uuid($iid);
       $irec->{holdingsRecordId} = $hid;
       $irec->{hrid} = $iid;
-      $irec->{barcode} = $item->subfield('i') || '';
+      if ($barcode && $bc_seen->{$barcode}) {
+        push @notes, "Duplicate barcode: $barcode";
+      } else {
+        $irec->{barcode} = $barcode;
+      }
+      $bc_seen->{$barcode} = 1;
       if ($blevel eq 's') {
         $irec->{enumeration} = $item->subfield('c') || '';
       } else {
