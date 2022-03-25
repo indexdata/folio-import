@@ -290,6 +290,7 @@ sub processing_funcs {
       if ($ind > 0 && length($out) > $ind) {
         $out = substr($out, $ind);
       }
+      $out =~ s/^['".(\[¡+#\$'‘“?ʻ_-]//;
     } elsif ($_ eq 'set_identifier_type_id_by_name') {
       my $name = $params->{name};
       $out = $refdata->{identifierTypes}->{$name} || '2e8b3b6c-0e7d-4e48-bca2-b0b23b376af5' 
