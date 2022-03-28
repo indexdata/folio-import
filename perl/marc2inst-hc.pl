@@ -38,7 +38,7 @@ my $cntypes = {
   '092' => '6caca63e-5651-4db6-9247-3205156e9699',
   '099' => '6caca63e-5651-4db6-9247-3205156e9699',
 };
-my $version = '4';
+my $version = '5';
 my $isil = 'MWH';
 
 my $rules_file = shift;
