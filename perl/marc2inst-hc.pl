@@ -554,6 +554,12 @@ foreach (@ARGV) {
     if ($marc->subfield('998', 'e') eq 'n') {
       $rec->{discoverySuppress} = JSON::true;
     }
+    foreach ($marc->field('993')) {
+      my $field = $_->clone();
+      $field->set_tag('590');
+      $marc->insert_fields_ordered($field);
+      $marc->delete_fields($_);
+    }
 
     my $srsmarc = $marc;
     if ($marc->field('880')) {
