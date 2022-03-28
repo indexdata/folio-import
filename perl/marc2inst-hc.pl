@@ -874,7 +874,6 @@ sub make_hi {
         }
       }
       foreach (@notes) {
-        if (!$irec->{notes}) { $irec->{notes} = [] }
         my $nobj = {};
         $nobj->{note} = $_;
         $nobj->{itemNoteTypeId} = '8d0a5eca-25de-4391-81a9-236eeefdd20b';  # Note
@@ -885,6 +884,19 @@ sub make_hi {
         $irec->{discoverySuppress} = 'true';
       } else {
         $irec->{discoverySuppress} = 'false';
+      }
+      if ($status eq '9') {
+        $irec->{temporaryLocationId} = $refdata->{locations}->{ondisplay} || '';
+      } elsif ($status eq 'd') {
+        $irec->{itemDamagedStatusId} = $refdata->{itemDamageStatuses}->{Damaged};
+      } elsif ($irec->{status}->{name} eq 'Restricted') {
+        $irec->{permanentLoanTypeId} = $refdata->{loantypes}->{'Non Circulating'};
+      } elsif ($status eq 'q') {
+        my $nobj = {};
+        $nobj->{note} = 'Request at Music Circulation Desk';
+        $nobj->{itemNoteTypeId} = $refdata->{itemNoteTypes}->{'Access Note'} || $refdata->{itemNoteTypes}->{Note} || die "Can't map itemNoteType";
+        $nobj->{staffOnly} = 'false';
+        push @{ $irec->{notes} }, $nobj;
       }
       my $iout = $json->encode($irec);
       $items .= $iout . "\n";
