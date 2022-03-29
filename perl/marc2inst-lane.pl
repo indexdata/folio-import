@@ -67,7 +67,7 @@ my $ifiles = {
   statcodes => 'statcodes.tsv',
   statuses => 'statuses.tsv',
   notes => 'notes.tsv',
-  barcodes => 'barcodes.tsv'
+  barcodes => 'barcodes.tsv',
 };
 
 sub uuid {
@@ -133,6 +133,7 @@ sub makeMapFromTsv {
   my $tsvmap = {};
   foreach (<$refdir/*.tsv>) {
     my $prop = $_;
+    next unless $prop =~ /mtypes/;
     $prop =~ s/^(.+\/)?(.+?)\.tsv/$2/;
     open my $tsv, $_ or die "Can't open $_";
     my $l = 0;
@@ -150,7 +151,7 @@ sub makeMapFromTsv {
       } elsif ($prop =~ /holdings-types/) {
         $name = $col[1];
       } elsif ($prop =~ /mtypes/) {
-        $name = $col[2];
+        $name = $col[1];
       } elsif ($prop =~ /loantypes/) {
         $name = $col[3];
       }      
@@ -181,8 +182,6 @@ sub mapItems {
   }
 }
 mapItems();
-print Dumper(keys %{ $items });
-# print Dumper($items->{notes});
 
 my $blvl = {
   'm' => 'Monograph',
@@ -511,7 +510,7 @@ foreach (@ARGV) {
       my $h = make_holdings($_);
       $hrecs .= $h->{holdings} . "\n";
       if ($h->{items}->[0]) {
-        foreach ($h->{items}) {
+        foreach (@{ $h->{items} }) {
           $irecs .= $json->encode($_) . "\n";
           $icount++;
         }
@@ -772,7 +771,7 @@ foreach (@ARGV) {
       }
 
       if ($irecs) {
-        print $IOUT, $irecs;
+        print $IOUT $irecs;
         $irecs = '';
       }
     }
@@ -892,6 +891,7 @@ sub make_items {
     $ir->{yearCaption} = $c[9] if $c[9];
     $ir->{numberOfPieces} = $c[10] if $c[10];
     $ir->{status}->{name} = 'Available';
+    $ir->{permanentLoanTypeId} = $refdata->{loantypes}->{'Can circulate'} or die "Can't find permanentLoanTypeId for $id";
     my $bc = $items->{barcodes}->{$link}->[0] || '';
     if ($bc) {
       $bc =~ s/\t.+//;
@@ -909,8 +909,7 @@ sub make_items {
     }
     my $sc = $items->{statcodes}->{$link};
     foreach (@{ $sc }) {
-      my $code = $refdata->{statisticalCodes}->{$_} || '';
-      push @{ $ir->{statisticalCodeIds} }, $code if $code;
+      push @{ $ir->{materialTypeId} }, $tofolio->{mtypes}->{$_} || $tofolio->{mtypes}->{unspecified} || die "Can't set material type for $id"; 
     }
     push @out, $ir;
   }

@@ -8,10 +8,11 @@ const tsvFile = argv._.shift();
 const ncol = argv.n;
 const ccol = argv.c;
 const source = argv.s;
+const normalize = argv.z;
 
 try {
   if (!tsvFile) {
-    throw 'Usage: node makeCrud.js [ -n name_col, -c code_col , -s source_value ] <tsv_file> [ field=value, vield=value, ...]';
+    throw 'Usage: node makeCrud.js [ -n name_col, -c code_col, -s source_value, -z normlize_code ] <tsv_file> [ field=value, vield=value, ...]';
   }
   let fields = {};
   argv._.forEach(a => {
@@ -23,7 +24,7 @@ try {
   const nseen = {};
   const cseen = {};
   lines.forEach(l => {
-    if (l.match(/\t/)) {
+    if (l.match(/\t|\w/)) {
       let col = l.split(/\t/);
       let out = {};
       if (ncol) {
@@ -32,6 +33,11 @@ try {
       }
       if (ccol) {
         let c = ccol - 1;
+        if (normalize) {
+          col[c] = col[c].replace(/'/g, '');
+          col[c] = col[c].replace(/\W+/g, '_');
+          col[c] = col[c].toLowerCase();
+        }
         out.code = col[c].trim();
       }
       if (source) {
@@ -43,6 +49,7 @@ try {
       if (cseen[out.code] && out.name) {
         out.code += ` (${out.name})`;
       }
+
       if (out.name) nseen[out.name] = 1;
       if (out.code) cseen[out.code] = 1;
       if (out.code) {
