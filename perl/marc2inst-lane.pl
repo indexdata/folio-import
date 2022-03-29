@@ -34,6 +34,7 @@ my $version = '1';
 my $isil = 'CSt-L';
 my $prefix = 'L';
 my $hprefix = "${prefix}H";
+my $iprefix = "${prefix}I";
 my $srstype = 'MARC';
 my @hnotes = qw(852z 907abcdefixy 931a 9613anwx 963adfghklnpqsw 9663abcdeqrw 9673aberw 990a);
 
@@ -66,7 +67,7 @@ my $ifiles = {
   statcodes => 'statcodes.tsv',
   statuses => 'statuses.tsv',
   notes => 'notes.tsv',
-  barcoces => 'barcodes.tsv'
+  barcodes => 'barcodes.tsv'
 };
 
 sub uuid {
@@ -173,15 +174,15 @@ sub mapItems {
     my $path = "$dir/$fn";
     open ITD, "<:encoding(UTF-8)", $path;
     while (<ITD>) {
-      chomp;
-      my @d = split(/\t/);
-      $items->{$prop}->{$d[0]} = $_;
+      s/[\r\n]//g;
+      my @d = split /\t/, $_, 2;
+      push @{ $items->{$prop}->{$d[0]} }, $d[1];
     }
   }
 }
 mapItems();
-print Dumper($items->{notes});
-exit;
+print Dumper(keys %{ $items });
+# print Dumper($items->{notes});
 
 my $blvl = {
   'm' => 'Monograph',
@@ -500,15 +501,21 @@ foreach (@ARGV) {
   my $inst_recs;
   my $srs_recs;
   my $hrecs;
-  my $item_recs;
+  my $irecs;
   my $idmap_lines;
   my $success = 0;
   my $hrids = {};
   my $rec;
   while (<RAW>) {
     if (/^\d{5}.[uvxy] /) {
-      my $h .= make_holdings($_) . "\n";
-      $hrecs .= $h;
+      my $h = make_holdings($_);
+      $hrecs .= $h->{holdings} . "\n";
+      if ($h->{items}->[0]) {
+        foreach ($h->{items}) {
+          $irecs .= $json->encode($_) . "\n";
+          $icount++;
+        }
+      }
       $hcount++;
     } else {
       $rec = {
@@ -763,6 +770,11 @@ foreach (@ARGV) {
         print $HOUT $hrecs;
         $hrecs = '';
       }
+
+      if ($irecs) {
+        print $IOUT, $irecs;
+        $irecs = '';
+      }
     }
   }
   my $tt = time() - $start;
@@ -851,8 +863,58 @@ sub make_holdings {
     }
   }
 
-  my $out = $json->encode($hr);
+  my $out = {
+    holdings => $json->encode($hr),
+  };
+  my @items = make_items($hr->{hrid}, $hr->{id});
+  push @{ $out->{items} }, @items;
   return $out;
+}
+
+sub make_items {
+  my $hhrid = shift;
+  my $hid = shift;
+  $hhrid =~ s/^[A-L]+//;
+  my @out;
+  foreach (@{ $items->{items}->{$hhrid} }) {
+    my @c = split /\t/, $_;
+    my $link = $c[0];
+    my $id = $iprefix . $link;
+    my $ir = {
+      id => uuid($id),
+      holdingsRecordId => $hid,
+      hrid => $id,
+      copyNumber => $c[4],
+    };
+    $ir->{callNumber} = $c[5] if $c[5];
+    $ir->{enumeration} = $c[6] if $c[6];
+    $ir->{chronology} = $c[7] if $c[7];
+    $ir->{yearCaption} = $c[9] if $c[9];
+    $ir->{numberOfPieces} = $c[10] if $c[10];
+    $ir->{status}->{name} = 'Available';
+    my $bc = $items->{barcodes}->{$link}->[0] || '';
+    if ($bc) {
+      $bc =~ s/\t.+//;
+      $ir->{barcode} = $bc;
+    }
+    my $nt = $items->{notes}->{$link};
+    foreach (@{ $nt }) {
+      s/\t.+//;
+      my $n = {
+        note => $_,
+        staffOnly => 'true'
+      };
+      $n->{itemNoteTypeId} = $refdata->{itemNoteTypes}->{Note};
+      push @{ $ir->{notes} }, $n;
+    }
+    my $sc = $items->{statcodes}->{$link};
+    foreach (@{ $sc }) {
+      my $code = $refdata->{statisticalCodes}->{$_} || '';
+      push @{ $ir->{statisticalCodeIds} }, $code if $code;
+    }
+    push @out, $ir;
+  }
+  return @out;
 }
 
 sub make_notes {
