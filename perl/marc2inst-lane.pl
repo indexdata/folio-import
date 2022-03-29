@@ -865,7 +865,7 @@ sub make_holdings {
   my $out = {
     holdings => $json->encode($hr),
   };
-  my @items = make_items($hr->{hrid}, $hr->{id});
+  my @items = make_items($hr->{hrid}, $hr->{id}, $hr->{callNumberTypeId});
   push @{ $out->{items} }, @items;
   return $out;
 }
@@ -873,6 +873,7 @@ sub make_holdings {
 sub make_items {
   my $hhrid = shift;
   my $hid = shift;
+  my $cntype = shift || '';
   $hhrid =~ s/^[A-L]+//;
   my @out;
   foreach (@{ $items->{items}->{$hhrid} }) {
@@ -885,7 +886,10 @@ sub make_items {
       hrid => $id,
       copyNumber => $c[4],
     };
-    $ir->{callNumber} = $c[5] if $c[5];
+    if ($c[5]) {
+      $ir->{itemLevelCallNumber} = $c[5];
+      $ir->{itemLevelCallNumberTypeId} = $cntype;
+    }
     $ir->{enumeration} = $c[6] if $c[6];
     $ir->{chronology} = $c[7] if $c[7];
     $ir->{yearCaption} = $c[9] if $c[9];
