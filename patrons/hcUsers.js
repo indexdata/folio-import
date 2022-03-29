@@ -131,7 +131,6 @@ try {
       for (let x = 0; x < c.length; x++) {
         c[x] = c[x].trim();
       }
-      console.log(l);
       let u = {};
       u.username = c[9];
       u.id = uuid(u.username, ns);
@@ -170,7 +169,15 @@ try {
       u.personal = per;
       if (!seen[u.id]) {
         let ustr = JSON.stringify(u);
-        fs.writeFileSync(outPath, `${ustr}\n`, { flag: 'as'});
+        fs.writeFileSync(outPath, `${ustr}\n`, { flag: 'as' });
+        let pu = {
+          id: uuid(u.id, ns),
+          userId: u.id,
+          permissions: []
+        }
+        let pstr = JSON.stringify(pu);
+        fs.writeFileSync(permPath, pstr + '\n', { flag: 'as' });
+        pcount++;
         succ++;
       } else {
         console.log('ERROR Duplicate Ids:', u.id);
