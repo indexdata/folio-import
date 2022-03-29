@@ -907,10 +907,8 @@ sub make_items {
       $n->{itemNoteTypeId} = $refdata->{itemNoteTypes}->{Note};
       push @{ $ir->{notes} }, $n;
     }
-    my $sc = $items->{statcodes}->{$link};
-    foreach (@{ $sc }) {
-      push @{ $ir->{materialTypeId} }, $tofolio->{mtypes}->{$_} || $tofolio->{mtypes}->{unspecified} || die "Can't set material type for $id"; 
-    }
+    my $sc = ($items->{statcodes}->{$link}) ? $items->{statcodes}->{$link}->[0] : '';
+    $ir->{materialTypeId} = $tofolio->{mtypes}->{$sc} || $refdata->{mtypes}->{unspecified} || die "Can't set material type for $id"; 
     push @out, $ir;
   }
   return @out;
