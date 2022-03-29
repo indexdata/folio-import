@@ -143,10 +143,10 @@ try {
       let dept = c[3];
       if (dept && deptMap[dept]) u.departments = [ deptMap[dept] ];
       if (c[4]) {
-        u.enrollmentDate = c[4];
+        u.enrollmentDate = new Date(c[4]);
       }
       if (c[5]) {
-        u.expirationDate = c[5];
+        u.expirationDate = new Date(c[5]);
       }
       u.externalSystemId = c[6];
       let pg = c[7];

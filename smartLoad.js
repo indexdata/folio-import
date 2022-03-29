@@ -83,6 +83,10 @@ let inFile = process.argv[2];
           ep = 'source-storage/records';
       } else if (rec.jobExecutionId) {
           ep = 'source-storage/snapshots';
+      } else if (rec.userId && rec.permissions) {
+          ep = 'perms/users';
+      } else if (rec.patronGroup) {
+          ep = 'users';
       } else {
         throw new Error(`Endpoint not found for ${line}`);
       }
