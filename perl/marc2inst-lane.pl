@@ -693,6 +693,18 @@ foreach (@ARGV) {
       $rec->{subjects} = dedupe(@{ $rec->{subjects} });
       $rec->{languages} = dedupe(@{ $rec->{languages} });
       $rec->{series} = dedupe(@{ $rec->{series} });
+      if ($marc->field('008')) {
+        my $cd = $marc->field('008')->data();
+        my $yr = substr($cd, 0, 2);
+        my $mo = substr($cd, 2, 2);
+        my $dy = substr($cd, 4, 2);
+        if ($yr =~ /^[012]/) {
+          $yr = "20$yr";
+        } else {
+          $yr = "19$yr";
+        }
+        $rec->{catalogedDate} = "$yr-$mo-$dy";
+      }
       
       # Assign uuid based on hrid;
       if (!$rec->{hrid}) {
