@@ -5343,6 +5343,62 @@
       ]
     }
   ],
+  "591": [
+    {
+      "entity": [
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_note_type_id",
+                  "parameter": {
+                    "name": "Local notes"
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "notes.instanceNoteTypeId",
+          "subfield": [
+            "a"
+          ],
+          "description": "Instance note type id",
+          "applyRulesOnConcatenatedData": true
+        },
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "trim_period"
+                }
+              ]
+            }
+          ],
+          "target": "notes.note",
+          "subfield": [
+            "a"
+          ],
+          "description": "Local notes",
+          "applyRulesOnConcatenatedData": true
+        },
+        {
+          "rules": [
+            {
+              "value": "true",
+              "conditions": []
+            }
+          ],
+          "target": "notes.staffOnly",
+          "subfield": [
+            "a"
+          ],
+          "description": "If true, determines that the note should not be visible for others than staff"
+        }
+      ]
+    }
+  ],
   "600": [
     {
       "rules": [
