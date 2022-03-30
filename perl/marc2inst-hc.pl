@@ -557,7 +557,6 @@ foreach (@ARGV) {
     foreach ($marc->field('993')) {
       my $data = $_->as_string(); 
       if ($data =~ /^(GIFT.*?[:;]) (.+)/i) {
-        print "$1\n";
         my $field = MARC::Field->new('541', ' ', ' ', 'c' => $1, 'a' => $2);
         $marc->insert_fields_ordered($field);
       } else {
