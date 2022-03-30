@@ -18,10 +18,8 @@ use Time::Piece;
 use File::Basename;
 use Data::Dumper;
 
-my $version = '4';
-$version = '';
+my $version = '5';
 my $isil = 'MWH';
-$isil = '';
 
 binmode STDOUT, ":utf8";
 
@@ -59,7 +57,8 @@ my $mdate = sprintf("%04d-%02d-%02dT%02d:%02d:%02d-0500", $lt[5] + 1900, $lt[4] 
 
 sub uuid {
   my $text = shift;
-  my $uuid = create_uuid_as_string(UUID_V5, $text . $isil . $version);
+  # my $uuid = create_uuid_as_string(UUID_V5, $text . $isil . $version);
+  my $uuid = create_uuid_as_string(UUID_V5, $text . $version);
   return $uuid;
 }
 
@@ -167,7 +166,7 @@ foreach (@ARGV) {
 
   my $outfile = "$dir/${fn}_iii_holdings.jsonl";
   unlink $outfile;
-  open my $OUT, ">>", $outfile;
+  open my $OUT, ">>:encoding(UTF-8)", $outfile;
 
   my $itemfile = "$dir/${fn}_iii_holdings_items.jsonl";
   unlink $itemfile;
@@ -178,118 +177,120 @@ foreach (@ARGV) {
   my $errcount = 0;
   my $start = time();
  
-  open IN, $infile;
+  open IN, '<:encoding(UTF-8)', $infile;
 
   my $seen = {};
   while (<IN>) { 
     chomp;
-    my $obj = $json->decode($_);
-    my $iii_bid = $obj->{bibIds}->[0];
-    my $bid = "b$iii_bid";
-    my $psv = $inst_map->{$bid} || next;
-    my @b = split(/\|/, $psv);
+    my $obj;
+    eval { $obj = $json->decode($_) };
+    next unless $obj;
+      my $iii_bid = $obj->{bibIds}->[0];
+      my $bid = "b$iii_bid";
+      my $psv = $inst_map->{$bid} || next;
+      my @b = split(/\|/, $psv);
 
-    my $vf = {};
-    foreach my $f (@{ $obj->{varFields} }) {
-      my $t = $f->{marcTag};
-      my $ft = $f->{fieldTag};
-      if ($t && $t gt '009') {
-        my $subs = {};
-        foreach my $sf (@{ $f->{subfields} }) {
-          my $c = $sf->{tag};
-          $subs->{$c} = $sf->{content};
+      my $vf = {};
+      foreach my $f (@{ $obj->{varFields} }) {
+        my $t = $f->{marcTag};
+        my $ft = $f->{fieldTag};
+        if ($t && $t gt '009') {
+          my $subs = {};
+          foreach my $sf (@{ $f->{subfields} }) {
+            my $c = $sf->{tag};
+            $subs->{$c} = $sf->{content};
+          }
+          push @{ $vf->{$t} }, $subs;
+        } elsif ($ft) {
+          push @{ $vf->{$ft} }, $f->{content};
         }
-        push @{ $vf->{$t} }, $subs;
-      } elsif ($ft) {
-        push @{ $vf->{$ft} }, $f->{content};
       }
-    }
-    # print Dumper($vf);
-    my $ff = $obj->{fixedFields};
-    my $h = {};
-    my $hid = "c" . $obj->{id};
-    next if $seen->{$hid};
-    $seen->{$hid} = 1;
-    my $loc_code = $ff->{40}->{value} || 'xxxxx';
-    $loc_code =~ s/\s*$//;
-    my $hkey = "$bid-$loc_code";
-    $h->{id} = uuid($hkey);
-    $h->{hrid} = $hkey;
-    $h->{instanceId} = $b[0];
-    my $loc_id = $refdata->{locations}->{$loc_code} || $refdata->{locations}->{xxxxx};
-    $h->{permanentLocationId} = $loc_id;
-    $h->{holdingsTypeId} = $b[3];
-    my $cn = $vf->{'090'}->[0]->{a} || '';
-    if ($cn) {
-      $h->{callNumberTypeId} = '95467209-6d7b-468b-94df-0f5d7ad2747d' # LC
-    } else {
-      $cn = $b[1];
-      $h->{callNumberTypeId} = '6caca63e-5651-4db6-9247-3205156e9699' if $cn; # other
-    }
-    $h->{callNumber} = $cn if $cn;
-    $h->{discoverySuppress} = $obj->{suppressed};
-    foreach my $t ('n', 'z') {
-      foreach (@{ $vf->{$t} }) {
-        push @{ $h->{notes} }, make_notes($t, $_);
+      # print Dumper($vf);
+      my $ff = $obj->{fixedFields};
+      my $h = {};
+      my $hid = "c" . $obj->{id};
+      next if $seen->{$hid};
+      $seen->{$hid} = 1;
+      my $loc_code = $ff->{40}->{value} || 'xxxxx';
+      $loc_code =~ s/\s*$//;
+      my $hkey = "$bid-$loc_code";
+      $h->{id} = uuid($hkey);
+      $h->{hrid} = $hkey;
+      $h->{instanceId} = $b[0];
+      my $loc_id = $refdata->{locations}->{$loc_code} || $refdata->{locations}->{xxxxx};
+      $h->{permanentLocationId} = $loc_id;
+      $h->{holdingsTypeId} = $b[3];
+      my $cn = $vf->{'090'}->[0]->{a} || '';
+      if ($cn) {
+        $h->{callNumberTypeId} = '95467209-6d7b-468b-94df-0f5d7ad2747d' # LC
+      } else {
+        $cn = $b[1];
+        $h->{callNumberTypeId} = '6caca63e-5651-4db6-9247-3205156e9699' if $cn; # other
       }
-    }
+      $h->{callNumber} = $cn if $cn;
+      $h->{discoverySuppress} = $obj->{suppressed};
+      foreach my $t ('n', 'z') {
+        foreach (@{ $vf->{$t} }) {
+          push @{ $h->{notes} }, make_notes($t, $_);
+        }
+      }
 
-    my $hs = statement($obj);
-    foreach my $t ('866', '867', '868') {
-      my $htype = 'holdingsStatements';
-      if ($t eq '867') {
-        $htype = 'holdingsStatementsForSupplements';
-      } elsif ($t eq '868') {
-        $htype = 'holdingsStatementsForIndexes';
+      my $hs = statement($obj);
+      foreach my $t ('866', '867', '868') {
+        my $htype = 'holdingsStatements';
+        if ($t eq '867') {
+          $htype = 'holdingsStatementsForSupplements';
+        } elsif ($t eq '868') {
+          $htype = 'holdingsStatementsForIndexes';
+        }
+        foreach my $f (@{ $hs->{$t}}) {
+          push @{ $h->{$htype} }, make_statement($f->{text}, $f->{note});
+        }
       }
-      foreach my $f (@{ $hs->{$t}}) {
-        push @{ $h->{$htype} }, make_statement($f->{text}, $f->{note});
-      }
-    }
 
-    if (0) {
-      foreach my $t ('863', '864', '865') {
-        foreach my $f (@{ $vf->{$t} }) {
-          my @data;
-          my @notes;
-          for my $s ('a' .. 'z') {
-            if ($f->{$s}) {
-              if ($s =~ /[mnz]/) {
-                push @notes, $f->{$s};
-              } else {
-                push @data, $f->{$s};
+      if (0) {
+        foreach my $t ('863', '864', '865') {
+          foreach my $f (@{ $vf->{$t} }) {
+            my @data;
+            my @notes;
+            for my $s ('a' .. 'z') {
+              if ($f->{$s}) {
+                if ($s =~ /[mnz]/) {
+                  push @notes, $f->{$s};
+                } else {
+                  push @data, $f->{$s};
+                }
               }
             }
+            my $text = join ', ', @data;
+            my $note = join ', ', @notes;
+            my $htype = 'holdingsStatements';
+            if ($t eq '864') {
+              $htype = 'holdingsStatementsForSupplements';
+            } elsif ($t eq '865') {
+              $htype = 'holdingsStatementsForIndexes';
+            }
+            push @{ $h->{$htype} }, make_statment($text, $note);
           }
-          my $text = join ', ', @data;
-          my $note = join ', ', @notes;
-          my $htype = 'holdingsStatements';
-          if ($t eq '864') {
-            $htype = 'holdingsStatementsForSupplements';
-          } elsif ($t eq '865') {
-            $htype = 'holdingsStatementsForIndexes';
-          }
-          push @{ $h->{$htype} }, make_statment($text, $note);
         }
       }
-    }
-    
-    my $hr = $json->encode($h);
-    write_objects($OUT, $hr . "\n");
+      
+      my $hr = $json->encode($h);
+      write_objects($OUT, $hr . "\n");
 
-    # make dummy items
-    my $itm = {};
-    $itm->{holdingsRecordId} = $h->{id};
-    $itm->{hrid} = $h->{hrid} . 'item';
-    $itm->{id} = uuid($itm->{hrid});
-    $itm->{materialTypeId} = '392bc101-5ec1-46bc-9f1a-7bfa899ce67d'; # other
-    $itm->{permanentLoanTypeId} = 'aecb53e1-46ec-40db-b268-a90b7e76cd16'; # non circulating
-    $itm->{status}->{name} = 'Restricted';
-    my $ir = $json->encode($itm);
-    write_objects($IOUT, $ir . "\n");
+      # make dummy items
+      my $itm = {};
+      $itm->{holdingsRecordId} = $h->{id};
+      $itm->{hrid} = $h->{hrid} . 'item';
+      $itm->{id} = uuid($itm->{hrid});
+      $itm->{materialTypeId} = '392bc101-5ec1-46bc-9f1a-7bfa899ce67d'; # other
+      $itm->{permanentLoanTypeId} = 'aecb53e1-46ec-40db-b268-a90b7e76cd16'; # non circulating
+      $itm->{status}->{name} = 'Restricted';
+      my $ir = $json->encode($itm);
+      # write_objects($IOUT, $ir . "\n");
 
-    $count++;
-    $ttl++;
+      $count++;
+      $ttl++;
   } 
   close IN;
 }
@@ -337,7 +338,7 @@ sub statement {
               next;
             }
             if (/[a-h]/) {
-              my $suf = $pat->{$_};
+              my $suf = $pat->{$_} || '';
               if ($suf =~ /\(year\)/) {
                 $suf = '';
               } elsif ($suf =~ /\(month|season\)/) {
@@ -426,6 +427,9 @@ sub parse {
       $sub->{ind1} = $v->{ind1};
       $sub->{ind2} = $v->{ind2};
       push @{ $sub->{arr} }, @ord;
+      if (!$num && $tag =~ /866|867|868/) {
+        $num = 1;
+      }
       if ($num) {
         push @{ $field->{$tag}->{$num} }, $sub;
       } else {
