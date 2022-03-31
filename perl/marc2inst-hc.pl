@@ -809,7 +809,7 @@ foreach (@ARGV) {
       write_objects($IOUT, $item_recs);
       $item_recs = '';
 
-      write_objects($IERR, $ierr_path);
+      write_objects($IERR, $ierr_recs);
       $item_recs = '';
 
       print IDMAP $idmap_lines;
