@@ -424,6 +424,7 @@ foreach (keys %{ $mapping_rules }) {
 }
 
 my $bc_seen = {};
+my $item_seen = {};
 
 foreach (@ARGV) {
   my $infile = $_;
@@ -438,6 +439,8 @@ foreach (@ARGV) {
   my $count = 0;
   my $icount = 0;
   my $hcount = 0;
+  my $pcount = 0;
+  my $iecount = 0;
   my $errcount = 0;
   my $start = time();
 
@@ -461,6 +464,11 @@ foreach (@ARGV) {
   $err_path =~ s/^(.+)\..+$/$1_err.mrc/;
   unlink $err_path;
 
+  my $presuc_file = $infile;
+  $presuc_file =~ s/^(.+)\..+$/$1_presuc.jsonl/;
+  unlink $presuc_file;
+  open my $PSOUT, ">>:encoding(UTF-8)", $presuc_file;
+
   my $holdings_path = $infile;
   $holdings_path =~ s/^(.+)\..+$/$1_holdings.jsonl/;
   unlink $holdings_path;
@@ -470,6 +478,11 @@ foreach (@ARGV) {
   $items_path =~ s/^(.+)\..+$/$1_items.jsonl/;
   unlink $items_path;
   open my $IOUT, ">>:encoding(UTF-8)", $items_path;
+
+  my $ierr_path = $infile;
+  $ierr_path =~ s/^(.+)\..+$/$1_item_dupes.jsonl/;
+  unlink $ierr_path;
+  open my $IERR, ">>:encoding(UTF-8)", $ierr_path;
 
   my $snapshot_id = make_snapshot($snap_file);
   
@@ -484,6 +497,7 @@ foreach (@ARGV) {
   my $srs_recs;
   my $hold_recs;
   my $item_recs;
+  my $ierr_recs;
   my $idmap_lines;
   my $success = 0;
   my $hrids = {};
@@ -740,6 +754,39 @@ foreach (@ARGV) {
         $item_recs .= $hi->{items};
         $icount += $hi->{icount};
       }
+      if ($hi->{itemerrs}) {
+        $ierr_recs .= $hi->{itemerrs};
+        $iecount += $hi->{iecount};
+      }
+
+      # make preceding succeding titles
+      foreach my $f ($marc->field('78[05]')) {
+        my $presuc = {};
+        $presuc->{title} = $f->as_string('ast');
+        if ($f->tag() eq '780') {
+          $presuc->{precedingInstanceId} = 'PRECEDING_INSTANCE' # dummy number
+        } else {
+          $presuc->{succeedingInstanceId} = 'SUCCEEDING_INSTANCE' # dummy number
+        }
+        foreach my $sf (('w', 'x')) {
+          my $idtype = $refdata->{identifierTypes}->{'Other standard identifier'};
+          foreach ($f->subfield($sf)) {
+            if (/OCoLC|ocm|ocn/) {
+              $idtype = $refdata->{identifierTypes}->{'OCLC'};
+            } elsif (/DLC/) {
+              $idtype = $refdata->{identifierTypes}->{'LCCN'};
+            } elsif (/^\d{4}-[0-9Xx]{4}/) {
+              $idtype = $refdata->{identifierTypes}->{'ISSN'};
+            } elsif (/^[0-9Xx]{10,13}/) {
+              $idtype = $refdata->{identifierTypes}->{'ISBN'};
+            }
+            my $idObj = { value=>$_, identifierTypeId=>$idtype };
+            push @{ $presuc->{identifiers} }, $idObj;
+          }
+        }
+        write_objects($PSOUT, $json->encode($presuc) . "\n");
+        $pcount++;
+      }
 
     } else {
       open ERROUT, ">>:encoding(UTF-8)", $err_path;
@@ -762,6 +809,9 @@ foreach (@ARGV) {
       write_objects($IOUT, $item_recs);
       $item_recs = '';
 
+      write_objects($IERR, $ierr_path);
+      $item_recs = '';
+
       print IDMAP $idmap_lines;
       $idmap_lines = '';
     }
@@ -771,6 +821,8 @@ foreach (@ARGV) {
   print "\nInstances: $success ($save_path)";
   print "\nHoldings:  $hcount ($holdings_path)";
   print "\nItems:     $icount ($items_path)";
+  print "\nPreSuc:    $pcount ($presuc_file)";
+  print "\nItemDupes: $iecount ($ierr_path)";
   print "\nErrors:    $errcount\n";
 }
 
@@ -788,11 +840,14 @@ sub make_hi {
   my $hrec = {};
   my $holdings = '';
   my $items = '';
+  my $itemerrs = '';
   my $hcount = 0;
   my $icount = 0;
+  my $iecount = 0;
   
   foreach my $item ($marc->field($itemtag)) {
     my $loc = $item->subfield('l') || '';
+    my $iid = $item->subfield('y');
     next if !$loc;
     $loc =~ s/(\s*$)//;
     my $hkey = "$bhrid-$loc";
@@ -826,7 +881,6 @@ sub make_hi {
 
     # make item record;
     my $irec = {};
-    my $iid = $item->subfield('y');
     my $itype = $item->subfield('t');
     my $status = $item->subfield('s') || '';
     my @msgs = $item->subfield('m');
@@ -840,7 +894,7 @@ sub make_hi {
       $irec->{hrid} = $iid;
       if ($barcode && $bc_seen->{$barcode}) {
         push @notes, "Duplicate barcode: $barcode";
-      } else {
+      } elsif ($barcode) {
         $irec->{barcode} = $barcode;
       }
       $bc_seen->{$barcode} = 1;
@@ -903,16 +957,25 @@ sub make_hi {
         $nobj->{staffOnly} = 'false';
         push @{ $irec->{notes} }, $nobj;
       }
+      
       my $iout = $json->encode($irec);
-      $items .= $iout . "\n";
-      $icount++;
+      if (!$item_seen->{$iid}) {
+        $items .= $iout . "\n";
+        $icount++;
+      } else {
+        $itemerrs .= $iout . "\n";
+        $iecount++;
+      }
+      $item_seen->{$iid} = 1;
     }
   }
   return {
     holdings => $holdings,
     items => $items,
+    itemerrs => $itemerrs,
     hcount => $hcount,
-    icount => $icount
+    icount => $icount,
+    iecount => $iecount
   };
 }
 
