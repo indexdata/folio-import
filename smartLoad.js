@@ -87,6 +87,8 @@ let inFile = process.argv[2];
           ep = 'perms/users';
       } else if (rec.patronGroup) {
           ep = 'users';
+      } else if (rec.succeedingInstanceId || rec.precedingInstanceId) {
+          ep = 'preceding-succeeding-titles';
       } else {
         throw new Error(`Endpoint not found for ${line}`);
       }
