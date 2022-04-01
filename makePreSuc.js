@@ -52,11 +52,7 @@ let inFile = process.argv[2];
           let inst = res.body.instances;
           if (inst.length > 0) {
             linkId = inst[0].id;
-            if (rec.precedingInstanceId) {
-              rec.precedingInstanceId = linkId;
-            } else {
-              rec.succeedingInstanceId = linkId;
-            }
+            rec.precedingInstanceId = linkId;
             let out = JSON.stringify(rec) + '\n';
             console.log(`INFO match found for ${linkId}`);
             fs.writeFileSync(outPath, out, { flag: 'as' })

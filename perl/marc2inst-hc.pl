@@ -760,14 +760,10 @@ foreach (@ARGV) {
       }
 
       # make preceding succeding titles
-      foreach my $f ($marc->field('78[05]')) {
+      foreach my $f ($marc->field('780')) {
         my $presuc = {};
         $presuc->{title} = $f->as_string('ast');
-        if ($f->tag() eq '780') {
-          $presuc->{precedingInstanceId} = 'PRECEDING_INSTANCE' # dummy number
-        } else {
-          $presuc->{succeedingInstanceId} = 'SUCCEEDING_INSTANCE' # dummy number
-        }
+        $presuc->{succeedingInstanceId} = $rec->{id};
         foreach my $sf (('w', 'x')) {
           my $idtype = $refdata->{identifierTypes}->{'Other standard identifier'};
           foreach ($f->subfield($sf)) {
