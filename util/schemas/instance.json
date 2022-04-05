@@ -8,6 +8,10 @@
       "description": "The unique ID of the instance record; a UUID",
       "$ref": "uuid.json"
     },
+    "_version": {
+      "type": "integer",
+      "description": "Record version for optimistic locking"
+    },
     "hrid": {
       "type": "string",
       "description": "The human readable ID, also called eye readable ID. A system-assigned sequential ID which maps to the Instance ID"
@@ -234,6 +238,21 @@
       },
       "uniqueItems": true
     },
+    "publicationPeriod": {
+      "type": "object",
+      "description": "Publication period",
+      "properties": {
+        "start": {
+          "type": "integer",
+          "description": "Publication start year"
+        },
+        "end": {
+          "type": "integer",
+          "description": "Publication end year"
+        }
+      },
+      "additionalProperties": false
+    },
     "electronicAccess": {
       "type": "array",
       "description": "List of electronic access items",
@@ -312,7 +331,7 @@
     },
     "notes": {
       "type": "array",
-      "description": "Bibliographic notes (e.g. general notes, specialized notes), and administrative notes",
+      "description": "Bibliographic notes (e.g. general notes, specialized notes)",
       "items": {
         "type": "object",
         "properties": {
@@ -332,6 +351,14 @@
         }
       }
     },
+    "administrativeNotes":{
+      "type": "array",
+      "description": "Administrative notes",
+      "minItems": 0,
+      "items": {
+        "type": "string"
+      }
+    },
     "modeOfIssuanceId": {
       "type": "string",
       "description": "UUID of the RDA mode of issuance, a categorization reflecting whether a resource is issued in one or more parts, the way it is updated, and whether its termination is predetermined or not (e.g. monograph,  sequential monograph, serial; integrating Resource, other)",
@@ -343,7 +370,8 @@
     },
     "previouslyHeld": {
       "type": "boolean",
-      "description": "Records the fact that the resource was previously held by the library for things like Hathi access, etc."
+      "description": "Records the fact that the resource was previously held by the library for things like Hathi access, etc.",
+      "default": false
     },
     "staffSuppress": {
       "type": "boolean",
@@ -358,8 +386,7 @@
       "type": "array",
       "description": "List of statistical code IDs",
       "items": {
-        "type": "string",
-        "$ref": "uuid.json"
+        "type": "string"
       },
       "uniqueItems": true
     },
