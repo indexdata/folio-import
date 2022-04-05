@@ -1,5 +1,7 @@
 /* 
   Find requests on items that have a status of Declared lost or Aged to lost.
+  This script will also try to find a requestable item on the same instance and 
+  place a move request to that item.
 */
 
 
