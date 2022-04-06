@@ -69,10 +69,18 @@ let inFile = process.argv[2];
       let rec = JSON.parse(line);
       let lDate = new Date();
       let ep;
-      if (rec.fundStatus) {
+      if (rec.periodStart && rec.periodEnd) {
+          ep = 'finance-storage/fiscal-years';
+      } else if (rec.ledgerStatus) {
+          ep = 'finance-storage/ledgers';
+      } else if (rec.fundStatus) {
           ep = 'finance-storage/funds';
       } else if (rec.budgetStatus) {
           ep = 'finance-storage/budgets';
+      } else if (inFile.match(/groups/i) && rec.status && rec.code && rec.name) {
+          ep = 'finance-storage/groups';
+      } else if (rec.fiscalYearId && rec.groupId && rec.fundId) {
+          ep = 'finance-storage/group-fund-fiscal-years';
       } else if (rec.holdingsRecordId && rec.materialTypeId) {
           ep = 'item-storage/items';
       } else if (rec.instanceId && rec.permanentLocationId) {
