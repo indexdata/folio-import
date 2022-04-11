@@ -97,6 +97,8 @@ let inFile = process.argv[2];
           ep = 'users';
       } else if (rec.succeedingInstanceId || rec.precedingInstanceId) {
           ep = 'preceding-succeeding-titles';
+      } else if (inFile.match(/organizations/)) {
+          ep = 'organizations-storage/organizations';
       } else {
         throw new Error(`Endpoint not found for ${line}`);
       }
