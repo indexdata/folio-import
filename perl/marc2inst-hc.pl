@@ -568,17 +568,17 @@ foreach (@ARGV) {
     if ($marc->subfield('998', 'e') eq 'n') {
       $rec->{discoverySuppress} = JSON::true;
     }
-    foreach ($marc->field('993')) {
-      my $data = $_->as_string(); 
-      if ($data =~ /^(GIFT.*?[:;]) (.+)/i) {
-        my $field = MARC::Field->new('541', ' ', ' ', 'c' => $1, 'a' => $2);
-        $marc->insert_fields_ordered($field);
-      } else {
-        my $field = MARC::Field->new('591', ' ', ' ', 'a' => $data); 
-        $marc->insert_fields_ordered($field);
-      }
+    # foreach ($marc->field('993')) {
+    #  my $data = $_->as_string(); 
+      # if ($data =~ /^(GIFT.*?[:;]) (.+)/i) {
+      #  my $field = MARC::Field->new('541', ' ', ' ', 'c' => $1, 'a' => $2);
+      #  $marc->insert_fields_ordered($field);
+      # } else {
+        # my $field = MARC::Field->new('591', ' ', ' ', 'a' => $data); 
+        # $marc->insert_fields_ordered($field);
+      # }
       # $marc->delete_fields($_);
-    }
+    # }
 
     my $srsmarc = $marc;
     if ($marc->field('880')) {
@@ -836,6 +836,7 @@ sub make_hi {
   my $cn = shift;
   my $cntag = shift;
   my $htype_id = shift;
+  my $lnote = ($marc->field('993')) ? $marc->subfield('993', 'a') : '';
   my $hseen = {};
   my $hid = '';
   my $hrec = {};
@@ -923,20 +924,19 @@ sub make_hi {
           id => 'ba213137-b641-4da7-aee2-9f2296e8bbf7',
           personal => { firstName => 'Index', lastName => 'Data' }
         };
-        if (/IN TRANSIT/) {
-          $irec->{status}->{name} = 'In transit';
-          s/^(.+): ?.+/$1/;
-          # $irec->{status}->{date} = $_;
-          # my $t = Time::Piece->strptime($_, "%a %b %d %Y %I:%M");
-          # $irec->{status}->{date} = $t->strftime("%Y-%m-%d");
-        } else {
-          push @{ $irec->{circulationNotes} }, $cnobj;
-        }
+        push @{ $irec->{circulationNotes} }, $cnobj;
       }
       foreach (@notes) {
         my $nobj = {};
         $nobj->{note} = $_;
-        $nobj->{itemNoteTypeId} = '8d0a5eca-25de-4391-81a9-236eeefdd20b';  # Note
+        $nobj->{itemNoteTypeId} = $refdata->{itemNoteTypes}->{Note};
+        $nobj->{staffOnly} = 'true';
+        push @{ $irec->{notes} }, $nobj;
+      }
+      if ($lnote =~ /^gift/i) {
+        my $nobj = {};
+        $nobj->{note} = $lnote;
+        $nobj->{itemNoteTypeId} = $refdata->{itemNoteTypes}->{'Internal gift note'};
         $nobj->{staffOnly} = 'true';
         push @{ $irec->{notes} }, $nobj;
       }
