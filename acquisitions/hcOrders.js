@@ -61,16 +61,33 @@ const refFiles = {
       lnum++;
       try {
         let so = JSON.parse(line);
+        let vf = (so.varFields) ? so.varFields : [];
+        let ff = so.fixedFields;
         let poNum = so.id.toString();
         let poId = uuid(poNum, ns);
         let orgId = refData.organizations[so.vendorRecordCode] || so.vendorRecordCode;
         let co = {
           id: poId,
           poNumber: poNum,
-          orderType: 'One-Time',
           vendor: orgId,
-          dateOrdered: so.orderDate
+          dateOrdered: so.orderDate,
+          compositePoLines: [],
+          notes: []
         }
+        let oType = ff['15'].value;
+        co.orderType = (oType.match(/[os]/)) ? 'Ongoing' : 'One-Time';
+        if (co.orderType === 'Ongoing') {
+          co.ongoing = {};
+        }
+        let pol = {};
+        vf.forEach(v => {
+          if (v.fieldTag === 's') {
+            pol.selector = v.content;
+          } else if (v.fieldTag.match(/[invz]/)) {
+            co.notes.push(v.content); 
+          }
+        });
+        // co.compositePoLines.push(pol);
         console.log(co);
         let coStr = JSON.stringify(co) + '\n';
         fs.writeFileSync(outFile, coStr, { flag: 'a' });
