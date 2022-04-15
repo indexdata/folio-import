@@ -17,6 +17,7 @@
   "private": true,
   "workspaces": [
     "util",
-    "patrons"
+    "patrons",
+    "acquisitions"
   ]
 }
