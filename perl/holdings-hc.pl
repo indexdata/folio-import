@@ -344,6 +344,7 @@ sub statement {
               } elsif ($suf =~ /\(month|season\)/) {
                 $suf = $months->($suf);
               }
+              push @enumparts, $suf . $splits->{$_}[$el];
             } else {
               my $p = $pat->{$_};
               my $v = $splits->{$_}[$el] || $splits->{$_}[0];
