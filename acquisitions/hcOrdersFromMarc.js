@@ -22,7 +22,7 @@ const refFiles = {
     if (!fs.existsSync(fundsMapFile)) throw new Error(`Cant't find funds_map.tsv in ${refDir}!`);
 
     const dir = path.dirname(inFile);
-    const fn = path.basename(inFile, '.json', '.jsonl');
+    const fn = path.basename(inFile, '.jsonl', '.json');
     const outFile = `${dir}/folio-${fn}.jsonl`;
     if (fs.existsSync(outFile)) fs.unlinkSync(outFile);
 
@@ -60,6 +60,23 @@ const refFiles = {
       return fo;
     }
 
+    const parseField = (field) => {
+      let fo = {};
+      if (field.subfields) {
+        fo.ind1 = field.ind1;
+        fo.ind2 = field.ind2;
+        field.subfields.forEach(s => {
+          for (let c in s) {
+            if (!fo[c]) fo[c] = [];
+            fo[c].push(s[c]);
+          }
+        });
+      } else {
+        fo.data = field;
+      }
+      return fo;
+    }
+
     const fieldToString = (field, subFieldCode, delimiter) => {
       if (!field) return null;
       let del = (delimiter) ? delimiter : ' ';
@@ -91,15 +108,36 @@ const refFiles = {
       lnum++;
       try {
         let marc = JSON.parse(line);
-        
         let fields = parseMarc(marc);
-        let data = fieldToString(fields['245'][0], 'ab');
-        console.log(data);
-        console.log('------');
+        
+        let pof = fields['960'][0];
+        if (pof) {
+          let spo = parseField(pof);
+          if (!spo.z) throw(`WARN No order number found in record!`);
+          let poNum = spo.z[0].replace(/^..(.+)./, '$1');
+          let poId = uuid(poNum, ns); 
+          let vcode = (spo.v) ? spo.v[0].trim() : '';
+          let orgId = refData.organizations[vcode] || vcode;
+          let co = {
+            id: poId,
+            poNumber: poNum,
+            vendor: orgId,
+            compositePoLines: [],
+            notes: []
+          }
+          fields['961'].forEach(n => {
+            console.log(n);
+          });
+          
+          console.log(co);
+          let coStr = JSON.stringify(co) + '\n';
+          fs.writeFileSync(outFile, coStr, { flag: 'a' });
+          c++;
+        }
+    
+
 
         /*
-        let vf = (so.varFields) ? so.varFields : [];
-        let ff = so.fixedFields;
         let poNum = so.id.toString();
         let poId = uuid(poNum, ns);
         let orgId = refData.organizations[so.vendorRecordCode] || so.vendorRecordCode;
@@ -124,13 +162,12 @@ const refFiles = {
             co.notes.push(v.content); 
           }
         });
-        // co.compositePoLines.push(pol);
-        console.log(co);
-        let coStr = JSON.stringify(co) + '\n';
-        fs.writeFileSync(outFile, coStr, { flag: 'a' }); */
-        c++;
+        // co.compositePoLines.push(pol); 
+        */
+       
       } catch (e) {
-        console.log(`WARN [${lnum}] ${e}`);
+        // console.log(`WARN [${lnum}] ${e}`);
+        console.log(e);
       }
     }
     console.log('Orders created', c);    
