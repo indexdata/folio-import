@@ -118,15 +118,33 @@ const refFiles = {
           let poId = uuid(poNum, ns); 
           let vcode = (spo.v) ? spo.v[0].trim() : '';
           let orgId = refData.organizations[vcode] || vcode;
+          let orderDate = spo.q[0] || '';
+          orderDate = orderDate.replace(/(\d\d)-(\d\d)-(\d\d)/, '20$3-$1-$2');
           let co = {
             id: poId,
             poNumber: poNum,
             vendor: orgId,
+            dateOrdered: orderDate,
             compositePoLines: [],
             notes: []
+          };
+          let oType = spo.i[0];
+          co.orderType = (oType.match(/[os]/)) ? 'Ongoing' : 'One-Time';
+          if (co.orderType === 'Ongoing') {
+            co.ongoing = {};
           }
           fields['961'].forEach(n => {
-            console.log(n);
+            let ns = parseField(n);
+            if (ns.c) {
+              ns.c.forEach(t => {
+                co.notes.push(t);
+              });
+            }
+            if (ns.d) {
+              ns.d.forEach(t => {
+                co.notes.push(t);
+              });
+            }
           });
           
           console.log(co);
