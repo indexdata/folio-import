@@ -13,8 +13,14 @@ const refFiles = {
   funds: 'funds.json'
 };
 
+const addresses = {
+  a: 'b6c5f084-9faa-4c19-b4f0-d727f86f0dbf',
+  p: '6daaa46d-7fb8-4061-9779-b2bb971246df'
+};
+
 (async () => {
   try {
+    let start = new Date().valueOf();
     if (!inFile) throw('Usage: node hcOrders.js <acq_ref_dir> <marc_jsonl_file>');
     if (!fs.existsSync(inFile)) throw new Error(`Can't find ${inFile}!`);
     refDir = refDir.replace(/\/$/, '');
@@ -103,6 +109,7 @@ const refFiles = {
     });
 
     let c = 0;
+    let fail = 0;
     let lnum = 0;
     for await (const line of rl) {
       lnum++;
@@ -113,13 +120,15 @@ const refFiles = {
         let pof = fields['960'][0];
         if (pof) {
           let spo = parseField(pof);
-          if (!spo.z) throw(`WARN No order number found in record!`);
+          if (!spo.z) throw(`WARN [${lnum}] No order number found in record!`);
           let poNum = spo.z[0].replace(/^..(.+)./, '$1');
           let poId = uuid(poNum, ns); 
           let vcode = (spo.v) ? spo.v[0].trim() : '';
-          let orgId = refData.organizations[vcode] || vcode;
+          let orgId = refData.organizations[vcode] || 'ERR';
+          if (orgId === 'ERR') throw(`WARN [${lnum}] Organization not found for "${vcode}"`);
           let orderDate = spo.q[0] || '';
           orderDate = orderDate.replace(/(\d\d)-(\d\d)-(\d\d)/, '20$3-$1-$2');
+
           let co = {
             id: poId,
             poNumber: poNum,
@@ -133,7 +142,9 @@ const refFiles = {
           if (co.orderType === 'Ongoing') {
             co.ongoing = {};
           }
-          fields['961'].forEach(n => {
+          let noteField = fields['961'] || [];
+          let ogNotes = [];
+          noteField.forEach(n => {
             let ns = parseField(n);
             if (ns.c) {
               ns.c.forEach(t => {
@@ -145,50 +156,55 @@ const refFiles = {
                 co.notes.push(t);
               });
             }
+            if (ns.c) {
+              ns.c.forEach(t => {
+                ogNotes.push(t);
+              });
+            }
           });
+          if (co.ongoing) {
+            if (ogNotes.length > 0) {
+              co.ongoing.notes = ogNotes.join(' ; ');
+            }
+            if (oType === 's') {
+              co.ongoing.isSubscription = true;  
+            } else {
+              co.ongoing.isSubscription = false;
+            }
+          }
+          let addType = (spo.k) ? spo.k[0] : '';
+          addType = addType.trim();
+          if (addType) co.shipTo = addresses[addType] || '';
           
-          console.log(co);
+
+          let pol = {};
+          if (spo.s) {
+            let price = spo.s[0].replace(/^\$/, '');
+            pol.cost = {
+              listUnitPrice: price,
+              discount: 0,
+              discountType: 'percentage',
+              quantityPhysical: 1
+            };
+          }
+          co.compositePoLines.push(pol);
+          
+          console.log(JSON.stringify(co, null, 2));
           let coStr = JSON.stringify(co) + '\n';
           fs.writeFileSync(outFile, coStr, { flag: 'a' });
           c++;
         }
-    
-
-
-        /*
-        let poNum = so.id.toString();
-        let poId = uuid(poNum, ns);
-        let orgId = refData.organizations[so.vendorRecordCode] || so.vendorRecordCode;
-        let co = {
-          id: poId,
-          poNumber: poNum,
-          vendor: orgId,
-          dateOrdered: so.orderDate,
-          compositePoLines: [],
-          notes: []
-        }
-        let oType = ff['15'].value;
-        co.orderType = (oType.match(/[os]/)) ? 'Ongoing' : 'One-Time';
-        if (co.orderType === 'Ongoing') {
-          co.ongoing = {};
-        }
-        let pol = {};
-        vf.forEach(v => {
-          if (v.fieldTag === 's') {
-            pol.selector = v.content;
-          } else if (v.fieldTag.match(/[invz]/)) {
-            co.notes.push(v.content); 
-          }
-        });
-        // co.compositePoLines.push(pol); 
-        */
        
       } catch (e) {
-        // console.log(`WARN [${lnum}] ${e}`);
         console.log(e);
+        fail++;
       }
     }
-    console.log('Orders created', c);    
+    let end = new Date().valueOf();
+    let tt = (end - start) / 1000;
+    console.log('Orders created', c);
+    console.log('Failures', fail);
+    console.log('Time (secs)', tt);
   } catch (e) {
     console.log(e);
   }
