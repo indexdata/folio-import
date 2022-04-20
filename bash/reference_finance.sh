@@ -15,7 +15,7 @@ if [ ! -d $REFDIR ]
     mkdir $REFDIR
 fi
 
-EPS='expense-classes fund-types fiscal-years ledgers budget-expense-classes groups group-fund-fiscal-years 
+EPS='expense-classes funds fund-types fiscal-years ledgers budget-expense-classes groups group-fund-fiscal-years 
 '
 
 for EP in $EPS

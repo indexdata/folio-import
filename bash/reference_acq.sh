@@ -15,7 +15,7 @@ if [ ! -d $REFDIR ]
     mkdir $REFDIR
 fi
 
-EPS='acquisitions-units/units'
+EPS='acquisitions-units/units locations material-types'
 
 for EP in $EPS
 do
