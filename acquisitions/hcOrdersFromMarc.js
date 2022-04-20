@@ -18,15 +18,21 @@ const addresses = {
   p: '6daaa46d-7fb8-4061-9779-b2bb971246df'
 };
 
+const methodMap = {
+  e: 'Exchange',
+  g: 'Gift',
+  p: 'Purchase',
+  d: 'Purchase',
+  r: 'Purchase'
+};
+
 (async () => {
   try {
     let start = new Date().valueOf();
     if (!inFile) throw('Usage: node hcOrders.js <acq_ref_dir> <marc_jsonl_file>');
     if (!fs.existsSync(inFile)) throw new Error(`Can't find ${inFile}!`);
     refDir = refDir.replace(/\/$/, '');
-    const fundsMapFile = `${refDir}/funds_map.tsv`;
-    if (!fs.existsSync(fundsMapFile)) throw new Error(`Cant't find funds_map.tsv in ${refDir}!`);
-
+    
     const dir = path.dirname(inFile);
     const fn = path.basename(inFile, '.jsonl', '.json');
     const outFile = `${dir}/folio-${fn}.jsonl`;
@@ -43,17 +49,6 @@ const addresses = {
         refData[prop][code] = p.id
       })
     }
-
-    const fundsMap = {};
-    const fundsTsv = fs.readFileSync(fundsMapFile, { encoding: 'utf8'});
-    fundsTsv.split(/\n/).forEach(l => {
-      let [code, num] = l.split(/\t/);
-      if (code) {
-        let numPadded = num.padStart(5, '0');
-        fundsMap[numPadded] = refData.funds[code];
-      }
-    });
-
 
     const parseMarc = (marc) => {
       let fo = {};
@@ -116,7 +111,9 @@ const addresses = {
       try {
         let marc = JSON.parse(line);
         let fields = parseMarc(marc);
-        
+        let titleField = fields['245'][0];
+        let title = fieldToString(titleField, 'abnp') || 'Untitled';
+        title = title.replace(/[/ ]*$/, '');
         let pof = fields['960'][0];
         if (pof) {
           let spo = parseField(pof);
@@ -176,6 +173,7 @@ const addresses = {
           addType = addType.trim();
           if (addType) co.shipTo = addresses[addType] || '';
           
+          // PO lines start here
 
           let pol = {};
           if (spo.s) {
@@ -184,8 +182,23 @@ const addresses = {
               listUnitPrice: price,
               discount: 0,
               discountType: 'percentage',
-              quantityPhysical: 1
+              quantityPhysical: 1,
+              currency: 'USD',
+              locations: []
             };
+          }
+          pol.source = 'User';
+          let am = spo.a[0];
+          pol.acquisitionMethod = methodMap[am] || 'Purchase';
+          pol.titleOrPackage = title;
+          let location = {};
+          let quant = parseInt(spo.o[0], 10);
+          if (spo.g[0] === 'e') {
+            pol.orderFormat = 'Electronic Resource';
+            pol.cost.quantityElectronic = quant;
+          } else {
+            pol.orderFormat = 'Physical Resource';
+            pol.cost.quantityPhysical = quant;
           }
           co.compositePoLines.push(pol);
           
