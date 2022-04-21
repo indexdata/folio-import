@@ -39,6 +39,27 @@ const methodMap = {
     const outFile = `${dir}/folio-${fn}.jsonl`;
     if (fs.existsSync(outFile)) fs.unlinkSync(outFile);
 
+    const bibMapFile = `${refDir}/bibs.map`;
+    if (!fs.existsSync(bibMapFile)) throw new Error(`Can't find bib map at ${bibMapFile}`);
+
+    console.log('Creating bib map (this may take a while...)');
+    const mapStream = fs.createReadStream(bibMapFile);
+
+    const mrl = readline.createInterface({
+      input: mapStream,
+      crlfDelay: Infinity
+    });
+
+    let mc = 0;
+    const bibMap = {};
+    for await (const line of mrl) {
+      let d = line.split(/\|/);
+      bibMap[d[0]] = d[1];
+      mc++;
+      if (mc % 100000 === 0) console.log(` ${mc} map lines read...`);
+    }
+    console.log(`Done! ${mc} map lines read`);
+
     const refData = {};
     for (let prop in refFiles) {
       refData[prop] = {};
@@ -115,6 +136,9 @@ const methodMap = {
         let fields = parseMarc(marc);
         let titleField = fields['245'][0];
         let title = fieldToString(titleField, 'abnp') || 'Untitled';
+
+        
+        
         title = title.replace(/[/ ]*$/, '');
         let pof = fields['960'][0];
         if (pof) {
@@ -199,8 +223,37 @@ const methodMap = {
           // PO lines start here
 
           let pol = {
-            paymentStatus: status.pay
+            paymentStatus: status.pay,
+            poLineNumber: poNum + '-1',
+            contributors: []
           };
+
+          if (fields['100']) {
+            let au = fieldToString(fields['100'][0]);
+            let contrib = {
+              contributor: au,
+              contributorNameTypeId: '2b94c631-fca9-4892-a730-03ee529ffe2a' // personal name
+            };
+            pol.contributors.push(contrib);
+          }
+          if (fields['110']) {
+            let au = fieldToString(fields['110'][0]);
+            let contrib = {
+              contributor: au,
+              contributorNameTypeId: '2e48e713-17f3-4c13-a9f8-23845bb210aa' // corporate author
+            };
+            pol.contributors.push(contrib);
+          }
+          if (fields['250']) {
+            pol.edition = fieldToString(fields['250'][0]);
+          }
+          if (fields['260']) {
+            pol.publisher = fieldToString(fields['260'][0], 'b');
+            pol.publicationDate = fieldToString(fields['260'][0], 'c');
+          } else if (fields['264']) {
+            pol.publisher = fieldToString(fields['264'][0], 'b');
+            pol.publicationDate = fieldToString(fields['264'][0], 'c');
+          }
           pol.source = 'User';
           let am = spo.a[0];
           pol.acquisitionMethod = methodMap[am] || 'Purchase';
@@ -214,15 +267,22 @@ const methodMap = {
             discountType: 'percentage',
             currency: 'USD',
           };
+
           let quant = parseInt(spo.o[0], 10);
           if (spo.g[0] === 'e') {
             pol.orderFormat = 'Electronic Resource';
             pol.cost.listUnitPriceElectronic = price;
             pol.cost.quantityElectronic = quant;
+            pol.eresource = {
+              createInventory: 'None'
+            }
           } else {
             pol.orderFormat = 'Physical Resource';
             pol.cost.listUnitPrice = price;
             pol.cost.quantityPhysical = quant;
+            pol.physical = {
+              createInventory: 'None'
+            };
           }
 
           let fundCode = spo.u[0];
@@ -247,14 +307,15 @@ const methodMap = {
             locations.quantityPhysical = quant;
           }
           pol.locations = [ locations ];
+
           let localField = fields['907'][0];
           let bibNum = fieldToString(localField, 'a');
           if (bibNum) {
             bibNum = bibNum.replace(/^.(.+)./, '$1');
-            pol.instanceId = bibNum;
+            pol.instanceId = bibMap[bibNum];
           }
           co.compositePoLines.push(pol);
-          
+
           // console.log(JSON.stringify(co, null, 2));
           let coStr = JSON.stringify(co) + '\n';
           fs.writeFileSync(outFile, coStr, { flag: 'a' });
