@@ -127,12 +127,33 @@ const methodMap = {
           if (orgId === 'ERR') throw(`WARN Organization not found for "${vcode}"`);
           let orderDate = spo.q[0] || '';
           orderDate = orderDate.replace(/(\d\d)-(\d\d)-(\d\d)/, '20$3-$1-$2');
+          let statCode = spo.m[0];
+          let status = {
+            wrk: 'Open'
+          };
+          if (statCode === 'o') {
+            status.pay = 'Awaiting Payment';
+          } else if (statCode === 'z') {
+            status.pay = 'Cancelled',
+            status.wrk = 'Closed'
+          } else if (statCode === 'a') {
+            status.pay = 'Fully Paid',
+            status.wrk = 'Closed'
+          } else if (statCode === 'q') {
+            status.pay = 'Partially Paid'
+          } else if (statCode === 'f') {
+            status.pay = 'Ongoing'
+          } else {
+            status.wrk = 'Pending',
+            status.pay = 'Pending'
+          }
 
           let co = {
             id: poId,
             poNumber: poNum,
             vendor: orgId,
             dateOrdered: orderDate,
+            workflowStatus: status.wrk,
             compositePoLines: [],
             notes: []
           };
@@ -177,7 +198,9 @@ const methodMap = {
           
           // PO lines start here
 
-          let pol = {};
+          let pol = {
+            paymentStatus: status.pay
+          };
           pol.source = 'User';
           let am = spo.a[0];
           pol.acquisitionMethod = methodMap[am] || 'Purchase';
@@ -224,6 +247,12 @@ const methodMap = {
             locations.quantityPhysical = quant;
           }
           pol.locations = [ locations ];
+          let localField = fields['907'][0];
+          let bibNum = fieldToString(localField, 'a');
+          if (bibNum) {
+            bibNum = bibNum.replace(/^.(.+)./, '$1');
+            pol.instanceId = bibNum;
+          }
           co.compositePoLines.push(pol);
           
           // console.log(JSON.stringify(co, null, 2));
