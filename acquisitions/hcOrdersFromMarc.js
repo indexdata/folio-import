@@ -10,7 +10,8 @@ const inFile = process.argv[3];
 
 const refFiles = {
   organizations: 'organizations.json',
-  funds: 'funds.json'
+  funds: 'funds.json',
+  locations: 'locations.json'
 };
 
 const addresses = {
@@ -49,6 +50,7 @@ const methodMap = {
         refData[prop][code] = p.id
       })
     }
+    // console.log(refData);
 
     const parseMarc = (marc) => {
       let fo = {};
@@ -117,12 +119,12 @@ const methodMap = {
         let pof = fields['960'][0];
         if (pof) {
           let spo = parseField(pof);
-          if (!spo.z) throw(`WARN [${lnum}] No order number found in record!`);
+          if (!spo.z) throw(`WARN No order number found in record!`);
           let poNum = spo.z[0].replace(/^..(.+)./, '$1');
           let poId = uuid(poNum, ns); 
           let vcode = (spo.v) ? spo.v[0].trim() : '';
           let orgId = refData.organizations[vcode] || 'ERR';
-          if (orgId === 'ERR') throw(`WARN [${lnum}] Organization not found for "${vcode}"`);
+          if (orgId === 'ERR') throw(`WARN Organization not found for "${vcode}"`);
           let orderDate = spo.q[0] || '';
           orderDate = orderDate.replace(/(\d\d)-(\d\d)-(\d\d)/, '20$3-$1-$2');
 
@@ -176,40 +178,62 @@ const methodMap = {
           // PO lines start here
 
           let pol = {};
-          if (spo.s) {
-            let price = spo.s[0].replace(/^\$/, '');
-            pol.cost = {
-              listUnitPrice: price,
-              discount: 0,
-              discountType: 'percentage',
-              quantityPhysical: 1,
-              currency: 'USD',
-              locations: []
-            };
-          }
           pol.source = 'User';
           let am = spo.a[0];
           pol.acquisitionMethod = methodMap[am] || 'Purchase';
           pol.titleOrPackage = title;
-          let location = {};
+          let price = spo.s[0];
+          if (!price) throw(`WARN price not found in source record!`)
+          price = price.replace(/[$,]/g, '');
+          price = parseFloat(price);
+          pol.cost = {
+            discount: 0,
+            discountType: 'percentage',
+            currency: 'USD',
+          };
           let quant = parseInt(spo.o[0], 10);
           if (spo.g[0] === 'e') {
             pol.orderFormat = 'Electronic Resource';
+            pol.cost.listUnitPriceElectronic = price;
             pol.cost.quantityElectronic = quant;
           } else {
             pol.orderFormat = 'Physical Resource';
+            pol.cost.listUnitPrice = price;
             pol.cost.quantityPhysical = quant;
           }
+
+          let fundCode = spo.u[0];
+          let fundId = refData.funds[fundCode];
+          if (!fundId) throw(`WARN Can't find fundId for "${fundCode}"`);
+          let fundDist = {
+            fundId: fundId,
+            distributionType: 'percentage',
+            value: 100
+          };
+          pol.fundDistribution = [ fundDist ];
+
+          let locCode = spo.t[0];
+          let locId = refData.locations[locCode];
+          if (!locId) throw(`WARN Can't find locactionId for "${locCode}"`);
+          let locations = {
+            locationId: locId
+          };
+          if (pol.cost.quantityElectronic) {
+            locations.quantityElectronic = quant;
+          } else {
+            locations.quantityPhysical = quant;
+          }
+          pol.locations = [ locations ];
           co.compositePoLines.push(pol);
           
-          console.log(JSON.stringify(co, null, 2));
+          // console.log(JSON.stringify(co, null, 2));
           let coStr = JSON.stringify(co) + '\n';
           fs.writeFileSync(outFile, coStr, { flag: 'a' });
           c++;
         }
        
       } catch (e) {
-        console.log(e);
+        console.log(`[${lnum}] ${e}`);
         fail++;
       }
     }
