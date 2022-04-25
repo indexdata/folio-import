@@ -7,6 +7,8 @@ const ns = 'a839a191-e230-4c52-8e08-38e3bc5adfc0';
 
 let refDir = process.argv[2];
 const inFile = process.argv[3];
+let fy = parseInt(process.argv[4], 10) || 2021;
+let fyMax = fy + 1;
 
 const refFiles = {
   organizations: 'organizations.json',
@@ -30,13 +32,13 @@ const methodMap = {
 (async () => {
   try {
     let start = new Date().valueOf();
-    if (!inFile) throw('Usage: node hcOrders.js <acq_ref_dir> <marc_jsonl_file>');
+    if (!inFile) throw('Usage: node hcOrders.js <acq_ref_dir> <marc_jsonl_file> [ <fiscal year> ]');
     if (!fs.existsSync(inFile)) throw new Error(`Can't find ${inFile}!`);
     refDir = refDir.replace(/\/$/, '');
     
     const dir = path.dirname(inFile);
     const fn = path.basename(inFile, '.jsonl', '.json');
-    const outFile = `${dir}/folio-${fn}.jsonl`;
+    const outFile = `${dir}/folio-${fn}-${fy}.jsonl`;
     if (fs.existsSync(outFile)) fs.unlinkSync(outFile);
 
     const bibMapFile = `${refDir}/bibs.map`;
@@ -136,8 +138,6 @@ const methodMap = {
         let fields = parseMarc(marc);
         let titleField = fields['245'][0];
         let title = fieldToString(titleField, 'abnp') || 'Untitled';
-
-        
         
         title = title.replace(/[/ ]*$/, '');
         let pof = fields['960'][0];
@@ -146,11 +146,16 @@ const methodMap = {
           if (!spo.z) throw(`WARN No order number found in record!`);
           let poNum = spo.z[0].replace(/^..(.+)./, '$1');
           let poId = uuid(poNum, ns); 
-          let vcode = (spo.v) ? spo.v[0].trim() : '';
-          let orgId = refData.organizations[vcode] || 'ERR';
-          if (orgId === 'ERR') throw(`WARN Organization not found for "${vcode}"`);
+          
           let orderDate = spo.q[0] || '';
           orderDate = orderDate.replace(/(\d\d)-(\d\d)-(\d\d)/, '20$3-$1-$2');
+          if (orderDate < `${fy}-07` || orderDate > `${fyMax}-06`) {
+            throw(`WARN ${orderDate} is not of this fiscal year.`);
+          }
+
+          let vcode = (spo.v) ? spo.v[0].trim() : '';
+          let orgId = refData.organizations[vcode] || 'ERR';
+          if (orgId === 'ERR') throw (`WARN Organization not found for "${vcode}"`);
           let statCode = spo.m[0];
           let status = {
             wrk: 'Open'
