@@ -150,7 +150,7 @@ const methodMap = {
           let orderDate = spo.q[0] || '';
           orderDate = orderDate.replace(/(\d\d)-(\d\d)-(\d\d)/, '20$3-$1-$2');
           if (orderDate < `${fy}-07` || orderDate > `${fyMax}-06`) {
-            throw(`WARN ${orderDate} is not of this fiscal year.`);
+            throw(`WARN ${orderDate} is not in fiscal year starting ${fy}-07.`);
           }
 
           let vcode = (spo.v) ? spo.v[0].trim() : '';
@@ -361,6 +361,6 @@ const methodMap = {
     console.log('Failures', fail);
     console.log('Time (secs)', tt);
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 })();

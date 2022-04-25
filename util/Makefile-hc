@@ -1,0 +1,15 @@
+wd = ~/Folio/folio-import
+data-dir = ~/Folio/holycross
+orders-dir = $(data-dir)/orders/v2
+orders-marc = $(orders-dir)/orders.mrc
+marc-jsonl = $(orders-dir)/orders.jsonl
+acq-ref = $(data-dir)/acq-ref
+
+help:
+	@echo "Usage: make [ help | orders-from-marc | process-orders ]"
+
+orders-from-marc: $(orders-marc)
+	yaz-marcdump -f marc8 -t utf8 -l 9=97 -o json $(orders-marc) | jq . -c > $(marc-jsonl)
+
+process-orders: $(marc-jsonl)
+	node $(wd)/acquisitions/hcOrdersFromMarc.js $(acq-ref) $(marc-jsonl)
