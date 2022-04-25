@@ -193,6 +193,8 @@ const methodMap = {
           }
           let noteField = fields['961'] || [];
           let ogNotes = [];
+          let requester = '';
+          let selector = '';
           noteField.forEach(n => {
             let ns = parseField(n);
             if (ns.c) {
@@ -209,6 +211,12 @@ const methodMap = {
               ns.c.forEach(t => {
                 ogNotes.push(t);
               });
+            }
+            if (ns.k) {
+              requester = ns.k[0]
+            }
+            if (ns.f) {
+              selector = ns.f[0]
             }
           });
           if (co.ongoing) {
@@ -272,6 +280,9 @@ const methodMap = {
             discountType: 'percentage',
             currency: 'USD',
           };
+
+          if (requester) pol.requester = requester;
+          if (selector) pol.selector = selector;
 
           let quant = parseInt(spo.o[0], 10);
           if (spo.g[0] === 'e') {
