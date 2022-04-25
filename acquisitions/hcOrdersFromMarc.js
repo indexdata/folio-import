@@ -195,6 +195,7 @@ const methodMap = {
           let ogNotes = [];
           let requester = '';
           let selector = '';
+          let rush = false;
           noteField.forEach(n => {
             let ns = parseField(n);
             if (ns.c) {
@@ -204,6 +205,7 @@ const methodMap = {
             }
             if (ns.d) {
               ns.d.forEach(t => {
+                if (t.match(/\brush\b/i)) rush = true;
                 co.notes.push(t);
               });
             }
@@ -238,7 +240,8 @@ const methodMap = {
           let pol = {
             paymentStatus: status.pay,
             poLineNumber: poNum + '-1',
-            contributors: []
+            contributors: [],
+            rush: rush
           };
 
           if (fields['100']) {
@@ -329,6 +332,13 @@ const methodMap = {
           if (bibNum) {
             bibNum = bibNum.replace(/^.(.+)./, '$1');
             pol.instanceId = bibMap[bibNum];
+          }
+
+          let rdate = spo.r[0];
+          if (rdate.match(/\d\d/)) {
+            rdate = rdate.replace(/(..)-(..)-(..)/, '20$3-$1-$2');
+            pol.receiptDate = rdate;
+            pol.receiptStatus = 'Fully Received';
           }
           co.compositePoLines.push(pol);
 
