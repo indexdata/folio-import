@@ -227,6 +227,8 @@ const methodMap = {
             }
             if (oType === 's') {
               co.ongoing.isSubscription = true;  
+              co.ongoing.renewalDate = orderDate;
+              co.ongoing.interval = 365;
             } else {
               co.ongoing.isSubscription = false;
             }
