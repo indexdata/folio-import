@@ -95,7 +95,13 @@ const refFiles = {
         };
         
         pol.titleOrPackage = so.bibs[0].title;
-        if (so.bibs[0].author) pol.contributors = [ so.bibs[0].author ];
+        if (so.bibs[0].author) {
+          let au = {
+            contributor: so.bibs[0].author,
+            contributorNameTypeId: '2b94c631-fca9-4892-a730-03ee529ffe2a' // personal name
+          }
+          pol.contributors = [ au ];
+        }
 
         let form = ff['11'].value;
         if (form.match(/[s2lmn]/i)) {
