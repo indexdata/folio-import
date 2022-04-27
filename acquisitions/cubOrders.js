@@ -2,8 +2,6 @@ const fs = require('fs');
 const readline = require('readline');
 const uuid = require('uuid/v5');
 const path = require('path');
-const { exit } = require('process');
-const { version } = require('os');
 
 const ns = 'e35dff4e-9035-4d6a-b621-3d42578f81c7';
 const nullns = '00000000-0000-0000-0000-000000000000';
