@@ -3,9 +3,12 @@ const readline = require('readline');
 const uuid = require('uuid/v5');
 const path = require('path');
 const { exit } = require('process');
+const { version } = require('os');
 
 const ns = 'e35dff4e-9035-4d6a-b621-3d42578f81c7';
+const nullns = '00000000-0000-0000-0000-000000000000';
 const unit = '24c4baf7-0653-517f-b901-bde483894fdd';  // CU Boulder
+const ver = '1';
 
 let refDir = process.argv[2];
 const inFile = process.argv[3];
@@ -65,6 +68,7 @@ const refFiles = {
 
     let c = 0;
     let lnum = 0;
+    let fail = 0;
     for await (const line of rl) {
       lnum++;
       try {
@@ -156,6 +160,9 @@ const refFiles = {
           pol.cost.listUnitPrice = price;
           pol.cost.quantityPhysical = copies;
           loc.quantityPhysical = copies;
+          pol.physical = {
+            createInventory: 'None'
+          }
         }
 
         loc.quantity = copies;
@@ -172,6 +179,9 @@ const refFiles = {
           pol.contributors = [ au ];
         }
         pol.publicationDate = `${so.bibs[0].publishYear}`;
+        let bibId = so.bibs[0].id;
+        bibId = 'b' + bibId;
+        pol.instanceId = uuid(bibId + ver, nullns);
 
         if (form.match(/[s2lmn]/i)) {
           pol.checkinItems = true;
@@ -185,9 +195,11 @@ const refFiles = {
         c++;
       } catch (e) {
         console.log(`[${lnum}] ${e}`);
+        fail++;
       }
     }
-    console.log('Orders created', c);    
+    console.log('Orders created', c);
+    console.log('Orders failed', fail);
   } catch (e) {
     console.log(e);
   }
