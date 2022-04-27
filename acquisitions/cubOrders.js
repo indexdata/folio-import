@@ -2,6 +2,7 @@ const fs = require('fs');
 const readline = require('readline');
 const uuid = require('uuid/v5');
 const path = require('path');
+const { exit } = require('process');
 
 const ns = 'e35dff4e-9035-4d6a-b621-3d42578f81c7';
 const unit = '24c4baf7-0653-517f-b901-bde483894fdd';  // CU Boulder
@@ -12,7 +13,8 @@ const inFile = process.argv[3];
 const refFiles = {
   organizations: 'organizations.json',
   funds: 'funds.json',
-  entries: 'fund-codes.json'
+  entries: 'fund-codes.json',
+  locations: 'locations.json'
 };
 
 (async () => {
@@ -20,6 +22,8 @@ const refFiles = {
     if (!inFile) throw('Usage: node cubOrders.js <acq_ref_dir> <sierra_orders_json_file>');
     if (!fs.existsSync(inFile)) throw new Error(`Can't find ${inFile}!`);
     refDir = refDir.replace(/\/$/, '');
+    let locMapFile = `${refDir}/locations.tsv`;
+    if (!fs.existsSync(locMapFile)) throw new Error(`Can't open location map file at ${locMapFile}`);
 
     const dir = path.dirname(inFile);
     const fn = path.basename(inFile, '.jsonl');
@@ -44,6 +48,14 @@ const refFiles = {
       })
     }
 
+    const locMap = {};
+    let locData = fs.readFileSync(locMapFile, { encoding: 'utf8' });
+    locData.split(/\n/).forEach(line => {
+      let [k, v] = line.split(/\t/);
+      v = v.replace(/^.+\//, '');
+      locMap[k] = refData.locations[v];
+    });
+
     const fileStream = fs.createReadStream(inFile);
 
     const rl = readline.createInterface({
@@ -64,7 +76,7 @@ const refFiles = {
         let vcode = ff['22'].value || '';
         vcode = vcode.trim();
         let orgId = refData.organizations[vcode];
-        if (!orgId) throw(`WARN no vendor code found for "${vcode}" (${poNum})`);
+        if (!orgId) throw(`WARN no organizationId found for "${vcode}" (${poNum})`);
         let co = {
           id: poId,
           poNumber: poNum,
@@ -74,6 +86,8 @@ const refFiles = {
           notes: [],
           acqUnitIds: [ unit ]
         }
+        let acqType = ff['1'].value;
+        let form = ff['11'].value;
         let oType = ff['15'].value;
         let statCode = ff['20'].value;
         co.orderType = (statCode.match(/[fz]/) && oType.match(/[dnoqs]/)) ? 'Ongoing' : 'One-Time';
@@ -91,9 +105,64 @@ const refFiles = {
         let pol = {
           paymentStatus: 'Awaiting Payment',
           poLineNumber: poNum + '-1',
-          checkinItems: false
+          source: 'User',
+          checkinItems: false,
+          locations: []
         };
-        
+
+        if (oType === 'a') {
+          pol.acquisitionMethod = 'Approval Plan';
+        } else if (oType.match(/[ew]/)) {
+          pol.acquisitionMethod = 'Demand Driven Acquisitions (DDA)';
+        } else if (acqType === 'd') {
+          pol.acquisitionMethod = 'Depository';
+        } else if (acqType === 'e') {
+          pol.acquisitionMethod = 'Exchange';
+        } else if (acqType === 'g') {
+          pol.acquisitionMethod = 'Gift';
+        } else if (oType === '2') {
+          pol.acquisitionMethod = 'Evidence Based Acquisitions (EBA)';
+        } else {
+          pol.acquisitionMethod = 'Purchase';
+        }
+
+        let format;
+        if (form.match(/[erxy4]/)) {
+          format = 'Electronic Resource';
+        } else if (form.match(/[ajuz]/)) {
+          format = 'Other';
+        } else if (form === '2') {
+          format = 'P/E Mix';
+        } else {
+          format = 'Physical Resource';
+        }
+        pol.orderFormat = format;
+
+        let location = ff['2'].value;
+        location = location.trim();
+        let copies = ff['5'].value;
+        copies = parseInt(copies);
+        let price = ff['10'].value;
+        price = parseFloat(price);
+
+        let loc = {};
+        pol.cost = {};
+        pol.cost.currency = 'USD';
+        if (format === 'Electronic Resource') {
+          pol.cost.listUnitPriceElectronic = price;
+          pol.cost.quantityElectronic = copies;
+          loc.quantityElectronic = copies;
+        } else {
+          pol.cost.listUnitPrice = price;
+          pol.cost.quantityPhysical = copies;
+          loc.quantityPhysical = copies;
+        }
+
+        loc.quantity = copies;
+        loc.locationId = locMap[location];
+        if (!loc.locationId) throw(`WARN no locationId found for "${location}"`)
+        pol.locations.push(loc);
+
         pol.titleOrPackage = so.bibs[0].title;
         if (so.bibs[0].author) {
           let au = {
@@ -102,8 +171,8 @@ const refFiles = {
           }
           pol.contributors = [ au ];
         }
+        pol.publicationDate = `${so.bibs[0].publishYear}`;
 
-        let form = ff['11'].value;
         if (form.match(/[s2lmn]/i)) {
           pol.checkinItems = true;
         }
