@@ -5,6 +5,8 @@ const path = require('path');
 
 const ns = 'e35dff4e-9035-4d6a-b621-3d42578f81c7';
 const nullns = '00000000-0000-0000-0000-000000000000';
+const prefix = 'inv';
+const linePrefix = 'invl';
 
 let refDir = process.argv[2];
 const inFile = process.argv[3];
@@ -53,13 +55,26 @@ const refFiles = {
       try {
         let so = JSON.parse(line);
         let sid = so.id.toString();
+        let invoiceId = uuid(prefix + sid, ns);
+        let venCode = so.vendors[0].vendorCode.trim();
+        let orgId = refData.organizations[venCode];
+        if (!orgId) throw(`WARN organiztion not found for vendorCode "${venCode}" (${sid})`);
         let iv = {
-          id: uuid(sid, ns),
+          id: invoiceId,
           batchGroupId: refData.batchGroups.FOLIO,
           currency: 'USD',
-          invoiceDate: so.invDate
+          invoiceDate: so.invDate,
+          vendorInvoiceNo: so.invNum,
+          vendorId: orgId,
+          source: 'User'
         };
-        
+        if (so.paidDate) {
+          iv.status = 'Paid';
+          iv.paymentDate = so.paidDate;
+        } else {
+          iv.status = 'Open';
+        }
+        iv.paymentMethod = 'Other';
     
         console.log(JSON.stringify(iv, null, 2));
         let ivStr = JSON.stringify(iv) + '\n';
