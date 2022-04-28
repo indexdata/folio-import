@@ -58,7 +58,7 @@ const refFiles = {
         let invoiceId = uuid(prefix + sid, ns);
         let venCode = so.vendors[0].vendorCode.trim();
         let orgId = refData.organizations[venCode];
-        if (!orgId) throw(`WARN organiztion not found for vendorCode "${venCode}" (${sid})`);
+        if (!orgId) throw(`WARN organization not found for vendorCode "${venCode}" (${sid})`);
         let iv = {
           id: invoiceId,
           batchGroupId: refData.batchGroups.FOLIO,
@@ -75,6 +75,38 @@ const refFiles = {
           iv.status = 'Open';
         }
         iv.paymentMethod = 'Other';
+        let sol = so.lineItems;
+        let fundCode = (sol) ? sol[0].fund : '';
+        let fundId = refData.funds[fundCode];
+        let tot = so.invTotal;
+        if (tot.subTotal !== tot.grandTotal) {
+          iv.adjustments = [];
+          let props = ['shipping', 'tax', 'discountOrService'];
+          props.forEach(prop => {
+            let val = tot[prop];
+            if (val !== 0) {
+              let adj = {
+                value: val,
+                type: 'Amount',
+                relationToTotal: 'In addition to',
+                prorate: 'Not prorated',
+                exportToAccounting: false,
+                description: prop
+              };
+              if (fundId) {
+                let fd = {
+                  fundId: fundId,
+                  code: fundCode,
+                  distributionType: 'percentage',
+                  value: 100
+                };
+                adj.fundDistributions = [ fd ];
+              }
+              iv.adjustments.push(adj);
+            }
+          });
+        }
+
     
         console.log(JSON.stringify(iv, null, 2));
         let ivStr = JSON.stringify(iv) + '\n';
