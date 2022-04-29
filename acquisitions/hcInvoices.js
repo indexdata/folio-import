@@ -25,8 +25,13 @@ const refFiles = {
 
     const dir = path.dirname(inFile);
     const fn = path.basename(inFile, '.jsonl');
+
     const outFile = `${dir}/folio-${fn}.jsonl`;
     if (fs.existsSync(outFile)) fs.unlinkSync(outFile);
+
+    const lineFile = `${dir}/folio-line-${fn}.jsonl`;
+    if (fs.existsSync(lineFile)) fs.unlinkSync(lineFile);
+
 
     const refData = {};
     for (let prop in refFiles) {
@@ -50,6 +55,7 @@ const refFiles = {
     let c = 0;
     let lnum = 0;
     let fail = 0;
+    let lcount = 0;
     for await (const line of rl) {
       lnum++;
       try {
@@ -107,6 +113,28 @@ const refFiles = {
           });
         }
 
+        let notes = [];
+        sol.forEach(l => {
+          let sid = l.id;
+          let ivlId = uuid(linePrefix + sid, ns);
+          let ivl = {
+            id: ivlId,
+            invoiceId: invoiceId,
+            description: l.title,
+            invoiceLineStatus: iv.status,
+            quantity: l.noOfCopies,
+            releaseEncumbrance: false,
+            subTotal: l.paidAmount
+          };
+          if (l.lineItemNote) notes.push(l.lineItemNote);
+          let linStr = JSON.stringify(ivl) + '\n';
+          fs.writeFileSync(lineFile, linStr, { flag: 'a' });
+          lcount++;
+        });
+
+        if (notes[0]) {
+          iv.note = notes.join(' ; ');
+        } 
     
         console.log(JSON.stringify(iv, null, 2));
         let ivStr = JSON.stringify(iv) + '\n';
@@ -117,9 +145,11 @@ const refFiles = {
         fail++;
       }
     }
-    console.log('Created', c);
-    console.log('Failed', fail);
-    console.log('Saved to:', outFile);
+    console.log('Invoices:', c);
+    console.log('Line items:', lcount);
+    console.log('Failed:', fail);
+    console.log('Invoices saved to:', outFile);
+    console.log('Line items saved to:', lineFile);
   } catch (e) {
     console.log(e);
   }
