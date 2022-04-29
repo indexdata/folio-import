@@ -114,17 +114,29 @@ const refFiles = {
         }
 
         let notes = [];
-        sol.forEach(l => {
-          let sid = l.id;
-          let ivlId = uuid(linePrefix + sid, ns);
+        sol.forEach((l, el) => {
+          let slid = l.id;
+          let ivlId = uuid(linePrefix + slid, ns);
+          let fdist = {
+            code: fundCode,
+            fundId: fundId,
+            invoiceLineId: ivlId,
+            distributionType: 'percentage',
+            value: 100
+          };
+
+          let num = el + 1;
           let ivl = {
+            invoiceLineNumber: `${sid}-${num}`,
             id: ivlId,
             invoiceId: invoiceId,
             description: l.title,
             invoiceLineStatus: iv.status,
             quantity: l.noOfCopies,
             releaseEncumbrance: false,
-            subTotal: l.paidAmount
+            subTotal: l.paidAmount,
+            total: l.paidAmount,
+            fundDistributions: [ fdist ]
           };
           if (l.lineItemNote) notes.push(l.lineItemNote);
           let linStr = JSON.stringify(ivl) + '\n';
