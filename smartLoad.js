@@ -77,6 +77,10 @@ let inFile = process.argv[2];
           ep = 'finance-storage/funds';
       } else if (rec.budgetStatus) {
           ep = 'finance-storage/budgets';
+      } else if (rec.transactionType && rec.amount) {
+          ep = 'finance-storage/transactions';
+      } else if (rec.numTransactions) {
+          ep = 'finance-storage/order-transaction-summaries';
       } else if (inFile.match(/groups/i) && rec.status && rec.code && rec.name) {
           ep = 'finance-storage/groups';
       } else if (rec.fiscalYearId && rec.groupId && rec.fundId) {
@@ -97,6 +101,10 @@ let inFile = process.argv[2];
           ep = 'users';
       } else if (rec.succeedingInstanceId || rec.precedingInstanceId) {
           ep = 'preceding-succeeding-titles';
+      } else if (rec.poNumber && rec.workflowStatus) {
+          ep = 'orders-storage/purchase-orders';
+      } else if (rec.titleOrPackage && rec.purchaseOrderId) {
+          ep = 'orders-storage/po-lines';
       } else if (inFile.match(/organizations/)) {
           ep = 'organizations-storage/organizations';
       } else {
