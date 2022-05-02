@@ -10,19 +10,10 @@ const inFile = process.argv[3];
 let fy = parseInt(process.argv[4], 10) || 2021;
 let fyMax = fy + 1;
 
-const files = {
-  po: 'purchase-orders.jsonl',
-  pol: 'po-lines.jsonl',
-  trans: 'transactions.jsonl',
-  summ: 'summaries.jsonl'
-}
-
 const refFiles = {
-
   organizations: 'organizations.json',
   funds: 'funds.json',
-  locations: 'locations.json',
-  fiscalYears: 'fiscal-years.json'
+  locations: 'locations.json'
 };
 
 const addresses = {
@@ -47,11 +38,8 @@ const methodMap = {
     
     const dir = path.dirname(inFile);
     const fn = path.basename(inFile, '.jsonl', '.json');
-
-    for (let n in files) {
-      files[n] = dir + '/' + files[n]; 
-      if (fs.existsSync(files[n])) fs.unlinkSync(files[n]);
-    }
+    const outFile = `${dir}/folio-${fn}-${fy}.jsonl`;
+    if (fs.existsSync(outFile)) fs.unlinkSync(outFile);
 
     const bibMapFile = `${refDir}/bibs.map`;
     if (!fs.existsSync(bibMapFile)) throw new Error(`Can't find bib map at ${bibMapFile}`);
@@ -133,11 +121,6 @@ const methodMap = {
       return out;
     }
 
-    const writeJsonl = (path, data) => {
-      let jsonStr = JSON.stringify(data) + '\n';
-      fs.writeFileSync(path, jsonStr, { flag: 'a' });
-    }
-
     const fileStream = fs.createReadStream(inFile);
 
     const rl = readline.createInterface({
@@ -200,6 +183,7 @@ const methodMap = {
             vendor: orgId,
             dateOrdered: orderDate,
             workflowStatus: status.wrk,
+            compositePoLines: [],
             notes: []
           };
           let oType = spo.i[0];
@@ -252,15 +236,10 @@ const methodMap = {
           let addType = (spo.k) ? spo.k[0] : '';
           addType = addType.trim();
           if (addType) co.shipTo = addresses[addType] || '';
-          writeJsonl(files.po, co);
           
           // PO lines start here
 
-          let lineNum = poNum + '-1';
-          let lineId = uuid(lineNum, ns);
           let pol = {
-            id: lineId,
-            purchaseOrderId: poId,
             paymentStatus: status.pay,
             poLineNumber: poNum + '-1',
             contributors: [],
@@ -326,7 +305,6 @@ const methodMap = {
               createInventory: 'None'
             };
           }
-          pol.cost.poLineEstimatedPrice = price * quant;
 
           let fundCode = spo.u[0];
           let fundId = refData.funds[fundCode];
@@ -337,28 +315,6 @@ const methodMap = {
             value: 100
           };
           pol.fundDistribution = [ fundDist ];
-
-          let trans = {
-            id: uuid(lineId, ns),
-            amount: price * quant,
-            currency: 'USD',
-            fiscalYearId: refData.fiscalYears.FY2021,
-            source: 'PoLine',
-            transactionType: 'Encumbrance',
-            fromFundId: fundId
-          };
-          let enc = {
-            initialAmountEncumbered: price * quant,
-            status: 'Unreleased',
-            orderType: co.orderType,
-            subscription: false,
-            reEncumber: false,
-            sourcePurchaseOrderId: poId,
-            sourcePoLineId: lineId
-          }
-          if (co.ongoing) enc.subscription = co.ongoing.isSubscription;
-          trans.encumbrance = enc;
-          writeJsonl(files.trans, trans);
 
           let locCode = spo.t[0];
           let locId = refData.locations[locCode];
@@ -386,13 +342,11 @@ const methodMap = {
             pol.receiptDate = rdate;
             pol.receiptStatus = 'Fully Received';
           }
-          writeJsonl(files.pol, pol);
+          co.compositePoLines.push(pol);
 
-          let summary = {
-            id: poId,
-            numTransactions: 1
-          }
-          writeJsonl(files.summ, summary);
+          // console.log(JSON.stringify(co, null, 2));
+          let coStr = JSON.stringify(co) + '\n';
+          fs.writeFileSync(outFile, coStr, { flag: 'a' });
           c++;
         }
        
