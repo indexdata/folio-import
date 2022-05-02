@@ -17,7 +17,7 @@ let inFile = process.argv[2];
   try {
     const start = new Date().valueOf();
     if (!inFile) {
-      throw 'Usage: node findRequestsLost.js <requests_jsonl_file>';
+      throw 'Usage: node moveLostRequests.js <requests_jsonl_file>';
     } else if (!fs.existsSync(inFile)) {
       throw new Error('Can\'t find input file');
     } 
