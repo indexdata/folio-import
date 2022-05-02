@@ -2,7 +2,7 @@ const fs = require('fs');
 const superagent = require('superagent');
 const { getAuthToken } = require('./lib/login');
 let endPoint = process.argv[2];
-let refDir = process.argv[3];
+let fileName = process.argv[3];
 let start = parseInt(process.argv[4], 10);
 let limit = parseInt(process.argv[5], 10);
 let fn;
@@ -10,18 +10,12 @@ let writeStream;
 
 (async () => {
   try {
-    if (!refDir) {
-      throw new Error('Usage: node downloadJSONL.js <endpoint> <download_dir> [ <start> <stop> ]');
-    } else if (!fs.existsSync(refDir)) {
-      throw new Error('Reference directory does\'t exist!');
-    } else if (!fs.lstatSync(refDir).isDirectory()) {
-      throw new Error(`${refDir} is not a directory!`)
+    if (!fileName) {
+      throw new Error('Usage: node downloadJSONL.js <endpoint> <filename> [ <start> <stop> ]');
     }
     const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
 
     const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
-
-    refDir = refDir.replace(/\/$/,'');
 
     if (endPoint.match(/^.x/)) {
       endPoint = endPoint.replace(/^.x\//, '');
@@ -34,9 +28,13 @@ let writeStream;
     let filename = endPoint.replace(/\//g, '__');
     filename = filename.replace(/\?.+/, '');
 
-    fn = `${refDir}/${filename}.jsonl`;
+    fn = fileName;
     if (fs.existsSync(fn)) {
-      fs.unlinkSync(fn);
+      if (fs.lstatSync(fn).isDirectory()) {
+        throw new Error(`${fileName} is a directory`);
+      } else {
+        fs.unlinkSync(fn);
+      }
     }
     console.log(`Writing to ${fn}`);
     writeStream = fs.createWriteStream(fn);
