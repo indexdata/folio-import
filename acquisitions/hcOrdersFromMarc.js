@@ -3,12 +3,13 @@ const readline = require('readline');
 const uuid = require('uuid/v5');
 const path = require('path');
 
-const ns = 'a839a191-e230-4c52-8e08-38e3bc5adfc0';
+const ns = '99a9c2f6-fae0-4f49-b242-63fd3661a7d6';
 
 let refDir = process.argv[2];
 const inFile = process.argv[3];
-let fy = parseInt(process.argv[4], 10) || 2021;
-let fyMax = fy + 1;
+// let fy = parseInt(process.argv[4], 10) || 2021;
+// let fyMax = fy + 1;
+const wfs = process.argv[4] || '';
 
 const files = {
   po: 'purchase-orders.jsonl',
@@ -41,7 +42,7 @@ const methodMap = {
 (async () => {
   try {
     let start = new Date().valueOf();
-    if (!inFile) throw('Usage: node hcOrders.js <acq_ref_dir> <marc_jsonl_file> [ <fiscal year> ]');
+    if (!inFile) throw('Usage: node hcOrders.js <acq_ref_dir> <marc_jsonl_file> [ <workflow_status> ]');
     if (!fs.existsSync(inFile)) throw new Error(`Can't find ${inFile}!`);
     refDir = refDir.replace(/\/$/, '');
     
@@ -166,9 +167,12 @@ const methodMap = {
           
           let orderDate = spo.q[0] || '';
           orderDate = orderDate.replace(/(\d\d)-(\d\d)-(\d\d)/, '20$3-$1-$2');
+
+          /*
           if (orderDate < `${fy}-07` || orderDate > `${fyMax}-06`) {
             throw(`WARN ${orderDate} is not in fiscal year starting ${fy}-07.`);
           }
+          */
 
           let vcode = (spo.v) ? spo.v[0].trim() : '';
           let orgId = refData.organizations[vcode] || 'ERR';
@@ -193,6 +197,10 @@ const methodMap = {
             status.wrk = 'Pending',
             status.pay = 'Pending'
           }
+
+          if (wfs && wfs !== status.wrk) {
+            throw(`WARN Workflow status ${status.wrk} does not equal ${wfs}`);
+          } 
 
           let co = {
             id: poId,

@@ -77,7 +77,7 @@ let inFile = process.argv[2];
           ep = 'finance-storage/funds';
       } else if (rec.budgetStatus) {
           ep = 'finance-storage/budgets';
-      } else if (rec.transactionType && rec.amount) {
+      } else if (rec.transactionType) {
           ep = 'finance-storage/transactions';
       } else if (rec.numTransactions) {
           ep = 'finance-storage/order-transaction-summaries';
