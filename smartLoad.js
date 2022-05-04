@@ -107,6 +107,10 @@ let inFile = process.argv[2];
           ep = 'orders-storage/po-lines';
       } else if (inFile.match(/organizations/)) {
           ep = 'organizations-storage/organizations';
+      } else if (rec.batchGroupId && rec.invoiceDate) {
+          ep = 'invoice-storage/invoices';
+      } else if (rec.invoiceLineStatus) {
+          ep = 'invoice-storage/invoice-lines';
       } else {
         throw new Error(`Endpoint not found for ${line}`);
       }
