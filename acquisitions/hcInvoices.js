@@ -9,7 +9,15 @@ const prefix = 'inv';
 const linePrefix = 'invl';
 
 let refDir = process.argv[2];
-const inFile = process.argv[3];
+let ordersDir = process.argv[3];
+const inFile = process.argv[4];
+
+const files = {
+  iv: 'folio-invoices.jsonl',
+  ivl: 'folio-invoice-lines.jsonl',
+  trans: 'invoice-transactions.jsonl',
+  summ: 'invoice-summaries.jsonl'
+}
 
 const refFiles = {
   organizations: 'organizations.json',
@@ -17,21 +25,31 @@ const refFiles = {
   batchGroups: 'batch-groups.json'
 };
 
+const orderFiles = {
+  orderLines: 'po-lines.jsonl',
+  transactions: 'transactions.jsonl'
+};
+
 (async () => {
   try {
-    if (!inFile) throw('Usage: node hcInvoices.js <acq_ref_dir> <sierra_invoices_json_file>');
+    if (!inFile) throw('Usage: node hcInvoices.js <acq_ref_dir> <orders_dir> <sierra_invoices_json_file>');
     if (!fs.existsSync(inFile)) throw new Error(`Can't find ${inFile}!`);
     refDir = refDir.replace(/\/$/, '');
+    ordersDir = ordersDir.replace(/\/$/, '');
 
     const dir = path.dirname(inFile);
     const fn = path.basename(inFile, '.jsonl');
+
+    for (let n in files) {
+      files[n] = dir + '/' + files[n];
+      if (fs.existsSync(files[n])) fs.unlinkSync(files[n]);
+    }
 
     const outFile = `${dir}/folio-${fn}.jsonl`;
     if (fs.existsSync(outFile)) fs.unlinkSync(outFile);
 
     const lineFile = `${dir}/folio-line-${fn}.jsonl`;
     if (fs.existsSync(lineFile)) fs.unlinkSync(lineFile);
-
 
     const refData = {};
     for (let prop in refFiles) {
@@ -43,6 +61,34 @@ const refFiles = {
         let code = p.code || p.name;
         refData[prop][code] = p.id;
       })
+    }
+
+    const orders = {};
+    for (let prop in orderFiles) {
+      refData[prop] = {};
+      let path = `${ordersDir}/${orderFiles[prop]}`;
+      const fileStream = fs.createReadStream(path);
+      const rl = readline.createInterface({
+        input: fileStream,
+        crlfDelay: Infinity
+      });
+      orders[prop] = {};
+      console.log(`Mapping ${prop}...`);
+      for await (const line of rl) {
+        let l = JSON.parse(line);
+        if (prop === 'orderLines') {
+          let k = l.poLineNumber.replace(/-.+/, '');
+          orders[prop][k] = l.id;
+        } else {
+          let k = l.encumbrance.sourcePoLineId;
+          orders[prop][k] = l.id;
+        }
+      }
+    }
+
+    const writeJsonl = (path, data) => {
+      let jsonStr = JSON.stringify(data) + '\n';
+      fs.writeFileSync(path, jsonStr, { flag: 'a' });
     }
 
     const fileStream = fs.createReadStream(inFile);
@@ -126,21 +172,24 @@ const refFiles = {
           };
 
           let num = el + 1;
+          
           let ivl = {
-            invoiceLineNumber: `${sid}-${num}`,
+            invoiceLineNumber: num.toString(),
             id: ivlId,
             invoiceId: invoiceId,
             description: l.title,
             invoiceLineStatus: iv.status,
             quantity: l.noOfCopies,
-            releaseEncumbrance: false,
+            releaseEncumbrance: true,
             subTotal: l.paidAmount,
             total: l.paidAmount,
             fundDistributions: [ fdist ]
           };
+          let poLineNum = l.order.replace(/.+\//, '');
+          let poLineId = orders.orderLines[poLineNum];
+          if (poLineId) ivl.poLineId = poLineId;
           if (l.lineItemNote) notes.push(l.lineItemNote);
-          let linStr = JSON.stringify(ivl) + '\n';
-          fs.writeFileSync(lineFile, linStr, { flag: 'a' });
+          writeJsonl(files.ivl, ivl);
           lcount++;
         });
 
@@ -148,9 +197,8 @@ const refFiles = {
           iv.note = notes.join(' ; ');
         } 
     
-        console.log(JSON.stringify(iv, null, 2));
-        let ivStr = JSON.stringify(iv) + '\n';
-        fs.writeFileSync(outFile, ivStr, { flag: 'a' });
+        // console.log(JSON.stringify(iv, null, 2));
+        writeJsonl(files.iv, iv);
         c++;
       } catch (e) {
         console.log(`[${lnum}] ${e}`);
