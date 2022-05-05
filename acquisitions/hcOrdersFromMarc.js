@@ -7,19 +7,20 @@ const ns = '99a9c2f6-fae0-4f49-b242-63fd3661a7d6';
 
 let refDir = process.argv[2];
 const inFile = process.argv[3];
-// let fy = parseInt(process.argv[4], 10) || 2021;
+let fy = parseInt(process.argv[4], 10) || 2021;
+let curFyStart = '2021-07';
 // let fyMax = fy + 1;
-const wfs = process.argv[4] || '';
+// const wfs = process.argv[4] || '';
 
 const files = {
   po: 'purchase-orders.jsonl',
   pol: 'po-lines.jsonl',
   trans: 'transactions.jsonl',
-  summ: 'summaries.jsonl'
+  summ: 'summaries.jsonl',
+  log: 'process.log'
 }
 
 const refFiles = {
-
   organizations: 'organizations.json',
   funds: 'funds.json',
   locations: 'locations.json',
@@ -42,7 +43,7 @@ const methodMap = {
 (async () => {
   try {
     let start = new Date().valueOf();
-    if (!inFile) throw('Usage: node hcOrders.js <acq_ref_dir> <marc_jsonl_file> [ <workflow_status> ]');
+    if (!inFile) throw('Usage: node hcOrders.js <acq_ref_dir> <marc_jsonl_file> [ fiscal_year_starting ]');
     if (!fs.existsSync(inFile)) throw new Error(`Can't find ${inFile}!`);
     refDir = refDir.replace(/\/$/, '');
     
@@ -86,7 +87,6 @@ const methodMap = {
         refData[prop][code] = p.id
       })
     }
-    // console.log(refData);
 
     const parseMarc = (marc) => {
       let fo = {};
@@ -139,6 +139,8 @@ const methodMap = {
       fs.writeFileSync(path, jsonStr, { flag: 'a' });
     }
 
+    const logger = new console.Console(fs.createWriteStream(files.log));
+
     const fileStream = fs.createReadStream(inFile);
 
     const rl = readline.createInterface({
@@ -168,11 +170,7 @@ const methodMap = {
           let orderDate = spo.q[0] || '';
           orderDate = orderDate.replace(/(\d\d)-(\d\d)-(\d\d)/, '20$3-$1-$2');
 
-          /*
-          if (orderDate < `${fy}-07` || orderDate > `${fyMax}-06`) {
-            throw(`WARN ${orderDate} is not in fiscal year starting ${fy}-07.`);
-          }
-          */
+          
 
           let vcode = (spo.v) ? spo.v[0].trim() : '';
           let orgId = refData.organizations[vcode] || 'ERR';
@@ -198,9 +196,15 @@ const methodMap = {
             status.pay = 'Pending'
           }
 
+          if (orderDate < `${fy}-07` && status.wrk === 'Closed') {
+            throw(`WARN Order date ${orderDate} is less than ${fy}-07 and status is ${status.wrk}`);
+          }
+
+          /*
           if (wfs && wfs !== status.wrk) {
             throw(`WARN Workflow status ${status.wrk} does not equal ${wfs}`);
-          } 
+          }
+          */
 
           let co = {
             id: poId,
@@ -337,6 +341,7 @@ const methodMap = {
           pol.cost.poLineEstimatedPrice = price * quant;
 
           let fundCode = spo.u[0];
+          if (orderDate < curFyStart) fundCode += '-p';
           let fundId = refData.funds[fundCode];
           if (!fundId) throw(`WARN Can't find fundId for "${fundCode}"`);
           let fundDist = {
@@ -405,7 +410,9 @@ const methodMap = {
         }
        
       } catch (e) {
-        console.log(`[${lnum}] ${e}`);
+        let msg = `[${lnum}] ${e}`;
+        console.log(msg);
+        logger.log(msg);
         fail++;
       }
     }
