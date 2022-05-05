@@ -111,6 +111,7 @@ const orderFiles = {
         if (!orgId) throw(`WARN organization not found for vendorCode "${venCode}" (${sid})`);
         let iv = {
           id: invoiceId,
+          folioInvoiceNo: sid,
           batchGroupId: refData.batchGroups.FOLIO,
           currency: 'USD',
           invoiceDate: so.invDate,
