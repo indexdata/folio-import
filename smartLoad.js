@@ -79,6 +79,8 @@ let inFile = process.argv[2];
           ep = 'finance-storage/budgets';
       } else if (rec.transactionType) {
           ep = 'finance-storage/transactions';
+      } else if (rec.numPendingPayments || rec.numPaymentsCredits) {
+          ep = 'finance-storage/invoice-transaction-summaries';
       } else if (rec.numTransactions) {
           ep = 'finance-storage/order-transaction-summaries';
       } else if (inFile.match(/groups/i) && rec.status && rec.code && rec.name) {

@@ -24,7 +24,8 @@ const files = {
 const refFiles = {
   organizations: 'organizations.json',
   funds: 'funds.json',
-  batchGroups: 'batch-groups.json'
+  batchGroups: 'batch-groups.json',
+  fiscalYears: 'fiscal-years.json'
 };
 
 const orderFiles = {
@@ -202,10 +203,38 @@ const orderFiles = {
           iv.note = notes.join(' ; ');
         } 
     
-        // console.log(JSON.stringify(iv, null, 2));
         if (hasLines[invoiceId]) {
           writeJsonl(files.iv, iv);
           c++;
+
+          // if there are adjustments, total them up a create a transaction.
+          if (iv.adjustments) {
+            let adjTotal = 0;
+            let fundId;
+            iv.adjustments.forEach(a => {
+              adjTotal += a.value;
+              fundId = a.fundDistributions[0].fundId;
+            });
+            let tranType = (adjTotal > 0) ? 'Payment' : 'Credit';
+            let tran = {
+              id: uuid('adj' + iv.id, ns),
+              amount: adjTotal,
+              currency: 'USD',
+              fiscalYearId: refData.fiscalYears.FY2021,
+              source: 'Invoice',
+              transactionType: tranType,
+              sourceInvoiceId: iv.id,
+              fromFundId: fundId
+            }
+
+            writeJsonl(files.trans, tran);
+            let summ = {
+              id: iv.id,
+              numPendingPayments: 0,
+              numPaymentsCredits: 1,
+            }
+            writeJsonl(files.summ, summ);
+          }
         } else {
           noLines++;
           throw(`WARN no invoice lines found for ${sid}`);
