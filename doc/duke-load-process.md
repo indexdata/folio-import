@@ -24,6 +24,8 @@ ln -s ${DATA_DUKE} data-duke
 ln -s ${DATA_DUKE}/log log
 ```
 
+Follow the [guide](https://github.com/indexdata/id-folio-infrastructure/runbooks/screen.md) to using "screen" to ensure continued operation of each long-running step.
+
 ## Assess and prepare data
 
 ```
@@ -51,11 +53,11 @@ jq -c '.[]' *bulk-items.jsonl > ${DATA_DUKE}/all-items.jsonl
 jq -c '.[]' *bulk-bound-with.jsonl > ${DATA_DUKE}/all-bound-with.jsonl
 ```
 
-Split into sets of data files ready for the multi-process runner (e.g. optimised for six instances of mod-inventory-storage).
-
 TODO: Do some other verification.
 
 ## Load instances
+
+Split into sets of data files ready for the multi-process runner (e.g. optimised for six replicas of mod-inventory-storage).
 
 ```
 split -d --number=l/6 ${DATA_DUKE}/all-instances.jsonl ${DATA_DUKE}/instance
@@ -64,11 +66,18 @@ split -d --number=l/6 ${DATA_DUKE}/all-instances.jsonl ${DATA_DUKE}/instance
 
 ## Load SRS
 
+As above, if there are many records to be loaded, and there are more than one replica of mod-source-record-storage, then split into appropriate number of files.
+
+The SRS data loading will take a long time, so get started early.
+
+Mint a new v4 UUID for "`snapshotId`" (e.g. at [uuidgenerator.net](https://www.uuidgenerator.net/))
+and add it to a snapshot-srs.jsonl file. Substitute the placeholder in data records with that UUID.
+
 ```
-sed -E 's/"snapshotId":"TO BE ADDED"/"snapshotId":"b756e7e5-ef54-47a4-b4e4-626ca5480a50"/' \
+sed -E 's/"snapshotId":"TO BE ADDED"/"snapshotId":"f77e03d6-7b5c-4c2f-b1eb-0c71ca8cf0fc"/' \
   ${DATA_DUKE}/all-source.jsonl > ${DATA_DUKE}/all-srs.jsonl
-split -d --number=l/3 ${DATA_DUKE}/all-srs.jsonl ${DATA_DUKE}/srs
 node loadJSONL.js source-storage/snapshots data-duke/snapshot-srs.jsonl
+split -d --number=l/3 ${DATA_DUKE}/all-srs.jsonl ${DATA_DUKE}/srs
 ./run_load_jsonl.sh source-storage/records data-duke/srs0*
 ```
 
