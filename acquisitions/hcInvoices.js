@@ -11,6 +11,8 @@ const linePrefix = 'invl';
 let refDir = process.argv[2];
 let ordersDir = process.argv[3];
 const inFile = process.argv[4];
+let fyStart = process.argv[5] || '2021-07';
+if (!fyStart.match(/-/)) fyStart = `${fyStart}-07`;
 
 const files = {
   iv: 'folio-invoices.jsonl',
@@ -32,7 +34,7 @@ const orderFiles = {
 
 (async () => {
   try {
-    if (!inFile) throw('Usage: node hcInvoices.js <acq_ref_dir> <orders_dir> <sierra_invoices_json_file>');
+    if (!inFile) throw('Usage: node hcInvoices.js <acq_ref_dir> <orders_dir> <sierra_invoices_json_file> [ <fiscal_year_start> ]');
     if (!fs.existsSync(inFile)) throw new Error(`Can't find ${inFile}!`);
     refDir = refDir.replace(/\/$/, '');
     ordersDir = ordersDir.replace(/\/$/, '');
@@ -44,12 +46,6 @@ const orderFiles = {
       files[n] = dir + '/' + files[n];
       if (fs.existsSync(files[n])) fs.unlinkSync(files[n]);
     }
-
-    const outFile = `${dir}/folio-${fn}.jsonl`;
-    if (fs.existsSync(outFile)) fs.unlinkSync(outFile);
-
-    const lineFile = `${dir}/folio-line-${fn}.jsonl`;
-    if (fs.existsSync(lineFile)) fs.unlinkSync(lineFile);
 
     const refData = {};
     for (let prop in refFiles) {
@@ -102,6 +98,8 @@ const orderFiles = {
     let lnum = 0;
     let fail = 0;
     let lcount = 0;
+    let noLines = 0;
+    let hasLines = {};
     for await (const line of rl) {
       lnum++;
       try {
@@ -120,6 +118,9 @@ const orderFiles = {
           vendorId: orgId,
           source: 'User'
         };
+        if (so.paidDate < fyStart) {
+          throw(`WARN Paid date ${so.paidDate} is less than ${fyStart}`);
+        }
         if (so.paidDate) {
           iv.status = 'Paid';
           iv.paymentDate = so.paidDate;
@@ -187,10 +188,13 @@ const orderFiles = {
           };
           let poLineNum = l.order.replace(/.+\//, '');
           let poLineId = orders.orderLines[poLineNum];
-          if (poLineId) ivl.poLineId = poLineId;
-          if (l.lineItemNote) notes.push(l.lineItemNote);
-          writeJsonl(files.ivl, ivl);
-          lcount++;
+          if (poLineId) {
+            hasLines[invoiceId] = 1;
+            ivl.poLineId = poLineId;
+            if (l.lineItemNote) notes.push(l.lineItemNote);
+            writeJsonl(files.ivl, ivl);
+            lcount++;
+          } 
         });
 
         if (notes[0]) {
@@ -198,8 +202,13 @@ const orderFiles = {
         } 
     
         // console.log(JSON.stringify(iv, null, 2));
-        writeJsonl(files.iv, iv);
-        c++;
+        if (hasLines[invoiceId]) {
+          writeJsonl(files.iv, iv);
+          c++;
+        } else {
+          noLines++;
+          throw(`WARN no invoice lines found for ${sid}`);
+        }
       } catch (e) {
         console.log(`[${lnum}] ${e}`);
         fail++;
@@ -207,9 +216,10 @@ const orderFiles = {
     }
     console.log('Invoices:', c);
     console.log('Line items:', lcount);
+    console.log('Invoices with no lines:', noLines);
     console.log('Failed:', fail);
-    console.log('Invoices saved to:', outFile);
-    console.log('Line items saved to:', lineFile);
+    console.log('Invoices saved to:', files.iv);
+    console.log('Line items saved to:', files.ivl);
   } catch (e) {
     console.log(e);
   }
