@@ -1,3 +1,8 @@
+/*
+  This script will take funds from finance-storage and create "prior years" funds and budgets.
+*/
+
+
 const uuid = require('uuid/v5');
 const fs = require('fs');
 const path = require('path');
