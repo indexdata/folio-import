@@ -2,23 +2,21 @@ Sierra Status Code	Folio Status	Sierra Status
 !	Awaiting pickup	ON HOLDSHELF		
 $	Lost and paid	LOST & PAID		FOLIO status choices
 -	Available	AVAILABLE		Aged to lost
-9	map to status "retricted" and "map to temp location" and "loan type non circulation"	ON DISPLAY		Available
+9	Available	ON DISPLAY	map to status "available" and "map to temp location On Display"	Available
 a	Declared lost	ASSUMED LOST		Awaiting pickup
 b	Available	ONLINE		Awaiting delivery
-d	map to status "available" and "Item damaged status"	DAMAGED		Checked out
-g	Declared lost	ON THE FLY LOST		Claimed returned
+d	Available	DAMAGED	map to status "available" and item condition set to "damaged"	Checked out
 m	Missing	MISSING		Declared lost
 n	Declared lost	BILLED		In process
-o	map to status "retricted" and "loan type non circulation"	LIB USE ONLY		In process (non-requestable)
-p	map to status "restricted" and "Item damaged status" and "loan type non circulation"	LIB ONLY/DAMAG		In transit
-q	map to status "restricted" and "Holdings statement public note" added "Request at Music Circulation Desk" I am not sure if this is the best place to have this note. Please advise.	LOCAL REQUEST		Intellectual item
-r	map to status "retricted" and "map to temp location" and "temporary loan type course reserves"	RESERVE ROOM		Long missing
-t	In transit	IN TRANSIT		Lost and paid
-w	Withdrawn	WITHDRAWN		Missing
-x	map to status "retricted" and "loan type non circulation"	DEPT USE ONLY		On order
-z	Claimed returned	CLMS RETD		Paged
-tu	Unavailable	TEMPORARILY UNAVAILABLE		Restricted
-k	On order	ON ORDER		Order closed
+o	Restricted	LIB USE ONLY	map to status "restricted" and "loan type "non circulation"	In transit
+q	Available	LOCAL REQUEST	map to status "Available" and "Item Access Note "Request at Music Circulation Desk"	Intellectual item
+t	In transit	IN TRANSIT		Long missing
+w	Withdrawn	WITHDRAWN		Lost and paid
+x	Restricted	DEPT USE ONLY	map to status "restricted" and "loan type non circulation"	Missing
+z	Claimed returned	CLMS RETD		On order
+tu	Unavailable	TEMPORARILY UNAVAILABLE		Paged
+k	On order	ON ORDER		Restricted
+				Order closed
 				Unavailable
 				Unknown
 				Withdrawn

@@ -1,68 +1,54 @@
-Code	Label
-0	Book   
-1	Ref Book  
-2	Bound Periodical  
-3	Mus Res  
-4	Spec. Coll.  
-5	Microcard   
-6	Microfiche   
-7	Microfilm   
-8	Filmstrip   
-9	Cassette   
-10	Slide   
-11	Score   
-12	Recording   
-13	Music CD  
-14	Mus Video  
-15	Diskette   
-16	Photo   
-17	Manuscript   
-18	Pamphlet   
-19	Newspaper   
-20	Equipment   
-21	Keys   
-22	Recording   
-23	Video   
-24	Mus. Cass.  
-25	Photocopy   
-26	Laser Disk  
-27	Annual   
-28	Per Issue  
-29	CD ROM  
-30	MRC Video  
-31	MRC Book  
-32	MRC Kit  
-33	CD ROM  
-34	Audio CD  
-35	MRC Equip  
-36	Laptop   
-37	WAM Books  
-38	Elec File  
-39	MRC DVD  
-40	DVD   
-41	Music DVD  
-42	Interlibrary Loan  
-43	Keyboard   
-44	PianoKey   
-45	AV Equipment  
-46	AV Dept. Equip. 
-47	Millard Equipment  
-48	DVD-ROM   
-49	MRC Audio CD 
-50	Math Equipment  
-51	Millard Audio Recorder 
-52	Lock (1 Day) 
-53	Lock (1 Week) 
-54	Lock (1 Semester) 
-55	AV Equipment (Hourly) 
-56	StEP Tablet  
-57	ITS Laptop - Windows
-58	ITS Laptop - MAC
-59	ITS Desktop - MAC
-60	ITS Desktop - Windows
-61	ITS Other Peripheral 
-62	ITS Wireless Access Point
-63	ITS Speaker Phone 
-64	ITS Chromebook  
-65	OSI Equipment  
-66	Reserve Kit  
+Sierra Item Type Num	Sierra Item Type Name	FOLIO Mat Type	FOLIO Loan Type	Notes		
+			Short Term Loan	All hdn* locations		
+0	Book	Book	Can Circulate			
+1	Ref Book	Book	Non Circulating			
+2	Bound Periodical	Periodical	Non Circulating			
+3	Mus Res	Score	Can Circulate			
+4	Spec. Coll.	Book	Non Circulating			
+5	Microcard	Microform	Non Circulating			
+6	Microfiche	Microform	Non Circulating			
+7	Microfilm	Microform	Non Circulating			Loan Type
+10	Slide	Media	Can Circulate			Can Circulate
+11	Score	Score	Can Circulate			Short Term Loan
+12	Sound Recording	Media	Can Circulate			Reserves
+15	Diskette	Media	Can Circulate			Online
+18	Pamphlet	Pamphlet	Non Circulating			Interlibrary Loan
+19	Newspaper	Periodical	Non Circulating			Non Circulating
+20	Equipment	Equipment	Equipment 1-Day	music with item type 20 are set to FOLIO Item Status Unavailable. 		Equipment End Of Semester
+21	Keys	Key	Short Term Loan			Equipment 1 Week
+23	Video	Media	Can Circulate			Equipment 3 Day
+24	Mus. Cass.	Media	Can Circulate			Equipment 1 Day
+26	Laser Disk	Media	Can Circulate			
+27	Annual	Book	Can Circulate			
+28	Per Issue	Periodical	Non Circulating			
+29	CD ROM	Media	Can Circulate			
+31	MRC Book	Media	Can Circulate			
+32	MRC Kit	Elec File	Online			
+33	CD ROM	Media	Can Circulate			
+34	Audio CD	Media	Can Circulate			
+36	Laptop	Equipment	Equipment 1-Day			
+37	WAM Books	Book	Can Circulate			
+38	Elec File	Elec File	Online			
+40	DVD	Media	Can Circulate			
+41	Music DVD	Media	Can Circulate			
+42	Interlibrary Loan	Interlibrary Loan	Interlibrary Loan			
+43	Keyboard	Equipment	Equipment 1-Day			
+44	PianoKey	Key	Short Term Loan			
+48	DVD-ROM	Media	Can Circulate			
+52	Lock (1-Day)	Lock	Can Circulate			
+53	Lock (1 Week)	Lock	Can Circulate			
+54	Lock (1 Semester	Lock	Can Circulate			
+50	Math Equipment	Equipment	Equipment End of Semester			
+57	ITS Laptop - Windows	Equipment	Equipment 1-Day			
+58	ITS Laptop - MAC	Equipment	Equipment 1-Day			
+59	ITS Desktop - MAC	Equipment	Equipment End of Semester			
+60	ITS Desktop - Windows	Equipment	Equipment End of Semester			
+61	ITS Other Peripheral	Equipment	Equipment 1-Day			
+62	ITS Wireless Access Point	Equipment	Equipment 1-Week			
+63	ITS Speaker Phone	Equipment	Equipment 1-Day			
+64	ITS Chromebook	Equipment	Equipment 1-Day			
+65	OSI Equipment	Equipment	Equipment 1-Day			
+47	Millard Equipment	Equipment	Equipment 3-Day			
+45	AV Equipment	Equipment	Equipment 1-Day			
+46	AV Dept. Equip.	Equipment	Equipment 1-Day			
+35	MRC Equip	Equipment	Equipment 1-Week			
