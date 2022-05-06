@@ -1,15 +1,77 @@
-wd = ~/Folio/folio-import
-data-dir = ~/Folio/holycross
-orders-dir = $(data-dir)/orders/v2
+wd = ~/folio-import
+login = login-holycross-test.sh
+data = /data/sftpusers/holycross/migration
+inv-dir = $(data)/marc-test
+orders-dir = $(data)/orders
 orders-marc = $(orders-dir)/orders.mrc
 marc-jsonl = $(orders-dir)/orders.jsonl
-acq-ref = $(data-dir)/acq-ref
+acq-ref = $(data)/acq-ref
+inv-ref = $(data)/inv-ref
+usr-ref = $(data)/usr-ref
+line = "------------------------------------------"
 
 help:
-	@echo "Usage: make [ help | orders-from-marc | process-orders ]"
+	@echo "Usage: make [ help | setup | inventory | orders-from-marc | process-orders ]"
 
-orders-from-marc: $(orders-marc)
-	yaz-marcdump -f marc8 -t utf8 -l 9=97 -o json $(orders-marc) | jq . -c > $(marc-jsonl)
+inventory: 
+	mv $(inv-dir)/*.out $(inv-dir)/bibs.mrc
+	@echo $(line)
+	./marc2inst-hc.pl $(wd)/mapping_rules/holycross.json $(inv-ref) $(inv-dir)/bibs.mrc
+	@echo $(line)
+
+inventory-multi: 
+	rm -f $(inv-dir)/x0*.mrc 
+	@echo "Splitting MARC file"
+	yaz-marcdump -C 70000 -s $(inv-dir)/x $(inv-dir)/*.out > /dev/null
+	for x in $(inv-dir)/x0*; do mv $$x $$x.mrc; done
+	./run-multi.sh ./marc2inst-hc.pl $(wd)/mapping_rules/holycross.json $(inv-ref) $(inv-dir)/x0*.mrc
+
+clean-inventory:
+	rm $(inv-dir)/*.jsonl
+	rm $(inv-dir)/*.map
+	mv $(inv-dir)/bibs.mrc $(inv-dir)/bibs.mrc.out
+
+setup:
+	cd $(wd); git pull
+	@echo $(line)
+	@echo "Copying scripts to ${PWD}"
+	@echo $(line)
+	cp $(wd)/configs/bash/login-holycross-test.sh .
+	cp $(wd)/configs/bash/login-holycross.sh .
+	cp $(wd)/bash/reference* .
+	cp $(wd)/perl/marc2inst-hc.pl .
+	@echo $(line)
+	@echo "Creating reference data directorys"
+	@echo $(line)
+	mkdir $(acq-ref); chown ${USER}.admin $(acq-ref)
+	mkdir $(inv-ref); chown ${USER}.admin $(inv-ref)
+	mkdir $(usr-ref); chown ${USER}.admin $(usr-ref)
+	@echo $(line)
+	@echo "Getting reference data..."
+	@echo $(line)
+	./$(login) > /dev/null
+	./reference_inventory.sh $(inv-ref)
+	./reference_acq.sh $(acq-ref)
+	./reference_users.sh $(usr-ref)
+	@echo $(line)
+	@echo "Copying tsv files to reference directories"
+	@echo $(line)
+	cp $(wd)/etc/holycross/statuses.tsv $(inv-ref)
+	cp $(wd)/etc/holycross/mtypes.tsv $(inv-ref)
+	cp $(wd)/etc/holycross/mtypes.tsv $(inv-ref)/loantypes.tsv
+
+orders-from-marc:
+	mv $(orders-dir)/*.pout $(orders-dir)/orders.mrc
+	time yaz-marcdump -f marc8 -t utf8 -l 9=97 -o json $(orders-marc) | jq . -c > $(marc-jsonl)
 
 process-orders: $(marc-jsonl)
 	node $(wd)/acquisitions/hcOrdersFromMarc.js $(acq-ref) $(marc-jsonl)
+
+clean:
+	rm login*.sh
+	rm reference*.sh
+	rm *.pl
+	rm -rf .okapi
+	rm -rf $(acq-ref)
+	rm -rf $(inv-ref)
+	rm -rf $(usr-ref)
