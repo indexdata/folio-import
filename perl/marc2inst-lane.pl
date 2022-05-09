@@ -63,8 +63,8 @@ my $files = {
 };
 
 my $ifiles = {
-  items => 'items.tsv',
-  statcodes => 'statcodes.tsv',
+  items => 'item info.tsv',
+  statcodes => 'stat codes.tsv',
   statuses => 'statuses.tsv',
   notes => 'notes.tsv',
   barcodes => 'barcodes.tsv',
@@ -830,7 +830,10 @@ sub make_holdings {
   $hr->{id} = uuid($hrid);
   $hr->{instanceId} = uuid($bid);
   $hr->{hrid} = $hrid;
-  $hr->{permanentLocationId} = $refdata->{locations}->{$loc} || die "ERROR FOLIO location not found for $loc!";
+  $hr->{permanentLocationId} = $refdata->{locations}->{$loc} || '';
+  if (!$hr->{permanentLocationId}) { 
+    print "WARN FOLIO location not found for $loc! ($id)\n";
+  }
   $hr->{callNumber} = $cn;
   $hr->{callNumberTypeId} = $refdata->{callNumberTypes}->{$cntype_str} if $cntype_str =~ /\w/;
   $hr->{discoverySuppress} = JSON::false;
