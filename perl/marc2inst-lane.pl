@@ -63,8 +63,8 @@ my $files = {
 };
 
 my $ifiles = {
-  items => 'item info.tsv',
-  statcodes => 'stat codes.tsv',
+  items => 'item_info.tsv',
+  statcodes => 'stat_codes.tsv',
   statuses => 'statuses.tsv',
   notes => 'notes.tsv',
   barcodes => 'barcodes.tsv',
@@ -177,7 +177,7 @@ sub mapItems {
     while (<ITD>) {
       s/[\r\n]//g;
       my @d = split /\t/, $_, 2;
-      push @{ $items->{$prop}->{$d[0]} }, $d[1];
+      push @{ $items->{$prop}->{$d[0]} }, $d[1] if ($d[0]);
     }
   }
 }
@@ -595,8 +595,10 @@ foreach (@ARGV) {
           my $sdata = $field->subfield($sf) || next;
           $sdata =~ s/^(\d{3}).*/$1/;
           my $rtag = $fr->{frules}->{$sdata} || $sdata;
-          $field->set_tag($rtag);
-          push @marc_fields, $field;
+          if ($rtag =~ /^\d\d\d$/) {
+            $field->set_tag($rtag);
+            push @marc_fields, $field;
+          }
           next;
         }
         if (($tag =~ /^(7|1)/ && !$field->subfield('a')) || ($tag == '856' && !$field->subfield('u'))) {
@@ -731,32 +733,32 @@ foreach (@ARGV) {
 
         # make preceding succeding titles
         foreach my $f ($marc->field('78[05]')) {
-          my $presuc = {};
-          $presuc->{title} = $f->as_string('ast');
-          if ($f->tag() eq '780') {
-            $presuc->{precedingInstanceId} = 'PRECEDING_INSTANCE' # dummy number
-          } else {
-            $presuc->{succeedingInstanceId} = 'SUCCEEDING_INSTANCE' # dummy number
-          }
-          foreach my $sf (('w', 'x')) {
-            my $idtype = $refdata->{identifierTypes}->{'Other standard identifier'};
-            foreach ($f->subfield($sf)) {
-              if (/OCoLC|ocm|ocn/) {
-                $idtype = $refdata->{identifierTypes}->{'OCLC'};
-              } elsif (/DLC/) {
-                $idtype = $refdata->{identifierTypes}->{'LCCN'};
-              } elsif (/^\d{4}-[0-9Xx]{4}/) {
-                $idtype = $refdata->{identifierTypes}->{'ISSN'};
-              } elsif (/^[0-9Xx]{10,13}/) {
-                $idtype = $refdata->{identifierTypes}->{'ISBN'};
-              }
-              my $idObj = { value=>$_, identifierTypeId=>$idtype };
-              push @{ $presuc->{identifiers} }, $idObj;
-            }
-          }
-          write_objects($PSOUT, $json->encode($presuc) . "\n");
-          $pcount++;
+        my $presuc = {};
+        $presuc->{title} = $f->as_string('ast');
+        if ($f->tag() eq '785') {
+          $presuc->{precedingInstanceId} = $rec->{id};
+        } else {
+          $presuc->{succeedingInstanceId} = $rec->{id};
         }
+        foreach my $sf (('w', 'x')) {
+          my $idtype = $refdata->{identifierTypes}->{'Other standard identifier'};
+          foreach ($f->subfield($sf)) {
+            if (/OCoLC|ocm|ocn/) {
+              $idtype = $refdata->{identifierTypes}->{'OCLC'};
+            } elsif (/DLC/) {
+              $idtype = $refdata->{identifierTypes}->{'LCCN'};
+            } elsif (/^\d{4}-[0-9Xx]{4}/) {
+              $idtype = $refdata->{identifierTypes}->{'ISSN'};
+            } elsif (/^[0-9Xx]{10,13}/) {
+              $idtype = $refdata->{identifierTypes}->{'ISBN'};
+            }
+            my $idObj = { value=>$_, identifierTypeId=>$idtype };
+            push @{ $presuc->{identifiers} }, $idObj;
+          }
+        }
+        write_objects($PSOUT, $json->encode($presuc) . "\n");
+        $pcount++;
+      }
 
       } else {
         open ERROUT, ">>:encoding(UTF-8)", $paths->{err};
