@@ -909,7 +909,7 @@ sub make_items {
     }
     $ir->{enumeration} = $c[6] if $c[6];
     $ir->{chronology} = $c[7] if $c[7];
-    $ir->{yearCaption} = $c[9] if $c[9];
+    push @{ $ir->{yearCaption} }, $c[9] if $c[9];
     $ir->{numberOfPieces} = $c[10] if $c[10];
     $ir->{status}->{name} = 'Available';
     $ir->{permanentLoanTypeId} = $refdata->{loantypes}->{'Can circulate'} or die "Can't find permanentLoanTypeId for $id";
