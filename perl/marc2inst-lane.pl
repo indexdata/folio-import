@@ -734,15 +734,25 @@ foreach (@ARGV) {
         # make preceding succeding titles
         foreach my $f ($marc->field('78[05]')) {
         my $presuc = {};
+        my $pstype = 1;
         $presuc->{title} = $f->as_string('ast');
         if ($f->tag() eq '785') {
           $presuc->{precedingInstanceId} = $rec->{id};
         } else {
           $presuc->{succeedingInstanceId} = $rec->{id};
+          $pstype = 2;
         }
         foreach my $sf (('w', 'x')) {
           my $idtype = $refdata->{identifierTypes}->{'Other standard identifier'};
           foreach ($f->subfield($sf)) {
+            if ($sf eq 'w') {
+              my $instid = uuid($_);
+              if ($pstype == 1) {
+                $presuc->{succeedingInstanceId} = $instid;
+              } else {
+                $presuc->{precedingInstanceId} = $instid;
+              }
+            } 
             if (/OCoLC|ocm|ocn/) {
               $idtype = $refdata->{identifierTypes}->{'OCLC'};
             } elsif (/DLC/) {
