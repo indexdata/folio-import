@@ -26,7 +26,7 @@ binmode STDOUT, ":utf8";
 my $ref_dir = shift;
 my $map_file = shift;
 if (! $ARGV[0]) {
-  die "Usage: ./items-hc.pl <ref_data_dir> <instances_tsv_map_file> <iii_holdings_jsonl_file>\n";
+  die "Usage: ./holdings-hc.pl <ref_data_dir> <instances_tsv_map_file> <iii_holdings_jsonl_file>\n";
 }
 
 my $months = {
@@ -168,9 +168,9 @@ foreach (@ARGV) {
   unlink $outfile;
   open my $OUT, ">>:encoding(UTF-8)", $outfile;
 
-  my $itemfile = "$dir/${fn}_iii_holdings_items.jsonl";
-  unlink $itemfile;
-  open my $IOUT, ">>", $itemfile;
+  # my $itemfile = "$dir/${fn}_iii_holdings_items.jsonl";
+  # unlink $itemfile;
+  # open my $IOUT, ">>", $itemfile;
 
   my $count = 0;
   my $hcount = 0;
@@ -279,14 +279,14 @@ foreach (@ARGV) {
       write_objects($OUT, $hr . "\n");
 
       # make dummy items
-      my $itm = {};
-      $itm->{holdingsRecordId} = $h->{id};
-      $itm->{hrid} = $h->{hrid} . 'item';
-      $itm->{id} = uuid($itm->{hrid});
-      $itm->{materialTypeId} = '392bc101-5ec1-46bc-9f1a-7bfa899ce67d'; # other
-      $itm->{permanentLoanTypeId} = 'aecb53e1-46ec-40db-b268-a90b7e76cd16'; # non circulating
-      $itm->{status}->{name} = 'Restricted';
-      my $ir = $json->encode($itm);
+      # my $itm = {};
+      # $itm->{holdingsRecordId} = $h->{id};
+      # $itm->{hrid} = $h->{hrid} . 'item';
+      # $itm->{id} = uuid($itm->{hrid});
+      # $itm->{materialTypeId} = '392bc101-5ec1-46bc-9f1a-7bfa899ce67d'; # other
+      # $itm->{permanentLoanTypeId} = 'aecb53e1-46ec-40db-b268-a90b7e76cd16'; # non circulating
+      # $itm->{status}->{name} = 'Restricted';
+      # my $ir = $json->encode($itm);
       # write_objects($IOUT, $ir . "\n");
 
       $count++;
