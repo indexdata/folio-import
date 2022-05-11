@@ -7,7 +7,7 @@ const { getAuthToken } = require('../lib/login');
 const { post } = require('superagent');
 
 const jsonFile = process.argv[2];
-const v = 'v2';
+const v = '';
 
 (async () => {
   try {

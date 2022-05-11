@@ -1,17 +1,16 @@
 wd = ~/folio-import
 login = login-holycross-test.sh
 data = /data/sftpusers/holycross/migration
-inv-dir = $(data)/marc-test
+inv-dir = $(data)/marc
+holdings-dir = $(data)/holdings
 orders-dir = $(data)/orders
-orders-marc = $(orders-dir)/orders.mrc
-marc-jsonl = $(orders-dir)/orders.jsonl
 acq-ref = $(data)/acq-ref
 inv-ref = $(data)/inv-ref
 usr-ref = $(data)/usr-ref
 line = "------------------------------------------"
 
 help:
-	@echo "Usage: make [ help | setup | inventory | orders-from-marc | process-orders ]"
+	@echo "Usage: make [ help | setup | inventory | iii-holdings | orders-from-marc ]"
 
 inventory: 
 	mv $(inv-dir)/*.out $(inv-dir)/bibs.mrc
@@ -22,7 +21,7 @@ inventory:
 inventory-multi: 
 	rm -f $(inv-dir)/x0*.mrc 
 	@echo "Splitting MARC file"
-	yaz-marcdump -C 70000 -s $(inv-dir)/x $(inv-dir)/*.out > /dev/null
+	yaz-marcdump -C 265000 -s $(inv-dir)/x $(inv-dir)/*.out > /dev/null
 	for x in $(inv-dir)/x0*; do mv $$x $$x.mrc; done
 	./run-multi.sh ./marc2inst-hc.pl $(wd)/mapping_rules/holycross.json $(inv-ref) $(inv-dir)/x0*.mrc
 
@@ -30,6 +29,20 @@ clean-inventory:
 	rm $(inv-dir)/*.jsonl
 	rm $(inv-dir)/*.map
 	mv $(inv-dir)/bibs.mrc $(inv-dir)/bibs.mrc.out
+
+iii-holdings:
+	mv $(holdings-dir)/groovy*json $(holdings-dir)/iii-holdings.json
+	cat $(inv-dir)/*.map > $(holdings-dir)/bibs.map
+	./holdings-hc.pl $(inv-ref) $(holdings-dir)/bibs.map $(holdings-dir)/iii-holdings.json
+
+clean-iii-holdings:
+	mv $(holdings-dir)/iii-holdings.json $(holdings-dir)/groovy-holdings.json
+	rm $(holdings-dir)/bibs.map
+	rm $(holdings-dir)/*.jsonl
+presuc: 
+	grep holycross_admin $(wd)/config.js
+	cat $(inv-dir)/*presuc*jsonl > $(inv-dir)/all_presuc.jsonl
+	cd $(wd); node makePreSuc.js $(inv-dir)/all_presuc.jsonl
 
 setup:
 	cd $(wd); git pull
@@ -40,6 +53,7 @@ setup:
 	cp $(wd)/configs/bash/login-holycross.sh .
 	cp $(wd)/bash/reference* .
 	cp $(wd)/perl/marc2inst-hc.pl .
+	cp $(wd)/perl/holdings-hc.pl .
 	@echo $(line)
 	@echo "Creating reference data directorys"
 	@echo $(line)
@@ -52,6 +66,8 @@ setup:
 	./$(login) > /dev/null
 	./reference_inventory.sh $(inv-ref)
 	./reference_acq.sh $(acq-ref)
+	./reference_org.sh $(acq-ref)
+	./reference_finance.sh $(acq-ref)
 	./reference_users.sh $(usr-ref)
 	@echo $(line)
 	@echo "Copying tsv files to reference directories"
@@ -61,11 +77,20 @@ setup:
 	cp $(wd)/etc/holycross/mtypes.tsv $(inv-ref)/loantypes.tsv
 
 orders-from-marc:
-	mv $(orders-dir)/*.pout $(orders-dir)/orders.mrc
-	time yaz-marcdump -f marc8 -t utf8 -l 9=97 -o json $(orders-marc) | jq . -c > $(marc-jsonl)
+	mv $(orders-dir)/*out* $(orders-dir)/orders.mrc;
+	cat $(inv-dir)/*.map > $(acq-ref)/bibs.map
+	yaz-marcdump -f marc8 -t utf8 -l 9=97 -o json $(orders-dir)/orders.mrc | jq . -c > $(orders-dir)/orders.json
+	node $(wd)/acquisitions/hcOrdersFromMarc.js $(acq-ref) $(orders-dir)/orders.json 2020-07
+	split -n l/5 $(orders-dir)/purchase-orders.jsonl $(orders-dir)/pos_
+	split -n l/5 $(orders-dir)/po-lines.jsonl $(orders-dir)/pol_
+	split -n l/5 $(orders-dir)/summaries.jsonl $(orders-dir)/sum_
+	split -n l/5 $(orders-dir)/transactions.jsonl $(orders-dir)/tra_
 
-process-orders: $(marc-jsonl)
-	node $(wd)/acquisitions/hcOrdersFromMarc.js $(acq-ref) $(marc-jsonl)
+clean-orders:
+	mv $(orders-dir)/orders.mrc $(orders-dir)/all-orders.out.mrc
+	rm $(orders-dir)/*.jsonl
+	rm $(orders-dir)/*.log
+	rm $(orders-dir)/*_??
 
 clean:
 	rm login*.sh
