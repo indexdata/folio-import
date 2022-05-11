@@ -4,7 +4,6 @@ const readline = require('readline');
 const path = require('path');
 
 const { getAuthToken } = require('./lib/login');
-const { setFlagsFromString } = require('v8');
 let inFile = process.argv[2];
 
 (async () => {
@@ -37,31 +36,33 @@ let inFile = process.argv[2];
     for await (const line of rl) {
       x++;
       let rec = JSON.parse(line);
-      let ids = rec.identifiers || [];
-      for (y = 0; y < ids.length; y++) {
-        let linkId = '';
-        let idType = ids[y].identifierTypeId;
-        let idVal = ids[y].value;
-        let url = `${config.okapi}/instance-storage/instances?query=(identifiers%20=/@value/@identifierTypeId=${idType}%20%22${idVal}%22)` 
-        console.log(`[${x}.${y}] GET ${url}`);
-        try {
-          let res = await superagent
-            .get(url)
-            .set('x-okapi-token', authToken)
-            .set('accept', 'application/json');
-          let inst = res.body.instances;
-          if (inst.length > 0) {
-            linkId = inst[0].id;
-            rec.precedingInstanceId = linkId;
-            let out = JSON.stringify(rec) + '\n';
-            console.log(`INFO match found for ${linkId}`);
-            fs.writeFileSync(outPath, out, { flag: 'as' })
-            break;
+      if (rec.succeedingInstanceId) {
+        let ids = rec.identifiers || [];
+        for (y = 0; y < ids.length; y++) {
+          let linkId = '';
+          let idType = ids[y].identifierTypeId;
+          let idVal = ids[y].value;
+          let url = `${config.okapi}/instance-storage/instances?query=(identifiers%20=/@value/@identifierTypeId=${idType}%20%22${idVal}%22)` 
+          console.log(`[${x}.${y}] GET ${url}`);
+          try {
+            let res = await superagent
+              .get(url)
+              .set('x-okapi-token', authToken)
+              .set('accept', 'application/json');
+            let inst = res.body.instances;
+            if (inst.length > 0) {
+              linkId = inst[0].id;
+              rec.precedingInstanceId = linkId;
+              console.log(`INFO match found for ${linkId}`);
+              break;
+            }
+          } catch (e) {
+            console.log(e);
           }
-        } catch (e) {
-          console.log(e);
         }
       }
+      let out = JSON.stringify(rec) + '\n';
+      fs.writeFileSync(outPath, out, { flag: 'as' })
     }
     const end = new Date().valueOf();
     const ms = end - start;
