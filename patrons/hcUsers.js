@@ -44,6 +44,11 @@ const makeNote = (mesg, userId, noteTypeId) => {
   return note;
 }
 
+ptypeMap = {
+  2: 'Faculty Member',
+  3: 'Staff Member'
+};
+
 try {
   if (!patronFile) throw 'Usage: node hcUsers.js <ref_directory> <sierra_patron_file>';
   if (!fs.existsSync(patronFile)) throw `Can't find patron file: ${patronFile}!`;
@@ -123,7 +128,27 @@ try {
   });
   const seen = {};
   const bcSeen = {};
+  let ftype = 0;
+  if (patronFile.match(/\.json/)) ftype = 1;
   rl.on('line', l => {
+    if (ftype) {
+      let j = JSON.parse(l);
+      let ptype = j.patronType;
+      count = 1;
+      let f = [];
+      f[0] = 'Active';
+      f[1] = j.barcodes[0] || '';
+      f[2] = j.createdDate;
+      let add = j.addresses[0];
+      f[3] = (ptype === 2 || ptype ===3) ? add.lines.pop() : '';
+      f[4] = '';
+      f[5] = j.expirationDate;
+      f[6] = j.uniqueIds[0] || '';
+      if (f[6]) f[6] = f[6].padStart(7, '0');
+      f[7] = ptypeMap[ptype] || 'Student';
+      f[8] = add.lines[0]
+      l = f.join('|');
+    }
     count++;
     l = l.trim();
     if (count > 1) {
