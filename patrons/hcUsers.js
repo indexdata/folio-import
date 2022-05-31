@@ -214,7 +214,7 @@ try {
         succ++;
         u.patronGroup = pg;
         u.personal.preferredContactTypeId = 'email';
-        u.personal.addresses[0].addressTypeId = 'Campus';
+        if (u.personal.addresses[0]) u.personal.addresses[0].addressTypeId = 'Campus';
         delete u.id;
         mui.users.push(u);
         muiCount++;
