@@ -44,6 +44,7 @@ const makeNote = (mesg, userId, noteTypeId) => {
   return note;
 }
 
+// used only if making users from Sierra JSON files
 ptypeMap = {
   2: 'Faculty Member',
   3: 'Staff Member'
@@ -59,9 +60,11 @@ try {
   const outPath = `${saveDir}/folio-${fileName}.jsonl`;
   const notePath = `${saveDir}/notes-${fileName}.jsonl`;
   const permPath = `${saveDir}/permusers-${fileName}.jsonl`;
+  const muiPath = `${saveDir}/mod-user-import-${fileName}.json`; 
   if (fs.existsSync(outPath)) fs.unlinkSync(outPath);
   if (fs.existsSync(notePath)) fs.unlinkSync(notePath);
   if (fs.existsSync(permPath)) fs.unlinkSync(permPath);
+  if (fs.existsSync(muiPath)) fs.unlinkSync(muiPath);
 
   refDir = refDir.replace(/\/$/, '');
 
@@ -120,6 +123,7 @@ try {
   let pcount = 0;
   let succ = 0;
   let err = 0;
+  let muiCount = 0;
 
   const fileStream = fs.createReadStream(patronFile);
   const rl = readline.createInterface({
@@ -128,8 +132,12 @@ try {
   });
   const seen = {};
   const bcSeen = {};
+  let mui;
   let ftype = 0;
   if (patronFile.match(/\.json/)) ftype = 1;
+  if (succ % 500 === 0) {
+    mui = { users: [] };
+  }
   rl.on('line', l => {
     if (ftype) {
       let j = JSON.parse(l);
@@ -151,7 +159,7 @@ try {
     }
     count++;
     l = l.trim();
-    if (count > 1) {
+    if (!l.match(/createdDate/)) {
       let c = l.split(/\|/);
       for (let x = 0; x < c.length; x++) {
         c[x] = c[x].trim();
@@ -204,8 +212,14 @@ try {
         fs.writeFileSync(permPath, pstr + '\n', { flag: 'as' });
         pcount++;
         succ++;
+        u.patronGroup = pg;
+        u.personal.preferredContactTypeId = 'email';
+        u.personal.addresses[0].addressTypeId = 'Campus';
+        delete u.id;
+        mui.users.push(u);
+        muiCount++;
       } else {
-        console.log('ERROR Duplicate Ids:', u.id);
+        console.log('ERROR Duplicate Ids:', u.id, u.username);
         err++;
       }
       seen[u.id] = 1;
@@ -213,12 +227,21 @@ try {
     }
   });
   rl.on('close', () => {
+
+    // create and write mod-user-import object;
+    mui.totalRecords = mui.users.length;
+    mui.deactivateMissingUsers = false;
+    mui.updateOnlyPresentFields = true;
+    mui.sourceType = '';
+    let muiStr = JSON.stringify(mui, null, 2);
+    fs.writeFileSync(muiPath, muiStr); 
     const t = (new Date().valueOf() - today) / 1000;
     console.log('------------');
     console.log('Finished!');
     console.log(`Saved ${succ} users to ${outPath}`);
     console.log(`Saved ${ncount} notes to ${notePath}`);
     console.log(`Saved ${pcount} permusers to ${permPath}`);
+    console.log(`Saved mod-user-import objects to ${muiPath}`);
     console.log('Errors:', err);
     console.log(`Time: ${t} secs.`);
   })
