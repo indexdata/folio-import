@@ -4,13 +4,14 @@ data = /data/sftpusers/holycross/migration
 inv-dir = $(data)/marc
 holdings-dir = $(data)/holdings
 orders-dir = $(data)/orders
+users-dir = /data/sftpusers/holycross/users
 acq-ref = $(data)/acq-ref
 inv-ref = $(data)/inv-ref
 usr-ref = $(data)/usr-ref
 line = "------------------------------------------"
 
 help:
-	@echo "Usage: make [ help | setup | inventory | iii-holdings | orders-from-marc ]"
+	@echo "Usage: make [ help | setup | inventory | iii-holdings | users | orders-from-marc ]"
 
 inventory: 
 	mv $(inv-dir)/*.out $(inv-dir)/bibs.mrc
@@ -43,6 +44,13 @@ presuc:
 	grep holycross_admin $(wd)/config.js
 	cat $(inv-dir)/*presuc*jsonl > $(inv-dir)/all_presuc.jsonl
 	cd $(wd); node makePreSuc.js $(inv-dir)/all_presuc.jsonl
+
+users: $(users-dir)/*.txt
+	cat $(users-dir)/*.txt > $(users-dir)/users.psv
+	node $(wd)/patrons/hcUsers.js $(usr-ref) $(users-dir)/users.psv
+
+clean-users: $(users-dir)/users.psv
+	rm $(users-dir)/users.psv
 
 setup:
 	cd $(wd); git pull
