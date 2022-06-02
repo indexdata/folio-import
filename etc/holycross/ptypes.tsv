@@ -1,0 +1,30 @@
+﻿ATOFOLIO	Patron Type Name	FOLIO Patron Group
+0	error	
+1	HC Student	Student
+2	HC Faculty	Faculty
+3	HC Staff	Staff
+4	Extern	Extern
+5	Library Staff	Staff
+6	Interlibrary Loan	Interlibrary Loan
+7	Honors	Honors
+8	Anna Maria	Extern
+9	Assumption	Extern
+10	Atlantic Union	Extern
+11	Becker Leicester	Extern
+12	Becker Worcester	Extern
+13	Clark	Extern
+14	Fitchburg	Extern
+15	Mass Pharmacy	Extern
+16	Mt. Wachusett	Extern
+17	Nichols	Extern
+18	Quinsigamond	Extern
+19	UMass Medical	Extern
+20	Worcester State	Extern
+21	WPI	Extern
+22	AJCU Faculty	Extern
+23	Tufts Veterinary School	Extern
+24	New England Baptist Seminary	Extern
+25	Abby Kelley Foster	Extern
+26	Step	Student
+27	WAM full-time	WAM Full Time
+28	WAM part-time	WAM Part Time
