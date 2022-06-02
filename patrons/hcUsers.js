@@ -44,12 +44,6 @@ const makeNote = (mesg, userId, noteTypeId) => {
   return note;
 }
 
-// used only if making users from Sierra JSON files
-ptypeMap = {
-  2: 'Faculty Member',
-  3: 'Staff Member'
-};
-
 try {
   if (!patronFile) throw 'Usage: node hcUsers.js <ref_directory> <sierra_patron_file>';
   if (!fs.existsSync(patronFile)) throw `Can't find patron file: ${patronFile}!`;
@@ -60,13 +54,16 @@ try {
   const outPath = `${saveDir}/folio-${fileName}.jsonl`;
   const notePath = `${saveDir}/notes-${fileName}.jsonl`;
   const permPath = `${saveDir}/permusers-${fileName}.jsonl`;
-  const muiPath = `${saveDir}/mod-user-import-${fileName}.json`; 
+  const muiPath = `${saveDir}/mod-user-import-${fileName}`; 
+  const idFile = `${saveDir}/id-username-map.json`; 
   if (fs.existsSync(outPath)) fs.unlinkSync(outPath);
   if (fs.existsSync(notePath)) fs.unlinkSync(notePath);
   if (fs.existsSync(permPath)) fs.unlinkSync(permPath);
-  if (fs.existsSync(muiPath)) fs.unlinkSync(muiPath);
 
   refDir = refDir.replace(/\/$/, '');
+
+  let ftype = 0;
+  if (patronFile.match(/\.json/)) ftype = 1;
 
   // map folio groups from file
   const groupMap = {};
@@ -74,26 +71,6 @@ try {
   groups.usergroups.forEach(g => {
     groupMap[g.group] = g.id;
   });
-  
-  /* map ptypes from tsv file
-  const ptypeGroup = {};
-  let tsv = fs.readFileSync(`${refDir}/ptypes.tsv`, { encoding: 'utf8' });
-  tsv.split(/\n/).forEach(l => {
-    l = l.trim();
-    if (l) {
-      let c = l.split(/\t/);
-      let ptype = c[0].trim();
-      let pcode3 = c[1].trim();
-      let k = `${ptype}_${pcode3}`;
-      let gname = c[2];
-      if (groupMap[gname]) {
-        ptypeGroup[k] = groupMap[gname];
-      } else {
-        console.log(`WARN patron group "${gname}" not found...`);
-      }
-    }
-  });
-  */
 
   // map folio addresstyes from file
   const atypes = require(`${refDir}/addresstypes.json`);
@@ -117,13 +94,26 @@ try {
   let noteTypeId = ntypeMap[noteType];
   if (!noteTypeId) throw(`Note type ID for "${noteType}" not found!`);
 
+  const ptypeMap = {};
+  if (ftype) {
+    let pdata = fs.readFileSync(`${refDir}/ptypes.tsv`, { encoding: 'utf8'});
+    let lines = pdata.split('\n');
+    lines.shift();
+    lines.pop();
+    lines.forEach(l => {
+      let [k, n, v] = l.split(/\t/);
+      ptypeMap[k] = v;
+    });
+  }
+  
+  const idMap = {};
+
   const today = new Date().valueOf();
   let count = 0;
   let ncount = 0;
   let pcount = 0;
   let succ = 0;
   let err = 0;
-  let muiCount = 0;
 
   const fileStream = fs.createReadStream(patronFile);
   const rl = readline.createInterface({
@@ -133,28 +123,50 @@ try {
   const seen = {};
   const bcSeen = {};
   let mui;
-  let ftype = 0;
-  if (patronFile.match(/\.json/)) ftype = 1;
+
   if (succ % 500 === 0) {
     mui = { users: [] };
   }
   rl.on('line', l => {
     if (ftype) {
       let j = JSON.parse(l);
+      let vf = {};
+      if (j.varFields) {
+        j.varFields.forEach(v => {
+          vf[v.fieldTag] = v.content;
+        });
+      } else {
+        throw new Error(`No varFields found in ${j.id}`);
+      }
       let ptype = j.patronType;
       count = 1;
       let f = [];
       f[0] = 'Active';
       f[1] = j.barcodes[0] || '';
       f[2] = j.createdDate;
-      let add = j.addresses[0];
-      f[3] = (ptype === 2 || ptype ===3) ? add.lines.pop() : '';
-      f[4] = '';
+      if (j.addresses) {
+        let add = j.addresses[0];
+        f[3] = (ptype === 2 || ptype === 3 || ptype === 5) ? add.lines.shift() : '';
+        f[8] = add.lines[0];
+      }
+      f[4] = j.createdDate;
       f[5] = j.expirationDate;
-      f[6] = j.uniqueIds[0] || '';
-      if (f[6]) f[6] = f[6].padStart(7, '0');
-      f[7] = ptypeMap[ptype] || 'Student';
-      f[8] = add.lines[0]
+      if (j.uniqueIds) { 
+        f[6] = j.uniqueIds[0].padStart(7, '0');
+      } else {
+        f[6] = 'p' + j.id;
+      }
+      f[7] = ptypeMap[ptype];
+      f[9] = vf.z || '';
+      idMap[j.id] = f[9];
+      if (vf.n) {
+        let fl = vf.n.split(/, /);
+        f[10] = fl[1];
+        f[11] = fl[0];
+      }
+      if (j.phones) {
+        f[14] = j.phones[0].number;
+      }
       l = f.join('|');
     }
     count++;
@@ -165,14 +177,14 @@ try {
         c[x] = c[x].trim();
       }
       let u = {};
-      u.username = c[9];
+      u.username = (c[9].match(/@/)) ? c[9] : c[1];
       u.id = uuid(u.username, ns);
       if (c[0] === 'Active') { 
         u.active = true;
       } else {
         u.active = false;
       }
-      u.barcode = c[1];
+      if (c[1]) u.barcode = c[1];
       let dept = c[3];
       if (dept && deptMap[dept]) u.departments = [ deptMap[dept] ];
       if (c[4]) {
@@ -200,7 +212,7 @@ try {
       }
       per.preferredContactTypeId = '002'; // email
       u.personal = per;
-      if (!seen[u.id]) {
+      if (!seen[u.id] && u.personal.lastName && u.username) {
         let ustr = JSON.stringify(u);
         fs.writeFileSync(outPath, `${ustr}\n`, { flag: 'as' });
         let pu = {
@@ -212,37 +224,51 @@ try {
         fs.writeFileSync(permPath, pstr + '\n', { flag: 'as' });
         pcount++;
         succ++;
+        seen[u.id] = 1;
         u.patronGroup = pg;
         u.personal.preferredContactTypeId = 'email';
         if (u.personal.addresses && u.personal.addresses[0]) u.personal.addresses[0].addressTypeId = 'Campus';
         if (u.departments && u.departments[0]) u.departments[0] = dept;
         delete u.id;
         mui.users.push(u);
-        muiCount++;
       } else {
-        console.log('ERROR Duplicate Ids:', u.id, u.username);
+        if (! u.personal.lastName) {
+          console.log('ERROR no lastName:', u.id, `"${u.username}"`);
+        } else {
+          console.log('ERROR Duplicate Ids:', u.id, `"${u.username}"`);
+        }
         err++;
       }
-      seen[u.id] = 1;
       bcSeen[u.barcode] = 1;
     }
   });
   rl.on('close', () => {
 
     // create and write mod-user-import object;
-    mui.totalRecords = mui.users.length;
-    mui.deactivateMissingUsers = false;
-    mui.updateOnlyPresentFields = true;
-    mui.sourceType = '';
-    let muiStr = JSON.stringify(mui, null, 2);
-    fs.writeFileSync(muiPath, muiStr); 
+    let muiCount = 0;
+    while (mui.users.length > 0) {
+      let out = {};
+      out.users = mui.users.splice(0, 5000);
+      out.totalRecords = out.users.length;
+      out.deactivateMissingUsers = false;
+      out.updateOnlyPresentFields = true;
+      out.sourceType = '';
+      let muiStr = JSON.stringify(out, null, 2);
+      let outFile = `${muiPath}-${muiCount}.json`;
+      console.log(`Writing to ${outFile}`);
+      fs.writeFileSync(outFile, muiStr); 
+      muiCount++;
+    }
+
+    fs.writeFileSync(idFile, JSON.stringify(idMap, null, 2 ));
+    
     const t = (new Date().valueOf() - today) / 1000;
     console.log('------------');
     console.log('Finished!');
     console.log(`Saved ${succ} users to ${outPath}`);
     console.log(`Saved ${ncount} notes to ${notePath}`);
     console.log(`Saved ${pcount} permusers to ${permPath}`);
-    console.log(`Saved mod-user-import objects to ${muiPath}`);
+    console.log(`ID map saved to ${idFile}`);
     console.log('Errors:', err);
     console.log(`Time: ${t} secs.`);
   })
