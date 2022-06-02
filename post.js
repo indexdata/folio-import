@@ -25,7 +25,8 @@ let pl = process.argv[3];
       .set('x-okapi-token', authToken);
       console.log(JSON.stringify(res.body, null, 2));
     } catch (e) {
-      console.log(`${e}`);
+      let msg = (e.response) ? e.response.text : e;
+      console.log(msg);
     }
   } catch(e) {
       console.log(`${e}`);
