@@ -67,7 +67,7 @@ const wait = (ms) => {
     let root;
     const firstLevel = Object.keys(refData);
     firstLevel.forEach(l => {
-      if (l !== 'totalRecords') {
+      if (!l.match(/totalRecords|resultInfo/)) {
         root = l;
       }
     });
