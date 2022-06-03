@@ -58,6 +58,15 @@ const itemsFile = process.argv[5];
       }
     }
 
+    // calculate time offset based on time changes 2022
+    let dateOffset = (dt) => {
+      let m = dt.replace(/^\d{4}-(\d\d).+/, '$1');
+      let d = dt.replace(/^\d{4}-\d\d-(\d\d).*/, '$1');
+      let testStr = m + d;
+      let out = (testStr > '0313' && testStr < '1106') ? '-04:00' : '-05:00';
+      return out; 
+    }
+
     const records = {};
     records.checkouts = [];
     const inactive = { checkouts: [] };
@@ -71,10 +80,12 @@ const itemsFile = process.argv[5];
         let loan = {};
         loan.itemBarcode = r['BARCODE'];
         loan.userBarcode = r['P BARCODE'];
-        let odate = r['OUT DATE'].replace(/(\d\d)-(\d\d)-(\d\d\d\d) (.*)/, '$3-$1-$2T$4:00-05:00');
-        loan.loanDate = odate;
-        let ddate = r['DUE DATE'].replace(/(\d\d)-(\d\d)-(\d\d\d\d)/, '$3-$1-$2T23:59:59-04:00')
-        loan.dueDate = ddate;
+        let odate = r['OUT DATE'].replace(/(\d\d)-(\d\d)-(\d\d\d\d) (.*)/, '$3-$1-$2T$4:00');
+        let os = dateOffset(odate);
+        loan.loanDate = odate + os;
+        let ddate = r['DUE DATE'].replace(/(\d\d)-(\d\d)-(\d\d\d\d)/, '$3-$1-$2T23:59:59')
+        os = dateOffset(ddate);
+        loan.dueDate = ddate + os;
         loan.servicePointId = spMap['dinand-circ'];
         if (active[r.bbarcode] !== undefined) {
           records.checkouts.push(loan);
