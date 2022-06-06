@@ -41,8 +41,9 @@ let refDir = process.argv[2];
       'https://raw.githubusercontent.com/folio-org/mod-licenses/master/service/src/main/okapi/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-patron-blocks/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-source-record-manager/3451d3059baefb07bc822574552e5bde58ffae71/descriptors/ModuleDescriptor-template.json',
-      'https://raw.githubusercontent.com/folio-org/mod-remote-storage/master/descriptors/ModuleDescriptor-template.json'
-    ]
+      'https://raw.githubusercontent.com/folio-org/mod-remote-storage/master/descriptors/ModuleDescriptor-template.json',
+      'https://raw.githubusercontent.com/folio-org/folio-custom-fields/master/descriptors/ModuleDescriptor-template.json'
+    ];
 
     const skipList = {
       '/item-storage/items': true,
@@ -93,6 +94,20 @@ let refDir = process.argv[2];
       'location-units__libraries',
       'locations'
     ]
+
+    let userMod = '';
+    try {
+      console.log('Getting modules list...');
+      let res = await superagent
+        .get(`${config.okapi}/_/proxy/tenants/${config.tenant}/modules`)
+        .set('x-okapi-token', authToken);
+        for (let x = 0; x < res.body.length; x++) {
+          let m = res.body[x];
+          if (m.id.match(/mod-users-\d/)) userMod = m.id;
+        };
+    } catch (e) {
+      console.log(e);
+    }
     
     let paths = [];
 
@@ -160,11 +175,21 @@ let refDir = process.argv[2];
 	  });
       }
       try {
-        let res = await superagent
-          .get(url)
-          .timeout({response: 5000})
-          .set('accept', 'application/json')
-          .set('x-okapi-token', authToken);
+        let res = {};
+        if (url.match(/custom-fields/)) {
+          res = await superagent
+            .get(url)
+            .timeout({ response: 5000 })
+            .set('accept', 'application/json')
+            .set('x-okapi-token', authToken)
+            .set('x-okapi-module-id', userMod);
+        } else {
+          res = await superagent
+            .get(url)
+            .timeout({response: 5000})
+            .set('accept', 'application/json')
+            .set('x-okapi-token', authToken)
+        }
         let jsonStr = JSON.stringify(res.body, null, 2);
         let fullSaveDir = refDir + saveDir;
         if (!fs.existsSync(fullSaveDir)) {
