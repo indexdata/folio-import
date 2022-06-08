@@ -5,6 +5,7 @@ inv-dir = $(data)/marc
 holdings-dir = $(data)/holdings
 orders-dir = $(data)/orders
 users-dir = /data/sftpusers/holycross/users
+pat-dir = $(users-dir)/Sierra\ Patrons
 acq-ref = $(data)/acq-ref
 inv-ref = $(data)/inv-ref
 usr-ref = $(data)/usr-ref
@@ -45,9 +46,24 @@ presuc:
 	cat $(inv-dir)/*presuc*jsonl > $(inv-dir)/all_presuc.jsonl
 	cd $(wd); node makePreSuc.js $(inv-dir)/all_presuc.jsonl
 
-users: $(users-dir)/*.txt
+users: $(pat-dir)/groovy*.json
+	cat $(pat-dir)/groovy*.json > $(pat-dir)/iii-users.json
+	cd $(wd)/patrons; node hcUsers.js $(usr-ref) $(pat-dir)/iii-users.json > $(pat-dir)/create.log
+	@echo "Log is located at $(pat-dir)/create.log"
+
+users-old: $(users-dir)/*.txt
 	cat $(users-dir)/*.txt > $(users-dir)/users.psv
 	node $(wd)/patrons/hcUsers.js $(usr-ref) $(users-dir)/users.psv
+
+checkouts: $(pat-dir)/checked*txt
+	cp $(pat-dir)/checked*xlsx $(pat-dir)/iii-checkouts.xlsx
+	cd $(wd)/util; node xlsx2csv.js $(pat-dir)/iii-checkouts.xlsx
+	mv $(pat-dir)/Sheet1.csv $(pat-dir)/iii-checkouts.csv
+	@echo "Downloading all users..."
+	cd $(wd); node downloadAllByEndpoint.js users $(pat-dir)
+	@echo "Getting service-points..."
+	cd $(wd); node downloadAllByEndpoint.js service-points $(pat-dir)
+	cd $(wd)/patrons; node hcCheckouts.js $(pat-dir)/service-points.json $(pat-dir)/users.json $(pat-dir)/iii-checkouts.csv
 
 clean-users: $(users-dir)/users.psv
 	rm $(users-dir)/users.psv
@@ -83,6 +99,7 @@ setup:
 	cp $(wd)/etc/holycross/statuses.tsv $(inv-ref)
 	cp $(wd)/etc/holycross/mtypes.tsv $(inv-ref)
 	cp $(wd)/etc/holycross/mtypes.tsv $(inv-ref)/loantypes.tsv
+	cp $(wd)/etc/holycross/ptypes.tsv $(usr-ref)
 
 orders-from-marc:
 	mv $(orders-dir)/*out* $(orders-dir)/orders.mrc;
