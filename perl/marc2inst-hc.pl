@@ -697,6 +697,10 @@ foreach (@ARGV) {
             }
           }
           foreach (keys %$data_obj) {
+            # don't include authors with no name!
+            if ($_ eq 'contributors' && !$data_obj->{$_}->{name}) {
+              next;
+            }
             if ($ftypes->{$_} eq 'array.object') {
               push @{ $rec->{$_} }, $data_obj->{$_};
             }
@@ -714,7 +718,7 @@ foreach (@ARGV) {
       $rec->{hrid} = sprintf("%4s%010d", "marc", $count);  # if there is no hrid, make one up.
     }
     my $hrid = $rec->{hrid};
-    if (!$hrids->{$hrid} && $marc->title()) {
+    if (!$hrids->{$hrid} && $marc->subfield('245',"a")) {
       # set FOLIO_USER_ID environment variable to create the following metadata object.
       $rec->{id} = uuid($hrid);
       if ($ENV{FOLIO_USER_ID}) {
