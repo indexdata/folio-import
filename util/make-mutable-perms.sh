@@ -8,4 +8,4 @@ then
   exit
 fi
 
-jq '{ permissions: [ .permissions[] | select(.mutable==true) ] }' perms__permissions.json > mutable.json
+jq '{ permissions: [ .permissions[] | select(.mutable==true) ] }' $1
