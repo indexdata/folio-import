@@ -89,8 +89,8 @@ const itemsFile = process.argv[5];
         loan.servicePointId = spMap['dinand-circ'];
         if (active[r.bbarcode] !== undefined) {
           records.checkouts.push(loan);
-          if (active[r['P BARCODE']].active === false) {
-            loan.expirationDate = active[r['P BARCODE']].expirationDate;
+          if (active[loan.userBarcode] && active[loan.userBarcode].active === false) {
+            loan.expirationDate = active[loan.userBarcode].expirationDate;
             inactive.checkouts.push(loan);
           }
         } else {
