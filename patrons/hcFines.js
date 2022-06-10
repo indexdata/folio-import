@@ -92,19 +92,23 @@ const inFile = process.argv[4];
 
       if (userId) {
         let acc = {};
-        let hrid = f.item.replace(/.+\//, '');
-        let check = calcCheckDigit(hrid);
-        hrid = 'i' + hrid + check;
+        let hrid = '';
         let item = {};
-        let url = `${config.okapi}/inventory/items?query=hrid==${hrid}`;
-        console.log(`GET ${url}`);
-        try {
-          let res = await superagent
-            .get(url)
-            .set('x-okapi-token', authToken);
-          item = res.body.items[0];
-        } catch (e) {
-          console.log(e);
+        if (f.item) {
+          hrid = f.item.replace(/.+\//, '');
+          let check = calcCheckDigit(hrid);
+          hrid = 'i' + hrid + check;
+        
+          let url = `${config.okapi}/inventory/items?query=hrid==${hrid}`;
+          console.log(`[${count}] GET ${url}`);
+          try {
+            let res = await superagent
+              .get(url)
+              .set('x-okapi-token', authToken);
+            item = res.body.items[0];
+          } catch (e) {
+            console.log(e);
+          }
         }
 
         for (let stype in stypes) {
@@ -123,7 +127,7 @@ const inFile = process.argv[4];
             acc.dateCreated = f.assessedDate;
             acc.status = { name: 'Open' };
             acc.paymentStatus = { name: 'Outstanding' };
-            if (item) {
+            if (item.id) {
               acc.title = item.title;
               acc.contributors = item.contributorNames;
               acc.barcode = item.barcode;
@@ -150,6 +154,9 @@ const inFile = process.argv[4];
             }
             ffa.createdAt = createdAt;
             ffa.source = source;
+            if (f.description) {
+              ffa.comments = f.description;
+            }
 
             let accStr = JSON.stringify(acc) + '\n';
             fs.writeFileSync(outPath, accStr, { flag: 'a'});
