@@ -53,6 +53,9 @@ let writeStream;
         let permStart = offset + 1;
         perPage = 5000;
 	      url = `${actionUrl}?length=${perPage}&start=${permStart}&stats=true`;
+      } else if (actionUrl.match(/inventory\/items/)) {
+        perPage = 100;
+        url = `${actionUrl}?limit=${perPage}&offset=${offset}`;
       }
       try {
         let res = await superagent
