@@ -117,6 +117,9 @@ const inFile = process.argv[4];
             acc.feeFineType = stypes[stype] || f.chargeType.display;
             acc.amount = f[stype];
             acc.remaining = acc.amount;
+            if (f.paidAmount > 0) {
+              acc.remaining -= f.paidAmount;
+            }
             acc.dateCreated = f.assessedDate;
             acc.status = { name: 'Open' };
             acc.paymentStatus = { name: 'Outstanding' };
@@ -141,6 +144,10 @@ const inFile = process.argv[4];
             ffa.notify = false;
             ffa.amountAction = acc.amount;
             ffa.balance = acc.remaining;
+            if (ffa.amountAction > ffa.balance) {
+              ffa.typeAction = 'Paid partially'
+              ffa.paymentMethod = 'Cash'
+            }
             ffa.createdAt = createdAt;
             ffa.source = source;
 
