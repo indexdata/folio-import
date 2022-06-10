@@ -127,7 +127,7 @@ const inFile = process.argv[4];
             acc.dateCreated = f.assessedDate;
             acc.status = { name: 'Open' };
             acc.paymentStatus = { name: 'Outstanding' };
-            if (item.id) {
+            if (item && item.id) {
               acc.title = item.title;
               acc.contributors = item.contributorNames;
               acc.barcode = item.barcode;
