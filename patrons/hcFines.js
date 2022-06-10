@@ -40,8 +40,8 @@ const inFile = process.argv[4];
 
     const start = new Date().valueOf();
     let count = 0;
-    let succ = 0;
-    let err = 0;
+    let accCount = 0;
+    let ffaCount = 0;
 
     // map users
     console.log('Loading users...');
@@ -131,11 +131,26 @@ const inFile = process.argv[4];
               acc.itemId = item.id;
               acc.holdingsRecordId = item.holdingsRecordId;
             }
-            // acc.contributors = [ ];
+
+            let ffa = {};
+            ffa.id = uuid(acc.id, ns);
+            ffa.accountId = acc.id;
+            ffa.userId = acc.userId;
+            ffa.dateAction = acc.dateCreated;
+            ffa.typeAction = acc.feeFineType;
+            ffa.notify = false;
+            ffa.amountAction = acc.amount;
+            ffa.balance = acc.remaining;
+            ffa.createdAt = createdAt;
+            ffa.source = source;
 
             let accStr = JSON.stringify(acc) + '\n';
             fs.writeFileSync(outPath, accStr, { flag: 'a'});
-            console.log(acc);
+            accCount++;
+
+            let ffaStr = JSON.stringify(ffa) + '\n';
+            fs.writeFileSync(actPath, ffaStr, { flag: 'a' });
+            ffaCount++;
           }
         }
       } else {
@@ -145,7 +160,8 @@ const inFile = process.argv[4];
     }
     
     let tt = (new Date().valueOf() - start) / 1000;
-    console.log('Done', count);
+    console.log('Processed', count);
+    console.log('Created', accCount);
     console.log('Seconds', tt);
 
 
