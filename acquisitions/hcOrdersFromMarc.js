@@ -13,10 +13,11 @@ let curFyStart = '2021-07';
 // const wfs = process.argv[4] || '';
 
 const files = {
-  po: 'purchase-orders.jsonl',
-  pol: 'po-lines.jsonl',
-  trans: 'transactions.jsonl',
-  summ: 'summaries.jsonl',
+  po: 'closed-purchase-orders.jsonl',
+  pol: 'closed-po-lines.jsonl',
+  co: 'open-composite-orders.jsonl',
+  trans: 'closed-transactions.jsonl',
+  summ: 'closed-summaries.jsonl',
   log: 'process.log'
 }
 
@@ -149,6 +150,8 @@ const methodMap = {
     });
 
     let c = 0;
+    let openCount = 0;
+    let closedCount = 0;
     let fail = 0;
     let lnum = 0;
     for await (const line of rl) {
@@ -264,7 +267,6 @@ const methodMap = {
           let addType = (spo.k) ? spo.k[0] : '';
           addType = addType.trim();
           if (addType) co.shipTo = addresses[addType] || '';
-          writeJsonl(files.po, co);
           
           // PO lines start here
 
@@ -369,9 +371,15 @@ const methodMap = {
             sourcePurchaseOrderId: poId,
             sourcePoLineId: lineId
           }
-          if (co.ongoing) enc.subscription = co.ongoing.isSubscription;
+          if (co.ongoing) { 
+            enc.subscription = co.ongoing.isSubscription;
+            co.reEncumber = true;
+          }
+          if (enc.status === 'Fully Paid') {
+            enc.status = 'Released';
+            trans.transactionType = 'Payment';
+          }
           trans.encumbrance = enc;
-          writeJsonl(files.trans, trans);
 
           let locCode = spo.t[0];
           let locId = refData.locations[locCode];
@@ -399,13 +407,25 @@ const methodMap = {
             pol.receiptDate = rdate;
             pol.receiptStatus = 'Fully Received';
           }
-          writeJsonl(files.pol, pol);
 
           let summary = {
             id: poId,
             numTransactions: 1
           }
-          writeJsonl(files.summ, summary);
+
+          if (co.workflowStatus !== 'Closed') {
+            co.compositePoLines = [ pol ];
+            writeJsonl(files.co, co);
+            openCount++;
+          } else {
+            writeJsonl(files.po, co);
+            writeJsonl(files.pol, pol);
+            if (pol.paymentStatus !== 'Cancelled') {
+              writeJsonl(files.trans, trans);
+              writeJsonl(files.summ, summary);
+            }
+            closedCount++;
+          }
           c++;
         }
        
@@ -418,7 +438,8 @@ const methodMap = {
     }
     let end = new Date().valueOf();
     let tt = (end - start) / 1000;
-    console.log('Orders created', c);
+    console.log('Open orders created', openCount);
+    console.log('Closed orders created', closedCount);
     console.log('Failures', fail);
     console.log('Time (secs)', tt);
   } catch (e) {

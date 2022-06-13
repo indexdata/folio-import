@@ -103,6 +103,8 @@ let inFile = process.argv[2];
           ep = 'users';
       } else if (rec.succeedingInstanceId || rec.precedingInstanceId) {
           ep = 'preceding-succeeding-titles';
+      } else if (rec.compositePoLines) {
+          ep = 'orders/composite-orders';
       } else if (rec.poNumber && rec.workflowStatus) {
           ep = 'orders-storage/purchase-orders';
       } else if (rec.titleOrPackage && rec.purchaseOrderId) {
