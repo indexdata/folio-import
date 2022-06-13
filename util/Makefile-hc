@@ -12,7 +12,7 @@ usr-ref = $(data)/usr-ref
 line = "------------------------------------------"
 
 help:
-	@echo "Usage: make [ help | setup | inventory | iii-holdings | users | orders-from-marc ]"
+	@echo "Usage: make [ help | setup | inventory | iii-holdings | users | checkouts | active-toggle | orders-from-marc ]"
 
 inventory: 
 	mv $(inv-dir)/*.out $(inv-dir)/bibs.mrc
@@ -64,6 +64,17 @@ checkouts: $(pat-dir)/checked*txt
 	@echo "Getting service-points..."
 	cd $(wd); node downloadAllByEndpoint.js service-points $(pat-dir)
 	cd $(wd)/patrons; node hcCheckouts.js $(pat-dir)/service-points.json $(pat-dir)/users.json $(pat-dir)/iii-checkouts.csv
+	@echo $(line)
+	@echo "1. Run make active-toggle (if inactive users found)"
+	@echo "2. Download all patron-block-limits"
+	@echo "3. Delete all patron-block-limits"
+	@echo "4. Run checkoutByBarcode.js script"
+	@echo "5. After checkouts finish running, post back the patron-block-limits"
+	@echo "6. Run make active-toggle again"
+	@echo $(line)
+
+active-toggle: $(pat-dir)/inactive_checkouts.json
+	cd $(wd); node usersActiveToggle.js $(pat-dir)/inactive_checkouts.json
 
 clean-users: $(users-dir)/users.psv
 	rm $(users-dir)/users.psv
