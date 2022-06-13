@@ -11,7 +11,7 @@ const argv = require('minimist')(process.argv.slice(2));
 const ns = 'b64efe60-be13-4625-b509-c9654f56af9e';
 const fiscalYear = 'FY2021';
 const ledger = 'HCLedger';
-const unit = 'Acquisitions';
+const unit = '';
 
 let files = {
   units: 'acq-units.jsonl',
@@ -108,12 +108,14 @@ let files = {
           name: r.name,
           fundStatus: 'Active',
           ledgerId: ledgerId,
-          acqUnitIds: [ unitId ],
+          // acqUnitIds: [ unitId ],
         }
         let fundTypeId = typesMap[r.fund_type];
+        console.log(r.fund_type);
         if (fundTypeId) fr.fundTypeId = fundTypeId;
         if (r.note1) fr.description = 'note1: ' + r.note1;
         if (r.note2) fr.description += '; note2: ' + r.note2;
+        fr.externalAccountNo = r.Note;
         writeObj(files.funds, fr);
         fnCount++;
 
@@ -126,7 +128,7 @@ let files = {
           fundId: id,
           fiscalYearId: fyId,
           budgetStatus: 'Active',
-          acqUnitIds: [ unitId ],
+          // acqUnitIds: [ unitId ],
         }
 
         if (r.appropriation) bd.initialAllocation = parseInt(r.appropriation, 10) / 10;
