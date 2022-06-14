@@ -16,6 +16,7 @@ const files = {
   po: 'closed-purchase-orders.jsonl',
   pol: 'closed-po-lines.jsonl',
   co: 'open-composite-orders.jsonl',
+  cco: 'recieved-composite-orders.jsonl',
   trans: 'closed-transactions.jsonl',
   summ: 'closed-summaries.jsonl',
   log: 'process.log'
@@ -423,8 +424,12 @@ const methodMap = {
             if (pol.paymentStatus !== 'Cancelled') {
               writeJsonl(files.trans, trans);
               writeJsonl(files.summ, summary);
+              pol.paymentStatus = 'Awaiting Payment';
+              co.compositePoLines = [ pol ];
+              co.workflowStatus = 'Open';
+              writeJsonl(files.cco, co);
+              closedCount++;
             }
-            closedCount++;
           }
           c++;
         }
@@ -439,7 +444,7 @@ const methodMap = {
     let end = new Date().valueOf();
     let tt = (end - start) / 1000;
     console.log('Open orders created', openCount);
-    console.log('Closed orders created', closedCount);
+    console.log('Received orders created', closedCount);
     console.log('Failures', fail);
     console.log('Time (secs)', tt);
   } catch (e) {
