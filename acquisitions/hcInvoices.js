@@ -16,9 +16,10 @@ if (!fyStart.match(/-/)) fyStart = `${fyStart}-07`;
 
 const files = {
   iv: 'folio-invoices.jsonl',
-  ivl: 'folio-invoice-lines.jsonl',
-  trans: 'invoice-transactions.jsonl',
-  summ: 'invoice-summaries.jsonl'
+  ivl: 'open-invoice-lines.jsonl',
+  ivopen: 'open-invoices.jsonl',
+  // trans: 'invoice-transactions.jsonl',
+  // summ: 'invoice-summaries.jsonl'
 }
 
 const refFiles = {
@@ -29,8 +30,8 @@ const refFiles = {
 };
 
 const orderFiles = {
-  orderLines: 'po-lines.jsonl',
-  transactions: 'transactions.jsonl'
+  orderLines: 'closed-po-lines.jsonl',
+  // transactions: 'transactions.jsonl'
 };
 
 (async () => {
@@ -188,6 +189,7 @@ const orderFiles = {
             total: l.paidAmount,
             fundDistributions: [ fdist ]
           };
+          ivl.invoiceLineStatus = 'Open';
           let poLineNum = l.order.replace(/.+\//, '');
           let poLineId = orders.orderLines[poLineNum];
           if (poLineId) {
@@ -205,6 +207,8 @@ const orderFiles = {
     
         if (hasLines[invoiceId]) {
           writeJsonl(files.iv, iv);
+          iv.status = 'Open';
+          writeJsonl(files.ivopen, iv);
           c++;
 
           // if there are adjustments, total them up a create a transaction.
