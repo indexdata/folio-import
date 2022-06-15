@@ -231,13 +231,13 @@ const orderFiles = {
               fromFundId: fundId
             }
 
-            writeJsonl(files.trans, tran);
+            // writeJsonl(files.trans, tran);
             let summ = {
               id: iv.id,
               numPendingPayments: 0,
               numPaymentsCredits: 1,
             }
-            writeJsonl(files.summ, summ);
+            // writeJsonl(files.summ, summ);
           }
         } else {
           noLines++;
