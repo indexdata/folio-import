@@ -8,7 +8,7 @@ const ns = '99a9c2f6-fae0-4f49-b242-63fd3661a7d6';
 let refDir = process.argv[2];
 const inFile = process.argv[3];
 let fy = parseInt(process.argv[4], 10) || 2021;
-let curFyStart = '2021-07';
+let curFyStart = '1970-07';
 // let fyMax = fy + 1;
 // const wfs = process.argv[4] || '';
 
