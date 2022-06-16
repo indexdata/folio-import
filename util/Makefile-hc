@@ -122,7 +122,7 @@ orders-from-marc:
 
 invoices: $(iv-dir)/groovy*json
 	cp $(iv-dir)/groovy*json $(iv-dir)/iii-invoices.json
-	node $(wd)/acquisitions/hcInvoices.js $(acq-ref) $(orders-dir) $(iv-dir)/iii-invoices.json 2010
+	node $(wd)/acquisitions/hcInvoices.js $(acq-ref) $(orders-dir) $(iv-dir)/iii-invoices.json 1970
 
 invoice-approvals:
 	cd $(wd); node downloadJSONL.js invoice/invoices $(iv-dir)/temp.jsonl
