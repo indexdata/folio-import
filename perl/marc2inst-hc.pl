@@ -762,6 +762,7 @@ foreach (@ARGV) {
         $ierr_recs .= $hi->{itemerrs};
         $iecount += $hi->{iecount};
       }
+      print $item_recs . "\n";
 
       # make preceding succeding titles
        foreach my $f ($marc->field('78[05]')) {
@@ -899,7 +900,8 @@ sub make_hi {
       $irec->{holdingsRecordId} = $hid;
       $irec->{hrid} = $iid;
       if ($barcode && $bc_seen->{$barcode}) {
-        push @notes, "Duplicate barcode: $barcode";
+        # push @notes, "Duplicate barcode: $barcode";
+        $irec->{barcode} = "${iid}_${barcode}";
       } elsif ($barcode) {
         $irec->{barcode} = $barcode;
       }
