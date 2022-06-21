@@ -762,7 +762,6 @@ foreach (@ARGV) {
         $ierr_recs .= $hi->{itemerrs};
         $iecount += $hi->{iecount};
       }
-      print $item_recs . "\n";
 
       # make preceding succeding titles
        foreach my $f ($marc->field('78[05]')) {
