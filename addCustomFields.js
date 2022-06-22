@@ -40,7 +40,7 @@ let inFile = process.argv[2];
               .put(purl)
               .send(JSON.stringify(inData))
               .set('x-okapi-token', authToken)
-              .set('x-okapi-module-id', 'mod-users-17.1.0')
+              .set('x-okapi-module-id', 'mod-users-18.1.2')
               .set('content-type', 'application/json')
               .set('accept', '*/*');
           } catch (e) {

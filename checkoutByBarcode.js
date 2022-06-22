@@ -28,7 +28,7 @@ const post_put = async (authToken, url, checkout, r) => {
     } else {
       let res = await superagent
         .post(url)
-        .timeout({ response: 3000 })
+        .timeout({ response: 10000 })
         .set('accept', 'application/json', 'text/plain')
         .set('x-okapi-token', authToken)
         .set('content-type', 'application/json')
