@@ -98,21 +98,27 @@ const addMap = {
         if (billTo) co.billTo = refData.configs[billTo];
         if (shipTo) co.shipTo = refData.configs[shipTo];
         co.notes = [];
+        let anotes = [];
         for (let k in addNotes) {
           if (v[k]) {
             let text = v[k];
             let pre = addNotes[k];
             let note = `${pre}: ${text}`;
-            co.notes.push(note);
+            anotes.push(note);
           }
         }
+        let combinedNotes = anotes.join('; ');
+        if (combinedNotes) co.notes.push(combinedNotes);
+        anotes = [];
         if (notes) {
           let nts = notes.split(/\n/);
           nts.forEach(n => {
             n = n.trim();
-            if (n) co.notes.push(n);
+            if (n) anotes.push(n);
           });
         }
+        combinedNotes = anotes.join('; ');
+        if (combinedNotes) co.notes.push(combinedNotes);
         co.orderType = orderType;
         co.reEncumber = (orderType === 'Ongoing') ? true : false;
         if (orderType === 'Ongoing') {
@@ -124,7 +130,7 @@ const addMap = {
         co.workflowStatus = wfStatus;
         co.acqUnitIds = [ unit ];
 
-        // console.log(JSON.stringify(co, null, 2));
+        console.log(JSON.stringify(co, null, 2));
         let coStr = JSON.stringify(co) + '\n';
         fs.writeFileSync(outFile, coStr, { flag: 'a' });
         c++;
