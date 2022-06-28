@@ -553,36 +553,13 @@ foreach (@ARGV) {
     my $iiinum = ($marc->field('907')) ? $marc->subfield('907', 'a') : '';
     $iiinum =~ s/.(.+).$/$1/;
     if ($marc->field('001')) {
-      foreach ($marc->field('001')) {
-        my $in_ctrl = $_->data();
-        my $id_data_type = ($marc->field('003')) ? $marc->field('003')->data() : '';
-        my $id_data = ($id_data_type) ? "($id_data_type)$in_ctrl" : $in_ctrl;
-        my $field = MARC::Field->new('035', ' ', ' ', 'a' => $id_data);
-        $marc->insert_fields_ordered($field);
-      }
-    $marc->delete_fields($marc->field('001'));
-    $marc->delete_fields($marc->field('003'));
+      $marc->delete_fields($marc->field('001'));
+      $marc->delete_fields($marc->field('003'));
     }
     my $cfield = MARC::Field->new('001', $iiinum);
     $marc->insert_fields_ordered($cfield);
     $cfield = MARC::Field->new('003', $isil);
     $marc->insert_fields_ordered($cfield); 
-
-    # III specific mapping for discoverySuppress
-    if ($marc->subfield('998', 'e') eq 'n') {
-      $rec->{discoverySuppress} = JSON::true;
-    }
-    # foreach ($marc->field('993')) {
-    #  my $data = $_->as_string(); 
-      # if ($data =~ /^(GIFT.*?[:;]) (.+)/i) {
-      #  my $field = MARC::Field->new('541', ' ', ' ', 'c' => $1, 'a' => $2);
-      #  $marc->insert_fields_ordered($field);
-      # } else {
-        # my $field = MARC::Field->new('591', ' ', ' ', 'a' => $data); 
-        # $marc->insert_fields_ordered($field);
-      # }
-      # $marc->delete_fields($_);
-    # }
 
     my $srsmarc = $marc;
     if ($marc->field('880')) {
@@ -854,8 +831,10 @@ sub make_hi {
   foreach my $item ($marc->field($itemtag)) {
     my $loc = $item->subfield('l') || '';
     my $iid = $item->subfield('y');
-    next if !$loc;
     $loc =~ s/(\s*$)//;
+    if (!$loc || $loc ne 'ims' && $loc =~ /^[iv]/) {
+      next;
+    }
     my $hkey = "$bhrid-$loc";
     my $locid = $sierra2folio->{locations}->{$loc} || $refdata->{locations}->{$loc};
     # make holdings record;
