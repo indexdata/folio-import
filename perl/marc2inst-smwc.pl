@@ -137,7 +137,7 @@ sub makeMapFromTsv {
         } elsif ($prop =~ /locations/) {
           $name = $col[2];
         } elsif ($prop =~ /loantypes/) {
-          $name = $col[3];
+          $name = $col[1];
         }
         $tsvmap->{$prop}->{$code} = $refdata->{$prop}->{$name};
       }
@@ -715,18 +715,16 @@ foreach (@ARGV) {
           last;
         }
       }
-      my $htype = ($marc->field('998')) ? $marc->subfield('998', 'd') : '';
-      $htype =~ s/\s*$//;
-      my $htype_id = $sierra2folio->{holdingsTypes}->{$htype} || '';
+      $type = ($marc->field('998')) ? $marc->subfield('998', 'd') : '';
       $inst_recs .= $json->encode($rec) . "\n";
       $srs_recs .= $json->encode(make_srs($srsmarc, $raw, $rec->{id}, $rec->{hrid}, $snapshot_id, $srs_file)) . "\n";
       my $ctype = $cntypes->{$cntag} || '';
-      $idmap_lines .= "$rec->{hrid}|$rec->{id}|$cn|$ctype|$htype_id\n";
+      $idmap_lines .= "$rec->{hrid}|$rec->{id}|$cn|$ctype\n";
       $hrids->{$hrid} = 1;
       $success++;
 
       # make holdings and items
-      my $hi = make_hi($marc, $rec->{id}, $rec->{hrid}, $type, $blevel, $cn, $cntag, $htype_id);
+      my $hi = make_hi($marc, $rec->{id}, $rec->{hrid}, $type, $blevel, $cn, $cntag);
       if ($hi->{holdings}) {
         $hold_recs .= $hi->{holdings};
         $hcount += $hi->{hcount};
@@ -816,7 +814,6 @@ sub make_hi {
   my $blevel = shift;
   my $cn = shift;
   my $cntag = shift;
-  my $htype_id = shift;
   my $lnote = ($marc->field('993')) ? $marc->subfield('993', 'a') : '';
   my $hseen = {};
   my $hid = '';
@@ -841,7 +838,6 @@ sub make_hi {
     if (!$hseen->{$hkey}) {
       $hid = uuid($hkey);
       $hrec->{id} = $hid;
-      $hrec->{holdingsTypeId} = $htype_id if $htype_id;
       $hrec->{hrid} = $hkey;
       $hrec->{instanceId} = $bid;
       $hrec->{permanentLocationId} = $locid;
@@ -889,9 +885,11 @@ sub make_hi {
         $irec->{volume} = $item->subfield('c') || '';
       }
       $irec->{copyNumber} = $item->subfield('g') || '';
+      $itype =~ s/\s+$//;
       $irec->{permanentLoanTypeId} = $sierra2folio->{loantypes}->{$itype} || $refdata->{loantypes}->{'Can circulate'};
-      
-      $irec->{materialTypeId} = $sierra2folio->{mtypes}->{$itype} || $refdata->{mtypes}->{unspecified} || die "No material type found for itype $itype\n";
+
+      $type =~ s/\s+$//; 
+      $irec->{materialTypeId} = $sierra2folio->{mtypes}->{$type} || $refdata->{mtypes}->{unspecified} || die "No material type found for itype $itype\n";
       $irec->{status}->{name} = $sierra2folio->{statuses}->{$status} || 'Unknown'; # defaulting to available;
  
       foreach (@msgs) {
