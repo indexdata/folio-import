@@ -127,6 +127,7 @@ sub makeMapFromTsv {
       my $code = $col[0];
       my $name = $col[1] || '';
       if ($prop eq 'statuses') {
+        $name = $col[2];
         $name =~ s/.*map .*/Unknown/;
         $tsvmap->{$prop}->{$code} = $name;
       } else {
@@ -867,6 +868,7 @@ sub make_hi {
     my @msgs = $item->subfield('m');
     my @notes = $item->subfield('n');
     my $barcode = $item->subfield('i') || '';
+    my $due = $item->subfield('k');
     $status =~ s/\s+$//;
     if ($iid) {
       $iid =~ s/^\.//;
@@ -890,7 +892,7 @@ sub make_hi {
 
       $type =~ s/\s+$//; 
       $irec->{materialTypeId} = $sierra2folio->{mtypes}->{$type} || $refdata->{mtypes}->{unspecified} || die "No material type found for itype $itype\n";
-      $irec->{status}->{name} = $sierra2folio->{statuses}->{$status} || 'Unknown'; # defaulting to available;
+      $irec->{status}->{name} = $sierra2folio->{statuses}->{$status} || 'Unknown'; # defaulting to Unknown;
  
       foreach (@msgs) {
         if (!$irec->{circulationNotes}) { $irec->{circulationNotes} = [] }

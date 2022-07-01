@@ -1,0 +1,24 @@
+﻿SIERRA STATUS CODE	SIERRA STATUS DESCRIPTOR	MAPPED FOLIO STATUS
+!	ON HOLD SHELF	Awaiting pickup
+$	LOST AND PAID	Lost and paid
+-	AVAILABLE	Available
+b	BINDERY	Unavailable
+c	CIRC REVIEW	Unavailable
+d	DISPLAY	Unavailable
+e	DAMAGED	Unavailable
+g	PROGRAMMING	Unavailable
+l	LOST	Declared lost
+lds	of	Unavailable
+m	MISSING	Missing
+n	BILLED	Unavailable
+o	LIBRARY USE ONLY	Unavailable
+p	IN PROCESS	In process
+r	MENDING	Unavailable
+s 	ON SEARCH	Paged
+t	IN TRANSIT	In transit
+u	UNKNOWN	Unknown
+v	CAT REVIEW	Unavailable
+w	WITHDRAWN	Withdrawn
+x	MULTIPLE	Unavailable
+y	SELECTOR REVIEW	Unavailable
+z	CLMS RETD	Claimed returned
