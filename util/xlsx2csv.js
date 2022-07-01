@@ -10,7 +10,7 @@ const types = {
 }
 
 try {
-  if (!inFile) throw new Error('Usage: node xlsx2csv.js <csv_file> [ output type: csv | tsv ]')
+  if (!inFile) throw new Error('Usage: node xlsx2csv.js <xlsx_file> [ output type: csv | tsv ]')
   const dir = path.dirname(inFile);
 
   // Read the file using pathname
