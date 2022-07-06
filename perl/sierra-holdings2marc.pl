@@ -160,7 +160,7 @@ foreach (@ARGV) {
     if ($obj) {
       my $iii_bid = $obj->{bibIds}->[0];
       my $bid = "b$iii_bid";
-      print "$bid\n";
+      # print "$bid\n";
 
       my $vf = {};
       my $marc = MARC::Record->new();
@@ -199,7 +199,7 @@ foreach (@ARGV) {
           }
         }
       }
-      print $marc->as_formatted();
+      print $marc->as_usmarc();
 
       my $hid = "c" . $obj->{id};
       next if $seen->{$hid};
@@ -261,7 +261,7 @@ foreach (@ARGV) {
 }
 my $end = time;
 my $secs = $end - $start;
-print "\n$ttl Sierra holdings processed in $secs secs.\n\n";
+# print "\n$ttl Sierra holdings processed in $secs secs.\n\n";
 
 sub statement {
   my $h = shift;
