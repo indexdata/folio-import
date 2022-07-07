@@ -17,8 +17,9 @@ let ep = process.argv[2];
     console.warn('GET', url);
     try {
       const res = await superagent
-    .get(url)
-    .set('x-okapi-token', authToken);
+      .get(url)
+      .set('x-okapi-token', authToken)
+      .set('accept', 'application/json');
       console.log(JSON.stringify(res.body, null, 2));
     } catch (e) {
       console.log(`${e}`);
