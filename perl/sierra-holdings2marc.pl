@@ -169,9 +169,16 @@ foreach (@ARGV) {
       my $f004 = MARC::Field->new('004', $bid);
       $marc->insert_fields_ordered($f004);
       my $updated = $obj->{fixedFields}->{84}->{value};
+      my $created = $obj->{fixedFields}->{83}->{value};
       $updated =~ s/[-TZ:]//g;
       my $f005 = MARC::Field->new('005', "$updated.0");
       $marc->insert_fields_ordered($f005);
+      my $loc_code = $obj->{fixedFields}->{40}->{value} || 'xxxxx';
+      $loc_code =~ s/\s*$//;
+      my $f852 =  MARC::Field->new('852', '0', ' ', 'b' => $loc_code);
+      $marc->insert_fields_ordered($f852);
+
+      my $f008_seen = 0;
       foreach my $f (@{ $obj->{varFields} }) {
         my $t = $f->{marcTag} ;
         my $ft = $f->{fieldTag};
@@ -187,6 +194,10 @@ foreach (@ARGV) {
           my $field = MARC::Field->new($t, $f->{ind1}, $f->{ind2}, @msubs);
           $marc->insert_fields_ordered($field);
         } elsif ($t && $t lt '010') {
+          if ($t eq '008') {
+            $f008_seen = 1;
+            $f->{content} = substr($f->{content}, 0, 32);
+          }
           my $field = MARC::Field->new($t, $f->{content});
           $marc->insert_fields_ordered($field); 
         } elsif ($ft) {
@@ -197,7 +208,12 @@ foreach (@ARGV) {
             my $field = MARC::Field->new('561', ' ', ' ', 'a' => $f->{content});
             $marc->insert_fields_ordered($field); 
           }
-        }
+        } 
+      }
+      if (!$f008_seen) {
+          $created =~ s/^..(..)-(..)-(..).*/$1$2$3/;
+          my $f008 = MARC::Field->new('008', "${created}0u    0   0   uuund       ");
+          $marc->insert_fields_ordered($f008);
       }
       print $OUT $marc->as_usmarc();
 
@@ -206,8 +222,6 @@ foreach (@ARGV) {
 
       my $ff = $obj->{fixedFields};
       $seen->{$hid} = 1;
-      my $loc_code = $ff->{40}->{value} || 'xxxxx';
-      $loc_code =~ s/\s*$//;
       my $cn = $vf->{'090'}->[0]->{a} || '';
 
       my $hs = statement($obj);

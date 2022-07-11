@@ -45,17 +45,18 @@ my $id_map = getIds();
 # create snapshot object;
 my @t = localtime();
 my $dt = sprintf("%4s-%02d-%02d", $t[5] + 1900, $t[4] + 1, $t[3]);
-my $snap_id = uuid($dt);
+my $tstring = join '', @t;
+my $snap_id = uuid($tstring);
 my $snap = {
   jobExecutionId=>$snap_id,
   status=>"COMMITTED",
   processingStartedDate=>"${dt}T00:00:00"
 };
 my $snap_path = $ARGV[0];
-$snap_path =~ s/^(.+)\..+$/$1_snapshot.json/;
+$snap_path =~ s/^(.+)\..+$/$1_snapshot.jsonl/;
 print "Saving snapshot object to $snap_path...\n";
 open SNOUT, ">$snap_path";
-print SNOUT encode_json($snap) . "\n";
+print SNOUT $json->encode($snap) . "\n";
 close SNOUT;
 
 foreach (@ARGV) {
@@ -104,6 +105,7 @@ foreach (@ARGV) {
     $srs->{matchedId} = $srs->{id};
     $srs->{recordType} = $type;
     $srs->{generation} = 0;
+    $srs->{state} = 'ACTUAL';
     $srs->{rawRecord} = { id=>$srs->{id}, content=>$raw };
     $srs->{parsedRecord} = { id=>$srs->{id}, content=>$parsed };
     if ($type eq 'MARC_BIB') {
@@ -111,7 +113,7 @@ foreach (@ARGV) {
     } else {
       $srs->{externalIdsHolder} = { holdingsId=>$id_map->{$control_num}, holdingsHrid=>$control_num };
     }
-    print OUT encode_json($srs) . "\n";
+    print OUT $json->encode($srs) . "\n";
     $count++;
   }
   print "\nDone! $count SRS records saved to $save_path\n";

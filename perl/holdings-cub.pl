@@ -21,6 +21,8 @@ use Data::Dumper;
 my $version = '1';
 my $isil = 'CoU';
 
+my $source_id = '036ee84a-6afd-4c3c-9ad3-4a12ab875f59' #MARC
+
 binmode STDOUT, ":utf8";
 
 my $ref_dir = shift;
@@ -222,7 +224,7 @@ foreach (@ARGV) {
     $h->{instanceId} = $b[0];
     my $loc_id = $refdata->{locations}->{$loc_code} || $refdata->{locations}->{UNMAPPED};
     $h->{permanentLocationId} = $loc_id;
-    # $h->{holdingsTypeId} = $b[3];
+    $h->{sourceId} = $source_id;
     my $cn = $b[1];
     $h->{callNumberTypeId} = $b[2] || '6caca63e-5651-4db6-9247-3205156e9699'; #other
     $h->{callNumber} = $cn if $cn;
