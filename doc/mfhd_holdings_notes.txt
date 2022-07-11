@@ -1,0 +1,13 @@
+MFHD requirements 
+
+* sourceId -- Must be a UUID of the MARC source from /holdings-sources
+
+* 852 is a required field.
+
+* 852$b is where the location code goes (use code, not name, not UUID)
+
+* 852$h $i are is for the callnumber.
+
+* 852 ind1 determines the callNumberType (0 for LC, 1 for Dewey, etc.)  This doesn't seem to work.
+
+* Add misc. notes to the 561 field.  These will be mapped to a type of "provenance" in FOLIO.

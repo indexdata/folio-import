@@ -13,9 +13,11 @@ use Data::UUID;
 binmode STDOUT, ":utf8";
 $| = 1;
 
-if (!$ARGV[1]) {
-  die "Usage: ./make_source_records.pl <uuid_map_file> <raw_marc_files>\n";
+if (!$ARGV[2]) {
+  die "Usage: ./make_source_records.pl <type (MARC_BIB | MARC_HOLDING)> <uuid_map_file> <raw_marc_files>\n";
 }
+my $type = shift;
+if ($type !~ /^(MARC_BIB|MARC_HOLDING)$/) { die "$type is not a valid type!"; }
 my $ctrl_file = shift;
 
 sub uuid {
@@ -35,6 +37,9 @@ sub getIds {
   }
   return $idmap;
 }
+
+my $json = JSON->new();
+$json->canonical();
 
 my $id_map = getIds();
 
@@ -73,8 +78,6 @@ foreach (@ARGV) {
   open RAW, "<:encoding(UTF-8)", $infile;
   open OUT, ">", $save_path;
   while (<RAW>) {
-    $count++;
-    print "\r$count";
     my $raw = $_;
     my $srs = {};
     my $marc = MARC::Record->new_from_usmarc($raw);
@@ -91,19 +94,26 @@ foreach (@ARGV) {
     }
     next unless $id_map->{$control_num};
     $srs->{id} = uuid();
-    my $nine = {};
-    $nine->{'999'} = { subfields=>[ { 'i'=>$id_map->{$control_num} }, { 's'=>$srs->{id} } ] };
-    $nine->{'999'}->{'ind1'} = 'f';
-    $nine->{'999'}->{'ind2'} = 'f';
-    push @{ $parsed->{fields} }, $nine;
+    if ($type eq 'MARC_BIB') {
+      my $nine = {};
+      $nine->{'999'} = { subfields=>[ { 'i'=>$id_map->{$control_num} }, { 's'=>$srs->{id} } ] };
+      $nine->{'999'}->{'ind1'} = 'f';
+      $nine->{'999'}->{'ind2'} = 'f';
+      push @{ $parsed->{fields} }, $nine;
+    }
     $srs->{snapshotId} = $snap_id;
     $srs->{matchedId} = $srs->{id};
-    $srs->{recordType} = 'MARC';
+    $srs->{recordType} = $type;
     $srs->{generation} = 0;
     $srs->{rawRecord} = { id=>$srs->{id}, content=>$raw };
     $srs->{parsedRecord} = { id=>$srs->{id}, content=>$parsed };
-    $srs->{externalIdsHolder} = { instanceId=>$id_map->{$control_num} };
+    if ($type eq 'MARC_BIB') {
+      $srs->{externalIdsHolder} = { instanceId=>$id_map->{$control_num}, instanceHrid=>$control_num };
+    } else {
+      $srs->{externalIdsHolder} = { holdingsId=>$id_map->{$control_num}, holdingsHrid=>$control_num };
+    }
     print OUT encode_json($srs) . "\n";
+    $count++;
   }
-  print "\nDone! SRS records saved to $save_path\n";
+  print "\nDone! $count SRS records saved to $save_path\n";
 }

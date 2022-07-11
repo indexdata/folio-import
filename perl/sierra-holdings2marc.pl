@@ -194,12 +194,12 @@ foreach (@ARGV) {
           if ($ft eq '_') {
             $marc->leader($f->{content});
           } else {
-            my $field = MARC::Field->new('500', ' ', ' ', 'a' => $f->{content});
+            my $field = MARC::Field->new('561', ' ', ' ', 'a' => $f->{content});
             $marc->insert_fields_ordered($field); 
           }
         }
       }
-      print $marc->as_usmarc();
+      print $OUT $marc->as_usmarc();
 
       my $hid = "c" . $obj->{id};
       next if $seen->{$hid};
@@ -261,7 +261,7 @@ foreach (@ARGV) {
 }
 my $end = time;
 my $secs = $end - $start;
-# print "\n$ttl Sierra holdings processed in $secs secs.\n\n";
+print "\n$ttl Sierra holdings processed in $secs secs.\n\n";
 
 sub statement {
   my $h = shift;
