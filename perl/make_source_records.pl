@@ -8,7 +8,7 @@ use MARC::Record;
 use MARC::Record::MiJ;
 use Data::Dumper;
 use JSON;
-use Data::UUID;
+use UUID::Tiny ':std';
 
 binmode STDOUT, ":utf8";
 $| = 1;
@@ -21,10 +21,9 @@ if ($type !~ /^(MARC_BIB|MARC_HOLDING)$/) { die "$type is not a valid type!"; }
 my $ctrl_file = shift;
 
 sub uuid {
-  my $ug = Data::UUID->new;
-  my $uuid = $ug->create();
-  my $uustr = lc($ug->to_string($uuid));
-  return $uustr;
+  my $text = shift;
+  my $uuid = create_uuid_as_string(UUID_V5, $text);
+  return $uuid;
 }
 
 sub getIds {
@@ -46,7 +45,7 @@ my $id_map = getIds();
 # create snapshot object;
 my @t = localtime();
 my $dt = sprintf("%4s-%02d-%02d", $t[5] + 1900, $t[4] + 1, $t[3]);
-my $snap_id = uuid();
+my $snap_id = uuid($dt);
 my $snap = {
   jobExecutionId=>$snap_id,
   status=>"COMMITTED",
@@ -93,7 +92,7 @@ foreach (@ARGV) {
       next;
     }
     next unless $id_map->{$control_num};
-    $srs->{id} = uuid();
+    $srs->{id} = uuid($control_num);
     if ($type eq 'MARC_BIB') {
       my $nine = {};
       $nine->{'999'} = { subfields=>[ { 'i'=>$id_map->{$control_num} }, { 's'=>$srs->{id} } ] };
