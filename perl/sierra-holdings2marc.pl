@@ -163,17 +163,18 @@ foreach (@ARGV) {
       # print "$bid\n";
 
       my $vf = {};
+      my $ff = $obj->{fixedFields};
       my $marc = MARC::Record->new();
       my $f001 = MARC::Field->new('001', $obj->{id});
       $marc->insert_fields_ordered($f001); 
       my $f004 = MARC::Field->new('004', $bid);
       $marc->insert_fields_ordered($f004);
-      my $updated = $obj->{fixedFields}->{84}->{value};
-      my $created = $obj->{fixedFields}->{83}->{value};
+      my $updated = $ff->{84}->{value};
+      my $created = $ff->{83}->{value};
       $updated =~ s/[-TZ:]//g;
       my $f005 = MARC::Field->new('005', "$updated.0");
       $marc->insert_fields_ordered($f005);
-      my $loc_code = $obj->{fixedFields}->{40}->{value} || 'xxxxx';
+      my $loc_code = $ff->{40}->{value} || 'xxxxx';
       $loc_code =~ s/\s*$//;
       my $f852 =  MARC::Field->new('852', '0', ' ', 'b' => $loc_code);
       $marc->insert_fields_ordered($f852);
@@ -215,13 +216,7 @@ foreach (@ARGV) {
           my $f008 = MARC::Field->new('008', "${created}0u    0   0   uuund       ");
           $marc->insert_fields_ordered($f008);
       }
-      print $OUT $marc->as_usmarc();
 
-      my $hid = "c" . $obj->{id};
-      next if $seen->{$hid};
-
-      my $ff = $obj->{fixedFields};
-      $seen->{$hid} = 1;
       my $cn = $vf->{'090'}->[0]->{a} || '';
 
       my $hs = statement($obj);
@@ -234,8 +229,15 @@ foreach (@ARGV) {
         }
         foreach my $f (@{ $hs->{$t}}) {
           my $st = make_statement($f->{text}, $f->{note});
+          print Dumper($f);
+          if ($f->{text}) {
+            my $field = MARC::Field->new($t, ' ', ' ', '8' => '1.1', 'a' => $f->{text}); 
+            $marc->insert_fields_ordered($field) if !$marc->field($t, 'a');
+          }
         }
       }
+
+      print $OUT $marc->as_usmarc();
 
       if (0) {
         foreach my $t ('863', '864', '865') {
