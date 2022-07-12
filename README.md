@@ -34,7 +34,7 @@ Since JS doesn't have any reliable MARC libraries, working with MARC records is 
 
 ### downloadAllRefData.js
 
-This programe will consult modual descripters, grab GET endpoints, fetch and store the data returned by the requests.  You just need to supply a path to a directory for storing these data.  The filenames will be the endpoint (forward slashes are converted to %2F) and the module root is added as prefix.
+This programe will consult modual descripters, grab GET endpoints, fetch and store the data returned by the requests.  You just need to supply a path to a directory for storing these data.  The filenames will be the endpoint (forward slashes are converted to __) and the module root is added as prefix.
 
 Usage:
 ```
