@@ -30,13 +30,14 @@ use Data::Dumper;
 
 binmode STDOUT, ":utf8";
 
-my $version = '1';
+my $version = '2';
 my $isil = 'CSt-L';
 my $prefix = 'L';
 my $hprefix = "${prefix}H";
 my $iprefix = "${prefix}I";
 my $srstype = 'MARC';
 my @hnotes = qw(852z 907abcdefixy 931a 9613anwx 963adfghklnpqsw 9663abcdeqrw 9673aberw 990a);
+my $source_id = '036ee84a-6afd-4c3c-9ad3-4a12ab875f59'; # MARC
 
 my $rules_file = shift;
 my $ref_dir = shift;
@@ -54,6 +55,7 @@ my $mdate = sprintf("%04d-%02d-%02dT%02d:%02d:%02d-0500", $lt[5] + 1900, $lt[4] 
 my $files = {
   inst => 'instances.jsonl',
   holds => 'holdings.jsonl',
+  hsrs => 'holdings_srs.jsonl',
   items => 'items.jsonl',
   imap => 'map.tsv',
   srs => 'srs.jsonl',
@@ -485,6 +487,7 @@ foreach (@ARGV) {
   }
 
   open my $HOUT, ">>:encoding(UTF-8)", $paths->{holds};
+  open my $HSRSOUT, ">>:encoding(UTF-8)", $paths->{hsrs};
   open my $IOUT, ">>:encoding(UTF-8)", $paths->{items};
   open my $PSOUT, ">>:encoding(UTF-8)", $paths->{presuc};
 
@@ -500,6 +503,7 @@ foreach (@ARGV) {
   my $inst_recs;
   my $srs_recs;
   my $hrecs;
+  my $hsrs;
   my $irecs;
   my $idmap_lines;
   my $success = 0;
@@ -507,8 +511,9 @@ foreach (@ARGV) {
   my $rec;
   while (<RAW>) {
     if (/^\d{5}.[uvxy] /) {
-      my $h = make_holdings($_);
+      my $h = make_holdings($_, $snapshot_id);
       $hrecs .= $h->{holdings} . "\n";
+      $hsrs .= $h->{srs} . "\n";
       if ($h->{items}->[0]) {
         foreach (@{ $h->{items} }) {
           $irecs .= $json->encode($_) . "\n";
@@ -726,7 +731,7 @@ foreach (@ARGV) {
           };
         }
         $inst_recs .= $json->encode($rec) . "\n";
-        $srs_recs .= $json->encode(make_srs($srsmarc, $raw, $rec->{id}, $rec->{hrid}, $snapshot_id, $paths->{srs})) . "\n";
+        $srs_recs .= $json->encode(make_srs($srsmarc, $raw, $rec->{id}, $rec->{hrid}, $snapshot_id)) . "\n";
         $idmap_lines .= "$rec->{hrid}\t$rec->{id}\n";
         $hrids->{$hrid} = 1;
         $success++;
@@ -794,6 +799,11 @@ foreach (@ARGV) {
         $hrecs = '';
       }
 
+      if ($hsrs) {
+        print $HSRSOUT $hsrs;
+        $hsrs = '';
+      }
+
       if ($irecs) {
         print $IOUT $irecs;
         $irecs = '';
@@ -811,6 +821,7 @@ foreach (@ARGV) {
 
 sub make_holdings {
   my $raw = shift;
+  my $snap_id = shift;
   my $marc = eval { 
     MARC::Record->new_from_usmarc($raw)
   };
@@ -838,11 +849,16 @@ sub make_holdings {
 
   $bid = "$prefix$bid";
   my $hrid = "$hprefix$id";
+  $marc->field('001')->update($hrid);
+  my $hid = uuid($hrid);
+  my $srs = make_srs($marc, $marc->as_usmarc(), '', $hrid, $snap_id, $hid);
+
   my $hr = {};
-  $hr->{id} = uuid($hrid);
+  $hr->{id} = $hid;
   $hr->{instanceId} = uuid($bid);
   $hr->{hrid} = $hrid;
   $hr->{permanentLocationId} = $refdata->{locations}->{$loc} || '';
+  $hr->{sourceId} = $source_id;
   if (!$hr->{permanentLocationId}) { 
     print "WARN FOLIO location not found for $loc! ($id)\n";
   }
@@ -891,6 +907,7 @@ sub make_holdings {
 
   my $out = {
     holdings => $json->encode($hr),
+    srs => $json->encode($srs)
   };
   my @items = make_items($hr->{hrid}, $hr->{id}, $hr->{callNumberTypeId});
   push @{ $out->{items} }, @items;
@@ -1021,7 +1038,7 @@ sub make_srs {
     my $iid = shift;
     my $hrid = shift;
     my $snap_id = shift;
-    my $srs_file = shift;
+    my $hid = shift || '';
     my $srs = {};
 
     my $mij = MARC::Record::MiJ->to_mij($marc);
@@ -1029,16 +1046,22 @@ sub make_srs {
     
     $srs->{id} = uuid($iid . 'srs');
     my $nine = {};
-    $nine->{'999'} = { subfields=>[ { 'i'=>$iid }, { 's'=>$srs->{id} } ] };
+    $nine->{'999'} = { subfields=>[ { 'i'=>$iid || $hid }, { 's'=>$srs->{id} } ] };
     $nine->{'999'}->{'ind1'} = 'f';
     $nine->{'999'}->{'ind2'} = 'f';
     push @{ $parsed->{fields} }, $nine;
     $srs->{snapshotId} = $snap_id;
     $srs->{matchedId} = $srs->{id};
-    $srs->{recordType} = $srstype;
     $srs->{generation} = 0;
     $srs->{rawRecord} = { id=>$srs->{id}, content=>$raw };
     $srs->{parsedRecord} = { id=>$srs->{id}, content=>$parsed };
-    $srs->{externalIdsHolder} = { instanceId=>$iid, instanceHrid=>$hrid };
+    if ($hid) {
+      $srs->{externalIdsHolder} = { holdingsId=>$hid, holdingsHrid=>$hrid };
+      $srs->{recordType} = 'MARC_HOLDING';
+    }
+    else {
+      $srs->{externalIdsHolder} = { instanceId=>$iid, instanceHrid=>$hrid };
+      $srs->{recordType} = 'MARC';
+    }
     return $srs;
 }
