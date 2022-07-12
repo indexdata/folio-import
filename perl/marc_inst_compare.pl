@@ -9,13 +9,14 @@ use JSON;
 binmode STDOUT, ":utf8";
 
 my $infile = shift;
-my $instfile = shift or die "Usage: ./marc_ctrl_fix.pl <raw_marc_file> <instance_jsonl>\n";
+my $instfile = shift or die "Usage: ./marc_ctrl_fix.pl <raw_marc_file> <instance_jsonl> [ <iii> ]\n";
 if (! -e $infile) {
   die "Can't find marc file!\n"
 }
 if (! -e $instfile) {
   die "Can't find jsonl file!\n"
 }
+my $iii = shift;
 
 my $imap = {};
 open INST, $instfile;
@@ -53,7 +54,12 @@ while (<RAW>) {
   my $ctrlnum;
   my $ok = eval {
     $marc = MARC::Record->new_from_usmarc($raw);
-    $ctrlnum = $marc->field('001')->data();
+    if ($iii) {
+      $ctrlnum = $marc->subfield('907', 'a');
+      $ctrlnum =~ s/^\.(.+).$/$1/;
+     } else {
+      $ctrlnum = $marc->field('001')->data();
+     }
     1;
   };
   if ($imap->{$ctrlnum}) {
