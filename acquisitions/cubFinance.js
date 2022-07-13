@@ -25,6 +25,7 @@ let files = {
   ledgers: 'ledgers.jsonl',
   groups: 'groups.jsonl',
   funds: 'funds.jsonl',
+  budgets: 'budgets.jsonl',
   groupfy: 'group-fund-fiscal-year.jsonl'
 };
 
@@ -35,7 +36,7 @@ const col = { a:0, b:1, c:2, d:3, e:4, f:5, g:6, h:7, i:8, j:9, k:10, l:11, m:12
   try {
     const inFile = argv._[0];
     if (!inFile) {
-      throw 'Usage: node makeFiscalYear.js <fiscal_year_tsv_file> [ -l <ledger_tsv_file> ] [ -f funds_tsv_file ] [ -s fy_series ]';
+      throw 'Usage: node cubFinance.js <fiscal_tsv_file> [ -l <ledger_tsv_file> ] [ -f funds_tsv_file ] [ -s fy_series ]';
     } else if (!fs.existsSync(inFile)) {
       throw new Error('Can\'t find input file');
     }
@@ -62,11 +63,13 @@ const col = { a:0, b:1, c:2, d:3, e:4, f:5, g:6, h:7, i:8, j:9, k:10, l:11, m:12
     let fyCount = 0;
     let ldCount = 0;
     let fnCount = 0;
+    let bdCount = 0;
     let grCount = 0;
     let gffyCount = 0;
 
     const series = (argv.s) ? argv.s : 'FY';
     let fyid = '';
+    let fyCode = '';
     const acqUnits = {};
     let x = 0;
     let sl = 1;
@@ -81,6 +84,7 @@ const col = { a:0, b:1, c:2, d:3, e:4, f:5, g:6, h:7, i:8, j:9, k:10, l:11, m:12
         code = code.replace(/^[A-z]+/, '');
         code = series + code;
         fyid = uuid(code, ns);
+        fyCode = code;
         let start = new Date(c[6]).toISOString();
         let end = new Date(c[7]).toISOString();
         let obj = {
@@ -200,6 +204,25 @@ const col = { a:0, b:1, c:2, d:3, e:4, f:5, g:6, h:7, i:8, j:9, k:10, l:11, m:12
             if (externalAccountNo) obj.externalAccountNo = externalAccountNo;
             writeObj(files.funds, obj);
             fnCount++;
+            
+            //create budget
+            let bud = {
+              id: uuid(id, ns),
+              fundId: id,
+              name: `${code}-${fyCode}`,
+              budgetStatus: 'Active',
+              fiscalYearId: fyid
+            };
+            let all = c[col.aj];
+            if (all.match(/\d/)) {
+              bud.initialAllocation = parseInt(all, 10);
+            } else {
+              bud.initialAllocation = 0;
+            }
+            if (obj.acqUnitIds) bud.acqUnitIds = obj.acqUnitIds;
+            writeObj(files.budgets, bud);
+            bdCount++;
+
           } else {
             console.log(`WARN Ledger name not found for ${code}`);
           }
@@ -213,7 +236,7 @@ const col = { a:0, b:1, c:2, d:3, e:4, f:5, g:6, h:7, i:8, j:9, k:10, l:11, m:12
         id: groupMap[g].id,
         name: groupMap[g].name,
         code: g,
-        status: 'Active'
+        status: 'Active',
       };
       writeObj(files.groups, obj);
       grCount++;
@@ -224,6 +247,7 @@ const col = { a:0, b:1, c:2, d:3, e:4, f:5, g:6, h:7, i:8, j:9, k:10, l:11, m:12
     console.log('Fiscal Yrs:', fyCount);
     console.log('Ledgers   :', ldCount);
     console.log('Funds     :', fnCount);
+    console.log('Budgets   :', bdCount);
     console.log('Groups    :', grCount); 
     console.log('Group FYs :', gffyCount); 
   } catch (e) {
