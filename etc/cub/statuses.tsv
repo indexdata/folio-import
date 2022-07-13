@@ -1,0 +1,38 @@
+Sierra Status Code	Sierra Status Display	Folio Status		Folio Status Choices
+-	Available	Available		Available
+!	ON HOLDSHELF	Awaiting pickup		Awaiting delivery
+@	OFF CAMPUS	Checked out		Checked out
+&	REQUESTED	Paged		Order closed
+$	LOST AND PAID	Lost and paid		Lost and paid
+2	ASK @ GOV DOCS	Restricted		
+6	Trace 1	Missing		On order
+7	TRACE 2	Missing		Paged
+8	Unavailable	Unavailable		
+c	En Route To PASCAL	In process		In process
+g	FROM BINDERY	In process (non-requestable)		In transit
+i	PRESERVATION	In process (non-requestable)		In process (non-requestable)
+k	PROSP LOST OR REPLACED	Declared lost		Declared lost
+l	TRACE LOST	Long missing		Long missing
+m	MISSING	Missing		Missing
+n	BILLED	Aged to lost		Aged to lost
+o	LIB USE ONLY	Restricted		Unavailable
+p	ONSITE ONLY	Restricted		Withdrawn
+q	Reservesscanned	Available		Awaiting pickup
+t	IN TRANSIT	In transit		Intellectual item
+v	LIMITED USE	Restricted		Unknown
+w	WITHDRAWN	Withdrawn		
+x	ORDERED BEING SHIPPED	On order		Restricted
+y	Unavailable	Unavailable		
+z	CLMS RETD	Claimed returned		Claimed returned
+%	PROSP RET'D			
+)	PROSP CANCELED			
+=	RENEW DENIED			
+#	PROSP RECVD			
++	RENEW PENDING			
+3	DAMAGED-REPLCD			
+u	REQUEST IT!			
+(	PROSP PAGED			
+4	Request It!			
+-	PROSP RE-REQ			
+h	Hathi Trust			
+r	LOST--REPLACED			

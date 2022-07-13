@@ -1,0 +1,242 @@
+Sierra Fund Code	Name	allocatedFromIDs	AllocatedToIDs	code	description	externalAccountNo	fundStatus	acqUnitIDs	tags	metadata	Ledger	Type	Acquisition Units	Group (1)	Group (2)	Group (3)	id	Name	Budget status	Allowable encumbrance	Allowable expenditure	Allocated	Awaiting payment	Available	Encumbered	Expenditures	Net transfers	Unavailable	Over encumbrance	Over expended	Fund id	Fiscal year id	Acq unit ids	Tags	Initial allocation	Allocation to	Allocation from	Total funding	Cash balance
+1film	Cinema Studies Transfer			1film		11005635	Active	CU Boulder			Campus General Funds		CU Boulder		Arts & Humanities	Cinema Studies			Active	150	150										1film	FY2022	CU Boulder		0				
+1open	Open Access non-library materials			1open		11002462	Active	CU Boulder			Campus General Funds		CU Boulder		General	Open Access			Active	150	150										1open	FY2022	CU Boulder		0				
+2famc	Family Campaign Gift			2famc		13480631	Active	CU Boulder			Gifts & Endowments		CU Boulder		Interdisciplinary				Active	150	150										2famc	FY2022	CU Boulder		2546.92				
+2gen4	Library General Gifts			2gen4		13476909	Active	CU Boulder			Gifts & Endowments		CU Boulder		Interdisciplinary				Active	150	150										2gen4	FY2022	CU Boulder		0				
+2gifn	Giffin/AMRC			2gifn		13401457	Active	CU Boulder			Gifts & Endowments		CU Boulder		Rare & Distinctive				Active	150	150										2gifn	FY2022	CU Boulder		0				
+2lebo	Lebowitz gift			2lebo		13400042	Active	CU Boulder			Gifts & Endowments		CU Boulder		Rare & Distinctive				Active	150	150										2lebo	FY2022	CU Boulder		1438.65				
+2teet	Teets Gift			2teet		13477097	Active	CU Boulder			Gifts & Endowments		CU Boulder		Interdisciplinary				Active	150	150										2teet	FY2022	CU Boulder		18322.05				
+3bail	Dana Bailey Endowment			3bail		13443599	Active	CU Boulder			Gifts & Endowments		CU Boulder		Rare & Distinctive				Active	150	150										3bail	FY2022	CU Boulder		0				
+3berg	K Bergstedt Sci Endow			3berg		13474627	Active	CU Boulder			Gifts & Endowments		CU Boulder		Sciences				Active	150	150										3berg	FY2022	CU Boulder		3650.94				
+3cabe	Cabell Endowment			3cabe		13450137	Active	CU Boulder			Gifts & Endowments		CU Boulder		Interdisciplinary				Active	150	150										3cabe	FY2022	CU Boulder		0				
+3clrk	Clark, Rosetta			3clrk		13411617	Active	CU Boulder			Gifts & Endowments		CU Boulder		Interdisciplinary				Active	150	150										3clrk	FY2022	CU Boulder		10020.21				
+3cs91	Class of 1991			3cs91		13429002	Active	CU Boulder			Gifts & Endowments		CU Boulder		Interdisciplinary				Active	150	150										3cs91	FY2022	CU Boulder		3283.15				
+3dean	Deans Library Projects			3dean		13437743	Active	CU Boulder			Gifts & Endowments		CU Boulder		Interdisciplinary				Active	150	150										3dean	FY2022	CU Boulder		0				
+3eldr	Eldridge endow			3eldr		13480469	Active	CU Boulder			Gifts & Endowments		CU Boulder		Interdisciplinary				Active	150	150										3eldr	FY2022	CU Boulder		31451.65				
+3fayh	Paul Louis Faye Memorial			3fayh		13418733	Active	CU Boulder			Gifts & Endowments		CU Boulder		Arts & Humanities				Active	150	150										3fayh	FY2022	CU Boulder		0				
+3fors	Father Forsyth Fd			3fors		13423608	Active	CU Boulder			Gifts & Endowments		CU Boulder		Arts & Humanities				Active	150	150										3fors	FY2022	CU Boulder		1408.56				
+3frdc	Friends Fund Cash			3frdc		13426803	Active	CU Boulder			Gifts & Endowments		CU Boulder		Interdisciplinary				Active	150	150										3frdc	FY2022	CU Boulder		0				
+3hall	Haller Library Fund			3hall		13400835	Active	CU Boulder			Gifts & Endowments		CU Boulder		Interdisciplinary				Active	150	150										3hall	FY2022	CU Boulder		0				
+3harb	Har, R M Business			3harb		13449397	Active	CU Boulder			Gifts & Endowments		CU Boulder		Social Sciences				Active	150	150										3harb	FY2022	CU Boulder		102022.98				
+3harr	Hart, R M			3harr		13439049	Active	CU Boulder			Gifts & Endowments		CU Boulder		Interdisciplinary				Active	150	150										3harr	FY2022	CU Boulder		168577.85				
+3hart	Hart Mt Income			3hart		13416891	Active	CU Boulder			Gifts & Endowments		CU Boulder		Rare & Distinctive				Active	150	150										3hart	FY2022	CU Boulder		0				
+3jeff	H. Jeffery Endowment			3jeff		13451523	Active	CU Boulder			Gifts & Endowments		CU Boulder		Rare & Distinctive				Active	150	150										3jeff	FY2022	CU Boulder		0				
+3kend	Kendall Endowment			3kend		13416870	Active	CU Boulder			Gifts & Endowments		CU Boulder		Arts & Humanities				Active	150	150										3kend	FY2022	CU Boulder		14865.76				
+3kirs	Kirschner, Barry			3kirs		13413980	Active	CU Boulder			Gifts & Endowments		CU Boulder		Arts & Humanities				Active	150	150										3kirs	FY2022	CU Boulder		1340.43				
+3norl	Norlin Endowment			3norl		13424861	Active	CU Boulder			Gifts & Endowments		CU Boulder		Interdisciplinary				Active	150	150										3norl	FY2022	CU Boulder		22670.03				
+3phel	Phelps Gift			3phel		13473394	Active	CU Boulder			Gifts & Endowments		CU Boulder		Sciences				Active	150	150										3phel	FY2022	CU Boulder		14118.05				
+3spce	Special Collections Endowment			3spce		13416640	Active	CU Boulder			Gifts & Endowments		CU Boulder		Rare & Distinctive				Active	150	150										3spce	FY2022	CU Boulder		0				
+3weir	Weir Endowment			3weir		13416527	Active	CU Boulder			Gifts & Endowments		CU Boulder		Rare & Distinctive				Active	150	150										3weir	FY2022	CU Boulder		0				
+3wils	Wilson Book Fund			3wils		13430846	Active	CU Boulder			Gifts & Endowments		CU Boulder		Arts & Humanities				Active	150	150										3wils	FY2022	CU Boulder		98015.98				
+3wprp	Women Poets Romantic Period			3wprp		13411933	Active	CU Boulder			Gifts & Endowments		CU Boulder		Rare & Distinctive				Active	150	150										3wprp	FY2022	CU Boulder		0				
+5brep	Replacement & Lost Books Fund			5brep		12926253	Active	CU Boulder			Auxiliary		CU Boulder		General				Active	150	150										5brep	FY2022	CU Boulder		30000				
+5sale	Better World Books Resale Revenue			5sale		12919438	Active	CU Boulder			Auxiliary		CU Boulder		General				Active	150	150										5sale	FY2022	CU Boulder		0				
+5ucar1	NCAR Indirect Fund 1			5ucar1		12901866	Active	CU Boulder			Auxiliary		CU Boulder		General				Active	150	150										5ucar1	FY2022	CU Boulder		0				
+5ucar2	NCAR Indirect Fund 2			5ucar2		12901867	Active	CU Boulder			Auxiliary		CU Boulder		General				Active	150	150										5ucar2	FY2022	CU Boulder		0				
+7adil	ADIL, SABAHAT			7adil		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	DONE	Arts & Humanities	Chinese and Other Asian Languages & Literature			Active	150	150										7adil	FY2022	CU Boulder		3013.95				
+7alexk	ALEXANDER, KATHERINE			7alexk		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	DONE	Arts & Humanities	Chinese and Other Asian Languages & Literature			Active	150	150										7alexk	FY2022	CU Boulder		174.67				
+7alia	ALI, AUN			7alia		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	Done	Arts & Humanities	Religious Studies			Active	150	150										7alia	FY2022	CU Boulder		0				
+7beit	BEITZ, MICHAEL			7beit		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	Done	Arts & Humanities	ART & ART HISTORY			Active	150	150										7beit	FY2022	CU Boulder		0				
+7boyd	BOYD, SAM			7boyd		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	Done	Arts & Humanities	Religious Studies			Active	150	150										7boyd	FY2022	CU Boulder		0				
+7burge	BURGE, MARJORIE			7burge		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	3rd Year	Arts & Humanities	Japanese & Korean			Active	150	150										7burge	FY2022	CU Boulder		6176.92				
+7chung	CHUNG, JAE WON EDWARD			7chung		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	5th year	Arts & Humanities	Japanese & Korean			Active	150	150										7chung	FY2022	CU Boulder		2557.9				
+7cohe	COHEN, BRIANNE			7cohe		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	5th year	Arts & Humanities	ART & ART HISTORY			Active	150	150										7cohe	FY2022	CU Boulder		8833.96				
+7dema	DEMAREST, HEATHER			7dema		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	5th year	Arts & Humanities	PHILOSOPHY			Active	150	150										7dema	FY2022	CU Boulder		9793.88				
+7dest	DE STECHER, ANNETTE			7dest		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	DONE	Arts & Humanities	ART & ART HISTORY			Active	150	150										7dest	FY2022	CU Boulder		688.79				
+7eo	EO, KYUNGHEE			7eo		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	1st Year	Arts & Humanities	Japanese & Korean			Active	150	150										7eo	FY2022	CU Boulder		2500				
+7falb	FALB - KALISMAN, HILARY			7falb		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	4th Year	Arts & Humanities	HISTORY			Active	150	150										7falb	FY2022	CU Boulder		9154.67				
+7grie	GRIES, LAURIE			7grie		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	DONE	Arts & Humanities	Communications			Active	150	150										7grie	FY2022	CU Boulder		1879.25				
+7guzm	GUZMAN, JOSHUA			7guzm		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	Done	Arts & Humanities	English			Active	150	150										7guzm	FY2022	CU Boulder		0				
+7harr	Harrington, Emily			7harr		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	Done	Arts & Humanities	English			Active	150	150										7harr	FY2022	CU Boulder		0				
+7herz	HERZ, ZACHARY			7herz		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	3rd Year	Arts & Humanities	CLASSICS			Active	150	150										7herz	FY2022	CU Boulder		6338.75				
+7hoec	HOECKER, ARNE			7hoec		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	Done	Arts & Humanities	German			Active	150	150										7hoec	FY2022	CU Boulder		0				
+7hutch	HUTCHINSON, ERIN			7hutch		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	2nd year	Arts & Humanities	HISTORY			Active	150	150										7hutch	FY2022	CU Boulder		2500				
+7kass	KASSIANIDOU, MARINA			7kass		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	DONE	Arts & Humanities	ART & ART HISTORY			Active	150	150										7kass	FY2022	CU Boulder		181				
+7kost	KOSTER, ISABEL			7kost		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	DONE	Arts & Humanities	CLASSICS			Active	150	150										7kost	FY2022	CU Boulder		180				
+7lagm	LAGMAN, EILEEN			7lagm		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	Done	Arts & Humanities	English			Active	150	150										7lagm	FY2022	CU Boulder		0				
+7lawr	LAWRENCE-SANDERS, ASHLEIGH			7lawr		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	1st Year	Arts & Humanities	HISTORY			Active	150	150										7lawr	FY2022	CU Boulder		2500				
+7laws	LAWSON, ANGELICA			7laws		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	Done	Arts & Humanities	Cinema Studies			Active	150	150										7laws	FY2022	CU Boulder		0				
+7leec	LEE, CLARENCE I-ZHUEN			7leec		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	4th Year	Arts & Humanities	Japanese & Korean			Active	150	150										7leec	FY2022	CU Boulder		6673.82				
+7loff	LOFFREDO, FERNANDO			7loff		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	3rd Year	Arts & Humanities	ART & ART HISTORY			Active	150	150										7loff	FY2022	CU Boulder		5333.82				
+7mall	MALLIPEDDI, RAMESH			7mall		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	Done	Arts & Humanities	English			Active	150	150										7mall	FY2022	CU Boulder		0				
+7mars	MARSLETT, GEOFFREY			7mars		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	Done	Arts & Humanities	Cinema Studies			Active	150	150										7mars	FY2022	CU Boulder		0				
+7mend	MENDOZA, NATALIE			7mend		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	3rd Year	Arts & Humanities	HISTORY			Active	150	150										7mend	FY2022	CU Boulder		7500				
+7merr	MERRITT, ADRIENNE			7merr		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	1st Year	Arts & Humanities	German			Active	150	150										7merr	FY2022	CU Boulder		2500				
+7mey	MEYERS, SKINNER			7mey		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	1st Year	Arts & Humanities	CINEMA STUDIES			Active	150	150										7mey	FY2022	CU Boulder		2500				
+7mitc	MITCHELL, DIANNE			7mitc		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	3rd Year	Arts & Humanities	ENGLISH			Active	150	150										7mitc	FY2022	CU Boulder		5000				
+7naka	NAKASSIS, DIMITRI			7naka		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	DONE	Arts & Humanities	CLASSICS			Active	150	150										7naka	FY2022	CU Boulder		297.37				
+7negri	NEGRI, SABRINA			7negri		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	5th year	Arts & Humanities	FILM STUDIES			Active	150	150										7negri	FY2022	CU Boulder		3838.53				
+7ogrady	O'GRADY, MEGAN			7ogrady		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	2nd year	Arts & Humanities	ART & ART HISTORY			Active	150	150										7ogrady	FY2022	CU Boulder		5000				
+7osip	OSIPOVA, ANASTASIYA			7osip		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	2nd year	Arts & Humanities	Slavic			Active	150	150										7osip	FY2022	CU Boulder		2500				
+7pars	PARSON, RAHUL			7pars		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	DONE	Arts & Humanities	Chinese and Other Asian Languages & Literature			Active	150	150										7pars	FY2022	CU Boulder		0				
+7port	PORTER, JILLIAN			7port		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	5th year	Arts & Humanities	Slavic			Active	150	150										7port	FY2022	CU Boulder		2511.55				
+7quan	QUAN, TRACY			7quan		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	2nd year	Arts & Humanities	SPANISH & PORTUGUESE			Active	150	150										7quan	FY2022	CU Boulder		3878.15				
+7queen	QUEEN, KHADIJAH			7queen		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	4th Year	Arts & Humanities	ENGLISH			Active	150	150										7queen	FY2022	CU Boulder		8643.11				
+7quin	QUINN, BRIAN			7quin		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	DONE	Arts & Humanities	French			Active	150	150										7quin	FY2022	CU Boulder		17				
+7raym	RAYMOND, CHASE			7raym		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	DONE	Arts & Humanities	SPANISH & PORTUGUESE			Active	150	150										7raym	FY2022	CU Boulder		0				
+7rios	RIOS, GABRIELA			7rios		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	2nd year	Arts & Humanities	PROGRAM FOR WRITING & RHETORIC			Active	150	150										7rios	FY2022	CU Boulder		5000				
+7robe	ROBERTSON, BENJAMIN			7robe		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	4th Year	Arts & Humanities	ENGLISH			Active	150	150										7robe	FY2022	CU Boulder		10000				
+7sachsh	SACHS, HONOR			7sachsh		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	4th Year	Arts & Humanities	HISTORY			Active	150	150										7sachsh	FY2022	CU Boulder		10000				
+7samc	SAMUELSON, CHARLES			7samc		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	4th Year	Arts & Humanities	French			Active	150	150										7samc	FY2022	CU Boulder		10000				
+7sauc	Saucedo Ceballos, Raul			7sauc		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	DONE	Arts & Humanities	PHILOSOPHY			Active	150	150										7sauc	FY2022	CU Boulder		0				
+7shell	SHELL, HANNA			7shell		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	5th year	Arts & Humanities	ART & ART HISTORY			Active	150	150										7shell	FY2022	CU Boulder		9824.8				
+7shih	SHIH, EVELYN			7shih		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	4th Year	Arts & Humanities	Chinese and Other Asian Languages & Literature			Active	150	150										7shih	FY2022	CU Boulder		6645.08				
+7staff	STAFFEL, JULIA			7staff		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	4th Year	Arts & Humanities	PHILOSOPHY			Active	150	150										7staff	FY2022	CU Boulder		7524.68				
+7ston	STONE, LAUREN			7ston		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	Extended-Final Year	Arts & Humanities	German			Active	150	150										7ston	FY2022	CU Boulder		6274.88				
+7sust	SU, STEPHANIE			7sust		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	4th Year	Arts & Humanities	ART & ART HISTORY			Active	150	150										7sust	FY2022	CU Boulder		7280.76				
+7talb	TALBOT, BRIAN			7talb		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	4th Year	Arts & Humanities	PHILOSOPHY			Active	150	150										7talb	FY2022	CU Boulder		9600.13				
+7thom	THOMPSON, THOMAS LEVI			7thom		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	4th Year	Arts & Humanities	ASIAN LANG & CIVILIZATIONS			Active	150	150										7thom	FY2022	CU Boulder		8498.38				
+7trnka	TRNKA-AMRHEIN, YVONA			7trnka		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	5th year	Arts & Humanities	CLASSICS			Active	150	150										7trnka	FY2022	CU Boulder		9419.14				
+7tsou	TSOUHLLARAKIS, ANNA			7tsou		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	3rd Year	Arts & Humanities	ART & ART HISTORY			Active	150	150										7tsou	FY2022	CU Boulder		7500				
+7wilh	WILKINS, HELANIUS			7wilh		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	DONE	Arts & Humanities	Theater & Dance			Active	150	150										7wilh	FY2022	CU Boulder		0				
+7wrig	WRIGHT, NICOLE			7wrig		11054094	Active	CU Boulder			Arts & Sciences Funds		CU Boulder	Done	Arts & Humanities	English			Active	150	150										7wrig	FY2022	CU Boulder		0				
+9ibaca	Kathia Ibacache IMPART Grant			9ibaca		11006151	Active	CU Boulder			Grants		CU Boulder		Arts & Humanities	SPANISH & PORTUGUESE			Active	150	150										9ibaca	FY2022	CU Boulder		0				
+9kfcs	Korea Foundation Grant Cost Share			9kfcs		0	Active	CU Boulder			Grants		CU Boulder		Arts & Humanities	Japanese & Korean			Active	150	150										9kfcs	FY2022	CU Boulder		0				
+9kfgt	Korea Foundation Grant			9kfgt		0	Active	CU Boulder			Grants		CU Boulder		Arts & Humanities	Japanese & Korean			Active	150	150										9kfgt	FY2022	CU Boulder		0				
+9lasc	Latin American Studies Grant			9lasc			Active	CU Boulder			Grants		CU Boulder		Arts & Humanities	SPANISH & PORTUGUESE			Active	150	150										9lasc	FY2022	CU Boulder		0				
+9stg3	State Grant for Libraries			9stg3		0	Active	CU Boulder			Grants		CU Boulder		General	General			Active	150	150										9stg3	FY2022	CU Boulder		0				
+9ucar	UCAR Grant			9ucar		13300010	Active	CU Boulder			Grants		CU Boulder						Active	150	150										9ucar	FY2022	CU Boulder		0				
+antmo	Anthropology Monographs			antmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Social Sciences	Anthropology			Active	150	150										antmo	FY2022	CU Boulder		5687				
+antsu	Anthropology Serials			antsu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Social Sciences	Anthropology			Active	150	150										antsu	FY2022	CU Boulder		0				
+artmo	Art & Art History			artmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Arts & Humanities	Art & Art History			Active	150	150										artmo	FY2022	CU Boulder		60126				
+artsu	Art & Art History Serials			artsu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Arts & Humanities	Art & Art History			Active	150	150										artsu	FY2022	CU Boulder		0				
+arvmo	Archives Monographs			arvmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Rare & Distinctive				Active	150	150										arvmo	FY2022	CU Boulder		13031.97				
+asemo	Japanese & Korean Monographs			asemo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Arts & Humanities	Japanese & Korean			Active	150	150										asemo	FY2022	CU Boulder		26483				
+asesu	Japanese & Korean Serials			asesu		11028257	Active	CU Boulder			Library Materials			Serials	Arts & Humanities	Japanese & Korean			Active	150	150										asesu	FY2022	CU Boulder		#N/A				
+asnmo	Chinese, Arabic, & Other Asian Languages Monographs			asnmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Arts & Humanities	Chinese, Arabic, & Other Asian Languages			Active	150	150										asnmo	FY2022	CU Boulder		26593				
+asnsu	Chinese, Arabic, & Other Asian Languages Monographs			asnsu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Arts & Humanities	Chinese, Arabic, & Other Asian Languages			Active	150	150										asnsu	FY2022	CU Boulder		0				
+astsu	Astrogeophysics Serials			astsu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Sciences				Active	150	150										astsu	FY2022	CU Boulder		0				
+biomo	Biology (EBIO) Monographs			biomo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Sciences	Biology			Active	150	150										biomo	FY2022	CU Boulder		5568				
+biosu	Biology Serials			biosu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Sciences	Biology			Active	150	150										biosu	FY2022	CU Boulder		0				
+busmo	Business Monographs			busmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Social Sciences	Business			Active	150	150										busmo	FY2022	CU Boulder		15000				
+bussu	Business Serials			bussu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Social Sciences	Business			Active	150	150										bussu	FY2022	CU Boulder		0				
+cdsmo	Speech, Language, and Hearing Sciences Monographs			cdsmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Social Sciences	Speech, Language, and Hearing Sciences			Active	150	150										cdsmo	FY2022	CU Boulder		5000				
+cdssu	Speech, Language, and Hearing Sciences Serials			cdssu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Social Sciences	Speech, Language, and Hearing Sciences			Active	150	150										cdssu	FY2022	CU Boulder		0				
+chemo	Chemistry & Biochemistry Monographs			chemo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Sciences	Chemistry & Biochemistry			Active	150	150										chemo	FY2022	CU Boulder		5568				
+chesu	Chemistry & Biochemistry Serials			chesu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Sciences	Chemistry & Biochemistry			Active	150	150										chesu	FY2022	CU Boulder		0				
+chusu	Consortial Humanities Serials			chusu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Arts & Humanities	Consortial			Active	150	150										chusu	FY2022	CU Boulder		0				
+cinsu	Consortial Interdisciplinary Serials			cinsu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Interdisciplinary	Consortial			Active	150	150										cinsu	FY2022	CU Boulder		0				
+clamo	Classics Monographs			clamo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Arts & Humanities	Classics			Active	150	150										clamo	FY2022	CU Boulder		21232				
+clasu	Classics Serials			clasu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Arts & Humanities	Classics			Active	150	150										clasu	FY2022	CU Boulder		0				
+colsu	Comparative literature serials			colsu			Active	CU Boulder			Library Materials		CU Boulder		Arts & Humanities				Active	150	150										colsu	FY2022	CU Boulder		0				
+commo	Communication Monographs			commo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Social Sciences	Communications			Active	150	150										commo	FY2022	CU Boulder		7500				
+comsu	Communications Serials			comsu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Social Sciences	Communications			Active	150	150										comsu	FY2022	CU Boulder		0				
+cscmo	Comptuer Science Monographs			cscmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Sciences	Computer Science			Active	150	150										cscmo	FY2022	CU Boulder		7577				
+cscsu	Computer Science Serials			cscsu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Sciences	Computer Science			Active	150	150										cscsu	FY2022	CU Boulder		0				
+csssu	Consortial Social Sciences Serials			csssu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Social Sciences	Consortial			Active	150	150										csssu	FY2022	CU Boulder		0				
+cstsu	Consortial Sciences Serials			cstsu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Sciences	Consortial			Active	150	150										cstsu	FY2022	CU Boulder		0				
+dessu	Environmental Design Serials			dessu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Interdisciplinary	Environmental Design			Active	150	150										dessu	FY2022	CU Boulder		0				
+ecomo	Economics Monographs			ecomo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Social Sciences	Economics			Active	150	150										ecomo	FY2022	CU Boulder		18782				
+ecosu	Economics Serials			ecosu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Social Sciences	Economics			Active	150	150										ecosu	FY2022	CU Boulder		0				
+edumo	Education Monographs			edumo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Social Sciences	Education			Active	150	150										edumo	FY2022	CU Boulder		11433				
+edusu	Education Serials			edusu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Social Sciences	Education			Active	150	150										edusu	FY2022	CU Boulder		0				
+engmo	Engineering Monographs			engmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Sciences	Engineering			Active	150	150										engmo	FY2022	CU Boulder		18294				
+engsu	Engineering Serials			engsu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Sciences	Engineering			Active	150	150										engsu	FY2022	CU Boulder		0				
+escmo	Earth Sciences Monographs			escmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Sciences	Earth Sciences			Active	150	150										escmo	FY2022	CU Boulder		12063				
+escsu	Earth Sciences Serials			escsu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Sciences	Earth Sciences			Active	150	150										escsu	FY2022	CU Boulder		0				
+evssu	Environmental Studies Serials			evssu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Sciences	Environmental Studies			Active	150	150										evssu	FY2022	CU Boulder		0				
+filmo	Cinema Studies Monographs			filmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Arts & Humanities	Cinema Studies			Active	150	150										filmo	FY2022	CU Boulder		14291				
+filsu	Cinema Studies Serials			filsu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Arts & Humanities	Cinema Studies			Active	150	150										filsu	FY2022	CU Boulder		0				
+fremo	French Monographs			fremo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Arts & Humanities	French			Active	150	150										fremo	FY2022	CU Boulder		17382				
+fresu	French Serials			fresu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Arts & Humanities	French			Active	150	150										fresu	FY2022	CU Boulder		0				
+gensu	General Serials			gensu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Interdisciplinary	General			Active	150	150										gensu	FY2022	CU Boulder		0				
+geomo	Geography Monographs			geomo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Sciences	Geography			Active	150	150										geomo	FY2022	CU Boulder		2299				
+geosu	Geology Serials			geosu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Sciences	Geology			Active	150	150										geosu	FY2022	CU Boulder		0				
+germo	German Monographs			germo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Arts & Humanities	German			Active	150	150										germo	FY2022	CU Boulder		25000				
+gersu	German Serials			gersu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Arts & Humanities	German			Active	150	150										gersu	FY2022	CU Boulder		0				
+govmo	Government Information Monographs			govmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Social Sciences	Government Information			Active	150	150										govmo	FY2022	CU Boulder		7000				
+govsu	Government Information Serials			govsu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Social Sciences	Government Information			Active	150	150										govsu	FY2022	CU Boulder		0				
+hismo	History Monographs			hismo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Arts & Humanities	History			Active	150	150										hismo	FY2022	CU Boulder		63308				
+hissu	History Serials			hissu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Arts & Humanities	History			Active	150	150										hissu	FY2022	CU Boulder		0				
+humsu	Humanities Serials			humsu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Arts & Humanities	Humanities			Active	150	150										humsu	FY2022	CU Boulder		0				
+intmo	International Affairs Monographs			intmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Social Sciences	International Affairs			Active	150	150										intmo	FY2022	CU Boulder		3616				
+itamo	Italian Monographs			itamo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Arts & Humanities	Italian			Active	150	150										itamo	FY2022	CU Boulder		7713				
+itasu	Italian Serials			itasu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Arts & Humanities	Italian			Active	150	150										itasu	FY2022	CU Boulder		0				
+joumo	Journalism Monographs			joumo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Social Sciences	Journalism			Active	150	150										joumo	FY2022	CU Boulder		5390				
+jousu	Journalism Serials			jousu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Social Sciences	Journalism			Active	150	150										jousu	FY2022	CU Boulder		0				
+juvmo	Children's and Young Adult (Juvenile) Monographs			juvmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Social Sciences	Children's and Young Adult (Juvenile			Active	150	150										juvmo	FY2022	CU Boulder		2500				
+juvsu	Children's and Young Adult Serials			juvsu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Social Sciences	Children's and Young Adult			Active	150	150										juvsu	FY2022	CU Boulder		0				
+kinmo	Integrative Physiology Monographs			kinmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Sciences	Integrative Physiology			Active	150	150										kinmo	FY2022	CU Boulder		5000				
+kinsu	Integrative Physiology Serials			kinsu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Sciences	Integrative Physiology			Active	150	150										kinsu	FY2022	CU Boulder		0				
+libmo	Library and Information Science Monographs			libmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Social Sciences	Library and Information Science			Active	150	150										libmo	FY2022	CU Boulder		14000				
+libsu	Library and Information Science Serials			libsu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Social Sciences	Library and Information Science			Active	150	150										libsu	FY2022	CU Boulder		0				
+linmo	Linguistics Monographs			linmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Social Sciences	Linguistics			Active	150	150										linmo	FY2022	CU Boulder		5539				
+linsu	Linguistics Serials			linsu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Social Sciences	Linguistics			Active	150	150										linsu	FY2022	CU Boulder		0				
+litmo	English & American Literature Monographs			litmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Arts & Humanities	English & American Literature			Active	150	150										litmo	FY2022	CU Boulder		35075				
+litsu	Literature Serials			litsu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Arts & Humanities	Literature			Active	150	150										litsu	FY2022	CU Boulder		0				
+mapmo	Maps Monographs			mapmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Rare & Distinctive	Maps			Active	150	150										mapmo	FY2022	CU Boulder		16470				
+mapsu	Maps Serials			mapsu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Rare & Distinctive	Maps			Active	150	150										mapsu	FY2022	CU Boulder		0				
+matmo	Mathematics Monographs			matmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Sciences	Mathematics			Active	150	150										matmo	FY2022	CU Boulder		4592				
+matsu	Mathematics Serials			matsu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Sciences	Mathematics			Active	150	150										matsu	FY2022	CU Boulder		0				
+mcdmo	Biology (Molecular, Cellular, Developmental) Monographs			mcdmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Sciences	Biology (Molecular, Cellular, Developmental			Active	150	150										mcdmo	FY2022	CU Boulder		7884				
+mcdsu	Biology (Molecular, Cellular, Developmental) Serials			mcdsu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Sciences	Biology (Molecular, Cellular, Developmental			Active	150	150										mcdsu	FY2022	CU Boulder		0				
+medmo	Critical Media Practice Monographs			medmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Arts & Humanities	Critical Media Practice			Active	150	150										medmo	FY2022	CU Boulder		10000				
+minmo	Ethnic Studies Monographs			ethmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Social Sciences	Ethnic Studies			Active	150	150										ethmo	FY2022	CU Boulder						
+minsu	Ethnic Studies Serials			ethsu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Social Sciences	Ethnic Studies			Active	150	150										ethsu	FY2022	CU Boulder						
+msmmo	Museum Studies Monographs			msmmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs		Museum Studies			Active	150	150										msmmo	FY2022	CU Boulder		2500				
+msmsu	Museum Studies Serials			msmsu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials		Museum Studies			Active	150	150										msmsu	FY2022	CU Boulder		0				
+musmo	Music Monographs			musmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Arts & Humanities	Music			Active	150	150										musmo	FY2022	CU Boulder		76686				
+mussu	Music Serials			mussu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Arts & Humanities	Music			Active	150	150										mussu	FY2022	CU Boulder		0				
+phimo	Philosophy Monographs			phimo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Arts & Humanities	Philosophy			Active	150	150										phimo	FY2022	CU Boulder		8983				
+phisu	Philosophy Serials			phisu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Arts & Humanities	Philosophy			Active	150	150										phisu	FY2022	CU Boulder		0				
+phymo	Physics Monographs			phymo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Sciences	Physics			Active	150	150										phymo	FY2022	CU Boulder		6948				
+physu	Physics Serials			physu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Sciences	Physics			Active	150	150										physu	FY2022	CU Boulder		0				
+polmo	Political Science Monographs			polmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Social Sciences	Political Science			Active	150	150										polmo	FY2022	CU Boulder		18782				
+polsu	Political Science Serials			polsu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Social Sciences	Political Science			Active	150	150										polsu	FY2022	CU Boulder		0				
+posmo	Postage			posmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	General				Active	150	150										posmo	FY2022	CU Boulder		37774				
+psymo	Psychology Monographs			psymo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Social Sciences	Psychology			Active	150	150										psymo	FY2022	CU Boulder		15000				
+psysu	Psychology Serials			psysu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Social Sciences	Psychology			Active	150	150										psysu	FY2022	CU Boulder		0				
+refmo	Reference Monographs			refmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	General	Reference			Active	150	150										refmo	FY2022	CU Boulder		25042				
+refsu	Reference Serials			refsu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	General	Reference			Active	150	150										refsu	FY2022	CU Boulder		0				
+relmo	Religious Studies Monographs			relmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Arts & Humanities	Religious Studies			Active	150	150										relmo	FY2022	CU Boulder		12217				
+relsu	Religious Studies Serials			relsu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Arts & Humanities	Religious Studies			Active	150	150										relsu	FY2022	CU Boulder		0				
+scisu	Science Serials			scisu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Sciences				Active	150	150										scisu	FY2022	CU Boulder		0				
+sersu	Serials Allocation			sersu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	General	Serials			Active	150	150										sersu	FY2022	CU Boulder		10727102.03				
+slamo	Slavic Monographs			slamo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Arts & Humanities	Slavic			Active	150	150										slamo	FY2022	CU Boulder		8528				
+slasu	Slavic Serials			slasu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Arts & Humanities	Slavic			Active	150	150										slasu	FY2022	CU Boulder		0				
+socmo	Sociology Monographs			socmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Social Sciences	Sociology			Active	150	150										socmo	FY2022	CU Boulder		7350				
+socsu	Sociology Serials			socsu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Social Sciences	Sociology			Active	150	150										socsu	FY2022	CU Boulder		0				
+spamo	Spanish Monographs			spamo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Arts & Humanities	Spanish			Active	150	150										spamo	FY2022	CU Boulder		52227				
+spasu	Spanish Serials			spasu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Arts & Humanities	Spanish			Active	150	150										spasu	FY2022	CU Boulder		0				
+spcmo	Special Collections Monographs			spcmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Rare & Distinctive	Special Collections			Active	150	150										spcmo	FY2022	CU Boulder		65000				
+spcsu	Special Collections Serials			spcsu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Rare & Distinctive	Special Collections			Active	150	150										spcsu	FY2022	CU Boulder		0				
+sscsu	Social Sciences Serials			sscsu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Social Sciences				Active	150	150										sscsu	FY2022	CU Boulder		0				
+swomo	Women, Gender, & LGBTQ Studies Monographs			swomo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Social Sciences	Women, Gender, & LGBTQ Studies			Active	150	150										swomo	FY2022	CU Boulder		7500				
+swosu	Women, Gender, & LGBTQ Studies Serials			swosu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Social Sciences	Women, Gender, & LGBTQ Studies			Active	150	150										swosu	FY2022	CU Boulder		0				
+themo	Theatre & Dance Monographs			themo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	Arts & Humanities	Theatre & Dance			Active	150	150										themo	FY2022	CU Boulder		8166				
+thesu	Theatre & Dance Serials			thesu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	Arts & Humanities	Theatre & Dance			Active	150	150										thesu	FY2022	CU Boulder		0				
+toomo	Internal Tools Monographs			toomo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	General	Internal Tools			Active	150	150										toomo	FY2022	CU Boulder		1500				
+toosu	Internal Tools Serials			toosu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	General	Internal Tools			Active	150	150										toosu	FY2022	CU Boulder		0				
+undmo	Undergraduate Studies/PWR Monographs			undmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	General	Undergraduate Studies			Active	150	150										undmo	FY2022	CU Boulder		2770				
+undsu	Undergraduate studies Serials			undsu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	General	Undergraduate studies			Active	150	150										undsu	FY2022	CU Boulder		0				
+vidmo	Instructional Videos Monographs			vidmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	General				Active	150	150										vidmo	FY2022	CU Boulder		30000				
+vidsu	Streaming Video Serials			vidsu		11028257	Active	CU Boulder			Library Materials		CU Boulder	Serials	General				Active	150	150										vidsu	FY2022	CU Boulder		0				
+vrtmo	ProQuest Virtual Approval Plan & DDA			vrtmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	General				Active	150	150										vrtmo	FY2022	CU Boulder		1100000				
+xcredt	Credits applied previous fiscal year			xcredt			Active	CU Boulder					CU Boulder						Active	150	150										xcredt	FY2022	CU Boulder		0				
+xebscebook	EBSCO ebook deposit account			xebscebook			Active	CU Boulder			Library Materials		CU Boulder	Deposit Accounts					Active	150	150										xebscebook	FY2022	CU Boulder		0				
+xkanop	Kanopy deposit account			xkanop			Active	CU Boulder			Library Materials		CU Boulder	Deposit Accounts					Active	150	150										xkanop	FY2022	CU Boulder		0				
+xoverdrv	Overdrive deposit account			xoverdrv			Active	CU Boulder			Library Materials		CU Boulder	Deposit Accounts					Active	150	150										xoverdrv	FY2022	CU Boulder		0				
+xtransf	Budget Transfers			xtransf			Active	CU Boulder			Library Materials		CU Boulder	Deposit Accounts					Active	150	150										xtransf	FY2022	CU Boulder		0				
+yhistoric	Former fund codes			yhistoric			Active	CU Boulder			Library Materials		CU Boulder						Active	150	150										yhistoric	FY2022	CU Boulder		0				
+zapc	Open Access Fund			zapc		11028257	Active	CU Boulder			Library Materials		CU Boulder	Other	General	Open Access			Active	150	150										zapc	FY2022	CU Boulder		120000				
+zarch	Digital Archiving			zarch		11028257	Active	CU Boulder			Library Materials		CU Boulder	Other					Active	150	150										zarch	FY2022	CU Boulder		17000				
+zbind	Preservation			zbind		11028257	Active	CU Boulder			Library Materials		CU Boulder	Other					Active	150	150										zbind	FY2022	CU Boulder		50000				
+zcoremo	Course Reserves			zcoremo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	General				Active	150	150										zcoremo	FY2022	CU Boulder		20000				
+zcumo	CU System ebook purchases			zcumo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	General				Active	150	150										zcumo	FY2022	CU Boulder		0				
+zgemo	Ebook packages			zgemo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Monographs	General				Active	150	150										zgemo	FY2022	CU Boulder		1100000				
+zgene	General Fund			zgene		11028257	Active	CU Boulder			Library Materials		CU Boulder	Other					Active	150	150										zgene	FY2022	CU Boulder		101832				
+zgenr	General Fund Reserve			zgenr		11028257	Active	CU Boulder			Library Materials		CU Boulder	Other					Active	150	150										zgenr	FY2022	CU Boulder		0				
+zgpsl	GPO Shelf list service			zgpsl		11028257	Active	CU Boulder			Library Materials		CU Boulder	Other					Active	150	150										zgpsl	FY2022	CU Boulder		6000				
+ziiim	Innovative Interfaces (ILS)			ziiim		11028257	Active	CU Boulder			Library Materials		CU Boulder	Other					Active	150	150										ziiim	FY2022	CU Boulder		180000				
+zillo	Interlibrary Loan fees (not content)			zillo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Other					Active	150	150										zillo	FY2022	CU Boulder		19000				
+zmarc	MARC records			zmarc		11028257	Active	CU Boulder			Library Materials		CU Boulder	Other					Active	150	150										zmarc	FY2022	CU Boulder		27000				
+zmemb	Institutional Memberships			zmemb		11028257	Active	CU Boulder			Library Materials		CU Boulder	Other					Active	150	150										zmemb	FY2022	CU Boulder		227218				
+zoclc	OCLC			zoclc		11028257	Active	CU Boulder			Library Materials		CU Boulder	Other					Active	150	150										zoclc	FY2022	CU Boulder		310000				
+zopc	OPAC Enhancements			zopc		11028257	Active	CU Boulder			Library Materials		CU Boulder	Other					Active	150	150										zopc	FY2022	CU Boulder		107000				
+zpdmo	Interlibrary Loan purchase on demand			zpdmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Other	General				Active	150	150										zpdmo	FY2022	CU Boulder		35000				
+zppodmo	Print purchase on demand			zppodmo		11028257	Active	CU Boulder			Library Materials		CU Boulder	Other	General				Active	150	150										zppodmo	FY2022	CU Boulder		6000				
+zproj	Projects			zproj			Active	CU Boulder			Library Materials		CU Boulder		General				Active	150	150										zproj	FY2022	CU Boulder		0				
+zpros	Prospector			zpros			Active	CU Boulder			Library Materials		CU Boulder		General				Active	150	150										zpros	FY2022	CU Boulder		0				
+zsgmo	Suggest a title			zsgmo			Active	CU Boulder			Library Materials		CU Boulder		General				Active	150	150										zsgmo	FY2022	CU Boulder		0				
+zupgmo	Auto upgrades			zupgmo			Active	CU Boulder			Library Materials		CU Boulder		General				Active	150	150										zupgmo	FY2022	CU Boulder		0				
+zvend	Vendor Processing			zvend			Active	CU Boulder			Library Materials		CU Boulder		General				Active	150	150										zvend	FY2022	CU Boulder		0				
