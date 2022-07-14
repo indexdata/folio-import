@@ -55,7 +55,7 @@ try {
   const notePath = `${saveDir}/notes-${fileName}.jsonl`;
   const permPath = `${saveDir}/permusers-${fileName}.jsonl`;
   const muiPath = `${saveDir}/mod-user-import-${fileName}`; 
-  const idFile = `${saveDir}/id-username-map.json`; 
+  const idFile = `${saveDir}/id-username-map.json`;
   if (fs.existsSync(outPath)) fs.unlinkSync(outPath);
   if (fs.existsSync(notePath)) fs.unlinkSync(notePath);
   if (fs.existsSync(permPath)) fs.unlinkSync(permPath);
@@ -131,9 +131,13 @@ try {
     if (ftype) {
       let j = JSON.parse(l);
       let vf = {};
+      let notes = [];
       if (j.varFields) {
         j.varFields.forEach(v => {
           vf[v.fieldTag] = v.content;
+          if (v.fieldTag.match(/[mx]/)) {
+            if (v.content.match(/\S/)) notes.push(v.content);
+          }
         });
       } else {
         throw new Error(`No varFields found in ${j.id}`);
@@ -167,6 +171,7 @@ try {
       if (j.phones) {
         f[14] = j.phones[0].number;
       }
+      f[15] = notes.join('%%');
       l = f.join('|');
     }
     count++;
@@ -179,6 +184,14 @@ try {
       let u = {};
       u.username = (c[9].match(/@/)) ? c[9] : c[1];
       u.id = uuid(u.username, ns);
+      if (c[15]) {
+        let notes = c[15].split(/%%/);
+        notes.forEach(n => {
+          let noteObj = makeNote(n, u.username, noteTypeId);
+          fs.writeFileSync(notePath, JSON.stringify(noteObj) + "\n", { flag: 'a' });
+          ncount++;
+        });
+      }
       if (c[0] === 'Active') { 
         u.active = true;
       } else {
