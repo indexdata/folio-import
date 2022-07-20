@@ -85,7 +85,11 @@ let refDir = process.argv[2];
       '/organizations-storage/interfaces': true,
       '/coursereserves/reserves': true,
       '/coursereserves/courses': true,
-      '/coursereserves/courselistings': true
+      '/coursereserves/courselistings': true,
+      '/record-bulk/ids': true,
+      '/inventory-storage/bound-with-parts': true,
+      '/request-preference-storage/request-preference': true,
+      '/finance-storage/transactions': true
     }
 
     priority = [
