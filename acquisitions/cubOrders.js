@@ -39,6 +39,7 @@ const refFiles = {
       console.log(`Mapping ${prop}...`);
       obj[prop].forEach(p => {
         let code = p.code;
+        code = code.trim();
         if (prop === 'entries') {
           let codeNum = `${p.codeNumber}`;
           codeNum = codeNum.padStart(5, '0');
@@ -53,6 +54,8 @@ const refFiles = {
     let locData = fs.readFileSync(locMapFile, { encoding: 'utf8' });
     locData.split(/\n/).forEach(line => {
       let [k, v] = line.split(/\t/);
+      k = k.trim();
+      v = v.trim();
       v = v.replace(/^.+\//, '');
       locMap[k] = refData.locations[v];
     });
