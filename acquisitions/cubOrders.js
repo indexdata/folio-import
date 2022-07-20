@@ -75,7 +75,6 @@ const refFiles = {
         let ff = so.fixedFields;
         let poNum = so.id.toString();
         let poId = uuid(poNum, ns);
-        let fundNum = ff['12'].value || '';
         let vcode = ff['22'].value || '';
         vcode = vcode.trim();
         let orgId = refData.organizations[vcode];
@@ -101,7 +100,13 @@ const refFiles = {
             renewalDate: co.dateOrdered
           };
         }
-        co.workflowStatus = 'Open';
+        let status = 'Open';
+        if (statCode === '1') {
+          status = 'Pending'
+        } else if (statCode === 'z') {
+          status = 'Closed'
+        }
+        co.workflowStatus = status;
 
         // PO lines start here
 
@@ -182,6 +187,7 @@ const refFiles = {
         bibId = 'b' + bibId;
         pol.instanceId = uuid(bibId + ver, nullns);
 
+        let fundNum = ff['12'].value || '';
         let fundId = refData.entries[fundNum] || '';
         if (fundId) {
           let fd = {
