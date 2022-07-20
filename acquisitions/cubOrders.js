@@ -75,6 +75,7 @@ const refFiles = {
         let ff = so.fixedFields;
         let poNum = so.id.toString();
         let poId = uuid(poNum, ns);
+        let fundNum = ff['12'].value || '';
         let vcode = ff['22'].value || '';
         vcode = vcode.trim();
         let orgId = refData.organizations[vcode];
@@ -100,7 +101,7 @@ const refFiles = {
             renewalDate: co.dateOrdered
           };
         }
-        co.workflowStatus = 'Pending';
+        co.workflowStatus = 'Open';
 
         // PO lines start here
 
@@ -181,13 +182,22 @@ const refFiles = {
         bibId = 'b' + bibId;
         pol.instanceId = uuid(bibId + ver, nullns);
 
+        let fundId = refData.entries[fundNum] || '';
+        if (fundId) {
+          let fd = {
+            fundId: fundId,
+            distributionType: 'percentage',
+            value: 100
+          };
+          pol.fundDistribution = [ fd ];
+        }
+
         if (form.match(/[s2lmn]/i)) {
           pol.checkinItems = true;
         }
         if (form === 'c' && oType === 'o') pol.checkinItems = true; 
         
         co.compositePoLines.push(pol);
-        console.log(JSON.stringify(co, null, 2));
         let coStr = JSON.stringify(co) + '\n';
         fs.writeFileSync(outFile, coStr, { flag: 'a' });
         c++;
