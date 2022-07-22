@@ -1,0 +1,7 @@
+{
+  "name": "js-marc",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "license": "Apache-2.0"
+}
