@@ -5,6 +5,6 @@ let rawFile = process.argv[2];
 
 let raw = fs.readFileSync(rawFile, { encoding: 'utf8' });
 
-let mij = parseMarc(raw);
+let mij = makeMij(raw);
 
 console.log(JSON.stringify(mij, null, 2));

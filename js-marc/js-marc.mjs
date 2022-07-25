@@ -1,4 +1,4 @@
-export function parseMarc(raw) {
+export function makeMij(raw) {
 
   let leader = raw.substring(0, 24);
 
@@ -38,4 +38,15 @@ export function parseMarc(raw) {
 
   });
   return mij;
+}
+
+export function getFields(mij) {
+  const fields = {}
+  mij.fields.forEach(f => {
+    let tag = Object.keys(f)[0];
+    let fobj = f[tag];
+    if (!fields[tag]) fields[tag] = [];
+    fields[tag].push(f[tag]);
+  });
+  return fields;
 }
