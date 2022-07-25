@@ -1,5 +1,5 @@
-import { makeMij } from '../js-marc.mjs';
-import { getFields } from '../js-marc.mjs';
+import { parseMarc } from '../js-marc.mjs';
+import { getSubs } from '../js-marc.mjs';
 import fs, { rmSync } from 'fs';
 
 let rawFile = process.argv[2];
@@ -21,11 +21,13 @@ fileStream.on('data', (chunk) => {
   }
   recs.forEach(r => {
     count++
-    let mij = makeMij(r);
-    // fs.writeFileSync('../data/raw.mrc', r, { flag: 'a' });
-    // console.log(mij);
-    // let fields = getFields(mij);
-    // console.log(fields);
+    let marc = parseMarc(r);
+    // console.log(JSON.stringify(marc.fields, null, 2));
+    let f245 = marc.fields['245'];
+    if (f245) {
+      let title = getSubs(f245[0], 'abcpn');
+      // console.log(title);
+    }
     if (count % 10000 === 0) {
       let now = new Date().valueOf();
       t = (now - start) / 1000;

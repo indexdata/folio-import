@@ -1,5 +1,5 @@
-export function makeMij(raw) {
-
+export function parseMarc(raw) {
+  let record = {};
   let leader = raw.substring(0, 24);
 
   let dirEnd = parseInt(leader.substring(12, 17), 10);
@@ -10,6 +10,9 @@ export function makeMij(raw) {
     leader: leader,
     fields: []
   };
+  let fields = {
+    leader: leader,
+  };
   dirParts.forEach(d => {
     let p = d.match(/^(.{3})(.{4})(.{5})/);
     let tag = p[1];
@@ -18,6 +21,7 @@ export function makeMij(raw) {
     let end = start + len;
     let obj = {};
     let data = raw.substring(start, end);
+    if (!fields[tag]) fields[tag] = [];
     if (tag > '009') {
       obj.ind1 = data.substring(0, 1);
       obj.ind2 = data.substring(1, 2);
@@ -31,22 +35,25 @@ export function makeMij(raw) {
         obj.subfields.push(sub);
       });
       mij.fields.push({ [tag]: obj });
+      fields[tag].push(obj);
     } else {
       mij.fields.push({ [tag]: data });
-
+      fields[tag].push(data);
     }
 
   });
-  return mij;
+  record = { mij: mij, fields: fields };
+  return record;
 }
 
-export function getFields(mij) {
-  const fields = {}
-  mij.fields.forEach(f => {
-    let tag = Object.keys(f)[0];
-    let fobj = f[tag];
-    if (!fields[tag]) fields[tag] = [];
-    fields[tag].push(f[tag]);
+export function getSubs(field, codes, delim) {
+  let dl = (delim) ? delim : ' ';
+  let out = [];
+  field.subfields.forEach(s => {
+    let code = Object.keys(s)[0];
+    if (codes.match(code)) {
+      out.push(s[code]);
+    }
   });
-  return fields;
+  return out.join(dl);
 }
