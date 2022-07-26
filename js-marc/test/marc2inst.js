@@ -4,12 +4,29 @@ import fs from 'fs';
 
 let rulesFile = process.argv[2];
 let rawFile = process.argv[3];
+const schemaDir = './schemas';
+
+const funcs = {
+  remove_prefix_by_indicator: function(data) {
+    console.log(data);
+  },
+  capitalize: function (data) {
+    console.log(data);
+  }
+}
 
 const makeInst = function (map, field) {
   let ff = {};
+  // console.log(JSON.stringify(map, null, 2));
   map.forEach(m => {
     let subcodes = m.subfield.join('');
     let data = getSubs(field, subcodes);
+    if (m.rules && m.rules[0].conditions) {
+      let ctype = m.rules[0].conditions[0].type;
+      ctype.split(/, */).forEach(c => {
+        funcs[c](data);
+      });
+    }
     ff[m.target] = data;
   });
   return ff;
@@ -20,6 +37,17 @@ try {
   let rulesStr = fs.readFileSync(rulesFile, { encoding: 'utf8' });
   const mappingRules = JSON.parse(rulesStr);
   rulesStr = '';
+
+  // get instance schema
+  let insFile = `${schemaDir}/instance.json`;
+  let insStr = fs.readFileSync(insFile, { encoding: 'utf8'});
+  let ins = JSON.parse(insStr);
+  let propMap = {};
+  for (let props in ins.properties) {
+    let type = ins.properties[props].type;
+    let items = (ins.properties[props].items) ? ins.properties[props].items.type : '';
+    propMap[props] = (type === 'array') ? `${type}.${items}` : type;
+  }
 
   let start = new Date().valueOf();
 
@@ -46,7 +74,12 @@ try {
           let fields = marc.fields[t];
           if (fields) {
             fields.forEach(f => {
-              inst = makeInst(mappingRules[t], f);
+              let ff = makeInst(mappingRules[t], f);
+              for (let prop in ff) {
+                if (propMap[prop] === 'string' || propMap[prop] === 'boolean') {
+                  inst[prop] = ff[prop];
+                }
+              }
             });
           }
         }
