@@ -154,7 +154,9 @@ const refFiles = {
         let copies = ff['5'].value;
         copies = parseInt(copies);
         let price = ff['10'].value;
+        price = price.replace(/(\d\d)\.0+/, '.$1');
         price = parseFloat(price);
+        console.log(price);
 
         let loc = {};
         pol.cost = {};
