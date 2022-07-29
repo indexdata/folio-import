@@ -722,6 +722,7 @@ foreach (@ARGV) {
       if (!$hrids->{$hrid} && $marc->title()) {
         # set FOLIO_USER_ID environment variable to create the following metadata object.
         $rec->{id} = uuid($hrid);
+        $rec->{_version} = 1;
         if ($ENV{FOLIO_USER_ID}) {
           $rec->{metadata} = {
             createdByUserId=>$ENV{FOLIO_USER_ID},
@@ -1061,7 +1062,7 @@ sub make_srs {
     }
     else {
       $srs->{externalIdsHolder} = { instanceId=>$iid, instanceHrid=>$hrid };
-      $srs->{recordType} = 'MARC';
+      $srs->{recordType} = 'MARC_BIB';
     }
     return $srs;
 }
