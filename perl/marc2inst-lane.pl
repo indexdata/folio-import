@@ -1043,6 +1043,14 @@ sub make_srs {
     my $snap_id = shift;
     my $hid = shift || '';
     my $srs = {};
+    if ($hid && $marc->field('852')) {
+      my $field = $marc->field('852');
+      if ($field->subfield('b')) {
+        my $loc = $field->subfield('b');
+        $loc = "LANE-$loc";
+        $field->update('b' => $loc);
+      }
+    }
 
     my $mij = MARC::Record::MiJ->to_mij($marc);
     my $parsed = decode_json($mij);
