@@ -852,9 +852,10 @@ sub make_holdings {
   my $hrid = "$hprefix$id";
   $marc->field('001')->update($hrid);
   my $hid = uuid($hrid);
-  my $srs = make_srs($marc, $marc->as_usmarc(), '', $hrid, $snap_id, $hid);
+  my $srs = make_srs($marc, $marc->as_usmarc(), $hid, $hrid, $snap_id, $hid);
 
   my $hr = {};
+  $hr->{_version} = 1;
   $hr->{id} = $hid;
   $hr->{instanceId} = uuid($bid);
   $hr->{hrid} = $hrid;
@@ -927,6 +928,7 @@ sub make_items {
     my $id = $iprefix . $link;
     my $ir = {
       id => uuid($id),
+      _version => 1,
       holdingsRecordId => $hid,
       hrid => $id,
       copyNumber => $c[4],
