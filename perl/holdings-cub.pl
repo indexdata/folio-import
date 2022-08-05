@@ -21,7 +21,7 @@ use Data::Dumper;
 my $version = '1';
 my $isil = 'CoU';
 
-my $source_id = '036ee84a-6afd-4c3c-9ad3-4a12ab875f59' #MARC
+my $source_id = '036ee84a-6afd-4c3c-9ad3-4a12ab875f59'; #MARC
 
 binmode STDOUT, ":utf8";
 
@@ -350,7 +350,7 @@ sub statement {
               next;
             }
             if (/[a-h]/) {
-              my $suf = $pat->{$_};
+              my $suf = $pat->{$_} || '';
               if ($suf =~ /\(year\)/) {
                 $suf = '';
               } elsif ($suf =~ /\(month|season\)/) {
@@ -358,7 +358,7 @@ sub statement {
               }
               push @enumparts, $suf . $splits->{$_}[$el];
             } else {
-              my $p = $pat->{$_};
+              my $p = $pat->{$_} || '';
               my $v = $splits->{$_}[$el] || $splits->{$_}[0];
               
               if ($p =~ /year/) {

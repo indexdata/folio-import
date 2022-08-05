@@ -13,7 +13,7 @@ use strict;
 use warnings;
 
 use MARC::Record;
-use MARC::Record::MIJ;
+use MARC::Record::MiJ;
 use JSON;
 use UUID::Tiny ':std';
 use Time::Piece;
