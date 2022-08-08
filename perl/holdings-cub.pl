@@ -32,6 +32,15 @@ if (! $ARGV[0]) {
 }
 
 my $months = {
+  '1' => 'Jan.',
+  '2' => 'Feb.',
+  '3' => 'Mar.',
+  '4' => "Apr.",
+  '5' => 'May',
+  '6' => 'Jun.',
+  '7' => 'Jul.',
+  '8' => 'Aug.',
+  '9' => 'Sep.',
   '01' => 'Jan.',
   '02' => 'Feb.',
   '03' => 'Mar.',
@@ -276,12 +285,12 @@ foreach (@ARGV) {
     }
 
     foreach my $e (@{ $vf->{856} }) {
-      my $uri = $e->{z};
-      my $ltext = $e->{z};
+      my $uri = $e->{z} || '';
+      my $ltext = $e->{z} || '';
       $uri =~ s/^.+(http.+?) >.+/$1/;
       $ltext =~ s/.+>\s*(.+) <.+/$1/;
       my $rcode = $e->{ind2};
-      my $rtext = $relations->{$rcode};
+      my $rtext = $relations->{$rcode} || '';
       my $rel = $refdata->{electronicAccessRelationships}->{$rtext} || $refdata->{electronicAccessRelationships}->{'No information provided'};
       my $er = { uri => $uri, linkText => $ltext, relationshipId => $rel };
       push @{ $h->{electronicAccess} }, $er;
@@ -289,17 +298,6 @@ foreach (@ARGV) {
     
     my $hr = $json->encode($h);
     write_objects($OUT, $hr . "\n");
-
-    # make dummy items
-    # my $itm = {};
-    # $itm->{holdingsRecordId} = $h->{id};
-    # $itm->{hrid} = $h->{hrid} . 'item';
-    # $itm->{id} = uuid($itm->{hrid});
-    # $itm->{materialTypeId} = '392bc101-5ec1-46bc-9f1a-7bfa899ce67d'; # other
-    # $itm->{permanentLoanTypeId} = 'aecb53e1-46ec-40db-b268-a90b7e76cd16'; # non circulating
-    # $itm->{status}->{name} = 'Restricted';
-    # my $ir = $json->encode($itm);
-    # write_objects($IOUT, $ir . "\n");
 
     $count++;
     $ttl++;
@@ -349,18 +347,12 @@ sub statement {
             if (!$splits->{$_}[$el]) {
               next;
             }
-            if (/[a-h]/) {
-              my $suf = $pat->{$_} || '';
-              if ($suf =~ /\(year\)/) {
-                $suf = '';
-              } elsif ($suf =~ /\(month|season\)/) {
-                $suf = $months->($suf);
-              }
+            my $suf = $pat->{$_} || '';
+            if (/[a-h]/ && $suf !~ /\((month|season|day|year)\)/) {
               push @enumparts, $suf . $splits->{$_}[$el];
             } else {
-              my $p = $pat->{$_} || '';
+              my $p = $suf;
               my $v = $splits->{$_}[$el] || $splits->{$_}[0];
-              
               if ($p =~ /year/) {
                 push @cronparts, $v;
                 $preyear = $v;
@@ -381,7 +373,7 @@ sub statement {
             push @cronparts, $preyear;
           }
           my $enumpart = join ':', @enumparts;
-          my $cronpart = join ' ', @cronparts;
+          my $cronpart = ($cronparts[1]) ? join ' ', @cronparts : $cronparts[0];
           if ($enumpart && $cronpart) {
             push @parts, "$enumpart ($cronpart)";
           } elsif ($cronpart) {
@@ -400,12 +392,14 @@ sub statement {
     }
   }
   foreach my $stag ('866', '867', '868') {
-    foreach (@{ $field->{$stag} }) {
-      $out->{$stag} = [];
-      my $snote = $_->{x} || '';
-      my $note = $_->{z} || '';
-      my $text = $_->{a} || '';
-      push @{ $out->{$stag} }, { text=>$text, staffnote=>$snote, note=>$note };
+    foreach my $key (keys %{ $field->{$stag} }) {
+      foreach (@{ $field->{$stag}->{$key} }) {
+        $out->{$stag} = [];
+        my $snote = $_->{x} || '';
+        my $note = $_->{z} || '';
+        my $text = $_->{a} || '';
+        push @{ $out->{$stag} }, { text=>$text, staffnote=>$snote, note=>$note };
+      }
     }
   }
   return $out;
@@ -420,12 +414,12 @@ sub parse {
     if ($tag && $tag gt '009') {
       my $sub = {};
       my @ord;
-      my $num;
+      my $num = '0';
       foreach my $s (@{ $v->{subfields} }) {
         my $code = $s->{tag};
         my $val = $s->{content};
         if ($code eq '8') {
-          $num = $val;
+          $num = $val || '0';
           $num =~ s/\..+//;
         }
         $sub->{$code} = $val;
@@ -434,7 +428,7 @@ sub parse {
       $sub->{ind1} = $v->{ind1};
       $sub->{ind2} = $v->{ind2};
       push @{ $sub->{arr} }, @ord;
-      if ($num) {
+      if ($num || $num eq "0") {
         push @{ $field->{$tag}->{$num} }, $sub;
       } else {
         eval { push @{ $field->{$tag} }, $sub };
