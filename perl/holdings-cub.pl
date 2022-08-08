@@ -16,6 +16,8 @@ use JSON;
 use UUID::Tiny ':std';
 use Time::Piece;
 use File::Basename;
+use MARC::Record;
+use MARC::Record::MiJ;
 use Data::Dumper;
 
 my $version = '1';
@@ -183,6 +185,10 @@ foreach (@ARGV) {
   unlink $outfile;
   open my $OUT, ">>", $outfile;
 
+  my $mrcfile = "$dir/${fn}_marc.mrc";
+  unlink $mrcfile;
+  open my $MRC, ">>", $mrcfile;
+
   # my $itemfile = "$dir/${fn}_iii_holdings_items.jsonl";
   # unlink $itemfile;
   # open my $IOUT, ">>", $itemfile;
@@ -202,6 +208,77 @@ foreach (@ARGV) {
     my $bid = "b$iii_bid";
     my $psv = $inst_map->{$bid} || next;
     my @b = split(/\|/, $psv);
+
+    if ($obj) {
+      my $vf = {};
+      my $ff = $obj->{fixedFields};
+      my $marc = MARC::Record->new();
+      my $f001 = MARC::Field->new('001', $obj->{id});
+      $marc->insert_fields_ordered($f001); 
+      my $f004 = MARC::Field->new('004', $bid);
+      $marc->insert_fields_ordered($f004);
+      my $updated = $ff->{84}->{value};
+      my $created = $ff->{83}->{value};
+      $updated =~ s/[-TZ:]//g;
+      my $f005 = MARC::Field->new('005', "$updated.0");
+      $marc->insert_fields_ordered($f005);
+      my $loc_code = $ff->{40}->{value} || 'xxxxx';
+      $loc_code =~ s/\s*$//;
+      my $f852 =  MARC::Field->new('852', '0', ' ', 'b' => $loc_code);
+      $marc->insert_fields_ordered($f852);
+
+      my $f008_seen = 0;
+      foreach my $f (@{ $obj->{varFields} }) {
+        my $t = $f->{marcTag} || '';
+        my $ft = $f->{fieldTag};
+        if ($t && $t gt '009') {
+          my $subs = {};
+          my @msubs;
+          foreach my $sf (@{ $f->{subfields} }) {
+            my $c = $sf->{tag};
+            $subs->{$c} = $sf->{content};
+            push @msubs, $sf->{tag}, $sf->{content};
+          }
+          push @{ $vf->{$t} }, $subs;
+          my $field = MARC::Field->new($t, $f->{ind1}, $f->{ind2}, @msubs);
+          $marc->insert_fields_ordered($field);
+        } elsif ($t =~ /\d/ && $t lt '010') {
+          if ($t eq '008') {
+            $f008_seen = 1;
+            $f->{content} = substr($f->{content}, 0, 32);
+          }
+          my $field = MARC::Field->new($t, $f->{content});
+          $marc->insert_fields_ordered($field); 
+        } elsif ($ft) {
+          push @{ $vf->{$ft} }, $f->{content};
+          if ($ft eq '_') {
+            $marc->leader($f->{content});
+          } else {
+            my $field = MARC::Field->new('561', ' ', ' ', 'a' => $f->{content});
+            $marc->insert_fields_ordered($field); 
+          }
+        } 
+      }
+      if (!$f008_seen) {
+          $created =~ s/^..(..)-(..)-(..).*/$1$2$3/;
+          my $f008 = MARC::Field->new('008', "${created}0u    0   0   uuund       ");
+          $marc->insert_fields_ordered($f008);
+      }
+
+      my $cn = $vf->{'090'}->[0]->{a} || '';
+
+      my $hs = statement($obj);
+      foreach my $t ('866', '867', '868') {
+        foreach my $f (@{ $hs->{$t}}) {
+          my $st = make_statement($f->{text}, $f->{note});
+          if ($f->{text}) {
+            my $field = MARC::Field->new($t, ' ', ' ', '8' => '1.1', 'a' => $f->{text}); 
+            $marc->insert_fields_ordered($field) if !$marc->field($t, 'a');
+          }
+        }
+      }
+      print $MRC $marc->as_usmarc();
+    }
 
     my $vf = {};
     foreach my $f (@{ $obj->{varFields} }) {
