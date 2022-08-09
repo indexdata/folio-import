@@ -157,6 +157,22 @@ const wait = (ms) => {
           coll.holdingsRecords.push(json);
         } else {
           if (!coll.instances) coll.instances = [];
+          // lets do some last minute fixing of records...
+          if (json.contributors) {
+            json.contributors.forEach(c => {
+              if (!c.name) {
+                c.name = ''
+              }
+            });
+          }
+          if (json.classifications) {
+            json.classifications.forEach(c => {
+              if (!c.classificationNumber) {
+                c.classificationNumber = '';
+              }
+            });
+          }
+          console.log(json);
           coll.instances.push(json);
         }
         if (endRec%collSize === 0) {
