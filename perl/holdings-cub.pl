@@ -24,6 +24,7 @@ my $version = '1';
 my $isil = 'CoU';
 
 my $source_id = '036ee84a-6afd-4c3c-9ad3-4a12ab875f59'; #MARC
+my $snapshot = '3b05b500-a69f-46f3-9b71-a82ca495d233';
 
 binmode STDOUT, ":utf8";
 
@@ -172,6 +173,7 @@ my $relations = {
 };
 
 my $ttl = 0;
+my $mrc_count = 0;
 
 foreach (@ARGV) {
   my $infile = $_;
@@ -183,11 +185,15 @@ foreach (@ARGV) {
 
   my $outfile = "$dir/${fn}_iii_holdings.jsonl";
   unlink $outfile;
-  open my $OUT, ">>", $outfile;
+  open my $OUT, ">>:encoding(UTF-8)", $outfile;
 
   my $mrcfile = "$dir/${fn}_marc.mrc";
   unlink $mrcfile;
-  open my $MRC, ">>", $mrcfile;
+  open my $MRC, ">>:encoding(UTF-8)", $mrcfile;
+
+  my $srsfile = "$dir/${fn}_srs.jsonl";
+  unlink $srsfile;
+  open my $SRS, ">>:encoding(UTF-8)", $srsfile;
 
   # my $itemfile = "$dir/${fn}_iii_holdings_items.jsonl";
   # unlink $itemfile;
@@ -204,11 +210,10 @@ foreach (@ARGV) {
   while (<IN>) { 
     chomp;
     my $obj = $json->decode($_);
-    my $iii_bid = $obj->{bibIds}->[0] || next;
+    my $iii_bid = $obj->{bibIds}->[0];
     my $bid = "b$iii_bid";
-    my $psv = $inst_map->{$bid} || next;
+    my $psv = $inst_map->{$bid};
     my @b = split(/\|/, $psv);
-
     if ($obj) {
       my $vf = {};
       my $ff = $obj->{fixedFields};
@@ -247,9 +252,9 @@ foreach (@ARGV) {
             $f008_seen = 1;
             $f->{content} = substr($f->{content}, 0, 32);
           }
-          my $field = MARC::Field->new($t, $f->{content});
+          my $field = MARC::Field->new($t, $f->{content}) if $f->{content};
           $marc->insert_fields_ordered($field); 
-        } elsif ($ft) {
+        } elsif ($ft && $f->{content}) {
           push @{ $vf->{$ft} }, $f->{content};
           if ($ft eq '_') {
             $marc->leader($f->{content});
@@ -277,7 +282,15 @@ foreach (@ARGV) {
           }
         }
       }
-      print $MRC $marc->as_usmarc();
+      my $raw = $marc->as_usmarc();
+      my $s = {
+        snapshotId=>$snapshot,
+        rawRecord=>{}
+      };
+      $s->{rawRecord}->{content} = $raw;
+      my $srs = $json->encode($s);
+      write_objects($SRS, $srs . "\n");
+      $mrc_count++;
     }
 
     my $vf = {};
@@ -299,7 +312,7 @@ foreach (@ARGV) {
     my $ff = $obj->{fixedFields};
     my $h = {};
     my $hid = "c" . $obj->{id};
-    next if $seen->{$hid};
+    # next if $seen->{$hid};
     $seen->{$hid} = 1;
     my $loc_code = $ff->{40}->{value} || 'xxxxx';
     $loc_code =~ s/\s*$//;
@@ -383,6 +396,7 @@ foreach (@ARGV) {
 }
 my $end = time;
 my $secs = $end - $start;
+print "\n$mrc_count MARC records created...";
 print "\n$ttl Sierra holdings processed in $secs secs.\n\n";
 
 sub statement {
