@@ -158,21 +158,33 @@ const wait = (ms) => {
         } else {
           if (!coll.instances) coll.instances = [];
           // lets do some last minute fixing of records...
+          if (!json._version) json._version = 1;
           if (json.contributors) {
-            json.contributors.forEach(c => {
-              if (!c.name) {
-                c.name = ''
+            for (let i = 0; i < json.contributors.length; i++) {
+              if (!json.contributors[i].name || !json.contributors[i].contributorNameTypeId) {
+                json.contributors.splice(i, 1);
+                i--;
               }
-            });
+            };
           }
+
           if (json.classifications) {
-            json.classifications.forEach(c => {
-              if (!c.classificationNumber) {
-                c.classificationNumber = '';
+            for (let i = 0; i < json.classifications.length; i++) {
+              if (!json.classifications[i].classificationNumber || !json.classifications[i].classificationTypeId) {
+                json.classifications.splice(i, 1);
+                i--;
               }
-            });
+            };
           }
-          console.log(json);
+          
+          if (json.identifiers) {
+            for (let i = 0; i < json.identifiers.length; i++) {
+              if (!json.identifiers[i].value || !json.identifiers[i].identifierTypeId) {
+                json.identifiers.splice(i, 1);
+                i--;
+              }
+            };
+          }
           coll.instances.push(json);
         }
         if (endRec%collSize === 0) {
