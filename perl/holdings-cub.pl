@@ -25,6 +25,12 @@ my $isil = 'CoU';
 
 my $source_id = '036ee84a-6afd-4c3c-9ad3-4a12ab875f59'; #MARC
 my $snapshot = '3b05b500-a69f-46f3-9b71-a82ca495d233';
+my $tm = localtime;
+my $snap = {
+    jobExecutionId=>$snapshot,
+    status=>'COMMITTED',
+    processingStartedDate=>$tm->datetime . '.000+0000'
+  };
 
 binmode STDOUT, ":utf8";
 
@@ -135,6 +141,7 @@ sub makeMapFromTsv {
         if ($prop eq 'locations') {
           $name = $col[1];
           $name =~ s/^.+\///;
+          $tsvmap->{loc_codes}->{$code} = $name;
         }
         $tsvmap->{$prop}->{$code} = $refdata->{$prop}->{$name};
       }
@@ -160,11 +167,6 @@ $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
 my $tofolio = makeMapFromTsv($ref_dir, $refdata);
 
-# foreach (sort keys %{ $tofolio->{mtypes} }) {
-  # print "$_\n" unless $tofolio->{mtypes}->{$_};
-# }
-# exit;
-
 my $relations = {
   '0' => 'Resource',
   '1' => 'Version of resource',
@@ -180,24 +182,21 @@ foreach (@ARGV) {
   if (! -e $infile) {
     die "Can't find Sierra holdings file!";
   } 
-  my $dir = dirname($map_file);
-  my $fn = basename($map_file, '.map');
+  my $dir = dirname($infile);
+  my $fn = basename($infile, '.jsonl');
 
-  my $outfile = "$dir/${fn}_iii_holdings.jsonl";
+  my $outfile = "$dir/${fn}_holdings.jsonl";
   unlink $outfile;
   open my $OUT, ">>:encoding(UTF-8)", $outfile;
-
-  my $mrcfile = "$dir/${fn}_marc.mrc";
-  unlink $mrcfile;
-  open my $MRC, ">>:encoding(UTF-8)", $mrcfile;
 
   my $srsfile = "$dir/${fn}_srs.jsonl";
   unlink $srsfile;
   open my $SRS, ">>:encoding(UTF-8)", $srsfile;
 
-  # my $itemfile = "$dir/${fn}_iii_holdings_items.jsonl";
-  # unlink $itemfile;
-  # open my $IOUT, ">>", $itemfile;
+  my $snapfile = "$dir/${fn}_snapshot.jsonl";
+  open my $SNP, ">:encoding(UTF-8)", $snapfile;
+  my $snapstr = $json->encode($snap);
+  write_objects($SNP, $snapstr . "\n");
 
   my $count = 0;
   my $hcount = 0;
@@ -212,86 +211,8 @@ foreach (@ARGV) {
     my $obj = $json->decode($_);
     my $iii_bid = $obj->{bibIds}->[0];
     my $bid = "b$iii_bid";
-    my $psv = $inst_map->{$bid};
+    my $psv = $inst_map->{$bid} || '';
     my @b = split(/\|/, $psv);
-    if ($obj) {
-      my $vf = {};
-      my $ff = $obj->{fixedFields};
-      my $marc = MARC::Record->new();
-      my $f001 = MARC::Field->new('001', $obj->{id});
-      $marc->insert_fields_ordered($f001); 
-      my $f004 = MARC::Field->new('004', $bid);
-      $marc->insert_fields_ordered($f004);
-      my $updated = $ff->{84}->{value};
-      my $created = $ff->{83}->{value};
-      $updated =~ s/[-TZ:]//g;
-      my $f005 = MARC::Field->new('005', "$updated.0");
-      $marc->insert_fields_ordered($f005);
-      my $loc_code = $ff->{40}->{value} || 'xxxxx';
-      $loc_code =~ s/\s*$//;
-      my $f852 =  MARC::Field->new('852', '0', ' ', 'b' => $loc_code);
-      $marc->insert_fields_ordered($f852);
-
-      my $f008_seen = 0;
-      foreach my $f (@{ $obj->{varFields} }) {
-        my $t = $f->{marcTag} || '';
-        my $ft = $f->{fieldTag};
-        if ($t && $t gt '009') {
-          my $subs = {};
-          my @msubs;
-          foreach my $sf (@{ $f->{subfields} }) {
-            my $c = $sf->{tag};
-            $subs->{$c} = $sf->{content};
-            push @msubs, $sf->{tag}, $sf->{content};
-          }
-          push @{ $vf->{$t} }, $subs;
-          my $field = MARC::Field->new($t, $f->{ind1}, $f->{ind2}, @msubs);
-          $marc->insert_fields_ordered($field);
-        } elsif ($t =~ /\d/ && $t lt '010') {
-          if ($t eq '008') {
-            $f008_seen = 1;
-            $f->{content} = substr($f->{content}, 0, 32);
-          }
-          my $field = MARC::Field->new($t, $f->{content}) if $f->{content};
-          $marc->insert_fields_ordered($field); 
-        } elsif ($ft && $f->{content}) {
-          push @{ $vf->{$ft} }, $f->{content};
-          if ($ft eq '_') {
-            $marc->leader($f->{content});
-          } else {
-            my $field = MARC::Field->new('561', ' ', ' ', 'a' => $f->{content});
-            $marc->insert_fields_ordered($field); 
-          }
-        } 
-      }
-      if (!$f008_seen) {
-          $created =~ s/^..(..)-(..)-(..).*/$1$2$3/;
-          my $f008 = MARC::Field->new('008', "${created}0u    0   0   uuund       ");
-          $marc->insert_fields_ordered($f008);
-      }
-
-      my $cn = $vf->{'090'}->[0]->{a} || '';
-
-      my $hs = statement($obj);
-      foreach my $t ('866', '867', '868') {
-        foreach my $f (@{ $hs->{$t}}) {
-          my $st = make_statement($f->{text}, $f->{note});
-          if ($f->{text}) {
-            my $field = MARC::Field->new($t, ' ', ' ', '8' => '1.1', 'a' => $f->{text}); 
-            $marc->insert_fields_ordered($field) if !$marc->field($t, 'a');
-          }
-        }
-      }
-      my $raw = $marc->as_usmarc();
-      my $s = {
-        snapshotId=>$snapshot,
-        rawRecord=>{}
-      };
-      $s->{rawRecord}->{content} = $raw;
-      my $srs = $json->encode($s);
-      write_objects($SRS, $srs . "\n");
-      $mrc_count++;
-    }
 
     my $vf = {};
     foreach my $f (@{ $obj->{varFields} }) {
@@ -319,7 +240,7 @@ foreach (@ARGV) {
     my $hkey = "$bid-$loc_code";
     $h->{id} = uuid($hkey);
     $h->{formerIds} = [ $obj->{id} ];
-    $h->{hrid} = $hkey;
+    $h->{hrid} = $hid;
     $h->{instanceId} = $b[0];
     my $loc_id = $refdata->{locations}->{$loc_code} || $refdata->{locations}->{UNMAPPED};
     $h->{permanentLocationId} = $loc_id;
@@ -388,6 +309,82 @@ foreach (@ARGV) {
     
     my $hr = $json->encode($h);
     write_objects($OUT, $hr . "\n");
+
+    if ($obj) {
+      my $vf = {};
+      my $ff = $obj->{fixedFields};
+      my $marc = MARC::Record->new();
+      my $f001 = MARC::Field->new('001', $h->{hrid});
+      $marc->insert_fields_ordered($f001); 
+      my $f004 = MARC::Field->new('004', $bid);
+      $marc->insert_fields_ordered($f004);
+      my $updated = $ff->{84}->{value};
+      my $created = $ff->{83}->{value};
+      $updated =~ s/[-TZ:]//g;
+      my $f005 = MARC::Field->new('005', "$updated.0");
+      $marc->insert_fields_ordered($f005);
+      my $loc_code = $ff->{40}->{value} || 'xxxxx';
+      $loc_code =~ s/\s*$//;
+      my $fcode = $tofolio->{loc_codes}->{$loc_code} || 'UNMAPPED';
+      my $f852 =  MARC::Field->new('852', '0', ' ', 'b' => $loc_code);
+      $marc->insert_fields_ordered($f852);
+
+      my $f008_seen = 0;
+      foreach my $f (@{ $obj->{varFields} }) {
+        my $t = $f->{marcTag} || '';
+        my $ft = $f->{fieldTag};
+        if ($t && $t gt '009') {
+          my $subs = {};
+          my @msubs;
+          foreach my $sf (@{ $f->{subfields} }) {
+            my $c = $sf->{tag};
+            $subs->{$c} = $sf->{content};
+            push @msubs, $sf->{tag}, $sf->{content};
+          }
+          push @{ $vf->{$t} }, $subs;
+          my $field = MARC::Field->new($t, $f->{ind1}, $f->{ind2}, @msubs);
+          $marc->insert_fields_ordered($field);
+        } elsif ($t =~ /\d/ && $t lt '010') {
+          if ($t eq '008') {
+            $f008_seen = 1;
+            $f->{content} = substr($f->{content}, 0, 32);
+          }
+          my $field = MARC::Field->new($t, $f->{content}) if $f->{content};
+          $marc->insert_fields_ordered($field); 
+        } elsif ($ft && $f->{content}) {
+          push @{ $vf->{$ft} }, $f->{content};
+          if ($ft eq '_') {
+            $marc->leader($f->{content});
+          } else {
+            my $field = MARC::Field->new('561', ' ', ' ', 'a' => $f->{content});
+            $marc->insert_fields_ordered($field); 
+          }
+        } 
+      }
+      if (!$f008_seen) {
+          $created =~ s/^..(..)-(..)-(..).*/$1$2$3/;
+          my $f008 = MARC::Field->new('008', "${created}0u    0   0   uuund       ");
+          $marc->insert_fields_ordered($f008);
+      }
+
+      my $cn = $vf->{'090'}->[0]->{a} || '';
+
+      my $hs = statement($obj);
+      foreach my $t ('866', '867', '868') {
+        foreach my $f (@{ $hs->{$t}}) {
+          my $st = make_statement($f->{text}, $f->{note});
+          if ($f->{text}) {
+            my $field = MARC::Field->new($t, ' ', ' ', '8' => '1.1', 'a' => $f->{text}); 
+            $marc->insert_fields_ordered($field) if !$marc->field($t, 'a');
+          }
+        }
+      }
+      my $raw = $marc->as_usmarc();
+      my $srs = make_srs($marc, $raw, '', $h->{hrid}, $snapshot, $h->{id});
+      my $s = $json->encode($srs);
+      write_objects($SRS, $s . "\n");
+      $mrc_count++;
+    }
 
     $count++;
     $ttl++;
@@ -571,4 +568,38 @@ sub dedupe {
     }
   }
   return [ @out ];
+}
+
+sub make_srs {
+    my $marc = shift;
+    my $raw = shift;
+    my $iid = shift;
+    my $hrid = shift;
+    my $snap_id = shift;
+    my $hid = shift || '';
+    my $srs = {};
+
+    my $mij = MARC::Record::MiJ->to_mij($marc);
+    my $parsed = decode_json($mij);
+    
+    $srs->{id} = uuid($iid . 'srs');
+    my $nine = {};
+    $nine->{'999'} = { subfields=>[ { 'i'=>$iid || $hid }, { 's'=>$srs->{id} } ] };
+    $nine->{'999'}->{'ind1'} = 'f';
+    $nine->{'999'}->{'ind2'} = 'f';
+    push @{ $parsed->{fields} }, $nine;
+    $srs->{snapshotId} = $snap_id;
+    $srs->{matchedId} = $srs->{id};
+    $srs->{generation} = 0;
+    $srs->{rawRecord} = { id=>$srs->{id}, content=>$raw };
+    $srs->{parsedRecord} = { id=>$srs->{id}, content=>$parsed };
+    if ($hid) {
+      $srs->{externalIdsHolder} = { holdingsId=>$hid, holdingsHrid=>$hrid };
+      $srs->{recordType} = 'MARC_HOLDING';
+    }
+    else {
+      $srs->{externalIdsHolder} = { instanceId=>$iid, instanceHrid=>$hrid };
+      $srs->{recordType} = 'MARC_BIB';
+    }
+    return $srs;
 }
