@@ -24,8 +24,8 @@ my $version = '1';
 my $isil = 'CoU';
 
 my $source_id = '036ee84a-6afd-4c3c-9ad3-4a12ab875f59'; #MARC
-my $snapshot = '3b05b500-a69f-46f3-9b71-a82ca495d233';
 my $tm = localtime;
+my $snapshot = uuid($tm->datetime);
 my $snap = {
     jobExecutionId=>$snapshot,
     status=>'COMMITTED',
@@ -176,6 +176,7 @@ my $relations = {
 
 my $ttl = 0;
 my $mrc_count = 0;
+my $errcount = 0;
 
 foreach (@ARGV) {
   my $infile = $_;
@@ -200,7 +201,6 @@ foreach (@ARGV) {
 
   my $count = 0;
   my $hcount = 0;
-  my $errcount = 0;
   my $start = time();
  
   open IN, $infile;
@@ -213,6 +213,11 @@ foreach (@ARGV) {
     my $bid = "b$iii_bid";
     my $psv = $inst_map->{$bid} || '';
     my @b = split(/\|/, $psv);
+    if (!$b[0]) {
+      print "WARN instanceId not found for $bid!\n";
+      $errcount++;
+      next;
+    }
 
     my $vf = {};
     foreach my $f (@{ $obj->{varFields} }) {
@@ -233,12 +238,12 @@ foreach (@ARGV) {
     my $ff = $obj->{fixedFields};
     my $h = {};
     my $hid = "c" . $obj->{id};
-    # next if $seen->{$hid};
+    next if $seen->{$hid};
     $seen->{$hid} = 1;
     my $loc_code = $ff->{40}->{value} || 'xxxxx';
     $loc_code =~ s/\s*$//;
     my $hkey = "$bid-$loc_code";
-    $h->{id} = uuid($hkey);
+    $h->{id} = uuid($hid);
     $h->{formerIds} = [ $obj->{id} ];
     $h->{hrid} = $hid;
     $h->{instanceId} = $b[0];
@@ -393,8 +398,10 @@ foreach (@ARGV) {
 }
 my $end = time;
 my $secs = $end - $start;
+my $mins = $secs/60;
 print "\n$mrc_count MARC records created...";
-print "\n$ttl Sierra holdings processed in $secs secs.\n\n";
+print "\n$ttl Sierra holdings processed in $mins min.";
+print "\n$errcount Errors\n\n";
 
 sub statement {
   my $h = shift;
