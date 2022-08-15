@@ -88,7 +88,7 @@ let writeStream;
       }
       offset += perPage;
       console.log(url);
-      if (actionUrl.match(/\/perms\//)) { totRecs = totFetch }
+      // if (actionUrl.match(/\/perms\//)) { totRecs = totFetch }
       console.log(`Received ${totFetch} of ${totRecs}...`);
     }
   } catch (e) {
