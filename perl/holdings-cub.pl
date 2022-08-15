@@ -589,7 +589,7 @@ sub make_srs {
     my $mij = MARC::Record::MiJ->to_mij($marc);
     my $parsed = decode_json($mij);
     
-    $srs->{id} = uuid($iid . 'srs');
+    $srs->{id} = uuid($hid . 'srs');
     my $nine = {};
     $nine->{'999'} = { subfields=>[ { 'i'=>$iid || $hid }, { 's'=>$srs->{id} } ] };
     $nine->{'999'}->{'ind1'} = 'f';
