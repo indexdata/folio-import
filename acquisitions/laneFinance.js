@@ -72,7 +72,7 @@ let refFiles = {
         if (f === 'types') {
           let name = r['Fund types'];
           obj.id = uuid(name, ns);
-          obj.name = name;
+          obj.name = name.trim();
         } else if (f === 'fy') {
           obj.id = uuid(r.code, ns);
           obj.name = r.name;
