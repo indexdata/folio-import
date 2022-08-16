@@ -1,3 +1,7 @@
+/*
+  This script creates fund-types, fiscal-years and ledgers from CSV files.
+*/
+
 const fs = require('fs');
 const uuid = require('uuid/v5');
 const parse = require('csv-parse/lib/sync');
@@ -8,8 +12,13 @@ let files = {
   types: 'fund-types.jsonl',
   fy: 'fiscal-years.jsonl',
   ledgers: 'ledgers.jsonl',
-  groups: 'groups.jsonl',
 };
+
+let ttl = {
+  types: 0,
+  fy: 0,
+  ledgers: 0
+}
 
 let refFiles = {
   acquisitionsUnits: 'units.json'
@@ -82,10 +91,14 @@ let refFiles = {
           obj.restrictExpenditures = false;
           obj.acqUnitIds = [ unit ];
         }
+        ttl[f]++;
         writeObj(outFile, obj);
-        console.log(obj);
       });
     }
+    console.log('Done!');
+    console.log('Fund types:', ttl.types);
+    console.log('Fiscal years:', ttl.fy);
+    console.log('Ledgers:', ttl.ledgers);
   } catch (e) {
     console.log(e);
   }
