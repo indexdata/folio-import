@@ -45,8 +45,8 @@ let refFiles = {
         refData[prop][p.name] = p.id
       });
     }
-    console.log(refData);
-    return;
+    const unit = refData.acquisitionsUnits.Lane;
+    let fyId = '';
 
     for (let f in files) {
       let outFile = files[f];
@@ -68,8 +68,19 @@ let refFiles = {
           obj.id = uuid(r.code, ns);
           obj.name = r.name;
           obj.code = r.code;
-          obj.periodStart = new Date(r.periodStart).toISOString();
-          obj.periodEnd = new Date(r.periodEnd).toISOString();
+          obj.periodStart = r.periodStart.replace(/ .+$/, '');
+          obj.periodEnd = r.periodEnd.replace(/ .+$/, '');
+          obj.acqUnitIds = [ unit ];
+          fyId = obj.id;
+        } else if (f === 'ledgers') {
+          obj.id = uuid(r.code, ns);
+          obj.code = r.code;
+          obj.name = r.name;
+          obj.fiscalYearOneId = fyId;
+          obj.ledgerStatus = 'Active';
+          obj.restrictEncumbrance = false;
+          obj.restrictExpenditures = false;
+          obj.acqUnitIds = [ unit ];
         }
         writeObj(outFile, obj);
         console.log(obj);
