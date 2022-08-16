@@ -7,9 +7,11 @@ const uuid = require('uuid/v5');
 const parse = require('csv-parse/lib/sync');
 
 const ns = 'e35dff4e-9035-4d6a-b621-3d42578f81c7';
+let fy = 'LANEFY2022';
 
 let files = {
   funds: 'funds.jsonl',
+  budgets: 'budgets.jsonl'
 };
 
 let ttl = {
@@ -20,7 +22,8 @@ let ttl = {
 let refFiles = {
   acquisitionsUnits: 'units.json',
   fundTypes: 'fund-types.json',
-  ledgers: 'ledgers'
+  ledgers: 'ledgers',
+  fiscalYears: 'fiscal-years.json'
 };
 
 (async () => {
@@ -56,11 +59,11 @@ let refFiles = {
     // console.log(refData); return;
     const unit = refData.acquisitionsUnits.Lane;
     let fyId = '';
+    let fundMap = {};
 
     for (let f in files) {
       let outFile = files[f];
       let inFile = outFile.replace(/\.jsonl$/, '.csv');
-      console.log(inFile);
       let csv = fs.readFileSync(inFile, 'utf8');
       inRecs = parse(csv, {
         columns: true,
@@ -80,8 +83,20 @@ let refFiles = {
           obj.ledgerId = lid;
           obj.fundStatus = r['Fund status'] || 'Active';
           obj.fundTypeId = ftypeId || ftype;
+          if (r.externalAccountNo) obj.externalAccountNo = r.externalAccountNo;
+          obj.acqUnitIds = [ unit ];
+          fundMap[obj.code] = { id: obj.id, name: obj.name };
         }
-        console.log(obj);
+        if (f === 'budgets') {
+          let fcode = r['Fund Code'];
+          let fund = fundMap[fcode];
+          obj.id = uuid(fund.name + 'bud', ns);
+          obj.name = fund.name;
+          obj.budgetStatus = 'Active';
+          obj.fundId = fund.id;
+          obj.fiscalYearId = refData.fiscalYears[fy];
+          obj.initialAllocation = parseInt(r.Current_Allocation, 10);
+        }
         ttl[f]++;
         writeObj(outFile, obj);
       });
