@@ -2,11 +2,15 @@ const fs = require('fs');
 const uuid = require('uuid/v5');
 const path = require('path');
 const parse = require('csv-parse/lib/sync');
+const readline = require('readline');
+const { Recoverable } = require('repl');
 
 const ns = '79d090dc-e59f-4cef-bd0c-4a3038603fb3';
 
 let refDir = process.argv[2];
 const inFile = process.argv[3];
+const linesFile = process.argv[4];
+const instFile = process.argv[5];
 let fy = parseInt(process.argv[4], 10) || 2021;
 let fyMax = fy + 1;
 
@@ -37,13 +41,13 @@ const addMap = {
 (async () => {
   try {
     let start = new Date().valueOf();
-    if (!inFile) throw('Usage: node laneOrders.js <acq_ref_dir> <csv_file> [ <fiscal year> ]');
+    if (!instFile) throw('Usage: node laneOrders.js <acq_ref_dir> <po_csv> <polines_csv> <instances_jsonl> [ <fiscal year> ]');
     if (!fs.existsSync(inFile)) throw new Error(`Can't find ${inFile}!`);
     refDir = refDir.replace(/\/$/, '');
     
     const dir = path.dirname(inFile);
     const fn = path.basename(inFile, '.csv');
-    const outFile = `${dir}/folio-${fn}-${fy}.jsonl`;
+    const outFile = `${dir}/composite-orders.jsonl`;
     if (fs.existsSync(outFile)) fs.unlinkSync(outFile);
 
     const refData = {};
@@ -59,7 +63,42 @@ const addMap = {
     }
     // console.log(refData);
 
-    let csv = fs.readFileSync(inFile, 'utf8');
+    // gather po-lines
+    let csv = fs.readFileSync(linesFile, 'utf8');
+    let inRecs = parse(csv, {
+      columns: true,
+      skip_empty_lines: true
+    });
+
+    const poLines = {};
+    inRecs.forEach(l => {
+      let pon = l.PO_NUMBER;
+      if (!poLines[pon]) poLines[pon] = [];
+      poLines[pon].push(l);
+    });
+    // console.log(poLines); return;
+
+    // gather instances
+    console.log('Loading instances (this may take awhile)...')
+    const fileStream = fs.createReadStream(instFile);
+    const rl = readline.createInterface({
+      input: fileStream,
+      crlfDelay: Infinity
+    });
+    const insts = {};
+    for await (const line of rl) {
+      let rec = JSON.parse(line);
+      let hrid = rec.hrid.replace(/^L/, '');
+      insts[hrid] = { 
+        title: rec.title,
+        contributors: rec.contributors,
+        publication: rec.publication
+      }
+    }
+    // console.log(insts); return;
+
+    // read orders file
+    csv = fs.readFileSync(inFile, 'utf8');
     inRecs = parse(csv, {
       columns: true,
       skip_empty_lines: true
@@ -129,6 +168,17 @@ const addMap = {
         co.vendor = vendorId || vendorCode;
         co.workflowStatus = wfStatus;
         co.acqUnitIds = [ unit ];
+
+        if (poLines[poNumber]) {
+          co.compositePoLines = [];
+          poLines[poNumber].forEach(l => {
+            let pol = {};
+            pol.id = uuid(l.LINE_ITEM_ID + 'poline', ns);
+            co.compositePoLines.push(pol);
+          });
+          
+        }
+        
 
         console.log(JSON.stringify(co, null, 2));
         let coStr = JSON.stringify(co) + '\n';
