@@ -11,12 +11,16 @@ let fy = 'LANEFY2022';
 
 let files = {
   funds: 'funds.jsonl',
-  budgets: 'budgets.jsonl'
+  budgets: 'budgets.jsonl',
+  groups: 'groups.jsonl',
+  groupFy: 'group-fund-fiscal-years.jsonl'
 };
 
 let ttl = {
   funds: 0,
   budgets: 0,
+  groups: 0,
+  groupFy: 0
 }
 
 let refFiles = {
@@ -58,17 +62,21 @@ let refFiles = {
     }
     // console.log(refData); return;
     const unit = refData.acquisitionsUnits.Lane;
-    let fyId = '';
+    let fyId = refData.fiscalYears[fy];
     let fundMap = {};
+    let groups = {};
 
     for (let f in files) {
+      let inRecs = [];
       let outFile = files[f];
-      let inFile = outFile.replace(/\.jsonl$/, '.csv');
-      let csv = fs.readFileSync(inFile, 'utf8');
-      inRecs = parse(csv, {
-        columns: true,
-        skip_empty_lines: true
-      });
+      if (!f.match(/group/)) {
+        let inFile = outFile.replace(/\.jsonl$/, '.csv');
+        let csv = fs.readFileSync(inFile, 'utf8');
+        inRecs = parse(csv, {
+          columns: true,
+          skip_empty_lines: true
+        });
+      }
 
       inRecs.forEach(r => {
         let obj = {};
@@ -85,7 +93,9 @@ let refFiles = {
           obj.fundTypeId = ftypeId || ftype;
           if (r.externalAccountNo) obj.externalAccountNo = r.externalAccountNo;
           obj.acqUnitIds = [ unit ];
-          fundMap[obj.code] = { id: obj.id, name: obj.name };
+          let groupId = uuid(r.groupCode + 'groups', ns);
+          groups[r.groupCode] = groupId;
+          fundMap[obj.code] = { id: obj.id, name: obj.name, groupId: groupId };
         }
         if (f === 'budgets') {
           let fcode = r['Fund Code'];
@@ -96,10 +106,33 @@ let refFiles = {
           obj.fundId = fund.id;
           obj.fiscalYearId = refData.fiscalYears[fy];
           obj.initialAllocation = parseInt(r.Current_Allocation, 10);
+          let gfid = uuid(obj.id + fyId, ns);
+          let groupFy = {
+            id: gfid,
+            budgetId: obj.id,
+            fundId: obj.fundId,
+            groupId: fund.groupId,
+            fiscalYearId: fyId
+          }
+          ttl.groupFy++;
+          writeObj(files.groupFy, groupFy);
         }
         ttl[f]++;
         writeObj(outFile, obj);
       });
+    }
+    for (code in groups) {
+      if (code) {
+        let g = {
+          id: groups[code],
+          name: code,
+          code: code,
+          status: 'Active',
+          acqUnitIds: [ unit ]
+        }
+        ttl.groups++;
+        writeObj(files.groups, g);
+      }
     }
     console.log('Done...');
     for (t in ttl) {
