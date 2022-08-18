@@ -18,6 +18,7 @@ const refFiles = {
   organizations: 'organizations.json',
   configs: 'addresses.json',
   acquisitionsUnits: 'units.json',
+  acquisitionMethods: 'acquisition-methods.json'
   // funds: 'funds.json',
   // locations: 'locations.json'
 };
@@ -57,11 +58,11 @@ const addMap = {
       let path = `${refDir}/${refFiles[prop]}`;
       let obj = require(path);
       obj[prop].forEach(p => {
-        let code = p.code || p.name;
+        let code = p.code || p.name || p.value;
         refData[prop][code] = p.id
       })
     }
-    // console.log(refData);
+    // console.log(refData); return;
 
     // gather po-lines
     let csv = fs.readFileSync(linesFile, 'utf8');
@@ -92,7 +93,8 @@ const addMap = {
       insts[hrid] = { 
         title: rec.title,
         contributors: rec.contributors,
-        publication: rec.publication
+        publication: rec.publication,
+        editions: rec.editions
       }
     }
     // console.log(insts); return;
@@ -123,7 +125,8 @@ const addMap = {
         let billTo = addMap[v.BILL_LOCATION];
         let shipTo = addMap[v.SHIP_LOCATION];
         let notes = v.NOTE;
-        let orderType = (v.PO_TYPE_DESC === 'Continuation') ? 'Ongoing' : 'One-Time';
+        let poType = v.PO_TYPE_DESC;
+        let orderType = (poType === 'Continuation') ? 'Ongoing' : 'One-Time';
         let vendorCode = v.VENDOR_CODE;
         if (!vendorCode.match(/-LANE$/)) vendorCode += '-Lane';
         let vendorId = refData.organizations[vendorCode];
@@ -173,7 +176,39 @@ const addMap = {
           co.compositePoLines = [];
           poLines[poNumber].forEach(l => {
             let pol = {};
+            let inst = insts[l.BIB_ID];
             pol.id = uuid(l.LINE_ITEM_ID + 'poline', ns);
+            pol.purchaseOrderId = co.id;
+            pol.source = 'User';
+            pol.orderFormat = 'Other';
+            let am = 'Purchase';
+            polType = l.LINE_ITEM_TYPE_DESC;
+            if (poType === 'Approval' && polType === 'Single-part') {
+              am = 'Demand Driven Acquisitions (DDA)';
+            } else if (poType === 'Gift' && polType === 'Single-part') {
+              am = 'Gift';
+            } else if (poType === 'Continuations' && polType === 'Membership') {
+              am = 'Membership';
+            }
+            pol.acquisitionMethod = refData.acquisitionMethods[am];
+            pol.cost = {
+              currency: 'USD',
+              listUnitPrice: l.LINE_PRICE
+            };
+            if (inst) {
+              pol.titleOrPackage = inst.title;
+              if (inst.editions && inst.editions[0]) pol.edition = inst.editions[0];
+              if (inst.contributors && inst.contributors[0]) {
+                pol.contributors = [];
+                inst.contributors.forEach(c => {
+                  pol.contributors.push({ contributor: c.name, contributorNameTypeId: c.contributorNameTypeId });
+                })
+              }
+              if (inst.publication && inst.publication[0]) {
+                pol.publisher = inst.publication[0].publisher;
+                pol.publicationDate = inst.publication[0].dateOfPublication;
+              }
+            }
             co.compositePoLines.push(pol);
           });
           
