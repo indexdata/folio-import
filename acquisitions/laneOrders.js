@@ -91,7 +91,8 @@ const addMap = {
     for await (const line of rl) {
       let rec = JSON.parse(line);
       let hrid = rec.hrid.replace(/^L/, '');
-      insts[hrid] = { 
+      insts[hrid] = {
+        id: rec.id,
         title: rec.title,
         contributors: rec.contributors,
         publication: rec.publication,
@@ -196,6 +197,7 @@ const addMap = {
             pol.acquisitionMethod = refData.acquisitionMethods[am];
             
             if (inst) {
+              pol.instanceId = inst.id;
               pol.titleOrPackage = inst.title;
               if (inst.editions && inst.editions[0]) pol.edition = inst.editions[0];
               if (inst.contributors && inst.contributors[0]) {
@@ -233,11 +235,16 @@ const addMap = {
                 createInventory: 'None',
               };
             }
-            let fundCode = l.USE_FUND;
+            let fundCode = l.USE_FUND || '';
+            fundCode = fundCode.replace(/-.+/, '');
+            fundCode += '-Lane';
+            let fundId = refData.funds[fundCode] || '';
             pol.fundDistribution = [];
-            if (fundCode) {
+            if (fundId) {
               fdist = {};
-              fdist.fundId = fundCode;
+              fdist.fundId = fundId;
+              fdist.distributionType = 'percentage';
+              fdist.value = 100;
               pol.fundDistribution.push(fdist);
             }
             co.compositePoLines.push(pol);
