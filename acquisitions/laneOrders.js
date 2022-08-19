@@ -6,6 +6,8 @@ const readline = require('readline');
 
 const ns = '79d090dc-e59f-4cef-bd0c-4a3038603fb3';
 const nons = '00000000-0000-0000-0000-000000000000';
+const version = '2';
+const isil = 'CSt-L';
 
 let refDir = process.argv[2];
 const inFile = process.argv[3];
@@ -280,6 +282,12 @@ const addMap = {
                 locationId: locId,
                 quantity: quant
               }
+              /*
+              if (l.MFHD_ID) {
+                let hid = uuid('LH' + l.MFHD_ID + isil + version, nons);
+                lobj.holdingId = hid;
+              }
+              */
               if (oform === 'Electronic Resource') {
                 lobj.quantityElectronic = quant;
               } else {
