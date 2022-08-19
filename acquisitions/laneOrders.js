@@ -3,9 +3,9 @@ const uuid = require('uuid/v5');
 const path = require('path');
 const parse = require('csv-parse/lib/sync');
 const readline = require('readline');
-const { Recoverable } = require('repl');
 
 const ns = '79d090dc-e59f-4cef-bd0c-4a3038603fb3';
+const nons = '00000000-0000-0000-0000-000000000000';
 
 let refDir = process.argv[2];
 const inFile = process.argv[3];
@@ -24,7 +24,7 @@ const refFiles = {
   locations: 'locations.json'
 };
 
-addNotes = {
+const addNotes = {
   PO_CREATE_DATE: 'PO_Create_Date in Voyager',
   CREATE_OPID: 'Creation Operator',
   CREATE_LOCATION_ID: 'Creation Location',
@@ -35,6 +35,12 @@ addNotes = {
   PO_STATUS_DESC: 'PO Status Description in Voyager',
   PRINT_NOTE: 'Instructions to Vendor from Voyager PO Notes'
 };
+
+const rstatusMap = {
+  'Received Partial': 'Partially Received',
+  'Received Complete': 'Fully Received',
+  'Approved': 'Ongoing'
+}
 
 const addMap = {
   'Lane: Acquisitions': 'LANE_LIBRARY_ACQUISITIONS'
@@ -60,10 +66,12 @@ const addMap = {
       let obj = require(path);
       obj[prop].forEach(p => {
         let code = p.code || p.name || p.value;
-        refData[prop][code] = p.id
-      })
+        if (prop === 'locations') {
+          code = code.replace(/^LANE-/, '');
+        }
+        refData[prop][code] = p.id;
+      });
     }
-    // console.log(refData); return;
 
     // gather po-lines
     let csv = fs.readFileSync(linesFile, 'utf8');
@@ -96,7 +104,8 @@ const addMap = {
         title: rec.title,
         contributors: rec.contributors,
         publication: rec.publication,
-        editions: rec.editions
+        editions: rec.editions,
+        identifiers: rec.identifiers
       }
     }
     // console.log(insts); return;
@@ -195,6 +204,10 @@ const addMap = {
               am = 'Membership';
             }
             pol.acquisitionMethod = refData.acquisitionMethods[am];
+            if (l.NOTE) {
+              let note = l.NOTE.replace(/\n\s*/g, ' -- ');
+              pol.description = note;
+            }
             
             if (inst) {
               pol.instanceId = inst.id;
@@ -209,6 +222,19 @@ const addMap = {
               if (inst.publication && inst.publication[0]) {
                 pol.publisher = inst.publication[0].publisher;
                 pol.publicationDate = inst.publication[0].dateOfPublication;
+              }
+              if (inst.identifiers && inst.identifiers[0]) {
+                pol.details = { productIds: [] }
+                inst.identifiers.forEach(i => {
+                  if (i.identifierTypeId === '8261054f-be78-422d-bd51-4ed9f33c3422') {
+                    i.value = i.value.replace(/^([0-9X]{10,13}).*/, '$1');
+                  }
+                  let pid = {
+                    productIdType: i.identifierTypeId,
+                    productId: i.value
+                  }
+                  pol.details.productIds.push(pid);
+                });
               }
             }
             if (!pol.titleOrPackage) pol.titleOrPackage = 'Unknown'
@@ -246,6 +272,21 @@ const addMap = {
               fdist.distributionType = 'percentage';
               fdist.value = 100;
               pol.fundDistribution.push(fdist);
+            }
+            let loc = l.LOCATION_CODE;
+            let locId = refData.locations[loc] || '';
+            if (locId) {
+              let lobj = {
+                locationId: locId,
+                quantity: quant
+              }
+              if (oform === 'Electronic Resource') {
+                lobj.quantityElectronic = quant;
+              } else {
+                lobj.quantityPhysical = quant;
+              }
+              pol.locations = [ lobj ];
+              pol.receiptStatus = rstatusMap[l.LINE_ITEM_STATUS] || 'Awaiting Receipt';
             }
             co.compositePoLines.push(pol);
           });
