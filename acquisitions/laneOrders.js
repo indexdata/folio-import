@@ -18,9 +18,10 @@ const refFiles = {
   organizations: 'organizations.json',
   configs: 'addresses.json',
   acquisitionsUnits: 'units.json',
-  acquisitionMethods: 'acquisition-methods.json'
-  // funds: 'funds.json',
-  // locations: 'locations.json'
+  acquisitionMethods: 'acquisition-methods.json',
+  mtypes: 'material-types.json',
+  funds: 'funds.json',
+  locations: 'locations.json'
 };
 
 addNotes = {
@@ -163,14 +164,16 @@ const addMap = {
         if (combinedNotes) co.notes.push(combinedNotes);
         co.orderType = orderType;
         co.reEncumber = (orderType === 'Ongoing') ? true : false;
-        if (orderType === 'Ongoing') {
-          co.ongoing = {
-            isSubscription: 'true'
-          }
-        }
         co.vendor = vendorId || vendorCode;
         co.workflowStatus = wfStatus;
         co.acqUnitIds = [ unit ];
+        if (orderType === 'Ongoing') {
+          co.ongoing = {
+            isSubscription: false,
+            // manualRenewal: true,
+            // renewalDate: appDate
+          };
+        }
 
         if (poLines[poNumber]) {
           co.compositePoLines = [];
@@ -179,22 +182,19 @@ const addMap = {
             let inst = insts[l.BIB_ID];
             pol.id = uuid(l.LINE_ITEM_ID + 'poline', ns);
             pol.purchaseOrderId = co.id;
+            pol.poLineNumber = co.poNumber + '-' + l.LINE_ITEM_NUMBER;
             pol.source = 'User';
-            pol.orderFormat = 'Other';
             let am = 'Purchase';
-            polType = l.LINE_ITEM_TYPE_DESC;
+            let polType = l.LINE_ITEM_TYPE_DESC;
             if (poType === 'Approval' && polType === 'Single-part') {
               am = 'Demand Driven Acquisitions (DDA)';
             } else if (poType === 'Gift' && polType === 'Single-part') {
               am = 'Gift';
-            } else if (poType === 'Continuations' && polType === 'Membership') {
+            } else if (poType === 'Continuation' && polType === 'Membership') {
               am = 'Membership';
             }
             pol.acquisitionMethod = refData.acquisitionMethods[am];
-            pol.cost = {
-              currency: 'USD',
-              listUnitPrice: l.LINE_PRICE
-            };
+            
             if (inst) {
               pol.titleOrPackage = inst.title;
               if (inst.editions && inst.editions[0]) pol.edition = inst.editions[0];
@@ -209,13 +209,44 @@ const addMap = {
                 pol.publicationDate = inst.publication[0].dateOfPublication;
               }
             }
+            if (!pol.titleOrPackage) pol.titleOrPackage = 'Unknown'
+            let price = parseInt(l.LINE_PRICE, 10);
+            if (price > 0) price = price/100;
+            let quant = parseInt(l.QUANTITY, 10);
+            let oform = (pol.titleOrPackage.match(/\[digital\]/)) ? 'Electronic Resource' : 'Physical Resource'
+            pol.orderFormat = oform;
+            pol.cost = {
+              currency: 'USD',
+            };
+            if (oform === 'Physical Resource') {
+              pol.cost.listUnitPrice = price;
+              pol.cost.quantityPhysical = quant;
+              pol.physical = {
+                createInventory: 'None',
+                materialType: refData.mtypes['unspecified'],
+                volumes: []
+              };
+            } else if (oform === 'Electronic Resource') {
+              pol.cost.listUnitPriceElectronic = price;
+              pol.cost.quantityElectronic = quant;
+              pol.eresource = {
+                createInventory: 'None',
+              };
+            }
+            let fundCode = l.USE_FUND;
+            pol.fundDistribution = [];
+            if (fundCode) {
+              fdist = {};
+              fdist.fundId = fundCode;
+              pol.fundDistribution.push(fdist);
+            }
             co.compositePoLines.push(pol);
           });
           
         }
         
 
-        console.log(JSON.stringify(co, null, 2));
+        // console.log(JSON.stringify(co, null, 2));
         let coStr = JSON.stringify(co) + '\n';
         fs.writeFileSync(outFile, coStr, { flag: 'a' });
         c++;
