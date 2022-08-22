@@ -5,7 +5,7 @@ const ns = '11d09fb3-7d46-4a2d-8c97-2b82a27ef7b7';
 let outFile = process.argv[2];
 
 try {
-  if (!outFile) throw 'Usage: node makeSnapshot.js <output_path>';
+  if (!outFile) throw new Error('Usage: node makeSnapshot.js <output_path>');
   let now = new Date().toISOString();
   now = now.replace(/Z.*/, '+0000');
   const out = {
