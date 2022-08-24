@@ -15,7 +15,8 @@ const refFiles = {
   organizations: 'organizations.json',
   funds: 'funds.json',
   entries: 'fund-codes.json',
-  locations: 'locations.json'
+  locations: 'locations.json',
+  acquisitionMethods: 'acquisition-methods.json'
 };
 
 (async () => {
@@ -38,7 +39,7 @@ const refFiles = {
       let obj = require(path);
       console.log(`Mapping ${prop}...`);
       obj[prop].forEach(p => {
-        let code = p.code;
+        let code = p.code || p.value;
         code = code.trim();
         if (prop === 'entries') {
           let codeNum = `${p.codeNumber}`;
@@ -49,6 +50,7 @@ const refFiles = {
         }
       })
     }
+    // console.log(refData); return;
 
     const locMap = {};
     let locData = fs.readFileSync(locMapFile, { encoding: 'utf8' });
@@ -122,19 +124,23 @@ const refFiles = {
         };
 
         if (oType === 'a') {
-          pol.acquisitionMethod = 'Approval Plan';
+          pol.acquisitionMethod = refData.acquisitionMethods['Approval Plan'];
         } else if (oType.match(/[ew]/)) {
-          pol.acquisitionMethod = 'Demand Driven Acquisitions (DDA)';
+          pol.acquisitionMethod = refData.acquisitionMethods['Demand Driven Acquisitions (DDA)'];
         } else if (acqType === 'd') {
-          pol.acquisitionMethod = 'Depository';
+          pol.acquisitionMethod = refData.acquisitionMethods['Depository'];
         } else if (acqType === 'e') {
-          pol.acquisitionMethod = 'Exchange';
+          pol.acquisitionMethod = refData.acquisitionMethods['Exchange'];
         } else if (acqType === 'g') {
-          pol.acquisitionMethod = 'Gift';
+          pol.acquisitionMethod = refData.acquisitionMethods['Gift'];
         } else if (oType === '2') {
-          pol.acquisitionMethod = 'Evidence Based Acquisitions (EBA)';
+          pol.acquisitionMethod = refData.acquisitionMethods['Evidence Based Acquisitions (EBA)'];
         } else {
-          pol.acquisitionMethod = 'Purchase';
+          pol.acquisitionMethod = refData.acquisitionMethods['Purchase'];
+        }
+
+        if (!pol.acquisitionMethod) {
+          throw new Error(`No acquisitionMethod found for plNum`);
         }
 
         let format;
@@ -156,7 +162,6 @@ const refFiles = {
         let price = ff['10'].value;
         price = price.replace(/(\d\d)\.0+/, '.$1');
         price = parseFloat(price);
-        console.log(price);
 
         let loc = {};
         pol.cost = {};
