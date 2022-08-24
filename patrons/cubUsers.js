@@ -7,6 +7,7 @@ const { user } = require('pg/lib/defaults');
 const ns = '70c937ca-c54a-49cd-8c89-6edcf336e9ff';
 let refDir = process.argv[2];
 const patronFile = process.argv[3];
+const defEmail = process.argv[4];
 
 const parseAddress = (saddr, type, primary) => {
   let addresses = [];
@@ -45,11 +46,11 @@ const makeNote = (mesg, userId, noteTypeId) => {
   return note;
 }
 
-if (!fs.existsSync(refDir)) throw `Can't find ref data directory: ${refDir}!`;
 
 try {
-  if (!patronFile) throw 'Usage: node cubUsers.js <ref_directory> <sierra_patron_file>';
+  if (!patronFile) throw 'Usage: node cubUsers.js <ref_directory> <sierra_patron_file> [ <default_email> ]';
   if (!fs.existsSync(patronFile)) throw `Can't find patron file: ${patronFile}!`;
+  if (!fs.existsSync(refDir)) throw `Can't find ref data directory: ${refDir}!`;
   const saveDir = path.dirname(patronFile);
   const fileExt = path.extname(patronFile);
   const fileName = path.basename(patronFile, fileExt);
@@ -165,6 +166,7 @@ try {
         preferredContactTypeId: '002'
       }
     }
+    if (defEmail) user.personal.email = defEmail;
     if (varFields.b && varFields.b[0]) {
       user.barcode = varFields.b[0];
     }
