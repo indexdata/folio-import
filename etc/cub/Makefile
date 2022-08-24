@@ -2,6 +2,8 @@ data=/data/colorado
 marcdir=$(data)/marc2
 itemdir=$(data)/item
 holdir=$(data)/holdings
+userdir = $(data)/users
+orddir = $(data)/orders
 log=$(data)/log
 home=/home/charles
 sdir=$(home)/sierra-api/js
@@ -32,30 +34,48 @@ ifeq ($(wildcard $(holdir)/.),)
 endif
 	cd $(sdir); node downloadHoldings.js $(holdir) > $(log)/iii-holdings.log 2>/dev/null & 
 
-marc-group: $(marcdir)/*.mrc
-	cd $(marcdir); cat marc0[01]*.mrc > part1.mrc
-	cd $(marcdir); cat marc0[23]*.mrc > part2.mrc
-	cd $(marcdir); cat marc0[45]*.mrc > part3.mrc
-	cd $(marcdir); cat marc0[67]*.mrc > part4.mrc
-	cd $(marcdir); cat marc0[89]*.mrc > part5.mrc
+get-users:
+ifeq ($(wildcard $(userdir)/.),)
+	mkdir $(userdir)
+endif
+	cd $(sdir); node downloadUsers.js $(userdir) > $(log)/users.log &
 
-instances: $(marcdir)/part*mrc
-	./run-multi.sh ./marc2inst-cub.pl mapping-rules.json $(iref) $(marcdir)/part?.mrc
+get-orders:
+ifeq ($(wildcard $(orddir)/.),)
+	mkdir $(orddir)
+endif
+	cd $(sdir); node downloadOrders.js -c [2022-07-01,2022-08-30] $(orddir) > $(log)/orders.log &
+
+instances: $(marcdir)/marc0*mrc
+	./run-multi.sh ./marc2inst-cub.pl mapping-rules.json $(iref) $(marcdir)/marc0*.mrc > $(log)/make-marc.log 2>/dev/null &
 
 items: $(itemdir)/*.jsonl
 	cat $(marcdir)/*.map > $(itemdir)/instance.map
 	cat $(itemdir)/items0*.jsonl > $(itemdir)/sierra-items.jsonl
 	cd $(wd)/perl; ./items-cub.pl $(iref) $(itemdir)/instance.map $(itemdir)/sierra-items.jsonl > $(log)/make-items.log &
+
+holdings: $(holdir)/*.jsonl
+	cat $(marcdir)/*.map > $(holdir)/instance.map
+	cd $(wd)/perl; ./holdings-cub.pl $(iref) $(holdir)/instance.map $(holdir)/holdings00*jsonl > $(log)/make-holdings.log 2>$(log)/make-holdings-err.log &
+
+orders: $(orddir)/orders0*jsonl
+	cat $(orddir)/orders0*.jsonl > $(orddir)/iii-orders.jsonl
+	cd $(wd)/acquisitions; node cubOrders.js $(aref) $(orddir)/iii-orders.jsonl
+
+users: $(userdir)/users0*.jsonl
+	cat $(userdir)/users0*.jsonl > $(userdir)/iii-users.jsonl
+	cd $(wd)/patrons; node cubUsers.js $(uref) $(userdir)/iii-users.jsonl 'folio@colorado.edu'
+
 setup:
 	cd $(wd); git pull	
-	cp $(wd)/configs/bash/login-cubl.sh .
+	cp $(wd)/configs/bash/login-cu-test.sh .
 	cp $(wd)/bash/reference_* .
 	cp $(wd)/perl/marc2inst-cub.pl .
 	cp $(wd)/mapping_rules/default.json mapping-rules.json
 	mkdir $(iref)
 	mkdir $(uref)
 	mkdir $(aref)
-	./login-cubl.sh
+	./login-cu-test.sh
 	./reference_inventory.sh $(iref)
 	./reference_users.sh $(uref)
 	./reference_finance.sh $(aref)
@@ -63,6 +83,7 @@ setup:
 	./reference_org.sh $(aref)
 	cp $(wd)/etc/cub/*.tsv $(iref)
 	cp $(wd)/etc/cub/*.* $(aref)
+	cp $(wd)/etc/cub/ptypes.tsv $(uref)
 
 clean:
 	rm -rf $(iref)
