@@ -851,6 +851,7 @@ sub make_holdings {
   $bid = "$prefix$bid";
   my $hrid = "$hprefix$id";
   $marc->field('001')->update($hrid);
+  $marc->field('004')->update($bid);
   my $hid = uuid($hrid);
   my $srs = make_srs($marc, $marc->as_usmarc(), $hid, $hrid, $snap_id, $hid);
 
@@ -876,7 +877,7 @@ sub make_holdings {
   foreach (@hnotes) {
     my ($tag, $subs) = /^(\d\d\d)(.+)/;
     my $staff = 0;
-    if ($tag =~ /963|966|967|990/) {
+    if ($tag =~ /963|966|967|990|907/) {
       $staff = 1;
     }
     my @notes = make_notes($marc, $tag, $subs, '', $staff);
