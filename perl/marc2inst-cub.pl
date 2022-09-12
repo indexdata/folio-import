@@ -491,6 +491,7 @@ foreach (@ARGV) {
   my $coll = { instances => [] };
   while (<RAW>) {
     my $rec = {
+      _version => 1,
       id => '',
       alternativeTitles => [],
       editions => [],
