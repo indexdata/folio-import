@@ -8,26 +8,47 @@ const schemaDir = './schemas';
 
 const funcs = {
   remove_prefix_by_indicator: function(data) {
-    console.log(data);
   },
   capitalize: function (data) {
-    console.log(data);
+  }
+}
+
+const applyRules = function (ent, field) {
+  if (ent.subfield) {
+    let subcodes = ent.subfield.join('');
+    let data = getSubs(field, subcodes);
+    console.log(JSON.stringify(ent, null, 2));
+    if (ent.rules && ent.rules[0].conditions[0]) {
+      let ctype = ent.rules[0].conditions[0].type;
+      ctype.split(/, */).forEach(c => {
+        console.log(c);
+        if (funcs[c]) {
+          funcs[c](data);
+        }
+      });
+    }
+    let out = { 
+      prop: ent.target,
+      value: data
+    }
+    return out;
   }
 }
 
 const makeInst = function (map, field) {
-  let ff = {};
   // console.log(JSON.stringify(map, null, 2));
+  let ff = {};
+  let data;
   map.forEach(m => {
-    let subcodes = m.subfield.join('');
-    let data = getSubs(field, subcodes);
-    if (m.rules && m.rules[0].conditions) {
-      let ctype = m.rules[0].conditions[0].type;
-      ctype.split(/, */).forEach(c => {
-        funcs[c](data);
-      });
+    if (m.entity) {
+      m.entity.forEach(e => {
+        data = applyRules(e, field);
+      })
+    } else {
+      data = applyRules(m, field);
     }
-    ff[m.target] = data;
+    console.log(data);
+    ff[data.prop] = data.value;
   });
   return ff;
 }
@@ -70,7 +91,7 @@ try {
       let inst = {};
       let marc = parseMarc(r);
       for (let t in mappingRules) {
-        if (t === '245') {
+        if (t === '100' && marc.fields[t]) {
           let fields = marc.fields[t];
           if (fields) {
             fields.forEach(f => {
@@ -84,7 +105,7 @@ try {
           }
         }
       }
-      // console.log(inst);
+      console.log(inst);
 
       if (count % 10000 === 0) {
         let now = new Date().valueOf();
