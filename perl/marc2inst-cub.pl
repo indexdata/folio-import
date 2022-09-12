@@ -593,12 +593,14 @@ foreach (@ARGV) {
       my $fr = $field_replace->{$tag} || '';
       if ($fr) {
         my $sf = $fr->{subfield}[0];
-        my $sdata = $field->subfield($sf);
+        my $sdata = $field->subfield($sf) || '';
         $sdata =~ s/^(\d{3}).*/$1/;
         my $rtag = $fr->{frules}->{$sdata} || $sdata;
-        $field->set_tag($rtag);
-        push @marc_fields, $field;
-        next;
+        if ($rtag) {
+          $field->set_tag($rtag);
+          push @marc_fields, $field;
+          next;
+        }
       }
       if (($tag =~ /^(7|1)/ && !$field->subfield('a')) || ($tag == '856' && !$field->subfield('u'))) {
         next;
