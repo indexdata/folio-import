@@ -6,7 +6,6 @@
 
 use MARC::Record;
 use Data::Dumper;
-use utf8;
 
 binmode(STDOUT, ":utf8");
 
@@ -24,7 +23,7 @@ $| = 1 if $bin;
 my $field = shift;
 my $query = shift;
 my $mrc = shift or die "Usage: ./mfind.pl [-b] <field> <regexp> <raw_marc_file> [<limit>]\n";
-open IN, "<:encoding(UTF-8)", $mrc or die "Can't find raw Marc file!\n";
+open IN, "<:encoding(utf-8)", $mrc or die "Can't find raw Marc file!\n";
 my $lim = shift || 1000000;
 $/ = "\x1D";
 $i = 0;
@@ -35,24 +34,22 @@ while (<IN>) {
   my $mdata;
   $raw = $_;
   next unless /$query/i;
-  my $ok = eval {
-      $marc = MARC::Record->new_from_usmarc($raw);
-      1;
-    };
-  next unless $ok;
-  if ($field eq 'LDR') {
-    $mdata = $marc->leader();
-    $found = 1 if $mdata =~ /$query/i;
-  } else {
-    foreach ($marc->field($tag)) {
-      if ($sf) {
-        $mdata = $_->as_string($sf);
-      } else {
-        $mdata = $_->as_string();
-      }
-      if ($mdata =~ /$query/i) {
-        $found = 1;
-        last;
+  my $marc = eval { MARC::Record->new_from_usmarc($raw) };
+  if ($marc) {
+    if ($field eq 'LDR') {
+      $mdata = $marc->leader();
+      $found = 1 if $mdata =~ /$query/i;
+    } else {
+      foreach ($marc->field($tag)) {
+        if ($sf) {
+          $mdata = $_->as_string($sf);
+        } else {
+          $mdata = $_->as_string();
+        }
+        if ($mdata =~ /$query/i) {
+          $found = 1;
+          last;
+        }
       }
     }
   }
