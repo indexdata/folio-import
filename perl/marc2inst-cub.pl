@@ -596,11 +596,11 @@ foreach (@ARGV) {
         my $sdata = $field->subfield($sf) || '';
         $sdata =~ s/^(\d{3}).*/$1/;
         my $rtag = $fr->{frules}->{$sdata} || $sdata;
-        if ($rtag =~ /^\d{3}$/) {
+        if ($rtag =~ /^\d{3}$/ && $rtag != '880') {
           $field->set_tag($rtag);
           push @marc_fields, $field;
-          next;
         }
+        next;
       }
       if (($tag =~ /^(7|1)/ && !$field->subfield('a')) || ($tag == '856' && !$field->subfield('u'))) {
         next;
