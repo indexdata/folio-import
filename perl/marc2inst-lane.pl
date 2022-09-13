@@ -15,6 +15,8 @@
 # directory as the raw marc file.
 # 
 # To add metadata, set FOLIO_USER_ID to user UUID (e.g. export FOLIO_USER_ID=b8e68b41-5473-5d0c-85c8-f4c4eb391b59)
+# 
+# For optomistic locking version set _VERSION to version number
 
 use strict;
 use warnings;
@@ -28,6 +30,7 @@ use Time::Piece;
 use File::Basename;
 use Data::Dumper;
 
+my $ver = ($ENV{_VERSION}) ? $ENV{_VERSION} : '1';
 binmode STDOUT, ":utf8";
 
 my $version = '2';
@@ -722,7 +725,7 @@ foreach (@ARGV) {
       if (!$hrids->{$hrid} && $marc->title()) {
         # set FOLIO_USER_ID environment variable to create the following metadata object.
         $rec->{id} = uuid($hrid);
-        $rec->{_version} = 1;
+        $rec->{_version} = $ver;
         if ($ENV{FOLIO_USER_ID}) {
           $rec->{metadata} = {
             createdByUserId=>$ENV{FOLIO_USER_ID},
@@ -856,7 +859,7 @@ sub make_holdings {
   my $srs = make_srs($marc, $marc->as_usmarc(), $hid, $hrid, $snap_id, $hid);
 
   my $hr = {};
-  $hr->{_version} = 1;
+  $hr->{_version} = $ver;
   $hr->{id} = $hid;
   $hr->{instanceId} = uuid($bid);
   $hr->{hrid} = $hrid;
@@ -929,7 +932,7 @@ sub make_items {
     my $id = $iprefix . $link;
     my $ir = {
       id => uuid($id),
-      _version => 1,
+      _version => $ver,
       holdingsRecordId => $hid,
       hrid => $id,
       copyNumber => $c[4],
@@ -961,6 +964,10 @@ sub make_items {
     }
     my $sc = ($items->{statcodes}->{$link}) ? $items->{statcodes}->{$link}->[0] : '';
     $ir->{materialTypeId} = $tofolio->{mtypes}->{$sc} || $refdata->{mtypes}->{unspecified} || die "Can't set material type for $id"; 
+    my $tmploc = $c[3];
+    if ($tmploc && $refdata->{locations}->{$tmploc}) {
+      $ir->{temporaryLocationId} = $refdata->{locations}->{$tmploc};
+    }
     push @out, $ir;
   }
   return @out;
