@@ -154,6 +154,17 @@ const addMap = {
         if (shipTo) co.shipTo = refData.configs[shipTo];
         co.notes = [];
         let anotes = [];
+        if (notes) {
+          let nts = notes.split(/\n/);
+          nts.forEach(n => {
+            n = n.trim();
+            if (n) anotes.push(n);
+          });
+        }
+        
+        let combinedNotes = anotes.join('; ');
+        if (combinedNotes) co.notes.push(combinedNotes);
+        anotes = [];
         for (let k in addNotes) {
           if (v[k]) {
             let text = v[k];
@@ -162,16 +173,7 @@ const addMap = {
             anotes.push(note);
           }
         }
-        let combinedNotes = anotes.join('; ');
-        if (combinedNotes) co.notes.push(combinedNotes);
-        anotes = [];
-        if (notes) {
-          let nts = notes.split(/\n/);
-          nts.forEach(n => {
-            n = n.trim();
-            if (n) anotes.push(n);
-          });
-        }
+        
         combinedNotes = anotes.join('; ');
         if (combinedNotes) co.notes.push(combinedNotes);
         co.orderType = orderType;
