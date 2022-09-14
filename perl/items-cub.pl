@@ -20,6 +20,7 @@ use Data::Dumper;
 
 binmode STDOUT, ":utf8";
 
+my $ver = $ENV{_VERSION} || '1';
 my $ref_dir = shift;
 my $map_file = shift;
 if (! $ARGV[0]) {
@@ -216,13 +217,26 @@ sub make_hi {
   $hid = uuid($hkey);
   my $locid = $sierra2folio->{locations}->{$loc} || '761db5ed-d29d-4e2e-83d1-c6dfd1426cfd'; # defaults to Unmapped location.
   my $vf = {};
+  my $local_callno = 0;
   foreach (@{ $item->{varFields} }) {
     my $ftag = $_->{fieldTag};
     push @{ $vf->{$ftag} }, $_->{content};
+    if ($ftag eq 'c') {
+      foreach(@{ $_->{subfields} }) {
+        if ($_->{tag} eq 'a') {
+          $cn = $_->{content};
+          $cntype = $refdata->{callNumberTypes}->{'Other scheme'};
+          $local_callno = 1;
+          last;
+        } 
+      }
+    }
   }
+
   # make holdings record from item;
   if (!$hseen->{$hkey}) {
     $hrec->{id} = $hid;
+    $hrec->{_version} = $ver;
     $hrec->{hrid} = $hkey;
     $hrec->{instanceId} = $bid;
     $hrec->{permanentLocationId} = $locid;
@@ -250,6 +264,7 @@ sub make_hi {
   $status =~ s/\s+$//;
   if ($iid) {
     $iid =~ s/^\.//;
+    $irec->{_version} = $ver;
     $irec->{id} = uuid($iid);
     $irec->{holdingsRecordId} = $hid || die "No holdings record ID found for $iid";
     $irec->{hrid} = "i$iid";
@@ -289,6 +304,10 @@ sub make_hi {
       $irec->{discoverySuppress} = 'true';
     } else {
       $irec->{discoverySuppress} = 'false';
+    }
+    if ($local_callno) {
+      $irec->{itemLevelCallNumber} = $cn;
+      $irec->{itemLevelCallNumberTypeId} = $cntype;
     }
     my $iout = $json->encode($irec);
     $items .= $iout . "\n";
