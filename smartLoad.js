@@ -87,6 +87,8 @@ let inFile = process.argv[2];
           ep = 'finance-storage/groups';
       } else if (rec.fiscalYearId && rec.groupId && rec.fundId) {
           ep = 'finance-storage/group-fund-fiscal-years';
+      } else if (rec.budgetId && rec.expenseClassId) {
+          ep = 'finance-storage/budget-expense-classes';
       } else if (rec.holdingsRecordId && rec.materialTypeId) {
           ep = 'item-storage/items';
       } else if (rec.instanceId && rec.permanentLocationId) {

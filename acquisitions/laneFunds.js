@@ -13,21 +13,24 @@ let files = {
   funds: 'funds.jsonl',
   budgets: 'budgets.jsonl',
   groups: 'groups.jsonl',
-  groupFy: 'group-fund-fiscal-years.jsonl'
+  groupFy: 'group-fund-fiscal-years.jsonl',
+  budgetExpenseClass: 'budget-expense-class.jsonl'
 };
 
 let ttl = {
   funds: 0,
   budgets: 0,
   groups: 0,
-  groupFy: 0
+  groupFy: 0,
+  budgetExpenseClass: 0
 }
 
 let refFiles = {
   acquisitionsUnits: 'units.json',
   fundTypes: 'fund-types.json',
   ledgers: 'ledgers',
-  fiscalYears: 'fiscal-years.json'
+  fiscalYears: 'fiscal-years.json',
+  expenseClasses: 'expense-classes.json'
 };
 
 (async () => {
@@ -69,7 +72,8 @@ let refFiles = {
     for (let f in files) {
       let inRecs = [];
       let outFile = files[f];
-      if (!f.match(/group/)) {
+      console.log(f);
+      if (!f.match(/group|Expense/)) {
         let inFile = outFile.replace(/\.jsonl$/, '.csv');
         let csv = fs.readFileSync(inFile, 'utf8');
         inRecs = parse(csv, {
@@ -116,6 +120,17 @@ let refFiles = {
           }
           ttl.groupFy++;
           writeObj(files.groupFy, groupFy);
+          for (let x in refData.expenseClasses) {
+            let xid = refData.expenseClasses[x];
+            xclass = {
+              budgetId: obj.id,
+              expenseClassId: xid,
+              id: uuid(obj.id + xid, ns),
+              status: 'Active'
+            };
+            writeObj(files.budgetExpenseClass, xclass);
+            ttl.budgetExpenseClass++;
+          }
         }
         ttl[f]++;
         writeObj(outFile, obj);
