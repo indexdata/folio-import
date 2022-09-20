@@ -47,6 +47,7 @@ const rstatusMap = {
 const addMap = {
   'Lane: Acquisitions': 'LANE_LIBRARY_ACQUISITIONS'
 };
+console.log(addMap);
 
 (async () => {
   try {
@@ -137,6 +138,7 @@ const addMap = {
         appDate = appDate.replace(/ /, 'T');
         let billTo = addMap[v.BILL_LOCATION];
         let shipTo = addMap[v.SHIP_LOCATION];
+        console.log(shipTo);
         let notes = v.NOTE;
         let poType = v.PO_TYPE_DESC;
         let orderType = (poType === 'Continuation') ? 'Ongoing' : 'One-Time';
