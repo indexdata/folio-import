@@ -1,9 +1,9 @@
 const fs = require('fs');
-const readline = require('readline');
 const uuid = require('uuid/v5');
 const path = require('path');
+const readline = require('readline');
 
-const ns = 'e35dff4e-9035-4d6a-b621-3d42578f81c7';
+const ns = '10896063-5500-47bb-bd55-4c28403ec3f6';
 const nullns = '00000000-0000-0000-0000-000000000000';
 const prefix = 'inv';
 const linePrefix = 'invl';
@@ -36,7 +36,7 @@ const orderFiles = {
 
 (async () => {
   try {
-    if (!inFile) throw('Usage: node hcInvoices.js <acq_ref_dir> <orders_dir> <sierra_invoices_json_file> [ <fiscal_year_start> ]');
+    if (!inFile) throw('Usage: node cubInvoices.js <acq_ref_dir> <orders_dir> <sierra_invoices_json_file> [ <fiscal_year_start> ]');
     if (!fs.existsSync(inFile)) throw new Error(`Can't find ${inFile}!`);
     refDir = refDir.replace(/\/$/, '');
     ordersDir = ordersDir.replace(/\/$/, '');
@@ -62,14 +62,11 @@ const orderFiles = {
     }
 
     const orders = {};
+    /*
     for (let prop in orderFiles) {
       refData[prop] = {};
       let path = `${ordersDir}/${orderFiles[prop]}`;
-      const fileStream = fs.createReadStream(path);
-      const rl = readline.createInterface({
-        input: fileStream,
-        crlfDelay: Infinity
-      });
+      
       orders[prop] = {};
       console.log(`Mapping ${prop}...`);
       for await (const line of rl) {
@@ -83,6 +80,7 @@ const orderFiles = {
         }
       }
     }
+    */
 
     const writeJsonl = (path, data) => {
       let jsonStr = JSON.stringify(data) + '\n';
@@ -90,7 +88,6 @@ const orderFiles = {
     }
 
     const fileStream = fs.createReadStream(inFile);
-
     const rl = readline.createInterface({
       input: fileStream,
       crlfDelay: Infinity
@@ -103,7 +100,6 @@ const orderFiles = {
     let noLines = 0;
     let hasLines = {};
     for await (const line of rl) {
-      lnum++;
       try {
         let so = JSON.parse(line);
         let sid = so.id.toString();
@@ -191,10 +187,10 @@ const orderFiles = {
           };
           ivl.invoiceLineStatus = 'Open';
           let poLineNum = l.order.replace(/.+\//, '');
-          let poLineId = orders.orderLines[poLineNum];
+          let poLineId = (orders.orderLines) ? orders.orderLines[poLineNum] : 1;
           if (poLineId) {
             hasLines[invoiceId] = 1;
-            ivl.poLineId = poLineId;
+            // ivl.poLineId = poLineId;
             if (l.lineItemNote) notes.push(l.lineItemNote);
             writeJsonl(files.ivl, ivl);
             lcount++;
