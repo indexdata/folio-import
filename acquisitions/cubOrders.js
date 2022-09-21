@@ -238,6 +238,7 @@ const formMap = {
         let bibId = so.bibs[0].id;
         bibId = 'b' + bibId;
         pol.instanceId = uuid(bibId + ver, nullns);
+        pol.description = bibId;
 
         let fundNum = ff['12'].value || '';
         let fundId = refData.entries[fundNum] || '';
