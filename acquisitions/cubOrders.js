@@ -16,7 +16,31 @@ const refFiles = {
   funds: 'funds.json',
   entries: 'fund-codes.json',
   locations: 'locations.json',
-  acquisitionMethods: 'acquisition-methods.json'
+  acquisitionMethods: 'acquisition-methods.json',
+  mtypes: 'material-types.json'
+};
+
+const formMap = {
+  b: "book",
+  e: "ejournal acq",
+  k: "map",
+  j: "memb acq",
+  g: "cd acq",
+  i: "lp",
+  l: "microfilm",
+  m: "microfiche",
+  n: "news acq",
+  o: "archival collection acq",
+  p: "photograph acq",
+  r: "ebook acq",
+  s: "journal",
+  u: "bib acq",
+  w: "dvd",
+  x: "db acq",
+  y: "electronic resource",
+  3: "score",
+  4: "stream acq",
+  f: "film reel"
 };
 
 (async () => {
@@ -39,7 +63,10 @@ const refFiles = {
       let obj = require(path);
       console.log(`Mapping ${prop}...`);
       obj[prop].forEach(p => {
-        let code = p.code || p.value;
+        let code = p.code || p.value || p.name;
+        if (prop === 'mtypes') {
+          code = code.toLowerCase();
+        }
         code = code.trim();
         if (prop === 'entries') {
           let codeNum = `${p.codeNumber}`;
@@ -50,7 +77,6 @@ const refFiles = {
         }
       })
     }
-    // console.log(refData); return;
 
     const locMap = {};
     let locData = fs.readFileSync(locMapFile, { encoding: 'utf8' });
@@ -177,9 +203,22 @@ const refFiles = {
           pol.cost.listUnitPrice = price;
           pol.cost.quantityPhysical = copies;
           loc.quantityPhysical = copies;
-          pol.physical = {
-            createInventory: 'None'
+          let mtypeName = '';
+          if (formMap[form]) {
+            mtypeName = formMap[form];
+          } else if (oType === 'z') {
+            mtypeName = 'apc acq';
+          } else if (oType === 'r') {
+            mtypeName = 'annual acq';
+          } else if (oType === 'd' || oType === 'o') {
+            mtypeName = 'so acq';
+          } else if (oType === 'x') {
+            mtypeName = 'manage acq';
           }
+          pol.physical = {
+            createInventory: 'None',
+            materialType: refData.mtypes[mtypeName] || refData.mtypes.unspecified
+          };
         }
 
         loc.quantity = copies;
