@@ -97,6 +97,7 @@ const refFiles = {
         let form = ff['11'].value;
         let oType = ff['15'].value;
         let statCode = ff['20'].value;
+        let raction = ff['16'].value;
         co.orderType = (statCode.match(/[fz]/) && oType.match(/[dnoqs]/)) ? 'Ongoing' : 'One-Time';
         if (co.orderType === 'Ongoing') {
           co.ongoing = {
@@ -122,6 +123,8 @@ const refFiles = {
           checkinItems: false,
           locations: []
         };
+
+        pol.rush = (raction.match(/[anrm]/)) ? true : false;
 
         if (oType === 'a') {
           pol.acquisitionMethod = refData.acquisitionMethods['Approval Plan'];
