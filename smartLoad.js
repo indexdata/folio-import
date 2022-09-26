@@ -89,6 +89,8 @@ let inFile = process.argv[2];
           ep = 'finance-storage/group-fund-fiscal-years';
       } else if (rec.budgetId && rec.expenseClassId) {
           ep = 'finance-storage/budget-expense-classes';
+      } else if (rec.feeFineId && rec.paymentStatus) {
+        ep = 'accounts';
       } else if (rec.holdingsRecordId && rec.materialTypeId) {
           ep = 'item-storage/items';
       } else if (rec.instanceId && rec.permanentLocationId) {
@@ -117,6 +119,8 @@ let inFile = process.argv[2];
           ep = 'invoice-storage/invoices';
       } else if (rec.invoiceLineStatus) {
           ep = 'invoice-storage/invoice-lines';
+      } else if (rec.itemId && rec.userId && rec.loanDate) {
+          ep = 'loan-storage/loans';
       } else {
         throw new Error(`Endpoint not found for ${line}`);
       }
