@@ -19,13 +19,9 @@ let inFile = process.argv[2];
     const workingDir = path.dirname(inFile);
     const baseName = path.basename(inFile, '.jsonl');
     const apath = `${workingDir}/new-accounts.jsonl`;
-    const lpath = `${workingDir}/checkouts.jsonl`;
-    const dpath = `${workingDir}/declared-lost.jsonl`;
+    const dpath = `${workingDir}/loans.jsonl`;
     if (fs.existsSync(apath)) {
       fs.unlinkSync(apath);
-    }
-    if (fs.existsSync(lpath)) {
-      fs.unlinkSync(lpath);
     }
     if (fs.existsSync(dpath)) {
       fs.unlinkSync(dpath);
@@ -64,12 +60,15 @@ let inFile = process.argv[2];
 
     let x = 0;
     let y = 0;
-    let z = 0;
     let seen = {};
+    let procFee = {};
     for await (const line of rl) {
       let acc = JSON.parse(line);
       if (acc.status.name === "Open") {
         let lid = uuid(acc.userId + acc.itemId, ns);
+        if (!procFee[lid]) {
+          procFee[lid] = { count: 1, found: 0 };
+        }
         let hrid = acc.title.replace(/.*?(\d+).*/, '$1');
         let hzLoan = hzLoans[acc.userId + '|' + hrid];
         let dueDate = (hzLoan) ? getDateByDays(hzLoan.due_date) : '2021-12-01T18:38:15.155Z';
@@ -84,35 +83,26 @@ let inFile = process.argv[2];
             loanPolicyId: 'd9cd0bed-1b49-4b5e-a7bd-064b8d177231',
             lostItemPolicyId: 'c7d3b34c-69e6-4aea-ae36-d3a7ccf97d20',
             overdueFinePolicyId: '4e41ca5f-c48a-4d04-b49c-a121d3ceaad9',
-            dueDate: dueDate
+            dueDate: dueDate,
+            declaredLostDate: dueDate,
+            status: { name: 'Open' }
           }
-          dloan.declaredLostDate = '2022-09-22T18:39:48.075+00:00';
-          dloan.status = { name: 'Open' };
           fs.writeFileSync(dpath, JSON.stringify(dloan) + '\n', { flag: 'a' });
 
-          let cloan = {
-            id: lid,
-            itemId: acc.itemId,
-            userId: acc.userId,
-            action: 'checkedout',
-            loanDate: loanDate,
-            loanPolicyId: 'd9cd0bed-1b49-4b5e-a7bd-064b8d177231',
-            lostItemPolicyId: 'c7d3b34c-69e6-4aea-ae36-d3a7ccf97d20',
-            overdueFinePolicyId: '4e41ca5f-c48a-4d04-b49c-a121d3ceaad9',
-            dueDate: dueDate
-          }
-          cloan.status = { name: 'Open' };
-          fs.writeFileSync(lpath, JSON.stringify(cloan) + '\n', { flag: 'a' });
           seen[lid] = 1;
           y++;
         }
         x++;
         acc.loanId = lid;
+        console.log(procFee);
+        if (acc.amount === 5) {
+          acc.feeFineType = 'Lost item processing fee';
+        }
         fs.writeFileSync(apath, JSON.stringify(acc) + '\n', { flag: 'a' });
       }
     }
     console.log(`${x} account records processed and saved to ${apath}`);
-    console.log(`${y} loans created and saved to ${lpath}`);
+    console.log(`${y} loans created and saved to ${dpath}`);
   } catch (e) {
     console.error(e);
   }
