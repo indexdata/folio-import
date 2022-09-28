@@ -2,6 +2,7 @@ const fs = require('fs');
 const readline = require('readline');
 const path = require('path');
 const uuid = require('uuid/v3');
+const { prependListener } = require('process');
 
 const ns = '65f4529e-1581-47f0-84a0-a5b63092e1b3';
 
@@ -43,6 +44,7 @@ let inFile = process.argv[2];
         hzLoans[key] = rec;
       }
     }
+    console.log('Loading hz-loans...');
     await getHzLoans();
 
     const getDateByDays = (days) => {
@@ -60,20 +62,23 @@ let inFile = process.argv[2];
 
     let x = 0;
     let y = 0;
+    let l = 0;
     let seen = {};
     let procFee = {};
     for await (const line of rl) {
+      l++;
+      if (l % 10000 === 0) console.log('Lines processed:', l); 
       let acc = JSON.parse(line);
-      if (acc.status.name === "Open") {
+      if (acc.status.name === "Open" && acc.title && acc.title.match(/hrid=/)) {
         let lid = uuid(acc.userId + acc.itemId, ns);
         if (!procFee[lid]) {
-          procFee[lid] = { count: 1, found: 0 };
+          procFee[lid] = { count: 0, found: 0 };
         }
         let hrid = acc.title.replace(/.*?(\d+).*/, '$1');
         let hzLoan = hzLoans[acc.userId + '|' + hrid];
         let dueDate = (hzLoan) ? getDateByDays(hzLoan.due_date) : '2021-12-01T18:38:15.155Z';
         let loanDate = (hzLoan) ? getDateByDays(hzLoan.last_cko_date) : '2021-12-01T18:38:15.155Z';
-        if (!seen[lid]) {
+        if (!seen[lid] && !acc.loanId) {
           let dloan = {
             id: lid,
             itemId: acc.itemId,
@@ -94,14 +99,19 @@ let inFile = process.argv[2];
         }
         x++;
         acc.loanId = lid;
-        console.log(procFee);
         if (acc.amount === 5) {
+          acc.feeFineType = 'Lost item processing fee';
+          procFee[lid].found++;
+        }
+        if (procFee[lid].count === 2 && procFee[lid].found === 0) {
           acc.feeFineType = 'Lost item processing fee';
         }
         fs.writeFileSync(apath, JSON.stringify(acc) + '\n', { flag: 'a' });
+        procFee[lid].count++;
       }
     }
-    console.log(`${x} account records processed and saved to ${apath}`);
+    console.log(`${l} accounts processed`);
+    console.log(`${x} accounts changed and saved to ${apath}`);
     console.log(`${y} loans created and saved to ${dpath}`);
   } catch (e) {
     console.error(e);
