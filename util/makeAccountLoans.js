@@ -99,12 +99,11 @@ let inFile = process.argv[2];
         }
         x++;
         acc.loanId = lid;
-        if (acc.amount === 5) {
-          acc.feeFineType = 'Lost item processing fee';
-          procFee[lid].found++;
-        }
-        if (procFee[lid].count === 2 && procFee[lid].found === 0) {
-          acc.feeFineType = 'Lost item processing fee';
+        if (procFee[lid].found === 0) {
+          if (acc.amount === 5 || procFee[lid].count === 1) {
+            acc.feeFineType = 'Lost item processing fee';
+            procFee[lid].found++;
+          }
         }
         fs.writeFileSync(apath, JSON.stringify(acc) + '\n', { flag: 'a' });
         procFee[lid].count++;
