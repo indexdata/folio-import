@@ -98,7 +98,7 @@ let inFile = process.argv[2];
           y++;
         }
         x++;
-        acc.loanId = lid;
+        if (!acc.loanId) acc.loanId = lid;
         if (procFee[lid].found === 0) {
           if (acc.amount === 5 || procFee[lid].count === 1) {
             acc.feeFineType = 'Lost item processing fee';
