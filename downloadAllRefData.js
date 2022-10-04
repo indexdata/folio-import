@@ -46,57 +46,98 @@ let refDir = process.argv[2];
     ];
 
     const skipList = {
-      '/item-storage/items': true,
-      '/inventory-view/instances': true,
+      '/accounts': true,
+      '/actual-cost-record-storage/actual-cost-records': true,
+      '/authority-source-files': true,
+      '/authority-storage/authorities': true,
+      '/change-manager/parsedRecords': true,
+      '/check-in-storage/check-ins': true,
+      '/coursereserves/courselistings': true,
+      '/coursereserves/courses': true,
+      '/coursereserves/reserves': true,
+      '/feefineactions': true,
+      '/finance-storage/transactions': true,
+      '/finance-storage/ledger-rollovers-budgets': true,
+      '/finance-storage/ledger-rollovers-logs': true,
       '/holdings-storage/holdings': true,
-      '/instance-storage/instances': true,
       '/instance-bulk/ids': true,
-      '/preceding-succeeding-titles': true,
-      '/shelf-locations': true,
-      '/users': true,
-      '/proxiesfor': true,
-      '/patron-action-session-storage/expired-session-patron-ids': true,
+      '/instance-storage/instance-relationships': true,
+      '/instance-storage/instances': true,
+      '/inventory-hierarchy/updated-instance-ids': true,
+      '/inventory-storage/bound-with-parts': true,
+      '/inventory-storage/migrations/jobs': true,
+      '/inventory-view/instance-set': true,
+      '/inventory-view/instances': true,
+      '/invoice-storage/invoice-lines': true,
+      '/invoice-storage/invoices': true,
+      '/item-storage-dereferenced/items': true,
+      '/item-storage/items': true,
+      '/licenses/amendments': true,
+      '/licenses/files': true,
+      '/licenses/licenses': true,
+      '/loan-storage/loan-history': true,
+      '/loan-storage/loans': true,
+      '/metadata-provider/logs': true,
       '/notes': true,
       '/notify': true,
-      '/inventory-hierarchy/updated-instance-ids': true,
-      '/loan-storage/loans': true,
-      '/loan-storage/loan-history': true,
       '/oai-pmh-view/instances': true,
       '/oai-pmh-view/updatedInstanceIds': true,
-      '/orders-storage/order-lines' : true,
-      '/orders-storage/orders' : true,
-      '/orders-storage/po-lines' : true,
-      '/orders-storage/purchase-orders' : true,
-      '/orders-storage/receiving-history' : true,
-      '/request-storage/requests': true,
+      '/orders-storage/order-invoice-relns': true,
+      '/orders-storage/order-lines': true,
+      '/orders-storage/orders': true,
+      '/orders-storage/po-lines': true,
+      '/orders-storage/purchase-orders': true,
+      '/orders-storage/receiving-history': true,
+      '/orders-storage/pieces': true,
+      '/orders-storage/titles': true,
+      '/organizations-storage/interfaces': true,
+      '/patron-action-session-storage/expired-session-patron-ids': true,
       '/patron-action-session-storage/patron-action-sessions': true,
+      '/preceding-succeeding-titles': true,
+      '/proxiesfor': true,
+      '/record-bulk/ids': true,
+      '/request-preference-storage/request-preference': true,
+      '/request-storage/requests': true,
+      '/scheduled-notice-storage/scheduled-notices': true,
+      '/shelf-locations': true,
       '/source-storage/records': true,
+      '/source-storage/snapshots': true,
       '/source-storage/source-records': true,
       '/source-storage/sourceRecords': true,
-      '/source-storage/snapshots': true,
-      '/check-in-storage/check-ins': true,
-      '/scheduled-notice-storage/scheduled-notices': true,
-      '/accounts': true,
-      '/feefineactions': true,
-      '/metadata-provider/logs': true,
-      '/change-manager/parsedRecords': true,
       '/source-storage/stream/records': true,
       '/source-storage/stream/source-records': true,
-      '/organizations-storage/interfaces': true,
-      '/coursereserves/reserves': true,
-      '/coursereserves/courses': true,
-      '/coursereserves/courselistings': true,
-      '/record-bulk/ids': true,
-      '/inventory-storage/bound-with-parts': true,
-      '/request-preference-storage/request-preference': true,
-      '/finance-storage/transactions': true
+      '/tlr-feature-toggle-job-storage/tlr-feature-toggle-jobs': true,
+      '/users': true,
+      '/voucher-storage/vouchers': true,
+      'voucher-storage/voucher-lines': true,
+
     }
 
-    priority = [
+    const priority = [
       'location-units__institutions',
       'location-units__campuses',
       'location-units__libraries',
-      'locations'
+      'locations',
+      'service-points',
+      'lost-item-fees-policies',
+      'overdue-fines-policies',
+      'feefines',
+      'comments',
+      'owners',
+      'payments',
+      'refunds',
+      'waives',
+      'transfer-criterias',
+      'transfers',
+      'manual-block-templates',
+      'manualblocks',
+      'loan-policy-storage__loan-policies',
+      'fixed-due-date-schedule-storage__fixed-due-date-schedules',
+      'patron-notice-policy-storage__patron-notice-policies',
+      'request-policy-storage__request-policies',
+      'staff-slips-storage__staff-slips',
+      'cancellation-reason-storage__cancellation-reasons',
+      'circulation-rules-storage'
     ]
 
     let userMod = '';
@@ -144,6 +185,11 @@ let refDir = process.argv[2];
     }
 
     for (let x = 0; x < paths.length; x++) {
+      if (paths[x].path === 'mapping-rules') {
+        paths[x].path = 'mapping-rules/marc-bib';
+        paths.push({ mod: paths[x].mod, path: 'mapping-rules/marc-holdings' });
+        paths.push({ mod: paths[x].mod, path: 'mapping-rules/marc-authority' });
+      }
       let saveDir = paths[x].mod.toLowerCase();
       paths[x].path = paths[x].path.replace(/\*/g, '');
       let fileName = paths[x].path.replace(/\//g, '__');
@@ -163,21 +209,22 @@ let refDir = process.argv[2];
       if (url.match(/data-import-profiles/)) {
         url += '&withRelations=true';
       }
-      if (paths[x].path == 'data-import-profiles/profileAssociations') {
-	  let profTypes = [
-		'ACTION_PROFILE_TO_ACTION_PROFILE',
-		'ACTION_PROFILE_TO_MAPPING_PROFILE',
-		'ACTION_PROFILE_TO_MATCH_PROFILE',
-		'JOB_PROFILE_TO_ACTION_PROFILE',
-		'JOB_PROFILE_TO_MATCH_PROFILE',
-		'MATCH_PROFILE_TO_ACTION_PROFILE',
-		'MATCH_PROFILE_TO_MATCH_PROFILE'
-          ];
-	  profTypes.forEach(p => {
-	    let t = p.split(/_TO_/);
-	    paths.push({ path: `${paths[x].path}?master=${t[0]}&detail=${t[1]}`, mod: paths[x].mod });
-	  });
+      if (paths[x].path === 'data-import-profiles/profileAssociations') {
+        let profTypes = [
+          'ACTION_PROFILE_TO_ACTION_PROFILE',
+          'ACTION_PROFILE_TO_MAPPING_PROFILE',
+          'ACTION_PROFILE_TO_MATCH_PROFILE',
+          'JOB_PROFILE_TO_ACTION_PROFILE',
+          'JOB_PROFILE_TO_MATCH_PROFILE',
+          'MATCH_PROFILE_TO_ACTION_PROFILE',
+          'MATCH_PROFILE_TO_MATCH_PROFILE'
+        ];
+        profTypes.forEach(p => {
+          let t = p.split(/_TO_/);
+          paths.push({ path: `${paths[x].path}?master=${t[0]}&detail=${t[1]}`, mod: paths[x].mod });
+        });
       }
+      
       try {
         let res = {};
         if (url.match(/custom-fields/)) {
@@ -197,7 +244,7 @@ let refDir = process.argv[2];
         let jsonStr = JSON.stringify(res.body, null, 2);
         let fullSaveDir = refDir + saveDir;
         if (!fs.existsSync(fullSaveDir)) {
-          console.log(`Creating directory: ${saveDir}`);
+          console.log(`(Creating directory: ${saveDir})`);
           fs.mkdirSync(fullSaveDir);
         }
         let p = priority.indexOf(fileName);
