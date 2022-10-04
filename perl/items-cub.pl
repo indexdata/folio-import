@@ -278,24 +278,25 @@ sub make_hi {
     $irec->{permanentLoanTypeId} = $refdata->{loantypes}->{'Can circulate'};
     $irec->{materialTypeId} = $sierra2folio->{mtypes}->{$itype} || '71fbd940-1027-40a6-8a48-49b44d795e46'; # defaulting to unspecified
     $irec->{status}->{name} = $sierra2folio->{statuses}->{$status} || 'Available'; # defaulting to available;
-    foreach (@{ $vf->{m} }) {
-      if (!$irec->{circulationNotes}) { $irec->{circulationNotes} = [] }
-      my $cnobj = {};
-      $cnobj->{note} = $_;
-      $cnobj->{noteType} = 'Check out';
-      $cnobj->{staffOnly} = 'true';
-      $cnobj->{date} = "" . localtime;
-      $cnobj->{source} = {
-        id => 'ba213137-b641-4da7-aee2-9f2296e8bbf7',
-        personal => { firstName => 'Index', lastName => 'Data' }
-      };
-      push @{ $irec->{circulationNotes} }, $cnobj;
+    foreach my $note (@{ $vf->{m} }) {
+      my @ntypes = ('Check out', 'Check in');
+      foreach my $ntype (@ntypes) {
+        my $cnobj = {};
+        $cnobj->{note} = $note;
+        $cnobj->{noteType} = $ntype;
+        $cnobj->{staffOnly} = 'true';
+        $cnobj->{date} = "" . localtime;
+        # $cnobj->{source} = {
+        #  id => 'ba213137-b641-4da7-aee2-9f2296e8bbf7',
+        #  personal => { firstName => 'Index', lastName => 'Data' }
+        # };
+        push @{ $irec->{circulationNotes} }, $cnobj;
+      }
     }
     foreach (@notes) {
-      if (!$irec->{notes}) { $irec->{notes} = [] }
       my $nobj = {};
       $nobj->{note} = $_;
-      $nobj->{noteTypeId} = '8d0a5eca-25de-4391-81a9-236eeefdd20b';  # Note
+      $nobj->{itemNoteTypeId} = '8d0a5eca-25de-4391-81a9-236eeefdd20b';  # Note
       $nobj->{staffOnly} = 'true';
       push @{ $irec->{notes} }, $nobj;
     }
