@@ -32,6 +32,14 @@ my $files = {
   i => 'items.jsonl'
 };
 
+my $cntypes = {
+  '050' => '95467209-6d7b-468b-94df-0f5d7ad2747d',
+  '086' => 'fc388041-6cd0-4806-8a74-ebe3b9ab4c6e',
+  '090' => '95467209-6d7b-468b-94df-0f5d7ad2747d',
+  '092' => '03dd64d0-5626-4ecd-8ece-4531e0069f35',
+  '099' => '6caca63e-5651-4db6-9247-3205156e9699',
+};
+
 my $json = JSON->new;
 $json->canonical();
 
@@ -209,6 +217,7 @@ sub make_hi {
   my $items = '';
   my $hcount = 0;
   my $icount = 0;
+  my $hcall;
 
   my $loc = $item->{fixedFields}->{79}->{value} || '';
   next if !$loc;
@@ -222,19 +231,31 @@ sub make_hi {
     my $ftag = $_->{fieldTag};
     push @{ $vf->{$ftag} }, $_->{content};
     if ($ftag eq 'c') {
-      foreach(@{ $_->{subfields} }) {
-        if ($_->{tag} eq 'a') {
-          $cn = $_->{content};
-          $cntype = $refdata->{callNumberTypes}->{'Other scheme'};
-          $local_callno = 1;
-          last;
-        } 
+      my @cntext;
+      my $mtag = $_->{marcTag} || 'XXX';
+      if ($_->{content}) {
+        $cntext[0] = $_->{content};
+      } else {
+        foreach(@{ $_->{subfields} }) {
+          if ($_->{tag} eq 'a') {
+            $cntext[0] = $_->{content};
+          } elsif ($_->{tag} eq 'b') {
+            $cntext[1] = $_->{content};
+          }  
+        }
+      }
+      my $cnstring = join ' ', @cntext;
+      if ($cnstring) {
+        $cn = $cnstring;
+        $cntype = $cntypes->{$mtag} || $refdata->{callNumberTypes}->{'Other scheme'};
+        $local_callno = 1;
       }
     }
   }
 
   # make holdings record from item;
   if (!$hseen->{$hkey}) {
+    $hcall = $cn;
     $hrec->{id} = $hid;
     $hrec->{_version} = $ver;
     $hrec->{hrid} = $hkey;
@@ -286,10 +307,6 @@ sub make_hi {
         $cnobj->{noteType} = $ntype;
         $cnobj->{staffOnly} = 'true';
         $cnobj->{date} = "" . localtime;
-        # $cnobj->{source} = {
-        #  id => 'ba213137-b641-4da7-aee2-9f2296e8bbf7',
-        #  personal => { firstName => 'Index', lastName => 'Data' }
-        # };
         push @{ $irec->{circulationNotes} }, $cnobj;
       }
     }
@@ -306,7 +323,7 @@ sub make_hi {
     } else {
       $irec->{discoverySuppress} = 'false';
     }
-    if ($local_callno) {
+    if ($local_callno && $hcall ne $cn) {
       $irec->{itemLevelCallNumber} = $cn;
       $irec->{itemLevelCallNumberTypeId} = $cntype;
     }
