@@ -29,7 +29,8 @@ if (! $ARGV[0]) {
 
 my $files = {
   h => 'holdings.jsonl',
-  i => 'items.jsonl'
+  i => 'items.jsonl',
+  b => 'bound-withs.jsonl'
 };
 
 my $cntypes = {
@@ -147,6 +148,7 @@ my $relations = {
 my $count = 0;
 my $hcount = 0;
 my $icount = 0;
+my $bcount = 0;
 my $start = time();
 
 foreach (@ARGV) {
@@ -167,7 +169,8 @@ foreach (@ARGV) {
   }
 
   open HOUT, '>>:encoding(UTF-8)', $paths->{h} or die "Can't open $paths->{h} for writing\n";
-  open IOUT, '>>:encoding(UTF-8)', $paths->{i} or die "Can't open $paths->{h} for writing\n";
+  open IOUT, '>>:encoding(UTF-8)', $paths->{i} or die "Can't open $paths->{i} for writing\n";
+  open BOUT, '>>:encoding(UTF-8)', $paths->{b} or die "Can't open $paths->{b} for writing\n";
   
   my $hseen = {};
   my $iseen = {};
@@ -177,22 +180,27 @@ foreach (@ARGV) {
   while (<IN>) { 
     chomp;
     my $obj = $json->decode($_);
-    my $it_bid = $obj->{bibIds}->[0];
-    my $bid = "b$it_bid";
-    my $psv = $inst_map->{$bid};
-    if (!$psv) {
-      print "WARN No map entry found for $bid (item: $obj->{id})\n";
-      next;
-    }
-    my @b = split(/\|/, $psv);
-    my $out = make_hi($obj, $b[0], $bid, $b[1], $b[2], $hseen);
-    print HOUT $out->{holdings};
-    print IOUT $out->{items};
-    $count++;
-    $hcount += $out->{hcount};
-    $icount += $out->{icount};
-    if ($count % 10000 == 0) {
-      print "$count items processed [ holdings: $hcount, items: $icount, file: $rawfn]\n"
+    my $bwc = 0;
+    foreach my $it_bid (@{ $obj->{bibIds} }) {
+      my $bid = "b$it_bid";
+      my $psv = $inst_map->{$bid};
+      if (!$psv) {
+        print "WARN No map entry found for $bid (item: $obj->{id})\n";
+        next;
+      }
+      my @b = split(/\|/, $psv);
+      my $out = make_hi($obj, $b[0], $bid, $b[1], $b[2], $hseen, $bwc);
+      print HOUT $out->{holdings};
+      print IOUT $out->{items};
+      print BOUT $out->{bws};
+      $count++;
+      $bwc++;
+      $hcount += $out->{hcount};
+      $icount += $out->{icount};
+      $bcount += $out->{bcount};
+      if ($count % 10000 == 0) {
+        print "$count items processed [ holdings: $hcount, items: $icount, bound-withs: $bcount, file: $rawfn]\n"
+      }
     }
   } 
   close IN;
@@ -202,6 +210,7 @@ print "---------------------------\n";
 print "$count items processed in $end secs\n";
 print "Holdings: $hcount\n";
 print "Items:    $icount\n";
+print "Bounds:   $bcount\n";
 
 sub make_hi {
   my $item = shift;
@@ -210,6 +219,7 @@ sub make_hi {
   my $cn = shift || '';
   my $cntype = shift || '';
   my $hseen = shift;
+  my $bwc = shift;
   my $blevel = shift || '';
   my $hid = '';
   my $hrec = {};
@@ -217,7 +227,10 @@ sub make_hi {
   my $items = '';
   my $hcount = 0;
   my $icount = 0;
+  my $bcount = 0;
   my $hcall;
+  my $bw;
+  my $bws = '';
 
   my $loc = $item->{fixedFields}->{79}->{value} || '';
   next if !$loc;
@@ -278,6 +291,7 @@ sub make_hi {
   my $iid = $item->{id};
   my $itype = $item->{fixedFields}->{79}->{value};
   my $status = $item->{fixedFields}->{79}->{value} || '';
+  my $bc = $vf->{b}[0] || '';
   my @msgs = $vf->{m};
   my @notes;
   push @notes, @{ $vf->{x} } if $vf->{x};
@@ -286,10 +300,23 @@ sub make_hi {
   if ($iid) {
     $iid =~ s/^\.//;
     $irec->{_version} = $ver;
-    $irec->{id} = uuid($iid);
     $irec->{holdingsRecordId} = $hid || die "No holdings record ID found for $iid";
+    if ($bwc == 0) {
+      $irec->{barcode} = $bc if $bc;
+    } else {
+      push @notes, "This item is bound with $bc";
+      my $main_id = uuid($iid);
+      $bw = {
+        itemId => $main_id,
+        holdingsRecordId => $hid,
+        id => uuid($main_id . $hid)
+      };
+      $bws .= $json->encode($bw) . "\n";
+      $bcount++;
+      $iid = "$iid-$bwc";
+    }
     $irec->{hrid} = "i$iid";
-    $irec->{barcode} = $vf->{b}[0] || '';
+    $irec->{id} = uuid($iid);
     if ($blevel eq 's') {
       $irec->{enumeration} = $vf->{v}[0] || '';
     } else {
@@ -334,8 +361,10 @@ sub make_hi {
   return {
     holdings => $holdings,
     items => $items,
+    bws => $bws,
     hcount => $hcount,
-    icount => $icount
+    icount => $icount,
+    bcount => $bcount
   };
 }
 
