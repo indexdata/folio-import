@@ -269,6 +269,8 @@ sub make_hi {
   # make holdings record from item;
   if (!$hseen->{$hkey}) {
     $hcall = $cn;
+    my $iid = 'i' . $item->{id};
+    my $bc = $vf->{b}[0] || 'No barcode';
     $hrec->{id} = $hid;
     $hrec->{_version} = $ver;
     $hrec->{hrid} = $hkey;
@@ -279,6 +281,14 @@ sub make_hi {
     if ($cn) {
       $hrec->{callNumber} = $cn;
       $hrec->{callNumberTypeId} = $cntype;
+    }
+    if ($bwc > 0) {
+      my $hnote = {
+        note => "Bound with $bc ($iid)",
+        holdingsNoteTypeId => $refdata->{holdingsNoteTypes}->{note} || 'b160f13a-ddba-4053-b9c4-60ec5ea45d56',
+        staffOnly => 'true'
+      };
+      push @{ $hrec->{notes} }, $hnote;
     }
     my $hout = $json->encode($hrec);
     $holdings .= $hout . "\n";
@@ -354,9 +364,11 @@ sub make_hi {
       $irec->{itemLevelCallNumber} = $cn;
       $irec->{itemLevelCallNumberTypeId} = $cntype;
     }
-    my $iout = $json->encode($irec);
-    $items .= $iout . "\n";
-    $icount++;
+    if ($bwc == 0) {
+      my $iout = $json->encode($irec);
+      $items .= $iout . "\n";
+      $icount++;
+    }
   }
   return {
     holdings => $holdings,
