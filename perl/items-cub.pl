@@ -145,6 +145,11 @@ my $relations = {
   '3' => 'No information provided'
 };
 
+my $htype_map = {
+  'm' => 'Monograph',
+  's' => 'Serial'
+};
+
 my $count = 0;
 my $hcount = 0;
 my $icount = 0;
@@ -270,14 +275,15 @@ sub make_hi {
   if (!$hseen->{$hkey}) {
     $hcall = $cn || '';
     my $iid = 'i' . $item->{id};
-    my $bc = $vf->{b}[0] || 'No barcode';
+    my $bc = $vf->{b}[0] || '[No barcode]';
     $hrec->{id} = $hid;
     $hrec->{_version} = $ver;
     $hrec->{hrid} = $hkey;
     $hrec->{instanceId} = $bid;
     $hrec->{permanentLocationId} = $locid;
-    $hrec->{holdingsTypeId} = '03c9c400-b9e3-4a07-ac0e-05ab470233ed'; # monograph
-    $hrec->{sourceId} = 'f32d531e-df79-46b3-8932-cdd35f7a2264'; # folio
+    $hrec->{sourceId} = $refdata->{holdingsRecordsSources}->{FOLIO} || '';
+    my $htype = $htype_map->{$blevel};
+    $hrec->{holdingsTypeId} = $refdata->{holdingsTypes}->{$htype} || 'dc35d0ae-e877-488b-8e97-6e41444e6d0a'; #monograph
     if ($cn) {
       $hrec->{callNumber} = $cn;
       $hrec->{callNumberTypeId} = $cntype;
