@@ -268,7 +268,7 @@ sub make_hi {
 
   # make holdings record from item;
   if (!$hseen->{$hkey}) {
-    $hcall = $cn;
+    $hcall = $cn || '';
     my $iid = 'i' . $item->{id};
     my $bc = $vf->{b}[0] || 'No barcode';
     $hrec->{id} = $hid;
