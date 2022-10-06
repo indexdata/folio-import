@@ -746,10 +746,10 @@ foreach (@ARGV) {
       foreach my $f ($marc->field('78[05]')) {
         my $presuc = {};
         $presuc->{title} = $f->as_string('ast');
-        if ($f->tag() eq '780') {
-          $presuc->{precedingInstanceId} = 'PRECEDING_INSTANCE' # dummy number
+        if ($f->tag() eq '785') {
+          $presuc->{precedingInstanceId} = $rec->{id};
         } else {
-          $presuc->{succeedingInstanceId} = 'SUCCEEDING_INSTANCE' # dummy number
+          $presuc->{succeedingInstanceId} = $rec->{id};
         }
         foreach my $sf (('w', 'x')) {
           my $idtype = $refdata->{identifierTypes}->{'Other standard identifier'};
