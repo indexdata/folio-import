@@ -189,7 +189,7 @@ foreach (@ARGV) {
         next;
       }
       my @b = split(/\|/, $psv);
-      my $out = make_hi($obj, $b[0], $bid, $b[1], $b[2], $hseen, $bwc);
+      my $out = make_hi($obj, $b[0], $bid, $b[1], $b[2], $hseen, $bwc, $b[3]);
       print HOUT $out->{holdings};
       print IOUT $out->{items};
       print BOUT $out->{bws};

@@ -725,7 +725,7 @@ foreach (@ARGV) {
       $inst_recs .= $json->encode($rec) . "\n";
       $srs_recs .= $json->encode(make_srs($srsmarc, $raw, $rec->{id}, $rec->{hrid}, $snapshot_id, $srs_file)) . "\n";
       my $ctype = $cntypes->{$cntag} || '';
-      $idmap_lines .= "$rec->{hrid}|$rec->{id}|$cn|$ctype\n";
+      $idmap_lines .= "$rec->{hrid}|$rec->{id}|$cn|$ctype|$blevel\n";
       $hrids->{$hrid} = 1;
       $success++;
 
