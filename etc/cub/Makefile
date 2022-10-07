@@ -12,7 +12,7 @@ iref=$(data)/inv-ref
 uref=$(data)/usr-ref
 aref=$(data)/acq-ref
 
-get-marc:
+get-marc-multi:
 ifeq ($(wildcard $(marcdir)/.),)
 	mkdir $(marcdir)
 endif
@@ -20,13 +20,25 @@ endif
 	cd $(sdir); node downloadMarc.js -s 1500 -e 2999 $(marcdir) > $(log)/marc1.log & 
 	cd $(sdir); node downloadMarc.js -s 3000 $(marcdir) > $(log)/marc2.log & 
 
-get-items:
+get-marc:
+ifeq ($(wildcard $(marcdir)/.),)
+	mkdir $(marcdir)
+endif
+	cd $(sdir); node downloadMarc.js $(marcdir) > $(log)/get-marc.log & 
+
+get-items-multi:
 ifeq ($(wildcard $(itemdir)/.),)
 	mkdir $(itemdir)
 endif
 	cd $(sdir); node downloadItems.js -s 0 -e 1999 $(itemdir) > $(log)/items0.log & 
 	cd $(sdir); node downloadItems.js -s 2000 -e 3999 $(itemdir) > $(log)/items1.log & 
 	cd $(sdir); node downloadItems.js -s 4000 $(itemdir) > $(log)/items2.log & 
+
+get-items:
+ifeq ($(wildcard $(itemdir)/.),)
+	mkdir $(itemdir)
+endif
+	cd $(sdir); node downloadItems.js $(itemdir) > $(log)/items0.log & 
 
 get-holdings:
 ifeq ($(wildcard $(holdir)/.),)
@@ -53,6 +65,9 @@ items: $(itemdir)/*.jsonl
 	cat $(marcdir)/*.map > $(itemdir)/instance.map
 	cat $(itemdir)/items0*.jsonl > $(itemdir)/sierra-items.jsonl
 	cd $(wd)/perl; ./items-cub.pl $(iref) $(itemdir)/instance.map $(itemdir)/sierra-items.jsonl > $(log)/make-items.log &
+
+clean-items: $(itemdir)/sierra-items.jsonl
+	mv $(itemdir)/sierra-items.jsonl $(itemdir)/items000000X.jsonl
 
 holdings: $(holdir)/*.jsonl
 	cat $(marcdir)/*.map > $(holdir)/instance.map
