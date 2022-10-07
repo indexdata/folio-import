@@ -64,6 +64,7 @@ my $files = {
   srs => 'srs.jsonl',
   snap => 'snapshot.jsonl',
   presuc => 'presuc.jsonl',
+  relate => 'relationships.jsonl',
   err => 'err.mrc'
 };
 
@@ -493,6 +494,7 @@ foreach (@ARGV) {
   open my $HSRSOUT, ">>:encoding(UTF-8)", $paths->{hsrs};
   open my $IOUT, ">>:encoding(UTF-8)", $paths->{items};
   open my $PSOUT, ">>:encoding(UTF-8)", $paths->{presuc};
+  open my $ROUT, ">>:encoding(UTF-8)", $paths->{relate};
 
   my $snapshot_id = make_snapshot($paths->{snap});
   
@@ -513,13 +515,14 @@ foreach (@ARGV) {
   my $hrids = {};
   my $rec;
   while (<RAW>) {
+    my $raw = $_;
     if (/^\d{5}.[uvxy] /) {
-      my $h = make_holdings($_, $snapshot_id);
+      my $h = make_holdings($raw, $snapshot_id);
       $hrecs .= $h->{holdings} . "\n";
       $hsrs .= $h->{srs} . "\n";
       if ($h->{items}->[0]) {
         foreach (@{ $h->{items} }) {
-          $irecs .= $json->encode($_) . "\n";
+          $irecs .= $json->encode($raw) . "\n";
           $icount++;
         }
       }
@@ -552,21 +555,19 @@ foreach (@ARGV) {
         source => 'MARC',
         instanceTypeId => ''
       };
-      
+      my $relid = '';
       $count++;
-      my $raw;
-      if ($_ =~ /^\d{5}....a/) {
-        $raw = $_
-      } else {
-        $raw = marc8_to_utf8($_);
-      }
-      my $marc;
-      my $ok = eval {
-        $marc = MARC::Record->new_from_usmarc($raw);
-        1;
+      #my $raw;
+      #if ($_ =~ /^\d{5}....a/) {
+      #  $raw = $_
+      #} else {
+      #  $raw = marc8_to_utf8($_);
+      #}
+      # my $marc;
+      my $marc = eval {
+        MARC::Record->new_from_usmarc($raw);
       };
-      next unless $ok;
-
+      next unless $marc;
       # lets add an "L" in to the front of the 001
       if ($marc->field('001')) {
         my $in_ctrl = $marc->field('001')->data();
@@ -594,9 +595,8 @@ foreach (@ARGV) {
         $rec->{modeOfIssuanceId} = $refdata->{issuanceModes}->{unspecified};
       }
       my @marc_fields = $marc->fields();
-      MARC_FIELD: foreach (@marc_fields) {
-        my $field = $_;
-        my $tag = $_->tag();
+      MARC_FIELD: foreach my $field (@marc_fields) {
+        my $tag = $field->tag();
         my $fr = $field_replace->{$tag} || '';
         if ($fr) {
           my $sf = $fr->{subfield}[0];
@@ -609,7 +609,7 @@ foreach (@ARGV) {
           }
           next;
         }
-        if (($tag =~ /^(7|1)/ && !$field->subfield('a')) || ($tag == '856' && !$field->subfield('u'))) {
+        if (($tag =~ /^(70|71|1)/ && !$field->subfield('a')) || ($tag == '856' && !$field->subfield('u'))) {
           next;
         }
         
@@ -698,6 +698,9 @@ foreach (@ARGV) {
             }
           }
         }
+        if ($tag eq '787') {
+          $relid = $field->subfield('w') || '';
+        }
       }
       # Do some some record checking and cleaning
       $rec->{subjects} = dedupe(@{ $rec->{subjects} });
@@ -718,7 +721,6 @@ foreach (@ARGV) {
       
       # Assign uuid based on hrid;
       if (!$rec->{hrid}) {
-        # $rec->{hrid} = sprintf("%4s%010d", "marc", $count);  # if there is no hrid, make one up.
         die "No HRID found in record $count";
       }
       my $hrid = $rec->{hrid};
@@ -733,6 +735,9 @@ foreach (@ARGV) {
             createdDate=>$mdate,
             updatedDate=>$mdate
           };
+        }
+        if ($relid) {
+          # create instance relationship object here.
         }
         $inst_recs .= $json->encode($rec) . "\n";
         $srs_recs .= $json->encode(make_srs($srsmarc, $raw, $rec->{id}, $rec->{hrid}, $snapshot_id)) . "\n";
