@@ -182,10 +182,17 @@ sub mapItems {
     my $fn = $ifiles->{$_};
     my $path = "$dir/$fn";
     open ITD, "<:encoding(UTF-8)", $path;
+    my $prekey = '';
     while (<ITD>) {
       s/[\r\n]//g;
+      if ($prop eq 'notes' && $_ !~ /^\d+\t/ && $items->{$prop}->{$prekey}->[0]) {
+        s/\"\s*$//;
+        $items->{$prop}->{$prekey}->[0] =~ s/"(.+)/$1\n$_/;
+        next;
+      } 
       my @d = split /\t/, $_, 2;
       push @{ $items->{$prop}->{$d[0]} }, $d[1] if ($d[0]);
+      $prekey = $d[0];
       if ($prop eq 'barcodes') {
         $d[1] =~ s/\t.+$//;
         $items->{bc2iid}->{$d[1]} = $d[0];
@@ -194,6 +201,7 @@ sub mapItems {
   }
 }
 mapItems();
+# print Dumper($items->{notes}); exit;
 
 my $blvl = {
   'm' => 'Monograph',
