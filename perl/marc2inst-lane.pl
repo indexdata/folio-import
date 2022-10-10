@@ -65,6 +65,7 @@ my $files = {
   snap => 'snapshot.jsonl',
   presuc => 'presuc.jsonl',
   relate => 'relationships.jsonl',
+  bwp => 'bound-with-parts.jsonl',
   err => 'err.mrc'
 };
 
@@ -173,6 +174,7 @@ my $tofolio = makeMapFromTsv($ref_dir, $refdata);
 # print Dumper($tofolio); exit;
 # print Dumper($refdata->{locations}); exit;
 
+print "Loading items...\n";
 my $items = {};
 sub mapItems {
   foreach (sort keys %{ $ifiles }) {
@@ -184,6 +186,10 @@ sub mapItems {
       s/[\r\n]//g;
       my @d = split /\t/, $_, 2;
       push @{ $items->{$prop}->{$d[0]} }, $d[1] if ($d[0]);
+      if ($prop eq 'barcodes') {
+        $d[1] =~ s/\t.+$//;
+        $items->{bc2iid}->{$d[1]} = $d[0];
+      }
     }
   }
 }
@@ -477,6 +483,8 @@ foreach (@ARGV) {
   my $hcount = 0;
   my $errcount = 0;
   my $pcount = 0;
+  my $rcount = 0;
+  my $bwcount = 0;
   my $start = time();
 
   my $dir = dirname($infile);
@@ -495,6 +503,7 @@ foreach (@ARGV) {
   open my $IOUT, ">>:encoding(UTF-8)", $paths->{items};
   open my $PSOUT, ">>:encoding(UTF-8)", $paths->{presuc};
   open my $ROUT, ">>:encoding(UTF-8)", $paths->{relate};
+  open my $BWOUT, ">>:encoding(UTF-8)", $paths->{bwp};
 
   my $snapshot_id = make_snapshot($paths->{snap});
   
@@ -522,8 +531,14 @@ foreach (@ARGV) {
       $hsrs .= $h->{srs} . "\n";
       if ($h->{items}->[0]) {
         foreach (@{ $h->{items} }) {
-          $irecs .= $json->encode($raw) . "\n";
+          $irecs .= $json->encode($_) . "\n";
           $icount++;
+        }
+      }
+      if ($h->{bwp}->[0]) {
+        foreach (@{ $h->{bwp} }) {
+          print $BWOUT $json->encode($_) . "\n";
+          $bwcount++;
         }
       }
       $hcount++;
@@ -737,7 +752,11 @@ foreach (@ARGV) {
           };
         }
         if ($relid) {
-          # create instance relationship object here.
+          my $superid = uuid($relid);
+          my $rtype = $refdata->{instanceRelationshipTypes}->{'bound-with'};
+          my $relobj = { superInstanceId=>$superid, subInstanceId=>$rec->{id}, instanceRelationshipTypeId=>$rtype };
+          print $ROUT $json->encode($relobj) . "\n";
+          $rcount++;
         }
         $inst_recs .= $json->encode($rec) . "\n";
         $srs_recs .= $json->encode(make_srs($srsmarc, $raw, $rec->{id}, $rec->{hrid}, $snapshot_id)) . "\n";
@@ -821,11 +840,13 @@ foreach (@ARGV) {
   }
   my $tt = time() - $start;
   print "\nDone!\n$count Marc records processed in $tt seconds";
-  print "\nInstances: $success ($paths->{inst})";
-  print "\nHoldings:  $hcount ($paths->{holds})";
-  print "\nItems:     $icount ($paths->{items})";
-  print "\nPre-suc:   $pcount ($paths->{presuc})";
-  print "\nErrors:    $errcount\n";
+  print "\nInstances:   $success ($paths->{inst})";
+  print "\nHoldings:    $hcount ($paths->{holds})";
+  print "\nItems:       $icount ($paths->{items})";
+  print "\nPre-suc:     $pcount ($paths->{presuc})";
+  print "\nRelations:   $rcount ($paths->{relate}";
+  print "\nBound-withs: $bwcount ($paths->{bwp})";
+  print "\nErrors:      $errcount\n";
 }
 
 sub make_holdings {
@@ -840,6 +861,7 @@ sub make_holdings {
   my $loc = $lfield->as_string('b');
   my $cn = $lfield->as_string('hi');
   my $cntype = $lfield->indicator(1);
+  my $subw = $lfield->as_string('w');
   my $cntype_str = '';
   if ($cntype eq '0') {
     $cntype_str = 'Library of Congress classification'; 
@@ -922,6 +944,16 @@ sub make_holdings {
   };
   my @items = make_items($hr->{hrid}, $hr->{id}, $hr->{callNumberTypeId});
   push @{ $out->{items} }, @items;
+  if ($subw) {
+    my $ihrid = $items->{bc2iid}->{$subw};
+    my $itemid = uuid($iprefix . $ihrid);
+    my $bw = {
+      holdingsRecordId => $hr->{id},
+      itemId => $itemid,
+      id => uuid($hr->{id} . $itemid)
+    };
+    push @{ $out->{bwp} }, $bw;
+  }
   return $out;
 }
 
