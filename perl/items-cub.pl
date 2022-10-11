@@ -23,8 +23,9 @@ binmode STDOUT, ":utf8";
 my $ver = $ENV{_VERSION} || '1';
 my $ref_dir = shift;
 my $map_file = shift;
+my $hmap_file = shift;
 if (! $ARGV[0]) {
-  die "Usage: ./items-cub.pl <ref_data_dir> <instances_tsv_map_file> <item_jsonl_file>\n";
+  die "Usage: ./items-cub.pl <ref_data_dir> <instance_map_file> <holdings_map_file> <item_jsonl_file>\n";
 }
 
 my $files = {
@@ -122,7 +123,7 @@ sub makeMapFromTsv {
 }
 
 my $inst_map = {};
-print "Opening map file-- this may take a while...\n";
+print "Opening instance map file-- this may take a while...\n";
 open MAP, $map_file;
 my $mi = 0;
 while (<MAP>) {
@@ -131,6 +132,19 @@ while (<MAP>) {
   chomp;
   my @d = split(/\|/, $_, 2);
   $inst_map->{$d[0]} = $d[1];
+}
+close MAP;
+
+my $hold_map = {};
+print "Opening holdings map file-- this may take a while...\n";
+open MAP, $hmap_file;
+$mi = 0;
+while (<MAP>) {
+  $mi++;
+  print "  $mi map lines read\n" if $mi % 1000000 == 0;
+  chomp;
+  my @d = split(/\|/, $_, 2);
+  push @{ $hold_map->{$d[0]} }, $d[1];
 }
 close MAP;
 
@@ -233,7 +247,7 @@ sub make_hi {
   my $hcount = 0;
   my $icount = 0;
   my $bcount = 0;
-  my $hcall;
+  my $hcall = '';
   my $bw;
   my $bws = '';
 
@@ -270,9 +284,18 @@ sub make_hi {
       }
     }
   }
+  my $hfound = 0;
+  foreach (@{ $hold_map->{$bhrid} }) {
+    my @m = split(/\|/);
+    if ($loc =~ /$m[0]/) {
+      $hid = $m[1];
+      $hfound = 1;
+      last;
+    }
+  }
 
   # make holdings record from item;
-  if (!$hseen->{$hkey}) {
+  if (!$hseen->{$hkey} && !$hfound)  {
     $hcall = $cn || '';
     my $iid = 'i' . $item->{id};
     my $bc = $vf->{b}[0] || '[No barcode]';
@@ -282,7 +305,7 @@ sub make_hi {
     $hrec->{instanceId} = $bid;
     $hrec->{permanentLocationId} = $locid;
     $hrec->{sourceId} = $refdata->{holdingsRecordsSources}->{FOLIO} || '';
-    my $htype = $htype_map->{$blevel};
+    my $htype = $htype_map->{$blevel} || '';
     $hrec->{holdingsTypeId} = $refdata->{holdingsTypes}->{$htype} || 'dc35d0ae-e877-488b-8e97-6e41444e6d0a'; #monograph
     if ($cn) {
       $hrec->{callNumber} = $cn;
@@ -310,6 +333,7 @@ sub make_hi {
   my $bc = $vf->{b}[0] || '';
   my @msgs = $vf->{m};
   my @notes;
+  push @notes, "Former location: $loc";
   push @notes, @{ $vf->{x} } if $vf->{x};
   push @notes, @{ $vf->{w} } if $vf->{w};
   $status =~ s/\s+$//;
