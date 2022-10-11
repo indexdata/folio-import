@@ -31,7 +31,8 @@ if (! $ARGV[0]) {
 my $files = {
   h => 'holdings.jsonl',
   i => 'items.jsonl',
-  b => 'bound-withs.jsonl'
+  b => 'bound-withs.jsonl',
+  r => 'relationships.jsonl'
 };
 
 my $cntypes = {
@@ -168,6 +169,7 @@ my $count = 0;
 my $hcount = 0;
 my $icount = 0;
 my $bcount = 0;
+my $rcount = 0;
 my $start = time();
 
 foreach (@ARGV) {
@@ -190,6 +192,7 @@ foreach (@ARGV) {
   open HOUT, '>>:encoding(UTF-8)', $paths->{h} or die "Can't open $paths->{h} for writing\n";
   open IOUT, '>>:encoding(UTF-8)', $paths->{i} or die "Can't open $paths->{i} for writing\n";
   open BOUT, '>>:encoding(UTF-8)', $paths->{b} or die "Can't open $paths->{b} for writing\n";
+  open ROUT, '>>:encoding(UTF-8)', $paths->{r} or die "Can't open $paths->{r} for writing\n";
   
   my $hseen = {};
   my $iseen = {};
@@ -200,6 +203,7 @@ foreach (@ARGV) {
     chomp;
     my $obj = $json->decode($_);
     my $bwc = 0;
+    my $main_bib = 'b' . $obj->{bibIds}->[0];
     foreach my $it_bid (@{ $obj->{bibIds} }) {
       my $bid = "b$it_bid";
       my $psv = $inst_map->{$bid};
@@ -212,6 +216,13 @@ foreach (@ARGV) {
       print HOUT $out->{holdings};
       print IOUT $out->{items};
       print BOUT $out->{bws};
+      if ($bwc > 0) {
+        my $super = uuid($main_bib);
+        my $sub = uuid($bid);
+        my $robj = { superInstanceId=>$super, subInstanceId=>$sub, instanceRelationshipTypeId=>'758f13db-ffb4-440e-bb10-8a364aa6cb4a' };
+        print ROUT $json->encode($robj) . "\n";
+        $rcount++;
+      }
       $count++;
       $bwc++;
       $hcount += $out->{hcount};
@@ -227,9 +238,10 @@ foreach (@ARGV) {
 my $end = time() - $start;
 print "---------------------------\n";
 print "$count items processed in $end secs\n";
-print "Holdings: $hcount\n";
-print "Items:    $icount\n";
-print "Bounds:   $bcount\n";
+print "Holdings:  $hcount\n";
+print "Items:     $icount\n";
+print "Bounds:    $bcount\n";
+print "Relations: $rcount\n";
 
 sub make_hi {
   my $item = shift;
