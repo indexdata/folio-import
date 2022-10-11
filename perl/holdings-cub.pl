@@ -199,6 +199,10 @@ foreach (@ARGV) {
   my $snapstr = $json->encode($snap);
   write_objects($SNP, $snapstr . "\n");
 
+  my $hmapfile = "$dir/holdings.map";
+  unlink $hmapfile;
+  open my $HMAP, ">>:encoding(UTF-8)", $hmapfile;
+
   my $count = 0;
   my $hcount = 0;
   my $start = time();
@@ -237,13 +241,14 @@ foreach (@ARGV) {
     }
     my $ff = $obj->{fixedFields};
     my $h = {};
+    my $loc_code = $ff->{40}->{value} || 'xxxxx';
+    $loc_code =~ s/\s*$//;
     my $hid = "c" . $obj->{id};
     next if $seen->{$hid};
     $seen->{$hid} = 1;
-    my $loc_code = $ff->{40}->{value} || 'xxxxx';
-    $loc_code =~ s/\s*$//;
     my $hkey = "$bid-$loc_code";
     $h->{id} = uuid($hid);
+    print $HMAP "$bid|$loc_code|$h->{id}|$hid\n";
     $h->{formerIds} = [ $obj->{id} ];
     $h->{hrid} = $hid;
     $h->{instanceId} = $b[0];
