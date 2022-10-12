@@ -21,11 +21,15 @@ let inFile = process.argv[2];
     const baseName = path.basename(inFile, '.jsonl');
     const apath = `${workingDir}/new-accounts.jsonl`;
     const dpath = `${workingDir}/loans.jsonl`;
+    const found = `${workingDir}/found.jsonl`;
     if (fs.existsSync(apath)) {
       fs.unlinkSync(apath);
     }
     if (fs.existsSync(dpath)) {
       fs.unlinkSync(dpath);
+    }
+    if (fs.existsSync(found)) {
+      fs.unlinkSync(found);
     }
 
     const hzFile = workingDir + '/hz-loans.jsonl';
@@ -47,6 +51,24 @@ let inFile = process.argv[2];
     console.log('Loading hz-loans...');
     await getHzLoans();
 
+    const itemFile = workingDir + '/items.jsonl';
+    let itemStatus = {};
+    const getItems = async () => {
+      const fileStream = fs.createReadStream(itemFile);
+
+      const rl = readline.createInterface({
+        input: fileStream,
+        crlfDelay: Infinity
+      });
+      for await (const line of rl) {
+        let rec = JSON.parse(line);
+        let key = rec.id;
+        itemStatus[key] = rec.status.name;
+      }
+    }
+    console.log('Loading items...');
+    await getItems();
+
     const getDateByDays = (days) => {
       const ms = days * 86400 * 1000;
       const rdate = new Date(ms).toISOString();
@@ -63,13 +85,15 @@ let inFile = process.argv[2];
     let x = 0;
     let y = 0;
     let l = 0;
+    let f = 0;
     let seen = {};
     let procFee = {};
     for await (const line of rl) {
       l++;
       if (l % 10000 === 0) console.log('Lines processed:', l); 
       let acc = JSON.parse(line);
-      if (acc.status.name === "Open" && acc.title && acc.title.match(/hrid=/)) {
+      let istat = itemStatus[acc.itemId];
+      if (acc.status.name === "Open" && acc.title && acc.title.match(/hrid=/) && istat === 'Declared lost') {
         let lid = uuid(acc.userId + acc.itemId, ns);
         if (!procFee[lid]) {
           procFee[lid] = { count: 0, found: 0 };
@@ -78,7 +102,8 @@ let inFile = process.argv[2];
         let hzLoan = hzLoans[acc.userId + '|' + hrid];
         let dueDate = (hzLoan) ? getDateByDays(hzLoan.due_date) : '2021-12-01T18:38:15.155Z';
         let loanDate = (hzLoan) ? getDateByDays(hzLoan.last_cko_date) : '2021-12-01T18:38:15.155Z';
-        if (!seen[lid] && !acc.loanId) {
+        
+        if (!seen[lid] && !acc.loanId ) {
           let dloan = {
             id: lid,
             itemId: acc.itemId,
@@ -107,11 +132,15 @@ let inFile = process.argv[2];
         }
         fs.writeFileSync(apath, JSON.stringify(acc) + '\n', { flag: 'a' });
         procFee[lid].count++;
+      } else if (acc.status.name === 'Open' && istat !== 'Declared lost') {
+        fs.writeFileSync(found, JSON.stringify(acc) + '\n', { flag: 'a'})
+        f++;
       }
     }
     console.log(`${l} accounts processed`);
     console.log(`${x} accounts changed and saved to ${apath}`);
     console.log(`${y} loans created and saved to ${dpath}`);
+    console.log(`${f} accounts have found items, saved to ${found}`);
   } catch (e) {
     console.error(e);
   }
