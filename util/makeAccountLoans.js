@@ -21,7 +21,7 @@ let inFile = process.argv[2];
     const baseName = path.basename(inFile, '.jsonl');
     const apath = `${workingDir}/new-accounts.jsonl`;
     const dpath = `${workingDir}/loans.jsonl`;
-    const found = `${workingDir}/found.jsonl`;
+    const found = `${workingDir}/not-declared-lost.jsonl`;
     if (fs.existsSync(apath)) {
       fs.unlinkSync(apath);
     }
