@@ -197,11 +197,15 @@ sub mapItems {
         $d[1] =~ s/\t.+$//;
         $items->{bc2iid}->{$d[1]} = $d[0];
       }
+      if ($prop eq 'items') {
+        $d[1] =~ s/\t.*//;
+        $items->{iid2hid}->{$d[1]} = $d[0];
+      }
     }
   }
 }
 mapItems();
-# print Dumper($items->{notes}); exit;
+# print Dumper($items->{iid2hid}); exit;
 
 my $blvl = {
   'm' => 'Monograph',
@@ -476,6 +480,7 @@ foreach (keys %{ $mapping_rules }) {
   }
 }
 
+my $bwmain = {};
 foreach (@ARGV) {
   my $infile = $_;
   if (! -e $infile) {
@@ -952,12 +957,22 @@ sub make_holdings {
   if ($subw && $items->{bc2iid}->{$subw}) {
     my $ihrid = $items->{bc2iid}->{$subw};
     my $itemid = uuid($iprefix . $ihrid);
+    if (!$bwmain->{$subw}) {
+      my $hhrid = $hprefix . $items->{iid2hid}->{$ihrid};
+      my $bw = {
+        holdingsRecordId => uuid($hhrid),
+        itemId => $itemid,
+        id => uuid($hhrid . $itemid)
+      };
+      push @{ $out->{bwp} }, $bw;
+    }
     my $bw = {
       holdingsRecordId => $hr->{id},
       itemId => $itemid,
       id => uuid($hr->{id} . $itemid)
     };
     push @{ $out->{bwp} }, $bw;
+    $bwmain->{$subw} = 1;
     my $hnote = {
       note => "Bound with $subw",
       holdingsNoteTypeId => $refdata->{holdingsNoteTypes}->{Binding},
