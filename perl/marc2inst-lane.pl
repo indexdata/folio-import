@@ -820,7 +820,7 @@ foreach (@ARGV) {
     }
     if (eof RAW || $success % 10000 == 0) {
       my $tt = time() - $start;
-      print "Processed #$count (" . $rec->{hrid} . ") [ instances: $success, holdings: $hcount, items: $icount, time: $tt secs ]\n";
+      print "Processed #$count (" . $rec->{hrid} . ") [ instances: $success, holdings: $hcount, items: $icount, time: $tt secs ]\n" if $rec->{hrid};
       write_objects($OUT, $inst_recs);
       $inst_recs = '';
 
@@ -946,13 +946,10 @@ sub make_holdings {
     }
   }
 
-  my $out = {
-    holdings => $json->encode($hr),
-    srs => $json->encode($srs)
-  };
+  my $out;
   my @items = make_items($hr->{hrid}, $hr->{id}, $hr->{callNumberTypeId});
   push @{ $out->{items} }, @items;
-  if ($subw) {
+  if ($subw && $items->{bc2iid}->{$subw}) {
     my $ihrid = $items->{bc2iid}->{$subw};
     my $itemid = uuid($iprefix . $ihrid);
     my $bw = {
@@ -961,7 +958,15 @@ sub make_holdings {
       id => uuid($hr->{id} . $itemid)
     };
     push @{ $out->{bwp} }, $bw;
+    my $hnote = {
+      note => "Bound with $subw",
+      holdingsNoteTypeId => $refdata->{holdingsNoteTypes}->{Binding},
+      staffOnly => 'true'
+    };
+    push @{ $hr->{notes} }, $hnote;
   }
+  $out->{holdings} = $json->encode($hr);
+  $out->{srs} = $json->encode($srs);
   return $out;
 }
 
