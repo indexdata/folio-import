@@ -198,14 +198,14 @@ sub mapItems {
         $items->{bc2iid}->{$d[1]} = $d[0];
       }
       if ($prop eq 'items') {
-        $d[1] =~ s/\t.*//;
+        $d[1] =~ s/.+?\t(.+?)\t.+/$1/;
         $items->{iid2hid}->{$d[1]} = $d[0];
       }
     }
   }
 }
 mapItems();
-# print Dumper($items->{iid2hid}); exit;
+# print Dumper($items->{items}); exit;
 
 my $blvl = {
   'm' => 'Monograph',
@@ -957,7 +957,7 @@ sub make_holdings {
   if ($subw && $items->{bc2iid}->{$subw}) {
     my $ihrid = $items->{bc2iid}->{$subw};
     my $itemid = uuid($iprefix . $ihrid);
-    if (!$bwmain->{$subw}) {
+    if (!$bwmain->{$subw} && $items->{iid2hid}->{$ihrid}) {
       my $hhrid = $hprefix . $items->{iid2hid}->{$ihrid};
       my $bw = {
         holdingsRecordId => uuid($hhrid),
@@ -993,7 +993,7 @@ sub make_items {
   my @out;
   foreach (@{ $items->{items}->{$hhrid} }) {
     my @c = split /\t/, $_;
-    my $link = $c[0];
+    my $link = $c[1];
     my $id = $iprefix . $link;
     my $ir = {
       id => uuid($id),
