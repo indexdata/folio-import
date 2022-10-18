@@ -7,7 +7,8 @@ const uuid = require('uuid/v5');
 const parse = require('csv-parse/lib/sync');
 
 const ns = 'e35dff4e-9035-4d6a-b621-3d42578f81c7';
-let fy = 'LANEFY2022';
+let fy = 'LANEFY2023';
+let suf = 'FY2023';
 
 let files = {
   funds: 'funds.jsonl',
@@ -28,7 +29,7 @@ let ttl = {
 let refFiles = {
   acquisitionsUnits: 'units.json',
   fundTypes: 'fund-types.json',
-  ledgers: 'ledgers',
+  ledgers: 'ledgers.json',
   fiscalYears: 'fiscal-years.json',
   expenseClasses: 'expense-classes.json'
 };
@@ -104,8 +105,8 @@ let refFiles = {
         if (f === 'budgets') {
           let fcode = r['Fund Code'];
           let fund = fundMap[fcode];
-          obj.id = uuid(fund.name + 'bud', ns);
-          obj.name = fund.name;
+          obj.id = uuid(fund.name + 'bud' + fy, ns);
+          obj.name = fund.name + '-' + suf;
           obj.budgetStatus = 'Active';
           obj.fundId = fund.id;
           obj.fiscalYearId = refData.fiscalYears[fy];
