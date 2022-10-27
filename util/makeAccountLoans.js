@@ -22,6 +22,7 @@ let inFile = process.argv[2];
     const apath = `${workingDir}/new-accounts.jsonl`;
     const dpath = `${workingDir}/loans.jsonl`;
     const found = `${workingDir}/not-declared-lost.jsonl`;
+    const istatFile = `${workingDir}/istats.txt`;
     if (fs.existsSync(apath)) {
       fs.unlinkSync(apath);
     }
@@ -30,6 +31,9 @@ let inFile = process.argv[2];
     }
     if (fs.existsSync(found)) {
       fs.unlinkSync(found);
+    }
+    if (fs.existsSync(istatFile)) {
+      fs.unlinkSync(istatFile);
     }
 
     const hzFile = workingDir + '/hz-loans.jsonl';
@@ -93,7 +97,8 @@ let inFile = process.argv[2];
       if (l % 10000 === 0) console.log('Lines processed:', l); 
       let acc = JSON.parse(line);
       let istat = itemStatus[acc.itemId];
-      if (acc.status.name === "Open" && acc.title && acc.title.match(/hrid=/) && istat === 'Declared lost') {
+      if (istat && acc.status.name === 'Open' && acc.title && acc.title.match(/hrid=/) && istat.match(/Declared lost|Withdrawn|Unavailable/)) {
+        fs.writeFileSync(istatFile, `${istat}\t${acc.id}\t${acc.userId}\n`, { flag: 'a' });
         let lid = uuid(acc.userId + acc.itemId, ns);
         if (!procFee[lid]) {
           procFee[lid] = { count: 0, found: 0 };
