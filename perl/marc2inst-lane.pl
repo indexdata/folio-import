@@ -186,8 +186,9 @@ sub mapItems {
     while (<ITD>) {
       s/[\r\n]//g;
       if ($prop eq 'notes' && $_ !~ /^\d+\t/ && $items->{$prop}->{$prekey}->[0]) {
-        s/\"\s*$//;
-        $items->{$prop}->{$prekey}->[0] =~ s/"(.+)/$1\n$_/;
+        s/"\t//;
+        $items->{$prop}->{$prekey}->[0] =~ s/^"//;
+        $items->{$prop}->{$prekey}->[0] .= "\n$_";
         next;
       } 
       my @d = split /\t/, $_, 2;
