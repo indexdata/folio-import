@@ -1000,14 +1000,14 @@ sub make_items {
       _version => $ver,
       holdingsRecordId => $hid,
       hrid => $id,
-      copyNumber => $c[4],
+      copyNumber => $c[5],
     };
-    if ($c[5]) {
-      $ir->{itemLevelCallNumber} = $c[5];
+    if ($c[6]) {
+      $ir->{itemLevelCallNumber} = $c[6];
       $ir->{itemLevelCallNumberTypeId} = $cntype;
     }
-    $ir->{enumeration} = $c[6] if $c[6];
-    $ir->{chronology} = $c[7] if $c[7];
+    $ir->{enumeration} = $c[7] if $c[7];
+    $ir->{chronology} = $c[8] if $c[8];
     push @{ $ir->{yearCaption} }, $c[9] if $c[9];
     $ir->{numberOfPieces} = $c[10] if $c[10];
     $ir->{status}->{name} = 'Available';
@@ -1029,7 +1029,7 @@ sub make_items {
     }
     my $sc = ($items->{statcodes}->{$link}) ? $items->{statcodes}->{$link}->[0] : '';
     $ir->{materialTypeId} = $tofolio->{mtypes}->{$sc} || $refdata->{mtypes}->{unspecified} || die "Can't set material type for $id"; 
-    my $tmploc = $c[3];
+    my $tmploc = $c[4];
     if ($tmploc && $refdata->{locations}->{$tmploc}) {
       $ir->{temporaryLocationId} = $refdata->{locations}->{$tmploc};
     }
