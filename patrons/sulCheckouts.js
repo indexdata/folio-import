@@ -58,8 +58,14 @@ const csvFile = process.argv[4];
       nf: 'notfound_checkouts.json'
     };
 
-    const save = (obj, file) =>{
+    let workDir = path.dirname(csvFile);
+    for (let f in files) {
+      files[f] = workDir + '/' + files[f];
+    }
 
+    const write = (obj, file) => {
+      console.log(`Writing ${obj.checkouts.length} to ${file}`);
+      fs.writeFileSync(file, JSON.stringify(obj, null, 2));
     };
 
     const records = {};
@@ -98,22 +104,12 @@ const csvFile = process.argv[4];
       } 
     });
 
-    let workDir = path.dirname(csvFile);
-    let savePath = `${workDir}/checkouts.json`;
     records.totalRecords = records.checkouts.length;
-    const recString = JSON.stringify(records, null, 2);
-    console.log(`Writing ${records.checkouts.length} records to ${savePath}...`);
-    fs.writeFileSync(savePath, recString);
-
-    let inactPath = `${workDir}/inactive_checkouts.json`;
+    write(records, files.co);
     inactive.totalRecords = inactive.checkouts.length;
-    console.log(`Writing ${inactive.totalRecords} to ${inactPath}...`);
-    fs.writeFileSync(inactPath, JSON.stringify(inactive, null, 2));
-
-    let nfPath = `${workDir}/notfound_checkouts.json`;
+    write(inactive, files.ia);
     notFound.totalRecords = notFound.checkouts.length;
-    console.log(`Writing ${notFound.totalRecords} to ${nfPath}...`);
-    fs.writeFileSync(nfPath, JSON.stringify(notFound, null, 2));
+    write(notFound, files.nf);
 
   } catch (e) {
     console.error(e);
