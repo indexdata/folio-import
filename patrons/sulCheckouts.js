@@ -44,7 +44,6 @@ const csvFile = process.argv[4];
       active[u.barcode] = { active: u.active, expirationDate: u.expirationDate };
     });
 
-    // calculate time offset based on time changes 2022
     let dateOffset = (dt) => {
       let dzo = new Date(dt).getTimezoneOffset();
       let pto = ((dzo+120)/60);  // change this value according to the local machine that runs the script.
@@ -77,8 +76,8 @@ const csvFile = process.argv[4];
     inRecs.forEach(r => {
       total++;
       let loan = {};
-      loan.itemBarcode = r['Item barcode'];
-      loan.userBarcode = r['User barcode'];
+      loan.itemBarcode = r['Item barcode'].trim();
+      loan.userBarcode = r['User barcode'].trim();
       let odate = r['Charge datetime'].replace(/(\d{4})(\d\d)(\d\d)(\d\d)(\d\d)/, '$1-$2-$3T$4:$5:00');
       let os = dateOffset(odate);
       loan.loanDate = odate + os;
@@ -93,9 +92,9 @@ const csvFile = process.argv[4];
         let crd = crdate + dateOffset(crdate);
         loan.claimedReturnedDate = crd;
       }
-      if (active[r.bbarcode] !== undefined) {
+      if (active[loan.userBarcode]) {
         records.checkouts.push(loan);
-        if (active[loan.userBarcode] && active[loan.userBarcode].active === false) {
+        if (active[loan.userBarcode].active === false) {
           loan.expirationDate = active[loan.userBarcode].expirationDate;
           inactive.checkouts.push(loan);
         }
