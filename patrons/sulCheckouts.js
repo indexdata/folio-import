@@ -52,39 +52,50 @@ const csvFile = process.argv[4];
       return out; 
     }
 
+    const files = {
+      co: 'checkouts.json',
+      ia: 'inactive_checkouts.json',
+      nf: 'notfound_checkouts.json'
+    };
+
+    const save = (obj, file) =>{
+
+    };
+
     const records = {};
     records.checkouts = [];
     const inactive = { checkouts: [] };
     const notFound = { checkouts: [] };
-    const noDueDate = [];
     let total = 0;
 
     inRecs.forEach(r => {
       total++;
-      if (1) {
-        let loan = {};
-        loan.itemBarcode = r['Item barcode'];
-        loan.userBarcode = r['User barcode'];
-        let odate = r['Charge datetime'].replace(/(\d{4})(\d\d)(\d\d)(\d\d)(\d\d)/, '$1-$2-$3T$4:$5:00');
-        let os = dateOffset(odate);
-        loan.loanDate = odate + os;
-        let ddate = r['Due date/time'].replace(/(\d{4})(\d\d)(\d\d)(\d\d)(\d\d)/, '$1-$2-$3T$4:$5:00');
-        os = dateOffset(ddate);
-        loan.dueDate = ddate + os;
-        let sp = r['Service point'];
-        loan.servicePointId = spMap[sp];
-        if (active[r.bbarcode] !== undefined) {
-          records.checkouts.push(loan);
-          if (active[loan.userBarcode] && active[loan.userBarcode].active === false) {
-            loan.expirationDate = active[loan.userBarcode].expirationDate;
-            inactive.checkouts.push(loan);
-          }
-        } else {
-          notFound.checkouts.push(loan);
-        } 
-      } else {
-        noDueDate.push(r); 
+      let loan = {};
+      loan.itemBarcode = r['Item barcode'];
+      loan.userBarcode = r['User barcode'];
+      let odate = r['Charge datetime'].replace(/(\d{4})(\d\d)(\d\d)(\d\d)(\d\d)/, '$1-$2-$3T$4:$5:00');
+      let os = dateOffset(odate);
+      loan.loanDate = odate + os;
+      let ddate = r['Due date/time'].replace(/(\d{4})(\d\d)(\d\d)(\d\d)(\d\d)/, '$1-$2-$3T$4:$5:00');
+      os = dateOffset(ddate);
+      loan.dueDate = ddate + os;
+      let sp = r['Service point'];
+      loan.servicePointId = spMap[sp];
+      let cr = r['Claims returned date'];
+      if (cr.match(/\d{8}/)) {
+        let crdate = cr.replace(/(\d{4})(\d\d)(\d\d)/, '$1-$2-$3T12:00:00');
+        let crd = crdate + dateOffset(crdate);
+        loan.claimedReturnedDate = crd;
       }
+      if (active[r.bbarcode] !== undefined) {
+        records.checkouts.push(loan);
+        if (active[loan.userBarcode] && active[loan.userBarcode].active === false) {
+          loan.expirationDate = active[loan.userBarcode].expirationDate;
+          inactive.checkouts.push(loan);
+        }
+      } else {
+        notFound.checkouts.push(loan);
+      } 
     });
 
     let workDir = path.dirname(csvFile);
@@ -103,11 +114,6 @@ const csvFile = process.argv[4];
     notFound.totalRecords = notFound.checkouts.length;
     console.log(`Writing ${notFound.totalRecords} to ${nfPath}...`);
     fs.writeFileSync(nfPath, JSON.stringify(notFound, null, 2));
-
-    let nddPath = `${workDir}/noduedates.json`;
-    let nddTotal = noDueDate.length;
-    console.log(`Writing ${nddTotal} to ${nddPath}...`);
-    fs.writeFileSync(nddPath, JSON.stringify(noDueDate, null, 2));
 
   } catch (e) {
     console.error(e);
