@@ -114,16 +114,16 @@ const formMap = {
           id: poId,
           poNumber: poNum,
           vendor: orgId,
-          dateOrdered: ff['13'].value,
+          dateOrdered: (ff['13']) ? ff['13'].value : '',
           compositePoLines: [],
           notes: [],
           acqUnitIds: [ unit ]
         }
-        let acqType = ff['1'].value;
-        let form = ff['11'].value;
-        let oType = ff['15'].value;
-        let statCode = ff['20'].value;
-        let raction = ff['16'].value;
+        let acqType = (ff['1']) ? ff['1'].value : '';
+        let form = (ff['11']) ? ff['11'].value : '';
+        let oType = (ff['15']) ? ff['15'].value : '';
+        let statCode = (ff['20']) ? ff['20'].value : '';
+        let raction = (ff['16']) ? ff['16'].value : '';
         co.orderType = (statCode.match(/[fz]/) && oType.match(/[dnoqs]/)) ? 'Ongoing' : 'One-Time';
         if (co.orderType === 'Ongoing') {
           co.ongoing = {
