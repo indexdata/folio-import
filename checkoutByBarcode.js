@@ -53,9 +53,9 @@ const post_put = async (authToken, url, checkout, r) => {
 
 (async () => {
   let added = 0;
-  let updated = 0;
   let errors = 0;
-  let deleted = 0;
+  let claimed = 0;
+  let claimedErrs = 0;
   try {
     if (!fn) {
       throw new Error('Usage: node checkoutByBarcode.js <checkouts_file> [offset] [checkin]');
@@ -63,6 +63,11 @@ const post_put = async (authToken, url, checkout, r) => {
 
     const dir = path.dirname(fn);
     const fname = path.basename(fn, '.json');
+    const saveFile = `${dir}/${fname}_done.jsonl`;
+    if (fs.existsSync(saveFile)) {
+      fs.unlinkSync(saveFile);
+    }
+
 
     const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
 
@@ -108,14 +113,31 @@ const post_put = async (authToken, url, checkout, r) => {
         let loanObj = await post_put(authToken, url, postData);
         if (checkIn === 'checkin') added++;
         if (loanObj && checkIn !== 'checkin') {
+          let loanStr = JSON.stringify(loanObj) + '\n';
+          fs.writeFileSync(saveFile, loanStr, { flag: 'a' });
           try {
             loanObj.dueDate = dueDate;
             loanObj.loanDate = data[d].loanDate;
             loanObj.action = 'dueDateChanged';
             let lurl = `${config.okapi}/circulation/loans/${loanObj.id}`;
             console.log(`[${d}] PUT ${lurl} (${data[d].itemBarcode})`);
-            let loanObj = await post_put(authToken, lurl, loanObj);
+            let newLoanObj = await post_put(authToken, lurl, loanObj);
             added++
+
+            if (claimedReturnedDate) {
+              try {
+                newLoanObj.action = claimedReturned;
+                newLoanObj.claimedReturnedDate = claimedReturnedDate;
+                newLaonObj.actionComment = "Migrated action";
+                let lurl = `${config.okapi}/circulation/loans/${newloanObj.id}`;
+                console.log(`[${d}] PUT claimed returned ${lurl} (${data[d].itemBarcode})`);
+                await post_put(authToken, lurl, newloanObj);
+                claimed++;
+              } catch (e) {
+                console.log(e);
+                claimedErrs++;
+              }
+            }
           } catch (e) {
             let m;
             if (e.response) {
@@ -123,11 +145,10 @@ const post_put = async (authToken, url, checkout, r) => {
             } else {
               m = e;
             }
-            console.log(e);
+            console.log(m);
             errors++;
           }
-          if (claimedReturnedDate) {
-          }
+          
         }
       } catch (e) {
         let m;
@@ -143,10 +164,10 @@ const post_put = async (authToken, url, checkout, r) => {
     } 
     const errPath = `${dir}/${fname}_errors.json`;
     if (!checkIn) fs.writeFileSync(errPath, JSON.stringify(errs, null, 2));
-    console.log(`Added:   ${added}`);
-    console.log(`Updated: ${updated}`);
-    console.log(`Errors:  ${errors}`);
-    console.log(`Deleted: ${deleted}`)
+    console.log('Added:', added);
+    console.log('Claimed:', claimed);
+    console.log('Errors:', errors);
+    console.log('Claimed errors:', claimedErrs);
   } catch (e) {
     console.error(e.message);
   }
