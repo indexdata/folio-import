@@ -94,7 +94,7 @@ const csvFile = process.argv[4];
       }
       if (active[loan.userBarcode]) {
         records.checkouts.push(loan);
-        if (active[loan.userBarcode].active === false) {
+        if (!active[loan.userBarcode].active) {
           loan.expirationDate = active[loan.userBarcode].expirationDate;
           inactive.checkouts.push(loan);
         }
