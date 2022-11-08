@@ -76,6 +76,8 @@ const titlesFile = process.argv[2];
       let edate = p.EXPECTED_DATE;
       let cap = p.ENUMCHRON;
       let titleId = titleMap[poLineId];
+      if (!poLineId) console.log(`WARN No title found for (${link})`);
+      if (!titleId) console.log(`WARN No title found for ${poLineId} (${link})`);
       if (poLineId && titleId) {
         let piece = {
           id: uuid(poLineId + cap + rdate + edate + format, ns),
