@@ -47,7 +47,7 @@ const rstatusMap = {
 const addMap = {
   'Lane: Acquisitions': 'LANE_LIBRARY_ACQUISITIONS'
 };
-console.log(addMap);
+// console.log(addMap);
 
 (async () => {
   try {
@@ -60,6 +60,8 @@ console.log(addMap);
     const fn = path.basename(inFile, '.csv');
     const outFile = `${dir}/composite-orders.jsonl`;
     if (fs.existsSync(outFile)) fs.unlinkSync(outFile);
+    const pieceMapFile = `${dir}/piece-map.jsonl`;
+    if (fs.existsSync(pieceMapFile)) fs.unlinkSync(pieceMapFile);
 
     const refData = {};
     for (let prop in refFiles) {
@@ -99,6 +101,7 @@ console.log(addMap);
       crlfDelay: Infinity
     });
     const insts = {};
+    let lineCount = 0;
     for await (const line of rl) {
       let rec = JSON.parse(line);
       let hrid = rec.hrid.replace(/^L/, '');
@@ -109,6 +112,10 @@ console.log(addMap);
         publication: rec.publication,
         editions: rec.editions,
         identifiers: rec.identifiers
+      }
+      lineCount++;
+      if (lineCount%10000 === 0) {
+        console.log('Instances loaded:', lineCount);
       }
     }
     // console.log(insts); return;
@@ -138,7 +145,6 @@ console.log(addMap);
         appDate = appDate.replace(/ /, 'T');
         let billTo = addMap[v.BILL_LOCATION];
         let shipTo = addMap[v.SHIP_LOCATION];
-        console.log(shipTo);
         let notes = v.NOTE;
         let poType = v.PO_TYPE_DESC;
         let orderType = (poType === 'Continuation') ? 'Ongoing' : 'One-Time';
@@ -195,8 +201,11 @@ console.log(addMap);
           co.compositePoLines = [];
           poLines[poNumber].forEach(l => {
             let pol = {};
+            let pmap = {};
             let inst = insts[l.BIB_ID];
-            pol.id = uuid(l.LINE_ITEM_ID + 'poline', ns);
+            let liid = l.LINE_ITEM_ID;
+            pol.id = uuid(liid + 'poline', ns);
+            pmap[liid] = { poLineId: pol.id };
             pol.purchaseOrderId = co.id;
             pol.poLineNumber = co.poNumber + '-' + l.LINE_ITEM_NUMBER;
             pol.source = 'User';
@@ -260,12 +269,14 @@ console.log(addMap);
                 materialType: refData.mtypes['unspecified'],
                 volumes: []
               };
+              pmap[liid].format = 'Physical';
             } else if (oform === 'Electronic Resource') {
               pol.cost.listUnitPriceElectronic = price;
               pol.cost.quantityElectronic = quant;
               pol.eresource = {
                 createInventory: 'None',
               };
+              pmap[liid].format = 'Electronic';
             }
             let fundCode = l.USE_FUND || '';
             fundCode = fundCode.replace(/-.+/, '');
@@ -300,6 +311,7 @@ console.log(addMap);
               pol.locations = [ lobj ];
               pol.receiptStatus = rstatusMap[l.LINE_ITEM_STATUS] || 'Awaiting Receipt';
             }
+            fs.writeFileSync(pieceMapFile, JSON.stringify(pmap) + '\n', { flag: 'a' });
             co.compositePoLines.push(pol);
           });
           
