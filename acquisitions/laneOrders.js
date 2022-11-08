@@ -223,7 +223,9 @@ const addMap = {
               let note = l.NOTE.replace(/\n\s*/g, ' -- ');
               pol.description = note;
             }
-            
+            pol.details = {};
+            let rnote = l.RECEIVING_NOTE || '';
+            if (rnote) pol.details.receivingNote = rnote;
             if (inst) {
               pol.instanceId = inst.id;
               pol.titleOrPackage = inst.title;
@@ -239,7 +241,7 @@ const addMap = {
                 pol.publicationDate = inst.publication[0].dateOfPublication;
               }
               if (inst.identifiers && inst.identifiers[0]) {
-                pol.details = { productIds: [] }
+                pol.details.productIds = [];
                 inst.identifiers.forEach(i => {
                   if (i.identifierTypeId === '8261054f-be78-422d-bd51-4ed9f33c3422') {
                     i.value = i.value.replace(/^([0-9X]{10,13}).*/, '$1');
