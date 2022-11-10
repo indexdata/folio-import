@@ -82,9 +82,9 @@ sub getRefData {
             my $name;
             my $id = $_->{id};
             if ($refroot eq 'location') {
-              $refobj->{$refroot}->{$_->{name}} = $id;
+              $refobj->{$refroot}->{$_->{code}} = $id;
             }
-            if ($refroot =~ /^(instanceTypes|contributorTypes|instanceFormats)$/) {
+            if ($refroot =~ /^(locations|instanceTypes|contributorTypes|instanceFormats)$/) {
               $name = $_->{code};
             } else {
               $name = $_->{name};
@@ -153,6 +153,11 @@ my $blvl = {
   's' => 'Serial'
 };
 
+my $htype_map = {
+  'm' => 'Monograph',
+  's' => 'Serial'
+};
+
 my $relations = {
   '0' => 'Resource',
   '1' => 'Version of resource',
@@ -183,6 +188,10 @@ my $rtypes = {
   'p' => 'xxx',
   'r' => 'tdf',
   't' => 'txt'
+};
+
+my $locmap = {
+  'CARM' => 'CARM01'
 };
 
 sub process_entity {
@@ -546,7 +555,7 @@ foreach (@ARGV) {
     my $ctrlfield = $marc->field('001');
     my $ctrlnum = $ctrlfield->data();
     $ctrlnum =~ s/^ *//;
-    $ctrlfield->update($isil . $ctrlnum);
+    $ctrlfield->update('c' . $ctrlnum);
 
     my $srsmarc = $marc;
     if ($marc->field('880')) {
@@ -703,7 +712,6 @@ foreach (@ARGV) {
           last;
         }
       }
-      $type = ($marc->field('998')) ? $marc->subfield('998', 'd') : '';
       $inst_recs .= $json->encode($rec) . "\n";
       my $rawsrs = $marc->as_usmarc();
       $srs_recs .= $json->encode(make_srs($srsmarc, $rawsrs, $rec->{id}, $rec->{hrid}, $snapshot_id, $srs_file)) . "\n";
@@ -713,18 +721,20 @@ foreach (@ARGV) {
       $success++;
 
       # make holdings and items
-      my $hi = make_hi($marc, $rec->{id}, $rec->{hrid}, $type, $blevel, $cn, $cntag);
-      if ($hi->{holdings}) {
-        $hold_recs .= $hi->{holdings};
-        $hcount += $hi->{hcount};
-      }
-      if ($hi->{items}) {
-        $item_recs .= $hi->{items};
-        $icount += $hi->{icount};
-      }
-      if ($hi->{itemerrs}) {
-        $ierr_recs .= $hi->{itemerrs};
-        $iecount += $hi->{iecount};
+      if ($marc->field('852')) {
+        my $hi = make_hi($marc, $rec->{id}, $rec->{hrid}, $type, $blevel, $cn, $cntag);
+        if ($hi->{holdings}) {
+          $hold_recs .= $hi->{holdings};
+          $hcount += $hi->{hcount};
+        }
+        if ($hi->{items}) {
+          $item_recs .= $hi->{items};
+          $icount += $hi->{icount};
+        }
+        if ($hi->{itemerrs}) {
+          $ierr_recs .= $hi->{itemerrs};
+          $iecount += $hi->{iecount};
+        }
       }
 
       # make preceding succeding titles
@@ -814,130 +824,128 @@ sub make_hi {
   my $icount = 0;
   my $iecount = 0;
   
-  my $itemtag = '999';
-  foreach my $item ($marc->field($itemtag)) {
-    my $loc = $item->subfield('l') || '';
-    my $iid = $item->subfield('y');
-    $loc =~ s/(\s*$)//;
+  my $htag = '852';
+  foreach my $h ($marc->field($htag)) {
+    my $loc = $h->subfield('b') || '';
+    my $htype = $htype_map->{$blevel} || 'm';
+    my $floc = $locmap->{$loc};
     if (!$loc || $loc ne 'ims' && $loc =~ /^[iv]/) {
       next;
     }
     my $hkey = "$bhrid-$loc";
-    my $locid = $sierra2folio->{locations}->{$loc} || $refdata->{locations}->{$loc};
-    # make holdings record;
-    if (!$hseen->{$hkey}) {
-      $hid = uuid($hkey);
-      $hrec->{id} = $hid;
-      $hrec->{hrid} = $hkey;
-      $hrec->{instanceId} = $bid;
-      $hrec->{permanentLocationId} = $locid;
-      my $cna = $item->subfield('a') || '';
-      my $cnb = $item->subfield('b') || '';
-      if ($cna && $cna =~ /\w/) {
-        $cn = $cna;
-        if ($cnb =~ /\w/) {
-          $cn .= " $cnb";
-        }
-      }
-      $cn =~ s/\s*$//;
-      if ($cn) {
-        $hrec->{callNumber} = $cn;
-        $hrec->{callNumberTypeId} = $cntypes->{$cntag} || '6caca63e-5651-4db6-9247-3205156e9699'; #other
-      }
-      my $hout = $json->encode($hrec);
-      $holdings .= $hout . "\n";
-      $hseen->{$hkey} = 1;
-      $hcount++;
+    my $locid = $refdata->{locations}->{$floc} || '';
+    $hid = uuid($hkey);
+    $hrec->{id} = $hid;
+    $hrec->{hrid} = $hkey;
+    $hrec->{instanceId} = $bid;
+    $hrec->{holdingsTypeId} = $refdata->{holdingsTypes}->{$htype};
+    $hrec->{permanentLocationId} = $locid;
+    my $cnpre = $h->subfield('h') || '';
+    my $cn = $h->subfield('i') || '';
+    if ($cn) {
+      $hrec->{callNumberPrefix} = $cnpre;
+      $hrec->{callNumber} = $cn;
+      $hrec->{callNumberTypeId} = $refdata->{callNumberTypes}->{'Other scheme'};
     }
+    my $hout = $json->encode($hrec);
+    $holdings .= $hout . "\n";
+    $hseen->{$hkey} = 1;
+    $hcount++;
 
     # make item record;
-    my $irec = {};
-    my $itype = $item->subfield('t');
-    my $status = $item->subfield('s') || '';
-    my @msgs = $item->subfield('m');
-    my @notes = $item->subfield('n');
-    my $barcode = $item->subfield('i') || '';
-    my $due = $item->subfield('k');
-    $status =~ s/\s+$//;
-    if ($iid) {
-      $iid =~ s/^\.//;
-      $irec->{id} = uuid($iid);
-      $irec->{holdingsRecordId} = $hid;
-      $irec->{hrid} = $iid;
-      if ($barcode && $bc_seen->{$barcode}) {
-        push @notes, "Duplicate barcode: $barcode";
-      } elsif ($barcode =~ /\d/) {
-        $irec->{barcode} = $barcode;
-      }
-      $bc_seen->{$barcode} = 1;
-      if ($blevel eq 's') {
-        $irec->{enumeration} = $item->subfield('c') || '';
-      } else {
-        $irec->{volume} = $item->subfield('c') || '';
-      }
-      $irec->{copyNumber} = $item->subfield('g') || '';
-      $itype =~ s/\s+$//;
-      $irec->{permanentLoanTypeId} = $sierra2folio->{loantypes}->{$itype} || $refdata->{loantypes}->{'Can circulate'};
+    
+    my $itag = 'Z30';
+    foreach my $item ($marc->field($itag)) {
+      print $itag . "\n";
+      my $irec = {};
+      my $itype = $item->subfield('t');
+      my $status = $item->subfield('s') || '';
+      my @msgs = $item->subfield('m');
+      my @notes = $item->subfield('n');
+      my $barcode = $item->subfield('i') || '';
+      my $due = $item->subfield('k');
+      $status =~ s/\s+$//;
+      my $iid = '';
+      if ($iid) {
+        $iid =~ s/^\.//;
+        $irec->{id} = uuid($iid);
+        $irec->{holdingsRecordId} = $hid;
+        $irec->{hrid} = $iid;
+        if ($barcode && $bc_seen->{$barcode}) {
+          push @notes, "Duplicate barcode: $barcode";
+        } elsif ($barcode =~ /\d/) {
+          $irec->{barcode} = $barcode;
+        }
+        $bc_seen->{$barcode} = 1;
+        if ($blevel eq 's') {
+          $irec->{enumeration} = $item->subfield('c') || '';
+        } else {
+          $irec->{volume} = $item->subfield('c') || '';
+        }
+        $irec->{copyNumber} = $item->subfield('g') || '';
+        $itype =~ s/\s+$//;
+        $irec->{permanentLoanTypeId} = $sierra2folio->{loantypes}->{$itype} || $refdata->{loantypes}->{'Can circulate'};
 
-      $type =~ s/\s+$//; 
-      $irec->{materialTypeId} = $sierra2folio->{mtypes}->{$type} || $refdata->{mtypes}->{unspecified} || die "No material type found for itype $itype\n";
-      $irec->{status}->{name} = $sierra2folio->{statuses}->{$status} || 'Unknown'; # defaulting to Unknown;
- 
-      foreach (@msgs) {
-        if (!$irec->{circulationNotes}) { $irec->{circulationNotes} = [] }
-        my $cnobj = {};
-        $cnobj->{note} = $_;
-        $cnobj->{noteType} = 'Check out';
-        $cnobj->{staffOnly} = 'true';
-        $cnobj->{date} = "" . localtime;
-        $cnobj->{source} = {
-          id => 'ba213137-b641-4da7-aee2-9f2296e8bbf7',
-          personal => { firstName => 'Index', lastName => 'Data' }
-        };
-        push @{ $irec->{circulationNotes} }, $cnobj;
+        $type =~ s/\s+$//; 
+        $irec->{materialTypeId} = $sierra2folio->{mtypes}->{$type} || $refdata->{mtypes}->{unspecified} || die "No material type found for itype $itype\n";
+        $irec->{status}->{name} = $sierra2folio->{statuses}->{$status} || 'Unknown'; # defaulting to Unknown;
+  
+        foreach (@msgs) {
+          if (!$irec->{circulationNotes}) { $irec->{circulationNotes} = [] }
+          my $cnobj = {};
+          $cnobj->{note} = $_;
+          $cnobj->{noteType} = 'Check out';
+          $cnobj->{staffOnly} = 'true';
+          $cnobj->{date} = "" . localtime;
+          $cnobj->{source} = {
+            id => 'ba213137-b641-4da7-aee2-9f2296e8bbf7',
+            personal => { firstName => 'Index', lastName => 'Data' }
+          };
+          push @{ $irec->{circulationNotes} }, $cnobj;
+        }
+        foreach (@notes) {
+          my $nobj = {};
+          $nobj->{note} = $_;
+          $nobj->{itemNoteTypeId} = $refdata->{itemNoteTypes}->{Note};
+          $nobj->{staffOnly} = 'true';
+          push @{ $irec->{notes} }, $nobj;
+        }
+        if ($lnote =~ /^gift/i) {
+          my $nobj = {};
+          $nobj->{note} = $lnote;
+          $nobj->{itemNoteTypeId} = $refdata->{itemNoteTypes}->{'Internal gift note'};
+          $nobj->{staffOnly} = 'true';
+          push @{ $irec->{notes} }, $nobj;
+        }
+        if ($item->subfield('o') && $item->subfield('o') eq 'n') {
+          $irec->{discoverySuppress} = 'false';
+        } else {
+          $irec->{discoverySuppress} = 'false';
+        }
+        if ($status eq '9') {
+          $irec->{temporaryLocationId} = $refdata->{locations}->{ondisplay} || '';
+        } elsif ($status eq 'd') {
+          $irec->{itemDamagedStatusId} = $refdata->{itemDamageStatuses}->{Damaged};
+        } elsif ($irec->{status}->{name} eq 'Restricted') {
+          $irec->{permanentLoanTypeId} = $refdata->{loantypes}->{'Non Circulating'};
+        } elsif ($status eq 'q') {
+          my $nobj = {};
+          $nobj->{note} = 'Request at Music Circulation Desk';
+          $nobj->{itemNoteTypeId} = $refdata->{itemNoteTypes}->{'Access Note'} || $refdata->{itemNoteTypes}->{Note} || die "Can't map itemNoteType";
+          $nobj->{staffOnly} = 'false';
+          push @{ $irec->{notes} }, $nobj;
+        }
+        
+        my $iout = $json->encode($irec);
+        if (!$item_seen->{$iid}) {
+          $items .= $iout . "\n";
+          $icount++;
+        } else {
+          $itemerrs .= $iout . "\n";
+          $iecount++;
+        }
+        $item_seen->{$iid} = 1;
       }
-      foreach (@notes) {
-        my $nobj = {};
-        $nobj->{note} = $_;
-        $nobj->{itemNoteTypeId} = $refdata->{itemNoteTypes}->{Note};
-        $nobj->{staffOnly} = 'true';
-        push @{ $irec->{notes} }, $nobj;
-      }
-      if ($lnote =~ /^gift/i) {
-        my $nobj = {};
-        $nobj->{note} = $lnote;
-        $nobj->{itemNoteTypeId} = $refdata->{itemNoteTypes}->{'Internal gift note'};
-        $nobj->{staffOnly} = 'true';
-        push @{ $irec->{notes} }, $nobj;
-      }
-      if ($item->subfield('o') && $item->subfield('o') eq 'n') {
-        $irec->{discoverySuppress} = 'false';
-      } else {
-        $irec->{discoverySuppress} = 'false';
-      }
-      if ($status eq '9') {
-        $irec->{temporaryLocationId} = $refdata->{locations}->{ondisplay} || '';
-      } elsif ($status eq 'd') {
-        $irec->{itemDamagedStatusId} = $refdata->{itemDamageStatuses}->{Damaged};
-      } elsif ($irec->{status}->{name} eq 'Restricted') {
-        $irec->{permanentLoanTypeId} = $refdata->{loantypes}->{'Non Circulating'};
-      } elsif ($status eq 'q') {
-        my $nobj = {};
-        $nobj->{note} = 'Request at Music Circulation Desk';
-        $nobj->{itemNoteTypeId} = $refdata->{itemNoteTypes}->{'Access Note'} || $refdata->{itemNoteTypes}->{Note} || die "Can't map itemNoteType";
-        $nobj->{staffOnly} = 'false';
-        push @{ $irec->{notes} }, $nobj;
-      }
-      
-      my $iout = $json->encode($irec);
-      if (!$item_seen->{$iid}) {
-        $items .= $iout . "\n";
-        $icount++;
-      } else {
-        $itemerrs .= $iout . "\n";
-        $iecount++;
-      }
-      $item_seen->{$iid} = 1;
     }
   }
   return {
