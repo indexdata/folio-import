@@ -4,7 +4,7 @@ const path = require('path');
 const { getAuthToken } = require('./lib/login');
 const fn = process.argv[2];
 const checkIn = process.argv[4];
-const offset = process.argv[3] ? parseInt(process.argv[3], 10) : 0;
+const offset = (process.argv[3]) ? parseInt(process.argv[3], 10) : 0;
 if (isNaN(offset)) throw new Error(`Limit must be a number!`);
 
 let errs = { checkouts: [] };
@@ -16,7 +16,7 @@ const wait = (ms) => {
 const post_put = async (authToken, url, checkout, r) => {
   r = (r) ? r : 0;
   try {
-    if (url.match(/\/loans\//)) {
+    if (url.match(/.{8}-.{4}-.{4}-.{4}-.{12}$/)) {
       await superagent
         .put(url)
         .timeout({ response: 10000 })
@@ -121,17 +121,17 @@ const post_put = async (authToken, url, checkout, r) => {
             loanObj.action = 'dueDateChanged';
             let lurl = `${config.okapi}/circulation/loans/${loanObj.id}`;
             console.log(`[${d}] PUT ${lurl} (${data[d].itemBarcode})`);
-            let newLoanObj = await post_put(authToken, lurl, loanObj);
+            await post_put(authToken, lurl, loanObj);
             added++
 
             if (claimedReturnedDate) {
               try {
-                newLoanObj.action = claimedReturned;
-                newLoanObj.claimedReturnedDate = claimedReturnedDate;
-                newLaonObj.actionComment = "Migrated action";
-                let lurl = `${config.okapi}/circulation/loans/${newloanObj.id}`;
-                console.log(`[${d}] PUT claimed returned ${lurl} (${data[d].itemBarcode})`);
-                await post_put(authToken, lurl, newloanObj);
+                let claimedObj = {};
+                claimedObj.itemClaimedReturnedDateTime = claimedReturnedDate;
+                claimedObj.comment = "Migrated action";
+                let lurl = `${config.okapi}/circulation/loans/${loanObj.id}/claim-item-returned`;
+                console.log(`[${d}] POST ${lurl} (${data[d].itemBarcode})`);
+                await post_put(authToken, lurl, claimedObj);
                 claimed++;
               } catch (e) {
                 console.log(e);
