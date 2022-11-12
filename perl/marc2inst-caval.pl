@@ -190,6 +190,15 @@ my $rtypes = {
   't' => 'txt'
 };
 
+my $mtypes = {
+  'a' => 'book',
+  'k' => 'video recording',
+  'i' => 'sound recording',
+  'j' => 'sound recording',
+  'm' => 'electronic resource',
+  'm' => 'cop',
+};
+
 my $locmap = {
   'CARM' => 'CARM01'
 };
@@ -553,9 +562,14 @@ foreach (@ARGV) {
     next unless $ok;
 
     my $ctrlfield = $marc->field('001');
-    my $ctrlnum = $ctrlfield->data();
+    my $ctrlnum = $ctrlfield->data() || '';
     $ctrlnum =~ s/^ *//;
     $ctrlfield->update('c' . $ctrlnum);
+    my @zfields = $marc->field('Z30');
+    foreach (@zfields) {
+      $_->set_tag('945');
+    }
+    
 
     my $srsmarc = $marc;
     if ($marc->field('880')) {
@@ -813,7 +827,6 @@ sub make_hi {
   my $blevel = shift;
   my $cn = shift;
   my $cntag = shift;
-  my $lnote = ($marc->field('993')) ? $marc->subfield('993', 'a') : '';
   my $hseen = {};
   my $hid = '';
   my $hrec = {};
@@ -854,18 +867,17 @@ sub make_hi {
 
     # make item record;
     
-    my $itag = 'Z30';
+    my $itag = '945';
     foreach my $item ($marc->field($itag)) {
-      print $itag . "\n";
       my $irec = {};
-      my $itype = $item->subfield('t');
-      my $status = $item->subfield('s') || '';
-      my @msgs = $item->subfield('m');
-      my @notes = $item->subfield('n');
-      my $barcode = $item->subfield('i') || '';
-      my $due = $item->subfield('k');
+      my $sub2 = $item->subfield('2');
+      my $barcode = $item->subfield('p') || '';
+      my $iid = "$sub2-$barcode";
+      my $itype = $item->subfield('s');
+      my $status = 'Availble';
+      my @msgs;
+      my @notes;
       $status =~ s/\s+$//;
-      my $iid = '';
       if ($iid) {
         $iid =~ s/^\.//;
         $irec->{id} = uuid($iid);
@@ -877,19 +889,17 @@ sub make_hi {
           $irec->{barcode} = $barcode;
         }
         $bc_seen->{$barcode} = 1;
-        if ($blevel eq 's') {
-          $irec->{enumeration} = $item->subfield('c') || '';
-        } else {
-          $irec->{volume} = $item->subfield('c') || '';
-        }
-        $irec->{copyNumber} = $item->subfield('g') || '';
-        $itype =~ s/\s+$//;
-        $irec->{permanentLoanTypeId} = $sierra2folio->{loantypes}->{$itype} || $refdata->{loantypes}->{'Can circulate'};
 
-        $type =~ s/\s+$//; 
-        $irec->{materialTypeId} = $sierra2folio->{mtypes}->{$type} || $refdata->{mtypes}->{unspecified} || die "No material type found for itype $itype\n";
-        $irec->{status}->{name} = $sierra2folio->{statuses}->{$status} || 'Unknown'; # defaulting to Unknown;
-  
+        # if ($blevel eq 's') {
+          # $irec->{enumeration} = $item->subfield('0') || '';
+        # } else {
+          # $irec->{volume} = $item->subfield('0') || '';
+        # }
+
+        $irec->{permanentLoanTypeId} = $refdata->{loantypes}->{'Can circulate'} or die "Can't map loan type!";
+        my $mtypestr = $mtypes->{$type} || 'unspecified';
+        $irec->{materialTypeId} = $refdata->{mtypes}->{$mtypestr} || $refdata->{mtypes}->{unspecified}; 
+        $irec->{status}->{name} = 'Available';
         foreach (@msgs) {
           if (!$irec->{circulationNotes}) { $irec->{circulationNotes} = [] }
           my $cnobj = {};
@@ -903,6 +913,7 @@ sub make_hi {
           };
           push @{ $irec->{circulationNotes} }, $cnobj;
         }
+
         foreach (@notes) {
           my $nobj = {};
           $nobj->{note} = $_;
@@ -910,31 +921,7 @@ sub make_hi {
           $nobj->{staffOnly} = 'true';
           push @{ $irec->{notes} }, $nobj;
         }
-        if ($lnote =~ /^gift/i) {
-          my $nobj = {};
-          $nobj->{note} = $lnote;
-          $nobj->{itemNoteTypeId} = $refdata->{itemNoteTypes}->{'Internal gift note'};
-          $nobj->{staffOnly} = 'true';
-          push @{ $irec->{notes} }, $nobj;
-        }
-        if ($item->subfield('o') && $item->subfield('o') eq 'n') {
-          $irec->{discoverySuppress} = 'false';
-        } else {
-          $irec->{discoverySuppress} = 'false';
-        }
-        if ($status eq '9') {
-          $irec->{temporaryLocationId} = $refdata->{locations}->{ondisplay} || '';
-        } elsif ($status eq 'd') {
-          $irec->{itemDamagedStatusId} = $refdata->{itemDamageStatuses}->{Damaged};
-        } elsif ($irec->{status}->{name} eq 'Restricted') {
-          $irec->{permanentLoanTypeId} = $refdata->{loantypes}->{'Non Circulating'};
-        } elsif ($status eq 'q') {
-          my $nobj = {};
-          $nobj->{note} = 'Request at Music Circulation Desk';
-          $nobj->{itemNoteTypeId} = $refdata->{itemNoteTypes}->{'Access Note'} || $refdata->{itemNoteTypes}->{Note} || die "Can't map itemNoteType";
-          $nobj->{staffOnly} = 'false';
-          push @{ $irec->{notes} }, $nobj;
-        }
+        $irec->{discoverySuppress} = JSON::false;
         
         my $iout = $json->encode($irec);
         if (!$item_seen->{$iid}) {
