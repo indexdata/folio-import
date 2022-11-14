@@ -19,7 +19,7 @@ const csvFile = process.argv[4];
       throw new Error('Can\'t find service points file');
     }
     if (!fs.existsSync(usersFile)) {
-      throw new Error('Can\'t find service points file');
+      throw new Error('Can\'t find users file');
     }
 
     const sp = require(spFile);
