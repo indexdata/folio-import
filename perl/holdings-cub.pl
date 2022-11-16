@@ -224,6 +224,7 @@ foreach (@ARGV) {
     }
 
     my $vf = {};
+    my $vfcn = '';
     foreach my $f (@{ $obj->{varFields} }) {
       my $t = $f->{marcTag};
       my $ft = $f->{fieldTag};
@@ -255,7 +256,19 @@ foreach (@ARGV) {
     my $loc_id = $refdata->{locations}->{$loc_code} || $refdata->{locations}->{UNMAPPED};
     $h->{permanentLocationId} = $loc_id;
     $h->{sourceId} = $source_id;
-    my $cn = $b[1];
+    my $cntype = $b[1];
+    my $cn = $b[2];
+    my @tags = ('050', '090');
+    my @csubs = ('a','b');
+    foreach my $tag (@tags) {
+      if ($vf->{$tag}) {
+        my @el;
+        foreach my $sub (@csubs) {
+          push @el, $vf->{$tag}[0]->{$sub} if $vf->{$tag}[0]->{$sub};
+        }
+        $cn = join ' ', @el;
+      }
+    }
     $h->{callNumberTypeId} = $b[2] || '6caca63e-5651-4db6-9247-3205156e9699'; #other
     $h->{callNumber} = $cn if $cn;
     $h->{discoverySuppress} = ($ff->{118}->{value} ne '-') ? JSON::true : JSON::false ;
@@ -376,8 +389,6 @@ foreach (@ARGV) {
           my $f008 = MARC::Field->new('008', "${created}0u    0   0   uuund       ");
           $marc->insert_fields_ordered($f008);
       }
-
-      my $cn = $vf->{'090'}->[0]->{a} || '';
 
       my $hs = statement($obj);
       foreach my $t ('866', '867', '868') {
