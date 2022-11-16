@@ -341,7 +341,7 @@ sub make_hi {
   my $irec = {};
   my $iid = $item->{id};
   my $itype = $item->{fixedFields}->{79}->{value};
-  my $status = $item->{fixedFields}->{79}->{value} || '';
+  my $status = $item->{fixedFields}->{88}->{value} || '';
   my $bc = $vf->{b}[0] || '';
   my @msgs = $vf->{m};
   my @notes;
