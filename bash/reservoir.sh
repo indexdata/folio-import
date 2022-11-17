@@ -5,24 +5,40 @@ OKAPI=`cat ${TMP}/url`
 TOKEN=`cat ${TMP}/token | sed 's/.$//'`
 
 PS3="Choose one: "
-EPS="reservoir/clusters reservoir/records reservoir/oai reservoir/config/modules"
-getopts pdo OPTS
+EPS="reservoir/clusters reservoir/clusters?matchkeyid=goldrush reservoir/records reservoir/oai reservoir/config/modules"
+
+# getopts pdo: OPTS
+while getopts "pdo:" o; do
+    case "${o}" in
+        d)
+            DEBUG=1
+	    ;;
+        p)
+            PRETTY=1
+	    ;;
+	o)
+	    OUT=${OPTARG}
+	    ;;
+    esac
+done
+
 select EP in $EPS
 do
-	echo $EP
 	break
 done
 
-URL="${OKAPI}/${EP}"
-if [ $OPTS == d ]
+read -p "Query string: " Q
+
+HEAD="x-okapi-token: ${TOKEN}"
+URL="${OKAPI}/${EP}${Q}"
+if [ $DEBUG ]
 then
 	echo "curl --http1.1 -w '\n' '$URL'"
 fi
 
-HEAD="x-okapi-token: ${TOKEN}"
-if [ $OPTS == p ]
+if [ $PRETTY ]
 then
-	curl --http1.1 -w '\n' -s $URL -H "$HEAD" | jq .
+	curl --http1.1 -w '\n' -s $URL -H "${HEAD}" | jq .
 else
-	curl --http1.1 -w '\n' -s $URL -H "$HEAD" 
+	curl --http1.1 -w '\n' $URL -H "${HEAD}" > "$OUT"
 fi
