@@ -5,7 +5,7 @@ OKAPI=`cat ${TMP}/url`
 TOKEN=`cat ${TMP}/token | sed 's/.$//'`
 
 PS3="Choose one: "
-EPS="reservoir/clusters reservoir/clusters?matchkeyid=goldrush reservoir/records reservoir/oai reservoir/config/modules"
+EPS="reservoir/clusters reservoir/clusters?matchkeyid=goldrush reservoir/records reservoir/oai?verb=ListRecords reservoir/oai?verb=GetRecords reservoir/config/modules"
 
 # getopts pdo: OPTS
 while getopts "pdo:" o; do
@@ -36,9 +36,12 @@ then
 	echo "curl --http1.1 -w '\n' '$URL'"
 fi
 
-if [ $PRETTY ]
-then
+if [ $PRETTY ] && [ $OUT ]; then
+	curl --http1.1 -w '\n' $URL -H "${HEAD}" | jq . > "$OUT"
+elif [ $PRETTY ]; then
 	curl --http1.1 -w '\n' -s $URL -H "${HEAD}" | jq .
-else
+elif [ $OUT ]; then
 	curl --http1.1 -w '\n' $URL -H "${HEAD}" > "$OUT"
+else
+	curl --http1.1 -w '\n' -s $URL -H "${HEAD}"
 fi
