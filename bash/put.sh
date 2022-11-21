@@ -22,7 +22,12 @@ while IFS= read -r line
   do
     UUID=`echo $line | grep -E -o '"id":"[^"]+' | grep -E -o -m 1 '........-....-....-....-............'`
     echo "Updating # ${LN} -- ${UUID}"
-    curl -w '\n' -X PUT --http1.1 "${OKAPI}/${EP}/${UUID}" -H 'content-type: application/json' -H "x-okapi-token: ${TOKEN}" -d "$line"
+    if [ $UUID ]; then
+	URL="${OKAPI}/${EP}/${UUID}"
+    else
+	URL="${OKAPI}/${EP}"
+    fi
+    curl -w '\n' -X PUT --http1.1 $URL -H 'content-type: application/json' -H "x-okapi-token: ${TOKEN}" -d "$line"
     LN=$(expr $LN + 1)
 done < $UFILE
 

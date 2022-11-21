@@ -27,7 +27,14 @@ do
 	break
 done
 
-read -p "Query string: " Q
+CQ=`cat ${TMP}/query`;
+read -p "Query string [${CQ}]: " Q
+if [ $Q == "-" ]; then
+	Q=""
+elif [ -z "$Q" ]; then
+	Q=$CQ
+fi
+echo $Q > "${TMP}/query"
 
 HEAD="x-okapi-token: ${TOKEN}"
 URL="${OKAPI}/${EP}${Q}"
