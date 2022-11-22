@@ -75,6 +75,8 @@ my $ifiles = {
   statuses => 'statuses.tsv',
   notes => 'notes.tsv',
   barcodes => 'barcodes.tsv',
+  loantypes => 'loan_types_map.tsv',
+  mtypes => 'mtypes_map.tsv'
 };
 
 sub uuid {
@@ -192,7 +194,12 @@ sub mapItems {
         next;
       } 
       my @d = split /\t/, $_, 2;
-      push @{ $items->{$prop}->{$d[0]} }, $d[1] if ($d[0]);
+      if ($prop =~ /mtypes|loantypes/) {
+        my $rkey = $d[1];
+        $items->{$prop}->{$d[0]} = $refdata->{$prop}->{$rkey};
+      } else {
+        push @{ $items->{$prop}->{$d[0]} }, $d[1] if ($d[0]);
+      }
       $prekey = $d[0];
       if ($prop eq 'barcodes') {
         $d[1] =~ s/\t.+$//;
@@ -206,7 +213,7 @@ sub mapItems {
   }
 }
 mapItems();
-# print Dumper($items->{items}); exit;
+# print Dumper ($items->{loantypes}); exit;
 
 my $blvl = {
   'm' => 'Monograph',
@@ -1012,7 +1019,9 @@ sub make_items {
     push @{ $ir->{yearCaption} }, $c[9] if $c[9];
     $ir->{numberOfPieces} = $c[10] if $c[10];
     $ir->{status}->{name} = 'Available';
-    $ir->{permanentLoanTypeId} = $refdata->{loantypes}->{'Can circulate'} or die "Can't find permanentLoanTypeId for $id";
+    my $permloc = $c[3];
+    my $lt = $c[2];
+    $ir->{permanentLoanTypeId} = $items->{loantypes}->{$lt} || $refdata->{loantypes}->{'Can circulate'};
     my $bc = $items->{barcodes}->{$link}->[0] || '';
     if ($bc) {
       $bc =~ s/\t.+//;
@@ -1029,7 +1038,7 @@ sub make_items {
       push @{ $ir->{notes} }, $n;
     }
     my $sc = ($items->{statcodes}->{$link}) ? $items->{statcodes}->{$link}->[0] : '';
-    $ir->{materialTypeId} = $tofolio->{mtypes}->{$sc} || $refdata->{mtypes}->{unspecified} || die "Can't set material type for $id"; 
+    $ir->{materialTypeId} = $items->{mtypes}->{$permloc} || $refdata->{mtypes}->{unspecified} || die "Can't set material type for $id"; 
     my $tmploc = $c[4];
     if ($tmploc && $refdata->{locations}->{$tmploc}) {
       $ir->{temporaryLocationId} = $refdata->{locations}->{$tmploc};
