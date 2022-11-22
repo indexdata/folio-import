@@ -32,6 +32,7 @@ use Data::Dumper;
 
 my $ver = ($ENV{_VERSION}) ? $ENV{_VERSION} : '1';
 binmode STDOUT, ":utf8";
+$| = 1;
 
 my $version = '2';
 my $isil = 'CSt-L';
@@ -1021,6 +1022,10 @@ sub make_items {
     $ir->{numberOfPieces} = $c[10] if $c[10];
     $ir->{status}->{name} = 'Available';
     my $permloc = $c[3];
+    my $locid = $refdata->{locations}->{$permloc} || '';
+    if ($locid) {
+      $ir->{permanentLocationId} = $locid;
+    }
     my $lt = $c[2];
     $ir->{permanentLoanTypeId} = $items->{loantypes}->{$lt} || $refdata->{loantypes}->{'Can circulate'};
     my $bc = $items->{barcodes}->{$link}->[0] || '';
