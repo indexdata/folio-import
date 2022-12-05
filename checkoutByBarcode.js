@@ -46,7 +46,27 @@ const post_put = async (authToken, url, checkout, r) => {
         throw new Error(`Too many retries (${r})!`);
       }
     } else {
-      throw new Error(e.response.text);
+      let text = e.response.text;
+      console.log(text);
+      if (text.match(/overridableBlock/) && !r) {
+        let err = JSON.parse(text);
+        let block;
+        err.errors.forEach(er => {
+          if (er.message.match(/not loanable/)) {
+            block = er.overridableBlock;
+          }
+        });
+        let name = block.name;
+        checkout.overrideBlocks = {
+          comment: 'Migration override',
+          [name]: { dueDate: new Date().toISOString() }
+        }
+        console.log(`WARN we've encountered a ${name} block, retrying with override...`);
+        let body = await post_put(authToken, url, checkout, 1);
+        return body;
+      } else {
+        throw new Error(text);
+      }
     }
   }
 }
@@ -108,7 +128,7 @@ const post_put = async (authToken, url, checkout, r) => {
         let uc = '';
         if (data[d].userBarcode) uc = ` --> ${data[d].userBarcode}`
 	      let postData = Object.assign({}, data[d]);
-	      delete postData.loanDate;
+	      // delete postData.loanDate;
         console.log(`[${d}] POST ${url} (${data[d].itemBarcode}${uc})`);
         let loanObj = await post_put(authToken, url, postData);
         if (checkIn === 'checkin') added++;
