@@ -23,7 +23,8 @@ const refFiles = {
   acquisitionMethods: 'acquisition-methods.json',
   mtypes: 'material-types.json',
   funds: 'funds.json',
-  locations: 'locations.json'
+  locations: 'locations.json',
+  expenseClasses: 'expense-classes.json'
 };
 
 const addNotes = {
@@ -72,7 +73,7 @@ const addMap = {
       obj[prop].forEach(p => {
         let code = p.code || p.name || p.value;
         if (prop === 'locations') {
-          code = code.replace(/^LANE-/, '');
+          code = p.name.replace(/^Lane /, '');
         }
         refData[prop][code] = p.id;
       });
@@ -185,7 +186,7 @@ const addMap = {
         combinedNotes = anotes.join('; ');
         if (combinedNotes) co.notes.push(combinedNotes);
         co.orderType = orderType;
-        co.reEncumber = (orderType === 'Ongoing') ? true : false;
+        co.reEncumber = false;
         co.vendor = vendorId || vendorCode;
         co.workflowStatus = wfStatus;
         co.acqUnitIds = [ unit ];
@@ -209,6 +210,9 @@ const addMap = {
             pol.purchaseOrderId = co.id;
             pol.poLineNumber = co.poNumber + '-' + l.LINE_ITEM_NUMBER;
             pol.source = 'User';
+            if (l.REQUESTOR) {
+              pol.requester = l.REQUESTOR;
+            }
             let am = 'Purchase';
             let polType = l.LINE_ITEM_TYPE_DESC;
             if (poType === 'Approval' && polType === 'Single-part') {
@@ -281,6 +285,8 @@ const addMap = {
               pmap[liid].format = 'Electronic';
             }
             let fundCode = l.USE_FUND || '';
+            let exClassCode = fundCode.replace(/^.+-/, '');
+            let exClassId = refData.expenseClasses[exClassCode];
             fundCode = fundCode.replace(/-.+/, '');
             fundCode += '-Lane';
             let fundId = refData.funds[fundCode] || '';
@@ -290,9 +296,10 @@ const addMap = {
               fdist.fundId = fundId;
               fdist.distributionType = 'percentage';
               fdist.value = 100;
+              fdist.expenseClassId = exClassId;
               pol.fundDistribution.push(fdist);
             }
-            let loc = l.LOCATION_CODE;
+            let loc = l.LOCATION_ID;
             let locId = refData.locations[loc] || '';
             if (locId) {
               let lobj = {
