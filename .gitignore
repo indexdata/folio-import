@@ -1,7 +1,7 @@
 config.js
 node_modules
 data
-bash/.okapi
+.okapi
 bash/login-*
 test/Batch*
 pica/test/m?
