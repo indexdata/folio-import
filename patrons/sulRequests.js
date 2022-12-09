@@ -13,8 +13,8 @@ const tenant = 'sul';
 
 (async () => {
   try {
-    if (csvFile === undefined) {
-      throw('Usage: node sulRequests.js <service_points_file> <users_file> <loans_csv_file>');
+    if (!csvFile) {
+      throw new Error('Usage: node sulRequests.js <service_points_file> <users_file> <loans_csv_file>');
     }
     if (!fs.existsSync(csvFile)) {
       throw new Error('Can\'t find loans file');
@@ -106,6 +106,17 @@ const tenant = 'sul';
             .get(url)
             .set('x-okapi-token', config.token);
           item = res.body.items[0];
+          if (item) {
+            try {
+              let res = await superagent
+                .get(`${config.url}/holdings-storage/holdings/${item.holdingsRecordId}`)
+                .set('x-okapi-token', config.token);
+              item.instanceId = res.body.instanceId;
+            } catch (e) {
+              let msg = (e.response) ? e.response.text : e;
+              console.log(msg); 
+            }
+          }
         } catch (e) {
           let msg = (e.response) ? e.response.text : e;
           console.log(msg);
@@ -126,6 +137,8 @@ const tenant = 'sul';
           id: uuid(ukey, ns),
           requesterId: userId,
           itemId: item.id,
+          holdingsRecordId: item.holdingsRecordId,
+          instanceId: item.instanceId,
           requestDate: rdate,
           fulfilmentPreference: "Hold Shelf",
           pickupServicePointId: spId,
