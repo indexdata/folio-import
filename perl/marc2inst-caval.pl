@@ -846,28 +846,30 @@ sub make_hi {
       next;
     }
     my $hkey = "$bhrid-$loc";
-    my $locid = $refdata->{locations}->{$floc} || '';
-    $hid = uuid($hkey);
-    $hrec->{id} = $hid;
-    $hrec->{hrid} = $hkey;
-    $hrec->{instanceId} = $bid;
-    $hrec->{holdingsTypeId} = $refdata->{holdingsTypes}->{$htype};
-    $hrec->{permanentLocationId} = $locid;
-    my $cnpre = $h->subfield('h') || '';
-    my $cn = $h->subfield('i') || '';
-    if ($cn) {
-      $hrec->{callNumberPrefix} = $cnpre;
-      $hrec->{callNumber} = $cn;
-      $hrec->{callNumberTypeId} = $refdata->{callNumberTypes}->{'Other scheme'};
+    if (!$hseen->{$hkey}) {
+      my $locid = $refdata->{locations}->{$floc} || '';
+      $hid = uuid($hkey);
+      $hrec->{id} = $hid;
+      $hrec->{hrid} = $hkey;
+      $hrec->{instanceId} = $bid;
+      $hrec->{holdingsTypeId} = $refdata->{holdingsTypes}->{$htype};
+      $hrec->{permanentLocationId} = $locid;
+      my $cnpre = $h->subfield('h') || '';
+      my $cn = $h->subfield('i') || '';
+      if ($cn) {
+        $hrec->{callNumberPrefix} = $cnpre;
+        $hrec->{callNumber} = $cn;
+        $hrec->{callNumberTypeId} = $refdata->{callNumberTypes}->{'Other scheme'};
+      }
+      my $hout = $json->encode($hrec);
+      $holdings .= $hout . "\n";
+      $hseen->{$hkey} = 1;
+      $hcount++;
     }
-    my $hout = $json->encode($hrec);
-    $holdings .= $hout . "\n";
-    $hseen->{$hkey} = 1;
-    $hcount++;
 
     # make item record;
     
-    my $itag = '945';
+    my $itag = '852';
     foreach my $item ($marc->field($itag)) {
       my $irec = {};
       my $sub2 = $item->subfield('2');
