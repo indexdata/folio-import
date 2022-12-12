@@ -85,6 +85,7 @@ let ep = process.argv[2];
         logger.info(`  Successfully added record id ${rec.id}`);
         success++;
       } catch (e) {
+	console.log(e);
 	let errMsg = (e.response) ? e.response.text : e;
         logger.warn(`  WARN ${errMsg}`);
         logger.info('  Trying PUT request...');

@@ -31,6 +31,7 @@ binmode STDOUT, ":utf8";
 
 my $version = '1';
 my $isil = 'CARM';
+my $ver = '2';
 
 my $cntypes = {};
 
@@ -836,28 +837,62 @@ sub make_hi {
   my $hcount = 0;
   my $icount = 0;
   my $iecount = 0;
+  my $enums = {};
   
+  foreach my $etag ('945', '952', '985', '999') {
+    foreach my $z ($marc->field($etag)) {
+      my $link = '';
+      my $data = '';
+      if (!$enums->{$link}) {
+        if ($etag eq '945') {
+          $link = $z->subfield('p');
+          $data = $z->subfield('j');
+        } elsif ($etag eq '952') {
+          $link = $z->subfield('h');
+          $data = $z->subfield('g');
+        } elsif ($etag eq '985' or $etag eq '999') {
+          $link = $z->subfield('b');
+        }
+        if ($data) {
+          $enums->{$link} = $data if $data;
+        }
+      }
+    }
+  }
+  my $hstat = '';
+  foreach ($marc->field('866')) {
+    if ($_->subfield('a')) {
+      $hstat = $_->subfield('a') || '';
+      last;
+    }
+  }
+
   my $htag = '852';
   foreach my $h ($marc->field($htag)) {
     my $loc = $h->subfield('b') || '';
     my $htype = $htype_map->{$blevel} || 'm';
-    my $floc = $locmap->{$loc};
+    my $floc = $locmap->{$loc} || '';
     if (!$loc || $loc ne 'ims' && $loc =~ /^[iv]/) {
       next;
     }
+    my $locid = $refdata->{locations}->{$floc} or die "Can't find location for $loc";
+    my $cnpre = $h->subfield('h') || '';
+    my $cn = $h->subfield('i') || '';
     my $hkey = "$bhrid-$loc";
+    my $hid = uuid($hkey);
     if (!$hseen->{$hkey}) {
-      my $locid = $refdata->{locations}->{$floc} || '';
-      $hid = uuid($hkey);
+      $hrec->{_version} = $ver;
       $hrec->{id} = $hid;
       $hrec->{hrid} = $hkey;
       $hrec->{instanceId} = $bid;
       $hrec->{holdingsTypeId} = $refdata->{holdingsTypes}->{$htype};
       $hrec->{permanentLocationId} = $locid;
-      my $cnpre = $h->subfield('h') || '';
-      my $cn = $h->subfield('i') || '';
-      if ($cn) {
-        $hrec->{callNumberPrefix} = $cnpre;
+      if ($hstat) {
+        my $sobj = { statement => $hstat, note => '', staffNote => '' };
+        push @{ $hrec->{holdingsStatements} }, $sobj;
+      }
+      if (0) {
+        # $hrec->{callNumberPrefix} = $cnpre;
         $hrec->{callNumber} = $cn;
         $hrec->{callNumberTypeId} = $refdata->{callNumberTypes}->{'Other scheme'};
       }
@@ -868,73 +903,85 @@ sub make_hi {
     }
 
     # make item record;
-    
-    my $itag = '852';
-    foreach my $item ($marc->field($itag)) {
-      my $irec = {};
-      my $sub2 = $item->subfield('2');
-      my $barcode = $item->subfield('p') || '';
-      my $iid = "$sub2-$barcode";
-      my $itype = $item->subfield('s');
-      my $status = 'Availble';
-      my @msgs;
-      my @notes;
-      $status =~ s/\s+$//;
-      if ($iid) {
-        $iid =~ s/^\.//;
-        $irec->{id} = uuid($iid);
-        $irec->{holdingsRecordId} = $hid;
-        $irec->{hrid} = $iid;
-        if ($barcode && $bc_seen->{$barcode}) {
-          push @notes, "Duplicate barcode: $barcode";
-        } elsif ($barcode =~ /\d/) {
-          $irec->{barcode} = $barcode;
-        }
-        $bc_seen->{$barcode} = 1;
-
-        # if ($blevel eq 's') {
-          # $irec->{enumeration} = $item->subfield('0') || '';
-        # } else {
-          # $irec->{volume} = $item->subfield('0') || '';
-        # }
-
-        $irec->{permanentLoanTypeId} = $refdata->{loantypes}->{'Can circulate'} or die "Can't map loan type!";
-        my $mtypestr = $mtypes->{$type} || 'unspecified';
-        $irec->{materialTypeId} = $refdata->{mtypes}->{$mtypestr} || $refdata->{mtypes}->{unspecified}; 
-        $irec->{status}->{name} = 'Available';
-        foreach (@msgs) {
-          if (!$irec->{circulationNotes}) { $irec->{circulationNotes} = [] }
-          my $cnobj = {};
-          $cnobj->{note} = $_;
-          $cnobj->{noteType} = 'Check out';
-          $cnobj->{staffOnly} = 'true';
-          $cnobj->{date} = "" . localtime;
-          $cnobj->{source} = {
-            id => 'ba213137-b641-4da7-aee2-9f2296e8bbf7',
-            personal => { firstName => 'Index', lastName => 'Data' }
-          };
-          push @{ $irec->{circulationNotes} }, $cnobj;
-        }
-
-        foreach (@notes) {
-          my $nobj = {};
-          $nobj->{note} = $_;
-          $nobj->{itemNoteTypeId} = $refdata->{itemNoteTypes}->{Note};
-          $nobj->{staffOnly} = 'true';
-          push @{ $irec->{notes} }, $nobj;
-        }
-        $irec->{discoverySuppress} = JSON::false;
-        
-        my $iout = $json->encode($irec);
-        if (!$item_seen->{$iid}) {
-          $items .= $iout . "\n";
-          $icount++;
-        } else {
-          $itemerrs .= $iout . "\n";
-          $iecount++;
-        }
-        $item_seen->{$iid} = 1;
+    my $item = $h;
+    my $irec = {};
+    my $sub2 = $item->subfield('2');
+    my $barcode = $item->subfield('p') || '';
+    my $iid = "ci$barcode";
+    my $itype = $item->subfield('s');
+    my $status = 'Availble';
+    my @msgs;
+    my @notes;
+    $status =~ s/\s+$//;
+    if ($iid) {
+      $iid =~ s/^\.//;
+      $irec->{id} = uuid($iid);
+      $irec->{holdingsRecordId} = $hid;
+      $irec->{hrid} = $iid;
+      if ($barcode && $bc_seen->{$barcode}) {
+        push @notes, "Duplicate barcode: $barcode";
+      } elsif ($barcode =~ /\d/) {
+        $irec->{barcode} = $barcode;
       }
+      $bc_seen->{$barcode} = 1;
+
+      if ($cn) {
+        $irec->{itemLevelCallNumber} = $cn;
+        $irec->{itemLevelCallNumberPrefix} = $cnpre;
+        $irec->{itemLevelCallNumberTypeId} = $refdata->{callNumberTypes}->{'Other scheme'};
+      }
+
+      my $vol = $enums->{$barcode} || '';
+      if ($vol) {
+        if ($blevel eq 's') {
+          $irec->{enumeration} = $vol;
+        } else {
+          $irec->{volume} = $vol;
+        }
+      }
+
+      # if ($blevel eq 's') {
+        # $irec->{enumeration} = $item->subfield('0') || '';
+      # } else {
+        # $irec->{volume} = $item->subfield('0') || '';
+      # }
+
+      $irec->{permanentLoanTypeId} = $refdata->{loantypes}->{'Can circulate'} or die "Can't map loan type!";
+      my $mtypestr = $mtypes->{$type} || 'unspecified';
+      $irec->{materialTypeId} = $refdata->{mtypes}->{$mtypestr} || $refdata->{mtypes}->{unspecified}; 
+      $irec->{status}->{name} = 'Available';
+      foreach (@msgs) {
+        if (!$irec->{circulationNotes}) { $irec->{circulationNotes} = [] }
+        my $cnobj = {};
+        $cnobj->{note} = $_;
+        $cnobj->{noteType} = 'Check out';
+        $cnobj->{staffOnly} = 'true';
+        $cnobj->{date} = "" . localtime;
+        $cnobj->{source} = {
+          id => 'ba213137-b641-4da7-aee2-9f2296e8bbf7',
+          personal => { firstName => 'Index', lastName => 'Data' }
+        };
+        push @{ $irec->{circulationNotes} }, $cnobj;
+      }
+
+      foreach (@notes) {
+        my $nobj = {};
+        $nobj->{note} = $_;
+        $nobj->{itemNoteTypeId} = $refdata->{itemNoteTypes}->{Note};
+        $nobj->{staffOnly} = 'true';
+        push @{ $irec->{notes} }, $nobj;
+      }
+      $irec->{discoverySuppress} = JSON::false;
+      
+      my $iout = $json->encode($irec);
+      if (!$item_seen->{$iid}) {
+        $items .= $iout . "\n";
+        $icount++;
+      } else {
+        $itemerrs .= $iout . "\n";
+        $iecount++;
+      }
+      $item_seen->{$iid} = 1;
     }
   }
   return {
