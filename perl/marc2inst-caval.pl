@@ -31,7 +31,7 @@ binmode STDOUT, ":utf8";
 
 my $version = '1';
 my $isil = 'CARM';
-my $ver = '2';
+my $ver = '1';
 
 my $cntypes = {};
 
