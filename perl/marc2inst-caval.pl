@@ -570,6 +570,14 @@ foreach (@ARGV) {
     foreach (@zfields) {
       $_->set_tag('945');
     }
+    my @dfields = $marc->field('DDC');
+    foreach (@dfields) {
+      $_->set_tag('946');
+    }
+    my @tfields = $marc->field('TBC');
+    foreach (@tfields) {
+      $_->set_tag('947');
+    }
     
 
     my $srsmarc = $marc;
@@ -875,7 +883,7 @@ sub make_hi {
     if (!$loc || $loc ne 'ims' && $loc =~ /^[iv]/) {
       next;
     }
-    my $locid = $refdata->{locations}->{$floc} or die "Can't find location for $loc";
+    my $locid = $refdata->{locations}->{$floc} || $refdata->{locations}->{UNMAPPED} || die "Can't find location for $loc";
     my $cnpre = $h->subfield('h') || '';
     my $cn = $h->subfield('i') || '';
     my $hkey = "$bhrid-$loc";

@@ -26,7 +26,7 @@ let pl = process.argv[3];
       console.log(JSON.stringify(res.body, null, 2));
     } catch (e) {
       let msg = (e.response) ? e.response.text : e;
-      console.log(msg);
+      console.log(e);
     }
   } catch(e) {
       console.log(`${e}`);
