@@ -40,7 +40,7 @@ const wait = (ms) => {
     const start = new Date().valueOf();
     let inData;
     if (!inFile) {
-      throw new Error('Usage: node loadInventorySyncJSONL.js [options -s start, -b batch size (default 1000) -u upsert (true|false)] <file>');
+      throw new Error('Usage: node loadInventory.js [options -s start, -b batch size (default 1000) -u upsert (true|false)] <file>');
     } else if (!fs.existsSync(inFile)) {
       throw new Error('Can\'t find input file');
     }
