@@ -86,6 +86,8 @@ const csvFile = process.argv[4];
       loan.dueDate = ddate + os;
       let sp = r['Service point'];
       loan.servicePointId = spMap[sp];
+      let rc = r['Num renewals'] || '';
+      loan.renewalCount = (rc) ? parseInt(rc, 10) : 0;
       let cr = r['Claims returned date'];
       if (cr.match(/\d{8}/)) {
         let crdate = cr.replace(/(\d{4})(\d\d)(\d\d)/, '$1-$2-$3T12:00:00');
