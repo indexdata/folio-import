@@ -110,10 +110,12 @@ const post_put = async (authToken, url, checkout, r) => {
     for (d = offset; d < data.length; d++) {
       let dueDate;
       let claimedReturnedDate = '';
+      let renewalCount = 0;
       if (checkIn === 'checkin') {
         delete data[d].loanDate;
         delete data[d].userBarcode;
         delete data[d].expirationDate;
+        delete data[d].renewalCount;
         data[d].checkInDate = today;
       } else {
         dueDate = data[d].dueDate;
@@ -122,6 +124,10 @@ const post_put = async (authToken, url, checkout, r) => {
         if (data[d].claimedReturnedDate) {
           claimedReturnedDate = data[d].claimedReturnedDate;
           delete data[d].claimedReturnedDate;
+        }
+        if (data[d].renewalCount) {
+          renewalCount = data[d].renewalCount; 
+          delete data[d].renewalCount;
         }
       }
       try {
@@ -139,6 +145,7 @@ const post_put = async (authToken, url, checkout, r) => {
             loanObj.dueDate = dueDate;
             loanObj.loanDate = data[d].loanDate;
             loanObj.action = 'dueDateChanged';
+            loanObj.renewalCount = renewalCount;
             let lurl = `${config.okapi}/circulation/loans/${loanObj.id}`;
             console.log(`[${d}] PUT ${lurl} (${data[d].itemBarcode})`);
             await post_put(authToken, lurl, loanObj);
