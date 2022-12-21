@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 const parse = require('csv-parse/lib/sync');
-const readline = require('readline');
 const uuid = require('uuid/v5');
 const superagent = require('superagent');
 

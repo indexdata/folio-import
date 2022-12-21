@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 const parse = require('csv-parse/lib/sync');
-const readline = require('readline');
 
 const spFile = process.argv[2];
 const usersFile = process.argv[3];
