@@ -9,7 +9,8 @@ const ns = 'e35dff4e-9035-4d6a-b621-3d42578f81c7';
 const files = {
   orgs: 'organizations.jsonl',
   notes: 'org-notes.jsonl',
-  contacts: 'contacts.jsonl'
+  contacts: 'contacts.jsonl',
+  cmap: 'codemap.json',
 };
 
 const unitsMap = {
@@ -19,6 +20,10 @@ const unitsMap = {
 const col = { a:0, b:1, c:2, d:3, e:4, f:5, g:6, h:7, i:8, j:9, k:10, l:11, m:12, n:13, o:14, p:15, q:16, r:17, 
   s:18, t:19, u:20, v:21, w:22, x:23, y:24, z:25, aa:26, ab:27, ac:28, ad:29, ae:30, af:31, ag:32, ah:33, ai:34, 
   aj:35, ak:36, al:37, am: 38, an: 39 };
+
+for (let k in col) {
+  if (k != 'a') col[k] = col[k]+1;
+}
 
 (async () => {
   try {
@@ -57,6 +62,7 @@ const col = { a:0, b:1, c:2, d:3, e:4, f:5, g:6, h:7, i:8, j:9, k:10, l:11, m:12
     let x = 0;
     const sl = 1;
     const seen = {};
+    const cmap = {};
     for await (const line of rl) {
       x++;
       if (x > sl) {
@@ -65,6 +71,10 @@ const col = { a:0, b:1, c:2, d:3, e:4, f:5, g:6, h:7, i:8, j:9, k:10, l:11, m:12
         let code = c[col.e];
         if (!seen[code]) {
           let id = uuid(code + 'orgs', ns);
+          let altCode = c[1];
+          if (altCode) {
+            cmap[altCode] = { id: id, code: c[0] };
+          }
           org.id = id;
           org.name = c[col.d];
           org.code = c[col.e];
@@ -123,6 +133,7 @@ const col = { a:0, b:1, c:2, d:3, e:4, f:5, g:6, h:7, i:8, j:9, k:10, l:11, m:12
         }
       }
     }
+    fs.writeFileSync(files.cmap, JSON.stringify(cmap, null, 2));
 
     console.log('---------------------');
     for (let t in ttls) {
