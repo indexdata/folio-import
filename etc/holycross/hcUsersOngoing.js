@@ -89,11 +89,11 @@ try {
       let dept = c[3];
       if (dept && !dept.match(/^No/i)) u.departments = [ dept ];
       if (c[4]) {
-	let d = c[4].replace(/(..)-(..)-(....)/, '$3-$1-$2');
+	      let d = c[4].replace(/(..)-(..)-(....)/, '$3-$1-$2');
         u.enrollmentDate = d + 'T05:00:00.000Z';
       }
       if (c[5]) {
-	let d = c[5].replace(/(..)-(..)-(....)/, '$3-$1-$2');
+	      let d = c[5].replace(/(..)-(..)-(....)/, '$3-$1-$2');
         u.expirationDate = d + 'T05:00:00.000Z';
       }
       u.externalSystemId = c[6];
@@ -102,8 +102,8 @@ try {
       let per = {};
       per.lastName = c[11];
       per.firstName = c[10];
-      per.middleName = c[12];
-      per.preferredFirstName = c[16];
+      if (c[12]) per.middleName = c[12];
+      if (c[16]) per.preferredFirstName = c[16];
       per.email = c[9];
       if (c[13]) per.mobilePhone = c[13];
       if (c[14]) per.phone = c[14];
