@@ -564,7 +564,7 @@ foreach (@ARGV) {
         $marc->insert_fields_ordered($field); 
       }
     }
-
+    
     # III specific mapping for discoverySuppress
     my $supp_code = $marc->subfield('998', 'e') || '';
     if ($supp_code eq 'n') {
@@ -729,9 +729,10 @@ foreach (@ARGV) {
         }
       }
       $inst_recs .= $json->encode($rec) . "\n";
+      my $electronic = ($rec->{electronicAccess}) ? $json->encode($rec->{electronicAccess}) : '';
       $srs_recs .= $json->encode(make_srs($srsmarc, $raw, $rec->{id}, $rec->{hrid}, $snapshot_id, $srs_file)) . "\n";
       my $ctype = $cntypes->{$cntag} || '';
-      $idmap_lines .= "$rec->{hrid}|$rec->{id}|$cn|$ctype|$blevel\n";
+      $idmap_lines .= "$rec->{hrid}|$rec->{id}|$cn|$ctype|$blevel|$electronic\n";
       $hrids->{$hrid} = 1;
       $success++;
 
