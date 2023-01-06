@@ -18,6 +18,7 @@
   "workspaces": [
     "util",
     "patrons",
-    "acquisitions"
+    "acquisitions",
+    "inventory"
   ]
 }
