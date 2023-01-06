@@ -6,13 +6,88 @@ const parse = require('csv-parse/lib/sync');
 const fs = require('fs');
 const readline = require('readline');
 const path = require('path');
+const uuid = require('uuid/v5');
 
-const itemFile = process.argv[2];
-const bnoFile = process.argv[3];
+const ns = '00000000-0000-0000-0000-000000000000';
+const ver = '1';
+
+const itemFile = process.argv[5];
+const bnoFile = process.argv[4];
+const instMapFile = process.argv[3];
+const refDir = process.argv[2];
+
+const files = {
+  items: 'items.jsonl',
+  holdings: 'holdings.jsonl'
+}
+
+const rfiles = {
+  locations: 'locations.json',
+  mtypes: 'material-types.json',
+  holdingsRecordsSources: 'holdings-sources.json',
+  holdingsTypes: 'holdings-types.json'
+};
+
+htypes = {
+  m: 'Monograph',
+  s: 'Serial',
+  i: 'Multi-part monograph'
+};
 
 (async () => {
   try {
-    if (!bnoFile) throw(`Usage: node bibno2item.js <itemfile.csv> <bnofile.csv>`);
+    if (!itemFile) throw(`Usage: node items-culaw.js <ref-dir> <inst-map-file> <bno-file.csv> <item-file.csv>`);
+
+    const writeJSON = (fn, data) => {
+      const out = JSON.stringify(data) + "\n";
+      fs.writeFileSync(fn, out, { flag: 'a' });
+    }
+
+    let dir = path.dirname(bnoFile);
+    let base = path.basename(instMapFile, '.map');
+
+    for (let f in files) {
+      let fullPath = dir + '/' + base + '_' + files[f];
+      if (fs.existsSync(fullPath)) fs.unlinkSync(fullPath);
+      files[f] = fullPath;
+    }
+
+    // get ref data
+    let refData = {};
+    for (let prop in rfiles) {
+      let rpath = refDir + '/' + rfiles[prop];
+      let refObj = require(rpath);
+      let arr = refObj[prop];
+      refData[prop] = {}
+      arr.forEach(e => {
+        let key = e.name;
+        if (prop.match(/locations/)) {
+          key = e.code;
+        }
+        let id = e.id;
+        refData[prop][key] = id;
+      });
+    }
+    // console.log(refData);
+
+    // get instance map
+    let instMap = {}
+    let fileStream = fs.createReadStream(instMapFile);
+    let rl = readline.createInterface({
+      input: fileStream,
+      crlfDelay: Infinity
+    });
+    for await (let line of rl) {
+      let c = line.split(/\|/);
+      let bhrid = c[0];
+      instMap[bhrid] = {
+        id: c[1],
+        cn: c[2],
+        cntype: c[3],
+        blevel: c[4],
+      }
+    }
+    // console.log(instMap);
 
     let itemCsv = fs.readFileSync(itemFile, 'utf8');
     itemCsv = itemCsv.replace(/";"/g, '%%');
@@ -22,13 +97,9 @@ const bnoFile = process.argv[3];
       skip_empty_lines: true
     });
 
-    let dir = path.dirname(bnoFile);
-    let outFile = `${dir}/items_with_bno.jsonl`;
-    if (fs.existsSync(outFile)) fs.unlinkSync(outFile);
+    fileStream = fs.createReadStream(bnoFile);
 
-    const fileStream = fs.createReadStream(bnoFile);
-
-    const rl = readline.createInterface({
+    rl = readline.createInterface({
       input: fileStream,
       crlfDelay: Infinity
     });
@@ -38,6 +109,8 @@ const bnoFile = process.argv[3];
       line = line.replace(/^"|"$/g, '');
       let c = line.split(/","/);
       let bnum = c.shift();
+      bnum = bnum.replace(/.$/, '');
+      if (bnum) bnum = 'l' + bnum;
       c.forEach(c => {
         if (c.match(/i\d{5}/)) {
           imap[c] = bnum;
@@ -45,24 +118,54 @@ const bnoFile = process.argv[3];
       });
     }
 
-    let c = 0;
+    let hcount = 0;
+    let icount = 0;
     let err = 0;
+    let hseen = {};
     itemRecs.forEach(i => {
       let iid = i['RECORD #(ITEM)'];
-      let bid = imap[iid];
-      i.bibId = bid;
-      if (bid) {
-        let out = JSON.stringify(i);
-        fs.writeFileSync(outFile, out + "\n", { flag: 'a'});
-        c++;
+      let bhrid = imap[iid];
+
+      // start making holdings and items
+      if (bhrid) {
+        let loc = i.LOC;
+        let hrid = bhrid + '-' + loc;
+
+        // make holdings
+        if (!hseen[hrid]) {
+          hseen[hrid] = 1;
+          let id = uuid(hrid, ns);
+          let instData = instMap[bhrid];
+          let instId = instData.id || '';
+          let locId = refData.locations[loc] || refData.locations.UNMAPPED;
+          let htype = htypes[instData.blevel] || 'Monograph';
+          let hr = {
+            _version: ver,
+            id: id,
+            hrid: hrid,
+            sourceId: refData.holdingsRecordsSources.FOLIO,
+            holdingsTypeId: refData.holdingsTypes[htype],
+            instanceId: instId,
+            permanentLocationId: locId
+          };
+          if (i.ICODE2 === 's') {
+            hr.discoverySuppress = true;
+          } else {
+            hr.discoverySuppress = false;
+          }
+          console.log(hr);
+          writeJSON(files.holdings, hr);
+          hcount++;
+        }
       } else {
         console.log(`No bib number found for ${iid}`);
         err++;
       }
     });
-    console.log('Saved to:', outFile);
-    console.log('Items created:', c);
+    console.log('Holdings created:', hcount);
+    console.log('Items created:', icount);
     console.log('Errors:', err);
+    console.log(files);
   } catch (e) {
     console.log(e);
   }
