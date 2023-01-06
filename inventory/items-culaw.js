@@ -85,6 +85,7 @@ htypes = {
         cn: c[2],
         cntype: c[3],
         blevel: c[4],
+        ea: c[5]
       }
     }
     // console.log(instMap);
@@ -152,6 +153,9 @@ htypes = {
             hr.discoverySuppress = true;
           } else {
             hr.discoverySuppress = false;
+          }
+          if (instData.ea) {
+            hr.electronicAccess = JSON.parse(instData.ea);
           }
           console.log(hr);
           writeJSON(files.holdings, hr);
