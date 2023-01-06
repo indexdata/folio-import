@@ -14,25 +14,29 @@ const funcs = {
 }
 
 const applyRules = function (ent, field) {
-  if (ent.subfield) {
+  console.log(ent);
+  let data;
+  if (ent.subfield && ent.subfield[0]) {
     let subcodes = ent.subfield.join('');
-    let data = getSubs(field, subcodes);
-    console.log(JSON.stringify(ent, null, 2));
+    data = getSubs(field, subcodes);
+    // console.log(JSON.stringify(ent, null, 2));
     if (ent.rules && ent.rules[0].conditions[0]) {
       let ctype = ent.rules[0].conditions[0].type;
       ctype.split(/, */).forEach(c => {
-        console.log(c);
+        // console.log(c);
         if (funcs[c]) {
           funcs[c](data);
         }
       });
     }
-    let out = { 
-      prop: ent.target,
-      value: data
-    }
-    return out;
+  } else {
+    data = field;
   }
+  const out = {
+    prop: ent.target,
+    data: data
+  }
+  return out;
 }
 
 const makeInst = function (map, field) {
@@ -47,8 +51,7 @@ const makeInst = function (map, field) {
     } else {
       data = applyRules(m, field);
     }
-    console.log(data);
-    ff[data.prop] = data.value;
+    ff[data.prop] = data;
   });
   return ff;
 }
@@ -91,14 +94,15 @@ try {
       let inst = {};
       let marc = parseMarc(r);
       for (let t in mappingRules) {
-        if (t === '100' && marc.fields[t]) {
+        if (t === '001' && marc.fields[t]) {
           let fields = marc.fields[t];
           if (fields) {
             fields.forEach(f => {
+              // console.log(JSON.stringify(mappingRules[t], null, 2));
               let ff = makeInst(mappingRules[t], f);
               for (let prop in ff) {
                 if (propMap[prop] === 'string' || propMap[prop] === 'boolean') {
-                  inst[prop] = ff[prop];
+                  inst[prop] = ff[prop].data;
                 }
               }
             });

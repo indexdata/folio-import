@@ -187,6 +187,9 @@
                     "subfieldsToConcat": [
                       "c",
                       "q"
+                    ],
+                    "subfieldsToStopConcat": [
+                      "z"
                     ]
                   }
                 }
@@ -233,6 +236,9 @@
                     "subfieldsToConcat": [
                       "q",
                       "c"
+                    ],
+                    "subfieldsToStopConcat": [
+                      "a"
                     ]
                   }
                 }
