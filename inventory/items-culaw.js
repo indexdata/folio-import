@@ -25,7 +25,8 @@ const rfiles = {
   locations: 'locations.json',
   mtypes: 'material-types.json',
   holdingsRecordsSources: 'holdings-sources.json',
-  holdingsTypes: 'holdings-types.json'
+  holdingsTypes: 'holdings-types.json',
+  callNumberTypes: 'call-number-types.json'
 };
 
 htypes = {
@@ -68,7 +69,7 @@ htypes = {
         refData[prop][key] = id;
       });
     }
-    // console.log(refData);
+    // console.log(refData); return;
 
     // get instance map
     let instMap = {}
@@ -131,6 +132,16 @@ htypes = {
       if (bhrid) {
         let loc = i.LOC;
         let hrid = bhrid + '-' + loc;
+        let cn = '';
+        let cntype = '';
+        let icall = i['CALL #(ITEM)'];
+        if (icall) {
+          cn = icall;
+          cntype = refData.callNumberTypes['Other scheme'];
+        } else {
+          cn = instMap[bhrid].cn;
+          cntype = instMap[bhrid].cntype;
+        }
 
         // make holdings
         if (!hseen[hrid]) {
@@ -149,6 +160,10 @@ htypes = {
             instanceId: instId,
             permanentLocationId: locId
           };
+          if (cn) {
+            hr.callNumber = cn;
+            hr.callNumberTypeId = cntype;
+          }
           if (i.ICODE2 === 's') {
             hr.discoverySuppress = true;
           } else {
@@ -157,7 +172,7 @@ htypes = {
           if (instData.ea) {
             hr.electronicAccess = JSON.parse(instData.ea);
           }
-          console.log(hr);
+          // console.log(hr);
           writeJSON(files.holdings, hr);
           hcount++;
         }
