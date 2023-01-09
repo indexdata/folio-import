@@ -26,8 +26,13 @@ const rfiles = {
   mtypes: 'material-types.json',
   holdingsRecordsSources: 'holdings-sources.json',
   holdingsTypes: 'holdings-types.json',
-  callNumberTypes: 'call-number-types.json'
+  callNumberTypes: 'call-number-types.json',
+  loantypes: 'loan-types.json'
 };
+
+const mfiles = {
+  statuses: 'law-statuses.tsv'
+}
 
 htypes = {
   m: 'Monograph',
@@ -70,6 +75,27 @@ htypes = {
       });
     }
     // console.log(refData); return;
+
+    // get tsv maps
+    toFolio = {}
+    for (let f in mfiles) {
+      let mfile = refDir + '/' + mfiles[f];
+      let fileStream = fs.createReadStream(mfile);
+      let rl = readline.createInterface({
+        input: fileStream,
+        crlfDelay: Infinity
+      });
+      toFolio[f] = {}
+      for await (let line of rl) {
+        let c = line.split(/\t/);
+        let key = c[0];
+        let val = c[2];
+        if (key) {
+          toFolio[f][key] = val;
+        }
+      }
+    }
+    // console.log(toFolio); return;
 
     // get instance map
     let instMap = {}
@@ -124,6 +150,7 @@ htypes = {
     let icount = 0;
     let err = 0;
     let hseen = {};
+    let hid;
     itemRecs.forEach(i => {
       let iid = i['RECORD #(ITEM)'];
       let bhrid = imap[iid];
@@ -147,6 +174,7 @@ htypes = {
         if (!hseen[hrid]) {
           hseen[hrid] = 1;
           let id = uuid(hrid, ns);
+          hid = id;
           let instData = instMap[bhrid];
           let instId = instData.id || '';
           let locId = refData.locations[loc] || refData.locations.UNMAPPED;
@@ -176,6 +204,27 @@ htypes = {
           writeJSON(files.holdings, hr);
           hcount++;
         }
+
+        let ihrid = i['RECORD #(ITEM)'];
+        ihrid = 'l' + ihrid;
+        let iid = uuid(ihrid, ns);
+        let loantypeId = refData.loantypes['Can circulate'];
+        let ir = {
+          id: iid,
+          hrid: ihrid,
+          holdingsRecordId: hid,
+          permanentLoanTypeId: loantypeId,
+          status: {}
+        };
+        if (icall) {
+          ir.itemLevelCallNumber = cn;
+          ir.itemLevelCallNumberTypeId = cntype;
+        }
+        let st = i.STATUS;
+        let stname = toFolio.statuses[st] || 'Unknown'
+        ir.status.name = stname;
+        console.log(ir);
+
       } else {
         console.log(`No bib number found for ${iid}`);
         err++;
@@ -184,7 +233,6 @@ htypes = {
     console.log('Holdings created:', hcount);
     console.log('Items created:', icount);
     console.log('Errors:', err);
-    console.log(files);
   } catch (e) {
     console.log(e);
   }
