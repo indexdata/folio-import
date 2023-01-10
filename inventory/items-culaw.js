@@ -27,14 +27,15 @@ const rfiles = {
   holdingsRecordsSources: 'holdings-sources.json',
   holdingsTypes: 'holdings-types.json',
   callNumberTypes: 'call-number-types.json',
-  loantypes: 'loan-types.json'
+  loantypes: 'loan-types.json',
+  itemNoteTypes: 'item-note-types.json'
 };
 
 const mfiles = {
   statuses: 'law-statuses.tsv'
 }
 
-htypes = {
+const htypes = {
   m: 'Monograph',
   s: 'Serial',
   i: 'Multi-part monograph'
@@ -47,6 +48,15 @@ htypes = {
     const writeJSON = (fn, data) => {
       const out = JSON.stringify(data) + "\n";
       fs.writeFileSync(fn, out, { flag: 'a' });
+    }
+
+    const noteGen = (note, type, staffOnly) => {
+      let out = {
+        note: note,
+        noteTypeId: type
+      }
+      out.staffOnly = (staffOnly) ? true : false;
+      return out;
     }
 
     let dir = path.dirname(bnoFile);
@@ -149,7 +159,9 @@ htypes = {
     let hcount = 0;
     let icount = 0;
     let err = 0;
+    let ierr = 0;
     let hseen = {};
+    let iseen = {};
     let hid;
     itemRecs.forEach(i => {
       let iid = i['RECORD #(ITEM)'];
@@ -157,6 +169,7 @@ htypes = {
 
       // start making holdings and items
       if (bhrid) {
+        let instData = instMap[bhrid];
         let loc = (i.LOC) ? i.LOC.trim() : '';
         let hrid = bhrid + '-' + loc;
         let cn = '';
@@ -166,21 +179,22 @@ htypes = {
           cn = icall;
           cntype = refData.callNumberTypes['Other scheme'];
         } else {
-          cn = instMap[bhrid].cn;
-          cntype = instMap[bhrid].cntype;
+          cn = instData.cn;
+          cntype = instData.cntype;
         }
         cn = cn.replace(/^(\w{1,3}) /, '$1');
+        cn = cn.replace(/ \./, '.');
         let supp = (i.ICODE2 && i.ICODE2 === 's') ? true : false;
+        let blevel = instData.blevel;
 
         // make holdings
         if (!hseen[hrid]) {
           hseen[hrid] = 1;
           let id = uuid(hrid, ns);
           hid = id;
-          let instData = instMap[bhrid];
           let instId = instData.id || '';
           let locId = refData.locations[loc] || refData.locations.UNMAPPED;
-          let htype = htypes[instData.blevel] || 'Monograph';
+          let htype = htypes[blevel] || 'Monograph';
           let hr = {
             _version: ver,
             id: id,
@@ -202,29 +216,71 @@ htypes = {
           writeJSON(files.holdings, hr);
           hcount++;
         }
-
+        
         let ihrid = i['RECORD #(ITEM)'];
-        ihrid = 'l' + ihrid;
-        let iid = uuid(ihrid, ns);
-        let loantypeId = refData.loantypes['Can circulate'];
-        let mt = refData.mtypes.unspecified;
-        let ir = {
-          id: iid,
-          hrid: ihrid,
-          holdingsRecordId: hid,
-          permanentLoanTypeId: loantypeId,
-          materialTypeId: mt,
-          status: {},
-          discoverySuppress: supp
-        };
-        if (icall) {
-          ir.itemLevelCallNumber = cn;
-          ir.itemLevelCallNumberTypeId = cntype;
+        if (!iseen[ihrid]) {
+          iseen[ihrid] = 1;
+          ihrid = 'l' + ihrid;
+          let iid = uuid(ihrid, ns);
+          let loantypeId = refData.loantypes['Can circulate'];
+          let mt = refData.mtypes.unspecified;
+          let ir = {
+            id: iid,
+            hrid: ihrid,
+            holdingsRecordId: hid,
+            permanentLoanTypeId: loantypeId,
+            materialTypeId: mt,
+            status: {},
+            discoverySuppress: supp
+          };
+          let bc = i.BARCODE;
+          if (bc) {
+            let b = bc.split(/%%/);
+            ir.barcode = b.shift();
+            if (b[0]) {
+              if (!ir.notes) ir.notes = [];
+              let ntype = refData.itemNoteTypes['Provenance'];
+              ir.notes.push(noteGen('Other barcode: ' + b[0], ntype, 1));
+            }
+          }
+          if (icall) {
+            ir.itemLevelCallNumber = cn;
+            ir.itemLevelCallNumberTypeId = cntype;
+          }
+          let st = i.STATUS;
+          let stname = toFolio.statuses[st] || 'Unknown'
+          ir.status.name = stname;
+          if (i['COPY #']) {
+            ir.copyNumber = i['COPY #'];
+          }
+          let vol = i.VOL;
+          if (vol && blevel === 's') {
+            ir.enumeration = vol;
+          } else if (vol) {
+            ir.volume = vol;
+          }
+          let msg = i['MESSAGE(ITEM)'];
+          if (msg) { 
+            // ir.descriptionOfPieces = msg;
+            // ir.numberOfPieces = msg;
+            ir.circulationNotes = [];
+            ir.circulationNotes.push({ note: msg, noteType: 'Check in'});
+            ir.circulationNotes.push({ note: msg, noteType: 'Check out'});
+          }
+          let inote = i['NOTE(ITEM)'];
+          if (inote) {
+            if (!ir.notes) ir.notes = [];
+            let ntype = refData.itemNoteTypes.Note
+            ir.notes.push(noteGen(inote, ntype, true))
+          }
+          // console.log(ir);
+          writeJSON(files.items, ir);
+          icount++;
+
+        } else {
+          console.log('WARN Duplicate item number', ihrid);
+          ierr++;
         }
-        let st = i.STATUS;
-        let stname = toFolio.statuses[st] || 'Unknown'
-        ir.status.name = stname;
-        console.log(ir);
 
       } else {
         console.log(`No bib number found for ${iid}`);
@@ -234,6 +290,7 @@ htypes = {
     console.log('Holdings created:', hcount);
     console.log('Items created:', icount);
     console.log('Errors:', err);
+    console.log('Item errors:', ierr);
   } catch (e) {
     console.log(e);
   }
