@@ -1,0 +1,16 @@
+{
+  'RECORD #(ITEM)': 'i10369120',
+  'COPY #': '1',
+  ICODE1: '0',
+  ICODE2: '-',
+  'I TYPE': '99',
+  LOC: 'llawp',
+  STATUS: 'j',
+  IMESSAGE: '-',
+  'CALL #(ITEM)': '',
+  VOL: 'electronic',
+  BARCODE: '',
+  'MESSAGE(ITEM)': '',
+  'NOTE(ITEM)': '',
+  bibId: 'lb7081030'
+}

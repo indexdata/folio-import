@@ -157,7 +157,7 @@ htypes = {
 
       // start making holdings and items
       if (bhrid) {
-        let loc = i.LOC;
+        let loc = (i.LOC) ? i.LOC.trim() : '';
         let hrid = bhrid + '-' + loc;
         let cn = '';
         let cntype = '';
@@ -169,6 +169,8 @@ htypes = {
           cn = instMap[bhrid].cn;
           cntype = instMap[bhrid].cntype;
         }
+        cn = cn.replace(/^(\w{1,3}) /, '$1');
+        let supp = (i.ICODE2 && i.ICODE2 === 's') ? true : false;
 
         // make holdings
         if (!hseen[hrid]) {
@@ -186,16 +188,12 @@ htypes = {
             sourceId: refData.holdingsRecordsSources.FOLIO,
             holdingsTypeId: refData.holdingsTypes[htype],
             instanceId: instId,
-            permanentLocationId: locId
+            permanentLocationId: locId,
+            discoverySuppress: supp
           };
           if (cn) {
             hr.callNumber = cn;
             hr.callNumberTypeId = cntype;
-          }
-          if (i.ICODE2 === 's') {
-            hr.discoverySuppress = true;
-          } else {
-            hr.discoverySuppress = false;
           }
           if (instData.ea) {
             hr.electronicAccess = JSON.parse(instData.ea);
@@ -209,12 +207,15 @@ htypes = {
         ihrid = 'l' + ihrid;
         let iid = uuid(ihrid, ns);
         let loantypeId = refData.loantypes['Can circulate'];
+        let mt = refData.mtypes.unspecified;
         let ir = {
           id: iid,
           hrid: ihrid,
           holdingsRecordId: hid,
           permanentLoanTypeId: loantypeId,
-          status: {}
+          materialTypeId: mt,
+          status: {},
+          discoverySuppress: supp
         };
         if (icall) {
           ir.itemLevelCallNumber = cn;
