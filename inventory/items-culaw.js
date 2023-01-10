@@ -53,7 +53,7 @@ const htypes = {
     const noteGen = (note, type, staffOnly) => {
       let out = {
         note: note,
-        noteTypeId: type
+        itemNoteTypeId: type
       }
       out.staffOnly = (staffOnly) ? true : false;
       return out;
