@@ -22,6 +22,7 @@ use Data::Dumper;
 
 my $version = '1';
 my $isil = 'CoU';
+my $ver = '1';
 
 my $source_id = '036ee84a-6afd-4c3c-9ad3-4a12ab875f59'; #MARC
 my $tm = localtime;
@@ -133,7 +134,7 @@ sub makeMapFromTsv {
       chomp;
       s/\s+$//;
       my @col = split(/\t/);
-      my $code = $col[0];
+      my $code = $col[0] || '';
       my $name = $col[2] || '';
       if ($prop eq 'statuses') {
         $tsvmap->{$prop}->{$code} = $name;
@@ -172,6 +173,12 @@ my $relations = {
   '1' => 'Version of resource',
   '2' => 'Related resource',
   '3' => 'No information provided'
+};
+
+my $typemap = {
+  'x' => 'Monograph',
+  'y' => 'Serial',
+  'v' => 'Multi-part monograph'
 };
 
 my $ttl = 0;
@@ -224,6 +231,7 @@ foreach (@ARGV) {
     }
 
     my $vf = {};
+    my $leader = '';
     my $vfcn = '';
     foreach my $f (@{ $obj->{varFields} }) {
       my $t = $f->{marcTag};
@@ -237,9 +245,14 @@ foreach (@ARGV) {
           $subs->{$c} = $sf->{content};
         }
         push @{ $vf->{$t} }, $subs;
+      } elsif ($ft) {
         push @{ $vf->{$ft} }, $f->{content};
+        if ($ft eq '_') {
+          $leader = $f->{content};
+        }
       }
     }
+
     my $ff = $obj->{fixedFields};
     my $h = {};
     my $loc_code = $ff->{40}->{value} || 'xxxxx';
@@ -250,12 +263,17 @@ foreach (@ARGV) {
     my $hkey = "$bid-$loc_code";
     $h->{id} = uuid($hid);
     print $HMAP "$bid|$loc_code|$h->{id}|$hid\n";
+    $h->{_version} = $ver;
     $h->{formerIds} = [ $obj->{id} ];
     $h->{hrid} = $hid;
     $h->{instanceId} = $b[0];
     my $loc_id = $refdata->{locations}->{$loc_code} || $refdata->{locations}->{UNMAPPED};
     $h->{permanentLocationId} = $loc_id;
     $h->{sourceId} = $source_id;
+    my $typecode = substr($leader, 6, 1);
+    my $typestr = $typemap->{$typecode};
+    my $typeid = $refdata->{holdingsTypes}->{$typestr} || $refdata->{holdingsTypes}->{Serial};
+    $h->{holdingsTypeId} = $typeid;
     my $cntype = $b[1];
     my $cn = $b[2];
     my @tags = ('050', '090');
@@ -288,33 +306,6 @@ foreach (@ARGV) {
       }
       foreach my $f (@{ $hs->{$t}}) {
         push @{ $h->{$htype} }, make_statement($f->{text}, $f->{note});
-      }
-    }
-
-    if (0) {
-      foreach my $t ('863', '864', '865') {
-        foreach my $f (@{ $vf->{$t} }) {
-          my @data;
-          my @notes;
-          for my $s ('a' .. 'z') {
-            if ($f->{$s}) {
-              if ($s =~ /[mnz]/) {
-                push @notes, $f->{$s};
-              } else {
-                push @data, $f->{$s};
-              }
-            }
-          }
-          my $text = join ', ', @data;
-          my $note = join ', ', @notes;
-          my $htype = 'holdingsStatements';
-          if ($t eq '864') {
-            $htype = 'holdingsStatementsForSupplements';
-          } elsif ($t eq '865') {
-            $htype = 'holdingsStatementsForIndexes';
-          }
-          push @{ $h->{$htype} }, make_statment($text, $note);
-        }
       }
     }
 
