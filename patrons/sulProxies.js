@@ -3,6 +3,7 @@ const path = require('path');
 const parse = require('csv-parse/lib/sync');
 const readline = require('readline');
 const uuid = require('uuid/v5');
+const { listenerCount } = require('process');
 const usersFile = process.argv[2];
 const csvFile = process.argv[3];
 
@@ -62,29 +63,39 @@ const ns = 'e1e79732-379c-496d-992f-44ec7e28ef90';
     let total = 0;
     let succ = 0;
     let err = 0;
+    const nowVal = new Date().valueOf();
     rl.on('line', l => {
-      let [ prox, spon ] = l.split(',');
-      let pid = bcmap[prox];
-      let sid = bcmap[spon];
-      if (pid && sid) {
-        let id = uuid(pid + sid, ns);
-        let pf = {
-          id: id,
-          proxyUserId: pid,
-          userId: sid,
-          accrueTo: 'Sponsor',
-          notificationsTo: 'Sponsor',
-          requestForSponsor: 'Yes',
-          status: 'active',
-        };
-        let out = JSON.stringify(pf) + "\n";
-        fs.writeFileSync(files.pf, out, { flag: 'a' });
-        succ++;
-      } else {
-        fs.writeFileSync(files.nfp, l + '\n', { flag: 'a' });
-        err++;
+      if (!l.match(/sponsorID/)) {
+        let [ spon, prox, exp ] = l.split(',');
+        let pid = bcmap[prox];
+        let sid = bcmap[spon];
+        exp = exp.replace(/(\d{4})(\d\d)(\d\d)/, '$1-$2-$3');
+        let ed = new Date(exp);
+        let expVal = ed.valueOf();
+        let expStr = ed.toISOString();
+        expStr = expStr.replace(/Z$/, '-08:00');
+        console.log(expStr);
+        if (pid && sid) {
+          let id = uuid(pid + sid, ns);
+          let pf = {
+            id: id,
+            proxyUserId: pid,
+            userId: sid,
+            accrueTo: 'Sponsor',
+            notificationsTo: 'Sponsor',
+            requestForSponsor: 'Yes',
+            status: (expVal < nowVal) ? 'Inactive' : 'Active'
+          };
+          if (exp) pf.expirationDate = expStr;
+          let out = JSON.stringify(pf) + "\n";
+          fs.writeFileSync(files.pf, out, { flag: 'a' });
+          succ++;
+        } else {
+          fs.writeFileSync(files.nfp, l + '\n', { flag: 'a' });
+          err++;
+        }
+        total++;
       }
-      total++;
     });
     rl.on('close', l => {
       console.log('Processed', total);

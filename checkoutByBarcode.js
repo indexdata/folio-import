@@ -19,7 +19,7 @@ const post_put = async (authToken, url, checkout, r) => {
     if (url.match(/.{8}-.{4}-.{4}-.{4}-.{12}$/)) {
       await superagent
         .put(url)
-        .timeout({ response: 10000 })
+        .timeout(30000)
         .set('accept', 'application/json', 'text/plain')
         .set('x-okapi-token', authToken)
         .set('content-type', 'application/json')
@@ -28,7 +28,7 @@ const post_put = async (authToken, url, checkout, r) => {
     } else {
       let res = await superagent
         .post(url)
-        .timeout({ response: 10000 })
+        .timeout(30000)
         .set('accept', 'application/json', 'text/plain')
         .set('x-okapi-token', authToken)
         .set('content-type', 'application/json')
