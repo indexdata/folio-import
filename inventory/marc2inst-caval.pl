@@ -866,7 +866,6 @@ sub make_hi {
       $enums->{$link} = $data if !$enums->{$link} && $data;
     }
   }
-  print Dumper($enums);
   my $hstat = '';
   foreach ($marc->field('866')) {
     if ($_->subfield('a')) {
@@ -893,6 +892,7 @@ sub make_hi {
       my $hhrid = "$bhrid-$hseq";
       $hrec->{_version} = $ver;
       $hrec->{id} = $hid;
+      $hrec->{sourceId} = $refdata->{holdingsRecordsSources}->{FOLIO};
       $hrec->{hrid} = $hhrid;
       $hrec->{instanceId} = $bid;
       $hrec->{holdingsTypeId} = $refdata->{holdingsTypes}->{$htype};
