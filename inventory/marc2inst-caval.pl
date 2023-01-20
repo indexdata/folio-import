@@ -245,7 +245,7 @@ sub process_entity {
       $add = 1;
     } else {
       foreach ($field->subfields()) {
-        if ($subs =~ /$_->[0]/ && $_->[1] =~ /\S/) {
+        if ($subs =~ /\Q$_->[0]/ && $_->[1] =~ /\S/) {
           $add = 1;
           last;
         }
@@ -263,7 +263,7 @@ sub process_entity {
       my $i = 0;
       my $sf;
       foreach (@{ $tmp_field->{_subfields} }) {
-        if ($i % 2 && $subs =~ /$sf/) {
+        if ($i % 2 && $subs =~ /\Q$sf/) {
           $_ = processing_funcs($_, $tmp_field, $params, @funcs);
         } else {
           $sf = $_;
