@@ -580,10 +580,7 @@ foreach (@ARGV) {
     # }
     
 
-    my $srsmarc = $marc;
-    if ($marc->field('880')) {
-      $srsmarc = $marc->clone();
-    }
+    my $srsmarc = $marc->clone();
     my $ldr = $marc->leader();
     my $blevel = substr($ldr, 7, 1);
     my $type = substr($ldr, 6, 1);
@@ -850,28 +847,26 @@ sub make_hi {
   my $icount = 0;
   my $iecount = 0;
   my $enums = {};
-  my $hseq = 1;
+  my $hseq = 0;
   
   foreach my $etag ('Z30', '952', '985', '999') {
     foreach my $z ($marc->field($etag)) {
       my $link = '';
       my $data = '';
-      if (!$enums->{$link}) {
-        if ($etag eq '945') {
-          $link = $z->subfield('p');
-          $data = $z->subfield('j');
-        } elsif ($etag eq '952') {
-          $link = $z->subfield('h');
-          $data = $z->subfield('g');
-        } elsif ($etag eq '985' or $etag eq '999') {
-          $link = $z->subfield('b');
-        }
-        if ($data) {
-          $enums->{$link} = $data if $data;
-        }
+      if ($etag eq 'Z30') {
+        $link = $z->subfield('p');
+        $data = $z->subfield('j');
+      } elsif ($etag eq '952') {
+        $link = $z->subfield('h');
+        $data = $z->subfield('g');
+      } elsif ($etag eq '985' or $etag eq '999') {
+        $link = $z->subfield('b');
+        $data = $z->subfield('e');
       }
+      $enums->{$link} = $data if !$enums->{$link} && $data;
     }
   }
+  print Dumper($enums);
   my $hstat = '';
   foreach ($marc->field('866')) {
     if ($_->subfield('a')) {
@@ -892,10 +887,10 @@ sub make_hi {
     my $cnpre = $h->subfield('h') || '';
     my $cn = $h->subfield('i') || '';
     my $hkey = "$bhrid-$cnpre-$cn";
-    my $hhrid = "$bhrid-$hseq";
-    my $hid = uuid($hhrid);
+    my $hid = uuid($hkey);
     if (!$hseen->{$hkey}) {
       $hseq++;
+      my $hhrid = "$bhrid-$hseq";
       $hrec->{_version} = $ver;
       $hrec->{id} = $hid;
       $hrec->{hrid} = $hhrid;
