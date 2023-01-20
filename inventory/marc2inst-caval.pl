@@ -566,18 +566,18 @@ foreach (@ARGV) {
     my $ctrlnum = $ctrlfield->data() || '';
     $ctrlnum =~ s/^ *//;
     $ctrlfield->update('c' . $ctrlnum);
-    my @zfields = $marc->field('Z30');
-    foreach (@zfields) {
-      $_->set_tag('945');
-    }
-    my @dfields = $marc->field('DDC');
-    foreach (@dfields) {
-      $_->set_tag('946');
-    }
-    my @tfields = $marc->field('TBC');
-    foreach (@tfields) {
-      $_->set_tag('947');
-    }
+    # my @zfields = $marc->field('Z30');
+    # foreach (@zfields) {
+      # $_->set_tag('945');
+    # }
+    # my @dfields = $marc->field('DDC');
+    # foreach (@dfields) {
+      # $_->set_tag('946');
+    # }
+    # my @tfields = $marc->field('TBC');
+    # foreach (@tfields) {
+      # $_->set_tag('947');
+    # }
     
 
     my $srsmarc = $marc;
@@ -736,7 +736,11 @@ foreach (@ARGV) {
         }
       }
       $inst_recs .= $json->encode($rec) . "\n";
-      my $rawsrs = $marc->as_usmarc();
+      foreach my $t ('Z30', 'DDC', 'TBC', '9..') {
+        my @f = $srsmarc->field($t);
+        $srsmarc->delete_fields(@f);
+      }
+      my $rawsrs = $srsmarc->as_usmarc();
       $srs_recs .= $json->encode(make_srs($srsmarc, $rawsrs, $rec->{id}, $rec->{hrid}, $snapshot_id, $srs_file)) . "\n";
       my $ctype = $cntypes->{$cntag} || '';
       $idmap_lines .= "$rec->{hrid}|$rec->{id}|$cn|$ctype\n";
@@ -846,8 +850,9 @@ sub make_hi {
   my $icount = 0;
   my $iecount = 0;
   my $enums = {};
+  my $hseq = 1;
   
-  foreach my $etag ('945', '952', '985', '999') {
+  foreach my $etag ('Z30', '952', '985', '999') {
     foreach my $z ($marc->field($etag)) {
       my $link = '';
       my $data = '';
@@ -886,12 +891,14 @@ sub make_hi {
     my $locid = $refdata->{locations}->{$floc} || $refdata->{locations}->{UNMAPPED} || die "Can't find location for $loc";
     my $cnpre = $h->subfield('h') || '';
     my $cn = $h->subfield('i') || '';
-    my $hkey = "$bhrid-$loc";
-    my $hid = uuid($hkey);
+    my $hkey = "$bhrid-$cnpre-$cn";
+    my $hhrid = "$bhrid-$hseq";
+    my $hid = uuid($hhrid);
     if (!$hseen->{$hkey}) {
+      $hseq++;
       $hrec->{_version} = $ver;
       $hrec->{id} = $hid;
-      $hrec->{hrid} = $hkey;
+      $hrec->{hrid} = $hhrid;
       $hrec->{instanceId} = $bid;
       $hrec->{holdingsTypeId} = $refdata->{holdingsTypes}->{$htype};
       $hrec->{permanentLocationId} = $locid;
@@ -899,8 +906,8 @@ sub make_hi {
         my $sobj = { statement => $hstat, note => '', staffNote => '' };
         push @{ $hrec->{holdingsStatements} }, $sobj;
       }
-      if (0) {
-        # $hrec->{callNumberPrefix} = $cnpre;
+      if ($cn) {
+        $hrec->{callNumberPrefix} = $cnpre;
         $hrec->{callNumber} = $cn;
         $hrec->{callNumberTypeId} = $refdata->{callNumberTypes}->{'Other scheme'};
       }
@@ -922,7 +929,6 @@ sub make_hi {
     my @notes;
     $status =~ s/\s+$//;
     if ($iid) {
-      $iid =~ s/^\.//;
       $irec->{id} = uuid($iid);
       $irec->{holdingsRecordId} = $hid;
       $irec->{hrid} = $iid;
