@@ -1,0 +1,16 @@
+NCO-BOARDS	98	Keep	Boards Collection
+NCO-CDROM	171	Keep	CD/DVD
+NCO-CLINIC	44	Keep	Clinical Collection
+NCO-DISPLY	2	Purge (Move to NCO-STACKS)	-
+NCO-DRMRES	158	Keep (Possibly suppressed)	Dormant Reserves
+NCO-EBOOK	311	Keep	eBooks
+NCO-EJRNLS	183	Keep	eJournals
+NCO-JRNLS	206	Keep	Print Journals
+NCO-MYERS	160	Keep	Myers Collection
+NCO-NEER	49	Keep	Roslindale
+NCO-NEW	1	Purge (Move to NCO-STACKS)	-
+NCO-OFFSTE	189	Keep	Offsite Storage
+NCO-REF	11	Purge (Move to NCO-STACKS)	-
+NCO-RESERV	113	Keep	Reserves
+NCO-SPCOLL	1154	Keep	Special Collections
+NCO-STACKS	3128	Keep	Reading Room
