@@ -36,9 +36,9 @@ $| = 1;
 
 my $version = '1';
 my $isil = 'mbneco';
-my $prefix = '';
-my $hprefix = "${prefix}";
-my $iprefix = "${prefix}";
+my $prefix = 'n';
+my $hprefix = "${prefix}h";
+my $iprefix = "${prefix}i";
 my $srstype = 'MARC';
 my @hnotes = qw(852z 907abcdefixy 931a 9613anwx 963adfghklnpqsw 9663abcdeqrw 9673aberw 990a);
 my $source_id = '036ee84a-6afd-4c3c-9ad3-4a12ab875f59'; # MARC
@@ -126,7 +126,6 @@ sub makeMapFromTsv {
   my $tsvmap = {};
   foreach (<$refdir/*.tsv>) {
     my $prop = $_;
-    print $prop . "\n";
     $prop =~ s/^(.+\/)?(.+?)\.tsv/$2/;
     open my $tsv, $_ or die "Can't open $_";
     my $l = 0;
@@ -189,6 +188,13 @@ my $rtypes = {
   'p' => 'xxx',
   'r' => 'tdf',
   't' => 'txt'
+};
+
+my $typemap = {
+  'x' => 'Monograph',
+  'y' => 'Serial',
+  'v' => 'Multi-part monograph',
+  'u' => 'Monograph'
 };
 
 sub process_entity {
@@ -814,6 +820,9 @@ sub make_holdings {
   my $marc = eval { 
     MARC::Record->new_from_usmarc($raw)
   };
+  my $ldr = $marc->leader();
+  my $tcode = $ldr;
+  $tcode =~ s/^......(.).+/$1/;
   my $id = $marc->field('001')->data();
   my $bid = $marc->field('004')->data();
   my $lfield = $marc->field('852');
@@ -845,6 +854,9 @@ sub make_holdings {
   my $srs = make_srs($marc, $marc->as_usmarc(), $hid, $hrid, $snap_id, $hid);
 
   my $hr = {};
+  my $typestr = $typemap->{$tcode} ;
+  my $typeid = $refdata->{holdingsTypes}->{$typestr} || $refdata->{holdingsTypes}->{Serial};
+  $hr->{holdingsTypeId} = $typeid;
   $hr->{_version} = $ver;
   $hr->{id} = $hid;
   $hr->{instanceId} = uuid($bid);
@@ -896,6 +908,42 @@ sub make_holdings {
       $ea->{relationshipId} = $refdata->{electronicAccessRelationships}->{$relstr};
       push @{ $hr->{electronicAccess} }, $ea;
     }
+  }
+  my $inum = 0;
+  foreach my $item ($marc->field('949')) {
+    $inum++;
+    my $inumstr = sprintf("$iprefix$id-%02d", $inum);
+    my $bc = $item->subfield('i') || '';
+    my $vl = $item->subfield('c') || '';
+    my $cr = $item->subfield('k') || '';
+    my $yc = $item->subfield('d') || '';
+    my $dp = $item->subfield('n') || '';
+    my $ir = {
+      id => uuid($inumstr),
+      hrid => $inumstr,
+      holdingsRecordId => $hr->{id}
+    };
+    $ir->{barcode} = $bc if ($bc);
+    if ($vl && $tcode =~ /[y]/) {
+      $ir->{enumeration} = $vl;
+    } elsif ($vl) {
+      $ir->{volume} = $vl;
+    }
+    $ir->{chronology} = $cr if ($cr);
+    $ir->{yearCaption} = $yc if ($yc);
+    $ir->{descriptionOfPieces} = $dp if ($dp);
+    foreach my $nt ($item->subfield('q')) {
+      my $n = {
+        note => $nt,
+        itemNoteTypeId => $refdata->{itemNoteTypes}->{Note},
+        staffOnly => JSON::true
+      };
+      push @{ $ir->{notes} }, $n;
+    }
+    
+    my $irstr = $json->encode($ir);
+    print $irstr . "\n";
+    
   }
 
   my $out;
