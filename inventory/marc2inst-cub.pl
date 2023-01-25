@@ -538,10 +538,21 @@ foreach (@ARGV) {
     $iiinum =~ s/.(.+).$/$1/;
     if ($marc->field('001')) {
       my $in_ctrl = $marc->field('001')->data();
+      $in_ctrl =~ s/^rbc//;
       my $in_ctrl_type = ($marc->field('003')) ? $marc->field('003')->data() : '';
       my $id_data = ($in_ctrl_type) ? "($in_ctrl_type)$in_ctrl" : $in_ctrl;
-      my $field = MARC::Field->new('035', ' ', ' ', 'a' => $id_data);
-      $marc->insert_fields_ordered($field);
+      my $nodupe = 1;
+      foreach my $o ($marc->field('035')) {
+        my $val = $o->as_string('a') || '';
+        if ($val eq $id_data) {
+          $nodupe = 0;
+          last;
+        }
+      }
+      if ($nodupe) {
+        my $field = MARC::Field->new('035', ' ', ' ', 'a' => $id_data);
+        $marc->insert_fields_ordered($field);
+      }
       $marc->field('001')->update($iiinum);
       if ($marc->field('003')) {
         $marc->field('003')->update($isls);
