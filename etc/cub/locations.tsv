@@ -1,109 +1,3 @@
-Sierra Code	FOLIO Code	Count	
-norrl	CU/B/NOR/NORRES		
-nor14	CU/B/NOR/NORRES		
-nor2h	CU/B/NOR/NORRES		
-nor2x	CU/B/NOR/NORRES		
-nor24	CU/B/NOR/NORRES		
-nor4h	CU/B/NOR/NORRES		
-nor4x	CU/B/NOR/NORRES		
-nor7d	CU/B/NOR/NORRES		
-nor72	CU/B/NOR/NORRES		
-nordo	CU/B/NOR/NORRES		
-asntp	CU/B/NOR/NORRES		
-nortp	CU/B/NOR/NORRES		
-govcd	CU/B/NOR/GOVOF		
-govav	CU/B/NOR/GOVOF		
-govce	CU/B/NOR/GOVOF		
-govof	CU/B/NOR/GOVOF		
-govoc	CU/B/NOR/GOVOF		
-govol	CU/B/NOR/GOVOF		
-govph	CU/B/NOR/GOVOF		
-govln	CU/B/NOR/GOVOF		
-govel	CU/B/NOR/GOVOF		
-govix	CU/B/NOR/GOVOF		
-engps	CU/B/EMP/EMPRES		
-engrs	CU/B/EMP/EMPRES		
-eng2h	CU/B/EMP/EMPRES		
-eng2x	CU/B/EMP/EMPRES		
-eng24	CU/B/EMP/EMPRES		
-eng4h	CU/B/EMP/EMPRES		
-eng4x	CU/B/EMP/EMPRES		
-eng48	CU/B/EMP/EMPRES		
-eng72	CU/B/EMP/EMPRES		
-busp2	CU/B/BUS/BUSRES		
-busp3	CU/B/BUS/BUSRES		
-busp1	CU/B/BUS/BUSRES		
-busp6	CU/B/BUS/BUSRES		
-busp4	CU/B/BUS/BUSRES		
-busp5	CU/B/BUS/BUSRES		
-busp7	CU/B/BUS/BUSRES		
-busrs	CU/B/BUS/BUSRES		
-bus2h	CU/B/EMP/BUSRESEMP		
-bus2x	CU/B/EMP/BUSRESEMP		
-bus24	CU/B/EMP/BUSRESEMP		
-bus3w	CU/B/EMP/BUSRESEMP		
-bus4h	CU/B/EMP/BUSRESEMP		
-bus4x	CU/B/EMP/BUSRESEMP		
-bus72	CU/B/EMP/BUSRESEMP		
-escrs	CU/B/ESM/ESMRES		
-esc2h	CU/B/ESM/ESMRES		
-esc2x	CU/B/ESM/ESMRES		
-esc24	CU/B/ESM/ESMRES		
-esc4h	CU/B/ESM/ESMRES		
-esc4x	CU/B/ESM/ESMRES		
-esc72	CU/B/ESM/ESMRES		
-map24	CU/B/ESM/ESMMRES		
-map2h	CU/B/ESM/ESMMRES		
-map2x	CU/B/ESM/ESMMRES		
-map4h	CU/B/ESM/ESMMRES		
-map4x	CU/B/ESM/ESMMRES		
-map72	CU/B/ESM/ESMMRES		
-maprs	CU/B/ESM/ESMMRES		
-artbl	CU/B/NOR/cleanup		
-artcl	CU/B/NOR/cleanup		
-artfo	CU/B/NOR/cleanup		
-artof	CU/B/NOR/cleanup		
-asnof	CU/B/NOR/cleanup		
-musas	CU/B/MUS/MUSCSA		
-musau	CU/B/MUS/MUSCSA		
-musag	CU/B/MUS/MUSCSA		
-govmp	CU/B/NOR/GOVIMC		
-govms	CU/B/NOR/GOVIMC		
-esc	CU/B/ESM/ESM		
-map	CU/B/ESM/ESM		
-mapsp	CU/B/ESM/ESMSP		
-mapdt	CU/B/ESM/ESMSP		
-eng	CU/B/EMP/eng		
-mph	CU/B/EMP/eng		
-spcgt	CU/B/NOR/RBCG		
-spcgr	CU/B/NOR/RBCG		
-spcst	CU/B/NOR/RBCST		
-spcmu	CU/B/NOR/RBCST		
-bus	CU/B/BUS/bus		
-busel	CU/B/BUS/BUSEL		
-busrd	CU/B/BUS/BUSRD		
-busst	CU/B/EMP/BUSEMP		
-busnw	CU/B/EMP/BUSNWEMP		
-busov	CU/B/EMP/BUSOVEMP		
-busbl	CU/B/EMP/BUSPOPEMP		
-busrf	CU/B/EMP/BUSREFEMP		
-busse	CU/B/EMP/BUSSEREMP		
-engmc	CU/B/EMP/EMPMC		
-engsd	CU/B/EMP/EMPS		
-engst	CU/B/EMP/EMPST		
-mapst	CU/B/ESM/ESMM		
-mapat	CU/B/ESM/ESMMAT		
-mapbk	CU/B/ESM/ESMMB		
-escmc	CU/B/ESM/ESMMF		
-mapgf	CU/B/ESM/ESMMGF		
-mapov	CU/B/ESM/ESMMOV		
-maprf	CU/B/ESM/ESMMREF		
-mapsw	CU/B/ESM/ESMMSW		
-mapus	CU/B/ESM/ESMMUST		
-escov	CU/B/ESM/ESMOV		
-escrf	CU/B/ESM/ESMREF		
-escst	CU/B/ESM/ESMS		
-escth	CU/B/ESM/ESMT		
 92110	CU/B/INN/92110		
 92120	CU/B/INN/92120		
 92130	CU/B/INN/92130		
@@ -321,6 +215,7 @@ escth	CU/B/ESM/ESMT
 6sccc	CU/B/INN/6sccc		
 6semo	CU/B/INN/6semo		
 6sfcc	CU/B/INN/6sfcc		
+6slam		1	DO NOT MIGRATE
 6slam	CU/B/INN/6slam		
 6slcc	CU/B/INN/6slcc		
 6slcp	CU/B/INN/6slcp		
@@ -414,319 +309,424 @@ escth	CU/B/ESM/ESMT
 9uncp	CU/B/INN/9uncp		
 9usaf	CU/B/INN/9usaf		
 9uwyp	CU/B/INN/9uwyp		
-mus	CU/B/MUS/mus		
-musao	CU/B/MUS/MUSCSOV		
-musmn	CU/B/MUS/MUSMIN		
-musov	CU/B/MUS/MUSOV		
-musrd	CU/B/MUS/MUSREF		
-mus	CU/B/MUS/MUSS		
-arvam	CU/B/NOR/ARCHARMC		
-arvbr	CU/B/NOR/ARCHBRAK		
-arvhc	CU/B/NOR/ARCHHIS		
-arvmz	CU/B/NOR/ARCHMAZA		
-arvm1	CU/B/NOR/ARCHMAZAOV		
-arvov	CU/B/NOR/ARCHOV		
-arvrc	CU/B/NOR/ARCHRECC		
-arvrf	CU/B/NOR/ARCHREF		
-arvup	CU/B/NOR/ARCHUP		
+admpr		3	
+altec	CU/B/OFF/ALTEC	2944	
+amrof		1	Do Not Map
 art	CU/B/NOR/art		
+artbl	CU/B/NOR/cleanup		
+artcl	CU/B/NOR/cleanup		
+artfo	CU/B/NOR/cleanup		
+artof	CU/B/NOR/cleanup		
+artos	CU/B/NOR/ARTOS	149	
 artov	CU/B/NOR/ARTOV		
 artrf	CU/B/NOR/ARTREF		
 artst	CU/B/NOR/ARTS		
 arv	CU/B/NOR/arv		
-asnst	CU/B/NOR/ASIA		
+arvaj	CU/B/NOR/ARVST	201	
+arvam	CU/B/NOR/ARCHARMC		
+arvbr	CU/B/NOR/ARCHBRAK		
+arvhc	CU/B/NOR/ARCHHIS		
+arvjl	CU/B/NOR/ARVST	2	
+arvm1	CU/B/NOR/ARCHMAZAOV		
+arvmz	CU/B/NOR/ARCHMAZA		
+arvnf	CU/B/NOR/ARVST	172	
+arvos	CU/B/NOR/ARVST	119	
+arvov	CU/B/NOR/ARCHOV		
+arvrc	CU/B/NOR/ARCHRECC		
+arvrf	CU/B/NOR/ARCHREF		
+arvst	CU/B/NOR/ARVST	146	
+arvua			
+arvup	CU/B/NOR/ARCHUP		
+arvwh			
+asn	CU/B/NOR/asn		
+asnof	CU/B/NOR/cleanup		
+asnos	CU/B/NOR/ASNOS	163	
 asnov	CU/B/NOR/ASIAOV		
+asnrc	CU/B/NOR/REFEAC		
 asnrf	CU/B/NOR/ASIAREF		
 asnro	CU/B/NOR/ASIAREFOV		
 asnrs	CU/B/NOR/ASIAREFSER		
-asn	CU/B/NOR/asn		
-govco	CU/B/NOR/BGOVCO		
-govfd	CU/B/NOR/BGOVFO		
-govon	CU/B/NOR/BGOVOV		
-govsa	CU/B/NOR/BGOVSA		
-govnb	CU/B/NOR/BGOVUS		
+asnst	CU/B/NOR/ASIA		
+asntp	CU/B/NOR/NORRES		
+bib		2	
+bus	CU/B/BUS/bus		
+bus24	CU/B/EMP/BUSRESEMP		
+bus2h	CU/B/EMP/BUSRESEMP		
+bus2x	CU/B/EMP/BUSRESEMP		
+bus3w	CU/B/EMP/BUSRESEMP		
+bus4h	CU/B/EMP/BUSRESEMP		
+bus4x	CU/B/EMP/BUSRESEMP		
+bus72	CU/B/EMP/BUSRESEMP		
+busbl	CU/B/EMP/BUSRFEMP	41	
+busbl	CU/B/EMP/BUSPOPEMP		
+buscr		6	no longer populated
+busel	CU/B/BUS/BUSEL		
+busgv		2	not populated do not map
 busmf	CU/B/NOR/BRES		
+busnw	CU/B/EMP/BUSNWEMP	11	
+busnw	CU/B/EMP/BUSNWEMP		
+busos	CU/B/BUS/BUSOS	583	
+busov	CU/B/EMP/BUSOVEMP		
+busp1	CU/B/BUS/BUSRES		
+busp2	CU/B/BUS/BUSRES		
+busp3	CU/B/BUS/BUSRES		
+busp4	CU/B/BUS/BUSRES		
+busp5	CU/B/BUS/BUSRES		
+busp6	CU/B/BUS/BUSRES		
+busp7	CU/B/BUS/BUSRES		
+busrd	CU/B/BUS/BUSRD		
+busrf	CU/B/EMP/BUSRFEMP	337	
+busrf	CU/B/EMP/BUSREFEMP		
+busrs	CU/B/BUS/BUSRES		
+buss1	CU/B/BUS/bus	5	
+buss2		14	 no longer populated
+busse	CU/B/EMP//BUSSEREMP	24	
+busse	CU/B/EMP/BUSSEREMP		
+busst	CU/B/EMP/BUSEMP		
+cbiof		6	
+cde	CU/B/NOR/CDOF		
 cdeof	CU/B/NOR/CDOF		
+cls			
+clsst	CU/B/OFF/CLSST	1425	
+com		17	no longer populated
+comch		4	no longer populated
+comcl		1	no longer populated
+comhp		2	no longer populated
+comlp		1	no longer populated
+comrm		5	no longer populated
+comst			
+cr0zz			
+crlst		4	
 cya	CU/B/NOR/cya		
-gov	CU/B/NOR/gov		
-govgr	CU/B/NOR/GOVIG		
-govin	CU/B/NOR/GOVII		
-govmc	CU/B/NOR/GOVIM		
-govrf	CU/B/NOR/GOVIREF		
-govun	CU/B/NOR/GOVIUN		
-govmg	CU/B/NOR/GOVMG		
-govov	CU/B/NOR/GOVOV		
-govoi	CU/B/NOR/GOVOVI		
-govus	CU/B/NOR/GOVUS		
-juv	CU/B/NOR/juv		
-med	CU/B/NOR/med		
-nor	CU/B/NOR/nor		
 cyast	CU/B/NOR/NORCYA		
-nordc	CU/B/NOR/NORDC		
-nordv	CU/B/NOR/NORDVD		
-norfc	CU/B/NOR/NORFSC		
+deans		2	
+eng	CU/B/EMP/eng		
+eng24	CU/B/EMP/EMPRES		
+eng2h	CU/B/EMP/EMPRES		
+eng2x	CU/B/EMP/EMPRES		
+eng48	CU/B/EMP/EMPRES		
+eng4h	CU/B/EMP/EMPRES		
+eng4x	CU/B/EMP/EMPRES		
+eng72	CU/B/EMP/EMPRES		
+engcd	CU/B/OFF/PASCAL	32	
+engds		2	no longer populated
+engi1		1	no longer populated
+engmc	CU/B/EMP/EMPMC		
+engnw		9	no longer populated
+engof		400	no longer populated
+engos	CU/B/OFF/PASCAL	573	
+engov	CU/B/ENG/ENGGOV	54	
+engps	CU/B/EMP/EMPRES		
+engrm		3	no longer populated
+engrs	CU/B/EMP/EMPRES		
+engsd	CU/B/EMP/EMPS		
+engst	CU/B/EMP/EMPST		
+eresv		5	
+esc	CU/B/ESM/ESM		
+esc24	CU/B/ESM/ESMRES		
+esc2h	CU/B/ESM/ESMRES		
+esc2x	CU/B/ESM/ESMRES		
+esc4h	CU/B/ESM/ESMRES		
+esc4x	CU/B/ESM/ESMRES		
+esc72	CU/B/ESM/ESMRES		
+escat		1	no longer populated
+esccd	CU/B/ESM/ESMCD	307	
+escds	CU/B/ESM/ESMDIS	25	
+esclp		1	no longer populated
+escmc	CU/B/ESM/ESMMF		
+escos	CU/B/ESM/ESCOS	124	
+escov	CU/B/ESM/ESMOV		
+escrf	CU/B/ESM/ESMREF		
+escrs	CU/B/ESM/ESMRES		
+escst	CU/B/ESM/ESMS		
+escth	CU/B/ESM/ESMT		
+etd	Oversize	8351	
+gov	CU/B/NOR/gov		
+govav	CU/B/NOR/GOVOF		
+govcd	CU/B/NOR/GOVOF		
+govce	CU/B/NOR/GOVOF		
+govco	CU/B/NOR/BGOVCO		
+govel	CU/B/NOR/GOVOF		
+govfd	CU/B/NOR/BGOVFO		
+govgr	CU/B/NOR/GOVIG		
+govib			
+govin	CU/B/NOR/GOVII		
+govix	CU/B/NOR/GOVOF		
+govln	CU/B/NOR/GOVOF		
+govmc	CU/B/NOR/GOVIM		
+govmg	CU/B/NOR/GOVMG		
+govmp	CU/B/NOR/GOVIMC		
+govms	CU/B/NOR/GOVIMC		
+govnb	CU/B/NOR/BGOVUS		
+govoc	CU/B/NOR/GOVOF		
+govof	CU/B/NOR/GOVOF		
+govoi	CU/B/NOR/GOVOVI		
+govol	CU/B/NOR/GOVOF		
+govon	CU/B/NOR/BGOVOV		
+govos	CU/B/NOR/GOVOV	2443	
+govov	CU/B/NOR/GOVOV		
+govph	CU/B/NOR/GOVOF		
+govrf	CU/B/NOR/GOVIREF		
+govsa	CU/B/NOR/BGOVSA		
+govst			
+govun	CU/B/NOR/GOVIUN		
+govus	CU/B/NOR/GOVUS		
+illst	CU/B/NOR/ILLST	992	
+inp	CU/B/NOR/INP	7371	
+inpac	Do Not Map	108	
+inpst	Do Not Map	24	
+inpts	CU/B/NOR/INPTS	3851	
+juv	CU/B/NOR/juv		
+law			
+lib	Do Not Map	5	
+map	CU/B/ESM/ESM		
+map24	CU/B/ESM/ESMMRES		
+map2h	CU/B/ESM/ESMMRES		
+map2x	CU/B/ESM/ESMMRES		
+map4h	CU/B/ESM/ESMMRES		
+map4x	CU/B/ESM/ESMMRES		
+map72	CU/B/ESM/ESMMRES		
+mapat	CU/B/ESM/ESMMAT		
+mapbk	CU/B/ESM/ESMMB		
+mapcd			
+mapdt	CU/B/ESM/ESMSP		
+mapgf	CU/B/ESM/ESMMGF		
+mapof		1	no longer populated
+mapos	CU/B/ESM/ESMOV	214	
+mapov	CU/B/ESM/ESMMOV		
+maprf	CU/B/ESM/ESMMREF		
+maprs	CU/B/ESM/ESMMRES		
+mapsp	CU/B/ESM/ESMSP		
+mapst	CU/B/ESM/ESMM		
+mapsw	CU/B/ESM/ESMMSW		
+mapus	CU/B/ESM/ESMMUST		
+med	CU/B/NOR/MDST		used to be med please remap to medst
+medav	CU/B/NOR/MDST	425	
+medfs	CU/B/OFF/MDFS	3458	
+medos	CU/B/NOR/MDST	1710	
+medrs	CU/B/NOR/MDST	2	
+medst	CU/B/NOR/MDST	360	
+mph	CU/B/EMP/eng		
+mphnb			
+mphov			
+mphrf			
+mphst		2	no longer populated
+msm	CU/B/OFF/NHMU	11	
+msmam	CU/B/OFF/ARTMU	108	
+msmnh	CU/B/OFF/NHMU	2	
+multi			
+mus	CU/B/MUS/mus		
+mus	CU/B/MUS/MUSS		
+mus24	CU/B/MUS/MUSRES	7	
+mus4h	CU/B/MUS/MUSRES	4	
+mus72	CU/B/MUS/MUSRES	1	
+musag	CU/B/MUS/MUSCSA		
+musao	CU/B/MUS/MUSCOV	125	
+musao	CU/B/MUS/MUSCSOV		
+musar		3	
+musas	CU/B/MUS/MUSCSA		
+musau	CU/B/MUS/MUSCSA		
+musmc	CU/B/MUS/MUMF	10	
+musmk		695	
+musmn	CU/B/MUS/MUSMIN		
+musof	CU/B/MUS/MUSST	22	
+musos	CU/B/MUS/MUSOV	729	
+musov	CU/B/MUS/MUSOV	970	
+musov	CU/B/MUS/MUSOV		
+musra	CU/B/MUS/MUSST	53	
+musrd	CU/B/MUS/MUSREF		
+musrf	CU/B/MUS/MUSREF	4336	
+musro	CU/B/MUS/MUSREFOV	107	
+musrs	CU/B/MUS/MUSRES	45	
+musso	CU/B/MUS/MUSCSOV	12	
+mussp			
+mussr	CU/B/MUS/MUSCS	16	
+musst	CU/B/MUS/MUSST	62643	
+none		527	
+nor	CU/B/NOR/nor		
+nor14	CU/B/NOR/NORRES		
+nor24	CU/B/NOR/NORRES		
+nor2h	CU/B/NOR/NORRES		
+nor2x	CU/B/NOR/NORRES		
+nor4h	CU/B/NOR/NORRES		
+nor4x	CU/B/NOR/NORRES		
+nor72	CU/B/NOR/NORRES		
+nor7d	CU/B/NOR/NORRES		
+norar	CU/B/NOR/NORART	7	
+norbr		1	
 norca	CU/B/NOR/NORGSC		
+norcl		1	no longer populated
+norcr		3	no longer populated
+nordc	CU/B/NOR/NORDC		
+nordo	CU/B/NOR/NORRES		
+nordr	CU/B/NOR/NORRAD		
+nords	CU/B/NOR/NORDIS	60	
+nordv	CU/B/NOR/NORDVD		
+nored	CU/B/NOR/NORED	1	a number of locations have been matriculated to this location in Sierra since last image.
+norex		13	
+norfc	CU/B/NOR/NORFSC		
+norhs		1	no longer populated
+noril		2	
+norli		2	
+norln		2	
+norlo		1	no longer populated
+normc	CU/B/NOR/NORRADC	67	
+normr	CU/B/NOR/NORMIND	35	
+nornb	CU/B/OFF/PASCAL	1	
 nornc	CU/B/NOR/NORNUC		
+norof		26	
+noros	NOROV	12750	NOROV
 norov	CU/B/NOR/NOROV		
+norpr		7970	
+norrc		822	
+norrl	CU/B/NOR/NORRES		
+norrx		1	no longer populated
+nors1		8	no longer populated
+nors2		1	no longer populated
+nors4		5	no longer populated
+nors5		3	no longer populated
+norsc		3	no longer populated
+norsl		23	no longer populated
+norst	CU/B/NOR/NORS		
+nortp	CU/B/NOR/NORRES		
+pas	CU/B/OFF/PASCAL	183	
+pascl	CU/B/OFF/PASCAL	162759	This is inactive under NOR/PASCAL but the location is OFFSITE and should be located there.
+pascu	CU/B/OFF/PASCAL		
+pasos		8	
+per	CU/B/NOR/per		
+perof		2	
+peros		69	
 perov	CU/B/NOR/NORPEROV		
 perst	CU/B/NOR/NORPERSTA		
 popbr	CU/B/NOR/NORPOP		
-nordr	CU/B/NOR/NORRAD		
+pso	CU/B/OFF/PASCAL	1	
+rbc			
+rbcax	RBCANN	15591	RBCANN
+rbcb1	CU/B/NOR/RBCBOV1	30	
+rbcb2	CU/B/NOR/RBCBOV2	10	
+rbcba	CU/B/NOR/RBCB	295	
+rbcbk	CU/B/NOR/RBCBA	972	
+rbcbl	Do not map	1	
+rbcbo	CU/B/NOR/RBCBAOV1	81	
+rbcbv	CU/B/NOR/RBCBAOV2	79	
+rbcc2	CU/B/NOR/RBCCROV2	8	
+rbcce	CU/B/NOR/RBCCR	421	
+rbcch	Do not map	2	
+rbcco	CU/B/NOR/RBCCROV1	28	
+rbccr	CU/B/NOR/RBCMR	318	
+rbccv	Do not map	1	
+rbcde	CU/B/NOR/RBCDP	165	
+rbcep	Do not map	1	
+rbcgu	Do not map	2	
+rbchc	CU/B/NOR/RBCHCYA	621	
+rbcl1	CU/B/NOR/RCBPOV1	19	
+rbcl2	CU/B/NOR/RBCLPOV2	3	
+rbclp	CU/B/NOR/RBCLP	359	
+rbcm1	CU/B/NOR/RBCM1	26	
+rbcm2	CU/B/NOR/RBCM2	26	
+rbcms	Do not map	1	
+rbcmt	Do Not Map	35	
+rbcmu	CU/B/NOR/RBCMU	764	
+rbcnl	CU/B/NOR/RBCNL	1667	
+rbcno	CU/B/NOR/RBCNLOV	8	
+rbco1	CU/B/NOR/RBCOV1	676	
+rbco2	CU/B/NOR/RBCOV2	243	
+rbcos	CU/B/NOR/RBCIS	777	
+rbcp1	CU/B/NOR/RBCPB	1	
+rbcpb	CU/B/NOR/RBCPB	297	
+rbcph	CU/B/NOR/RBCPP	11	
+rbcpl	CU/B/NOR/RBCPL	169	
+rbcpo	CU/B/NOR/RBCPLOV	44	
+rbcrd		2	
+rbcrf	CU/NOR/RBCREF	83	
+rbcrl	CU/B/NOR/RBCRC	14	
+rbcro	CU/B/NOR/RBCREF	11	
+rbcsc	CU/B/NOR/RBCSCB	5524	
+rbcso	CU/B/NOR/RBCSCBOV1	394	
+rbcst	RBCST	12665	RBCST
+rbctr	Do Not Map	74	
+rbcvt	no longer used	1	
+rbcwf	CU/B/NOR/RBCWV	121	
+rbcwo	CU/B/NOR/RBCIWCOV	7	
+rbcwv	CU/B/NOR/RBCIWCVB	394	
+ref	CU/B/NOR/ref		
+ref0a		1	
+ref0b		1	
+ref13		1	
 refat	CU/B/NOR/NORREFA		
-refsc	CU/B/NOR/NORREFC		
+refcd			
+refdk	CU/B/NOR/NORREFS	1	
+refed		2	
 refhr	CU/B/NOR/NORREFHRAF		
+refix			
+reflp		1	
 refmc	CU/B/NOR/NORREFMF		
+refmg	CU/B/NOR/NORREFMG	355	
 refmg	CU/B/NOR/NORREFMG		
+refnb	CU/B/OFF/PASCAL	1	
+refo1			
+refof	CU/B/NOR/NREFOFF	25	
+refos	CU/B/OFF/PASCAL	31	
 refov	CU/B/NOR/NORREFOV		
+refrd			
+refsc	CU/B/NOR/NORREFC		
 refst	CU/B/NOR/NORREFS		
-norst	CU/B/NOR/NORS		
-scist	CU/B/NOR/NORSCI 		
+reftb		1	
+reg	CU/B/OFF/REGH	239	
+rej		2	no longer populated
+sci	CU/B/NOR/SCIST	556	
+sciof		20	
+scios		1527	
 sciov	CU/B/NOR/NORSCIOV		
-per	CU/B/NOR/per		
+scirf	CU/B/NOR/NORREFSCI	5660	
+scisg	CUB/OFF/PASCAL	5	
+scist	NOR/NORSCI	67123	NOR/NORSCI
+scist	CU/B/NOR/NORSCI 		
+Sierra Code	FOLIO Code	Count	
 spc	CU/B/NOR/rbc		
 spcax	CU/B/NOR/RBCANN		
+spcb1	CU/B/NOR/RBCBOV1		
+spcb2	CU/B/NOR/RBCBOV2		
 spcba	CU/B/NOR/RBCB		
 spcbk	CU/B/NOR/RBCBA		
 spcbo	CU/B/NOR/RBCBAOV1		
 spcbv	CU/B/NOR/RBCBAOV2		
-spcb1	CU/B/NOR/RBCBOV1		
-spcb2	CU/B/NOR/RBCBOV2		
-spcch	CU/B/NOR/RBCCC		
-spccr	CU/B/NOR/RBCCMR		
-spcce	CU/B/NOR/RBCCR		
-spcco	CU/B/NOR/RBCCROV1		
 spcc2	CU/B/NOR/RBCCROV2		
+spcce	CU/B/NOR/RBCCR		
+spcch	DO NOT MAP		no longer populated
+spcco	CU/B/NOR/RBCCROV1		
+spccr	CU/B/NOR/RBCCMR		
 spcde	CU/B/NOR/RBCDP		
+spcgr	CU/B/NOR/RBCG		
+spcgt	CU/B/NOR/RBCG		
 spcha	CU/B/NOR/RBCHA		
-spcwo	CU/B/NOR/RBCIWCOV		
-spcwv	CU/B/NOR/RBCIWCVB		
-spcwf	CU/B/NOR/RBCIWV		
-spclp	CU/B/NOR/RBCLP		
+spchc			no longer populated
 spcl1	CU/B/NOR/RBCLPOV1		
 spcl2	CU/B/NOR/RBCLPOV2		
+spclp	CU/B/NOR/RBCLP		
 spcm1	CU/B/NOR/RBCM1		
 spcm2	CU/B/NOR/RBCM2		
+spcmu	CU/B/NOR/RBCST		
 spcnl	CU/B/NOR/RBCNL		
 spcno	CU/B/NOR/RBCNLOV		
 spco1	CU/B/NOR/RBCOV1		
 spco2	CU/B/NOR/RBCOV2		
+spcph	CU/B/NOR/RBCPP		
 spcpl	CU/B/NOR/RBCPL		
 spcpo	CU/B/NOR/RBCPLOV		
-spcph	CU/B/NOR/RBCPP		
+spcrf			
 spcrl	CU/B/NOR/RBCRC		
 spcsc	CU/B/NOR/RBCSCB		
 spcso	CU/B/NOR/RBCSCBOV1		
-ref	CU/B/NOR/ref		
-asnrc	CU/B/NOR/REFEAC		
+spcst	CU/B/NOR/RBCST		
+spcvt			
+spcwf	CU/B/NOR/RBCIWV		
+spcwo	CU/B/NOR/RBCIWCOV		
+spcwv	CU/B/NOR/RBCIWCVB		
 tec	CU/B/NOR/tec		
 tecaq	CU/B/NOR/TSACQ		
 tecca	CU/B/NOR/TSCAT		
 tecpr	CU/B/NOR/TSPRES		
 tecse	CU/B/NOR/TSS		
-pascu	CU/B/OFF/PASCAL		
-			FOLIOCODE
 web	NOR/ONLINE	4831794	NOR/ONLINE
-pascl	CU/B/OFF/PASCAL	162759	This is inactive under NOR/PASCAL but the location is OFFSITE and should be located there.
-scist	NOR/NORSCI	67123	NOR/NORSCI
-musst	MUS/MUSST	62643	MUS/MUSST
-rbcax	RBCANN	15591	RBCANN
-noros	NOROV	12750	NOROV
-rbcst	RBCST	12665	RBCST
-etd		8351	
-norpr		7970	
-inp		7371	
-scirf		5660	
-rbcsc		5524	
-musrf		4336	
-inpts		3851	
-medfs		3458	
-altec		2944	Campus/ALTEC
-govos		2443	
-medos		1710	
-rbcnl		1667	
-scios		1527	
-clsst		1425	Campus/CLSST
-illst		992	
-rbcbk		972	
-musov		970	
-norrc		822	
-rbcos		777	
-rbcmu		764	
-musos		729	
-musmk		695	
-rbco1		676	
-rbchc		621	
-busos		583	BUS/BUSOS
-engos		573	
-sci		556	
-none		527	
-medav		425	
-rbcce		421	
-engof		400	
-rbcwv		394	
-rbcso		394	
-medst		360	
-rbclp		359	
-refmg		355	
-busrf		337	EMP/BUSRFEMP
-rbccr		318	
-esccd		307	
-rbcpb		297	
-rbcba		295	
-rbco2		243	
-reg		239	
-mapos		214	
-arvaj		201	
-pas		183	
-arvnf		172	
-rbcpl		169	
-rbcde		165	
-asnos		163	
-artos		149	
-arvst		146	
-musao		125	
-escos		124	
-rbcwf		121	
-arvos		119	
-msmam		108	
-inpac		108	
-musro		107	
-rbcrf		83	
-rbcbo		81	
-rbcbv		79	
-rbctr		74	
-peros		69	
-normc		67	
-nords		60	
-engov		54	
-musra		53	
-musrs		45	
-rbcpo		44	
-busbl		41	EMP/BUSPOPEMP
-rbcmt		35	
-normr		35	
-engcd		32	
-refos		31	
-rbcb1		30	
-rbcco		28	
-rbcm2		26	
-rbcm1		26	
-norof		26	
-refof		25	
-escds		25	
-inpst		24	
-busse		24	EMP/BUSSEREMP
-norsl		23	
-musof		22	
-sciof		20	
-rbcl1		19	
-com		17	
-mussr		16	
-rbcrl		14	
-buss2		14	 no longer populated
-norex		13	
-musso		12	
-rbcro		11	
-rbcph		11	
-msm		11	
-busnw		11	EMP/BUSNWEMP
-rbcb2		10	
-musmc		10	
-engnw		9	
-rbcno		8	
-rbcc2		8	
-pasos		8	
-nors1		8	
-spchc		7	
-rbcwo		7	
-norar		7	
-mus24		7	
-cbiof		6	
-buscr		6	no longer populated
-scisg		5	
-nors4		5	
-lib		5	
-eresv		5	
-comrm		5	
-buss1		5	bus
-mus4h		4	
-crlst		4	
-comch		4	
-rbcl2		3	
-norsc		3	
-nors5		3	
-norcr		3	
-musar		3	
-engrm		3	
-admpr		3	
-rej		2	
-refed		2	
-rbcrd		2	
-rbcgu		2	
-rbcch		2	
-perof		2	
-norln		2	
-norli		2	
-noril		2	
-msmnh		2	
-mphst		2	
-medrs		2	
-engds		2	
-deans		2	
-comhp		2	
-busgv		2	
-bib		2	
-arvjl		2	
-reftb		1	
-refnb		1	
-reflp		1	
-refdk		1	
-ref13		1	
-ref0b		1	
-ref0a		1	
-rbcvt		1	
-rbcp1		1	
-rbcms		1	
-rbcep		1	
-rbccv		1	
-rbcbl		1	
-pso		1	
-nors2		1	
-norrx		1	
-nornb		1	
-norlo		1	
-norhs		1	
-nored		1	
-norcl		1	
-norbr		1	
-mus72		1	
-mapof		1	
-esclp		1	
-escat		1	
-engi1		1	
-comlp		1	
-comcl		1	
-cde		1	
-amrof		1	
-6slam		1	
-arvua			
-arvwh			
-cls			
-comst			
-cr0zz			
-govib			
-govst			
-law			
-mapcd			
-mphnb			
-mphov			
-mphrf			
-multi			
-mussp			
-rbc			
-refcd			
-refix			
-refo1			
-refrd			
-spcrf			
-spcvt			
+			FOLIOCODE
