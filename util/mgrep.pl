@@ -2,16 +2,14 @@
 binmode(STDOUT, ":utf8");
 
 my $m = shift or die "Usage: ./mgrep.pl <match> <raw_marc_file> [<limit>]\n";
-my $lim = 10000000;
+open IN, "<:encoding(utf-8)", shift or die "Can't find raw Marc file!\n";
+my $lim = shift || 1000000;
 $/ = "\x1D";
 $i = 0;
-foreach (@ARGV) {
-  open IN, "<:encoding(utf-8)", $_ or die "Can't find raw Marc file!\n";
-  while (<IN>) {
-    last if $i == $lim;
-    if (/$m/) {
-      print $_;
-      $i++;
-    }
+while (<IN>) {
+  last if $i == $lim;
+  if (/$m/) {
+    print $_;
+    $i++;
   }
 }
