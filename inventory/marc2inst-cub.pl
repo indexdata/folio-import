@@ -120,7 +120,7 @@ sub makeMapFromTsv {
       chomp;
       s/\s+$//;
       my @col = split(/\t/);
-      my $code = $col[0];
+      my $code = $col[0] || '';
       my $name = $col[1] || '';
       if ($prop eq 'statuses') {
         $name =~ s/.*map .*/Unknown/;
