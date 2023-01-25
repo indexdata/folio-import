@@ -205,6 +205,8 @@ my $statmap = {
   'Missing' => 'Missing'
 };
 
+my $bcseen = {};
+
 sub process_entity {
   my $field = shift;
   my $ent = shift;
@@ -871,7 +873,7 @@ sub make_holdings {
   $hr->{permanentLocationId} = $tofolio->{locations}->{$loc} || '';
   $hr->{sourceId} = $source_id;
   if (!$hr->{permanentLocationId}) { 
-    $hr->{permanentLocationId} = $refdata->{locations}->{'UNMAPPED'};
+    $hr->{permanentLocationId} = $refdata->{locations}->{'Unmapped Location'};
     print "WARN FOLIO location not found for $loc! ($id)\n";
   }
   $hr->{callNumber} = $cn;
@@ -942,14 +944,19 @@ sub make_holdings {
     $ir->{materialTypeId} = $tofolio->{mtypes}->{$mt};
     $ir->{status}->{name} = $statmap->{$st} || 'Available';
     $ir->{permanentLoanTypeId} = $refdata->{loantypes}->{'Can circulate'};
-    $ir->{barcode} = $bc if ($bc);
+    if ($bc && !$bcseen->{$bc}) {
+      $ir->{barcode} = $bc if ($bc);
+      $bcseen->{$bc} = 1;
+    } elsif ($bc) {
+      print "WARN duplicat barcode found $bc\n";
+    }
     if ($vl && $tcode =~ /[y]/) {
       $ir->{enumeration} = $vl;
     } elsif ($vl) {
       $ir->{volume} = $vl;
     }
     $ir->{chronology} = $cr if ($cr);
-    $ir->{yearCaption} = $yc if ($yc);
+    $ir->{yearCaption} = [ $yc ] if ($yc);
     $ir->{descriptionOfPieces} = $dp if ($dp);
     $ir->{copyNumber} = $cp if ($cp);
     if ($cn) {
