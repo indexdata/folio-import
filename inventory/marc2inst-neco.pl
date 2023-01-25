@@ -41,7 +41,7 @@ my $hprefix = "${prefix}h";
 my $iprefix = "${prefix}i";
 my $srstype = 'MARC';
 my @hnotes = qw(852z 907abcdefixy 931a 9613anwx 963adfghklnpqsw 9663abcdeqrw 9673aberw 990a);
-my $source_id = '036ee84a-6afd-4c3c-9ad3-4a12ab875f59'; # MARC
+my $source_id = 'f32d531e-df79-46b3-8932-cdd35f7a2264'; # Folio 
 
 my $rules_file = shift;
 my $ref_dir = shift;
@@ -59,14 +59,11 @@ my $mdate = sprintf("%04d-%02d-%02dT%02d:%02d:%02d-0500", $lt[5] + 1900, $lt[4] 
 my $files = {
   inst => 'instances.jsonl',
   holds => 'holdings.jsonl',
-  hsrs => 'holdings_srs.jsonl',
   items => 'items.jsonl',
   imap => 'map.tsv',
   srs => 'srs.jsonl',
   snap => 'snapshot.jsonl',
   presuc => 'presuc.jsonl',
-  relate => 'relationships.jsonl',
-  bwp => 'bound-with-parts.jsonl',
   err => 'err.mrc'
 };
 
@@ -139,6 +136,8 @@ sub makeMapFromTsv {
       my $name = $col[1] || '';
       if ($prop eq 'locations') {
         $name = ($col[3] eq '-') ? 'Unmapped Location' : $col[3];
+      } elsif ($prop eq 'mtypes') {
+        $name = $col[3];
       }
       $tsvmap->{$prop}->{$code} = $refdata->{$prop}->{$name};
     }
@@ -195,6 +194,15 @@ my $typemap = {
   'y' => 'Serial',
   'v' => 'Multi-part monograph',
   'u' => 'Monograph'
+};
+
+my $statmap = {
+  'In Process' => 'In process', 
+  'In Transit Discharged' => 'In transit',
+  'In Transit On Hold' => 'In transit',
+  'Lost--Library Applied' => 'Declared lost',
+  'Lost--System Applied' => 'Declared lost',
+  'Missing' => 'Missing'
 };
 
 sub process_entity {
@@ -809,8 +817,6 @@ foreach (@ARGV) {
   print "\nHoldings:    $hcount ($paths->{holds})";
   print "\nItems:       $icount ($paths->{items})";
   print "\nPre-suc:     $pcount ($paths->{presuc})";
-  print "\nRelations:   $rcount ($paths->{relate}";
-  print "\nBound-withs: $bwcount ($paths->{bwp})";
   print "\nErrors:      $errcount\n";
 }
 
@@ -853,6 +859,7 @@ sub make_holdings {
   my $hid = uuid($hrid);
   my $srs = make_srs($marc, $marc->as_usmarc(), $hid, $hrid, $snap_id, $hid);
 
+  my $out = {};
   my $hr = {};
   my $typestr = $typemap->{$tcode} ;
   my $typeid = $refdata->{holdingsTypes}->{$typestr} || $refdata->{holdingsTypes}->{Serial};
@@ -913,16 +920,28 @@ sub make_holdings {
   foreach my $item ($marc->field('949')) {
     $inum++;
     my $inumstr = sprintf("$iprefix$id-%02d", $inum);
-    my $bc = $item->subfield('i') || '';
-    my $vl = $item->subfield('c') || '';
-    my $cr = $item->subfield('k') || '';
-    my $yc = $item->subfield('d') || '';
-    my $dp = $item->subfield('n') || '';
+    my $bc = $item->as_string('i') || '';
+    my $vl = $item->as_string('c') || '';
+    my $cr = $item->as_string('k') || '';
+    my $yc = $item->as_string('d') || '';
+    my $dp = $item->as_string('n') || '';
+    my $mt = $item->as_string('t') || '';
+    my $st = $item->as_string('s') || '';
+    my $loc = $item->as_string('l') || '';
+    my $tmploc = $item->as_string('h') || '';
+    my $cp = $item->as_string('g') || '';
+    my $cn = $item->as_string('ab') || '';
+    my $ntype = $item->as_string('r') || '';
+    my $no = $item->as_string('q') || '';
+
     my $ir = {
       id => uuid($inumstr),
       hrid => $inumstr,
       holdingsRecordId => $hr->{id}
     };
+    $ir->{materialTypeId} = $tofolio->{mtypes}->{$mt};
+    $ir->{status}->{name} = $statmap->{$st} || 'Available';
+    $ir->{permanentLoanTypeId} = $refdata->{loantypes}->{'Can circulate'};
     $ir->{barcode} = $bc if ($bc);
     if ($vl && $tcode =~ /[y]/) {
       $ir->{enumeration} = $vl;
@@ -932,21 +951,49 @@ sub make_holdings {
     $ir->{chronology} = $cr if ($cr);
     $ir->{yearCaption} = $yc if ($yc);
     $ir->{descriptionOfPieces} = $dp if ($dp);
-    foreach my $nt ($item->subfield('q')) {
-      my $n = {
-        note => $nt,
-        itemNoteTypeId => $refdata->{itemNoteTypes}->{Note},
-        staffOnly => JSON::true
+    $ir->{copyNumber} = $cp if ($cp);
+    if ($cn) {
+      $ir->{itemLevelCallNumber} = $cn;
+      $ir->{itemLevelCallNumberTypeId} = '95467209-6d7b-468b-94df-0f5d7ad2747d' # LC
+    }
+    if ($loc) {
+      $ir->{permanentLocationId} = $tofolio->{locations}->{$loc} || $refdata->{locations}->{'Unmapped Location'};
+    }
+    if ($tmploc) {
+      $ir->{temporaryLocationId} = $tofolio->{locations}->{$tmploc} || $refdata->{locations}->{'Unmapped Location'};
+    }
+    if ($ntype eq 'regular') {
+      foreach my $nt ($item->subfield('q')) {
+        my $n = {
+          note => $nt,
+          itemNoteTypeId => $refdata->{itemNoteTypes}->{Note},
+          staffOnly => JSON::true
+        };
+        push @{ $ir->{notes} }, $n;
+      }
+    }
+    $ir->{circulationNotes} = [];
+    if ($no && $ntype eq 'charge') {
+      my $nobj = {
+        note => $no,
+        noteType => 'Check out'
       };
-      push @{ $ir->{notes} }, $n;
+      push @{ $ir->{circulationNotes} }, $nobj;
+    }
+    if ($no && $ntype eq 'discharge') {
+      my $nobj = {
+        note => $no,
+        noteType => 'Check in'
+      };
+      push @{ $ir->{circulationNotes} }, $nobj;
     }
     
-    my $irstr = $json->encode($ir);
-    print $irstr . "\n";
+    # my $irstr = $json->pretty->encode($ir);
+    push @{ $out->{items} }, $ir;
+    # print $irstr . "\n";
     
   }
 
-  my $out;
   $out->{holdings} = $json->encode($hr);
   $out->{srs} = $json->encode($srs);
   return $out;
