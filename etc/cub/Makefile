@@ -38,40 +38,45 @@ get-items:
 ifeq ($(wildcard $(itemdir)/.),)
 	mkdir $(itemdir)
 endif
-	cd $(sdir); node downloadItems.js $(itemdir) > $(log)/items0.log & 
+	cd $(sdir); node downloadItems.js $(itemdir) > $(log)/get-items.log & 
 
 get-holdings:
 ifeq ($(wildcard $(holdir)/.),)
 	mkdir $(holdir)
 endif
-	cd $(sdir); node downloadHoldings.js $(holdir) > $(log)/iii-holdings.log 2>/dev/null & 
+	cd $(sdir); node downloadHoldings.js $(holdir) > $(log)/get-holdings.log 2>/dev/null & 
 
 get-users:
 ifeq ($(wildcard $(userdir)/.),)
 	mkdir $(userdir)
 endif
-	cd $(sdir); node downloadUsers.js $(userdir) > $(log)/users.log &
+	cd $(sdir); node downloadUsers.js $(userdir) > $(log)/get-users.log &
 
 get-orders:
 ifeq ($(wildcard $(orddir)/.),)
 	mkdir $(orddir)
 endif
-	cd $(sdir); node downloadOrders.js -c [2022-07-01,2022-08-30] $(orddir) > $(log)/orders.log &
+	cd $(sdir); node downloadOrders.js -c '*' $(orddir) > $(log)/get-orders.log &
+	# cd $(sdir); node downloadOrders.js -c [2022-07-01,2022-08-30] $(orddir) > $(log)/orders.log &
 
 instances: $(marcdir)/marc0*mrc
-	./run-multi.sh ./marc2inst-cub.pl mapping-rules.json $(iref) $(marcdir)/marc0*.mrc > $(log)/make-marc.log 2>/dev/null &
+	cd $(marcdir); yaz-marcdump -C 1800000 -s m marc0*mrc >/dev/null
+	cd $(marcdir); for f in m0*; do mv $$f $$f.mrc; done
+	./run-multi.sh ./marc2inst-cub.pl mapping-rules.json $(iref) $(marcdir)/m0*.mrc > $(log)/make-marc.log 2>/dev/null &
 
-items: $(itemdir)/*.jsonl
+items: $(itemdir)/items00000000.jsonl
+	# wc -l $(itemdir)/items00000000.jsonl > $(itemdir)/count
+	date > $(itemdir)/start
 	cat $(marcdir)/*.map > $(itemdir)/instance.map
-	cat $(itemdir)/items0*.jsonl > $(itemdir)/sierra-items.jsonl
-	cd $(wd)/perl; ./items-cub.pl $(iref) $(itemdir)/instance.map $(itemdir)/sierra-items.jsonl > $(log)/make-items.log &
+	cat $(holdir)/*.map > $(itemdir)/holdings.map
+	cd $(wd)/inventory; ./items-cub.pl $(iref) $(itemdir)/instance.map $(itemdir)/holdings.map $(itemdir)/items00000000.jsonl > $(log)/make-items.log 2>$(log)/make-items-err.log &
 
 clean-items: $(itemdir)/sierra-items.jsonl
 	mv $(itemdir)/sierra-items.jsonl $(itemdir)/items000000X.jsonl
 
 holdings: $(holdir)/*.jsonl
 	cat $(marcdir)/*.map > $(holdir)/instance.map
-	cd $(wd)/perl; ./holdings-cub.pl $(iref) $(holdir)/instance.map $(holdir)/holdings00*jsonl > $(log)/make-holdings.log 2>$(log)/make-holdings-err.log &
+	cd $(wd)/inventory; ./holdings-cub.pl $(iref) $(holdir)/instance.map $(holdir)/holdings00*jsonl > $(log)/make-holdings.log 2>$(log)/make-holdings-err.log &
 
 orders: $(orddir)/orders0*jsonl
 	cat $(orddir)/orders0*.jsonl > $(orddir)/iii-orders.jsonl
@@ -79,13 +84,13 @@ orders: $(orddir)/orders0*jsonl
 
 users: $(userdir)/users0*.jsonl
 	cat $(userdir)/users0*.jsonl > $(userdir)/iii-users.jsonl
-	cd $(wd)/patrons; node cubUsers.js $(uref) $(userdir)/iii-users.jsonl 'folio@colorado.edu'
+	cd $(wd)/patrons; node cubUsers.js $(uref) $(userdir)/iii-users.jsonl 'folio@colorado.edu' > $(log)/make-users.log 2>$(log)/make-users-err.log &
 
 setup:
 	cd $(wd); git pull	
 	cp $(wd)/configs/bash/login-cu-test.sh .
 	cp $(wd)/bash/reference_* .
-	cp $(wd)/perl/marc2inst-cub.pl .
+	cp $(wd)/inventory/marc2inst-cub.pl .
 	cp $(wd)/mapping_rules/default.json mapping-rules.json
 	mkdir $(iref)
 	mkdir $(uref)
