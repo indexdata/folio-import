@@ -107,7 +107,7 @@ sub makeMapFromTsv {
       chomp;
       s/\s+$//;
       my @col = split(/\t/);
-      my $code = $col[0];
+      my $code = $col[0] || '';
       my $name = $col[2] || '';
       if ($prop eq 'statuses') {
         $tsvmap->{$prop}->{$code} = $name;
@@ -217,11 +217,15 @@ foreach (@ARGV) {
       print IOUT $out->{items};
       print BOUT $out->{bws};
       if ($bwc > 0) {
-        my $super = uuid($main_bib);
-        my $sub = uuid($bid);
-        my $robj = { superInstanceId=>$super, subInstanceId=>$sub, instanceRelationshipTypeId=>'758f13db-ffb4-440e-bb10-8a364aa6cb4a' };
-        print ROUT $json->encode($robj) . "\n";
-        $rcount++;
+        my $superline = $inst_map->{$main_bib} || '';
+        my $subline = $inst_map->{$bid} || '';
+        if ($superline && $subline) {
+          my @super = split(/\|/, $superline);
+          my @sub = split(/\|/, $subline);
+          my $robj = { superInstanceId=>$super[0], subInstanceId=>$sub[0], instanceRelationshipTypeId=>'758f13db-ffb4-440e-bb10-8a364aa6cb4a' };
+          print ROUT $json->encode($robj) . "\n";
+          $rcount++;
+        }
       }
       $count++;
       $bwc++;
