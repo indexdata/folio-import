@@ -533,32 +533,42 @@ foreach (@ARGV) {
     };
     next unless $ok;
 
+    my @lfields = $marc->field('945');
+    $marc->delete_fields(@lfields);
     # lets move the 001 to 035
     my $iiinum = ($marc->field('907')) ? $marc->subfield('907', 'a') : '';
     $iiinum =~ s/.(.+).$/$1/;
     if ($marc->field('001')) {
-      my $in_ctrl = $marc->field('001')->data();
-      $in_ctrl =~ s/^rbc//;
-      my $in_ctrl_type = ($marc->field('003')) ? $marc->field('003')->data() : '';
-      my $id_data = ($in_ctrl_type) ? "($in_ctrl_type)$in_ctrl" : $in_ctrl;
-      my $nodupe = 1;
-      foreach my $o ($marc->field('035')) {
-        my $val = $o->as_string('a') || '';
-        if ($val eq $id_data) {
-          $nodupe = 0;
-          last;
+      my $cc = 0;
+      foreach my $f ($marc->field('001')) {
+        if ($cc > 0) {
+          $marc->delete_field($f);
+        } else {
+          my $in_ctrl = $f->data();
+          $in_ctrl =~ s/^rbc//;
+          my $in_ctrl_type = ($marc->field('003')) ? $marc->field('003')->data() : '';
+          my $id_data = ($in_ctrl_type) ? "($in_ctrl_type)$in_ctrl" : $in_ctrl;
+          my $nodupe = 1;
+          foreach my $o ($marc->field('035')) {
+            my $val = $o->as_string('a') || '';
+            if ($val eq $id_data) {
+              $nodupe = 0;
+              last;
+            }
+          }
+          if ($nodupe) {
+            my $field = MARC::Field->new('035', ' ', ' ', 'a' => $id_data);
+            $marc->insert_fields_ordered($field);
+          }
+          $f->update($iiinum);
+          if ($marc->field('003')) {
+            $marc->field('003')->update($isls);
+          } else {
+            my $field = MARC::Field->new('003', $isls);
+            $marc->insert_fields_ordered($field);  
+          }
         }
-      }
-      if ($nodupe) {
-        my $field = MARC::Field->new('035', ' ', ' ', 'a' => $id_data);
-        $marc->insert_fields_ordered($field);
-      }
-      $marc->field('001')->update($iiinum);
-      if ($marc->field('003')) {
-        $marc->field('003')->update($isls);
-      } else {
-        my $field = MARC::Field->new('003', $isls);
-        $marc->insert_fields_ordered($field);  
+        $cc++;
       }
     } else {
       my $field = MARC::Field->new('001', $iiinum);
@@ -576,10 +586,7 @@ foreach (@ARGV) {
       $rec->{discoverySuppress} = JSON::true;
     }
 
-    my $srsmarc = $marc;
-    if ($marc->field('880')) {
-      $srsmarc = $marc->clone();
-    }
+    my $srsmarc = $marc->clone();
     my $ldr = $marc->leader();
     my $blevel = substr($ldr, 7, 1);
     my $type = substr($ldr, 6, 1);
@@ -734,7 +741,7 @@ foreach (@ARGV) {
         }
       }
       $inst_recs .= $json->encode($rec) . "\n";
-      $srs_recs .= $json->encode(make_srs($srsmarc, $raw, $rec->{id}, $rec->{hrid}, $snapshot_id, $srs_file)) . "\n";
+      $srs_recs .= $json->encode(make_srs($srsmarc, $rec->{id}, $rec->{hrid}, $snapshot_id, $srs_file)) . "\n";
       my $ctype = $cntypes->{$cntag} || '';
       $idmap_lines .= "$rec->{hrid}|$rec->{id}|$cn|$ctype|$blevel\n";
       $hrids->{$hrid} = 1;
@@ -968,7 +975,7 @@ sub make_snapshot {
 
 sub make_srs {
     my $marc = shift;
-    my $raw = shift;
+    my $raw = $marc->as_usmarc();
     my $iid = shift;
     my $hrid = shift;
     my $snap_id = shift;
