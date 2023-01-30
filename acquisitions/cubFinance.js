@@ -18,6 +18,7 @@ const { application_name } = require('pg/lib/defaults');
 const argv = require('minimist')(process.argv.slice(2));
 
 const ns = 'e35dff4e-9035-4d6a-b621-3d42578f81c7';
+const ver = 1;
 
 let files = {
   units: 'acq-units.jsonl',
@@ -41,6 +42,7 @@ const col = { a:0, b:1, c:2, d:3, e:4, f:5, g:6, h:7, i:8, j:9, k:10, l:11, m:12
       throw new Error('Can\'t find input file');
     }
     const writeObj = (fn, data) => {
+      data._version = ver;
       const jsonStr = JSON.stringify(data);
       fs.writeFileSync(fn, jsonStr + '\n', { flag: 'a' });
     }

@@ -83,9 +83,9 @@ let ep = process.argv[2];
         logger.info(`  Successfully added record id ${rec.id}`);
         success++;
       } catch (e) {
-	      let errMsg = (e.response) ? e.response.text : e;
-        logger.error(e);
-        fail++;
+          let errMsg = (e.response && e.response.error) ? e.response.error : e;
+          logger.error(errMsg);
+          fail++;
       }
     }
     const end = new Date().valueOf();
