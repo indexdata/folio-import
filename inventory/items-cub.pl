@@ -113,7 +113,7 @@ sub makeMapFromTsv {
         $tsvmap->{$prop}->{$code} = $name;
       } else {
         if ($prop eq 'locations') {
-          $name = $col[1];
+          $name = $col[1] || '';
           $name =~ s/^.+\///;
         }
         $tsvmap->{$prop}->{$code} = $refdata->{$prop}->{$name};

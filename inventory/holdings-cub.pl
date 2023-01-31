@@ -116,7 +116,7 @@ sub getRefData {
       }
     }
   }
- return $refobj;
+  return $refobj;
 }
 
 sub makeMapFromTsv {
@@ -270,8 +270,8 @@ foreach (@ARGV) {
     my $loc_id = $refdata->{locations}->{$loc_code} || $refdata->{locations}->{UNMAPPED};
     $h->{permanentLocationId} = $loc_id;
     $h->{sourceId} = $source_id;
-    my $typecode = substr($leader, 6, 1);
-    my $typestr = $typemap->{$typecode};
+    my $typecode = substr($leader, 6, 1) || '';
+    my $typestr = $typemap->{$typecode} || '';
     my $typeid = $refdata->{holdingsTypes}->{$typestr} || $refdata->{holdingsTypes}->{Serial};
     $h->{holdingsTypeId} = $typeid;
     my $cntype = $b[1];
