@@ -183,7 +183,6 @@ const htypes = {
           cntype = instData.cntype;
         }
         cn = cn.replace(/^(\w{1,3}) /, '$1');
-        cn = cn.replace(/ \./, '.');
         let supp = (i.ICODE2 && i.ICODE2 === 's') ? true : false;
         let blevel = instData.blevel;
 
