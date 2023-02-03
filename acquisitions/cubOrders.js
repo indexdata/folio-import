@@ -44,6 +44,38 @@ const formMap = {
   f: "film reel"
 };
 
+otherCodes = {
+  "aaass": "aaas",
+  "aiaas": "aiaa",
+  "aiphs": "aip",
+  "alas": "ala",
+  "alexs": "alexa",
+  "arls": "arl",
+  "aspre": "ap",
+  "assps": "assp",
+  "astms": "astm",
+  "bobkc": "bosto",
+  "briln": "brill",
+  "casas": "casal",
+  "ciss": "umis",
+  "harrs": "harra",
+  "isis": "clari",
+  "japas": "japan",
+  "maruz": "maruj",
+  "moods": "fiss",
+  "oecds": "oecd",
+  "orint": "corne",
+  "priss": "prima",
+  "sages": "conqs",
+  "spcrs": "spcms",
+  "spies": "spie",
+  "ucp": "uchic",
+  "ugss": "utgss",
+  "uillp": "illpr",
+  "uslcs": "loc",
+  "visin": "sdvs",
+};
+
 (async () => {
   let startTime = new Date().valueOf();
   try {
@@ -89,6 +121,7 @@ const formMap = {
       v = v.replace(/^.+\//, '');
       locMap[k] = refData.locations[v];
     });
+    locMap['unmapped'] = refData.locations['UNMAPPED'];
 
     const fileStream = fs.createReadStream(inFile);
 
@@ -121,6 +154,7 @@ const formMap = {
           let poId = uuid(poNum, ns);
           let vcode = ff['22'].value || '';
           vcode = vcode.trim();
+          vcode = (otherCodes[vcode]) ? otherCodes[vcode] : vcode;
           let orgId = refData.organizations[vcode];
           if (!orgId) throw(`ERROR no organizationId found for "${vcode}" (${poNum})`);
           let co = {
@@ -229,7 +263,7 @@ const formMap = {
           }
 
           loc.quantity = copies;
-          loc.locationId = locMap[location];
+          loc.locationId = locMap[location] || locMap['unmapped'];
           if (!loc.locationId) throw(`ERROR no locationId found for "${location}"`)
           pol.locations.push(loc);
 
