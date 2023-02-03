@@ -140,7 +140,7 @@ sub makeMapFromTsv {
         $tsvmap->{$prop}->{$code} = $name;
       } else {
         if ($prop eq 'locations') {
-          $name = $col[1];
+          $name = $col[1] || '';
           $name =~ s/^.+\///;
           $tsvmap->{loc_codes}->{$code} = $name;
         }
@@ -274,8 +274,8 @@ foreach (@ARGV) {
     my $typestr = $typemap->{$typecode} || '';
     my $typeid = $refdata->{holdingsTypes}->{$typestr} || $refdata->{holdingsTypes}->{Serial};
     $h->{holdingsTypeId} = $typeid;
-    my $cntype = $b[1];
-    my $cn = $b[2];
+    my $cntype = $b[2];
+    my $cn = $b[1];
     my @tags = ('050', '090');
     my @csubs = ('a','b');
     foreach my $tag (@tags) {
@@ -287,7 +287,7 @@ foreach (@ARGV) {
         $cn = join ' ', @el;
       }
     }
-    $h->{callNumberTypeId} = $b[2] || '6caca63e-5651-4db6-9247-3205156e9699'; #other
+    $h->{callNumberTypeId} = $cntype || '6caca63e-5651-4db6-9247-3205156e9699'; #other
     $h->{callNumber} = $cn if $cn;
     $h->{discoverySuppress} = ($ff->{118}->{value} ne '-') ? JSON::true : JSON::false ;
     foreach my $t ('n', 'z') {
