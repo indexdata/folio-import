@@ -188,8 +188,8 @@ const htypes = {
 
         // make holdings
         if (!hseen[hrid]) {
-          hseen[hrid] = 1;
           let id = uuid(hrid, ns);
+          hseen[hrid] = id;
           hid = id;
           let instId = instData.id || '';
           let locId = refData.locations[loc] || refData.locations.UNMAPPED;
@@ -226,7 +226,7 @@ const htypes = {
           let ir = {
             id: iid,
             hrid: ihrid,
-            holdingsRecordId: hid,
+            holdingsRecordId: hseen[hrid],
             permanentLoanTypeId: loantypeId,
             materialTypeId: mt,
             status: {},
