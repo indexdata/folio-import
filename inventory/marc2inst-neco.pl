@@ -942,6 +942,7 @@ sub make_holdings {
       holdingsRecordId => $hr->{id}
     };
     $ir->{materialTypeId} = $tofolio->{mtypes}->{$mt};
+    # add hardcoded unavailable locations here (ie: Offsite Storage" (NCO-OFFSTE) )
     $ir->{status}->{name} = $statmap->{$st} || 'Available';
     $ir->{permanentLoanTypeId} = $refdata->{loantypes}->{'Can circulate'};
     if ($bc && !$bcseen->{$bc}) {
