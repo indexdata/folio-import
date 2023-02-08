@@ -897,7 +897,7 @@ sub make_holdings {
     }
   }
   foreach ($marc->field('866')) {
-    my $text = $_->as_string('vy');
+    my $text = $_->as_string('a');
     if ($text) {
       my $n = $_->as_string('z') || '';
       my $s = make_statement($text, $n);

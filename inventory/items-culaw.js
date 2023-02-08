@@ -166,10 +166,10 @@ const htypes = {
     itemRecs.forEach(i => {
       let iid = i['RECORD #(ITEM)'];
       let bhrid = imap[iid];
+      let instData = instMap[bhrid];
 
       // start making holdings and items
-      if (bhrid) {
-        let instData = instMap[bhrid];
+      if (bhrid && instData) {
         let loc = (i.LOC) ? i.LOC.trim() : '';
         let hrid = bhrid + '-' + loc;
         let cn = '';
