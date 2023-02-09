@@ -70,9 +70,11 @@ let ep = process.argv[2];
     for await (const line of rl) {
       x++;
       let rec = JSON.parse(line);
+      let id = rec.id;
+      if (rec.fund && rec.fund.id) id = rec.fund.id;
       let lDate = new Date();
-      logger.info(`[${x}] ${lDate} PUT ${rec.id} to ${actionUrl}`);
-      let recUrl = `${actionUrl}/${rec.id}`;
+      logger.info(`[${x}] ${lDate} PUT ${id} to ${actionUrl}`);
+      let recUrl = `${actionUrl}/${id}`;
       try {
         await superagent
           .put(recUrl)
@@ -80,7 +82,7 @@ let ep = process.argv[2];
           .set('x-okapi-token', authToken)
           .set('content-type', 'application/json')
           .set('accept', 'text/plain');
-        logger.info(`  Successfully updated record id ${rec.id}`);
+        logger.info(`  Successfully updated record id ${id}`);
         success++;
       } catch (e) {
 	      let errMsg = (e.response) ? e.response.text : e;

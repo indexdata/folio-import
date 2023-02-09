@@ -18,7 +18,7 @@ const { application_name } = require('pg/lib/defaults');
 const argv = require('minimist')(process.argv.slice(2));
 
 const ns = 'e35dff4e-9035-4d6a-b621-3d42578f81c7';
-const ver = 1;
+const ver = process.env._VERSION || 1;
 
 let files = {
   units: 'acq-units.jsonl',
@@ -27,7 +27,8 @@ let files = {
   groups: 'groups.jsonl',
   funds: 'funds.jsonl',
   budgets: 'budgets.jsonl',
-  groupfy: 'group-fund-fiscal-year.jsonl'
+  groupfy: 'group-fund-fiscal-year.jsonl',
+  cfunds: 'composite-funds.jsonl'
 };
 
 const col = { a:0, b:1, c:2, d:3, e:4, f:5, g:6, h:7, i:8, j:9, k:10, l:11, m:12, n:13, o:14, p:15, q:16, r:17, 
@@ -42,7 +43,7 @@ const col = { a:0, b:1, c:2, d:3, e:4, f:5, g:6, h:7, i:8, j:9, k:10, l:11, m:12
       throw new Error('Can\'t find input file');
     }
     const writeObj = (fn, data) => {
-      data._version = ver;
+      if (!fn.match(/composite/)) data._version = ver;
       const jsonStr = JSON.stringify(data);
       fs.writeFileSync(fn, jsonStr + '\n', { flag: 'a' });
     }
@@ -169,27 +170,21 @@ const col = { a:0, b:1, c:2, d:3, e:4, f:5, g:6, h:7, i:8, j:9, k:10, l:11, m:12
           let externalAccountNo = c[6];
           let id = uuid(code, ns);
 
+          let groupCode = '';
           let groups = [c[col.o], c[col.p], c[col.q]];
+          let gid = [];
           groups.forEach(g => {
             if (g) {
               let code = g.toLocaleLowerCase();
               code = code.replace(/\W+/g, '_');
+              groupCode = code;
               if (!groupMap[code]) {
                 groupMap[code] = {
                   id: uuid('group' + code, ns),
                   name: g
                 }
               }
-
-              // create group fund fiscal year object
-              let fyObj = {
-                id: uuid(code + id, ns),
-                groupId: groupMap[code].id,
-                fundId: id,
-                fiscalYearId: fyid
-              };
-              writeObj(files.groupfy, fyObj);
-              gffyCount++;
+              gid.push(groupMap[code].id);
             }
           });
           if (ledgerMap[ledgerName]) {
@@ -205,6 +200,13 @@ const col = { a:0, b:1, c:2, d:3, e:4, f:5, g:6, h:7, i:8, j:9, k:10, l:11, m:12
             if (au) obj.acqUnitIds = [ acqUnits[au] ];
             if (externalAccountNo) obj.externalAccountNo = externalAccountNo;
             writeObj(files.funds, obj);
+
+            // make composite funds
+            let compObj = {
+              fund: obj,
+              groupIds: gid
+            };
+            writeObj(files.cfunds, compObj);
             fnCount++;
             
             //create budget
@@ -224,6 +226,19 @@ const col = { a:0, b:1, c:2, d:3, e:4, f:5, g:6, h:7, i:8, j:9, k:10, l:11, m:12
             if (obj.acqUnitIds) bud.acqUnitIds = obj.acqUnitIds;
             writeObj(files.budgets, bud);
             bdCount++;
+
+            // create group fund fiscal year object
+            gid.forEach(groupId => {
+              let fyObj = {
+                id: uuid(groupId + id, ns),
+                budgetId: bud.id,
+                groupId: groupId,
+                fundId: id,
+                fiscalYearId: fyid
+              };
+              writeObj(files.groupfy, fyObj);
+              gffyCount++;
+            });
 
           } else {
             console.log(`WARN Ledger name not found for ${code}`);
