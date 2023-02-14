@@ -741,44 +741,49 @@ foreach (@ARGV) {
 
         # make preceding succeding titles
         foreach my $f ($marc->field('78[05]')) {
-        my $presuc = {};
-        my $pstype = 1;
-        $presuc->{title} = $f->as_string('ast');
-        if ($f->tag() eq '785') {
-          $presuc->{precedingInstanceId} = $rec->{id};
-        } else {
-          $presuc->{succeedingInstanceId} = $rec->{id};
-          $pstype = 2;
-        }
-        foreach my $sf (('w', 'x')) {
-          my $idtype = $refdata->{identifierTypes}->{'Other standard identifier'};
-          foreach ($f->subfield($sf)) {
-            if ($sf eq 'w') {
-              my $instid = uuid($_);
-              if ($pstype == 1) {
-                $presuc->{succeedingInstanceId} = $instid;
-              } else {
-                $presuc->{precedingInstanceId} = $instid;
-              }
-            } 
-            if (/OCoLC|ocm|ocn/) {
-              $idtype = $refdata->{identifierTypes}->{'OCLC'};
-            } elsif (/DLC/) {
-              $idtype = $refdata->{identifierTypes}->{'LCCN'};
-            } elsif (/^\d{4}-[0-9Xx]{4}/) {
-              $idtype = $refdata->{identifierTypes}->{'ISSN'};
-            } elsif (/^[0-9Xx]{10,13}/) {
-              $idtype = $refdata->{identifierTypes}->{'ISBN'};
-            }
-            my $idObj = { value=>$_, identifierTypeId=>$idtype };
-            push @{ $presuc->{identifiers} }, $idObj;
+          my $presuc = {};
+          my $pstype = 1;
+          $presuc->{title} = $f->as_string('ast');
+          if ($f->tag() eq '785') {
+            $presuc->{precedingInstanceId} = $rec->{id};
+          } else {
+            $presuc->{succeedingInstanceId} = $rec->{id};
+            $pstype = 2;
           }
-        }
-        write_objects($PSOUT, $json->encode($presuc) . "\n");
-        $pcount++;
-      }
-
+          foreach my $sf (('w', 'x')) {
+            my $idtype = $refdata->{identifierTypes}->{'Other standard identifier'};
+            foreach ($f->subfield($sf)) {
+              if ($sf eq 'w') {
+                my $instid = uuid($_);
+                if ($pstype == 1) {
+                  $presuc->{succeedingInstanceId} = $instid;
+                } else {
+                  $presuc->{precedingInstanceId} = $instid;
+                }
+              } 
+              if (/OCoLC|ocm|ocn/) {
+                $idtype = $refdata->{identifierTypes}->{'OCLC'};
+              } elsif (/DLC/) {
+                $idtype = $refdata->{identifierTypes}->{'LCCN'};
+              } elsif (/^\d{4}-[0-9Xx]{4}/) {
+                $idtype = $refdata->{identifierTypes}->{'ISSN'};
+              } elsif (/^[0-9Xx]{10,13}/) {
+                $idtype = $refdata->{identifierTypes}->{'ISBN'};
+              }
+              my $idObj = { value=>$_, identifierTypeId=>$idtype };
+              push @{ $presuc->{identifiers} }, $idObj;
+            }
+          }
+          write_objects($PSOUT, $json->encode($presuc) . "\n");
+          $pcount++;
+        } 
       } else {
+        if ($hrids->{$hrid}) {
+          print "ERROR Duplicate HRID: $hrid\n";
+        } 
+        if (!$rec->{title}) {
+          print "ERROR $hrid has no title\n"
+        }
         open ERROUT, ">>:encoding(UTF-8)", $paths->{err};
         print ERROUT $raw;
         close ERROUT;
@@ -943,7 +948,11 @@ sub make_holdings {
     };
     $ir->{materialTypeId} = $tofolio->{mtypes}->{$mt};
     # add hardcoded unavailable locations here (ie: Offsite Storage" (NCO-OFFSTE) )
-    $ir->{status}->{name} = $statmap->{$st} || 'Available';
+    if ($loc eq 'NCO-OFFSTE') {
+      $ir->{status}->{name} = 'Unavailable';
+    } else {
+      $ir->{status}->{name} = $statmap->{$st} || 'Available';
+    }
     $ir->{permanentLoanTypeId} = $refdata->{loantypes}->{'Can circulate'};
     if ($bc && !$bcseen->{$bc}) {
       $ir->{barcode} = $bc if ($bc);
