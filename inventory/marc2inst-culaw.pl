@@ -782,6 +782,8 @@ foreach (@ARGV) {
             push @{ $presuc->{identifiers} }, $idObj;
           }
         }
+        my $psid = create_uuid_as_string(UUID_V1);
+        $presuc->{id} = $psid;
         write_objects($PSOUT, $json->encode($presuc) . "\n");
         $pcount++;
       }
