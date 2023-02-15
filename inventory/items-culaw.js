@@ -41,6 +41,12 @@ const htypes = {
   i: 'Multi-part monograph'
 };
 
+const opacmsgs = {
+  s: 'Superseded',
+  l: 'Later edition available',
+  n: 'Not updated'
+};
+
 (async () => {
   try {
     if (!itemFile) throw(`Usage: node items-culaw.js <ref-dir> <inst-map-file> <bno-file.csv> <item-file.csv>`);
@@ -266,12 +272,23 @@ const htypes = {
             ir.circulationNotes.push({ note: msg, noteType: 'Check in'});
             ir.circulationNotes.push({ note: msg, noteType: 'Check out'});
           }
+          ir.notes = [];
           let inote = i['NOTE(ITEM)'];
           if (inote) {
-            if (!ir.notes) ir.notes = [];
             let ntype = refData.itemNoteTypes.Note
             ir.notes.push(noteGen(inote, ntype, true))
           }
+          let om = i.OPACMSG;
+          if (om && om.match(/[sln]/)) {
+            let ntype = refData.itemNoteTypes.Note
+            ir.notes.push(noteGen(opacmsgs[om], ntype, true))
+          }
+          let gn = i.ICODE1;
+          if (gn && gn === '1') {
+            let ntype = refData.itemNoteTypes.Note
+            ir.notes.push(noteGen('Gift copy', ntype, true)) 
+          }
+
           // console.log(ir);
           writeJSON(files.items, ir);
           icount++;
