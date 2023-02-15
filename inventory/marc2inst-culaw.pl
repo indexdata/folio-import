@@ -564,6 +564,15 @@ foreach (@ARGV) {
         $marc->insert_fields_ordered($field); 
       }
     }
+
+    # We need to remove all spaces from $a for tags 090 and 050
+    foreach my $t (('090', '050')) {
+      foreach my $f ($marc->field($t)) {
+        my $a = $f->as_string('a') || '';
+        $a =~ s/ //g;
+        $f->update('a' => $a);
+      }
+    }
     
     # III specific mapping for discoverySuppress
     my $supp_code = $marc->subfield('998', 'e') || '';
@@ -571,10 +580,8 @@ foreach (@ARGV) {
       $rec->{discoverySuppress} = JSON::true;
     }
 
-    my $srsmarc = $marc;
-    if ($marc->field('880')) {
-      $srsmarc = $marc->clone();
-    }
+    my $srsmarc = $marc->clone();
+
     my $ldr = $marc->leader();
     my $blevel = substr($ldr, 7, 1);
     my $type = substr($ldr, 6, 1);
@@ -730,7 +737,8 @@ foreach (@ARGV) {
       }
       $inst_recs .= $json->encode($rec) . "\n";
       my $electronic = ($rec->{electronicAccess}) ? $json->encode($rec->{electronicAccess}) : '';
-      $srs_recs .= $json->encode(make_srs($srsmarc, $raw, $rec->{id}, $rec->{hrid}, $snapshot_id, $srs_file)) . "\n";
+      my $sraw = $marc->as_usmarc();
+      $srs_recs .= $json->encode(make_srs($srsmarc, $sraw, $rec->{id}, $rec->{hrid}, $snapshot_id, $srs_file)) . "\n";
       my $ctype = $cntypes->{$cntag} || '';
       $idmap_lines .= "$rec->{hrid}|$rec->{id}|$cn|$ctype|$blevel|$electronic\n";
       $hrids->{$hrid} = 1;
