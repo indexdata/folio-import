@@ -1,0 +1,7 @@
+id	name	code	description	fiscalYearOneId	ledgerStatus	allocated	available	netTransfers	unavailable	currency	acqUnitIds	restrictEncumbrance	restrictExpenditures	initialAllocation	allocationTo	allocationFrom	totalFunding	cashBalance	awaitingPayment	encumbered	expenditures	overEncumbrance	overExpended
+	Campus General Funds	1Funds	Fund 10 Speedtypes - General Funds, Unrestricted	FY2022	Active						CU Boulder	FALSE	FALSE										
+	Gifts & Endowments	GiftFunds	Fund 34 Gift and Endowments, Restricted	FY2022	Active						CU Boulder	FALSE	FALSE										
+	Auxiliary	5Funds	Fund 20s Auxiliary & Self-funded Activities	FY2022	Active						CU Boulder	FALSE	FALSE										
+	Arts & Sciences Funds	7Funds	Arts & Sciences Faculty Startup Funds	FY2022	Active						CU Boulder	FALSE	FALSE										
+	Grants	9Funds	Fund 30 & 31s, Grants and Contracts, Restricted	FY2022	Active						CU Boulder	FALSE	FALSE										
+	Library Materials	LibMat	Library Materials Budget	FY2022	Active						CU Boulder	FALSE	FALSE										
