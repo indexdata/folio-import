@@ -128,18 +128,25 @@ sub makeMapFromTsv {
     my $l = 0;
     while (<$tsv>) {
       $l++;
-      next if $l == 1;
+      # next if $l == 1;
       chomp;
       s/\s+$//;
       my @col = split(/\t/);
       my $code = $col[0] || '';
       my $name = $col[1] || '';
       if ($prop eq 'locations') {
-        $name = ($col[3] eq '-') ? 'Unmapped Location' : $col[3];
+        $name = (!$col[5]) ? 'Unmapped Location' : $col[5];
       } elsif ($prop eq 'mtypes') {
-        $name = $col[3];
+        $name = $col[3] || '';
+      } 
+      if ($prop eq 'status') {
+        if ($name eq 'N/A' || $code eq 'Charged') {
+          $name = 'Available';
+        }
+        $tsvmap->{$prop}->{$code} = $name;
+      } else {
+        $tsvmap->{$prop}->{$code} = $refdata->{$prop}->{$name};
       }
-      $tsvmap->{$prop}->{$code} = $refdata->{$prop}->{$name};
     }
   }
  return $tsvmap;
@@ -202,7 +209,8 @@ my $statmap = {
   'In Transit On Hold' => 'In transit',
   'Lost--Library Applied' => 'Declared lost',
   'Lost--System Applied' => 'Declared lost',
-  'Missing' => 'Missing'
+  'Missing' => 'Missing',
+  'At Bindery' => 'Unavailable'
 };
 
 my $bcseen = {};
@@ -993,7 +1001,7 @@ sub make_holdings {
     if ($no && $ntype eq 'charge') {
       my $nobj = {
         note => $no,
-        noteType => 'Check out'
+        noteType => 'Check out',
         staffOnly => JSON::true
       };
       push @{ $ir->{circulationNotes} }, $nobj;
