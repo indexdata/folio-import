@@ -994,13 +994,15 @@ sub make_holdings {
       my $nobj = {
         note => $no,
         noteType => 'Check out'
+        staffOnly => JSON::true
       };
       push @{ $ir->{circulationNotes} }, $nobj;
     }
     if ($no && $ntype eq 'discharge') {
       my $nobj = {
         note => $no,
-        noteType => 'Check in'
+        noteType => 'Check in',
+        staffOnly => JSON::true
       };
       push @{ $ir->{circulationNotes} }, $nobj;
     }

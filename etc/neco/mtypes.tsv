@@ -1,28 +1,25 @@
-2dayReserv	43	Report needed (potentially purge?) 	unspecified
-2hrReserve	28	Report needed (move to book?)	unspecified
-AV	5	Report needed 	unspecified
+2hrReserve	2	Move to book 	book
 Archive	6	Move to book 	book
-Audio Cass	3	Purge	unspecified
-BOOK	190	Merged with Book	book
-BoardsBook	106	Merged with Book	book
-Book	3631	Keep	book
-CD-ROM	5	Merge with CDROM	dvd
-CDROM	152	Change to CD-DVD	dvd
-DVD	59	Merge with CD-DVD	dvd
-E-Book	45	Report needed (Merge with online?)	electronic resource
-Equipment	195	Keep	equipment
+Audio Cass	2	Purge	
+BOOK	172	Merged with Book	book
+BoardsBook	89	Merged with Book	book
+Book	3209	Keep	book
+CD-ROM	4	Merge with CDROM	dvd
+CDROM	139		dvd
+DVD	55	Merge with CDROM	dvd
+E-Book	42	Purge, not migrating e-resources	
+Equipment	209	Keep	equipment
 Kit	9	Merge with equipment	equipment
-Magazine	1	Purge	unspecified
-ONLINE	133	Report needed	electronic resource
+Magazine	1	Purge	
+ONLINE	4	Purge, not migrating e-resources	
 OVERSIZED	7	Merge with Book	book
-Photocopy	127	Report needed (Purge?)	unspecified
+Photocopy	113	Purge	
 Rare	834	Merge with Book	book
 Realia	12	Merge with equipment	equipment
-Reference	49	Merge with Book	book
-Reserve	1	Report needed (Merge with Book?)	book
-Serial	225	Keep (Report needed)	serial
-Slide	1	Purge	unspecified
-Software	4	Purge	unspecified
-THESIS	378	Merge with Thesis	thesis
+Reference	10	Merge with Book	book
+Serial	30	Keep 	serial
+Slide	1	Purge	
+Software	4	Purge	
+THESIS	374	Merge with Thesis	thesis
 Thesis	1	Keep	thesis
-Videotape	17	Report needed	video recording
+Videotape	17	Purge	

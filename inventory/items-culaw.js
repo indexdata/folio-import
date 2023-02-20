@@ -281,7 +281,7 @@ const opacmsgs = {
           let om = i.OPACMSG;
           if (om && om.match(/[sln]/)) {
             let ntype = refData.itemNoteTypes.Note
-            ir.notes.push(noteGen(opacmsgs[om], ntype, true))
+            ir.notes.push(noteGen(opacmsgs[om], ntype, false))
           }
           let gn = i.ICODE1;
           if (gn && gn === '1') {
