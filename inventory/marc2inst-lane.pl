@@ -80,6 +80,11 @@ my $ifiles = {
   mtypes => 'mtypes_map.tsv'
 };
 
+my $sfiles = {
+  bibs => 'bib_ids_to_suppress.txt',
+  mfhds => 'mfhd_ids_to_suppress.txt'
+};
+
 sub uuid {
   my $text = shift;
   my $uuid = create_uuid_as_string(UUID_V5, $text . $isil . $version);
@@ -171,11 +176,25 @@ sub makeMapFromTsv {
  return $tsvmap;
 }
 
-$ref_dir =~ s/\/$//;
+my $supids = {};
+sub getSups {
+  foreach my $fn (keys %{ $sfiles }) {
+    my $f = "$dir/$sfiles->{$fn}";
+    open SUP, $f or die "Can't open suppressed ids file $f !";
+    while (<SUP>) {
+      s/\s//g;
+      s/^/L/;
+      $supids->{$fn}->{$_} = 1;
+    }
+  }
+}
+getSups();
+
 my $refdata = getRefData($ref_dir);
 my $tofolio = makeMapFromTsv($ref_dir, $refdata);
 # print Dumper($tofolio); exit;
 # print Dumper($refdata->{locations}); exit;
+# print Dumper($supids); exit;
 
 print "Loading items...\n";
 my $items = {};
@@ -186,6 +205,7 @@ sub mapItems {
     my $path = "$dir/$fn";
     open ITD, "<:encoding(UTF-8)", $path;
     my $prekey = '';
+    print "$prop\n";
     while (<ITD>) {
       s/[\r\n]//g;
       if ($prop eq 'notes' && $_ !~ /^\d+\t/ && $items->{$prop}->{$prekey}->[0]) {
@@ -757,10 +777,13 @@ foreach (@ARGV) {
       }
       
       # Assign uuid based on hrid;
-      if (!$rec->{hrid}) {
+      my $hrid = $rec->{hrid};
+      if (!$hrid) {
         die "No HRID found in record $count";
       }
-      my $hrid = $rec->{hrid};
+      if ($supids->{$hrid}) {
+        $rec->{discoverySuppress} = JSON::true;
+      }
       if (!$hrids->{$hrid} && $marc->title()) {
         # set FOLIO_USER_ID environment variable to create the following metadata object.
         $rec->{id} = uuid($hrid);
