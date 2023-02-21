@@ -181,10 +181,14 @@ sub getSups {
   foreach my $fn (keys %{ $sfiles }) {
     my $f = "$dir/$sfiles->{$fn}";
     open SUP, $f or die "Can't open suppressed ids file $f !";
+    $supids->{$fn} = {};
     while (<SUP>) {
       s/\s//g;
-      s/^/L/;
-      $supids->{$fn}->{$_} = 1;
+      my $key = $prefix . $_;
+      if ($fn eq 'mfhds') {
+        $key = $hprefix . $_;
+      }
+      $supids->{$fn}->{$key} = 1;
     }
   }
 }
@@ -781,7 +785,7 @@ foreach (@ARGV) {
       if (!$hrid) {
         die "No HRID found in record $count";
       }
-      if ($supids->{$hrid}) {
+      if ($supids->{bibs}->{$hrid}) {
         $rec->{discoverySuppress} = JSON::true;
       }
       if (!$hrids->{$hrid} && $marc->title()) {
@@ -944,6 +948,9 @@ sub make_holdings {
   $hr->{callNumber} = $cn;
   $hr->{callNumberTypeId} = $refdata->{callNumberTypes}->{$cntype_str} if $cntype_str =~ /\w/;
   $hr->{discoverySuppress} = JSON::false;
+  if ($supids->{mfhds}->{$hrid}) {
+    $hr->{discoverySuppress} = JSON::true;
+  }
   foreach (@f655) {
     my $val = $_->as_string('a');
     if ($_->{_ind1} eq '7' && $_->{_ind2} eq '7' && $val eq 'Suppressed') {
