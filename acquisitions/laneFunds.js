@@ -103,7 +103,10 @@ let refFiles = {
           let groupId = uuid(r.groupCode + 'groups', ns);
           groups[r.groupCode] = groupId;
           fundMap[obj.code] = { id: obj.id, name: obj.name, groupId: groupId };
-          let compFund = { fund: obj };
+          let compFund = {
+            fund: obj,
+            groupIds: [ groupId ]
+          };
           writeObj(files.compFunds, compFund);
         }
         if (f === 'budgets') {
@@ -115,6 +118,7 @@ let refFiles = {
           obj.fundId = fund.id;
           obj.fiscalYearId = refData.fiscalYears[fy];
           obj.initialAllocation = parseInt(r.Current_Allocation, 10);
+          obj.allocated = obj.initialAllocation;
           let gfid = uuid(obj.id + fyId, ns);
           let groupFy = {
             id: gfid,
