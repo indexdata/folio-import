@@ -1,5 +1,7 @@
 /*
   This script creates fund-types, fiscal-years and ledgers from CSV files.
+  NOTE: This script may not need to be run if these tables are already populated as ref data.
+        In this case, move onto laneFunds.js
 */
 
 const fs = require('fs');
