@@ -12,6 +12,7 @@ let suf = 'FY2023';
 
 let files = {
   funds: 'funds.jsonl',
+  compFunds: 'composite-funds.jsonl',
   budgets: 'budgets.jsonl',
   groups: 'groups.jsonl',
   groupFy: 'group-fund-fiscal-years.jsonl',
@@ -74,7 +75,7 @@ let refFiles = {
       let inRecs = [];
       let outFile = files[f];
       console.log(f);
-      if (!f.match(/group|Expense/)) {
+      if (!f.match(/group|Expense|compFunds/)) {
         let inFile = outFile.replace(/\.jsonl$/, '.csv');
         let csv = fs.readFileSync(inFile, 'utf8');
         inRecs = parse(csv, {
@@ -89,6 +90,7 @@ let refFiles = {
           lcode = r['Ledger ID'];
           lid = refData.ledgers[lcode];
           ftype = r.fundType;
+          ftype = ftype.replace(/^lane/i, 'LANE');
           ftypeId = refData.fundTypes[ftype];
           obj.code = r.Code;
           obj.id = uuid(r.Code, ns);
@@ -101,6 +103,8 @@ let refFiles = {
           let groupId = uuid(r.groupCode + 'groups', ns);
           groups[r.groupCode] = groupId;
           fundMap[obj.code] = { id: obj.id, name: obj.name, groupId: groupId };
+          let compFund = { fund: obj };
+          writeObj(files.compFunds, compFund);
         }
         if (f === 'budgets') {
           let fcode = r['Fund Code'];
@@ -135,6 +139,7 @@ let refFiles = {
         }
         ttl[f]++;
         writeObj(outFile, obj);
+        
       });
     }
     for (code in groups) {
