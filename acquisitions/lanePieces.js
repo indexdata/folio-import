@@ -44,6 +44,7 @@ const titlesFile = process.argv[2];
       let key = Object.keys(rec)[0];
       lineMap[key] = rec[key];
     }
+    // console.log(lineMap); return;
 
     fileStream = fs.createReadStream(titlesFile);
     rl = readline.createInterface({
@@ -66,39 +67,44 @@ const titlesFile = process.argv[2];
     let csv = fs.readFileSync(inFile, 'utf8');
     let inRecs = parse(csv, {
       columns: true,
-      skip_empty_lines: true
+      skip_empty_lines: true,
+      bom: true
     });
     inRecs.forEach(p => {
       let link = p.LINE_ITEM_ID;
-      let poLineId = lineMap[link].poLineId;
-      let format = lineMap[link].format;
-      let rdate = p.RECEIPT_DATE;
-      let edate = p.EXPECTED_DATE;
-      let cap = p.ENUMCHRON;
-      let titleId = titleMap[poLineId];
-      if (!poLineId) console.log(`WARN No title found for (${link})`);
-      if (!titleId) console.log(`WARN No title found for ${poLineId} (${link})`);
-      if (poLineId && titleId) {
-        let piece = {
-          id: uuid(poLineId + cap + rdate + edate + format, ns),
-          poLineId: poLineId,
-          format: format,
-          titleId: titleId
-        }
-        if (rdate.match(/\d/)) {
-          piece.receivingStatus = 'Received';
-          piece.receivedDate = rdate;
+      if (lineMap[link]) {
+        let poLineId = lineMap[link].poLineId
+        let format = lineMap[link].format
+        let rdate = p.RECEIPT_DATE;
+        let edate = p.EXPECTED_DATE;
+        let cap = p.ENUMCHRON;
+        let titleId = titleMap[poLineId];
+        if (!poLineId) console.log(`WARN No title found for (${link})`);
+        if (!titleId) console.log(`WARN No title found for ${poLineId} (${link})`);
+        if (poLineId && titleId) {
+          let piece = {
+            id: uuid(poLineId + cap + rdate + edate + format, ns),
+            poLineId: poLineId,
+            format: format,
+            titleId: titleId
+          }
+          if (rdate.match(/\d/)) {
+            piece.receivingStatus = 'Received';
+            piece.receivedDate = rdate;
+          } else {
+            piece.receivingStatus = 'Expected';
+            piece.receiptDate = edate;
+          }
+          if (cap) {
+            piece.caption = cap;
+          }
+          fs.writeFileSync(outFile, JSON.stringify(piece) + '\n', { flag: 'a' });
+          c++;
         } else {
-          piece.receivingStatus = 'Expected';
-          piece.receiptDate = edate;
+          fail++;
         }
-        if (cap) {
-          piece.caption = cap;
-        }
-        fs.writeFileSync(outFile, JSON.stringify(piece) + '\n', { flag: 'a' });
-        c++;
       } else {
-        fail++;
+        console.log(`WARN ${link} not found in lineMap!`);
       }
     });
     
