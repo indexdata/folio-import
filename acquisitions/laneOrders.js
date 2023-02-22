@@ -133,13 +133,13 @@ const addMap = {
     let lnum = 0;
     let unit = refData.acquisitionsUnits.Lane;
     if (!unit) throw new Error(`Can't find acquisitions unit for Lane`);
-
+    let polSeen = {};
     inRecs.forEach(v => {
       lnum++;
       try {
         let co = {};
 
-        let poNumber = v.PO_NUMBER;
+        let poNumber = v.PO_NUMBER.trim();
         let id = uuid(poNumber, ns);
         let approved = (v.PO_STATUS_DESC.match(/Complete|Approved|Received/)) ? true : false;
         let appDate = v.PO_APPROVE_DATE;
@@ -203,125 +203,130 @@ const addMap = {
           poLines[poNumber].forEach(l => {
             let pol = {};
             let pmap = {};
-            let inst = insts[l.BIB_ID];
-            let liid = l.LINE_ITEM_ID;
-            pol.id = uuid(liid + 'poline', ns);
-            pmap[liid] = { poLineId: pol.id };
-            pol.purchaseOrderId = co.id;
             pol.poLineNumber = co.poNumber + '-' + l.LINE_ITEM_NUMBER;
-            pol.source = 'User';
-            if (l.REQUESTOR) {
-              pol.requester = l.REQUESTOR;
-            }
-            let am = 'Purchase';
-            let polType = l.LINE_ITEM_TYPE_DESC;
-            if (poType === 'Approval' && polType === 'Single-part') {
-              am = 'Demand Driven Acquisitions (DDA)';
-            } else if (poType === 'Gift' && polType === 'Single-part') {
-              am = 'Gift';
-            } else if (poType === 'Continuation' && polType === 'Membership') {
-              am = 'Membership';
-            }
-            pol.acquisitionMethod = refData.acquisitionMethods[am];
-            if (l.NOTE) {
-              let note = l.NOTE.replace(/\n\s*/g, ' -- ');
-              pol.description = note;
-            }
-            pol.details = {};
-            let rnote = l.RECEIVING_NOTE || '';
-            if (rnote) pol.details.receivingNote = rnote;
-            if (inst) {
-              pol.instanceId = inst.id;
-              pol.titleOrPackage = inst.title;
-              if (inst.editions && inst.editions[0]) pol.edition = inst.editions[0];
-              if (inst.contributors && inst.contributors[0]) {
-                pol.contributors = [];
-                inst.contributors.forEach(c => {
-                  pol.contributors.push({ contributor: c.name, contributorNameTypeId: c.contributorNameTypeId });
-                })
+            let liid = pol.poLineNumber;
+            if (!polSeen[liid]) { 
+              let inst = insts[l.BIB_ID];
+              pol.id = uuid(liid + 'poline', ns);
+              pmap[liid] = { poLineId: pol.id };
+              pol.purchaseOrderId = co.id;
+              pol.source = 'User';
+              if (l.REQUESTOR) {
+                pol.requester = l.REQUESTOR;
               }
-              if (inst.publication && inst.publication[0]) {
-                pol.publisher = inst.publication[0].publisher;
-                pol.publicationDate = inst.publication[0].dateOfPublication;
+              let am = 'Purchase';
+              let polType = l.LINE_ITEM_TYPE_DESC;
+              if (poType === 'Approval' && polType === 'Single-part') {
+                am = 'Demand Driven Acquisitions (DDA)';
+              } else if (poType === 'Gift' && polType === 'Single-part') {
+                am = 'Gift';
+              } else if (poType === 'Continuation' && polType === 'Membership') {
+                am = 'Membership';
               }
-              if (inst.identifiers && inst.identifiers[0]) {
-                pol.details.productIds = [];
-                inst.identifiers.forEach(i => {
-                  if (i.identifierTypeId === '8261054f-be78-422d-bd51-4ed9f33c3422') {
-                    i.value = i.value.replace(/^([0-9X]{10,13}).*/, '$1');
-                  }
-                  let pid = {
-                    productIdType: i.identifierTypeId,
-                    productId: i.value
-                  }
-                  pol.details.productIds.push(pid);
-                });
+              pol.acquisitionMethod = refData.acquisitionMethods[am];
+              if (l.NOTE) {
+                let note = l.NOTE.replace(/\n\s*/g, ' -- ');
+                pol.description = note;
               }
-            }
-            if (!pol.titleOrPackage) pol.titleOrPackage = 'Unknown'
-            let price = parseInt(l.LINE_PRICE, 10);
-            if (price > 0) price = price/100;
-            let quant = parseInt(l.QUANTITY, 10);
-            let oform = (pol.titleOrPackage.match(/\[digital\]/)) ? 'Electronic Resource' : 'Physical Resource'
-            pol.orderFormat = oform;
-            pol.cost = {
-              currency: 'USD',
-            };
-            if (oform === 'Physical Resource') {
-              pol.cost.listUnitPrice = price;
-              pol.cost.quantityPhysical = quant;
-              pol.physical = {
-                createInventory: 'None',
-                materialType: refData.mtypes['unspecified'],
-                volumes: []
+              pol.details = {};
+              let rnote = l.RECEIVING_NOTE || '';
+              if (rnote) pol.details.receivingNote = rnote;
+              if (inst) {
+                pol.instanceId = inst.id;
+                pol.titleOrPackage = inst.title;
+                if (inst.editions && inst.editions[0]) pol.edition = inst.editions[0];
+                if (inst.contributors && inst.contributors[0]) {
+                  pol.contributors = [];
+                  inst.contributors.forEach(c => {
+                    pol.contributors.push({ contributor: c.name, contributorNameTypeId: c.contributorNameTypeId });
+                  })
+                }
+                if (inst.publication && inst.publication[0]) {
+                  pol.publisher = inst.publication[0].publisher;
+                  pol.publicationDate = inst.publication[0].dateOfPublication;
+                }
+                if (inst.identifiers && inst.identifiers[0]) {
+                  pol.details.productIds = [];
+                  inst.identifiers.forEach(i => {
+                    if (i.identifierTypeId === '8261054f-be78-422d-bd51-4ed9f33c3422') {
+                      i.value = i.value.replace(/^([0-9X]{10,13}).*/, '$1');
+                    }
+                    let pid = {
+                      productIdType: i.identifierTypeId,
+                      productId: i.value
+                    }
+                    pol.details.productIds.push(pid);
+                  });
+                }
+              }
+              if (!pol.titleOrPackage) pol.titleOrPackage = 'Unknown'
+              let price = parseInt(l.LINE_PRICE, 10);
+              if (price > 0) price = price/100;
+              let quant = parseInt(l.QUANTITY, 10);
+              let oform = (pol.titleOrPackage.match(/\[digital\]/)) ? 'Electronic Resource' : 'Physical Resource'
+              pol.orderFormat = oform;
+              pol.cost = {
+                currency: 'USD',
               };
-              pmap[liid].format = 'Physical';
-            } else if (oform === 'Electronic Resource') {
-              pol.cost.listUnitPriceElectronic = price;
-              pol.cost.quantityElectronic = quant;
-              pol.eresource = {
-                createInventory: 'None',
-              };
-              pmap[liid].format = 'Electronic';
-            }
-            let fundCode = l.USE_FUND || '';
-            let exClassCode = fundCode.replace(/^.+-/, '');
-            let exClassId = refData.expenseClasses[exClassCode];
-            fundCode = fundCode.replace(/-.+/, '');
-            fundCode += '-Lane';
-            let fundId = refData.funds[fundCode] || '';
-            pol.fundDistribution = [];
-            if (fundId) {
-              fdist = {};
-              fdist.fundId = fundId;
-              fdist.distributionType = 'percentage';
-              fdist.value = 100;
-              fdist.expenseClassId = exClassId;
-              pol.fundDistribution.push(fdist);
-            }
-            let loc = l.LOCATION_ID;
-            let locId = refData.locations[loc] || '';
-            if (locId) {
-              let lobj = {
-                locationId: locId,
-                quantity: quant
+              if (oform === 'Physical Resource') {
+                pol.cost.listUnitPrice = price;
+                pol.cost.quantityPhysical = quant;
+                pol.physical = {
+                  createInventory: 'None',
+                  materialType: refData.mtypes['unspecified'],
+                  volumes: []
+                };
+                pmap[liid].format = 'Physical';
+              } else if (oform === 'Electronic Resource') {
+                pol.cost.listUnitPriceElectronic = price;
+                pol.cost.quantityElectronic = quant;
+                pol.eresource = {
+                  createInventory: 'None',
+                };
+                pmap[liid].format = 'Electronic';
               }
-              /*
-              if (l.MFHD_ID) {
-                let hid = uuid('LH' + l.MFHD_ID + isil + version, nons);
-                lobj.holdingId = hid;
+              let fundCode = l.USE_FUND || '';
+              let exClassCode = fundCode.replace(/^.+-/, '');
+              let exClassId = refData.expenseClasses[exClassCode];
+              fundCode = fundCode.replace(/-.+/, '');
+              fundCode += '-Lane';
+              let fundId = refData.funds[fundCode] || '';
+              pol.fundDistribution = [];
+              if (fundId) {
+                fdist = {};
+                fdist.fundId = fundId;
+                fdist.distributionType = 'percentage';
+                fdist.value = 100;
+                fdist.expenseClassId = exClassId;
+                pol.fundDistribution.push(fdist);
               }
-              */
-              if (oform === 'Electronic Resource') {
-                lobj.quantityElectronic = quant;
-              } else {
-                lobj.quantityPhysical = quant;
+              let loc = l.LOCATION_ID;
+              let locId = refData.locations[loc] || '';
+              if (locId) {
+                let lobj = {
+                  locationId: locId,
+                  quantity: quant
+                }
+                /*
+                if (l.MFHD_ID) {
+                  let hid = uuid('LH' + l.MFHD_ID + isil + version, nons);
+                  lobj.holdingId = hid;
+                }
+                */
+                if (oform === 'Electronic Resource') {
+                  lobj.quantityElectronic = quant;
+                } else {
+                  lobj.quantityPhysical = quant;
+                }
+                pol.locations = [ lobj ];
+                pol.receiptStatus = rstatusMap[l.LINE_ITEM_STATUS] || 'Awaiting Receipt';
               }
-              pol.locations = [ lobj ];
-              pol.receiptStatus = rstatusMap[l.LINE_ITEM_STATUS] || 'Awaiting Receipt';
+              fs.writeFileSync(pieceMapFile, JSON.stringify(pmap) + '\n', { flag: 'a' });
+              co.compositePoLines.push(pol);
+              polSeen[liid] = 1;
+            } else {
+              console.log(`WARN poLine number ${liid} already used!`);
             }
-            fs.writeFileSync(pieceMapFile, JSON.stringify(pmap) + '\n', { flag: 'a' });
-            co.compositePoLines.push(pol);
           });
           
         }
