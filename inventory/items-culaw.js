@@ -11,8 +11,7 @@ const uuid = require('uuid/v5');
 const ns = '00000000-0000-0000-0000-000000000000';
 const ver = '1';
 
-const itemFile = process.argv[5];
-const bnoFile = process.argv[4];
+const itemFile = process.argv[4];
 const instMapFile = process.argv[3];
 const refDir = process.argv[2];
 
@@ -49,7 +48,7 @@ const opacmsgs = {
 
 (async () => {
   try {
-    if (!itemFile) throw(`Usage: node items-culaw.js <ref-dir> <inst-map-file> <bno-file.csv> <item-file.csv>`);
+    if (!itemFile) throw(`Usage: node items-culaw.js <ref-dir> <inst-map-file> <item-file.csv>`);
 
     const writeJSON = (fn, data) => {
       const out = JSON.stringify(data) + "\n";
@@ -65,7 +64,7 @@ const opacmsgs = {
       return out;
     }
 
-    let dir = path.dirname(bnoFile);
+    let dir = path.dirname(itemFile);
     let base = path.basename(instMapFile, '.map');
 
     for (let f in files) {
@@ -135,12 +134,14 @@ const opacmsgs = {
 
     let itemCsv = fs.readFileSync(itemFile, 'utf8');
     itemCsv = itemCsv.replace(/";"/g, '%%');
+    itemCsv = itemCsv.replace(/","(b\d{6})/g, '~$1');
 
     const itemRecs = parse(itemCsv, {
       columns: true,
       skip_empty_lines: true
     });
 
+    /*
     fileStream = fs.createReadStream(bnoFile);
 
     rl = readline.createInterface({
@@ -161,6 +162,7 @@ const opacmsgs = {
         }
       });
     }
+    */
 
     let hcount = 0;
     let icount = 0;
@@ -171,137 +173,142 @@ const opacmsgs = {
     let hid;
     itemRecs.forEach(i => {
       let iid = i['RECORD #(ITEM)'];
-      let bhrid = imap[iid];
-      let instData = instMap[bhrid];
+      // let bhrid = imap[iid];
+      let bn = i['RECORD #(BIBLIO)'];
+      let bnums = bn.split(/~/);
 
-      // start making holdings and items
-      if (bhrid && instData) {
-        let loc = (i.LOC) ? i.LOC.trim() : '';
-        let hrid = bhrid + '-' + loc;
-        let cn = '';
-        let cntype = '';
-        let icall = i['CALL #(ITEM)'];
-        if (icall) {
-          cn = icall;
-          cntype = refData.callNumberTypes['Other scheme'];
-        } else {
-          cn = instData.cn;
-          cntype = instData.cntype;
-        }
-        cn = cn.replace(/^(\w{1,3}) /, '$1');
-        let supp = (i.ICODE2 && i.ICODE2 === 's') ? true : false;
-        let blevel = instData.blevel;
-
-        // make holdings
-        if (!hseen[hrid]) {
-          let id = uuid(hrid, ns);
-          hseen[hrid] = id;
-          hid = id;
-          let instId = instData.id || '';
-          let locId = refData.locations[loc] || refData.locations.UNMAPPED;
-          let htype = htypes[blevel] || 'Monograph';
-          let hr = {
-            _version: ver,
-            id: id,
-            hrid: hrid,
-            sourceId: refData.holdingsRecordsSources.FOLIO,
-            holdingsTypeId: refData.holdingsTypes[htype],
-            instanceId: instId,
-            permanentLocationId: locId,
-            discoverySuppress: supp
-          };
-          if (cn) {
-            hr.callNumber = cn;
-            hr.callNumberTypeId = cntype;
-          }
-          if (instData.ea) {
-            hr.electronicAccess = JSON.parse(instData.ea);
-          }
-          // console.log(hr);
-          writeJSON(files.holdings, hr);
-          hcount++;
-        }
-        
-        let ihrid = i['RECORD #(ITEM)'];
-        if (!iseen[ihrid]) {
-          iseen[ihrid] = 1;
-          ihrid = 'l' + ihrid;
-          let iid = uuid(ihrid, ns);
-          let loantypeId = refData.loantypes['Can circulate'];
-          let mt = refData.mtypes.unspecified;
-          let ir = {
-            id: iid,
-            hrid: ihrid,
-            holdingsRecordId: hseen[hrid],
-            permanentLoanTypeId: loantypeId,
-            materialTypeId: mt,
-            status: {},
-            discoverySuppress: supp
-          };
-          let bc = i.BARCODE;
-          if (bc) {
-            let b = bc.split(/%%/);
-            ir.barcode = b.shift();
-            if (b[0]) {
-              if (!ir.notes) ir.notes = [];
-              let ntype = refData.itemNoteTypes['Provenance'];
-              ir.notes.push(noteGen('Other barcode: ' + b[0], ntype, 1));
-            }
-          }
+      bnums.forEach(bhrid => {
+        bhrid = bhrid.replace(/.$/, '');
+        bhrid = bhrid.replace(/^/, 'l');
+        let instData = instMap[bhrid];
+        if (bhrid && instData) {
+          let loc = (i.LOC) ? i.LOC.trim() : '';
+          let hrid = bhrid + '-' + loc;
+          let cn = '';
+          let cntype = '';
+          let icall = i['CALL #(ITEM)'];
           if (icall) {
-            ir.itemLevelCallNumber = cn;
-            ir.itemLevelCallNumberTypeId = cntype;
+            cn = icall;
+            cntype = refData.callNumberTypes['Other scheme'];
+          } else {
+            cn = instData.cn;
+            cntype = instData.cntype;
           }
-          let st = i.STATUS;
-          let stname = toFolio.statuses[st] || 'Unknown'
-          ir.status.name = stname;
-          if (i['COPY #']) {
-            ir.copyNumber = i['COPY #'];
-          }
-          let vol = i.VOL;
-          if (vol && blevel === 's') {
-            ir.enumeration = vol;
-          } else if (vol) {
-            ir.volume = vol;
-          }
-          let msg = i['MESSAGE(ITEM)'];
-          if (msg) { 
-            // ir.descriptionOfPieces = msg;
-            // ir.numberOfPieces = msg;
-            ir.circulationNotes = [];
-            ir.circulationNotes.push({ note: msg, noteType: 'Check in'});
-            ir.circulationNotes.push({ note: msg, noteType: 'Check out'});
-          }
-          ir.notes = [];
-          let inote = i['NOTE(ITEM)'];
-          if (inote) {
-            let ntype = refData.itemNoteTypes.Note
-            ir.notes.push(noteGen(inote, ntype, true))
-          }
-          let om = i.OPACMSG;
-          if (om && om.match(/[sln]/)) {
-            let ntype = refData.itemNoteTypes.Note
-            ir.notes.push(noteGen(opacmsgs[om], ntype, false))
-          }
-          let gn = i.ICODE1;
-          if (gn && gn === '1') {
-            let ntype = refData.itemNoteTypes.Note
-            ir.notes.push(noteGen('Gift copy', ntype, true)) 
-          }
+          cn = cn.replace(/^(\w{1,3}) /, '$1');
+          let supp = (i.ICODE2 && i.ICODE2 === 's') ? true : false;
+          let blevel = instData.blevel;
 
-          // console.log(ir);
-          writeJSON(files.items, ir);
-          icount++;
+          // make holdings
+          if (!hseen[hrid]) {
+            let id = uuid(hrid, ns);
+            hseen[hrid] = id;
+            hid = id;
+            let instId = instData.id || '';
+            let locId = refData.locations[loc] || refData.locations.UNMAPPED;
+            let htype = htypes[blevel] || 'Monograph';
+            let hr = {
+              _version: ver,
+              id: id,
+              hrid: hrid,
+              sourceId: refData.holdingsRecordsSources.FOLIO,
+              holdingsTypeId: refData.holdingsTypes[htype],
+              instanceId: instId,
+              permanentLocationId: locId,
+              discoverySuppress: supp
+            };
+            if (cn) {
+              hr.callNumber = cn;
+              hr.callNumberTypeId = cntype;
+            }
+            if (instData.ea) {
+              hr.electronicAccess = JSON.parse(instData.ea);
+            }
+            // console.log(hr);
+            writeJSON(files.holdings, hr);
+            hcount++;
+          }
+          
+          let ihrid = i['RECORD #(ITEM)'];
+          if (!iseen[ihrid]) {
+            iseen[ihrid] = 1;
+            ihrid = 'l' + ihrid;
+            let iid = uuid(ihrid, ns);
+            let loantypeId = refData.loantypes['Can circulate'];
+            let mt = refData.mtypes.unspecified;
+            let ir = {
+              id: iid,
+              hrid: ihrid,
+              holdingsRecordId: hseen[hrid],
+              permanentLoanTypeId: loantypeId,
+              materialTypeId: mt,
+              status: {},
+              discoverySuppress: supp
+            };
+            let bc = i.BARCODE;
+            if (bc) {
+              let b = bc.split(/%%/);
+              ir.barcode = b.shift();
+              if (b[0]) {
+                if (!ir.notes) ir.notes = [];
+                let ntype = refData.itemNoteTypes['Provenance'];
+                ir.notes.push(noteGen('Other barcode: ' + b[0], ntype, 1));
+              }
+            }
+            if (icall) {
+              ir.itemLevelCallNumber = cn;
+              ir.itemLevelCallNumberTypeId = cntype;
+            }
+            let st = i.STATUS;
+            let stname = toFolio.statuses[st] || 'Unknown'
+            ir.status.name = stname;
+            if (i['COPY #']) {
+              ir.copyNumber = i['COPY #'];
+            }
+            let vol = i.VOL;
+            if (vol && blevel === 's') {
+              ir.enumeration = vol;
+            } else if (vol) {
+              ir.volume = vol;
+            }
+            let msg = i['MESSAGE(ITEM)'];
+            if (msg) { 
+              // ir.descriptionOfPieces = msg;
+              // ir.numberOfPieces = msg;
+              ir.circulationNotes = [];
+              ir.circulationNotes.push({ note: msg, noteType: 'Check in'});
+              ir.circulationNotes.push({ note: msg, noteType: 'Check out'});
+            }
+            ir.notes = [];
+            let inote = i['NOTE(ITEM)'];
+            if (inote) {
+              let ntype = refData.itemNoteTypes.Note
+              ir.notes.push(noteGen(inote, ntype, true))
+            }
+            let om = i.OPACMSG;
+            if (om && om.match(/[sln]/)) {
+              let ntype = refData.itemNoteTypes.Note
+              ir.notes.push(noteGen(opacmsgs[om], ntype, false))
+            }
+            let gn = i.ICODE1;
+            if (gn && gn === '1') {
+              let ntype = refData.itemNoteTypes.Note
+              ir.notes.push(noteGen('Gift copy', ntype, true)) 
+            }
+
+            // console.log(ir);
+            writeJSON(files.items, ir);
+            icount++;
+
+          } else {
+            console.log('WARN Duplicate item number', ihrid);
+            ierr++;
+          }
 
         } else {
-          console.log('WARN Duplicate item number', ihrid);
-          ierr++;
+          console.log(`No bib number found for ${iid}`);
+          err++;
         }
-
-      } else {
-        console.log(`No bib number found for ${iid}`);
-        err++;
-      }
+      });
     });
     console.log('Holdings created:', hcount);
     console.log('Items created:', icount);
