@@ -85,6 +85,7 @@ let ep = process.argv[2];
       } catch (e) {
           let errMsg = (e.response && e.response.error) ? e.response.error : e;
           logger.error(errMsg);
+          fs.writeFile(errPath, line + '\n', { flag: 'a'});
           fail++;
       }
     }
