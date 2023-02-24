@@ -59,7 +59,6 @@ let polFile = process.argv[3];
       } else {
         rec.compositePoLines = [];
       }
-      console.log(rec);
       fs.writeFileSync(outPath, JSON.stringify(rec) + "\n", { flag: 'a'});
       pcount++
     }
