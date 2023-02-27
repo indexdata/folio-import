@@ -17,7 +17,8 @@ const refDir = process.argv[2];
 
 const files = {
   items: 'items.jsonl',
-  holdings: 'holdings.jsonl'
+  holdings: 'holdings.jsonl',
+  rel: 'relationships.jsonl'
 }
 
 const rfiles = {
@@ -130,7 +131,6 @@ const opacmsgs = {
         ea: c[5]
       }
     }
-    // console.log(instMap);
 
     let itemCsv = fs.readFileSync(itemFile, 'utf8');
     itemCsv = itemCsv.replace(/";"/g, '%%');
@@ -167,7 +167,7 @@ const opacmsgs = {
     let hcount = 0;
     let icount = 0;
     let err = 0;
-    let ierr = 0;
+    let bwc = 0;
     let hseen = {};
     let iseen = {};
     let hid;
@@ -300,8 +300,21 @@ const opacmsgs = {
             icount++;
 
           } else {
-            console.log('WARN Duplicate item number', ihrid);
-            ierr++;
+            // console.log('WARN Duplicate item number', ihrid);
+            let superh = bnums[0].replace(/.$/, '');
+            superh = 'l' + superh;
+            let superInst = instMap[superh];
+            let subInst = instMap[bhrid];
+            if (superInst && subInst) {
+              let robj = {
+                id: uuid(superInst.id + subInst.id, ns),
+                superInstanceId: superInst.id,
+                subInstanceId: subInst.id,
+                instanceRelationshipTypeId: '758f13db-ffb4-440e-bb10-8a364aa6cb4a'
+              }
+              writeJSON(files.rel, robj);
+              bwc++;
+            }
           }
 
         } else {
@@ -312,8 +325,8 @@ const opacmsgs = {
     });
     console.log('Holdings created:', hcount);
     console.log('Items created:', icount);
+    console.log('Bound withs:', bwc);
     console.log('Errors:', err);
-    console.log('Item errors:', ierr);
   } catch (e) {
     console.log(e);
   }
