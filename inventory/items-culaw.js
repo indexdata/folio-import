@@ -52,6 +52,8 @@ const opacmsgs = {
   try {
     if (!itemFile) throw(`Usage: node items-culaw.js <ref-dir> <inst-map-file> <item-file.csv>`);
 
+    const startTime = new Date().valueOf();
+
     const writeJSON = (fn, data) => {
       const out = JSON.stringify(data) + "\n";
       fs.writeFileSync(fn, out, { flag: 'a' });
@@ -115,6 +117,7 @@ const opacmsgs = {
     // console.log(toFolio); return;
 
     // get instance map
+    console.log('Making instance map...')
     let instMap = {}
     let fileStream = fs.createReadStream(instMapFile);
     let rl = readline.createInterface({
@@ -301,6 +304,7 @@ const opacmsgs = {
             // console.log(ir);
             writeJSON(files.items, ir);
             icount++;
+            if (icount % 10000 === 0) console.log(`${icount} items created...`);
 
           } else {
             let superh = bnums[0].replace(/.$/, '');
@@ -328,16 +332,24 @@ const opacmsgs = {
             }
           }
         } else {
-          console.log(`No bib number found for ${iid}}`);
-          err++;
+          if (iid.match(/^i\d/)) {
+            console.log(`No bib number found for ${iid}`);
+            err++;
+          }
         }
       });
     });
+
+    const endTime = new Date().valueOf();
+    const secs = (endTime - startTime)/1000;
+    console.log('---------------------------');
     console.log('Holdings created:', hcount);
     console.log('Items created:', icount);
     console.log('Relationships:', relc);
     console.log('Bound withs:', bwc);
     console.log('Errors:', err);
+    console.log('Timing (secs):', secs);
+    console.log('---------------------------');
   } catch (e) {
     console.log(e);
   }
