@@ -18,7 +18,8 @@ const refDir = process.argv[2];
 const files = {
   items: 'items.jsonl',
   holdings: 'holdings.jsonl',
-  rel: 'relationships.jsonl'
+  rel: 'relationships.jsonl',
+  bw: 'bound-with-parts.jsonl'
 }
 
 const rfiles = {
@@ -69,7 +70,7 @@ const opacmsgs = {
     let base = path.basename(instMapFile, '.map');
 
     for (let f in files) {
-      let fullPath = dir + '/' + base + '_' + files[f];
+      let fullPath = dir + '/' + base + '-' + files[f];
       if (fs.existsSync(fullPath)) fs.unlinkSync(fullPath);
       files[f] = fullPath;
     }
@@ -168,6 +169,7 @@ const opacmsgs = {
     let icount = 0;
     let err = 0;
     let bwc = 0;
+    let relc = 0;
     let hseen = {};
     let iseen = {};
     let hid;
@@ -176,6 +178,7 @@ const opacmsgs = {
       // let bhrid = imap[iid];
       let bn = i['RECORD #(BIBLIO)'];
       let bnums = bn.split(/~/);
+      let itemId;
 
       bnums.forEach(bhrid => {
         bhrid = bhrid.replace(/.$/, '');
@@ -232,11 +235,11 @@ const opacmsgs = {
           if (!iseen[ihrid]) {
             iseen[ihrid] = 1;
             ihrid = 'l' + ihrid;
-            let iid = uuid(ihrid, ns);
+            itemId = uuid(ihrid, ns);
             let loantypeId = refData.loantypes['Can circulate'];
             let mt = refData.mtypes.unspecified;
             let ir = {
-              id: iid,
+              id: itemId,
               hrid: ihrid,
               holdingsRecordId: hseen[hrid],
               permanentLoanTypeId: loantypeId,
@@ -300,7 +303,6 @@ const opacmsgs = {
             icount++;
 
           } else {
-            // console.log('WARN Duplicate item number', ihrid);
             let superh = bnums[0].replace(/.$/, '');
             superh = 'l' + superh;
             let superInst = instMap[superh];
@@ -313,18 +315,27 @@ const opacmsgs = {
                 instanceRelationshipTypeId: '758f13db-ffb4-440e-bb10-8a364aa6cb4a'
               }
               writeJSON(files.rel, robj);
+              relc++;
+            }
+            if (itemId && hid) {
+              let bwObj = {
+                id: uuid(itemId + hid, ns),
+                itemId: itemId,
+                holdingsRecordId: hid,
+              }
+              writeJSON(files.bw, bwObj);
               bwc++;
             }
           }
-
         } else {
-          console.log(`No bib number found for ${iid}`);
+          console.log(`No bib number found for ${iid}}`);
           err++;
         }
       });
     });
     console.log('Holdings created:', hcount);
     console.log('Items created:', icount);
+    console.log('Relationships:', relc);
     console.log('Bound withs:', bwc);
     console.log('Errors:', err);
   } catch (e) {

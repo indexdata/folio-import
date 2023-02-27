@@ -83,9 +83,9 @@ let ep = process.argv[2];
         logger.info(`  Successfully added record id ${rec.id}`);
         success++;
       } catch (e) {
-          let errMsg = (e.response && e.response.error) ? e.response.error : e;
+          let errMsg = (e.response && e.response.text) ? e.response.text : e;
           logger.error(errMsg);
-          fs.writeFile(errPath, line + '\n', { flag: 'a'});
+          fs.writeFileSync(errPath, line + '\n', { flag: 'a'});
           fail++;
       }
     }
