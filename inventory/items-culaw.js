@@ -110,6 +110,7 @@ const opacmsgs = {
         let key = c[0];
         let val = c[2];
         if (key) {
+          if (f === 'statuses' && val === 'Checked Out') val = 'Available';
           toFolio[f][key] = val;
         }
       }
