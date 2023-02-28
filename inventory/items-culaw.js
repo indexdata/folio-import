@@ -33,7 +33,7 @@ const rfiles = {
 };
 
 const mfiles = {
-  statuses: 'law-statuses.tsv'
+  // statuses: 'law-statuses.tsv'
 }
 
 const htypes = {
@@ -46,6 +46,21 @@ const opacmsgs = {
   s: 'Superseded',
   l: 'Later edition available',
   n: 'Not updated'
+};
+
+const statuses = {
+  '!': 'Awaiting pickup',
+  z: 'Claimed returned',
+  n: 'Declared lost',
+  l: 'Declared lost',
+  r: 'In process (non-requestable)',
+  q: 'In process (non-requestable)',
+  t: 'In transit',
+  '$': 'Lost and paid',
+  m: 'Missing',
+  s: 'Missing',
+  o: 'Restricted',
+  w: 'Withdrawn'
 };
 
 (async () => {
@@ -266,7 +281,7 @@ const opacmsgs = {
               ir.itemLevelCallNumberTypeId = cntype;
             }
             let st = i.STATUS;
-            let stname = toFolio.statuses[st] || 'Unknown'
+            let stname = statuses[st] || 'Available';
             ir.status.name = stname;
             if (i['COPY #']) {
               ir.copyNumber = i['COPY #'];
