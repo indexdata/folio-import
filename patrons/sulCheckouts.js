@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const parse = require('csv-parse/lib/sync');
+const readline = require('readline');
 
 const spFile = process.argv[2];
 const usersFile = process.argv[3];
@@ -27,21 +28,48 @@ const csvFile = process.argv[4];
       spMap[s.code] = s.id;
     });
 
-    let csv = fs.readFileSync(csvFile, { encoding: 'utf8'});
+    /* let csv = fs.readFileSync(csvFile, { encoding: 'utf8'});
     csv = csv.replace(/^\uFEFF/, ''); // remove BOM
+    csv.split(/\n/).forEach(line => {
+      console.log(line);
+    }); */
+
+    const fileStream = fs.createReadStream(csvFile);
+    const rl = readline.createInterface({
+      input: fileStream,
+      crlfDelay: Infinity
+    });
+
+    let csv = '';
+    let lcount = 0;
+    let ccount = 0;
+    for await (let line of rl) {
+      lcount++;
+      if (lcount === 1) {
+        line = line.replace(/^\uFEFF/, ''); // remove BOM
+        ccount = line.split(/,/).length;
+      }
+      let cols = line.split(/,/);
+      if (cols.length < ccount) line += ','; 
+      csv += line + '\n';
+    }
 
     const inRecs = parse(csv, {
       columns: true,
       skip_empty_lines: true
     });
-
+    
+    console.log('Loading users into memory...')
     const users = require(usersFile);
     delete require.cache[require.resolve(usersFile)];
 
     let active = {};
+    let ucount = 0;
     users.users.forEach(u => {
       active[u.barcode] = { active: u.active, expirationDate: u.expirationDate };
+      ucount++;
     });
+    console.log(`(${ucount} users loaded...)`);
 
     let dateOffset = (dt) => {
       let dzo = new Date(dt).getTimezoneOffset();
@@ -71,6 +99,7 @@ const csvFile = process.argv[4];
     const inactive = { checkouts: [] };
     const notFound = { checkouts: [] };
     let total = 0;
+    let pcount = 0;
 
     inRecs.forEach(r => {
       total++;
@@ -88,6 +117,9 @@ const csvFile = process.argv[4];
       let rc = r['Num renewals'] || '';
       loan.renewalCount = (rc) ? parseInt(rc, 10) : 0;
       let cr = r['Claims returned date'];
+      if (r['Proxy barcode']) {
+        pcount++;
+      }
       if (cr.match(/\d{8}/)) {
         let crdate = cr.replace(/(\d{4})(\d\d)(\d\d)/, '$1-$2-$3T12:00:00');
         let crd = crdate + dateOffset(crdate);
@@ -110,7 +142,7 @@ const csvFile = process.argv[4];
     write(inactive, files.ia);
     notFound.totalRecords = notFound.checkouts.length;
     write(notFound, files.nf);
-
+    console.log('Proxy user loans:', pcount);
   } catch (e) {
     console.error(e);
   }
