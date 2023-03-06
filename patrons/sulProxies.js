@@ -45,6 +45,7 @@ const ns = 'e1e79732-379c-496d-992f-44ec7e28ef90';
 
     const files = {
       pf: 'proxiesfor.jsonl',
+      inAct: 'inactive-proxiesfor.jsonl',
       nfp: 'notfound_proxy.jsonl',
       nfu: 'notfound_sponser.jsonl'
     };
@@ -62,6 +63,7 @@ const ns = 'e1e79732-379c-496d-992f-44ec7e28ef90';
 
     let total = 0;
     let succ = 0;
+    let inActc = 0;
     let err = 0;
     const nowVal = new Date().valueOf();
     rl.on('line', l => {
@@ -74,7 +76,6 @@ const ns = 'e1e79732-379c-496d-992f-44ec7e28ef90';
         let expVal = ed.valueOf();
         let expStr = ed.toISOString();
         expStr = expStr.replace(/Z$/, '-08:00');
-        console.log(expStr);
         if (pid && sid) {
           let id = uuid(pid + sid, ns);
           let pf = {
@@ -87,6 +88,12 @@ const ns = 'e1e79732-379c-496d-992f-44ec7e28ef90';
             status: (expVal < nowVal) ? 'Inactive' : 'Active'
           };
           if (exp) pf.expirationDate = expStr;
+          if (pf.status === 'Inactive') {
+            let iout = JSON.stringify(pf) + "\n";
+            fs.writeFileSync(files.inAct, iout, { flag: 'a'});
+            pf.status = 'Active';
+            pf.expirationDate = '2023-12-31T00:00:00.000-08:00'; 
+          }
           let out = JSON.stringify(pf) + "\n";
           fs.writeFileSync(files.pf, out, { flag: 'a' });
           succ++;
