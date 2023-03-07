@@ -67,7 +67,7 @@ const csvFile = process.argv[4];
     let active = {};
     let ucount = 0;
     users.users.forEach(u => {
-      active[u.barcode] = { id: u.id, active: u.active, expirationDate: u.expirationDate };
+      active[u.barcode] = { active: u.active, expirationDate: u.expirationDate };
       ucount++;
     });
     console.log(`(${ucount} users loaded...)`);
@@ -135,6 +135,7 @@ const csvFile = process.argv[4];
         write(files.co, loan);
         ttl.co++;
         if (!user.active) {
+          user.barcode = loan.userBarcode;
           write(files.ia, user);
           ttl.ia++;
         }

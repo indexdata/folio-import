@@ -5,24 +5,33 @@
 const fs = require('fs');
 const superagent = require('superagent');
 const { getAuthToken } = require('./lib/login');
+const readline = require('readline');
+
 const fn = process.argv[2];
 const tf = process.argv[3];
 
 (async () => {
   try {
     if (!fn) {
-      throw new Error(`Usage: node usersActiveToggle.js <checkout_file> [true|false]`);
+      throw new Error(`Usage: node usersActiveToggle.js <inactive_users_jsonl> [true|false]`);
     }
     const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
 
     const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
 
-    let coll = require(fn);
-    let data = coll.checkouts;
     let seen = {};
 
-    for (d = 0; d < data.length; d++) {
-      let bc = data[d].userBarcode;
+    const fileStream = fs.createReadStream(fn);
+    const rl = readline.createInterface({
+      input: fileStream,
+      crlfDelay: Infinity
+    });
+
+    let d = 0;
+    for await (const line of rl) {
+      d++;
+      let data = JSON.parse(line);
+      let bc = data.barcode;
       if (!seen[bc]) {
         seen[bc] = 1;
         let url = `${config.okapi}/users?query=%28barcode%3D%3D%22${bc}%22%29`;
@@ -43,7 +52,7 @@ const tf = process.argv[3];
               user.expirationDate = '2025-12-31T00:00:00.000+0000'
             } else {
               user.active = false;
-              user.expirationDate = data[d].expirationDate;
+              user.expirationDate = (data.experationDate) ? data.expirationDate : null;
             }
             console.log(`     POST ${purl}...`);
             console.log(`     Changing user.active to "${user.active}"...`);
@@ -65,6 +74,6 @@ const tf = process.argv[3];
       }
     } 
   } catch (e) {
-    console.error(e.message);
+    console.error(e);
   }
 })();
