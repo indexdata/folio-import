@@ -22,6 +22,7 @@ const csvFile = process.argv[4];
       throw new Error('Can\'t find users file');
     }
 
+    const start = new Date().valueOf();
     const sp = require(spFile);
     spMap = {};
     sp.servicepoints.forEach(s => {
@@ -66,7 +67,7 @@ const csvFile = process.argv[4];
     let active = {};
     let ucount = 0;
     users.users.forEach(u => {
-      active[u.barcode] = { active: u.active, expirationDate: u.expirationDate };
+      active[u.barcode] = { id: u.id, active: u.active, expirationDate: u.expirationDate };
       ucount++;
     });
     console.log(`(${ucount} users loaded...)`);
@@ -129,12 +130,12 @@ const csvFile = process.argv[4];
         let crd = crdate + dateOffset(crdate);
         loan.claimedReturnedDate = crd;
       }
-      if (active[loan.userBarcode]) {
+      let user = active[loan.userBarcode];
+      if (user) {
         write(files.co, loan);
         ttl.co++;
-        if (!active[loan.userBarcode].active) {
-          loan.expirationDate = active[loan.userBarcode].expirationDate;
-          write(files.ia, loan);
+        if (!user.active) {
+          write(files.ia, user);
           ttl.ia++;
         }
       } else {
@@ -143,10 +144,13 @@ const csvFile = process.argv[4];
       } 
     });
 
+    const end = new Date().valueOf();
+    const time = (end - start)/1000;
     console.log('Checkouts:', ttl.co);
     console.log('Inactives:', ttl.ia);
     console.log('Proxy COs:', ttl.pr);
     console.log('Not found:', ttl.nf);
+    console.log('Time (sec):', time);
   } catch (e) {
     console.error(e);
   }
