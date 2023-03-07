@@ -74,6 +74,6 @@ const tf = process.argv[3];
       }
     } 
   } catch (e) {
-    console.error(e);
+    console.error(e.message);
   }
 })();

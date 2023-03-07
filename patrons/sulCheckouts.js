@@ -81,8 +81,8 @@ const csvFile = process.argv[4];
 
     const files = {
       co: 'checkouts.jsonl',
-      ia: 'inactive_checkouts.jsonl',
-      nf: 'notfound_checkouts.jsonl'
+      ia: 'inactive_users.jsonl',
+      nf: 'users_notfound_checkouts.jsonl'
     };
 
     let workDir = path.dirname(csvFile);
