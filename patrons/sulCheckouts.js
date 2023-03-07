@@ -117,7 +117,9 @@ const csvFile = process.argv[4];
       let rc = r['Num renewals'] || '';
       loan.renewalCount = (rc) ? parseInt(rc, 10) : 0;
       let cr = r['Claims returned date'];
-      if (r['Proxy barcode']) {
+      let proxyBarcode = r['Proxy barcode'];
+      if (proxyBarcode) {
+        loan.proxyUserBarcode = proxyBarcode;
         pcount++;
       }
       if (cr.match(/\d{8}/)) {
