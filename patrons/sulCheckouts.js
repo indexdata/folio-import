@@ -79,30 +79,32 @@ const csvFile = process.argv[4];
     }
 
     const files = {
-      co: 'checkouts.json',
-      ia: 'inactive_checkouts.json',
-      nf: 'notfound_checkouts.json'
+      co: 'checkouts.jsonl',
+      ia: 'inactive_checkouts.jsonl',
+      nf: 'notfound_checkouts.jsonl'
     };
 
     let workDir = path.dirname(csvFile);
     for (let f in files) {
       files[f] = workDir + '/' + files[f];
+      if (fs.existsSync(files[f])) {
+        fs.unlinkSync(files[f]);
+      }
     }
 
-    const write = (obj, file) => {
-      console.log(`Writing ${obj.checkouts.length} to ${file}`);
-      fs.writeFileSync(file, JSON.stringify(obj, null, 2));
+    const write = (file, obj) => {
+      fs.writeFileSync(file, JSON.stringify(obj) + '\n', { flag: 'a'});
     };
 
     const records = {};
-    records.checkouts = [];
-    const inactive = { checkouts: [] };
-    const notFound = { checkouts: [] };
-    let total = 0;
-    let pcount = 0;
+    const ttl = {
+      co: 0,
+      ia: 0,
+      nf: 0,
+      pr: 0
+    }
 
     inRecs.forEach(r => {
-      total++;
       let loan = {};
       loan.itemBarcode = r['Item barcode'].trim();
       loan.userBarcode = r['User barcode'].trim();
@@ -120,7 +122,7 @@ const csvFile = process.argv[4];
       let proxyBarcode = r['Proxy barcode'];
       if (proxyBarcode) {
         loan.proxyUserBarcode = proxyBarcode;
-        pcount++;
+        ttl.pr++;
       }
       if (cr.match(/\d{8}/)) {
         let crdate = cr.replace(/(\d{4})(\d\d)(\d\d)/, '$1-$2-$3T12:00:00');
@@ -128,23 +130,23 @@ const csvFile = process.argv[4];
         loan.claimedReturnedDate = crd;
       }
       if (active[loan.userBarcode]) {
-        records.checkouts.push(loan);
+        write(files.co, loan);
+        ttl.co++;
         if (!active[loan.userBarcode].active) {
           loan.expirationDate = active[loan.userBarcode].expirationDate;
-          inactive.checkouts.push(loan);
+          write(files.ia, loan);
+          ttl.ia++;
         }
       } else {
-        notFound.checkouts.push(loan);
+        write(files.nf, loan);
+        ttl.nf++;
       } 
     });
 
-    records.totalRecords = records.checkouts.length;
-    write(records, files.co);
-    inactive.totalRecords = inactive.checkouts.length;
-    write(inactive, files.ia);
-    notFound.totalRecords = notFound.checkouts.length;
-    write(notFound, files.nf);
-    console.log('Proxy user loans:', pcount);
+    console.log('Checkouts:', ttl.co);
+    console.log('Inactives:', ttl.ia);
+    console.log('Proxy COs:', ttl.pr);
+    console.log('Not found:', ttl.nf);
   } catch (e) {
     console.error(e);
   }
