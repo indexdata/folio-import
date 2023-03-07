@@ -85,11 +85,16 @@ const post_put = async (authToken, url, checkout, r) => {
 
     const dir = path.dirname(fn);
     const fname = path.basename(fn, '.jsonl');
+
     const saveFile = `${dir}/${fname}_done.jsonl`;
     if (fs.existsSync(saveFile)) {
       fs.unlinkSync(saveFile);
     }
-
+    
+    const errPath = `${dir}/${fname}_errors.jsonl`;
+    if (fs.existsSync(errPath)) {
+      fs.unlinkSync(errPath);
+    }
 
     const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
 
@@ -191,11 +196,9 @@ const post_put = async (authToken, url, checkout, r) => {
         }
         console.log(m);
         errors++;
-        errs.checkouts.push(data);
+        if (!checkIn) fs.writeFileSync(errPath, JSON.stringify(data), { flag: 'a' });
       }
     } 
-    const errPath = `${dir}/${fname}_errors.json`;
-    if (!checkIn) fs.writeFileSync(errPath, JSON.stringify(errs, null, 2));
     console.log('Added:', added);
     console.log('Claimed:', claimed);
     console.log('Errors:', errors);
