@@ -124,6 +124,13 @@ const csvFile = process.argv[4];
       if (proxyBarcode) {
         loan.proxyUserBarcode = proxyBarcode;
         ttl.pr++;
+        let puser = active[proxyBarcode];
+        if (!puser.active) {
+          puser.barcode = proxyBarcode;
+          puser.isProxy = true;
+          write(files.ia, puser);
+          ttl.ia++; 
+        }
       }
       if (cr.match(/\d{8}/)) {
         let crdate = cr.replace(/(\d{4})(\d\d)(\d\d)/, '$1-$2-$3T12:00:00');
