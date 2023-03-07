@@ -2,6 +2,8 @@ const fs = require('fs');
 const superagent = require('superagent');
 const path = require('path');
 const { getAuthToken } = require('./lib/login');
+const readline = require('readline');
+
 const fn = process.argv[2];
 const checkIn = process.argv[4];
 const offset = (process.argv[3]) ? parseInt(process.argv[3], 10) : 0;
@@ -78,11 +80,11 @@ const post_put = async (authToken, url, checkout, r) => {
   let claimedErrs = 0;
   try {
     if (!fn) {
-      throw new Error('Usage: node checkoutByBarcode.js <checkouts_file> [offset] [checkin]');
+      throw new Error('Usage: node checkoutByBarcode.js <checkouts_jsonl> [offset] [checkin]');
     }
 
     const dir = path.dirname(fn);
-    const fname = path.basename(fn, '.json');
+    const fname = path.basename(fn, '.jsonl');
     const saveFile = `${dir}/${fname}_done.jsonl`;
     if (fs.existsSync(saveFile)) {
       fs.unlinkSync(saveFile);
@@ -93,12 +95,7 @@ const post_put = async (authToken, url, checkout, r) => {
 
     const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
 
-    let collStr = fs.readFileSync(fn, 'utf8');
-    let coll = JSON.parse(collStr);
-
     let url = `${config.okapi}/circulation/check-out-by-barcode`;
-    let collRoot = 'checkouts';
-    let data = coll[collRoot];
     let today;
 
     if (checkIn === 'checkin') {
@@ -106,36 +103,44 @@ const post_put = async (authToken, url, checkout, r) => {
       today = new Date().toISOString();
     }
 
+    const fileStream = fs.createReadStream(fn);
+    const rl = readline.createInterface({
+      input: fileStream,
+      crlfDelay: Infinity
+    });
 
-    for (d = offset; d < data.length; d++) {
+    let d = 0;
+    for await (let line of rl) {
+      d++;
+      let data = JSON.parse(line);
       let dueDate;
       let claimedReturnedDate = '';
       let renewalCount = 0;
       if (checkIn === 'checkin') {
-        delete data[d].loanDate;
-        delete data[d].userBarcode;
-        delete data[d].expirationDate;
-        delete data[d].renewalCount;
-        data[d].checkInDate = today;
+        delete data.loanDate;
+        delete data.userBarcode;
+        delete data.expirationDate;
+        delete data.renewalCount;
+        data.checkInDate = today;
       } else {
-        dueDate = data[d].dueDate;
-        delete data[d].dueDate;
-        delete data[d].expirationDate;
-        if (data[d].claimedReturnedDate) {
-          claimedReturnedDate = data[d].claimedReturnedDate;
-          delete data[d].claimedReturnedDate;
+        dueDate = data.dueDate;
+        delete data.dueDate;
+        delete data.expirationDate;
+        if (data.claimedReturnedDate) {
+          claimedReturnedDate = data.claimedReturnedDate;
+          delete data.claimedReturnedDate;
         }
-        if (data[d].renewalCount) {
-          renewalCount = data[d].renewalCount; 
-          delete data[d].renewalCount;
+        if (data.renewalCount) {
+          renewalCount = data.renewalCount; 
+          delete data.renewalCount;
         }
       }
       try {
         let uc = '';
-        if (data[d].userBarcode) uc = ` --> ${data[d].userBarcode}`
-	      let postData = Object.assign({}, data[d]);
-	      // delete postData.loanDate;
-        console.log(`[${d}] POST ${url} (${data[d].itemBarcode}${uc})`);
+        if (data.userBarcode) uc = ` --> ${data.userBarcode}`
+	      let postData = Object.assign({}, data);
+
+        console.log(`[${d}] POST ${url} (${data.itemBarcode}${uc})`);
         let loanObj = await post_put(authToken, url, postData);
         if (checkIn === 'checkin') added++;
         if (loanObj && checkIn !== 'checkin') {
@@ -143,11 +148,11 @@ const post_put = async (authToken, url, checkout, r) => {
           fs.writeFileSync(saveFile, loanStr, { flag: 'a' });
           try {
             loanObj.dueDate = dueDate;
-            loanObj.loanDate = data[d].loanDate;
+            loanObj.loanDate = data.loanDate;
             loanObj.action = 'dueDateChanged';
             loanObj.renewalCount = renewalCount;
             let lurl = `${config.okapi}/circulation/loans/${loanObj.id}`;
-            console.log(`[${d}] PUT ${lurl} (${data[d].itemBarcode})`);
+            console.log(`[${d}] PUT ${lurl} (${data.itemBarcode})`);
             await post_put(authToken, lurl, loanObj);
             added++
 
@@ -157,7 +162,7 @@ const post_put = async (authToken, url, checkout, r) => {
                 claimedObj.itemClaimedReturnedDateTime = claimedReturnedDate;
                 claimedObj.comment = "Migrated action";
                 let lurl = `${config.okapi}/circulation/loans/${loanObj.id}/claim-item-returned`;
-                console.log(`[${d}] POST ${lurl} (${data[d].itemBarcode})`);
+                console.log(`[${d}] POST ${lurl} (${data.itemBarcode})`);
                 await post_put(authToken, lurl, claimedObj);
                 claimed++;
               } catch (e) {
@@ -186,7 +191,7 @@ const post_put = async (authToken, url, checkout, r) => {
         }
         console.log(m);
         errors++;
-        errs.checkouts.push(data[d]);
+        errs.checkouts.push(data);
       }
     } 
     const errPath = `${dir}/${fname}_errors.json`;
@@ -196,6 +201,6 @@ const post_put = async (authToken, url, checkout, r) => {
     console.log('Errors:', errors);
     console.log('Claimed errors:', claimedErrs);
   } catch (e) {
-    console.error(e.message);
+    console.error(e);
   }
 })();
