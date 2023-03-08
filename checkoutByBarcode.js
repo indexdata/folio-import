@@ -204,6 +204,6 @@ const post_put = async (authToken, url, checkout, r) => {
     console.log('Errors:', errors);
     console.log('Claimed errors:', claimedErrs);
   } catch (e) {
-    console.error(e);
+    console.error(e.message);
   }
 })();
