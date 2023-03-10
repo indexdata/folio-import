@@ -15,10 +15,10 @@ if [ ! -d $REFDIR ]
     mkdir $REFDIR
 fi
 
-EPS='categories contacts organizations interfaces'
+EPS='categories contacts organizations interfaces organization-types'
 
 for EP in $EPS
 do
     echo "Fetching ${EP}"
-    curl --http1.1 -o "${REFDIR}/${EP}.json" -w "\n" "${OKAPI}/organizations/${EP}?limit=5000" -H "x-okapi-token: ${TOKEN}"
+    curl --http1.1 -o "${REFDIR}/${EP}.json" -w "\n" "${OKAPI}/organizations-storage/${EP}?limit=5000" -H "x-okapi-token: ${TOKEN}"
 done
