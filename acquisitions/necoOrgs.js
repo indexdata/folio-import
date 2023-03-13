@@ -69,12 +69,14 @@ try {
   });
 
   let cseen = {};
+  let rseen = {}
   for (let oid in orgRows) {
     let rows = orgRows[oid];
     let tr = rows.length;
     let aseen = {};
     let rc = 0;
     let org = {};
+    let contacts = {}
     rows.forEach(r => {
       rc++;
       for (let f in r) {
@@ -121,18 +123,33 @@ try {
         aseen[akey] = 1
       }
       let cname = r['Contact Name'];
+      let crole = r['Contact Role'];
+      let rollkey = cname + crole;
       if (cname && !cseen[cname]) {
         let names = cname.match(/(.+) (.+)/) || ['Unknown', cname];
         let fn = names[1];
         let ln = names[2];
+        let note = r['Contact Title'];
         let obj = {};
         obj.id = uuid(cname, ns);
         obj.firstName = fn.trim();
         obj.lastName = (ln) ? ln.trim() : obj.firstName;
-        writeTo(files.cont, obj);
+        obj.categories = [];
+        if (note) obj.notes = note;
         cc++;
-        cseen[cname] = 1;
-        org.contacts.push(obj.id);
+        cseen[cname] = obj;
+      }
+      if (cname && crole && !rseen[rollkey]) {
+        let crollId = ref.categories[crole];
+        if (crollId) {
+          cseen[cname].categories.push(crollId);
+          rseen[rollkey] = 1;
+        }
+      }
+      if (cseen[cname]) {
+        let cid = cseen[cname].id;
+        if (!contacts[cid]) org.contacts.push(cid);
+        contacts[cid] = 1
       }
       if (rc === tr) {
         writeTo(files.orgs, org);
@@ -142,6 +159,9 @@ try {
       }
       seen[oid] = 1;
     });
+  }
+  for (let k in cseen) {
+    writeTo(files.cont, cseen[k]);
   }
 
   console.log('Finished!');
