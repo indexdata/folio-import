@@ -10,7 +10,9 @@ const unit = 'NECO Library';
 
 const files = {
   orgs: 'organizations.jsonl',
-  cont: 'contacts.jsonl'
+  cont: 'contacts.jsonl',
+  faces: 'interfaces.jsonl',
+  creds: 'interface-credentials.jsonl'
 };
 
 const rfiles = {
@@ -62,6 +64,7 @@ try {
   const orgRows = {};
   let c = 0;
   let cc = 0;
+  let ic = 0;
   inRecs.forEach(r => {
     let oid = r['Organization ID'];
     if (!orgRows[oid]) orgRows[oid] = [];
@@ -69,7 +72,8 @@ try {
   });
 
   let cseen = {};
-  let rseen = {}
+  let rseen = {};
+  let iseen = {};
   for (let oid in orgRows) {
     let rows = orgRows[oid];
     let tr = rows.length;
@@ -97,7 +101,8 @@ try {
           acqUnitIds: [ unitId ],
           isVendor: false,
           aliases: [],
-          contacts: []
+          contacts: [],
+          interfaces: []
         }
         if (url) {
           if (!url.match(/^(http|ftp)/)) {
@@ -171,6 +176,41 @@ try {
         if (!contacts[cid]) org.contacts.push(cid);
         contacts[cid] = 1
       }
+      let alogin = r['Accounts Login Type'];
+      let aurl = r['Accounts URL'];
+      let amail = r['Accounts Local Account Email'];
+      let auser = r['Accounts Username'];
+      let apass = r['Accounts Password'];
+      let anote = r['Accounts Notes'];
+      let users = [];
+      if (amail) users.push(amail);
+      if (auser) users.push(auser)
+      let ikey = alogin + aurl + auser;
+      if (ikey && !iseen[ikey]) {
+        let obj = {
+          id: uuid(ikey, ns)
+        }
+        if (alogin) obj.type = [ alogin.replace(/Statistics/, 'Reports') ];
+        if (aurl) obj.uri = aurl;
+        if (users[0]) {
+          cred = {
+            id: uuid(obj.id + users[0], ns),
+            interfaceId: obj.id
+          };
+          cred.username = users.join(', ');
+          if (apass) cred.password = apass;
+          writeTo(files.creds, cred);
+        }
+        if (anote) obj.notes = anote;
+        writeTo(files.faces, obj);
+        iseen[ikey] = obj;
+        ic++;
+      }
+      if (iseen[ikey]) {
+        let iid = iseen[ikey].id;
+        console.log(iid);
+        if (org.interfaces.indexOf(iid) === -1) org.interfaces.push(iid);
+      }
       if (rc === tr) {
         writeTo(files.orgs, org);
         c++;
@@ -185,8 +225,9 @@ try {
   }
 
   console.log('Finished!');
-  console.log('Organizations created:', c);
-  console.log('Contacts created:', cc);
+  console.log('Organizations: ', c);
+  console.log('Contacts: ', cc);
+  console.log('Interfaces: ', ic);
 } catch (e) {
   console.log(e);
 }
