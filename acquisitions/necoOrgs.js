@@ -125,6 +125,12 @@ try {
       let cname = r['Contact Name'];
       let crole = r['Contact Role'];
       let rollkey = cname + crole;
+      let phone = r['Contact Phone'];
+      let altPhone = r['Contact Alt Phone'];
+      let email = r['Contact Email'];
+      let cadd = r['Contact Address'];
+      let cnote = r['Contact Notes'];
+      let notes = [];
       if (cname && !cseen[cname]) {
         let names = cname.match(/(.+) (.+)/) || ['Unknown', cname];
         let fn = names[1];
@@ -135,7 +141,21 @@ try {
         obj.firstName = fn.trim();
         obj.lastName = (ln) ? ln.trim() : obj.firstName;
         obj.categories = [];
-        if (note) obj.notes = note;
+        if (phone) { 
+          obj.phoneNumbers = [{ phoneNumber: phone, isPrimary: true }];
+          if (altPhone) {
+            obj.phoneNumbers.push({ phoneNumber: altPhone, isPrimary: false });
+          }
+        }
+        if (email && email.match(/@/)) {
+          obj.emails = [{ value: email, isPrimary: true }];
+        }
+        if (cadd) {
+          obj.addresses = [{ addressLine1: cadd }];
+        }
+        if (note) notes.push('Contact title: ' + note);
+        if (cnote) notes.push('Contact note: ' + cnote);
+        if (notes[0]) obj.notes = notes.join('; ');
         cc++;
         cseen[cname] = obj;
       }
