@@ -91,8 +91,6 @@ try {
         let desca = r['Organization Account Details'];
         let descb = r['Organization Notes'];
         let url = r['Organization Company URL'];
-        let role = r['Organization Role'];
-        let typeId = ref.organizationTypes[role] || '';
         org = {
           id: uuid(oid, ns),
           code: oid,
@@ -102,7 +100,8 @@ try {
           isVendor: false,
           aliases: [],
           contacts: [],
-          interfaces: []
+          interfaces: [],
+          organizationTypes: []
         }
         if (url) {
           if (!url.match(/^(http|ftp)/)) {
@@ -110,13 +109,15 @@ try {
           }
           org.urls = [ { value: url } ];
         }
-        if (role === 'Vendor') org.isVendor = true;
-        if (typeId) org.organizationTypes = [ typeId ];
         let desc = []
         if (desca) desc.push(desca);
         if (descb) desc.push(descb);
         if (desc[0]) org.description = desc.join('\n ');
       }
+      let role = r['Organization Role'];
+      if (role === 'Vendor') org.isVendor = true;
+      let typeId = ref.organizationTypes[role] || '';
+      if (typeId && org.organizationTypes.indexOf(typeId) === -1 ) org.organizationTypes.push(typeId);
       let aliasName = r['Alias Name'];
       let aliasType = r['Alias Type'];
       let akey = aliasName + aliasType;
@@ -208,7 +209,6 @@ try {
       }
       if (iseen[ikey]) {
         let iid = iseen[ikey].id;
-        console.log(iid);
         if (org.interfaces.indexOf(iid) === -1) org.interfaces.push(iid);
       }
       if (rc === tr) {
