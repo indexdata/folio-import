@@ -297,8 +297,8 @@ const statuses = {
               // ir.descriptionOfPieces = msg;
               // ir.numberOfPieces = msg;
               ir.circulationNotes = [];
-              ir.circulationNotes.push({ note: msg, noteType: 'Check in'});
-              ir.circulationNotes.push({ note: msg, noteType: 'Check out'});
+              ir.circulationNotes.push({ note: msg, noteType: 'Check in', staffOnly: true});
+              ir.circulationNotes.push({ note: msg, noteType: 'Check out', staffOnly: true});
             }
             ir.notes = [];
             let inote = i['NOTE(ITEM)'];
