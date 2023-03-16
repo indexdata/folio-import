@@ -1,0 +1,421 @@
+{
+  "id": "3607dbbc-0241-4962-9212-de9fd52799f9",
+  "items": [
+    {
+      "id": "848a45f4-0113-4460-9a41-4ec679fa00f3",
+      "tags": [],
+      "owner": {
+        "id": "3607dbbc-0241-4962-9212-de9fd52799f9"
+      },
+      "poLines": [],
+      "type": "detached",
+      "suppressFromDiscovery": false,
+      "description": "FY21 $66,850.00 Access Fee (operating)",
+      "customCoverage": false,
+      "explanation": null,
+      "startDate": null,
+      "endDate": null,
+      "activeFrom": null,
+      "activeTo": null,
+      "contentUpdated": null,
+      "haveAccess": true
+    },
+    {
+      "id": "31e87daf-c731-4f14-b924-ac3760a7019d",
+      "tags": [],
+      "owner": {
+        "id": "3607dbbc-0241-4962-9212-de9fd52799f9"
+      },
+      "poLines": [],
+      "type": "detached",
+      "suppressFromDiscovery": false,
+      "description": "FY22 part of EBSCO Package, Product ID 288-399-385",
+      "customCoverage": false,
+      "explanation": null,
+      "startDate": null,
+      "endDate": null,
+      "activeFrom": null,
+      "activeTo": null,
+      "contentUpdated": null,
+      "haveAccess": true
+    },
+    {
+      "id": "eccc965b-7233-4af4-b8fa-1c846eb72ceb",
+      "tags": [],
+      "owner": {
+        "id": "3607dbbc-0241-4962-9212-de9fd52799f9"
+      },
+      "poLines": [],
+      "type": "detached",
+      "suppressFromDiscovery": false,
+      "description": "FY20 $66,850.00 Access Fee (operating)",
+      "customCoverage": false,
+      "explanation": null,
+      "startDate": null,
+      "endDate": null,
+      "activeFrom": null,
+      "activeTo": null,
+      "contentUpdated": null,
+      "haveAccess": true
+    },
+    {
+      "id": "cd7ec591-90e1-4655-ab77-e57810e363f1",
+      "type": "external",
+      "description": null,
+      "authority": "EKB-PACKAGE",
+      "reference": "19-2333054",
+      "explanation": null,
+      "startDate": null,
+      "endDate": null,
+      "activeFrom": null,
+      "activeTo": null,
+      "contentUpdated": null,
+      "haveAccess": true,
+      "suppressFromDiscovery": false,
+      "note": null,
+      "owner": {
+        "id": "3607dbbc-0241-4962-9212-de9fd52799f9",
+        "name": "Academic Search Ultimate"
+      },
+      "customCoverage": false,
+      "reference_object": {
+        "label": "Academic Search Ultimate",
+        "type": "Package",
+        "provider": "EBSCO",
+        "titleCount": 14828,
+        "selectedCount": 14827,
+        "contentType": "Aggregated Full Text",
+        "providerName": "EBSCO",
+        "isSelected": true
+      }
+    }
+  ],
+  "name": "Academic Search Ultimate",
+  "orgs": [
+    {
+      "id": "752e6353-db52-47cd-9d64-d3dc28d3200f",
+      "primaryOrg": true,
+      "org": {
+        "id": "9ec1d089-633d-43d2-8c14-3636781bec47",
+        "orgsUuid": "aa25ae25-4f4b-40fe-b4c0-2b31a49d4d6d",
+        "name": "EBSCO",
+        "orgsUuid_object": {
+          "id": "aa25ae25-4f4b-40fe-b4c0-2b31a49d4d6d",
+          "name": "EBSCO",
+          "code": "ebsco",
+          "exportToAccounting": false,
+          "status": "Active",
+          "organizationTypes": [],
+          "language": "eng",
+          "aliases": [],
+          "addresses": [],
+          "phoneNumbers": [],
+          "emails": [],
+          "urls": [],
+          "contacts": [
+            "17e612aa-57f6-4232-9b35-124b57425984",
+            "8dd1c6e9-0ea7-4ecb-af8d-0c975a6d58a1",
+            "04e1ff8d-c023-4bb4-9c94-02cb40398146",
+            "48b713c7-86f2-467f-8fdc-0dfaa8b6c25b",
+            "b729308a-acbc-4416-b50a-e39f3b969a55",
+            "599a694e-c5c6-40b1-b8e2-33b840641e9c",
+            "d7c725b5-7fd1-44f7-9422-6cd33e58d4e4",
+            "f6a9958a-5976-4480-9378-d78a7798fa7d",
+            "0ec64d07-2806-4511-8d19-66ad3df41228",
+            "decdab2f-9b00-4d11-83f5-38b1f5a9ff76"
+          ],
+          "agreements": [],
+          "erpCode": "N/A",
+          "paymentMethod": "EFT",
+          "vendorCurrencies": [
+            "USD"
+          ],
+          "interfaces": [
+            "10fdfd38-b6fb-42e8-8553-476da2dd2ba0",
+            "e4ed84a4-2393-4d39-a08c-3668e1b6386a",
+            "3e351164-7189-42b2-8d96-e90ba7e91706",
+            "e7d8f262-2eef-4c78-8aa2-d4923a964813",
+            "ee97fbfd-0b60-49a5-a876-ace88f24bfe5"
+          ],
+          "accounts": [],
+          "isVendor": true,
+          "changelogs": [],
+          "acqUnitIds": [],
+          "tags": {
+            "tagList": [
+              "important"
+            ]
+          },
+          "metadata": {
+            "createdDate": "2020-07-02T18:40:14.206+00:00",
+            "createdByUserId": "833a0a2b-fda2-4800-b222-e6703107ce70",
+            "updatedDate": "2022-10-19T14:16:59.919+00:00",
+            "updatedByUserId": "dfbd02cd-2bd6-4053-9f41-d62984e4152c"
+          }
+        }
+      },
+      "owner": {
+        "id": "3607dbbc-0241-4962-9212-de9fd52799f9"
+      },
+      "roles": [
+        {
+          "id": "1a09d9da-2b8e-0b77-49ee-2f8caadbe85a",
+          "owner": {
+            "id": "752e6353-db52-47cd-9d64-d3dc28d3200f"
+          },
+          "role": {
+            "id": "2c90382672535e8e0172536271590010",
+            "value": "vendor",
+            "label": "Vendor"
+          }
+        }
+      ]
+    }
+  ],
+  "externalLicenseDocs": [],
+  "outwardRelationships": [],
+  "customProperties": {
+    "resourceURL": [
+      {
+        "id": 2306,
+        "internal": true,
+        "value": "https://search.ebscohost.com/login.aspx?authtype=ip,uid&profile=ehost&defaultdb=asn",
+        "type": {
+          "id": "2c903e527c46edf4017d34218fb00001",
+          "retired": false,
+          "name": "resourceURL",
+          "primary": true,
+          "defaultInternal": true,
+          "label": "Resource URL",
+          "description": "Access the resource through the proxy prepend https://ezproxy.simmons.edu/login?url= plus this URL (or this URL alone for password-protected resources noted in the Authentication Username & Password field)",
+          "weight": 0,
+          "type": "com.k_int.web.toolkit.custprops.types.CustomPropertyText"
+        }
+      }
+    ],
+    "acquisitionType": [
+      {
+        "id": 2303,
+        "internal": true,
+        "value": {
+          "id": "2c903e527c46edf4017d3429c451000c",
+          "value": "renewal",
+          "label": "Renewal"
+        },
+        "type": {
+          "id": "2c903e527c46edf4017d342b9f7a000e",
+          "retired": false,
+          "name": "acquisitionType",
+          "primary": true,
+          "category": {
+            "id": "2c903e527c46edf4017d3427bec40004",
+            "desc": "AcquisitionTypeSIMM",
+            "internal": false,
+            "values": [
+              {
+                "id": "2c903e527c46edf4017d3429f1dc000d",
+                "value": "trial",
+                "label": "Trial"
+              },
+              {
+                "id": "2c903e527c46edf4017d3429546b000a",
+                "value": "open_access",
+                "label": "Open Access"
+              },
+              {
+                "id": "2c903e527c46edf4017d342829340005",
+                "value": "cancellation",
+                "label": "Cancellation"
+              },
+              {
+                "id": "2c903e527c46edf4017d342905090009",
+                "value": "new_purchase",
+                "label": "New Purchase"
+              },
+              {
+                "id": "2c903e527c46edf4017d34298935000b",
+                "value": "pda_subscription",
+                "label": "PDA Subscription"
+              },
+              {
+                "id": "2c903e527c46edf4017d3428d41b0008",
+                "value": "library_school",
+                "label": "Library School"
+              },
+              {
+                "id": "2c903e527c46edf4017d3429c451000c",
+                "value": "renewal",
+                "label": "Renewal"
+              },
+              {
+                "id": "2c903e527c46edf4017d3428637b0006",
+                "value": "cancellation_with_access",
+                "label": "Cancellation with Access"
+              },
+              {
+                "id": "2c903e527c46edf4017d3428a3000007",
+                "value": "deposit",
+                "label": "Deposit"
+              }
+            ]
+          },
+          "defaultInternal": true,
+          "label": "Acquisition Type",
+          "description": "Possible values: Cancellation | Cancellation with Access | Deposit | Library School | New Purchase | Open Access | PDA Subscription | Renewal | Trial",
+          "weight": 3,
+          "type": "com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata"
+        }
+      }
+    ],
+    "userLimit": [
+      {
+        "id": 2305,
+        "internal": true,
+        "value": "Unlimited",
+        "type": {
+          "id": "2c903e527c46edf4017d342e3b7a000f",
+          "retired": false,
+          "name": "userLimit",
+          "primary": true,
+          "defaultInternal": true,
+          "label": "Simultaneous User Limit",
+          "description": "Can be a number, or Unlimited, or Various",
+          "weight": 4,
+          "type": "com.k_int.web.toolkit.custprops.types.CustomPropertyText"
+        }
+      }
+    ],
+    "accessMethod": [
+      {
+        "id": 2302,
+        "internal": true,
+        "value": {
+          "id": "2c903e527c46edf4017d3430020e0013",
+          "value": "libguide",
+          "label": "LibGuide"
+        },
+        "type": {
+          "id": "2c903e527c46edf4017d343336460017",
+          "retired": false,
+          "name": "accessMethod",
+          "primary": true,
+          "category": {
+            "id": "2c903e527c46edf4017d342f5b6a0010",
+            "desc": "AccessMethodSIMM",
+            "internal": false,
+            "values": [
+              {
+                "id": "2c903e527c46edf4017d343091550016",
+                "value": "unique_url",
+                "label": "Unique URL"
+              },
+              {
+                "id": "2c903e527c46edf4017d343033300014",
+                "value": "libguide_+_catalog",
+                "label": "LibGuide + Catalog"
+              },
+              {
+                "id": "2c903e527c46edf4017d34306b820015",
+                "value": "libguide_+_knowledge_base",
+                "label": "LibGuide + Knowledge Base"
+              },
+              {
+                "id": "2c903e527c46edf4017d342fb5b30011",
+                "value": "catalog",
+                "label": "Catalog"
+              },
+              {
+                "id": "2c903e527c46edf4017d342fd4260012",
+                "value": "knowledge_base",
+                "label": "Knowledge Base"
+              },
+              {
+                "id": "2c903e527c46edf4017d3430020e0013",
+                "value": "libguide",
+                "label": "LibGuide"
+              }
+            ]
+          },
+          "defaultInternal": true,
+          "label": "Access Method",
+          "description": "the discovery method. Possible values : Catalog | Knowledge Base | LibGuide | LibGuide + Catalog | LibGuide + Knowledge Base | Unique URL",
+          "weight": 5,
+          "type": "com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata"
+        }
+      }
+    ],
+    "OCLCHoldings": [
+      {
+        "id": 2304,
+        "internal": true,
+        "value": {
+          "id": "2c903e527c46edf4017d3487795d0029",
+          "value": "no",
+          "label": "No"
+        },
+        "type": {
+          "id": "2c903e527c46edf4017d3488ea9e002a",
+          "retired": false,
+          "name": "OCLCHoldings",
+          "primary": true,
+          "category": {
+            "id": "2c903e527c46edf4017d3486fd8c0027",
+            "desc": "OCLCHoldingsSIMM",
+            "internal": false,
+            "values": [
+              {
+                "id": "2c903e527c46edf4017d3487679e0028",
+                "value": "yes",
+                "label": "Yes"
+              },
+              {
+                "id": "2c903e527c46edf4017d3487795d0029",
+                "value": "no",
+                "label": "No"
+              }
+            ]
+          },
+          "defaultInternal": true,
+          "label": "OCLC Holdings",
+          "description": "OCLC Holdings. Possible values: Yes | No",
+          "weight": 13,
+          "type": "com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata"
+        }
+      }
+    ]
+  },
+  "contacts": [],
+  "tags": [],
+  "inwardRelationships": [],
+  "renewalPriority": {
+    "id": "2c90382672535e8e0172536271ee0033",
+    "value": "for_review",
+    "label": "For review"
+  },
+  "endDate": "2022-06-30",
+  "startDate": "2021-07-01",
+  "linkedLicenses": [],
+  "docs": [],
+  "periods": [
+    {
+      "id": "7378f005-a2d1-4de2-a10f-e967e80942b5",
+      "startDate": "2021-07-01",
+      "owner": {
+        "id": "3607dbbc-0241-4962-9212-de9fd52799f9"
+      },
+      "endDate": "2022-06-30",
+      "periodStatus": "previous"
+    }
+  ],
+  "usageDataProviders": [],
+  "agreementStatus": {
+    "id": "2c90382672535e8e017253627227003e",
+    "value": "active",
+    "label": "Active"
+  },
+  "supplementaryDocs": [],
+  "description": "Why search here?\nAcademic Search Ultimate is a great place to start your search for both popular and scholarly articles on almost any topic.\nWhat's included?\nIt contains a large number of journals, the majority of which are peer-reviewed, from numerous subject areas. This resource features mostly full text content, and goes as far back as 1865.",
+  "cancellationDeadline": null,
+  "alternateNames": [],
+  "version": 3
+}
