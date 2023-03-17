@@ -28,8 +28,12 @@ let ep = process.argv[2];
     const workingDir = path.dirname(inFile);
     const baseName = path.basename(inFile, '.jsonl');
     const errPath = `${workingDir}/${baseName}Err.jsonl`;
+    const outPath = `${workingDir}/${baseName}Out.jsonl`;
     if (fs.existsSync(errPath)) {
       fs.unlinkSync(errPath);
+    }
+    if (fs.existsSync(outPath)) {
+      fs.unlinkSync(outPath);
     }
     
     var logger;
@@ -74,13 +78,16 @@ let ep = process.argv[2];
       logger.info(`[${x}] ${lDate} POST ${rec.id} to ${actionUrl}`);
       let recUrl = (actionUrl.match(/mapping-rules/)) ? actionUrl : `${actionUrl}/${rec.id}`;
       try {
-        await superagent
+        let res = await superagent
           .post(actionUrl)
           .send(rec)
           .set('x-okapi-token', authToken)
           .set('content-type', 'application/json')
           .set('accept', 'application/json');
         logger.info(`  Successfully added record id ${rec.id}`);
+        if (actionUrl.match(/\/erm\//)) {
+          fs.writeFileSync(outPath, JSON.stringify(res.body) + '\n', {flag: 'a'});
+        }
         success++;
       } catch (e) {
           let errMsg = (e.response && e.response.text) ? e.response.text : e;
