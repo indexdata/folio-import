@@ -149,15 +149,17 @@ try {
       customProperties: cprops,
       orgs: []
     };
-    a.xorgs.forEach(o => {
+    a.xorgs.forEach((o, i) => {
       let org = {
         _delete: false,
-        roles: [{ role: {id: '2c90a37d843a686001847c28f9920016'} }]
+        roles: [{ role: {id: '2c90a37d843a686001847c28f9920016'} }],
+        primaryOrg: false
       };
       orgMap = ref.organizations[o];
       if (orgMap) {
         org.org = { orgsUuid: orgMap.id, name: orgMap.name };
       }
+      if (i === 0) org.primaryOrg = true
       agr.orgs.push(org);
     });
 
