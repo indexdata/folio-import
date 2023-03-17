@@ -61,8 +61,8 @@ try {
     let rdata = require(rfile);
     ref[f] = {};
     rdata[f].forEach(r => {
-      let k = r.name || r.value;
-      let v = r.id;
+      let k = (f === 'organizations') ? r.code : r.name;
+      let v = (f === 'organizations') ? {id: r.id, name: r.name} : r.id;
       ref[f][k] = v;
     });
   }
@@ -82,32 +82,85 @@ try {
     }
     let oid = r['Product ID'];
     let pnote = r['Product Notes'];
+    let ntype = r['Product Note Type'];
     let org = r['Product Organization ID'];
     if (!ag[oid]) { 
       ag[oid] = r;
       ag[oid].xnotes = [];
       ag[oid].xorgs = [];
     }
-    if (pnote && ag[oid].xnotes.indexOf(pnote) === -1) ag[oid].xnotes.push(pnote);
+    if (pnote) {
+      let compNote = ntype + ': ' + pnote;
+      if (ag[oid].xnotes.indexOf(compNote) === -1) ag[oid].xnotes.push(compNote);
+    }
     if (org && ag[oid].xorgs.indexOf(org) === -1) ag[oid].xorgs.push(org);
   });
+  // console.log(ag); return;
 
   let c = 0;
   for (let al in ag) {
     let a = ag[al];
+    let cprops = {};
+    for (let p in supProps) {
+      cprops[p] =[{ _delete: true }];
+    }
     let name = a['Product Name'];
     let desc = a['Product Description'];
     let status = a['Product Status'];
     let start = a['Order Sub Start'];
     let end = a['Order Current Sub End'];
+
+    // map custom props below
+    let resurl = a['Product URL'];
+    let resalturl = a['Product Alt URL'];
+    let prodissn = a['Product ISSN/ISBN'];
+    let creds = [];
+    let creda = a['Access Username'];
+    let credb = a['Access Password'];
+    if (creda) creds.push(creda);
+    if (credb) creds.push(credb);
+    let userlimit = a['Access Simultaneous User Limit'];
+
+    if (resurl) cprops.resurl[0].value = resurl;
+    if (resalturl) cprops.resalturl[0].value = resalturl;
+    if (prodissn) cprops.prodissn[0].value = prodissn;
+    if (creds[0]) cprops.authcreds[0].value = creds.join('/');
+    if (userlimit) cprops.userlimit[0].value = userlimit;
+    a.xnotes.forEach((n, i) => {
+      if (i === 0) {
+        cprops.resnote[0].value = n;
+      } else {
+        cprops.resnote[0].value += '; ' + n;
+      }
+      
+    });
+
+    for (let p in cprops) {
+      cprops[p].forEach(o => {
+        if (o.value) {
+          o._delete = false;
+        }
+      });
+    }
+
     let agr = {
       id: uuid(al, ns),
       name: name,
-      customProperties: {}
+      customProperties: cprops,
+      orgs: []
     };
-    for (let p in supProps) {
-      agr.customProperties[p] = [{ _delete: true }];
-    }
+    a.xorgs.forEach(o => {
+      let org = {
+        _delete: false,
+        roles: [{ role: {id: '2c90a37d843a686001847c28f9920016'} }]
+      };
+      orgMap = ref.organizations[o];
+      if (orgMap) {
+        org.org = { orgsUuid: orgMap.id, name: orgMap.name };
+      }
+      agr.orgs.push(org);
+    });
+
     agr.agreementStatus = statusMap[status];
     if (desc) agr.description = desc;
     if (start) {
@@ -118,7 +171,6 @@ try {
       agr.periods= [ per ];
     }
     writeTo(files.agree, agr);
-    console.log(agr);
     c++;
     if (c === 5) break;
   }
@@ -139,7 +191,7 @@ try {
     writeTo(files.supProps, cust);
     cpc++;
   }
-
+  
   console.log('Finished!');
   console.log('Agreements:', c);
   console.log('Custom Properties', cpc);
