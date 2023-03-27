@@ -46,6 +46,7 @@ let writeStream;
     while (totFetch < totRecs) {
       let prop;
       let url = `${actionUrl}?limit=${perPage}&offset=${offset}`;
+      if (actionUrl.match(/\?/)) url = url.replace(/\?limit/, '&limit');
       if (actionUrl.match(/\/(licenses|erm)\//)) {
 	      perPage = 100;
 	      url = `${actionUrl}?perPage=${perPage}&offset=${offset}&stats=true`;
