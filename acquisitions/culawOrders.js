@@ -54,10 +54,13 @@ const formMap = {
     if (!fs.existsSync(locMapFile)) throw new Error(`Can't open location map file at ${locMapFile}`);
 
     const dir = path.dirname(inFile);
-    const fn = path.basename(inFile, '.jsonl');
+    const fn = path.basename(inFile, '.txt');
     const outFile = `${dir}/folio-${fn}.jsonl`;
     if (fs.existsSync(outFile)) fs.unlinkSync(outFile);
 
+    const tagFile = `${dir}/folio-tags.jsonl`;
+    if (fs.existsSync(tagFile)) fs.unlinkSync(tagFile);
+    
     const refData = {};
     for (let prop in refFiles) {
       refData[prop] = {};
@@ -78,6 +81,22 @@ const formMap = {
           refData[prop][code] = p.id;
         }
       })
+    }
+
+    const writeTo = (fileName, data) => {
+      let outStr = JSON.stringify(data) + '\n';
+      fs.writeFileSync(fileName, outStr, { flag: 'a' });
+    }
+
+    // make tags
+    const tagMap = { k: 'Vital Law', w: 'LMA', l: 'MAP', '-' : 'LMA' };
+    for (let k in tagMap) {
+      let tob = {
+        label: tagMap[k],
+        description: tagMap[k],
+        id: uuid(tagMap[k] + tagMap, ns)
+      }
+      writeTo(tagFile, tob);
     }
 
     const locMap = {};
@@ -130,8 +149,13 @@ const formMap = {
             created = '2000-01-01';
           }
           let otype = so['ORD TYPE'];
+          let ostat = so['STATUS'];
+          let code2 = so['CODE2'];
           
-          let status = 'hey';
+          let orderType = (otype === 's') ? 'Ongoing' : 'One-Time';
+          let reEnc = (ostat === 'f') ? false : true;
+          let wfStat = (ostat.match(/[of]/)) ? 'Open' : 'Closed';
+          wfStat = 'Pending';
           let co = {
             id: poId,
             poNumber: poNum,
@@ -139,7 +163,10 @@ const formMap = {
             dateOrdered: created,
             compositePoLines: [],
             notes: [],
-            acqUnitIds: [ unit ]
+            acqUnitIds: [ unit ],
+            orderType: orderType,
+            reEncumber: reEnc,
+            workflowStatus: wfStat
           }
           nfields.forEach(f => {
             if (so[f]) {
@@ -149,29 +176,35 @@ const formMap = {
               });
             }
           });
+          if (tagMap[code2]) {
+            co.tags = { tagList: [ tagMap[code2] ] };
+          }
 
-          console.log(co);
-
-          // co.orderType = orderType;
-          if (co.orderType === 'Ongoing') {
+          if (orderType === 'Ongoing') {
             co.ongoing = {
               interval: 365,
               isSubscription: true,
-              renewalDate: co.dateOrdered
+              manualRenewal: true
             };
           }
           
-          co.workflowStatus = status;
-
           // PO lines start here
 
+          let amId = refData.acquisitionMethods['Purchase'];
           let pol = {
+            acquisitionMethod: amId,
             paymentStatus: 'Awaiting Payment',
             poLineNumber: poNum + '-1',
             source: 'User',
             checkinItems: false,
             locations: []
           };
+          pol.id = uuid(pol.poLineNumber, ns);
+          co.compositePoLines.push(pol);
+
+          console.log(co);
+          writeTo(outFile, co);
+          c++;
         }
       } catch (e) {
         console.log(`[${lnum}] ${e}`);
