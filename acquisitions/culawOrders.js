@@ -140,6 +140,7 @@ const formMap = {
       crlfDelay: Infinity
     });
 
+    const fundId = refData.funds['Law'];
     let nfields = ['NOTE(ORDER)', 'MESSAGE', 'TICKLER'];
     let c = 0;
     let lnum = 0;
@@ -154,7 +155,6 @@ const formMap = {
         let so = {};
         if (lnum === 1) {
           head = cols;
-          console.log(head);
         } else {
           head.forEach((h, i) => {
             so[h] = cols[i];
@@ -174,7 +174,12 @@ const formMap = {
           let otype = so['ORD TYPE'];
           let ostat = so['STATUS'];
           let code2 = so['CODE2'];
-          
+          let priceStr = so['E PRICE'] || '0';
+          priceStr = priceStr.replace(/^\$/, '');
+          let price = parseFloat(priceStr);
+          let form = so['FORM'];
+          let copies = so['COPIES'];
+          let quant = parseInt(copies, 10);
           let orderType = (otype === 's') ? 'Ongoing' : 'One-Time';
           let reEnc = (ostat === 'f') ? false : true;
           let wfStat = (ostat.match(/[of]/)) ? 'Open' : 'Closed';
@@ -223,19 +228,42 @@ const formMap = {
             poLineNumber: poNum + '-1',
             source: 'User',
             checkinItems: false,
+            purchaseOrderId: co.id,
+            fundDistribution: [],
             locations: []
           };
           pol.id = uuid(pol.poLineNumber, ns);
-          pol.orderFormat = 'Physical Resource';
+          pol.orderFormat = (form === 'c') ? 'Electronic Resource' : 'Physical Resource';
           if (inst) {
             pol.instanceId = inst.id;
             pol.titleOrPackage = inst.title;
           } else {
             console.log(`WARN No instance found for ${bid}`);
           }
+
+          let cost = {
+            currency: 'USD',
+          }
+          if (pol.orderFormat === 'Electronic Resource') {
+            cost.listUnitPriceElectronic = price;
+            cost.quantityElectronic = quant;
+          } else {
+            cost.listUnitPrice = price;
+            cost.quantityPhysical = quant;
+          }
+          pol.cost = cost;
+
+          let fd = {
+            distributionType: 'percentage',
+            value: 100,
+            fundId: fundId,
+            code: 'Law'
+          }
+          pol.fundDistribution.push(fd);
+
           co.compositePoLines.push(pol);
 
-          console.log(co);
+          // console.log(co);
           writeTo(outFile, co);
           c++;
         }
