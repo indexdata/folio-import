@@ -10,7 +10,8 @@ const unit = '04fbd113-822b-49cf-bde0-cde66db437ad';  // CU Boulder
 const ver = '1';
 
 let refDir = process.argv[2];
-const inFile = process.argv[3];
+let instFile = process.argv[3];
+const inFile = process.argv[4];
 
 const refFiles = {
   organizations: 'organizations.json',
@@ -47,7 +48,7 @@ const formMap = {
 (async () => {
   let startTime = new Date().valueOf();
   try {
-    if (!inFile) throw('Usage: node culawOrders.js <acq_ref_dir> <orders_text_file>');
+    if (!inFile) throw('Usage: node culawOrders.js <acq_ref_dir> <instances_jsonl_file> <orders_text_file>');
     if (!fs.existsSync(inFile)) throw new Error(`Can't find ${inFile}!`);
     refDir = refDir.replace(/\/$/, '');
     let locMapFile = `${refDir}/locations.tsv`;
@@ -82,6 +83,28 @@ const formMap = {
         }
       })
     }
+
+    // map instances
+
+    const instfileStream = fs.createReadStream(instFile);
+
+    const irl = readline.createInterface({
+      input: instfileStream,
+      crlfDelay: Infinity
+    });
+
+    console.log('Reading instance file...');
+    const instMap = {};
+    let ic = 0;
+    for await (let line of irl) {
+      ic++;
+      let inst = JSON.parse(line);
+      instMap[inst.hrid] = inst;
+      if (ic%10000 === 0) {
+        console.log('Instances read:', ic);
+      }
+    }
+    console.log('Total instances read:', ic);
 
     const writeTo = (fileName, data) => {
       let outStr = JSON.stringify(data) + '\n';
@@ -190,7 +213,10 @@ const formMap = {
           
           // PO lines start here
 
+          let bid = 'l' + so['RECORD #(BIBLIO)'];
+          bid = bid.replace(/.$/, '');
           let amId = refData.acquisitionMethods['Purchase'];
+          let inst = instMap[bid];
           let pol = {
             acquisitionMethod: amId,
             paymentStatus: 'Awaiting Payment',
@@ -200,6 +226,13 @@ const formMap = {
             locations: []
           };
           pol.id = uuid(pol.poLineNumber, ns);
+          pol.orderFormat = 'Physical Resource';
+          if (inst) {
+            pol.instanceId = inst.id;
+            pol.titleOrPackage = inst.title;
+          } else {
+            console.log(`WARN No instance found for ${bid}`);
+          }
           co.compositePoLines.push(pol);
 
           console.log(co);
