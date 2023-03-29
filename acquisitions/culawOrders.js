@@ -30,6 +30,14 @@ const formMap = {
   c: "web"
 };
 
+const payMap = {
+  a: 'Fully paid',
+  d: 'Fully paid',
+  z: 'Cancelled',
+  o: 'Pending',
+  f: 'Ongoing'
+};
+
 (async () => {
   let startTime = new Date().valueOf();
   try {
@@ -148,6 +156,7 @@ const formMap = {
           let poNum = (so['RECORD #(ORDER)']) ? 'l' + so['RECORD #(ORDER)'] : '';
           let poId = uuid(poNum, ns);
           let vend = so.VENDOR.replace(/^l([^-])/, 'l-$1');
+          vend = vend.trim();
           let orgId = refData.organizations[vend];
           if (!orgId) throw (`WARN No organizationId found for ${vend}`);
           let created = so.ODATE;
@@ -164,6 +173,7 @@ const formMap = {
           let price = parseFloat(priceStr);
           let form = so['FORM'];
           let formStr = formMap[form];
+          let payStat = payMap[ostat] || 'Awaiting payment';
           let materialTypeId = refData.mtypes[formStr] || refData.mtypes.unspecified;
           if (!materialTypeId) throw(`WARN can't find materialTypeId for ${form} (${formStr})`);
           let copies = so['COPIES'];
@@ -215,13 +225,13 @@ const formMap = {
           let inst = instMap[bid];
           let pol = {
             acquisitionMethod: amId,
-            paymentStatus: 'Awaiting Payment',
             poLineNumber: poNum + '-1',
             source: 'User',
             checkinItems: false,
             purchaseOrderId: co.id,
             fundDistribution: [],
-            locations: []
+            locations: [],
+            paymentStatus: payStat
           };
           pol.id = uuid(pol.poLineNumber, ns);
           pol.orderFormat = (form === 'c') ? 'Electronic Resource' : 'Physical Resource';
