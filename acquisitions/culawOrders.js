@@ -23,26 +23,11 @@ const refFiles = {
 };
 
 const formMap = {
-  b: "book",
-  e: "ejournal acq",
-  k: "map",
-  j: "memb acq",
-  g: "cd acq",
-  i: "lp",
-  l: "microfilm",
-  m: "microfiche",
-  n: "news acq",
-  o: "archival collection acq",
-  p: "photograph acq",
-  r: "ebook acq",
-  s: "journal",
-  u: "bib acq",
-  w: "dvd",
-  x: "db acq",
-  y: "electronic resource",
-  3: "score",
-  4: "stream acq",
-  f: "film reel"
+  m: "book",
+  s: "serial",
+  l: "serial",
+  v: "video recording",
+  c: "web"
 };
 
 (async () => {
@@ -164,7 +149,7 @@ const formMap = {
           let poId = uuid(poNum, ns);
           let vend = so.VENDOR.replace(/^l([^-])/, 'l-$1');
           let orgId = refData.organizations[vend];
-          if (!orgId) throw new Error(`No vender ID found for ${vend}`);
+          if (!orgId) throw (`WARN No organizationId found for ${vend}`);
           let created = so.ODATE;
           if (created.match(/\d/)) {
             created = created.replace(/(..-..)-(....)/, '$2-$1');
@@ -178,12 +163,18 @@ const formMap = {
           priceStr = priceStr.replace(/^\$/, '');
           let price = parseFloat(priceStr);
           let form = so['FORM'];
+          let formStr = formMap[form];
+          let materialTypeId = refData.mtypes[formStr] || refData.mtypes.unspecified;
+          if (!materialTypeId) throw(`WARN can't find materialTypeId for ${form} (${formStr})`);
           let copies = so['COPIES'];
           let quant = parseInt(copies, 10);
+          let loc = so['LOC'].trim();
+          let locId = refData.locations[loc];
+          if (!locId) throw(`WARN can't find locationId for ${loc} (${poNum})`)
           let orderType = (otype === 's') ? 'Ongoing' : 'One-Time';
           let reEnc = (ostat === 'f') ? false : true;
           let wfStat = (ostat.match(/[of]/)) ? 'Open' : 'Closed';
-          wfStat = 'Pending';
+          // wfStat = 'Pending';
           let co = {
             id: poId,
             poNumber: poNum,
@@ -240,18 +231,33 @@ const formMap = {
           } else {
             console.log(`WARN No instance found for ${bid}`);
           }
-
+          let locObj = {
+            locationId: locId,
+            quantity: quant
+          };
           let cost = {
             currency: 'USD',
-          }
+          };
           if (pol.orderFormat === 'Electronic Resource') {
             cost.listUnitPriceElectronic = price;
             cost.quantityElectronic = quant;
+            locObj.quantityElectronic = quant;
+            pol.eresource = {
+              createInventory: 'None',
+              materialType: materialTypeId 
+            };
           } else {
             cost.listUnitPrice = price;
             cost.quantityPhysical = quant;
+            locObj.quantityPhysical = quant;
+            pol.physical = {
+              createInventory: 'None',
+              materialType: materialTypeId,
+              volumes: []
+            };
           }
           pol.cost = cost;
+          pol.locations.push(locObj);
 
           let fd = {
             distributionType: 'percentage',
