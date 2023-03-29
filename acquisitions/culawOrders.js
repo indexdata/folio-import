@@ -104,6 +104,12 @@ const payMap = {
       fs.writeFileSync(fileName, outStr, { flag: 'a' });
     }
 
+    const dateParse = (dateStr) => {
+      let out = dateStr.replace(/(..-..)-(....)/, '$2-$1');
+      out = out.replace(/^(..-..)-(..)/, '19$2-$1');
+      return out;
+    }
+
     // make tags
     const tagMap = { k: 'Vital Law', w: 'LMA', l: 'MAP', '-' : 'LMA' };
     for (let k in tagMap) {
@@ -161,10 +167,11 @@ const payMap = {
           if (!orgId) throw (`WARN No organizationId found for ${vend}`);
           let created = so.ODATE;
           if (created.match(/\d/)) {
-            created = created.replace(/(..-..)-(....)/, '$2-$1');
+            created = dateParse(created);
           } else {
             created = '2000-01-01';
           }
+          let rdate = (so.RDATE.match(/\d/)) ? dateParse(so.RDATE) : '';
           let otype = so['ORD TYPE'];
           let ostat = so['STATUS'];
           let code2 = so['CODE2'];
@@ -241,6 +248,8 @@ const payMap = {
           } else {
             console.log(`WARN No instance found for ${bid}`);
           }
+          pol.receiptStatus = (rdate) ? 'Received' : 'Awaiting Receipt';
+          if (rdate) pol.receiptDate = rdate;
           let locObj = {
             locationId: locId,
             quantity: quant
