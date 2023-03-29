@@ -171,6 +171,7 @@ my $icount = 0;
 my $bcount = 0;
 my $rcount = 0;
 my $start = time();
+my $inc = {};
 
 foreach (@ARGV) {
   my $infile = $_;
@@ -206,6 +207,10 @@ foreach (@ARGV) {
     my $main_bib = 'b' . $obj->{bibIds}->[0];
     foreach my $it_bid (@{ $obj->{bibIds} }) {
       my $bid = "b$it_bid";
+      if (!$inc->{$bid}) {
+        $inc->{$bid} = 0;
+      }
+      $inc->{$bid}++;
       my $psv = $inst_map->{$bid};
       if (!$psv) {
         print "WARN No map entry found for $bid (item: $obj->{id})\n";
@@ -266,12 +271,12 @@ sub make_hi {
   my $hcall = '';
   my $bw;
   my $bws = '';
+  my $hinc = sprintf("%03d", $inc->{$bhrid});
 
   my $loc = $item->{fixedFields}->{79}->{value} || '';
   next if !$loc;
   $loc =~ s/(\s*$)//;
   my $hkey = "$bhrid-$loc";
-  $hid = uuid($hkey);
   my $locid = $sierra2folio->{locations}->{$loc} || '761db5ed-d29d-4e2e-83d1-c6dfd1426cfd'; # defaults to Unmapped location.
   my $vf = {};
   my $local_callno = 0;
@@ -311,13 +316,15 @@ sub make_hi {
   }
 
   # make holdings record from item;
+  $hkey = "$hkey-$cn";
+  $hid = uuid($hkey);
   if (!$hseen->{$hkey} && !$hfound)  {
     $hcall = $cn || '';
     my $iid = 'i' . $item->{id};
     my $bc = $vf->{b}[0] || '[No barcode]';
     $hrec->{id} = $hid;
     $hrec->{_version} = $ver;
-    $hrec->{hrid} = $hkey;
+    $hrec->{hrid} = "$bhrid-$hinc";
     $hrec->{instanceId} = $bid;
     $hrec->{permanentLocationId} = $locid;
     $hrec->{sourceId} = $refdata->{holdingsRecordsSources}->{FOLIO} || '';
