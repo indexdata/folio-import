@@ -166,7 +166,9 @@ close MAP;
 
 $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
+# print Dumper($refdata); exit;
 my $tofolio = makeMapFromTsv($ref_dir, $refdata);
+# print Dumper($tofolio->{locations}); exit;
 
 my $relations = {
   '0' => 'Resource',
@@ -267,7 +269,10 @@ foreach (@ARGV) {
     $h->{formerIds} = [ $obj->{id} ];
     $h->{hrid} = $hid;
     $h->{instanceId} = $b[0];
-    my $loc_id = $refdata->{locations}->{$loc_code} || $refdata->{locations}->{UNMAPPED};
+    my $loc_id = $tofolio->{locations}->{$loc_code} || $refdata->{locations}->{UNMAPPED};
+    if (!$tofolio->{locations}->{$loc_code}) {
+      print "WARN: LocationId not found for $loc_code\n";
+    }
     $h->{permanentLocationId} = $loc_id;
     $h->{sourceId} = $source_id;
     my $typecode = substr($leader, 6, 1) || '';
