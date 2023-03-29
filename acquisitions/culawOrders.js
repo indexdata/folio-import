@@ -248,7 +248,7 @@ const payMap = {
           } else {
             console.log(`WARN No instance found for ${bid}`);
           }
-          pol.receiptStatus = (rdate) ? 'Received' : 'Awaiting Receipt';
+          pol.receiptStatus = (rdate) ? 'Fully Received' : 'Awaiting Receipt';
           if (rdate) pol.receiptDate = rdate;
           let locObj = {
             locationId: locId,
