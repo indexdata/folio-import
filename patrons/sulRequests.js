@@ -42,7 +42,8 @@ const tenant = 'sul';
 
     const inRecs = parse(csv, {
       columns: true,
-      skip_empty_lines: true
+      skip_empty_lines: true,
+      relax_column_count: true
     });
 
     console.log(`Loading users from ${usersFile}`);
@@ -74,9 +75,8 @@ const tenant = 'sul';
       files[f] = fullPath;
     }
 
-    const write = (obj, file) => {
-      console.log(`Writing ${obj.checkouts.length} to ${file}`);
-      fs.writeFileSync(file, JSON.stringify(obj, null, 2));
+    const writeTo = (file, obj) => {
+      fs.writeFileSync(file, JSON.stringify(obj) + '\n', { flag: 'a'});
     };
 
     let total = 0;
@@ -145,8 +145,7 @@ const tenant = 'sul';
           requestLevel: 'Item'
         };
         ibcodeSeen[ibcode] = item;
-        reqStr = JSON.stringify(req);
-        console.log(reqStr);
+        writeTo(files.co, req);
       }
     }
 
