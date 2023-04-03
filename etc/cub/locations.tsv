@@ -312,7 +312,7 @@
 admpr		3	
 altec	CU/B/OFF/ALTEC	2944	
 amrof		1	Do Not Map
-art	CU/B/NOR/art		
+art	CU/B/NOR/ARTS		REMAP
 artbl	CU/B/NOR/cleanup		
 artcl	CU/B/NOR/cleanup		
 artfo	CU/B/NOR/cleanup		
@@ -347,7 +347,7 @@ asnrf	CU/B/NOR/ASIAREF
 asnro	CU/B/NOR/ASIAREFOV		
 asnrs	CU/B/NOR/ASIAREFSER		
 asnst	CU/B/NOR/ASIA		
-asntp	CU/B/NOR/NORRES		
+asntp	CU/B/NOR/NORRES		do not migrate
 bib		2	
 bus	CU/B/BUS/bus		
 bus24	CU/B/EMP/BUSRESEMP		
@@ -388,16 +388,16 @@ cde	CU/B/NOR/CDOF
 cdeof	CU/B/NOR/CDOF		
 cls			
 clsst	CU/B/OFF/CLSST	1425	
-com		17	no longer populated
-comch		4	no longer populated
-comcl		1	no longer populated
-comhp		2	no longer populated
-comlp		1	no longer populated
-comrm		5	no longer populated
-comst			
+com		17	do not migrate
+comch		4	do not migrate
+comcl		1	do not migrate
+comhp		2	do not migrate
+comlp		1	do not migrate
+comrm		5	do not migrate
+comst			do not migrate
 cr0zz			
 crlst		4	
-cya	CU/B/NOR/cya		
+cya	CU/B/NOR/NORCYA		REMAP
 cyast	CU/B/NOR/NORCYA		
 deans		2	
 eng	CU/B/EMP/eng		
@@ -440,7 +440,7 @@ escrf	CU/B/ESM/ESMREF
 escrs	CU/B/ESM/ESMRES		
 escst	CU/B/ESM/ESMS		
 escth	CU/B/ESM/ESMT		
-etd	Oversize	8351	
+etd	CU/B/Online/Online	8351	
 gov	CU/B/NOR/gov		
 govav	CU/B/NOR/GOVOF		
 govcd	CU/B/NOR/GOVOF		
@@ -479,6 +479,7 @@ inpts	CU/B/NOR/INPTS	3851
 juv	CU/B/NOR/juv		
 law			
 lib	Do Not Map	5	
+malcu	CU/B/OFFSITE/MALCU		
 map	CU/B/ESM/ESM		
 map24	CU/B/ESM/ESMMRES		
 map2h	CU/B/ESM/ESMMRES		
@@ -555,40 +556,40 @@ nor7d	CU/B/NOR/NORRES
 norar	CU/B/NOR/NORART	7	
 norbr		1	
 norca	CU/B/NOR/NORGSC		
-norcl		1	no longer populated
-norcr		3	no longer populated
+norcl		1	do not migrate
+norcr		3	do not migrate
 nordc	CU/B/NOR/NORDC		
 nordo	CU/B/NOR/NORRES		
 nordr	CU/B/NOR/NORRAD		
 nords	CU/B/NOR/NORDIS	60	
 nordv	CU/B/NOR/NORDVD		
 nored	CU/B/NOR/NORED	1	a number of locations have been matriculated to this location in Sierra since last image.
-norex		13	
-norfc	CU/B/NOR/NORFSC		
+norex		13	do not migrate
+norfc			do not migrate
 norhs		1	no longer populated
 noril		2	
 norli		2	
-norln		2	
-norlo		1	no longer populated
+norln		0	do not migrate
+norlo		1	do not migrate
 normc	CU/B/NOR/NORRADC	67	
 normr	CU/B/NOR/NORMIND	35	
 nornb	CU/B/OFF/PASCAL	1	
 nornc	CU/B/NOR/NORNUC		
-norof		26	
+norof		26	do not migrate
 noros	NOROV	12750	NOROV
 norov	CU/B/NOR/NOROV		
 norpr		7970	
-norrc		822	
+norrc		822	do not migrate
 norrl	CU/B/NOR/NORRES		
-norrx		1	no longer populated
-nors1		8	no longer populated
-nors2		1	no longer populated
-nors4		5	no longer populated
-nors5		3	no longer populated
-norsc		3	no longer populated
-norsl		23	no longer populated
+norrx		1	do not migrate
+nors1		8	do not migrate
+nors2		1	do not migrate
+nors4		5	do not migrate
+nors5		3	do not migrate
+norsc		3	do not migrate
+norsl		23	do not migrate
 norst	CU/B/NOR/NORS		
-nortp	CU/B/NOR/NORRES		
+nortp			do not migrate
 pas	CU/B/OFF/PASCAL	183	
 pascl	CU/B/OFF/PASCAL	162759	This is inactive under NOR/PASCAL but the location is OFFSITE and should be located there.
 pascu	CU/B/OFF/PASCAL		
@@ -671,7 +672,7 @@ refov	CU/B/NOR/NORREFOV
 refrd			
 refsc	CU/B/NOR/NORREFC		
 refst	CU/B/NOR/NORREFS		
-reftb		1	
+reftb		0	
 reg	CU/B/OFF/REGH	239	
 rej		2	no longer populated
 sci	CU/B/NOR/SCIST	556	
@@ -728,5 +729,5 @@ tecaq	CU/B/NOR/TSACQ
 tecca	CU/B/NOR/TSCAT		
 tecpr	CU/B/NOR/TSPRES		
 tecse	CU/B/NOR/TSS		
-web	NOR/ONLINE	4831794	NOR/ONLINE
+web	CU/B/Online/Online	4831794	CU/B/Online/Online
 			FOLIOCODE
