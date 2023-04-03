@@ -144,10 +144,12 @@ while (<MAP>) {
   $mi++;
   print "  $mi map lines read\n" if $mi % 1000000 == 0;
   chomp;
-  my @d = split(/\|/, $_, 2);
-  push @{ $hold_map->{$d[0]} }, $d[1];
+  my @d = split(/\|/, $_);
+  my $mkey = $d[0] . '-' . $d[1];
+  push @{ $hold_map->{$mkey} }, $d[2];
 }
 close MAP;
+# print Dumper($hold_map); exit;
 
 $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
@@ -306,19 +308,21 @@ sub make_hi {
     }
   }
   my $hfound = 0;
-  foreach (@{ $hold_map->{$bhrid} }) {
-    my @m = split(/\|/);
-    if ($loc =~ /$m[0]/) {
-      $hid = $m[1];
-      $hfound = 1;
-      last;
-    }
+  my $mloc = $loc;
+  my $mkey = "$bhrid-$mloc";
+  $mloc =~ s/^(...).*/$1/;
+  my $fkey = "$bhrid-$mloc";
+  my $holdid = '';
+  if ($hold_map->{$mkey}) {
+    $holdid = $hold_map->{$mkey}[0];
+  } elsif ($hold_map->{$fkey}) {
+    $holdid = $hold_map->{$fkey}[0];
   }
 
   # make holdings record from item;
   $hkey = "$hkey-$cn";
   $hid = uuid($hkey);
-  if (!$hseen->{$hkey} && !$hfound)  {
+  if (!$hseen->{$hkey} && !$holdid)  {
     $hcall = $cn || '';
     my $iid = 'i' . $item->{id};
     my $bc = $vf->{b}[0] || '[No barcode]';
@@ -363,7 +367,7 @@ sub make_hi {
   if ($iid) {
     $iid =~ s/^\.//;
     $irec->{_version} = $ver;
-    $irec->{holdingsRecordId} = $hid || die "No holdings record ID found for $iid";
+    $irec->{holdingsRecordId} = $holdid || $hid || die "No holdings record ID found for $iid";
     if ($bwc == 0) {
       $irec->{barcode} = $bc if $bc;
     } else {
