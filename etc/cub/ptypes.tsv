@@ -1,114 +1,165 @@
-ptype	pcode3	FOLIO Target Patron Group
-0	75	Tier 2
-1	*	Tier 1
-2	*	Tier 1
-3	*	Tier 1
-4	*	Tier 2
-5	*	Tier 2
-6	22	Tier 2
-6	23	Tier 1
-6	24	Tier 2
-6	25	Tier 1
-6	28	Tier 3
-6	31	Tier 3
-6	32	Tier 2
-6	33	Tier 2
-6	34	Tier 2
-6	35	Tier 2
-6	36	Tier 2
-6	37	Tier 2
-6	38	Tier 2
-6	39	Tier 2
-6	40	Tier 2
-6	41	Tier 2
-6	42	Tier 2
-6	43	Tier 2
-6	44	Tier 2
-6	45	Tier 2
-6	46	Tier 2
-6	47	Tier 2
-6	48	Tier 2
-6	49	Tier 2
-6	50	Tier 2
-6	51	Tier 2
-6	52	Tier 2
-6	53	Tier 2
-6	54	Tier 2
-6	55	Tier 2
-6	56	Tier 2
-6	57	Tier 2
-6	58	Tier 2
-6	86	Tier 1
-6	98	Tier 2
-6	99	Tier 2
-7	23	Tier 1
-7	27	Tier 1
-7	87	Tier 1
-8	*	Tier 1
-9	*	Library Departments
-10	*	Library Departments
-11	*	Tier 1
-13	*	Library Departments
-14	*	Library Departments
-15	*	Library Departments
-16	21	Tier 1
-16	93	Tier 1
-16	94	Tier 1
-16	95	Tier 2
-18	*	Tier 3
-19	*	Library Departments
-21	*	Library Departments
-22	*	Library Departments
-23	*	Tier 1
-24	*	Tier 1
-25	*	Tier 3
-26	*	CU Departments
-27	*	CU Departments
-28	*	CU Departments
-29	*	Library Departments
-30	* 	Tier 1
-31	* 	Tier 3
-200	*	Prospector/MOBIUS
-201	*	Prospector/MOBIUS
-202	*	Prospector/MOBIUS
-203	*	Prospector/MOBIUS
-204	*	Prospector/MOBIUS
-205	*	Prospector/MOBIUS
-206	*	Prospector/MOBIUS
-207	*	Prospector/MOBIUS
-208	*	Prospector/MOBIUS
-209	*	Prospector/MOBIUS
-210	*	Prospector/MOBIUS
-211	*	Prospector/MOBIUS
-212	*	Prospector/MOBIUS
-213	*	Prospector/MOBIUS
-214	*	Prospector/MOBIUS
-215	*	Prospector/MOBIUS
-216	*	Prospector/MOBIUS
-217	*	Prospector/MOBIUS
-218	*	Prospector/MOBIUS
-220	*	Prospector/MOBIUS
-224	*	Prospector/MOBIUS
-227	*	Prospector/MOBIUS
-228	*	Prospector/MOBIUS
-229	*	Prospector/MOBIUS
-230	*	Prospector/MOBIUS
-231	*	Prospector/MOBIUS
-232	*	Prospector/MOBIUS
-233	*	Prospector/MOBIUS
-234	*	Prospector/MOBIUS
-235	*	Prospector/MOBIUS
-236	*	Prospector/MOBIUS
-237	*	Prospector/MOBIUS
-238	*	Prospector/MOBIUS
-239	*	Prospector/MOBIUS
-240	*	Prospector/MOBIUS
-241	*	Prospector/MOBIUS
-242	*	Prospector/MOBIUS
-246	*	Prospector/MOBIUS
-248	*	Prospector/MOBIUS
-249	*	Prospector/MOBIUS
-250	*	Prospector/MOBIUS
-253	*	Prospector/MOBIUS
-254	*	Prospector/MOBIUS
-255	*	Prospector/MOBIUS
+ptype	pcode3	FOLIO Target Patron Group					
+0	75	Tier 2					
+1	*	Tier 1				FOLIO will have 6 patron groups:	Current Sierra pTypes:
+2	*	Tier 1				Tier 1	1,2,3,7,8,11,16,23,24,30
+3	*	Tier 1				Tier 2	0,4,5,6,
+4	*	Tier 2				Tier 3	18,25,31
+5	*	Tier 2				Library Department	9,10,13,14,15,19,21,22,29
+6	22	Tier 2				Campus Department	26,27,28
+6	23	Tier 1				Prospector/Mobius	200-255
+6	24	Tier 2					
+6	25	Tier 1					
+6	28	Tier 3					
+6	31	Tier 3					
+6	32	Tier 2					
+6	33	Tier 2					
+6	34	Tier 2					
+6	35	Tier 2					
+6	36	Tier 2					
+6	37	Tier 2					
+6	38	Tier 2					
+6	39	Tier 2					
+6	40	Tier 2					
+6	41	Tier 2					
+6	42	Tier 2					
+6	43	Tier 2					
+6	44	Tier 2					
+6	45	Tier 2					
+6	46	Tier 2					
+6	47	Tier 2					
+6	48	Tier 2					
+6	49	Tier 2					
+6	50	Tier 2					
+6	51	Tier 2					
+6	52	Tier 2					
+6	53	Tier 2					
+6	54	Tier 2					
+6	55	Tier 2					
+6	56	Tier 2					
+6	57	Tier 2					
+6	58	Tier 2					
+6	86	Tier 1					
+6	98	Tier 2					
+6	99	Tier 2					
+7	23	Tier 1					
+7	27	Tier 1					
+7	87	Tier 1					
+8	*	Tier 1					
+9	*	Library Departments					
+10	*	Library Departments					
+11	*	Tier 1					
+13	*	Library Departments					
+14	*	Library Departments					
+15	*	Library Departments					
+16	21	Tier 1					
+16	93	Tier 1					
+16	94	Tier 1					
+16	95	Tier 2					
+18	*	Tier 3					
+19	*	Library Departments					
+21	*	Library Departments					
+22	*	Library Departments					
+23	*	Tier 1					
+24	*	Tier 1					
+25	*	Tier 3					
+26	*	CU Departments					
+27	*	CU Departments					
+28	*	CU Departments					
+29	*	Library Departments					
+30	* 	Tier 1					
+31	* 	Tier 3					
+200	*	Prospector/MOBIUS					
+201	*	Prospector/MOBIUS					
+202	*	Prospector/MOBIUS					
+203	*	Prospector/MOBIUS					
+204	*	Prospector/MOBIUS					
+205	*	Prospector/MOBIUS					
+206	*	Prospector/MOBIUS					
+207	*	Prospector/MOBIUS					
+208	*	Prospector/MOBIUS					
+209	*	Prospector/MOBIUS					
+210	*	Prospector/MOBIUS					
+211	*	Prospector/MOBIUS					
+212	*	Prospector/MOBIUS					
+213	*	Prospector/MOBIUS					
+214	*	Prospector/MOBIUS					
+215	*	Prospector/MOBIUS					
+216	*	Prospector/MOBIUS					
+217	*	Prospector/MOBIUS					
+218	*	Prospector/MOBIUS					
+220	*	Prospector/MOBIUS					
+224	*	Prospector/MOBIUS					
+227	*	Prospector/MOBIUS					
+228	*	Prospector/MOBIUS					
+229	*	Prospector/MOBIUS					
+230	*	Prospector/MOBIUS					
+231	*	Prospector/MOBIUS					
+232	*	Prospector/MOBIUS					
+233	*	Prospector/MOBIUS					
+234	*	Prospector/MOBIUS					
+235	*	Prospector/MOBIUS					
+236	*	Prospector/MOBIUS					
+237	*	Prospector/MOBIUS					
+238	*	Prospector/MOBIUS					
+239	*	Prospector/MOBIUS					
+240	*	Prospector/MOBIUS					
+241	*	Prospector/MOBIUS					
+242	*	Prospector/MOBIUS					
+246	*	Prospector/MOBIUS					
+248	*	Prospector/MOBIUS					
+249	*	Prospector/MOBIUS					
+250	*	Prospector/MOBIUS					
+253	*	Prospector/MOBIUS					
+254	*	Prospector/MOBIUS					
+255	*	Prospector/MOBIUS					
+0	0	TIER 2					
+0	11	TIER 2					
+0	21	TIER 2					
+0	22	TIER 2					
+0	24	TIER 2					
+0	27	TIER 2					
+0	28	TIER 2					
+0	29	TIER 2					
+0	30	TIER 2					
+0	31	TIER 2					
+0	32	TIER 2					
+0	35	TIER 2					
+0	38	TIER 2					
+0	39	TIER 2					
+0	42	TIER 2					
+0	45	TIER 2					
+0	48	TIER 2					
+0	49	TIER 2					
+0	50	TIER 2					
+0	52	TIER 2					
+0	53	TIER 2					
+0	54	TIER 2					
+0	56	TIER 2					
+0	58	TIER 2					
+0	98	TIER 2					
+0	99	TIER 2					
+12	0	no patron combos like this, don't map					
+12	1	no patron combos like this, don't map					
+12	18	no patron combos like this, don't map					
+12	202	no patron combos like this, don't map					
+12	204	no patron combos like this, don't map					
+12	27	no patron combos like this, don't map					
+12	31	no patron combos like this, don't map					
+12	70	no patron combos like this, don't map					
+12	75	no patron combos like this, don't map					
+12	97	no patron combos like this, don't map					
+16	11	no patron combos like this, don't map					
+6	100	TIER 2					
+6	13	TIER 2					
+6	14	TIER 2					
+6	18	TIER 2					
+6	199	TIER 2					
+6	82	TIER 2					
+6	83	TIER 2					
+6	84	TIER 2					
+7	199	no patron combos like this, don't map					
+7	22	no patron combos like this, don't map					
+7	56	no patron combos like this, don't map					
+7	8	no patron combos like this, don't map					
+7	81	no patron combos like this, don't map					
+7	99	no patron combos like this, don't map					
