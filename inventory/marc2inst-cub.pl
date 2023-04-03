@@ -87,7 +87,7 @@ sub getRefData {
           $refobj->{$refroot} = {};
           foreach (@{ $json->{$_} }) {
             my $name;
-            if ($refroot =~ /^(instanceTypes|contributorTypes|instanceFormats|locations)$/) {
+            if ($refroot =~ /^(instanceTypes|contributorTypes|instanceFormats|locations|statisticalCodes)$/) {
               $name = $_->{code};
             } else {
               $name = $_->{name};
@@ -128,6 +128,8 @@ sub makeMapFromTsv {
       } else {
         if ($prop =~ /mtypes|holdings-types/) {
           $name = $col[1];
+        } elsif ($prop eq 'statisticalCodes') {
+          $name = $col[2];
         }
         $tsvmap->{$prop}->{$code} = $refdata->{$prop}->{$name};
       }
@@ -139,7 +141,7 @@ sub makeMapFromTsv {
 $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
 my $sierra2folio = makeMapFromTsv($ref_dir, $refdata);
-# print Dumper($sierra2folio); exit;
+# print Dumper($sierra2folio->{statisticalCodes}); exit;
 # print Dumper($refdata); exit;
 
 
@@ -723,6 +725,12 @@ foreach (@ARGV) {
     if (!$hrids->{$hrid} && $marc->title()) {
       # set FOLIO_USER_ID environment variable to create the following metadata object.
       $rec->{id} = uuid($hrid . $version);
+      my $arlcode = $marc->subfield('998','d') || '';
+      $arlcode =~ s/ //g;
+      my $statId = $sierra2folio->{statisticalCodes}->{$arlcode} || '';
+      if ($statId) {
+        push @{$rec->{statisticalCodeIds}}, $statId;
+      }
       if ($ENV{FOLIO_USER_ID}) {
         $rec->{metadata} = {
           createdByUserId=>$ENV{FOLIO_USER_ID},
