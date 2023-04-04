@@ -1,0 +1,63 @@
+Sierra iType	FOLIO Material Type	FOLIO Loan Type			
+					Can Circulate
+1	Journal	Can Circulate			Cannot Circulate
+63	Newspaper	Can Circulate			Course Reserves
+0	Book	Can Circulate			Reading Room
+6	Document	Can Circulate			
+10	Score	Can Circulate			Course Reserves 2 Hour
+20	Folio	Can Circulate			Course Reserves 4 Hour
+32	Thesis	Can Circulate			Course Reserves 24 Hour
+87	Standards	Can Circulate			Course Reserves 48 Hour
+102	Book, no Prospector	Can Circulate			Course Reserves 72 Hour
+7	Mona	Popular Reading Collections			
+76	Reference Circulating Collection	Circulating Reference Materials			Circulating Reference Materials
+11	Sound Recording	Can Circulate			Popular Reading Collections
+12	Microfilm	Can Circulate			
+13	VHS Video	Can Circulate			
+14	Map	Can Circulate			
+15	CD-Rom	Can Circulate			
+16	Computer Disk	Can Circulate			
+17	Microfiche	Can Circulate			
+24	Slide	Can Circulate			
+29	Audiocassette	Can Circulate			
+30	DVD: No Prospector	Can Circulate			
+32	Filmstrip	Can Circulate			
+45	VHS Video: Prospector	Can Circulate			
+46	DVD: Prospector	Can Circulate			
+47	Microfilm: Prospector	Can Circulate			
+50	LP	Can Circulate			
+51	Laserdisc	Can Circulate			
+52	Microprint	Can Circulate			
+59	Film Reel	Can Circulate			
+72	Sound recordings - No Prospector	Can Circulate			
+80	Flash Drive	Can Circulate			
+97	 3D item 3 day loan	Can Circulate			
+96	3D item 4 hour loan	Can Circulate			
+70	DVD, conversion from VHS	Can Circulate			
+42	Web	Can Circulate			
+73	ILL Borrowed Materials	Can Circulate			
+94	Ebooks, Prospector	Can Circulate			
+95	SILLVR streaming videos	Can Circulate			
+200	Prospector-Requestable	Can Circulate			
+201	Prospector NonRequestable	Can Circulate			
+202	MOBIUS AV Circ	Can Circulate			
+203	MOBIUS TEST	Can Circulate			
+205	Prospector Media	Can Circulate			
+206	Prospector PASCAL journals	Can Circulate			
+207	Prospector CRL Items	Can Circulate			
+209	MOBIUS GENERAL CIRC	Can Circulate			
+210	MOBIUS NON-CIRC	Can Circulate			
+211	MOBIUS Audiobook	Can Circulate			
+220	Marmot monograph	Can Circulate			
+	Marmot Media	Can Circulate			
+39	SPC & ARV PASCAL	Reading Room	May change depending on reading room workflow decisions		
+40	Gov Pub Special	Reading Room	May change depending on reading room workflow decisions		
+60	Music Spec Coll PASCAL	Reading Room	May change depending on reading room workflow decisions		
+64	Lebowitz Collection	Reading Room	May change depending on reading room workflow decisions		
+68	AMRC PASCAL	Reading Room	May change depending on reading room workflow decisions		
+79	Gov Pres Steward	Reading Room	May change depending on reading room workflow decisions		
+81	Music Scores Limited Use	Can Circulate	May change depending on reading room workflow decisions		
+82	Music Gindes Collection	Can Circulate	May change depending on reading room workflow decisions		
+90	Artworks	Cannot Circulate			
+98	3D item semester loan	Can Circulate			
+67	Reserves	Course Reserves			
