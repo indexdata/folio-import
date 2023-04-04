@@ -117,7 +117,12 @@ const wait = (ms) => {
           logger.error(`${date} [${range}] (${slice}): ${e.response.text}`);
           if (lpath) {
             let rfname = lname.replace(/\.json$/, '');
-            fs.writeFileSync(`${lpath}/${rfname}_${range}_err.json`, JSON.stringify(ldata, null, 2));
+            let efile = `${lpath}/${rfname}_${range}_err.jsonl`;
+            if (fs.existsSync(efile)) fs.unlinkSync(efile);
+            for (let x = 0; x < ldata[root].length; x++) {
+              let erec = ldata[root][x];
+              fs.writeFileSync(`${lpath}/${rfname}_${range}_err.jsonl`, JSON.stringify(erec) + '\n', { flag: 'a'});
+            }
           }
           fail++;
           await wait(config.delay);
