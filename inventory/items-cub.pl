@@ -78,6 +78,7 @@ sub getRefData {
               $name = $_->{code};
             } else {
               $name = $_->{name};
+              $name = lc($name);
             }
             if ($refroot eq 'locations') {
               $name =~ s/^.+\///;
@@ -107,8 +108,11 @@ sub makeMapFromTsv {
       chomp;
       s/\s+$//;
       my @col = split(/\t/);
-      my $code = $col[0] || '';
+      my $code = ($col[0] =~ /\w/) ? $col[0] : '';
+      $code =~ s/^ +| +$//g;
       my $name = $col[2] || '';
+      $name =~ s/^ +| +$//g;
+      $name = lc($name);
       if ($prop eq 'statuses') {
         $tsvmap->{$prop}->{$code} = $name;
       } else {
@@ -116,7 +120,9 @@ sub makeMapFromTsv {
           $name = $col[1] || '';
           $name =~ s/^.+\///;
         }
-        $tsvmap->{$prop}->{$code} = $refdata->{$prop}->{$name};
+        if ($refdata->{$prop}->{$name}) {
+          $tsvmap->{$prop}->{$code} = $refdata->{$prop}->{$name};
+        }
       }
     }
   }
@@ -149,11 +155,11 @@ while (<MAP>) {
   push @{ $hold_map->{$mkey} }, $d[2];
 }
 close MAP;
-# print Dumper($hold_map); exit;
 
 $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
 my $sierra2folio = makeMapFromTsv($ref_dir, $refdata);
+# print Dumper($sierra2folio->{loantypes}); exit;
 
 my $relations = {
   '0' => 'Resource',
@@ -355,9 +361,18 @@ sub make_hi {
   # make item record;
   my $irec = {};
   my $iid = $item->{id};
-  my $itype = $item->{fixedFields}->{79}->{value};
+  my $itype = $item->{fixedFields}->{61}->{value};
   my $status = $item->{fixedFields}->{88}->{value} || '';
-  my $bc = $vf->{b}[0] || '';
+  my $bc = '';
+  my $pbc = '';
+  foreach (@{$vf->{b}}) {
+    s/ +$//;
+    if ($_ =~ /^U/) {
+      $bc = $_;
+    } elsif ($_ =~ /^P/) {
+      $pbc = $_;
+    }
+  }
   my @msgs = $vf->{m};
   my @notes;
   push @notes, "Former location: $loc";
@@ -368,8 +383,12 @@ sub make_hi {
     $iid =~ s/^\.//;
     $irec->{_version} = $ver;
     $irec->{holdingsRecordId} = $holdid || $hid || die "No holdings record ID found for $iid";
+    my @pnotes;
     if ($bwc == 0) {
       $irec->{barcode} = $bc if $bc;
+      if ($pbc) {
+        push @pnotes, $pbc;
+      }
     } else {
       push @notes, "This item is bound with $bc";
       my $main_id = uuid($iid);
@@ -390,7 +409,7 @@ sub make_hi {
       $irec->{volume} = $vf->{v}[0] || '';
     }
     $irec->{copyNumber} = $item->{fixedFields}->{58}->{value} || '';
-    $irec->{permanentLoanTypeId} = $refdata->{loantypes}->{'Can circulate'};
+    $irec->{permanentLoanTypeId} = $sierra2folio->{loantypes}->{$itype} || $refdata->{loantypes}->{'can circulate'};
     $irec->{materialTypeId} = $sierra2folio->{mtypes}->{$itype} || '71fbd940-1027-40a6-8a48-49b44d795e46'; # defaulting to unspecified
     $irec->{status}->{name} = $sierra2folio->{statuses}->{$status} || 'Available'; # defaulting to available;
     foreach my $note (@{ $vf->{m} }) {
@@ -408,6 +427,13 @@ sub make_hi {
       my $nobj = {};
       $nobj->{note} = $_;
       $nobj->{itemNoteTypeId} = '8d0a5eca-25de-4391-81a9-236eeefdd20b';  # Note
+      $nobj->{staffOnly} = 'true';
+      push @{ $irec->{notes} }, $nobj;
+    }
+    foreach (@pnotes) {
+      my $nobj = {};
+      $nobj->{note} = $_;
+      $nobj->{itemNoteTypeId} = '5c9f271c-4960-4356-840e-0a8fc050a420'; # PASCAL Barcode
       $nobj->{staffOnly} = 'true';
       push @{ $irec->{notes} }, $nobj;
     }
