@@ -366,11 +366,13 @@ sub make_hi {
   my $bc = '';
   my $pbc = '';
   foreach (@{$vf->{b}}) {
-    s/ +$//;
-    if ($_ =~ /^U/) {
-      $bc = $_;
-    } elsif ($_ =~ /^P/) {
-      $pbc = $_;
+    if ($_) {
+      s/ +$//;
+      if ($_ =~ /^U/) {
+        $bc = $_;
+      } elsif ($_ =~ /^P/) {
+        $pbc = $_;
+      }
     }
   }
   my @msgs = $vf->{m};
