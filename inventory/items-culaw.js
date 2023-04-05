@@ -242,9 +242,9 @@ const statuses = {
               hr.callNumber = cn;
               hr.callNumberTypeId = cntype;
             }
-            if (instData.ea) {
-              hr.electronicAccess = JSON.parse(instData.ea);
-            }
+            // if (instData.ea) {
+            //  hr.electronicAccess = JSON.parse(instData.ea);
+            // }
             // console.log(hr);
             writeJSON(files.holdings, hr);
             hcount++;
