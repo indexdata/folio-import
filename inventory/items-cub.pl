@@ -397,8 +397,8 @@ sub make_hi {
       my $main_id = uuid($iid);
       $bw = {
         itemId => $main_id,
-        holdingsRecordId => $hid,
-        id => uuid($main_id . $hid)
+        holdingsRecordId => $irec->{holdingsRecordId},
+        id => uuid($main_id . $irec->{holdingsRecordId})
       };
       $bws .= $json->encode($bw) . "\n";
       $bcount++;
