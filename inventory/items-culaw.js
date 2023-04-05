@@ -158,7 +158,8 @@ const statuses = {
 
     const itemRecs = parse(itemCsv, {
       columns: true,
-      skip_empty_lines: true
+      skip_empty_lines: true,
+      relax_column_count: true
     });
 
     /*
@@ -193,6 +194,7 @@ const statuses = {
     let iseen = {};
     let hid;
     itemRecs.forEach(i => {
+      console.log(i);
       let iid = i['RECORD #(ITEM)'];
       // let bhrid = imap[iid];
       let bn = i['RECORD #(BIBLIO)'];
