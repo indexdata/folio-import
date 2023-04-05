@@ -112,10 +112,10 @@ sub makeMapFromTsv {
       $code =~ s/^ +| +$//g;
       my $name = $col[2] || '';
       $name =~ s/^ +| +$//g;
-      $name = lc($name);
       if ($prop eq 'statuses') {
         $tsvmap->{$prop}->{$code} = $name;
       } else {
+        $name = lc($name);
         if ($prop eq 'locations') {
           $name = $col[1] || '';
           $name =~ s/^.+\///;
