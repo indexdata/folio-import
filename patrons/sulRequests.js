@@ -117,32 +117,34 @@ const tenant = 'sul';
       let item;
 
       if (userId) {
-        if (!ibcodeSeen[ibcode]) {
-          let url = `${config.url}/item-storage/items?query=barcode==${ibcode}`;
-          console.log(`[${total}] GET ${url}`);
-          try {
-            let res = await superagent
-              .get(url)
-              .set('x-okapi-token', config.token);
-            item = res.body.items[0];
-            if (item) {
-              try {
-                let res = await superagent
-                  .get(`${config.url}/holdings-storage/holdings/${item.holdingsRecordId}`)
-                  .set('x-okapi-token', config.token);
-                item.instanceId = res.body.instanceId;
-              } catch (e) {
-                let msg = (e.response) ? e.response.text : e;
-                console.log(msg); 
+        if (reqLevel === 'Item' && ibcode) {
+          if (!ibcodeSeen[ibcode]) {
+            let url = `${config.url}/item-storage/items?query=barcode==${ibcode}`;
+            console.log(`[${total}] GET ${url}`);
+            try {
+              let res = await superagent
+                .get(url)
+                .set('x-okapi-token', config.token);
+              item = res.body.items[0];
+              if (item) {
+                try {
+                  let res = await superagent
+                    .get(`${config.url}/holdings-storage/holdings/${item.holdingsRecordId}`)
+                    .set('x-okapi-token', config.token);
+                  item.instanceId = res.body.instanceId;
+                } catch (e) {
+                  let msg = (e.response) ? e.response.text : e;
+                  console.log(msg); 
+                }
               }
+            } catch (e) {
+              let msg = (e.response) ? e.response.text : e;
+              console.log(msg);
             }
-          } catch (e) {
-            let msg = (e.response) ? e.response.text : e;
-            console.log(msg);
+          } else {
+            console.log(`[${total}] Item with barcode ${ibcode} found in cache...`);
+            item = ibcodeSeen[ibcode];
           }
-        } else {
-          console.log(`[${total}] Item with barcode ${ibcode} found in cache...`);
-          item = ibcodeSeen[ibcode];
         }
         
         if (item) {
