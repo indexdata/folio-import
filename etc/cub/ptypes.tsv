@@ -1,165 +1,94 @@
-ptype	pcode3	FOLIO Target Patron Group					
-0	75	Tier 2					
-1	*	Tier 1				FOLIO will have 6 patron groups:	Current Sierra pTypes:
-2	*	Tier 1				Tier 1	1,2,3,7,8,11,16,23,24,30
-3	*	Tier 1				Tier 2	0,4,5,6,
-4	*	Tier 2				Tier 3	18,25,31
-5	*	Tier 2				Library Department	9,10,13,14,15,19,21,22,29
-6	22	Tier 2				Campus Department	26,27,28
-6	23	Tier 1				Prospector/Mobius	200-255
-6	24	Tier 2					
-6	25	Tier 1					
-6	28	Tier 3					
-6	31	Tier 3					
-6	32	Tier 2					
-6	33	Tier 2					
-6	34	Tier 2					
-6	35	Tier 2					
-6	36	Tier 2					
-6	37	Tier 2					
-6	38	Tier 2					
-6	39	Tier 2					
-6	40	Tier 2					
-6	41	Tier 2					
-6	42	Tier 2					
-6	43	Tier 2					
-6	44	Tier 2					
-6	45	Tier 2					
-6	46	Tier 2					
-6	47	Tier 2					
-6	48	Tier 2					
-6	49	Tier 2					
-6	50	Tier 2					
-6	51	Tier 2					
-6	52	Tier 2					
-6	53	Tier 2					
-6	54	Tier 2					
-6	55	Tier 2					
-6	56	Tier 2					
-6	57	Tier 2					
-6	58	Tier 2					
-6	86	Tier 1					
-6	98	Tier 2					
-6	99	Tier 2					
-7	23	Tier 1					
-7	27	Tier 1					
-7	87	Tier 1					
-8	*	Tier 1					
-9	*	Library Departments					
-10	*	Library Departments					
-11	*	Tier 1					
-13	*	Library Departments					
-14	*	Library Departments					
-15	*	Library Departments					
-16	21	Tier 1					
-16	93	Tier 1					
-16	94	Tier 1					
-16	95	Tier 2					
-18	*	Tier 3					
-19	*	Library Departments					
-21	*	Library Departments					
-22	*	Library Departments					
-23	*	Tier 1					
-24	*	Tier 1					
-25	*	Tier 3					
-26	*	CU Departments					
-27	*	CU Departments					
-28	*	CU Departments					
-29	*	Library Departments					
-30	* 	Tier 1					
-31	* 	Tier 3					
-200	*	Prospector/MOBIUS					
-201	*	Prospector/MOBIUS					
-202	*	Prospector/MOBIUS					
-203	*	Prospector/MOBIUS					
-204	*	Prospector/MOBIUS					
-205	*	Prospector/MOBIUS					
-206	*	Prospector/MOBIUS					
-207	*	Prospector/MOBIUS					
-208	*	Prospector/MOBIUS					
-209	*	Prospector/MOBIUS					
-210	*	Prospector/MOBIUS					
-211	*	Prospector/MOBIUS					
-212	*	Prospector/MOBIUS					
-213	*	Prospector/MOBIUS					
-214	*	Prospector/MOBIUS					
-215	*	Prospector/MOBIUS					
-216	*	Prospector/MOBIUS					
-217	*	Prospector/MOBIUS					
-218	*	Prospector/MOBIUS					
-220	*	Prospector/MOBIUS					
-224	*	Prospector/MOBIUS					
-227	*	Prospector/MOBIUS					
-228	*	Prospector/MOBIUS					
-229	*	Prospector/MOBIUS					
-230	*	Prospector/MOBIUS					
-231	*	Prospector/MOBIUS					
-232	*	Prospector/MOBIUS					
-233	*	Prospector/MOBIUS					
-234	*	Prospector/MOBIUS					
-235	*	Prospector/MOBIUS					
-236	*	Prospector/MOBIUS					
-237	*	Prospector/MOBIUS					
-238	*	Prospector/MOBIUS					
-239	*	Prospector/MOBIUS					
-240	*	Prospector/MOBIUS					
-241	*	Prospector/MOBIUS					
-242	*	Prospector/MOBIUS					
-246	*	Prospector/MOBIUS					
-248	*	Prospector/MOBIUS					
-249	*	Prospector/MOBIUS					
-250	*	Prospector/MOBIUS					
-253	*	Prospector/MOBIUS					
-254	*	Prospector/MOBIUS					
-255	*	Prospector/MOBIUS					
-0	0	TIER 2					
-0	11	TIER 2					
-0	21	TIER 2					
-0	22	TIER 2					
-0	24	TIER 2					
-0	27	TIER 2					
-0	28	TIER 2					
-0	29	TIER 2					
-0	30	TIER 2					
-0	31	TIER 2					
-0	32	TIER 2					
-0	35	TIER 2					
-0	38	TIER 2					
-0	39	TIER 2					
-0	42	TIER 2					
-0	45	TIER 2					
-0	48	TIER 2					
-0	49	TIER 2					
-0	50	TIER 2					
-0	52	TIER 2					
-0	53	TIER 2					
-0	54	TIER 2					
-0	56	TIER 2					
-0	58	TIER 2					
-0	98	TIER 2					
-0	99	TIER 2					
-12	0	no patron combos like this, don't map					
-12	1	no patron combos like this, don't map					
-12	18	no patron combos like this, don't map					
-12	202	no patron combos like this, don't map					
-12	204	no patron combos like this, don't map					
-12	27	no patron combos like this, don't map					
-12	31	no patron combos like this, don't map					
-12	70	no patron combos like this, don't map					
-12	75	no patron combos like this, don't map					
-12	97	no patron combos like this, don't map					
-16	11	no patron combos like this, don't map					
-6	100	TIER 2					
-6	13	TIER 2					
-6	14	TIER 2					
-6	18	TIER 2					
-6	199	TIER 2					
-6	82	TIER 2					
-6	83	TIER 2					
-6	84	TIER 2					
-7	199	no patron combos like this, don't map					
-7	22	no patron combos like this, don't map					
-7	56	no patron combos like this, don't map					
-7	8	no patron combos like this, don't map					
-7	81	no patron combos like this, don't map					
-7	99	no patron combos like this, don't map					
+# accounts	pType	pCode3	Sierra Description	FOLIO Patron Group	TIER		TIER	FOLIO Patron Group		
+59	0	21	UCBSS UCBoulder Special	Continuing Ed students, degree and non-degree seeking	1		1	Continuing Ed students, degree and non-degree seeking		
+7986	0	75	SPECL   Special Borrower	Continuing Ed students, degree and non-degree seeking	1		1	CU Boulder retirees		
+9	0	24	INSTWK UCBoulder Inst Workshop	CU Boulder institute and workshop participants	2		1	CU Boulder faculty/staff		
+1	0	29	CARL    CARL Affiliate	Reciprocal Borrowing Programs 	2		1	CU Boulder graduate		
+2	0	30	DPL     Denver Public Library	Reciprocal Borrowing Programs 	2		1	CU Boulder undergraduate students		
+8	0	38	UDENG   UD Graduate	Reciprocal Borrowing Programs 	2		1	CU Boulder POI “External Instructors”		
+8	0	39	UDENU   UD Undergraduate	Reciprocal Borrowing Programs 	2		1	CU Boulder Visiting scholars		
+9	0	56	REGIS   Regis College	Reciprocal Borrowing Programs 	2		1	Friends of the Libraries	No Law privileges thru main campus, 	
+18	0	58	COCL    Colorad College	Reciprocal Borrowing Programs 	2		1	Law faculty/staff		
+1	0	32	UNCF    UNC Faculty	State funded CO universities/colleges faculty, staff, and students	2		1	Law students		
+4	0	35	UNCU    UNC Undergraduate	State funded CO universities/colleges faculty, staff, and students	2					
+14	0	42	METRU   Metro State Student	State funded CO universities/colleges faculty, staff, and students	2		2	Alumni	No Law Privileges	
+1	0	45	CCAU    CCA Student	State funded CO universities/colleges faculty, staff, and students	2		2	Auditors, Community and Senior	No Law Privileges	
+3	0	48	MINEG   Mines Graduate	State funded CO universities/colleges faculty, staff, and students	2		2	CU Boulder institute and workshop participants	No Law Privileges	
+12	0	49	MINEU   Mines Undergraduate	State funded CO universities/colleges faculty, staff, and students	2		2	CU System faculty, staff, and student	No Law Privileges	
+1	0	50	CSUF    CSU Faculty	State funded CO universities/colleges faculty, staff, and students	2		2	Naropa	No Law Privileges	
+7	0	52	CSUG    CSU Graduate	State funded CO universities/colleges faculty, staff, and students	2		2	Reciprocal Borrowing Programs 	No Law Privileges	
+15	0	53	CSUU    CSU Undergraduate	State funded CO universities/colleges faculty, staff, and students	2		2	Research partners	No Law Privileges	
+14	0	54	FRCC    Front Range Comm College	State funded CO universities/colleges faculty, staff, and students	2		2	State funded CO universities/colleges faculty, staff, and students	No Law Privileges	
+4	0	99	OTHER ACADEMICS	State funded CO universities/colleges faculty, staff, and students	2					
+9474	1	0	UCBF    UCBoulder Faculty	CU Boulder faculty/staff	1		3	Public Patron		
+9790	1	1	UCBS    UCBoulder Staff	CU Boulder faculty/staff	1		3	CU Boulder faculty/staff spouses/partners		
+1039	1	8	UCBTF   UCBoulder Temp Faculty	CU Boulder faculty/staff	1		3	Colorado high school teachers/students		
+2	1	27	VISSCH  UCBoulder Visiting Schol	CU Boulder Visiting scholars	1					
+2	1	2	UCHSCF  UCHS Faculty	CU System faculty, staff, and student	2			Law Public Patron		
+6	1	4	UCDF    UND Faculty	CU System faculty, staff, and student	2					
+2	1	6	UCCSF   UCCS Faculty	CU System faculty, staff, and student	2		CU Boulder Department	CU Boulder Departments		
+20	2	91	CONTDEGU ContEd degree undergrad	Continuing Ed students, degree and non-degree seeking	1		ILL	ILL		
+80	2	93	CONTNONDEGU ContEd nondegree U	Continuing Ed students, degree and non-degree seeking	1		Library Department	Library Departments		
+47552	2	11	UCBU    UCBoulder Undergraduate	CU Boulder undergraduate	1		Prospector/MOBIUS	Prospector/MOBIUS		delete
+5	2	13	UCDU    UND Undergraduate	CU System faculty, staff, and student	2					changed to Lib Department per Megan Lambert
+578	3	92	CONTDEGG ContEd degree grad	Continuing Ed students, degree and non-degree seeking	1		Not Migrating:			changed to Lib Department per Megan Lambert
+845	3	94	CONTNONDEGG ContEd nondegree G	Continuing Ed students, degree and non-degree seeking	1		Sierra pType	Sierra Description	# accounts	changed to Lib Department per Megan Lambert
+7158	3	15	UCBM    UCBoulder Masters	CU Boulder graduate	1		12	TEMP STATUS NON-ENTERPRISE	0	delete
+40	3	16	UCBD    UCBoulder PhD	CU Boulder graduate	1		13	PRESERVATION	4	changed to pub pat and added note. Only account expired.
+5	3	18	UCDM    UND Masters	CU System faculty, staff, and student	2		14	BINDING	2	changed to Lib Department per Megan Lambert
+1	4	12	UCHSCU UCHS Undergraduate	CU System faculty, staff, and student	2		15	MARKING/REPAIR	5	delete
+4	4	13	UCDU UND Undergraduate	CU System faculty, staff, and student	2		17	GINDES	0	change to Lib Department
+6	4	18	UCDM UND Masters	CU System faculty, staff, and student	2		18	SPC COLL	1	change to ptype 25, pcode3 70
+11	4	82	OCUS Other CU Campus Student	CU System faculty, staff, and student	2		19	BOOK REPAIR	4	delete
+4	4	99	OTHER ACADEMICS	CU System faculty, staff, and student	2		20	NOT CURRENTLY USED	0	delete
+1	5	14	UCCSU UCCS Undergraduate	CU System faculty, staff, and student	2		21	GOV PUBS CIRCULATION	1	Dresha clean up to delete, changed ptype to 9 for now
+8489	5	2	UCHSCF UCHS Faculty	CU System faculty, staff, and student	2		22	CIRCULATION COLLECTIONS CARE	4	delete
+2387	5	4	UCDF UND Faculty	CU System faculty, staff, and student	2		27	NCAR	0	
+1229	5	6	UCCSF UCCS Faculty	CU System faculty, staff, and student	2		28	MSEE ONLINE	0	
+7	5	5	UCDS UND Staff	CU System faculty, staff, and student	2		29	METADATE SERVICES WFH	1	
+231	6	22	ALUM    UCBoulder Alumni	Alumni	2		31	TEST FOR API	0	
+2	6	95	AUDITOR	Auditors, Community and Senior	2					
+14	6	31	HIGHSC  High School Student	Colorado high school teachers/students	2					
+1	6	24	INSTWK  UCBoulder Inst Workshop	CU Boulder institute and workshop participants	2					
+10882	6	25	POI UCB Person of Interest	CU Boulder POI “External Instructors”	1					
+2	6	28	PUBPAT  Public Patron	CU Public Patron	3					
+7	6	81	BOOKFINDERS	CU System faculty, staff, and student	2					
+2	6	83	CUFD  Denver Campus Fac/Staff	CU System faculty, staff, and student	2					
+1	6	84	CUFH  Health Sci Faculty/Staff	CU System faculty, staff, and student	2					
+1	6	23	FRIEND  UCBoulder Friend	Friends of the Libraries	1					
+95	6	98	NAROPA	Naropa	2					
+3	6	38	UDENG   UD Graduate	Reciprocal Borrowing Programs 	2					
+2	6	39	UDENU   UD Undergraduate	Reciprocal Borrowing Programs 	2					
+2	6	56	REGIS   Regis College	Reciprocal Borrowing Programs 	2					
+9	6	199	Libraries Research Partners	Research partners	2					
+40	6	99	OTHER ACADEMICS	State funded CO universities/colleges faculty, staff, and students	2					
+1	6	41	METRS   Metro State Staff	State funded CO universities/colleges faculty, staff, and students	2					
+7	6	42	METRU   Metro State Student	State funded CO universities/colleges faculty, staff, and students	2					
+1	6	45	CCAU    CCA Student	State funded CO universities/colleges faculty, staff, and students	2					
+1	6	47	MINES   Mines Staff	State funded CO universities/colleges faculty, staff, and students	2					
+1	6	49	MINEU   Mines Undergraduate	State funded CO universities/colleges faculty, staff, and students	2					
+2	6	53	CSUU    CSU Undergraduate	State funded CO universities/colleges faculty, staff, and students	2					
+6	6	54	FRCC    Front Range Comm College	State funded CO universities/colleges faculty, staff, and students	2					
+28	7	27	VISSCH UCBoulder Visiting Schol	CU Boulder Visiting scholars	1					
+17	7	23	FRIEND UCBoulder Friend	Friends of the Libraries	1					
+2	7	86	FRIENDS Friends Silver	Friends of the Libraries	1					
+1	7	199	Libraries Research Partners	Research partners	2					
+2	8	25	POI UCB Person of Interest	CU Boulder POI “External Instructors”	1					
+1	8	199	Libraries Research Partners	Research partners	2					
+1	9	77	ILL	ILL	ILL					
+37	9	70	Lib Department	Library Department	Library Department					
+7	9	80	Department	Library Department	Library Department					
+2780	10	78	ILLEND ILL Lending	ILL	ILL					
+67	11	0	UCBF UCBoulder Faculty	CU Boulder faculty/staff	1					
+76	11	1	UCBS UCBoulder Staff	CU Boulder faculty/staff	1					
+2976	16		UCBSS UCBoulder Special	Continuing Ed students, degree and non-degree seeking	1					
+4	22	70	Lib Department	Library Department	Library Department					
+696	23	200	CU Boulder Law Student	Law students	1					
+114	24	201	CU Boulder Law Faculty/Staff	Law faculty/staff	1					
+44	25	31	High school student	Colorado high school teachers/students	2					
+8	25	207	CU Boulder Spouse/Partner	CU Boulder faculty/staff spouses/partners	3					
+888	25	28	PUBPAT  Public Patron	CU Public Patron	3					
+1	26	80	Dept	CU Boulder Department	CU Boulder Department					
+1	26	152	Film Studies	CU Boulder Department	CU Boulder Department					
+3	26	170	Law	CU Boulder Department	CU Boulder Department					
+85	30	70	Google Books	Library Department	Library Department					
+				Law Public Patron	Privileges at Law, not main campus					

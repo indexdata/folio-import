@@ -2,7 +2,6 @@ const readline = require('readline');
 const fs = require('fs');
 const path = require('path');
 const uuid = require('uuid/v5');
-const { user } = require('pg/lib/defaults');
 
 const ns = '70c937ca-c54a-49cd-8c89-6edcf336e9ff';
 let refDir = process.argv[2];
@@ -68,10 +67,12 @@ try {
   // map folio groups from file
   const groups = require(`${refDir}/groups.json`);
   groups.usergroups.forEach(g => {
+    // g.group = g.group.toLowerCase();
     groupMap[g.group] = g.id;
   });
-  let staff = groupMap['Library Departments'];
-  if (!staff) throw("Can't find 'staff' patron group!");
+  // let staff = groupMap['Library Departments'];
+  // if (!staff) throw("Can't find 'staff' patron group!");
+  let staff = 'hey!';
   
   // map ptypes from tsv file
   const ptypeGroup = {};
@@ -80,10 +81,11 @@ try {
     l = l.trim();
     if (l) {
       let c = l.split(/\t/);
-      let ptype = c[0].trim();
-      let pcode3 = c[1].trim();
+      let ptype = c[1].trim();
+      let pcode3 = (c[2]) ? c[2].trim() : '';
       let k = `${ptype}_${pcode3}`;
-      let gname = c[2];
+      // let gname = (c[4]) ? c[4].toLowerCase() : '';
+      gname = (c[4]) ? c[4].trim() : '';
       if (groupMap[gname]) {
         ptypeGroup[k] = groupMap[gname];
       } else {
@@ -91,6 +93,7 @@ try {
       }
     }
   });
+  // console.log(ptypeGroup); return;
 
   // map folio addresstyes from file
   const atypes = require(`${refDir}/addresstypes.json`);

@@ -9,10 +9,11 @@ const ncol = argv.n;
 const ccol = argv.c;
 const source = argv.s;
 const normalize = argv.z;
+const group = argv.g;
 
 try {
   if (!tsvFile) {
-    throw 'Usage: node makeCrud.js [ -n name_col, -c code_col, -s source_value, -z normlize_code ] <tsv_file> [ field=value, vield=value, ...]';
+    throw 'Usage: node makeCrud.js [ -n name_col, -c code_col, -s source_value, -g group, -z normlize_code ] <tsv_file> [ field=value, vield=value, ...]';
   }
   let fields = {};
   argv._.forEach(a => {
@@ -43,6 +44,10 @@ try {
       if (source) {
         out.source = source;
       }
+      if (group) {
+        c = group - 1;
+        out.group = col[c].trim();
+      }
       if (nseen[out.name] && out.code) {
         out.name += ` (${out.code})`;
       }
@@ -54,6 +59,8 @@ try {
       if (out.code) cseen[out.code] = 1;
       if (out.code) {
         out.id = uuid(out.code, ns);
+      } else if (out.group) {
+        out.id = uuid(out.group, ns);
       } else {
         out.id = uuid(out.name, ns);
       }
