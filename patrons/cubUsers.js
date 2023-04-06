@@ -196,10 +196,7 @@ try {
       }
       fs.writeFileSync(permPath, JSON.stringify(pu) + '\n', { flag: 'as' });
       pcount++;
-    } else if (user.personal.lastName === 'Fuller') {
-      console.log(user);
     }
-    
   
     if (count % 1000 === 0) {
       console.log(`Processed ${count} records...`);
