@@ -8,14 +8,14 @@ const { request } = require('http');
 const spFile = process.argv[2];
 const usersFile = process.argv[3];
 const csvFile = process.argv[4];
-const reqLevel = process.argv[5] || 'Item';
+const reqLevel = process.argv[5];
 const ns = '34d6cfa4-f604-47ec-83d2-3c2aec16a986';
 const tenant = 'sul';
 
 (async () => {
   try {
     if (!csvFile) {
-      throw new Error('Usage: node sulRequests.js <service_points_file> <users_file> <loans_csv_file> [ <type [Item|Title]>');
+      throw new Error('Usage: node sulRequests.js <service_points_file> <users_file> <loans_csv_file> <level [Item|Title]>');
     }
     if (!fs.existsSync(csvFile)) {
       throw new Error('Can\'t find loans file');
@@ -25,6 +25,9 @@ const tenant = 'sul';
     }
     if (!fs.existsSync(usersFile)) {
       throw new Error('Can\'t find users file');
+    }
+    if (!reqLevel) {
+      throw new Error(`A level of "Item" or "Title" must be entered!`);
     }
     if (reqLevel && !reqLevel.match(/Item|Title/)) {
       throw new Error(`${reqLevel} is not a proper requestLevel!`);
@@ -99,6 +102,7 @@ const tenant = 'sul';
       total++;
       let ubcode = r['User barcode'];
       let ibcode = r['Item barcode'];
+      let instHrid = r['Instance HRID'];
       let rdate = r['Request date'];
       let exdate = r['Request expiration date'];
       let sp = r['Pickup servicepoint'];
@@ -115,6 +119,7 @@ const tenant = 'sul';
       }
       let spId = spMap[sp];
       let item;
+      let inst;
 
       if (userId) {
         if (reqLevel === 'Item' && ibcode) {
@@ -145,15 +150,26 @@ const tenant = 'sul';
             console.log(`[${total}] Item with barcode ${ibcode} found in cache...`);
             item = ibcodeSeen[ibcode];
           }
+        } else if (reqLevel === 'Title' && instHrid) {
+          let url = `${config.url}/instance-storage/instances?query=hrid==${instHrid}`;
+          try {
+            let res = await superagent
+              .get(url)
+              .set('x-okapi-token', config.token);
+            inst = res.body.instances[0];
+          } catch (e) {
+            let msg = (e.response) ? e.response.text : e;
+            console.log(msg);
+          }
         }
         
-        if (item) {
+        if (item || inst) {
           rdate = parseDate(rdate);
           rdate += dateOffset(rdate);
           exdate = parseDate(exdate)
           exdate += dateOffset(exdate);
           let requestType = "Page";
-          if (item.status.name === "Checked out") {
+          if (item && item.status.name.match(/Checked out|Restricted/)) {
             if (rflag) {
               requestType = "Recall";
             } else {
@@ -163,9 +179,6 @@ const tenant = 'sul';
           let req = {
             id: uuid(ukey, ns),
             requesterId: userId,
-            itemId: item.id,
-            holdingsRecordId: item.holdingsRecordId,
-            instanceId: item.instanceId,
             requestDate: rdate,
             fulfilmentPreference: "Hold Shelf",
             pickupServicePointId: spId,
@@ -174,6 +187,14 @@ const tenant = 'sul';
             requestExpirationDate: exdate,
 
           };
+          if (item) {
+            req.itemId = item.id;
+            req.holdingsRecordId = item.holdingsRecordId;
+            req.instanceId = item.instanceId;
+          } else if (inst) {
+            req.instanceId = inst.id;
+            req.requestType = 'Page';
+          }
           if (proxyBc && requesters[proxyBc]) {
             req.proxyUserId = requesters[proxyBc].id;
           }
@@ -184,7 +205,11 @@ const tenant = 'sul';
           writeTo(files.co, req);
           succ++;
         } else {
-          console.log(`WARN no item found with barcode ${ibcode}`);
+          if (reqLevel === 'Item') {
+            console.log(`WARN no item found with barcode ${ibcode}`);
+          } else {
+            console.log(`WARN no instance found with HRID ${instHrid}`);
+          }
         }
       }
     }
