@@ -7,6 +7,7 @@ const path = require('path');
 const { getAuthToken } = require('./lib/login');
 let inFile = process.argv[3];
 let ep = process.argv[2];
+let debug = process.env.DEBUG;
 
 (async () => {
   try {
@@ -90,7 +91,7 @@ let ep = process.argv[2];
         }
         success++;
       } catch (e) {
-          let errMsg = (e.response && e.response.text) ? e.response.text : e;
+          let errMsg = (e.response && e.response.text && !debug) ? e.response.text : e;
           logger.error(errMsg);
           fs.writeFileSync(errPath, line + '\n', { flag: 'a'});
           fail++;

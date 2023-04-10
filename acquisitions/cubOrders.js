@@ -24,24 +24,25 @@ const refFiles = {
 const formMap = {
   b: "book",
   e: "ejournal acq",
+  f: "film reel",
   k: "map",
-  j: "memb acq",
-  g: "cd acq",
+  j: "membership acq",
+  g: "compact disk",
   i: "lp",
   l: "microfilm",
   m: "microfiche",
-  n: "news acq",
-  o: "archival collection acq",
+  n: "newspaper",
+  o: "document",
   p: "photograph acq",
-  r: "ebook acq",
+  r: "annual access fee",
   s: "journal",
-  u: "bib acq",
-  w: "dvd",
-  x: "db acq",
+  u: "bibliographic utility acq",
+  w: "dvd: no prospector",
+  x: "accounting acq",
   y: "electronic resource",
+  z: "open access article processing charge (apc)",
   3: "score",
-  4: "stream acq",
-  f: "film reel"
+  4: "stream acq"
 };
 
 otherCodes = {
@@ -87,8 +88,12 @@ otherCodes = {
 
     const dir = path.dirname(inFile);
     const fn = path.basename(inFile, '.jsonl');
+
     const outFile = `${dir}/folio-${fn}.jsonl`;
     if (fs.existsSync(outFile)) fs.unlinkSync(outFile);
+
+    const polFile = `${dir}/folio-${fn}-pols.jsonl`;
+    if (fs.existsSync(polFile)) fs.unlinkSync(polFile);
 
     const refData = {};
     for (let prop in refFiles) {
@@ -111,6 +116,7 @@ otherCodes = {
         }
       })
     }
+    // console.log(refData.mtypes); return;
 
     const locMap = {};
     let locData = fs.readFileSync(locMapFile, { encoding: 'utf8' });
@@ -122,6 +128,7 @@ otherCodes = {
       locMap[k] = refData.locations[v];
     });
     locMap['unmapped'] = refData.locations['UNMAPPED'];
+    // console.log(locMap); return;
 
     const fileStream = fs.createReadStream(inFile);
 
@@ -141,6 +148,7 @@ otherCodes = {
         let ff = so.fixedFields;
         let created = (ff['13']) ? ff['13'].value : '1970-01-01';
         let oType = (ff['15']) ? ff['15'].value : '';
+        let oNote = (ff['14']) ? ff['14'].value : '';
         let statCode = (ff['20']) ? ff['20'].value : '';
         let status = 'Open';
         if (statCode === '1') {
@@ -164,7 +172,8 @@ otherCodes = {
             dateOrdered: created,
             compositePoLines: [],
             notes: [],
-            acqUnitIds: [ unit ]
+            acqUnitIds: [ unit ],
+            reEncumber: false
           }
           let acqType = (ff['1']) ? ff['1'].value : '';
           let form = (ff['11']) ? ff['11'].value : '';
@@ -184,12 +193,14 @@ otherCodes = {
           // PO lines start here
 
           let pol = {
+            purchaseOrderId: poId,
             paymentStatus: 'Awaiting Payment',
             poLineNumber: poNum + '-1',
             source: 'User',
             checkinItems: false,
             locations: []
           };
+          pol.id = uuid(pol.poLineNumber, ns);
 
           pol.rush = (raction.match(/[anrm]/)) ? true : false;
 
@@ -232,29 +243,38 @@ otherCodes = {
           let price = ff['10'].value;
           price = price.replace(/(\d\d)\.0+/, '.$1');
           price = parseFloat(price);
+          co.totalEstimatedPrice = price;
+
 
           let loc = {};
           pol.cost = {};
           pol.cost.currency = 'USD';
+          let mtypeName = '';
+          if (formMap[form]) {
+            mtypeName = formMap[form];
+          }
+          if (oType.match(/[zrdox]/)) {
+            mtypeName = formMap[oType];
+          }
           if (format === 'Electronic Resource') {
             pol.cost.listUnitPriceElectronic = price;
             pol.cost.quantityElectronic = copies;
             loc.quantityElectronic = copies;
+            /* pol.eresource = {
+              createInventory: 'None',
+              materialType: refData.mtypes[mtypeName] || refData.mtypes.unspecified,
+            }
+            pol.eresource.userLimit = (oNote === 's') ? 1 : (oNote === 'm') ? 3 : '';
+            */
           } else {
             pol.cost.listUnitPrice = price;
             pol.cost.quantityPhysical = copies;
             loc.quantityPhysical = copies;
-            let mtypeName = '';
             if (formMap[form]) {
               mtypeName = formMap[form];
-            } else if (oType === 'z') {
-              mtypeName = 'apc acq';
-            } else if (oType === 'r') {
-              mtypeName = 'annual acq';
-            } else if (oType === 'd' || oType === 'o') {
-              mtypeName = 'so acq';
-            } else if (oType === 'x') {
-              mtypeName = 'manage acq';
+            } 
+            if (oType.match(/[zrdox]/)) {
+              mtypeName = formMap[oType];
             }
             pol.physical = {
               createInventory: 'None',
@@ -300,6 +320,9 @@ otherCodes = {
           co.compositePoLines.push(pol);
           let coStr = JSON.stringify(co) + '\n';
           fs.writeFileSync(outFile, coStr, { flag: 'a' });
+
+          let polStr = JSON.stringify(pol) + '\n';
+          fs.writeFileSync(polFile, polStr, { flag: 'a' });
           c++;
         } else {
           let reason;
