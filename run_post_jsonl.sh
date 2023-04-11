@@ -11,5 +11,5 @@ for f in ${@:2}
 do
 	LNAME=$(echo $f | sed -E 's/^.*\///')	
 	echo "View info at log/${LNAME}.info"
-	node loadJSONL.js $EP $f > log/$LNAME.info &
+	node postJSONL.js $EP $f > log/$LNAME.info &
 done
