@@ -219,9 +219,11 @@ const col = { a:0, b:1, c:2, d:3, e:4, f:5, g:6, h:7, i:8, j:9, k:10, l:11, m:12
             };
             let all = c[col.aj];
             if (all.match(/\d/)) {
-              bud.initialAllocation = parseInt(all, 10);
+              bud.initialAllocation = 0;
+              bud.allocated = parseInt(all, 10);
             } else {
               bud.initialAllocation = 0;
+              bud.allocated = 0;
             }
             if (obj.acqUnitIds) bud.acqUnitIds = obj.acqUnitIds;
             writeObj(files.budgets, bud);
@@ -266,7 +268,9 @@ const col = { a:0, b:1, c:2, d:3, e:4, f:5, g:6, h:7, i:8, j:9, k:10, l:11, m:12
     console.log('Funds     :', fnCount);
     console.log('Budgets   :', bdCount);
     console.log('Groups    :', grCount); 
-    console.log('Group FYs :', gffyCount); 
+    console.log('Group FYs :', gffyCount);
+    console.log('----------------------');
+    console.log('LOAD budgets.jsonl via finance/budgets enpoint. DO NOT USE STORAGE!');
   } catch (e) {
     console.log(e);
   }
