@@ -57,12 +57,12 @@ ifeq ($(wildcard $(orddir)/.),)
 	mkdir $(orddir)
 endif
 	cd $(sdir); node downloadOrders.js -c '*' $(orddir) > $(log)/get-orders.log &
-	# cd $(sdir); node downloadOrders.js -c [2022-07-01,2022-08-30] $(orddir) > $(log)/orders.log &
+	# cd $(sdir); node downloadOrders.js -c [2000-01-01,2023-06-30] $(orddir) > $(log)/orders.log &
 
 instances: $(marcdir)/marc0*mrc
 	cd $(marcdir); yaz-marcdump -C 1800000 -s m marc0*mrc >/dev/null
 	cd $(marcdir); for f in m0*; do mv $$f $$f.mrc; done
-	./run-multi.sh ./marc2inst-cub.pl mapping-rules.json $(iref) $(marcdir)/m0*.mrc > $(log)/make-marc.log 2>/dev/null &
+	./run-multi.sh ./marc2inst-cub.pl mapping-rules.json $(iref) $(marcdir)/m0*.mrc > $(log)/make-marc.log 2>$(log)/make-marc-err.log &
 
 items: $(itemdir)/items00000000.jsonl
 	# wc -l $(itemdir)/items00000000.jsonl > $(itemdir)/count
