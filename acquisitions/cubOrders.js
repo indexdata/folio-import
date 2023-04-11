@@ -260,12 +260,11 @@ otherCodes = {
             pol.cost.listUnitPriceElectronic = price;
             pol.cost.quantityElectronic = copies;
             loc.quantityElectronic = copies;
-            /* pol.eresource = {
+            pol.eresource = {
               createInventory: 'None',
               materialType: refData.mtypes[mtypeName] || refData.mtypes.unspecified,
             }
             pol.eresource.userLimit = (oNote === 's') ? 1 : (oNote === 'm') ? 3 : '';
-            */
           } else {
             pol.cost.listUnitPrice = price;
             pol.cost.quantityPhysical = copies;
