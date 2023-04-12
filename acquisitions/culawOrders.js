@@ -12,6 +12,7 @@ const ver = '1';
 let refDir = process.argv[2];
 let instFile = process.argv[3];
 const inFile = process.argv[4];
+const debug = process.env.DEBUG;
 
 const refFiles = {
   organizations: 'organizations.json',
@@ -150,7 +151,7 @@ const payMap = {
       try {
         lnum++;
         line = line.replace(/^"|"$/g, '');
-        let cols = line.split(/""/);
+        let cols = line.split(/"\+?"/);
         let so = {};
         if (lnum === 1) {
           head = cols;
@@ -241,6 +242,9 @@ const payMap = {
             paymentStatus: payStat
           };
           pol.id = uuid(pol.poLineNumber, ns);
+          if (orderType === 'Ongoing') {
+            pol.checkinItems = true;
+          }
           pol.orderFormat = (form === 'c') ? 'Electronic Resource' : 'Physical Resource';
           if (inst) {
             pol.instanceId = inst.id;
@@ -293,7 +297,11 @@ const payMap = {
           c++;
         }
       } catch (e) {
-        console.log(`[${lnum}] ${e}`);
+        if (debug) {
+          console.log(e);
+        } else {
+          console.log(`[${lnum}] ${e}`);
+        }
         fail++;
       }
     }
