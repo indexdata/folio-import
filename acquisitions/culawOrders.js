@@ -32,8 +32,8 @@ const formMap = {
 };
 
 const payMap = {
-  a: 'Fully paid',
-  d: 'Fully paid',
+  a: 'Fully Paid',
+  d: 'Fully Paid',
   z: 'Cancelled',
   o: 'Pending',
   f: 'Ongoing'
