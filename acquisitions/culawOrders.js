@@ -25,8 +25,8 @@ const refFiles = {
 
 const formMap = {
   m: "book",
-  s: "serial",
-  l: "serial",
+  s: "journal",
+  l: "journal",
   v: "video recording",
   c: "web"
 };
@@ -45,8 +45,12 @@ const payMap = {
     if (!inFile) throw('Usage: node culawOrders.js <acq_ref_dir> <instances_jsonl_file> <orders_text_file>');
     if (!fs.existsSync(inFile)) throw new Error(`Can't find ${inFile}!`);
     refDir = refDir.replace(/\/$/, '');
+
     let locMapFile = `${refDir}/locations.tsv`;
     if (!fs.existsSync(locMapFile)) throw new Error(`Can't open location map file at ${locMapFile}`);
+
+    let orgMapFile = `${refDir}/law-orgs.tsv`;
+    if (!fs.existsSync(orgMapFile)) throw new Error(`Can't open location map file at ${orgMapFile}`);
 
     const dir = path.dirname(inFile);
     const fn = path.basename(inFile, '.txt');
@@ -77,6 +81,29 @@ const payMap = {
         }
       })
     }
+
+    // map tsv files
+
+    const locMap = {};
+    let locData = fs.readFileSync(locMapFile, { encoding: 'utf8' });
+    locData.split(/\n/).forEach(line => {
+      let [k, v] = line.split(/\t/);
+      k = k.trim();
+      v = v.trim();
+      v = v.replace(/^.+\//, '');
+      locMap[k] = refData.locations[v];
+    });
+    locMap['unmapped'] = refData.locations['UNMAPPED'];
+
+    const orgMap = {};
+    let orgData = fs.readFileSync(orgMapFile, { encoding: 'utf8' });
+    orgData.split(/\n/).forEach(line => {
+      let c = line.split(/\t/);
+      let scode = c[0];
+      let fcode = c[4];
+      orgMap[scode] = refData.organizations[fcode];
+    });
+    // console.log(orgMap); return;
 
     // map instances
 
@@ -122,16 +149,7 @@ const payMap = {
       writeTo(tagFile, tob);
     }
 
-    const locMap = {};
-    let locData = fs.readFileSync(locMapFile, { encoding: 'utf8' });
-    locData.split(/\n/).forEach(line => {
-      let [k, v] = line.split(/\t/);
-      k = k.trim();
-      v = v.trim();
-      v = v.replace(/^.+\//, '');
-      locMap[k] = refData.locations[v];
-    });
-    locMap['unmapped'] = refData.locations['UNMAPPED'];
+    
 
     const fileStream = fs.createReadStream(inFile);
 
@@ -162,9 +180,9 @@ const payMap = {
 
           let poNum = (so['RECORD #(ORDER)']) ? 'l' + so['RECORD #(ORDER)'] : '';
           let poId = uuid(poNum, ns);
-          let vend = so.VENDOR.replace(/^l([^-])/, 'l-$1');
+          let vend = so.VENDOR;
           vend = vend.trim();
-          let orgId = refData.organizations[vend];
+          let orgId = orgMap[vend];
           if (!orgId) throw (`WARN No organizationId found for ${vend}`);
           let created = so.ODATE;
           if (created.match(/\d/)) {
