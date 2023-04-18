@@ -49,12 +49,11 @@ const post_put = async (authToken, url, checkout, r) => {
       }
     } else {
       let text = e.response.text;
-      console.log(text);
       if (text.match(/overridableBlock/) && !r) {
         let err = JSON.parse(text);
         let block;
         err.errors.forEach(er => {
-          if (er.message.match(/not loanable/)) {
+          if (er.message.match(/not loanable|blocked/)) {
             block = er.overridableBlock;
           }
         });
@@ -67,7 +66,7 @@ const post_put = async (authToken, url, checkout, r) => {
         let body = await post_put(authToken, url, checkout, 1);
         return body;
       } else {
-        throw new Error(text);
+        throw(text);
       }
     }
   }
@@ -118,6 +117,9 @@ const post_put = async (authToken, url, checkout, r) => {
     for await (let line of rl) {
       d++;
       let data = JSON.parse(line);
+      delete data.errorMessage;
+      let errData = JSON.parse(line);
+      let errMsg;
       let dueDate;
       let claimedReturnedDate = '';
       let renewalCount = 0;
@@ -156,6 +158,7 @@ const post_put = async (authToken, url, checkout, r) => {
             loanObj.loanDate = data.loanDate;
             loanObj.action = 'dueDateChanged';
             loanObj.renewalCount = renewalCount;
+            if (process.env.DEBUG) console.log(loanObj);
             let lurl = `${config.okapi}/circulation/loans/${loanObj.id}`;
             console.log(`[${d}] PUT ${lurl} (${data.itemBarcode})`);
             await post_put(authToken, lurl, loanObj);
@@ -185,7 +188,6 @@ const post_put = async (authToken, url, checkout, r) => {
             console.log(m);
             errors++;
           }
-          
         }
       } catch (e) {
         let m;
@@ -195,8 +197,10 @@ const post_put = async (authToken, url, checkout, r) => {
           m = e;
         }
         console.log(m);
+        errMsg = m;
+        if (errMsg) errData.errorMessage = errMsg;
         errors++;
-        if (!checkIn) fs.writeFileSync(errPath, JSON.stringify(data), { flag: 'a' });
+        if (!checkIn) fs.writeFileSync(errPath, JSON.stringify(errData) + '\n', { flag: 'a' });
       }
     } 
     console.log('Added:', added);
