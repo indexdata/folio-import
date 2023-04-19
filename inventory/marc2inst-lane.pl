@@ -207,7 +207,7 @@ sub mapItems {
     my $prop = $_;
     my $fn = $ifiles->{$_};
     my $path = "$dir/$fn";
-    open ITD, "<:encoding(UTF-8)", $path;
+    open ITD, "<:encoding(UTF-8)", $path or next;
     my $prekey = '';
     print "$prop\n";
     while (<ITD>) {
@@ -565,7 +565,7 @@ foreach (@ARGV) {
   my $hrecs;
   my $hsrs;
   my $irecs;
-  my $idmap_lines;
+  my $idmap_lines = '';
   my $success = 0;
   my $hrids = {};
   my $rec;
