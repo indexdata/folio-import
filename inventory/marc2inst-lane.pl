@@ -692,11 +692,13 @@ foreach (@ARGV) {
                 $new_field->add_subfields($code => $sdata );
               }
               $i++;
-              my @ncode = [''];
+              my @ncode = ('');
               if ($subs[$i]) {
                 @ncode = @{ $subs[$i] };
               }
-              push @marc_fields, $new_field if (index($all_codes, $ncode[0]) != -1 && $new_field->{_tag}) || !$ncode[0];
+              if ((index($all_codes, $ncode[0]) != -1 && $new_field->{_tag}) || !$ncode[0]) {
+                push @marc_fields, $new_field;
+              }
             }
             next MARC_FIELD;
           }
