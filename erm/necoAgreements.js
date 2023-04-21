@@ -11,7 +11,8 @@ const unit = 'NECO Library';
 
 const files = {
   agree: 'agreements.jsonl',
-  supProps: 'custprops.jsonl'
+  supProps: 'custprops.jsonl',
+  rel: 'relationships.jsonl'
 };
 
 const rfiles = {
@@ -142,13 +143,16 @@ try {
     if (coverage) cprops.coverage[0].value = coverage;
     if (creds[0]) cprops.authcreds[0].value = creds.join('/');
     if (userlimit) cprops.userlimit[0].value = userlimit;
+
+    let oid = a['Product ID'];
+    let relId = a['Product Related Products ID'] || '';
+    let relType = a['Product Related Products Relationship Type'] ||'';
     a.xnotes.forEach((n, i) => {
       if (i === 0) {
         cprops.resnote[0].value = n;
       } else {
         cprops.resnote[0].value += '; ' + n;
       }
-      
     });
 
     for (let p in cprops) {
@@ -191,6 +195,16 @@ try {
     if (dbug) console.log(JSON.stringify(agr, null, 2)); 
     writeTo(files.agree, agr);
     c++;
+
+    if (relId && oid) {
+      let rel = {
+        id: oid,
+        rid: relId,
+        type: relType
+      };
+      writeTo(files.rel, rel);
+    }
+
     if (dbug) if (c === 5) break;
   }
 
@@ -210,6 +224,8 @@ try {
     writeTo(files.supProps, cust);
     cpc++;
   }
+
+  
   
   console.log('Finished!');
   console.log('Agreements:', c);
