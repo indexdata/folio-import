@@ -5,6 +5,7 @@ const path = require('path');
 
 const refDir = process.argv[2];
 const inFile = process.argv[3];
+const dbug = process.env.DEBUG;
 const ns = '2d0d02e9-5758-4d3b-8db7-fafa64cfd03e';
 const unit = 'NECO Library';
 
@@ -30,7 +31,12 @@ const supProps = {
   resalturl: 'Alternate Resource URL',
   prodissn: 'Product ISSN/ISBN',
   authcreds: 'Authentication Username & Password',
-  userlimit: 'Simultaneous User Limit'
+  userlimit: 'Simultaneous User Limit',
+  format: 'Product Format',
+  restype: 'Product Resource Type',
+  sites: 'Order Purchasing Sites',
+  authtype: 'Access Authentication Type',
+  coverage: 'Access Coverage'
 }
 
 try {
@@ -114,6 +120,11 @@ try {
     let resurl = a['Product URL'];
     let resalturl = a['Product Alt URL'];
     let prodissn = a['Product ISSN/ISBN'];
+    let format = a['Product Format'];
+    let restype = a['Product Resource Type'];
+    let sites = a['Order Purchasing Sites'];
+    let authtype = a['Access Authentication Type'];
+    let coverage = a['Access Coverage'];
     let creds = [];
     let creda = a['Access Username'];
     let credb = a['Access Password'];
@@ -124,6 +135,11 @@ try {
     if (resurl) cprops.resurl[0].value = resurl;
     if (resalturl) cprops.resalturl[0].value = resalturl;
     if (prodissn) cprops.prodissn[0].value = prodissn;
+    if (format) cprops.format[0].value = format;
+    if (restype) cprops.restype[0].value = restype;
+    if (sites) cprops.sites[0].value = sites;
+    if (authtype) cprops.authtype[0].value = authtype;
+    if (coverage) cprops.coverage[0].value = coverage;
     if (creds[0]) cprops.authcreds[0].value = creds.join('/');
     if (userlimit) cprops.userlimit[0].value = userlimit;
     a.xnotes.forEach((n, i) => {
@@ -172,9 +188,10 @@ try {
       if (end && end !== '0000-00-00') per.endDate = end;
       agr.periods= [ per ];
     }
+    if (dbug) console.log(JSON.stringify(agr, null, 2)); 
     writeTo(files.agree, agr);
     c++;
-    // if (c === 5) break;
+    if (dbug) if (c === 5) break;
   }
 
   let cpc = 0;
