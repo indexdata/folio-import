@@ -17,7 +17,8 @@ const files = {
 
 const rfiles = {
   organizations: 'organizations.json',
-  acquisitionsUnits: 'units.json'
+  acquisitionsUnits: 'units.json',
+  roles: 'refdata.json'
 };
 
 const statusMap = {
@@ -67,13 +68,22 @@ try {
     let rfile = refDir + rfiles[f];
     let rdata = require(rfile);
     ref[f] = {};
-    rdata[f].forEach(r => {
-      let k = (f === 'organizations') ? r.code : r.name;
-      let v = (f === 'organizations') ? {id: r.id, name: r.name} : r.id;
-      ref[f][k] = v;
-    });
+    if (f === 'roles') {
+      rdata.forEach(r => {
+        if (r.desc === 'SubscriptionAgreementOrg.Role') {
+          r.values.forEach(v => {
+            ref[f][v.label] = v.id;
+          })
+        }
+      });
+    } else {
+      rdata[f].forEach(r => {
+        let k = (f === 'organizations') ? r.code : r.name;
+        let v = (f === 'organizations') ? {id: r.id, name: r.name} : r.id;
+        ref[f][k] = v;
+      });
+    }
   }
-  // console.log(ref); return;
   let unitId = ref.acquisitionsUnits['NECO Library'];
 
   const writeTo = (fileName, data) => {
@@ -91,6 +101,8 @@ try {
     let pnote = r['Product Notes'];
     let ntype = r['Product Note Type'];
     let org = r['Product Organization ID'];
+    let role = r['Product Organization Role'];
+    org += '|' + role;
     if (!ag[oid]) { 
       ag[oid] = r;
       ag[oid].xnotes = [];
@@ -170,12 +182,14 @@ try {
       orgs: []
     };
     a.xorgs.forEach((o, i) => {
+      let [ orgId, role ] = o.split(/\|/);
+      let roleId = ref.roles[role] || '2c90a37d843a686001847c28f9920016';
       let org = {
         _delete: false,
-        roles: [{ role: {id: '2c90a37d843a686001847c28f9920016'} }],
+        roles: [{ role: {id: roleId} }],
         primaryOrg: false
       };
-      orgMap = ref.organizations[o];
+      orgMap = ref.organizations[orgId];
       if (orgMap) {
         org.org = { orgsUuid: orgMap.id, name: orgMap.name };
       }
