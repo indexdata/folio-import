@@ -168,14 +168,15 @@ const tenant = 'sul';
           rdate += dateOffset(rdate);
           exdate = parseDate(exdate)
           exdate += dateOffset(exdate);
-          let requestType = "Page";
-          if (item && item.status.name.match(/Checked out|Restricted/)) {
+          let requestType = (reqLevel === 'Title') ? 'Hold' : 'Page';
+          if (item && item.status.name.match(/^(Checked out|Restricted|Awaiting pickup|In process|Aged to lost|On order|Missing|In transit)$/)) {
             if (rflag) {
-              requestType = "Recall";
+              requestType = 'Recall';
             } else {
-              requestType = "Hold";
+              requestType = 'Hold';
             }
           }
+          if (reqLevel === 'Title') requestType = 'Hold'
           let req = {
             id: uuid(ukey, ns),
             requesterId: userId,
@@ -193,7 +194,6 @@ const tenant = 'sul';
             req.instanceId = item.instanceId;
           } else if (inst) {
             req.instanceId = inst.id;
-            req.requestType = 'Page';
           }
           if (proxyBc && requesters[proxyBc]) {
             req.proxyUserId = requesters[proxyBc].id;
