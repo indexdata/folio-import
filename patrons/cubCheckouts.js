@@ -95,6 +95,7 @@ const itemFile = process.argv[4];
           loan.userBarcode = ubcode.trim();
           loan.loanDate = odate;
           loan.dueDate = due;
+          if (rnum) loan.renewalCount = parseInt(rnum, 10);
           loan.servicePointId = spMap.NORED;
           if (process.env.DEBUG) console.log(loan);
           if (user) {
