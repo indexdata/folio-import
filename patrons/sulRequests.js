@@ -110,7 +110,7 @@ const tenant = 'sul';
       let adate = r['Date available'];
       let proxyBc = r['Proxy barcode'];
       let comment = r['Patron comments'];
-      let ukey = ubcode + ibcode;
+      let ukey = (ibcode) ? ubcode + ibcode : ubcode + instHrid;
       let userId;
       if (requesters[ubcode]) {
         userId = requesters[ubcode].id;
