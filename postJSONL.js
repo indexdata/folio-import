@@ -8,6 +8,7 @@ const { getAuthToken } = require('./lib/login');
 let inFile = process.argv[3];
 let ep = process.argv[2];
 let debug = process.env.DEBUG;
+let dolog = process.env.LOG;
 
 (async () => {
   try {
@@ -30,6 +31,7 @@ let debug = process.env.DEBUG;
     const baseName = path.basename(inFile, '.jsonl');
     const errPath = `${workingDir}/${baseName}Err.jsonl`;
     const outPath = `${workingDir}/${baseName}Out.jsonl`;
+    const logPath = `${workingDir}/${baseName}.log`;
     if (fs.existsSync(errPath)) {
       fs.unlinkSync(errPath);
     }
@@ -39,10 +41,10 @@ let debug = process.env.DEBUG;
     
     var logger;
 
-    if (config.logpath) {
+    if (config.logpath || dolog) {
       const lpath = config.logpath;
       const lname = inFile.replace(/.+\//, '');
-      const logFileName = `${lpath}/${lname}.log`;
+      const logFileName = (dolog) ? logPath : `${lpath}/${lname}.log`;
       if (fs.existsSync(logFileName)) {
         fs.unlinkSync(logFileName);
       }
