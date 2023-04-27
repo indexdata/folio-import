@@ -60,7 +60,7 @@ const tenant = 'sul';
 
     let requesters = {};
     users.users.forEach(u => {
-      requesters[u.barcode] = { active: u.active, expirationDate: u.expirationDate, id: u.id };
+      requesters[u.barcode] = { active: u.active, expirationDate: u.expirationDate, id: u.id, barcode: u.barcode };
     });
 
     let dateOffset = (dt) => {
@@ -95,6 +95,7 @@ const tenant = 'sul';
 
     let total = 0;
     let succ = 0;
+    let iacount = 0;
     const ibcodeSeen = {};
 
     for (let x = 0; x < inRecs.length; x++) {
@@ -114,6 +115,16 @@ const tenant = 'sul';
       let userId;
       if (requesters[ubcode]) {
         userId = requesters[ubcode].id;
+        let uact = requesters[ubcode].active;
+        let ubc = requesters[ubcode].barcode;
+        let exp = requesters[ubcode].expirationDate;
+        if (!uact) {
+          iacount++;
+          let ia = { barcode: ubc };
+          if (exp) ia.expirationDate = exp;
+          writeTo(files.ia, ia);
+          console.log(`WARN User with barcode ${ubc} is inactive`);
+        }
       } else {
         console.log(`[${total}] WARN User not found with barcode ${ubcode}`);
       }
@@ -219,6 +230,7 @@ const tenant = 'sul';
     console.log('Time (secs)', tt);
     console.log('Processed', total);
     console.log('Created:', succ);
+    console.log('Inactives:', iacount);
   } catch (e) {
     const msg = (e.message) ? e.message : e;
     console.error(e.message);
