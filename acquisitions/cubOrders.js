@@ -2,6 +2,7 @@ const fs = require('fs');
 const readline = require('readline');
 const uuid = require('uuid/v5');
 const path = require('path');
+const { STATUS_CODES } = require('http');
 
 let startDate = '2022-07-01';
 const ns = 'e35dff4e-9035-4d6a-b621-3d42578f81c7';
@@ -189,6 +190,7 @@ otherCodes = {
           let acqType = (ff['1']) ? ff['1'].value : '';
           let form = (ff['11']) ? ff['11'].value : '';
           let raction = (ff['16']) ? ff['16'].value : '';
+          let rdate = (ff['17']) ? ff['17'].value : '';
 
           co.orderType = orderType;
           if (co.orderType === 'Ongoing') {
@@ -205,15 +207,19 @@ otherCodes = {
 
           let pol = {
             purchaseOrderId: poId,
-            paymentStatus: 'Awaiting Payment',
             poLineNumber: poNum + '-1',
             source: 'User',
             checkinItems: false,
             locations: []
           };
           pol.id = uuid(pol.poLineNumber, ns);
-
           pol.rush = (raction.match(/[anrm]/)) ? true : false;
+          if (rdate.match(/\d{4}-\d\d-\d\d/)) {
+            pol.receiptStatus = 'Fully Received';
+            pol.receiptDate = rdate;
+          }
+          pol.paymentStatus = (statCode.match(/^[az]$/)) ? 'Fully Paid' : 'Awaiting Payment';
+
 
           if (oType === 'a') {
             pol.acquisitionMethod = refData.acquisitionMethods['Approval Plan'];
