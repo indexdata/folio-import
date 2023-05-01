@@ -23,7 +23,6 @@ const refFiles = {
 
 const formMap = {
   b: "book",
-  e: "ejournal acq",
   f: "film reel",
   k: "map",
   j: "membership acq",
@@ -34,15 +33,27 @@ const formMap = {
   n: "newspaper",
   o: "document",
   p: "photograph acq",
-  r: "annual access fee",
   s: "journal",
   u: "bibliographic utility acq",
-  w: "dvd: no prospector",
-  x: "accounting acq",
-  y: "electronic resource",
-  z: "open access article processing charge (apc)",
+  w: "dvd: prospector",
   3: "score",
+};
+
+const eFormMap = {
+  r: "book",
+  e: "journal",
+  j: "membership acq",
+  u: "bibliographic utility acq",
+  x: "database acq",
+  y: "eresource collection",
   4: "stream acq"
+};
+
+
+const otypeMap = {
+  r: "annual access fee",
+  z: "open access article processing charge (apc)",
+  x: "accounting acq"
 };
 
 otherCodes = {
@@ -249,17 +260,11 @@ otherCodes = {
           let loc = {};
           pol.cost = {};
           pol.cost.currency = 'USD';
-          let mtypeName = '';
-          if (formMap[form]) {
-            mtypeName = formMap[form];
-          }
-          if (oType.match(/[zrdox]/)) {
-            mtypeName = formMap[oType];
-          }
           if (format === 'Electronic Resource') {
             pol.cost.listUnitPriceElectronic = price;
             pol.cost.quantityElectronic = copies;
             loc.quantityElectronic = copies;
+            let mtypeName = eFormMap[form] || otypeMap[oType];
             pol.eresource = {
               createInventory: 'None',
               materialType: refData.mtypes[mtypeName] || refData.mtypes.unspecified,
@@ -269,12 +274,7 @@ otherCodes = {
             pol.cost.listUnitPrice = price;
             pol.cost.quantityPhysical = copies;
             loc.quantityPhysical = copies;
-            if (formMap[form]) {
-              mtypeName = formMap[form];
-            } 
-            if (oType.match(/[zrdox]/)) {
-              mtypeName = formMap[oType];
-            }
+            let mtypeName = formMap[form] || otypeMap[oType];
             pol.physical = {
               createInventory: 'None',
               materialType: refData.mtypes[mtypeName] || refData.mtypes.unspecified
