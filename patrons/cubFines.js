@@ -2,16 +2,35 @@ const readline = require('readline');
 const fs = require('fs');
 const path = require('path');
 const uuid = require('uuid/v5');
+const superagent = require('superagent');
 
+const tenant = 'cu';
 const ns = 'a8e1584e-a8d1-4d40-b921-03798ca3563b';
-const owner = '88f3a68d-8982-4a0d-b893-851eef69ae7e';
-const fineType = '8b27811a-0bb7-4088-a865-8373cb88cef4';
+const owner = 'ee5ecb79-e879-47b4-9082-f9cd27a7eaa3';
+const ownerName = 'Patron Accounts';
 const createdAt = '3a40852d-49fd-4df2-a1f9-6e2641a6e91f';
 const source = 'Sierra';
 const stypes = { 
-  itemCharge: '',
-  processingFee: 'Lost item processing fee',
-  billingFee: 'Lost item billing fee'
+  itemCharge: {
+    name: 'Overdue fine',
+    id: '9523cb96-e752-40c2-89da-60f3961a488d'
+  },
+  processingFee: {
+    name: 'Lost item processing fee',
+    id: 'c7dede15-aa48-45ed-860b-f996540180e0'
+  },
+  lostItemFee: {
+    name: 'Lost item fee',
+    id: 'cf238f9f-7018-47b7-b815-bb2db798e19f'
+  },
+  replacementFee: {
+    name: 'Replacement processing fee',
+    id: 'd20df2fb-45fd-4184-b238-0d25747ffdd9'
+  },
+  billingFee: {
+    name: 'Lost item billing fee',
+    id: '96cfc7a1-3cfd-4b4e-b436-c75c2d0825f1'
+  }
 }
 
 const usersMapFile = process.argv[2];
@@ -29,9 +48,14 @@ const inFile = process.argv[3];
     if (fs.existsSync(outPath)) fs.unlinkSync(outPath);
     if (fs.existsSync(actPath)) fs.unlinkSync(actPath);
 
+    const config = JSON.parse(fs.readFileSync('../.okapi', { encoding: 'utf8' }));
+    if (config.tenant !== tenant) throw new Error('There is a tenant mismatch. Run the authToken.js script with proper config!');
+    const authToken = config.token;
+
     const start = new Date().valueOf();
     let count = 0;
     let accCount = 0;
+    let ffaCount = 0;
 
     // map users
     console.log('Loading users...');
@@ -76,17 +100,17 @@ const inFile = process.argv[3];
         let hrid = '';
         let item = {};
         if (f.item) {
-          hrid = f.item.replace(/.+\//, '');
-          let check = calcCheckDigit(hrid);
-          hrid = 'i' + hrid + check;
+          hrid = f.item.replace(/.+\/(\d+).*/, '$1');
+          hrid = 'i' + hrid;
         
-          let url = `${config.okapi}/inventory/items?query=hrid==${hrid}`;
+          let url = `${config.url}/inventory/items?query=hrid==${hrid}`;
           console.log(`[${count}] GET ${url}`);
           try {
             let res = await superagent
               .get(url)
               .set('x-okapi-token', authToken);
             item = res.body.items[0];
+            console.log(res.body);
           } catch (e) {
             console.log(e);
           }
@@ -97,9 +121,19 @@ const inFile = process.argv[3];
             acc.id = uuid(f.id + stype, ns);
             acc.userId = userId;
             acc.ownerId = owner;
-            acc.feeFineOwner = 'Dinand Library';
-            acc.feeFineId = fineType;
-            acc.feeFineType = stypes[stype] || f.chargeType.display;
+            acc.feeFineOwner = ownerName;
+            if (stypes[stype]) {
+              if (stype === 'itemCharge' && f.chargeType.code === '3') {
+                acc.feeFineType = stypes.lostItemFee.name;
+                acc.feeFineId = stypes.lostItemFee.id;
+              } else {
+                acc.feeFineType = stypes[stype].name;
+                acc.feeFineId = stypes[stype].id;
+              }
+            } else {
+              acc.feeFineType = f.chargeType.display;
+              acc.feeFineId = fineType.lostItemFee.id;
+            }
             acc.amount = f[stype];
             acc.remaining = acc.amount;
             if (f.paidAmount > 0) {
@@ -156,7 +190,8 @@ const inFile = process.argv[3];
     
     let tt = (new Date().valueOf() - start) / 1000;
     console.log('Processed', count);
-    console.log('Created', accCount);
+    console.log('Accounts', accCount);
+    console.log('Actions', ffaCount);
     console.log('Seconds', tt);
 
 
