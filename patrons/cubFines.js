@@ -41,7 +41,7 @@ const inFile = process.argv[3];
   try {
     if (!inFile) throw 'Usage: node hcFines.js <users_map> <sierra_fines_jsonl>';
     if (!fs.existsSync(inFile)) throw `Can't find fines file: ${inFile}!`;
-    if (!fs.existsSync(usersMapFile)) throw `Can't find map file directory: ${usersFileFile}!`;
+    if (!fs.existsSync(usersMapFile)) throw `Can't find map file directory: ${usersMapFile}!`;
     const saveDir = path.dirname(inFile);
     const outPath = `${saveDir}/folio-accounts.jsonl`;
     const actPath = `${saveDir}/folio-actions.jsonl`; 
