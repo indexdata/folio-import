@@ -1,9 +1,10 @@
-data=/data/colorado
+data=/data/charles/colorado
 marcdir=$(data)/marc2
 itemdir=$(data)/item
 holdir=$(data)/holdings
 userdir = $(data)/users
 orddir = $(data)/orders
+finedir = $(data)/fines
 log=$(data)/log
 home=/home/charles
 sdir=$(home)/sierra-api/js
@@ -52,6 +53,12 @@ ifeq ($(wildcard $(userdir)/.),)
 endif
 	cd $(sdir); node downloadUsers.js $(userdir) > $(log)/get-users.log &
 
+get-fines:
+ifeq ($(wildcard $(finedir)/.),)
+	mkdir $(finedir)
+endif
+	cd $(sdir); node downloadFines.js $(finedir) > $(log)/get-fines.log &
+
 get-orders:
 ifeq ($(wildcard $(orddir)/.),)
 	mkdir $(orddir)
@@ -86,6 +93,11 @@ users: $(userdir)/users0*.jsonl
 	cat $(userdir)/users0*.jsonl > $(userdir)/iii-users.jsonl
 	cd $(wd)/patrons; node cubUsers.js $(uref) $(userdir)/iii-users.jsonl 'folio@colorado.edu' > $(log)/make-users.log 2>$(log)/make-users-err.log &
 
+fines: $(finedir)/fines0*.jsonl
+	cd $(wd); node authToken.js
+	grep '"tenant":"cu"' $(wd)/.okapi
+	cd $(wd)/patrons; node cubFines.js $(userdir)/users.map $(finedir)/fines0*jsonl > $(log)/make-fines.log 2>$(log)make-fines.err &
+
 setup:
 	cd $(wd); git pull	
 	cp $(wd)/configs/bash/login-cu-test.sh .
@@ -95,6 +107,7 @@ setup:
 	mkdir $(iref)
 	mkdir $(uref)
 	mkdir $(aref)
+	mkdir $(log)
 	./login-cu-test.sh
 	./reference_inventory.sh $(iref)
 	./reference_users.sh $(uref)
@@ -109,3 +122,4 @@ clean:
 	rm -rf $(iref)
 	rm -rf $(uref)
 	rm -rf $(aref)
+	rm -rf $(log)
