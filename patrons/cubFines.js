@@ -116,6 +116,7 @@ const inFile = process.argv[3];
           }
         }
 
+        let payMade = false;
         for (let stype in stypes) {
           if (f[stype] > 0) {
             acc.id = uuid(f.id + stype, ns);
@@ -136,8 +137,9 @@ const inFile = process.argv[3];
             }
             acc.amount = f[stype];
             acc.remaining = acc.amount;
-            if (f.paidAmount > 0) {
+            if (f.paidAmount > 0 && !payMade) {
               acc.remaining -= f.paidAmount;
+              payMade = true;
             }
             acc.dateCreated = f.assessedDate;
             acc.status = { name: 'Open' };
