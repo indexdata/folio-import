@@ -1,0 +1,166 @@
+const readline = require('readline');
+const fs = require('fs');
+const path = require('path');
+const uuid = require('uuid/v5');
+
+const ns = 'a8e1584e-a8d1-4d40-b921-03798ca3563b';
+const owner = '88f3a68d-8982-4a0d-b893-851eef69ae7e';
+const fineType = '8b27811a-0bb7-4088-a865-8373cb88cef4';
+const createdAt = '3a40852d-49fd-4df2-a1f9-6e2641a6e91f';
+const source = 'Sierra';
+const stypes = { 
+  itemCharge: '',
+  processingFee: 'Lost item processing fee',
+  billingFee: 'Lost item billing fee'
+}
+
+const usersMapFile = process.argv[2];
+const inFile = process.argv[3];
+
+
+(async () => {
+  try {
+    if (!inFile) throw 'Usage: node hcFines.js <users_map> <sierra_fines_jsonl>';
+    if (!fs.existsSync(inFile)) throw `Can't find fines file: ${inFile}!`;
+    if (!fs.existsSync(usersMapFile)) throw `Can't find map file directory: ${usersFileFile}!`;
+    const saveDir = path.dirname(inFile);
+    const outPath = `${saveDir}/folio-accounts.jsonl`;
+    const actPath = `${saveDir}/folio-actions.jsonl`; 
+    if (fs.existsSync(outPath)) fs.unlinkSync(outPath);
+    if (fs.existsSync(actPath)) fs.unlinkSync(actPath);
+
+    const start = new Date().valueOf();
+    let count = 0;
+    let accCount = 0;
+
+    // map users
+    console.log('Loading users...');
+    let fileStream = fs.createReadStream(usersMapFile);
+    let rl = readline.createInterface({
+      input: fileStream,
+      crlfDelay: Infinity
+    });
+    const userMap = {};
+    for await (const u of rl) {
+      let [pid, id] = u.split(/\|/);
+      userMap[pid] = id;
+    }
+    // console.log(userMap); return;
+
+    const calcCheckDigit = (recordNumber) => {
+      let m = 2
+      let x = 0
+      let i = Number(recordNumber)
+      while (i > 0) {
+        let a = i % 10
+        i = Math.floor(i / 10)
+        x += a * m
+        m += 1
+      }
+      const r = x % 11
+      return r === 10 ? 'x' : String(r)
+    }
+
+    fileStream = fs.createReadStream(inFile);
+    rl = readline.createInterface({
+      input: fileStream,
+      crlfDelay: Infinity
+    });
+    for await (const l of rl) {
+      let f = JSON.parse(l);
+      let pid = f.patron.replace(/^.+\//, '');
+      let userId = userMap[pid];
+
+      if (userId) {
+        let acc = {};
+        let hrid = '';
+        let item = {};
+        if (f.item) {
+          hrid = f.item.replace(/.+\//, '');
+          let check = calcCheckDigit(hrid);
+          hrid = 'i' + hrid + check;
+        
+          let url = `${config.okapi}/inventory/items?query=hrid==${hrid}`;
+          console.log(`[${count}] GET ${url}`);
+          try {
+            let res = await superagent
+              .get(url)
+              .set('x-okapi-token', authToken);
+            item = res.body.items[0];
+          } catch (e) {
+            console.log(e);
+          }
+        }
+
+        for (let stype in stypes) {
+          if (f[stype] > 0) {
+            acc.id = uuid(f.id + stype, ns);
+            acc.userId = userId;
+            acc.ownerId = owner;
+            acc.feeFineOwner = 'Dinand Library';
+            acc.feeFineId = fineType;
+            acc.feeFineType = stypes[stype] || f.chargeType.display;
+            acc.amount = f[stype];
+            acc.remaining = acc.amount;
+            if (f.paidAmount > 0) {
+              acc.remaining -= f.paidAmount;
+            }
+            acc.dateCreated = f.assessedDate;
+            acc.status = { name: 'Open' };
+            acc.paymentStatus = { name: 'Outstanding' };
+            if (item && item.id) {
+              acc.title = item.title;
+              acc.contributors = item.contributorNames;
+              acc.barcode = item.barcode;
+              acc.callNumber = item.callNumber;
+              acc.location = item.effectiveLocation.name;
+              acc.itemStatus = item.status;
+              acc.materialType = item.materialType.name;
+              acc.itemId = item.id;
+              acc.holdingsRecordId = item.holdingsRecordId;
+            }
+
+            let ffa = {};
+            ffa.id = uuid(acc.id, ns);
+            ffa.accountId = acc.id;
+            ffa.userId = acc.userId;
+            ffa.dateAction = acc.dateCreated;
+            ffa.typeAction = acc.feeFineType;
+            ffa.notify = false;
+            ffa.amountAction = acc.amount;
+            ffa.balance = acc.remaining;
+            if (ffa.amountAction > ffa.balance) {
+              ffa.typeAction = 'Paid partially'
+              ffa.paymentMethod = 'Cash'
+            }
+            ffa.createdAt = createdAt;
+            ffa.source = source;
+            if (f.description) {
+              ffa.comments = f.description;
+            }
+
+            let accStr = JSON.stringify(acc) + '\n';
+            fs.writeFileSync(outPath, accStr, { flag: 'a'});
+            accCount++;
+
+            let ffaStr = JSON.stringify(ffa) + '\n';
+            fs.writeFileSync(actPath, ffaStr, { flag: 'a' });
+            ffaCount++;
+          }
+        }
+      } else {
+        console.log(`WARN userId not found for ${pid}`);
+      }
+      count++;
+    }
+    
+    let tt = (new Date().valueOf() - start) / 1000;
+    console.log('Processed', count);
+    console.log('Created', accCount);
+    console.log('Seconds', tt);
+
+
+  } catch (e) {
+    console.log(e);
+  }
+})();
