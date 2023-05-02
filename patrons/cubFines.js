@@ -110,7 +110,6 @@ const inFile = process.argv[3];
               .get(url)
               .set('x-okapi-token', authToken);
             item = res.body.items[0];
-            console.log(res.body);
           } catch (e) {
             console.log(e);
           }
