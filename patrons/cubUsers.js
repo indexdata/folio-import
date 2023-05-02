@@ -56,9 +56,12 @@ try {
   const outPath = `${saveDir}/folio-${fileName}.jsonl`;
   const notePath = `${saveDir}/notes-${fileName}.jsonl`;
   const permPath = `${saveDir}/permusers-${fileName}.jsonl`;
+  const mapPath = `${saveDir}/users.map`;
   if (fs.existsSync(outPath)) fs.unlinkSync(outPath);
   if (fs.existsSync(notePath)) fs.unlinkSync(notePath);
   if (fs.existsSync(permPath)) fs.unlinkSync(permPath);
+  if (fs.existsSync(mapPath)) fs.unlinkSync(mapPath);
+
 
   refDir = refDir.replace(/\/$/, '');
 
@@ -188,6 +191,7 @@ try {
     }
 
     fs.writeFileSync(outPath, JSON.stringify(user) + '\n', { flag: 'as' });
+    fs.writeFileSync(mapPath, `${pid}|${user.id}\n`, { flag: 'as' });
     if (groupId !== staff) {
       let uid = user.id;
       let pu = {
