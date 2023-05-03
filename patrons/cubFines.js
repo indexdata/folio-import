@@ -45,8 +45,10 @@ const inFile = process.argv[3];
     const saveDir = path.dirname(inFile);
     const outPath = `${saveDir}/folio-accounts.jsonl`;
     const actPath = `${saveDir}/folio-actions.jsonl`; 
+    const payPath = `${saveDir}/folio-pay.jsonl`; 
     if (fs.existsSync(outPath)) fs.unlinkSync(outPath);
     if (fs.existsSync(actPath)) fs.unlinkSync(actPath);
+    if (fs.existsSync(payPath)) fs.unlinkSync(payPath);
 
     const config = JSON.parse(fs.readFileSync('../.okapi', { encoding: 'utf8' }));
     if (config.tenant !== tenant) throw new Error('There is a tenant mismatch. Run the authToken.js script with proper config!');
@@ -56,6 +58,7 @@ const inFile = process.argv[3];
     let count = 0;
     let accCount = 0;
     let ffaCount = 0;
+    let payCount = 0;
 
     // map users
     console.log('Loading users...');
@@ -110,12 +113,13 @@ const inFile = process.argv[3];
               .get(url)
               .set('x-okapi-token', authToken);
             item = res.body.items[0];
+            if (!item) console.log(`WARN No item found for ${hrid}`);
           } catch (e) {
             console.log(e);
           }
         }
 
-        let payMade = false;
+        let paid = false;
         for (let stype in stypes) {
           if (f[stype] > 0) {
             acc.id = uuid(f.id + stype, ns);
@@ -136,10 +140,10 @@ const inFile = process.argv[3];
             }
             acc.amount = f[stype];
             acc.remaining = acc.amount;
-            if (f.paidAmount > 0 && !payMade) {
+            /* if (f.paidAmount > 0 && !payMade) {
               acc.remaining -= f.paidAmount;
               payMade = true;
-            }
+            } */
             acc.dateCreated = f.assessedDate;
             acc.status = { name: 'Open' };
             acc.paymentStatus = { name: 'Outstanding' };
@@ -181,6 +185,24 @@ const inFile = process.argv[3];
             let ffaStr = JSON.stringify(ffa) + '\n';
             fs.writeFileSync(actPath, ffaStr, { flag: 'a' });
             ffaCount++;
+
+            let pa = f.paidAmount;
+            if (pa > 0 && !paid) {
+              let payObj = {
+                _accountId: acc.id,
+                amount: pa,
+                paymentMethod: 'Other',
+                notifyPatron: false,
+                comments: '',
+                servicePointId: '3a40852d-49fd-4df2-a1f9-6e2641a6e91f',
+                userName: 'Administrator, Index Data',
+                transactionInfo: ''
+              }
+              let payStr = JSON.stringify(payObj) + '\n';
+              fs.writeFileSync(payPath, payStr, { flag: 'a' });
+              payCount++;
+              paid = true;
+            }
           }
         }
       } else {
@@ -193,6 +215,7 @@ const inFile = process.argv[3];
     console.log('Processed', count);
     console.log('Accounts', accCount);
     console.log('Actions', ffaCount);
+    console.log('Payments', payCount);
     console.log('Seconds', tt);
 
 
