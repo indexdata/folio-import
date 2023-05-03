@@ -97,6 +97,8 @@ const inFile = process.argv[3];
       let f = JSON.parse(l);
       let pid = f.patron.replace(/^.+\//, '');
       let userId = userMap[pid];
+      let invNum = (f.invoiceNumber) ? f.invoiceNumber.toString() : '';
+      let comm = 'Invoice number: ' + invNum;
 
       if (userId) {
         let acc = {};
@@ -168,15 +170,16 @@ const inFile = process.argv[3];
             ffa.notify = false;
             ffa.amountAction = acc.amount;
             ffa.balance = acc.remaining;
-            if (ffa.amountAction > ffa.balance) {
+            ffa.comments = comm;
+            /* if (ffa.amountAction > ffa.balance) {
               ffa.typeAction = 'Paid partially'
               ffa.paymentMethod = 'Cash'
-            }
+            } */
             ffa.createdAt = createdAt;
             ffa.source = source;
-            if (f.description) {
+            /* if (f.description) {
               ffa.comments = f.description;
-            }
+            }*/
 
             let accStr = JSON.stringify(acc) + '\n';
             fs.writeFileSync(outPath, accStr, { flag: 'a'});
@@ -193,9 +196,9 @@ const inFile = process.argv[3];
                 amount: pa,
                 paymentMethod: 'Other',
                 notifyPatron: false,
-                comments: '',
+                comments: comm,
                 servicePointId: '3a40852d-49fd-4df2-a1f9-6e2641a6e91f',
-                userName: 'Administrator, Index Data',
+                userName: source,
                 transactionInfo: ''
               }
               let payStr = JSON.stringify(payObj) + '\n';
