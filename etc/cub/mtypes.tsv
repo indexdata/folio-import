@@ -1,74 +1,45 @@
-Updated 3/17/2023 Juleah Swanson			
-Sierra iType	Sierra Order Field & Code	FOLIO Material Type	FOLIO Orders Definition
-0	Form B, R	Book	Print or Ebook
-1	Form E,  S	Journal	Print or Ejournal
-6	Form O	Document	Documents, papers, manuscripts
-7	none	Mona	none, do not use in order. Use Book instead on Order, Mona on Item
-10	Form 3	Score	Music Score
-11	none	Sound Recording	
-12	Form L	Microfilm	Microfilm
-13	none	VHS Video	
-14	Form K	Map	
-15	none	CD-Rom	
-16	none	Computer Disk	
-17	Form M	Microfiche	Microfiche
-20	none	Folio	none
-24	none	Slide	none
-29	none	Audiocassette	none
-30	none	DVD: No Prospector	none
-32	none	Filmstrip	none
-32	none	Thesis	none
-39	none	SPC & ARV PASCAL	Do not use for order records. 
-40	none	Gov Pub Special	Do not use for order records. 
-42	none	Web	Do not use for order records. 
-45	none	VHS Video: Prospector	
-46	Form W	DVD: Prospector	DVD, Bluray, Video Discs
-47		Microfilm: Prospector	
-50	Form i	LP	Phonorecords, LP, and Records
-51	none	Laserdisc	For orders use DVD: Prospector
-52	none	Microprint	
-59	Form F	Film Reel	Film Reel, motion film
-60	none	Music Spec Coll PASCAL	Do not use for orders
-63	Form N	Newspaper	Print Newspaper only. Electronic Newspapers are considered Databases
-64	none	Lebowitz Collection	Do not use for order records. May use on Item records
-67	none	Reserves	Do not use for order records. May use on Item records
-68	none	AMRC PASCAL	
-70	none	DVD, conversion from VHS	Do not use for order records. May use on item records
-72	none	Sound recordings - No Prospector	
-73	none	ILL Borrowed Materials	Do not use for order records
-76	none	Reference Circulating Collection	Do not use for order records
-79	none	Gov Pres Steward	
-80	none	Flash Drive	
-81	none	Music Scores Limited Use	Do not use for order records
-82	none	Music Gindes Collection	
-87	none	Standards	TBD
-90	none	Artworks	TBD
-94	none	Ebooks, Prospector	Do not use for order records
-95	none	SILLVR streaming videos	Do not use for order records
-96	none	3D item 4 hour loan	
-97	none	 3D item 3 day loan	
-98	none	3D item semester loan	
-102	none	Book, no Prospector	Do not use for order records. May use on items
-200	none	Prospector-Requestable	
-201	none	Prospector NonRequestable	
-202	none	MOBIUS AV Circ	
-203	none	MOBIUS TEST	
-205	none	Prospector Media	
-206	none	Prospector PASCAL journals	Do not use for order records
-207	none	Prospector CRL Items	Do not use for order records
-209	none	MOBIUS GENERAL CIRC	
-210	none	MOBIUS NON-CIRC	
-211	none	MOBIUS Audiobook	
-220	none	Marmot monograph	
-	none	Marmot Media	
-	Form J	Membership ACQ	Institutional Membership where primary purpose is the membership rather than content. For order records only
-	Form G	Compact Disc ACQ	Compact Disc. For Order Records only
-	Form X	Database ACQ	Eresource Database, ongoing
-	Form Y	Eresource Collection	One time purchase of an e-resource collection such as archival collections
-	Form 4	Streaming Video ACQ	Streaming Video
-	Order Type z	Open Access Article Processing Charge (APC) 	Open Access Article Processing Charges and other OA fees
-	Order Type r	Annual Access Fee	Hosting fees for access only. Purchases that include content will be under a different Material Type
-	Order Type X	Accounting ACQ	Acquisitions Management Records. Accounting records for internal accounting purposes. Example - Records to capture JEs or Budget Transfers
-	none	SPO Service Contracts ACQ	Standing Purchase Orders in CU Marketplace or similar service type contracts not covered under Bibliographic Utility
-	none	Postage ACQ	Internal Records for tracking Postage expenditures
-	Form U	Bibliographic Utlity ACQ	Orders for services, MARC records, discovery, or other aspects of cataloging, bibliographic data, or discovery.
+82	Sound recording
+83	3D item, 3 day loan
+84	3D item, semester loan
+85	3D item, semester loan
+86	Mona
+87	Standards
+88	Reserves
+89	Book, no prospector
+90	Artworks
+91	3D item, semester loan
+92	deleted
+93	deleted
+94	Ebooks, Prospector
+95	SILLVR streaming videos
+96	3D item 4 hour loan
+97	 3D item 3 day loan
+98	3D item semester loan
+99	deleted
+100	deleted
+101	deleted
+102	Book, no Prospector
+200	Prospector-Requestable
+201	Prospector NonRequestable
+202	MOBIUS AV Circ
+203	MOBIUS TEST
+204	
+205	Prospector Media
+206	Prospector PASCAL journals
+207	Prospector CRL Items
+209	MOBIUS GENERAL CIRC
+210	MOBIUS NON-CIRC
+211	MOBIUS Audiobook
+220	Marmot monograph
+	Marmot Media
+	Membership ACQ
+	Compact Disc ACQ
+	Database ACQ
+	Eresource Collection
+	Streaming Video ACQ
+	Open Access Article Processing Charge (APC) 
+	Annual Access Fee
+	Accounting ACQ
+	SPO Service Contracts ACQ
+	Postage ACQ
+	Bibliographic Utlity ACQ
