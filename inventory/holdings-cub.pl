@@ -315,7 +315,7 @@ foreach (@ARGV) {
     }
 
     foreach my $e (@{ $vf->{856} }) {
-      my $uri = $e->{z} || '';
+      my $uri = $e->{u} || '';
       my $ltext = $e->{z} || '';
       $uri =~ s/^.+(http.+?) >.+/$1/;
       $ltext =~ s/.+>\s*(.+) <.+/$1/;
