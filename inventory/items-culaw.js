@@ -63,6 +63,13 @@ const statuses = {
   w: 'Withdrawn'
 };
 
+const itypes = {
+  '0': 'book',
+  '50': 'Book, no Prospector',
+  '99': 'journal',
+  '10': 'Book, no Prospector'
+};
+
 (async () => {
   try {
     if (!itemFile) throw(`Usage: node items-culaw.js <ref-dir> <inst-map-file> <item-file.csv>`);
@@ -252,12 +259,14 @@ const statuses = {
           }
           
           let ihrid = i['RECORD #(ITEM)'];
+          let itype = i['I TYPE'];
           if (!iseen[ihrid]) {
             iseen[ihrid] = 1;
             ihrid = 'l' + ihrid;
             itemId = uuid(ihrid, ns);
             let loantypeId = refData.loantypes['Can circulate'];
-            let mt = refData.mtypes.unspecified;
+            let mtStr = itypes[itype];
+            let mt = refData.mtypes[mtStr] || refData.mtypes.unspecified;
             let ir = {
               id: itemId,
               hrid: ihrid,
