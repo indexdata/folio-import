@@ -364,16 +364,20 @@ sub make_hi {
   my $itype = $item->{fixedFields}->{61}->{value};
   my $status = $item->{fixedFields}->{88}->{value} || '';
   my $bc = '';
-  my $pbc = '';
+  my $ubc = '';
   foreach (@{$vf->{b}}) {
     if ($_) {
       s/ +$//;
-      if ($_ =~ /^U/) {
+      if ($_ =~ /^P/) {
         $bc = $_;
-      } elsif ($_ =~ /^P/) {
-        $pbc = $_;
+      } elsif ($_ =~ /^U/) {
+        $ubc = $_;
       }
     }
+  }
+  if (!$bc && $ubc) {
+    $bc = $ubc;
+    $ubc = '';
   }
   my @msgs = $vf->{m};
   my @notes;
@@ -389,8 +393,8 @@ sub make_hi {
     if ($bwc == 0) {
       $irec->{barcode} = $bc if $bc && !$bseen->{$bc};
       $bseen->{$bc} = 1;
-      if ($pbc) {
-        push @pnotes, $pbc;
+      if ($ubc) {
+        $irec->{formerIds} = [ $ubc ];
       }
     } else {
       push @notes, "This item is bound with $bc";
