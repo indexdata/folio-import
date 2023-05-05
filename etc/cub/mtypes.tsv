@@ -1,3 +1,85 @@
+0	Book
+1	Journal
+2	deleted
+3	deleted
+4	deleted
+5	deleted
+6	Document
+7	Mona
+8	deleted
+9	deleted
+10	Score
+11	Sound Recording
+12	Microfilm
+13	VHS Video
+14	Map
+15	CD-Rom
+16	Computer Disk
+17	Microfiche
+18	deleted
+19	3D item, semester loan
+20	Folio
+21	3D item, 4 hour loan
+22	3D item, 4 hour loan
+23	3D item, 4 hour loan
+24	Slide
+25	deleted
+26	deleted
+27	3D item, 4 hour loan
+28	delete
+29	Audiocassette
+30	DVD: No Prospector
+31	3D item, 3 day loan
+32	Filmstrip
+33	Journal
+34	3D item, semester loan
+35	delete
+36	delete
+37	3D item, 3 day loan
+38	Thesis
+39	SPC & ARV PASCAL
+40	Gov Pub Special
+41	film reel
+42	Web
+43	Book
+44	Sound Recording
+45	VHS Video: Prospector
+46	DVD: Prospector
+47	Microfilm: Prospector
+48	delete
+49	delete
+50	LP
+51	Laserdisc
+52	Microprint
+53	Reference circ collection
+54	deleted
+55	deleted
+56	book
+57	journal
+58	3D item, 4 hour loan
+59	Film Reel
+60	Music Spec Coll PASCAL
+61	Book
+62	3D item, 4 hour loan
+63	Newspaper
+64	Lebowitz Collection
+65	3D item, 4 hour loan
+66	3D item, 4 hour loan
+67	Reserves
+68	AMRC PASCAL
+69	3D item, 4 hour loan
+70	DVD, conversion from VHS
+71	Book, no Prospector
+72	Sound recordings - No ILL
+73	ILL Borrowed Materials
+74	3D item, 4 hour loan
+75	3D item, 3 day loan
+76	Reference Circulating Collection
+77	3D item, 3 day loan
+78	Book
+79	Gov Pres Steward
+80	Flash Drive
+81	Music Scores Limited Use
 82	Sound recording
 83	3D item, 3 day loan
 84	3D item, semester loan
@@ -13,7 +95,7 @@
 94	Ebooks, Prospector
 95	SILLVR streaming videos
 96	3D item 4 hour loan
-97	 3D item 3 day loan
+97	3D item 3 day loan
 98	3D item semester loan
 99	deleted
 100	deleted
@@ -31,15 +113,3 @@
 210	MOBIUS NON-CIRC
 211	MOBIUS Audiobook
 220	Marmot monograph
-	Marmot Media
-	Membership ACQ
-	Compact Disc ACQ
-	Database ACQ
-	Eresource Collection
-	Streaming Video ACQ
-	Open Access Article Processing Charge (APC) 
-	Annual Access Fee
-	Accounting ACQ
-	SPO Service Contracts ACQ
-	Postage ACQ
-	Bibliographic Utlity ACQ
