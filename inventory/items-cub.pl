@@ -111,6 +111,9 @@ sub makeMapFromTsv {
       my $code = ($col[0] =~ /\w/) ? $col[0] : '';
       $code =~ s/^ +| +$//g;
       my $name = $col[2] || '';
+      if ($prop eq 'mtypes') {
+        $name = $col[1];
+      }
       $name =~ s/^ +| +$//g;
       if ($prop eq 'statuses') {
         $tsvmap->{$prop}->{$code} = $name;
@@ -159,7 +162,7 @@ close MAP;
 $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
 my $sierra2folio = makeMapFromTsv($ref_dir, $refdata);
-# print Dumper($sierra2folio->{loantypes}); exit;
+# print Dumper($sierra2folio->{mtypes}); exit;
 
 my $relations = {
   '0' => 'Resource',
