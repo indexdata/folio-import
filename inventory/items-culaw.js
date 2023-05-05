@@ -276,11 +276,12 @@ const itypes = {
           
           let ihrid = i['RECORD #(ITEM)'];
           let itype = i['I TYPE'];
+          let st = i.STATUS;
           if (!iseen[ihrid]) {
             iseen[ihrid] = 1;
             ihrid = 'l' + ihrid;
             itemId = uuid(ihrid, ns);
-            let loantypeId = refData.loantypes['Can circulate'];
+            let loantypeId = (st === 'o') ? refData.loantypes['Cannot circulate'] : refData.loantypes['Can circulate'];
             let mtStr = itypes[itype];
             let mt = refData.mtypes[mtStr] || refData.mtypes.unspecified;
             let ir = {
@@ -316,7 +317,6 @@ const itypes = {
               ir.itemLevelCallNumber = cn;
               ir.itemLevelCallNumberTypeId = cntype;
             }
-            let st = i.STATUS;
             let stname = statuses[st] || 'Available';
             ir.status.name = stname;
             if (i['COPY #']) {
