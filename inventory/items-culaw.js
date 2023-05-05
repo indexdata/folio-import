@@ -199,6 +199,7 @@ const itypes = {
     let relc = 0;
     let hseen = {};
     let iseen = {};
+    let bseen = {};
     let hid;
     itemRecs.forEach(i => {
       let iid = i['RECORD #(ITEM)'];
@@ -274,16 +275,26 @@ const itypes = {
               permanentLoanTypeId: loantypeId,
               materialTypeId: mt,
               status: {},
-              discoverySuppress: supp
+              discoverySuppress: supp,
+              notes: []
             };
+            let nlabel = 'Other barcode: ';
             let bc = i.BARCODE;
             if (bc) {
+              bc = bc.toUpperCase();
               let b = bc.split(/%%/);
-              ir.barcode = b.shift();
+              let ibc = b.shift();
+              ibc = ibc.trim();
+              if (ibc && !iseen[ibc]) {
+                ir.barcode = ibc;
+                iseen[ibc] = 1;
+              } else {
+                b.push(ibc);
+                nlabel = 'Duplicate barcode: '
+              }
               if (b[0]) {
-                if (!ir.notes) ir.notes = [];
                 let ntype = refData.itemNoteTypes['Provenance'];
-                ir.notes.push(noteGen('Other barcode: ' + b[0], ntype, 1));
+                ir.notes.push(noteGen(nlabel + b[0], ntype, 1));
               }
             }
             if (icall) {
@@ -310,7 +321,6 @@ const itypes = {
               ir.circulationNotes.push({ note: msg, noteType: 'Check in', staffOnly: true});
               ir.circulationNotes.push({ note: msg, noteType: 'Check out', staffOnly: true});
             }
-            ir.notes = [];
             let inote = i['NOTE(ITEM)'];
             if (inote) {
               let ntype = refData.itemNoteTypes.Note
