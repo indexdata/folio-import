@@ -10,6 +10,7 @@ const uuid = require('uuid/v5');
 
 const ns = '00000000-0000-0000-0000-000000000000';
 const ver = '1';
+const hnoteType = '200e2ad5-7c20-4d62-b079-afdd45102528';
 
 const itemFile = process.argv[4];
 const instMapFile = process.argv[3];
@@ -33,7 +34,7 @@ const rfiles = {
 };
 
 const mfiles = {
-  // statuses: 'law-statuses.tsv'
+  cnotes: 'checkin-notes.txt'
 }
 
 const htypes = {
@@ -117,27 +118,30 @@ const itypes = {
     }
     // console.log(refData); return;
 
-    // get tsv maps
-    toFolio = {}
+    // map checkin notes from txt file
+    cnotes = {}
     for (let f in mfiles) {
-      let mfile = refDir + '/' + mfiles[f];
+      let mfile = dir + '/' + mfiles[f];
       let fileStream = fs.createReadStream(mfile);
       let rl = readline.createInterface({
         input: fileStream,
         crlfDelay: Infinity
       });
-      toFolio[f] = {}
       for await (let line of rl) {
-        let c = line.split(/\t/);
-        let key = c[0];
-        let val = c[2];
+        line = line.replace(/^"|"$/g, '');
+        let c = line.split(/","/);
+        let key = c.shift();
+        let loc = c.shift();
+        let val = c;
         if (key) {
-          if (f === 'statuses' && val === 'Checked Out') val = 'Available';
-          toFolio[f][key] = val;
+          key = key.replace(/\w$/, '');
+          key = 'l' + key + '-' + loc;
+          key = key.trim();
+          cnotes[key] = val;
         }
       }
     }
-    // console.log(toFolio); return;
+    // console.log(cnotes); return;
 
     // get instance map
     console.log('Making instance map...')
@@ -245,16 +249,27 @@ const itypes = {
               holdingsTypeId: refData.holdingsTypes[htype],
               instanceId: instId,
               permanentLocationId: locId,
-              discoverySuppress: supp
+              discoverySuppress: supp,
+              notes: []
             };
             if (cn) {
               hr.callNumber = cn;
               hr.callNumberTypeId = cntype;
             }
-            // if (instData.ea) {
-            //  hr.electronicAccess = JSON.parse(instData.ea);
-            // }
-            // console.log(hr);
+            let hns = cnotes[hrid];
+            if (hns) {
+              hns.forEach(n => {
+                if (n) {
+                  let noteObj = {
+                    note: n,
+                    holdingsNoteTypeId: hnoteType,
+                    staffOnly: true
+                  }
+                  hr.notes.push(noteObj);
+                }
+              });
+            }
+            
             writeJSON(files.holdings, hr);
             hcount++;
           }
