@@ -180,6 +180,8 @@ my $bcount = 0;
 my $rcount = 0;
 my $start = time();
 my $inc = {};
+my $bseen = {};
+my $hseen = {};
 
 foreach (@ARGV) {
   my $infile = $_;
@@ -203,8 +205,6 @@ foreach (@ARGV) {
   open BOUT, '>>:encoding(UTF-8)', $paths->{b} or die "Can't open $paths->{b} for writing\n";
   open ROUT, '>>:encoding(UTF-8)', $paths->{r} or die "Can't open $paths->{r} for writing\n";
   
-  my $hseen = {};
-  my $iseen = {};
  
   open IN, $infile;
 
@@ -225,7 +225,7 @@ foreach (@ARGV) {
         next;
       }
       my @b = split(/\|/, $psv);
-      my $out = make_hi($obj, $b[0], $bid, $b[1], $b[2], $hseen, $bwc, $b[3]);
+      my $out = make_hi($obj, $b[0], $bid, $b[1], $b[2], $bwc, $b[3]);
       print HOUT $out->{holdings};
       print IOUT $out->{items};
       print BOUT $out->{bws};
@@ -266,7 +266,6 @@ sub make_hi {
   my $bhrid = shift;
   my $cn = shift || '';
   my $cntype = shift || '';
-  my $hseen = shift;
   my $bwc = shift;
   my $blevel = shift || '';
   my $hid = '';
@@ -388,7 +387,8 @@ sub make_hi {
     $irec->{holdingsRecordId} = $holdid || $hid || die "No holdings record ID found for $iid";
     my @pnotes;
     if ($bwc == 0) {
-      $irec->{barcode} = $bc if $bc;
+      $irec->{barcode} = $bc if $bc && !$bseen->{$bc};
+      $bseen->{$bc} = 1;
       if ($pbc) {
         push @pnotes, $pbc;
       }
