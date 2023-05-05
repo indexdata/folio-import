@@ -80,7 +80,8 @@
 2780	10	78	ILLEND ILL Lending	ILL	ILL					
 67	11	0	UCBF UCBoulder Faculty	CU Boulder faculty/staff	1					
 76	11	1	UCBS UCBoulder Staff	CU Boulder faculty/staff	1					
-2976	16		UCBSS UCBoulder Special	Continuing Ed students, degree and non-degree seeking	1					
+	11	8	UCBoulder Temp Faculty	CU Boulder faculty/staff						
+2976	16	21	UCBSS UCBoulder Special	Continuing Ed students, degree and non-degree seeking	1					
 4	22	70	Lib Department	Library Department	Library Department					
 696	23	200	CU Boulder Law Student	Law students	1					
 114	24	201	CU Boulder Law Faculty/Staff	Law faculty/staff	1					
@@ -91,4 +92,5 @@
 1	26	152	Film Studies	CU Boulder Department	CU Boulder Department					
 3	26	170	Law	CU Boulder Department	CU Boulder Department					
 85	30	70	Google Books	Library Department	Library Department					
+										
 				Law Public Patron	Privileges at Law, not main campus					

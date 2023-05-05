@@ -57,10 +57,12 @@ try {
   const notePath = `${saveDir}/notes-${fileName}.jsonl`;
   const permPath = `${saveDir}/permusers-${fileName}.jsonl`;
   const mapPath = `${saveDir}/users.map`;
+  const errPath = `${saveDir}/${fileName}-errors.jsonl`;
   if (fs.existsSync(outPath)) fs.unlinkSync(outPath);
   if (fs.existsSync(notePath)) fs.unlinkSync(notePath);
   if (fs.existsSync(permPath)) fs.unlinkSync(permPath);
   if (fs.existsSync(mapPath)) fs.unlinkSync(mapPath);
+  if (fs.existsSync(errPath)) fs.unlinkSync(errPath);
 
 
   refDir = refDir.replace(/\/$/, '');
@@ -118,6 +120,10 @@ try {
   let count = 0;
   let ncount = 0;
   let pcount = 0;
+  let ecount = 0;
+  const bseen = {};
+  const eseen = {};
+  const useen = {};
 
   const fileStream = fs.createReadStream(patronFile);
   const rl = readline.createInterface({
@@ -153,10 +159,12 @@ try {
     let pcode3 = fixedFields.PCODE3.trim();
     let groupKey = ptype + '_' + pcode3;
     let groupId = (ptypeGroup[groupKey]) ? ptypeGroup[groupKey] : ptypeGroup[ptype + '_*'];
+    let uniId = (varFields.u) ? varFields.u[0] : '';
+    let identaKey = (varFields.q) ? varFields.q[0] : (uniId) ? uniId : pid;
+    let barcode = (varFields.b) ? varFields.b[0] : '';
     let user = {
       id: uuid(pid, ns),
-      externalSystemId: pid,
-      username: (varFields.r && varFields.r[0]) ? varFields.r[0] : pid,
+      username: identaKey,
       patronGroup: groupId || `No group ID found for PTYPE ${ptype} PCODE3 ${pcode3}`,
       expirationDate: fixedFields['EXP DATE'],
       enrollmentDate: fixedFields['CREATED'],
@@ -172,9 +180,18 @@ try {
         preferredContactTypeId: '002'
       }
     }
+    if (identaKey && !useen[identaKey]) {
+      user.username = identaKey;
+      useen[identaKey] = 1;
+    }
+    if (uniId && !eseen[uniId]) {
+      user.externalSystemId = uniId;
+      eseen[uniId] = 1;
+    }
     if (defEmail) user.personal.email = defEmail;
-    if (varFields.b && varFields.b[0]) {
-      user.barcode = varFields.b[0];
+    if (barcode && !bseen[barcode]) {
+      user.barcode = barcode;
+      bseen[barcode] = 1;
     }
     if (varFields.h) {
       user.personal.addresses = parseAddress(varFields.h, atypeMap['Home'], true);
@@ -190,16 +207,19 @@ try {
       }
     }
 
-    fs.writeFileSync(outPath, JSON.stringify(user) + '\n', { flag: 'as' });
-    fs.writeFileSync(mapPath, `${pid}|${user.id}\n`, { flag: 'as' });
-    if (groupId !== staff) {
+    if (user.username && groupId && groupId !== staff) {
       let uid = user.id;
       let pu = {
         id: uuid(uid, ns),
         userId: uid
       }
+      fs.writeFileSync(outPath, JSON.stringify(user) + '\n', { flag: 'as' });
+      fs.writeFileSync(mapPath, `${pid}|${user.id}\n`, { flag: 'as' });
       fs.writeFileSync(permPath, JSON.stringify(pu) + '\n', { flag: 'as' });
       pcount++;
+    } else {
+      fs.writeFileSync(errPath, JSON.stringify(user) + '\n', { flag: 'a'});
+      ecount++
     }
   
     if (count % 1000 === 0) {
@@ -213,6 +233,7 @@ try {
     console.log(`Saved ${count} users to ${outPath}`);
     console.log(`Saved ${ncount} notes to ${notePath}`);
     console.log(`Saved ${pcount} permusers to ${permPath}`);
+    console.log('Errors:', ecount);
     console.log(`Time: ${t} secs.`);
   })
 
