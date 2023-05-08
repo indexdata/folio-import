@@ -48,7 +48,7 @@ let limit = parseInt(process.argv[5], 10);
 	      url = `${actionUrl}&perPage=${perPage}&offset=${offset}&stats=true`;
       } else if (actionUrl.match(/\/perms\//)) {
         let permStart = offset + 1;
-        perPage = 5000;
+        perPage = 200000;
 	      url = `${actionUrl}&length=${perPage}&start=${permStart}&stats=true`;      }
       try {
         let res = await superagent
