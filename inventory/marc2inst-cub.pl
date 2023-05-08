@@ -398,12 +398,14 @@ my $field_replace = {};
 my $repeat_subs = {};
 foreach (keys %{ $mapping_rules }) {
   my $rtag = $_;
-  foreach (@{ $mapping_rules->{$rtag} }) {
+    foreach (@{ $mapping_rules->{$rtag} }) {
     if ($_->{entityPerRepeatedSubfield}) {
       my $conf = $_;
-      $repeat_subs->{$rtag} = [] unless $repeat_subs->{$rtag};
-      foreach (@{ $conf->{entity} }) {
-        push @{ $repeat_subs->{$rtag} }, $_->{subfield}->[0] if $_->{target} !~ /Id$/;
+      $repeat_subs->{$rtag} = () unless $repeat_subs->{$rtag};
+      foreach my $ent (@{ $conf->{entity} }) {
+        foreach (@{$ent->{subfield}}) {
+          push @{ $repeat_subs->{$rtag} }, $_ if $ent->{target} !~ /Id$/;
+        }
       }
     }
     if ($_->{fieldReplacementBy3Digits}) {
@@ -632,26 +634,25 @@ foreach (@ARGV) {
         my $all_codes = join '', @{ $repeat_subs->{$tag} };
         my @sf = $field->subfield($main_code);
         my $occurence = @sf;
-        if ($occurence > 1) {
+        if ($occurence > 0 && !$field->{_seen}) {
           my $new_field = {};
           my $i = 0;
           my @subs = $field->subfields();
           foreach (@subs) {
             my ($code, $sdata) = @$_;
-            if ($code eq $main_code) {
-              $new_field = MARC::Field->new($tag, $field->{_ind1}, $field->{_ind2}, $code => $sdata);
-            } elsif ($new_field->{_tag}) {
-              $new_field->add_subfields($code => $sdata );
-            }
+            $new_field = MARC::Field->new($tag, $field->{_ind1}, $field->{_ind2}, $code => $sdata);
+            $new_field->{_seen} = 1;
             $i++;
-            my @ncode = [''];
+            my @ncode = ('');
             if ($subs[$i]) {
               @ncode = @{ $subs[$i] };
             }
-            push @marc_fields, $new_field if (index($all_codes, $ncode[0]) != -1 && $new_field->{_tag}) || !$ncode[0];
+            if ((index($all_codes, $ncode[0]) != -1 && $new_field->{_tag}) || !$ncode[0]) {
+              push @marc_fields, $new_field;
+            }
           }
           next MARC_FIELD;
-        }
+        } 
       }
       my $fld_conf = $mapping_rules->{$tag};
       my @entities;
