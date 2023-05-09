@@ -128,6 +128,9 @@ law-items:
 law-users:
 	cd $(wd)/patrons; node culawUsers.js $(uref) $(law)/users/law-patrons.txt 'folio@colorado.edu'
 
+law-orders:
+	cd $(wd)/acquisitions; node culawOrders.js $(aref) $(law)/marc/*instances*jsonl $(law)/orders/*order*txt
+
 setup:
 	cd $(wd); git pull	
 	cp $(wd)/configs/bash/login-cu-test.sh .
@@ -148,6 +151,7 @@ setup:
 	cp $(wd)/etc/cub/*.tsv $(iref)
 	cp $(wd)/etc/cub/*.* $(aref)
 	cp $(wd)/etc/cub/ptypes.tsv $(uref)
+	cp $(wd)/etc/culaw/law-orgs.tsv $(aref)
 
 clean:
 	rm -rf $(iref)
