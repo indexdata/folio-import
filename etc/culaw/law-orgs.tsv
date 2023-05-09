@@ -1,0 +1,100 @@
+Millennium Vendor CODE	Millennium Vendor Name	Id	Name	Code	Description	Export to accounting	Status	Language	Aliases	Addresses	Phone numbers	Emails	Urls	Contacts	Agreements	Erp code	Payment method	Access provider	Governmental	Licensor	Material supplier	Vendor currencies	Claiming interval	Discount percent	Expected activation interval	Expected invoice interval	Renewal activation interval	Subscription interval	Expected receipt interval	Tax id	Liable for vat	Tax percentage	Edi	Interfaces	Accounts	Is vendor	San code	Changelogs	Acq unit ids	Tags
+laba	American Bar Association		American Bar Association	l-aba		no	Active		ABA																											YES			Law	
+laila	AILA Publications		AILA Publications	l-aila		no	Active																													YES			Law	
+lalm	ALM Media		ALM Media	l-alm		no	Active																																	
+laaj	American Association for Justice		American Association for Justice	l-aaj		no	Active																																	
+lali	American Law Institute		American Law Institute	l-ali		no	Active		ALI																											YES			Law	
+lamaz	Amazon		Amazon	l-amazon		no	Active																													YES			Law	
+lacom	Argent Communications		Argent Communications	l-argent		no	Active																																	
+lasp	Aspen Publishers		Aspen Publishers	l-aspen	Study Aids	no	Active																													YES			Law	
+lb&j	Banks & Jordan Law Publishing Company		Banks & Jordan Law Publishing Company	l-b&j		no	Active																													YES			Law	
+lbern	Bernan Associates		Bernan Associates	l-bernan		no	Active																													YES			Law	
+lblmg	Bloomberg Law		Bloomberg Law	l-blaw		no	Active																													YES			Law	
+lblu	Blue360 Media		Blue360 Media	l-blue		no	Active																													YES			Law	
+lbowk	R.R. Bowker LLC		R.R. Bowker LLC	l-bowker	Includes Syndetics	no	Active		Bowker																											YES			Law	
+lbrnl	Brill Academic - Netherlands/UK		Brill Academic - Netherlands/UK	l-brill		no	Active																													YES			Law	
+lbrus	Brill Academic -  United States		Brill Academic -  United States	l-brillus		no	Active																													YES			Law	
+lbutt	Lexis UK		Lexis UK	l-lexisuk		no	Active		Butterworths																											YES			Law	
+lcali	CALI (Computer Aided Legal Instruction)		CALI (Computer Aided Legal Instruction)	l-cali		no	Active																													YES			Law	
+lcap	Carolina Academic Press		Carolina Academic Press	l-cap		no	Active		CAP																											YES			Law	
+lcarl	Colorado Alliance of Research Libraries		Colorado Alliance of Research Libraries	l-carl		no	Active		CARL																											YES			Law	
+lcass	Cassidy Cataloguing Services, Inc.			l-cassidy		no	Active																													YES			Law	
+lcch	Commerce Clearing House		Wolters Kluwer	l-cch	Domestic Payments	no	Active		CCH; Aspen																											YES			Law	
+lcirc	Circuit Media LLC		Circuit Media LLC	l-circuit		no	Active																													YES			Law	
+lcle	Continuing Legal Education in Colorado, Inc.		Continuing Legal Education in Colorado, Inc.	l-cle		no	Inactive		CLE																											YES			Law	
+lcler	CLERT		CLERT	l-clert		no	Active																													YES			Law	
+lclic	Colorado Library Consortium		Colorado Library Consortium	l-clic		no	Active		CLIC																											YES			Law	
+lcoba	Colorado Bar Association		Colorado Bar Association	l-cba		no	Active		CBA																											YES			Law	
+lcqsd	CQ Press		CQ Press	l-cqpress		no	Active																													YES			Law	
+lcsg	Council of State Governments		Council of State Governments	l-csg		no	Active																													YES			Law	
+lcup	Cambridge University Press		Cambridge University Press	l-cup		no	Active																													YES			Law	
+ldaca	Daily Camera		Daily Camera	l-daca		no	Active																													YES			Law	
+ldata	Data Trace Publishing Co.		Data Trace Publishing Co.	l-data		no	Active																													YES			Law	
+lebsc	EBSCO		EBSCO	l-ebsco		no	Active																													YES			Law	
+leen	E&E News		Politico	l-politico		no	Active		E&E News																											YES			Law	
+lelga	Edward Elgar Publishing		Elgar Publishing	l-elgar		no	Active		Edward Elgar Publishing																											YES			Law	
+lelse	Elsevier		Elsevier	l-elsevier		no	Active																																	
+leli	Environmental Law Institute		Environmental Law Institute	l-eli		no	Active		ELI																											YES			Law	
+lemlf	Energy & Mineral Law Foundation		Energy & Mineral Law Foundation	l-emlf		no	Active																													YES			Law	
+leras	Erasmus		Erasmus	l-erasmus		no	Active																													YES			Law	
+lfast	Fastcase		Fastcase	l-fastcase		no	Active																													YES			Law	
+lfors	Forster-Long LLC		Forster-Long LLC	l-forster		no	Active																																	
+lfs	The Federalist Society		Federalist Society	l-fedsoc		no	Active																													YES			Law	
+lgale	The Gale Group		The Gale Group	l-gale		no	Active		Cengage Gale																											YES			Law	
+lgaun	Gaunt LLC		Gaunt LLC	l-gaunt		no	Active																													YES			Law	
+lgpo	U.S. Governernment Publishing Office		U.S. Governernment Publishing Office	l-gpo		no	Active		USGPO; GPO																											YES			Law	
+lhein	William S. Hein & Co.		William S. Hein & Co.	l-hein		no	Active		Hein; HeinOnline																											YES			Law	
+lhouc	Houchen Bindery		Houchen Bindery	l-houchen		no	Active		HF Group																											YES			Law	
+liclr	Incorporated Council of Law Reporting for England and Wales		Incorporated Council of Law Reporting for England and Wales	l-iclr		no	Active																													YES			Law	
+linfo	Infosources Publishing		Infosources Publishing	l-infosources		no	Active		LawTrio																											YES			Law	
+linn	Innovative Interfaces (III)		Innovative Interfaces (III)	l-inn		no	Active		III																											YES			Law	
+liwp	Inside Washington Publishers		Inside Washington Publishers	l-iwp		no	Active																													YES			Law	
+ljame	James Publishing, Inc.		James Publishing, Inc.	l-james		no	Active																													YES			Law	
+ljp	Juris Publishing		Juris Publishing	l-juris		no	Active																													YES			Law	
+ljsto	JSTOR		JSTOR	l-jstor		no	Active																													YES			Law	
+ljtac	Data & Stuff Inc.		Data & Stuff Inc.	l-jtacq		no	Inactive		JTacq																											YES			Law	
+ljvr	Jury Verdict Reporter of Colorado		Jury Verdict Reporter of Colorado	l-jvr		no	Active																													YES			Law	
+lklu	Kluwer Law International		Kluwer Law International	l-kli	Foreign Payment - IEL	no	Active		KLI																											YES			Law	
+llaw	Lawrence Publishing Company		Lawrence Publishing Company	l-lawrence	Foreign Publisher	no	Active																													YES			Law	
+llawp	Lawpress Corporation		Lawpress Corporation	l-lawpress		no	Active																													YES			Law	
+llexi	LexisNexis (online)		LexisNexis	l-lexis		no	Active		Matthew Bender																											YES			Law	
+lljp	Law Journal Press		Law Journal Press	l-ljp		no	Active		LJP																											YES			Law	
+lllmc	Law Library Microform Consortium		Law Library Microform Consortium	l-llmc		no	Active		LLMC																											YES			Law	
+lloc	Library of Congress		Library of Congress	l-loc		no	Active																													YES			Law	
+llrp	LRP Publications		LRP Publications	l-lrp		no	Active																													YES			Law	
+llulu	lulu		lulu	l-lulu		no	Active																													YES			Law	
+llxa	Lexis Advance		Lexis Advance	l-lxa		no	Active																													YES			Law	
+lman	Manhattan Publishing Company		Manhattan Publishing Company	l-manhattan	Foreign Publisher	no	Active																													YES			Law	
+lmont	Montana State Legislature		Montana State Legislature	l-montana		no	Active																																	
+lmcc	Municipal Code Corporation		Municipal Code Corporation	l-mcc		no	Active																													YES			Law	
+lnell	New England Law Libraries Consortium		New England Law Libraries Consortium	l-nellco		no	Active																													YES			Law	
+lnor	Norlin		Norlin	l-nor		no	Active																													YES			Law	
+lnyt	New York Times		New York Times	l-nyt		no	Inactive																													YES			Law	
+loclc	OCLC Online Service Center		OCLC Online Service Center	l-oclc		no	Active																													YES			Law	
+loup	Oxford University Press		Oxford University Press	l-oup		no	Active																													YES			Law	
+lpli	Pratising Law Institute		Pratising Law Institute	l-pli		no	Active		PLI																											YES			Law	
+lpqgi	ProQuest Government Information Services		ProQuest Government Information Services	l-pqgi	Includes Summon	no	Active		Clarivate																											YES			Law	
+lproq	ProQuest Information and Learning		ProQuest Information and Learning	l-proquest	Includes Serials Solutions, Inc.	no	Active		Clarivate																											YES			Law	
+lpur	Public Utilities Reports, Inc.		Public Utilities Reports, Inc.	l-pur		no	Active																													YES			Law	
+lreed	Reed Elsevier		Reed Elsevier	l-elsevier		no	Active		Elsevier																											YES			Law	
+lrmml	Foundation for Natural Resources and Energy Law (formerly RMMLF)		Foundation for Natural Resources and Energy Law (formerly RMMLF)	l-fnrel		no	Active		Rocky Mountain Mineral Law Foundation																											YES			Law	
+lrow	Rowman & Littlefield		Rowman & Littlefield	l-rowman		no	Active																													YES			Law	
+lsage	Sage		Sage	l-sage		no	Active																													YES			Law	
+lspn	SpringerNature		Springer Nature	l-spnature		no	Active																																	
+lshep	LexisNexis Matthew Bender (Shepards)		LexisNexis Matthew Bender (Shepards)	l-shep		no	Active																													YES			Law	
+lt&f	Taylor & Francis		Taylor & Francis	l-t&f		no	Active																													YES			Law	
+ltaxn	Tax Analysts		Tax Analysts	l-taxn		no	Active																													YES			Law	
+ltodd	Todd Publishing		Todd Publishing	l-todd	Reference Encyclopedia of the American Indian	no	Active																													YES			Law	
+ltrta	Thomson Reuters (Tax & Accounting)		Thomson Reuters (Tax & Accounting)	l-trta		no	Active		RIA																											YES			Law	
+ltrw	Thomson Reuters West		Thomson Reuters West	l-trw	Use for Westlaw, ProView, West Serials	no	Active																													YES			Law	
+lunp	United Nations Publications		United Nations Publications	l-unp		no	Active		UN Publications																											YES			Law	
+lusne	U.S. News & World Report		U.S. News & World Report	l-usnwr		no	Active																													YES			Law	
+lutor	University of Toronto Press		University of Toronto Press	l-utoronto		no	Active																													YES			Law	
+																																								
+lwap	West Academic Publishing		West Academic Publishing	l-wap	Inleudes West Academic Press	no	Active		LEG, Inc.; West Academic Press																											YES			Law	
+lwest	West Group / Thomson-Reuters		West Group / Thomson-Reuters	l-west	LMA	no	Active		Westlaw																											YES			Law	
+lwile	John Wiley & Sons		John Wiley & Sons	l-wiley		no	Active																													YES			Law	
+lwils	H.W. Wilson		H.W. Wilson	l-wilson		no	Active																													YES			Law	
+																																								
+lwrc	World RadioCommunications Week		World RadioCommunications Week	l-wrc		no	Active																													YES			Law	
+lybp	YBP -   GOBI		YBP -   GOBI	l-ybp		no	Active		Yankee Book Peddler																											YES			Law	
