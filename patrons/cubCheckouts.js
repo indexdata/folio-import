@@ -50,8 +50,16 @@ const itemFile = process.argv[4];
     const sp = require(spFile);
     spMap = {};
     sp.servicepoints.forEach(s => {
-      spMap[s.code] = s.id;
+      spMap[s.name] = s.id;
     });
+
+    const loc2sp = {};
+    const lospData = fs.readFileSync(workDir + '/spoints.tsv', { encoding: 'utf8' });
+    lospData.split(/\r?\n/).forEach(l => {
+      let [k, x, v] = l.split(/\t/);
+      loc2sp[k] = spMap[v] || v;
+    });
+    // console.log(loc2sp); return;
 
     const main = () => {
       const fileStream = fs.createReadStream(itemFile);
@@ -83,7 +91,7 @@ const itemFile = process.argv[4];
           let ibcode = '';
           vf.forEach(v => {
             if (v.fieldTag === 'b') {
-              if (v.content.match(/^U/)) {
+              if (v.content.match(/^P/)) {
                 ibcode = v.content;
               } else if (!ibcode) {
                 ibcode = v.content
@@ -96,7 +104,7 @@ const itemFile = process.argv[4];
           loan.loanDate = odate;
           loan.dueDate = due;
           if (rnum) loan.renewalCount = parseInt(rnum, 10);
-          loan.servicePointId = spMap.NORED;
+          loan.servicePointId = loc2sp[loc] || spMap.NORED;
           if (process.env.DEBUG) console.log(loan);
           if (user) {
             write(files.co, loan);
