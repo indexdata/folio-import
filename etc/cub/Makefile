@@ -6,6 +6,7 @@ userdir = $(data)/users
 orddir = $(data)/orders
 finedir = $(data)/fines
 log=$(data)/log
+law=$(data)/law
 home=/home/charles
 sdir=$(home)/sierra-api/js
 wd=$(home)/folio-import
@@ -87,7 +88,7 @@ holdings: $(holdir)/*.jsonl
 
 orders: $(orddir)/orders0*jsonl
 	cat $(orddir)/orders0*.jsonl > $(orddir)/iii-orders.jsonl
-	cd $(wd)/acquisitions; node cubOrders.js $(aref) $(orddir)/iii-orders.jsonl
+	cd $(wd)/acquisitions; node cubOrders.js $(aref) $(orddir)/iii-orders.jsonl > $(log)/make-orders.log &
 
 users: $(userdir)/users0*.jsonl
 	cat $(userdir)/users0*.jsonl > $(userdir)/iii-users.jsonl
@@ -98,16 +99,46 @@ fines: $(finedir)/fines0*.jsonl
 	grep '"tenant":"cu"' $(wd)/.okapi
 	cd $(wd)/patrons; node cubFines.js $(userdir)/users.map $(finedir)/fines0*jsonl > $(log)/make-fines.log 2>$(log)make-fines.err &
 
+law-setup:
+	cd $(data); mkdir -p law
+	cp ftp-culaw.sh $(law)
+	cd $(law); ./ftp-culaw.sh
+	mkdir -p $(law)/marc
+	mkdir -p $(law)/item
+	mkdir -p $(law)/orders
+	mkdir -p $(law)/users
+	mv $(law)/*.mrc $(law)/marc
+	mv $(law)/*item*txt $(law)/item
+	mv $(law)/*serial*txt $(law)/item/checkin-notes.txt
+	mv $(law)/*order*txt $(law)/orders
+	mv $(law)/*patrons*txt $(law)/users/law-patrons.txt
+
+law-clean:
+	cd $(law); mv */*.* ..
+
+law-instances:
+	cat $(law)/marc/*.mrc > $(law)/marc/law.mrc
+	$(wd)/inventory/marc2inst-culaw.pl mapping-rules.json $(iref) $(law)/marc/law.mrc
+
+law-items:
+	cat $(law)/marc/*.map > $(law)/item/instance.map
+	cat $(law)/item/*item*.txt > $(law)/item/law.csv
+	cd $(wd)/inventory; node items-culaw.js $(iref) $(law)/item/instance.map $(law)/item/law.csv > $(log)/make-law-items.log &
+
+law-users:
+	cd $(wd)/patrons; node culawUsers.js $(uref) $(law)/users/law-patrons.txt 'folio@colorado.edu'
+
 setup:
 	cd $(wd); git pull	
 	cp $(wd)/configs/bash/login-cu-test.sh .
 	cp $(wd)/bash/reference_* .
 	cp $(wd)/inventory/marc2inst-cub.pl .
 	cp $(wd)/mapping_rules/default.json mapping-rules.json
-	mkdir $(iref)
-	mkdir $(uref)
-	mkdir $(aref)
-	mkdir $(log)
+	cp $(wd)/etc/cub/run-multi.sh .
+	mkdir -p $(iref)
+	mkdir -p $(uref)
+	mkdir -p $(aref)
+	mkdir -p $(log)
 	./login-cu-test.sh
 	./reference_inventory.sh $(iref)
 	./reference_users.sh $(uref)
@@ -122,4 +153,3 @@ clean:
 	rm -rf $(iref)
 	rm -rf $(uref)
 	rm -rf $(aref)
-	rm -rf $(log)

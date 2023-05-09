@@ -59,6 +59,7 @@ let refDir = process.argv[2];
       '/finance-storage/transactions': true,
       '/finance-storage/ledger-rollovers-budgets': true,
       '/finance-storage/ledger-rollovers-logs': true,
+      '/finance-storage/group-budgets': true,
       '/holdings-storage/holdings': true,
       '/instance-bulk/ids': true,
       '/instance-storage/instance-relationships': true,
