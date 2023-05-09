@@ -83,45 +83,48 @@ const itemFile = process.argv[4];
         let pnum = (ff && ff['66']) ? ff['66'].value : '';
         if (pnum && pnum !== '0') {
           let user = active[pnum];
-          if (!user) throw(`User not found for ${pnum}`);
-          let ubcode = user.barcode;
-          let odate = (ff['63']) ? ff['63'].value : '';
-          let due = (ff['65']) ? ff['65'].value : '';
-          let loc = (ff['64']) ? ff['64'].value : '';
-          let rnum = (ff['71']) ? ff['71'].value : '';
-          let vf = i.varFields || [];
-          let ibcode = '';
-          vf.forEach(v => {
-            if (v.fieldTag === 'b') {
-              if (v.content.match(/^P/)) {
-                ibcode = v.content;
-              } else if (!ibcode) {
-                ibcode = v.content
-              }
-            }
-          });
-          let loan = {};
-          loan.itemBarcode = ibcode.trim();
-          loan.userBarcode = ubcode.trim();
-          loan.loanDate = odate;
-          loan.dueDate = due;
-          if (rnum) loan.renewalCount = parseInt(rnum, 10);
-          loan.servicePointId = loc2sp[loc] || spMap.NORED;
-          if (process.env.DEBUG) console.log(loan);
-          if (user) {
-            write(files.co, loan);
-            ttl.co++;
-            if (!user.active) {
-              user.barcode = loan.userBarcode;
-              write(files.ia, user);
-              ttl.ia++;
-            }
+          if (!user) { 
+            console.log(`User not found for ${pnum}`);
           } else {
-            write(files.nf, loan);
-            ttl.nf++;
+            let ubcode = user.barcode;
+            let odate = (ff['63']) ? ff['63'].value : '';
+            let due = (ff['65']) ? ff['65'].value : '';
+            let loc = (ff['64']) ? ff['64'].value : '';
+            let rnum = (ff['71']) ? ff['71'].value : '';
+            let vf = i.varFields || [];
+            let ibcode = '';
+            vf.forEach(v => {
+              if (v.fieldTag === 'b') {
+                if (v.content.match(/^P/)) {
+                  ibcode = v.content;
+                } else if (!ibcode) {
+                  ibcode = v.content
+                }
+              }
+            });
+            let loan = {};
+            loan.itemBarcode = ibcode.trim();
+            loan.userBarcode = ubcode.trim();
+            loan.loanDate = odate;
+            loan.dueDate = due;
+            if (rnum) loan.renewalCount = parseInt(rnum, 10);
+            loan.servicePointId = loc2sp[loc] || spMap.NORED;
+            if (process.env.DEBUG) console.log(loan);
+            if (user) {
+              write(files.co, loan);
+              ttl.co++;
+              if (!user.active) {
+                user.barcode = loan.userBarcode;
+                write(files.ia, user);
+                ttl.ia++;
+              }
+            } else {
+              write(files.nf, loan);
+              ttl.nf++;
+            }
+            
+            // if (ttl.co === 10) rl.close();
           }
-          
-          // if (ttl.co === 10) rl.close();
         }
         if (c % 100000 === 0) {
           console.log('Items processed', c);
