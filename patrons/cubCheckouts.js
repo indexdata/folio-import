@@ -118,7 +118,7 @@ const itemFile = process.argv[4];
             write(files.nf, loan);
             ttl.nf++;
           }
-          if (ttl.co === 10) rl.close();
+          // if (ttl.co === 10) rl.close();
         }
       });
       rl.on('close', () => {
