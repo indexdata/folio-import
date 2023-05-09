@@ -120,10 +120,11 @@ const itemFile = process.argv[4];
             write(files.nf, loan);
             ttl.nf++;
           }
-          if (c % 100000 === 0) {
-            console.log('Items processed', c);
-          }
+          
           // if (ttl.co === 10) rl.close();
+        }
+        if (c % 100000 === 0) {
+          console.log('Items processed', c);
         }
       });
       rl.on('close', () => {
