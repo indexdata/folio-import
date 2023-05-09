@@ -74,8 +74,10 @@ const itemFile = process.argv[4];
         nf: 0,
         pr: 0
       }
+      let c = 0;
 
       rl.on('line', l => {
+        c++;
         let i = JSON.parse(l);
         let ff = i.fixedFields;
         let pnum = (ff && ff['66']) ? ff['66'].value : '';
@@ -117,6 +119,9 @@ const itemFile = process.argv[4];
           } else {
             write(files.nf, loan);
             ttl.nf++;
+          }
+          if (c % 100000 === 0) {
+            console.log('Items processed', c);
           }
           // if (ttl.co === 10) rl.close();
         }
