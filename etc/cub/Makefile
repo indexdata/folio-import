@@ -94,6 +94,9 @@ users: $(userdir)/users0*.jsonl
 	cat $(userdir)/users0*.jsonl > $(userdir)/iii-users.jsonl
 	cd $(wd)/patrons; node cubUsers.js $(uref) $(userdir)/iii-users.jsonl 'folio@colorado.edu' > $(log)/make-users.log 2>$(log)/make-users-err.log &
 
+checkouts: $(itemdir)/items00000000.jsonl
+	cd $(wd)/patrons; node cubCheckouts.js $(iref)/service-points.json $(userdir)/users00000000.jsonl $(itemdir)/items00000000.jsonl
+
 fines: $(finedir)/fines0*.jsonl
 	cd $(wd); node authToken.js
 	grep '"tenant":"cu"' $(wd)/.okapi
@@ -152,6 +155,8 @@ setup:
 	cp $(wd)/etc/cub/*.* $(aref)
 	cp $(wd)/etc/cub/ptypes.tsv $(uref)
 	cp $(wd)/etc/culaw/law-orgs.tsv $(aref)
+	mkdir -p $(itemdir)
+	cp $(wd)/etc/cub/spoints.tsv $(itemdir)
 
 clean:
 	rm -rf $(iref)
