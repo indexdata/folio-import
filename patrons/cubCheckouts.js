@@ -108,7 +108,7 @@ const itemFile = process.argv[4];
             loan.loanDate = odate;
             loan.dueDate = due;
             if (rnum) loan.renewalCount = parseInt(rnum, 10);
-            loan.servicePointId = loc2sp[loc] || spMap.NORED;
+            loan.servicePointId = loc2sp[loc] || spMap['Norlin East Desk'];
             if (process.env.DEBUG) console.log(loan);
             if (user) {
               write(files.co, loan);
