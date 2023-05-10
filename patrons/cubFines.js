@@ -99,6 +99,7 @@ const inFile = process.argv[3];
       let userId = userMap[pid];
       let invNum = (f.invoiceNumber) ? f.invoiceNumber.toString() : '';
       let comm = 'Invoice number: ' + invNum;
+      let rdate = f.returnDate;
 
       if (userId) {
         let acc = {};
@@ -149,6 +150,7 @@ const inFile = process.argv[3];
             acc.dateCreated = f.assessedDate;
             acc.status = { name: 'Open' };
             acc.paymentStatus = { name: 'Outstanding' };
+            if (rdate) acc.returnedDate = rdate;
             if (item && item.id) {
               acc.title = item.title;
               acc.contributors = item.contributorNames;
