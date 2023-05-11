@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
 
+const sp = 'de02f979-de64-42ab-a59e-0763b61527cd' // Law Library
 const loansFile = process.argv[2];
 
 (async () => {
@@ -13,10 +14,15 @@ const loansFile = process.argv[2];
       throw new Error('Can\'t find loans file');
     }
 
-    let dateOffset = (dt) => {
+    const dateOffset = (dt) => {
       let dzo = new Date(dt).getTimezoneOffset();
       let pto = ((dzo + 120) / 60);  // change this value according to the local machine that runs the script.
       out = `-0${pto}:00`;
+      return out;
+    }
+
+    const parseDate = (dt) => {
+      let out = (dt) ? dt.replace(/(\d\d)-(\d\d)-(\d{4})/, '$3-$1-$2T23:59:59-07:00') : '';
       return out;
     }
 
@@ -55,8 +61,24 @@ const loansFile = process.argv[2];
 
       rl.on('line', l => {
         c++;
-        console.log(l);
-        if (c % 100000 === 0) {
+        l = l.replace(/^"|"$/g, '');
+        let f = l.split(/","/);
+        let [ ubcode ] = f[0].split(/";"/);
+        let ibcode = f[1];
+        let odate = parseDate(f[2]);
+        let due = parseDate(f[3]);
+        let co = {
+          itemBarcode: ibcode,
+          userBarcode: ubcode,
+          loanDate: odate,
+          dueDate: due,
+          servicePointId: sp
+        }
+        if (c > 1) {
+          write(files.co, co);
+          ttl.co++;
+        }
+        if (c % 100 === 0) {
           console.log('Items processed', c);
         }
       });
