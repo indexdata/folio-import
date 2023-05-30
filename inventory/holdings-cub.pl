@@ -82,6 +82,7 @@ sub uuid {
   return $uuid;
 }
 
+my $loc_code_map = {};
 sub getRefData {
   my $refdir = shift;
   my $refobj = {};
@@ -143,8 +144,9 @@ sub makeMapFromTsv {
           $name = $col[1] || '';
           $name =~ s/^.+\///;
           $tsvmap->{loc_codes}->{$code} = $name;
+          $loc_code_map->{$code} = $name || 'UNMAPPED';
         }
-        $tsvmap->{$prop}->{$code} = $refdata->{$prop}->{$name};
+        $tsvmap->{$prop}->{$code} = $refdata->{$prop}->{$name}; 
       }
     }
   }
@@ -169,6 +171,7 @@ my $refdata = getRefData($ref_dir);
 # print Dumper($refdata); exit;
 my $tofolio = makeMapFromTsv($ref_dir, $refdata);
 # print Dumper($tofolio->{locations}); exit;
+# print Dumper($loc_code_map); exit;
 
 my $relations = {
   '0' => 'Resource',
@@ -344,8 +347,8 @@ foreach (@ARGV) {
       $marc->insert_fields_ordered($f005);
       my $loc_code = $ff->{40}->{value} || 'xxxxx';
       $loc_code =~ s/\s*$//;
-      my $fcode = $tofolio->{loc_codes}->{$loc_code} || 'UNMAPPED';
-      my $f852 =  MARC::Field->new('852', '0', ' ', 'b' => $loc_code);
+      my $fcode = $loc_code_map->{$loc_code};
+      my $f852 =  MARC::Field->new('852', '0', ' ', 'b' => $fcode);
       $marc->insert_fields_ordered($f852);
 
       my $f008_seen = 0;
