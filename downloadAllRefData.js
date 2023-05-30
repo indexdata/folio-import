@@ -42,7 +42,8 @@ let refDir = process.argv[2];
       'https://raw.githubusercontent.com/folio-org/mod-patron-blocks/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-source-record-manager/3451d3059baefb07bc822574552e5bde58ffae71/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-remote-storage/master/descriptors/ModuleDescriptor-template.json',
-      'https://raw.githubusercontent.com/folio-org/folio-custom-fields/master/descriptors/ModuleDescriptor-template.json'
+      'https://raw.githubusercontent.com/folio-org/folio-custom-fields/master/descriptors/ModuleDescriptor-template.json',
+      'https://raw.githubusercontent.com/folio-org/mod-calendar/master/descriptors/ModuleDescriptor-template.json'
     ];
 
     const skipList = {
@@ -110,7 +111,7 @@ let refDir = process.argv[2];
       '/tlr-feature-toggle-job-storage/tlr-feature-toggle-jobs': true,
       '/users': true,
       '/voucher-storage/vouchers': true,
-      'voucher-storage/voucher-lines': true,
+      '/voucher-storage/voucher-lines': true,
 
     }
 
@@ -253,9 +254,10 @@ let refDir = process.argv[2];
           fileName = `${p}-${fileName}`;
         }
         fs.writeFileSync(`${fullSaveDir}/${fileName}.json`, jsonStr);
-        if (paths[x].path == 'service-points') {
+        if (paths[x].path == 'service-pointsXXX') {
           res.body.servicepoints.forEach(sp => {
-            paths.push({ path: `calendar/periods/${sp.id}/period?withOpeningDays=true&showPast=true&showExceptional=false`, mod: paths[x].mod });
+            paths.push({ path: `calendar/dates/${sp.id}/surrounding-openings`, mod: paths[x].mod });
+            paths.push({ path: `calendar/dates/${sp.id}/all-openings`, mod: paths[x].mod });
           }) 
         }
         if (paths[x].path == 'organizations-storage/interfaces') {
