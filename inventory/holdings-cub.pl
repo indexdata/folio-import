@@ -257,6 +257,9 @@ foreach (@ARGV) {
         }
       }
     }
+    # print Dumper($vf);
+    my $stitle = $vf->{'843'}->[0]->{a} || '';
+    print $stitle . "\n";
 
     my $ff = $obj->{fixedFields};
     my $h = {};
@@ -272,6 +275,7 @@ foreach (@ARGV) {
     $h->{formerIds} = [ $obj->{id} ];
     $h->{hrid} = $hid;
     $h->{instanceId} = $b[0];
+    $h->{shelvingTitle} = $stitle if $stitle;
     my $loc_id = $tofolio->{locations}->{$loc_code} || $refdata->{locations}->{UNMAPPED};
     if (!$tofolio->{locations}->{$loc_code}) {
       print "WARN: LocationId not found for $loc_code\n";
