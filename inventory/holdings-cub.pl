@@ -259,7 +259,6 @@ foreach (@ARGV) {
     }
     # print Dumper($vf);
     my $stitle = $vf->{'843'}->[0]->{a} || '';
-    print $stitle . "\n";
 
     my $ff = $obj->{fixedFields};
     my $h = {};
@@ -353,6 +352,7 @@ foreach (@ARGV) {
       $loc_code =~ s/\s*$//;
       my $fcode = $loc_code_map->{$loc_code};
       my $f852 =  MARC::Field->new('852', '0', ' ', 'b' => $fcode);
+      $f852->add_subfields('l', $stitle) if $stitle;
       $marc->insert_fields_ordered($f852);
 
       my $f008_seen = 0;
