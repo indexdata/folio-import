@@ -14,7 +14,7 @@ const tenant = 'cu';
 (async () => {
   try {
     if (!holdsFile) {
-      throw new Error('Usage: node cubRequests.js <service_points_file> <users_jsonl> <holds_jsonl> <level [Item|Title]>');
+      throw new Error('Usage: node cubRequests.js <service_points_file> <users_map> <holds_jsonl> <level [Item|Title]>');
     }
     if (!fs.existsSync(holdsFile)) {
       throw new Error('Can\'t find loans file');
@@ -52,10 +52,9 @@ const tenant = 'cu';
 
     const requesters = {};
     for await (let line of rl) {
-      let u = JSON.parse(line);
-      requesters[u.barcode] = { active: u.active, expirationDate: u.expirationDate, id: u.id, barcode: u.barcode };
+      let [k, v] = line.split(/\|/);
+      requesters[k] = v;
     };
-    console.log(requesters); return;
 
     let dateOffset = (dt) => {
       let dzo = new Date(dt).getTimezoneOffset();
@@ -92,16 +91,17 @@ const tenant = 'cu';
     let iacount = 0;
     const ibcodeSeen = {};
 
-    fileStream = fs.createReadStream(usersFile);
+    fileStream = fs.createReadStream(holdsFile);
     rl = readline.createInterface({
       input: fileStream,
       crlfDelay: Infinity
     });
 
     for await (let line of rl) {
-      let r = inRecs[x];
+      let r = JSON.parse(line);
+      // console.log(r);
       total++;
-      let ubcode = r['User barcode'];
+      let uid = (r.patron) ? r.patron.replace(/^.+\//, '') : '';
       let ibcode = r['Item barcode'];
       let instHrid = r['Instance HRID'];
       let rdate = r['Request date'];
@@ -111,22 +111,13 @@ const tenant = 'cu';
       let adate = r['Date available'];
       let proxyBc = r['Proxy barcode'];
       let comment = r['Patron comments'];
-      let ukey = (ibcode) ? ubcode + ibcode : ubcode + instHrid;
+      let ukey = (ibcode) ? uid + ibcode : uid + instHrid;
       let userId;
-      if (requesters[ubcode]) {
-        userId = requesters[ubcode].id;
-        let uact = requesters[ubcode].active;
-        let ubc = requesters[ubcode].barcode;
-        let exp = requesters[ubcode].expirationDate;
-        if (!uact) {
-          iacount++;
-          let ia = { barcode: ubc };
-          if (exp) ia.expirationDate = exp;
-          writeTo(files.ia, ia);
-          console.log(`WARN User with barcode ${ubc} is inactive`);
-        }
+      if (requesters[uid]) {
+        userId = requesters[uid];
+        console.log(userId)
       } else {
-        console.log(`[${total}] WARN User not found with barcode ${ubcode}`);
+        console.log(`[${total}] WARN User not found with patron ID ${uid}`);
       }
       let spId = spMap[sp];
       let item;
