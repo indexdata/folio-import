@@ -393,13 +393,13 @@ foreach (@ARGV) {
           $marc->insert_fields_ordered($f008);
       }
 
-      my $hs = statement($obj);
+      # my $hs = statement($obj);
       foreach my $t ('866', '867', '868') {
         foreach my $f (@{ $hs->{$t}}) {
           my $st = make_statement($f->{text}, $f->{note});
           if ($f->{text}) {
             my $field = MARC::Field->new($t, ' ', ' ', '8' => '1.1', 'a' => $f->{text}); 
-            $marc->insert_fields_ordered($field) if !$marc->field($t, 'a');
+            $marc->insert_fields_ordered($field); # if !$marc->field($t, 'a');
           }
         }
       }
@@ -524,6 +524,7 @@ sub parse {
   my $vf = $h->{varFields};
   my $field = {};
   foreach my $v (@{ $vf }) {
+    print Dumper($v);
     my $tag = $v->{marcTag} || '';
     if ($tag && $tag gt '009') {
       my $sub = {};
