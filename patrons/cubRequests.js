@@ -129,6 +129,7 @@ const statMap = {
       total++;
       let uid = (r.patron) ? r.patron.replace(/^.+\//, '') : '';
       let iid = (r.record) ? r.record.replace(/^.+\//, 'i') : '';
+      iid = iid.replace(/@.+/, '');
       let rdate = r.placed;
       let exdate = r.notNeededAfterDate;
       let sp = (r.pickupLocation) ? r.pickupLocation.code.trim() : '';
