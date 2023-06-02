@@ -125,7 +125,7 @@ const csvFile = process.argv[4];
         loan.proxyUserBarcode = proxyBarcode;
         ttl.pr++;
         let puser = active[proxyBarcode];
-        if (!puser.active) {
+        if (puser && !puser.active) {
           puser.barcode = proxyBarcode;
           puser.isProxy = true;
           write(files.ia, puser);
