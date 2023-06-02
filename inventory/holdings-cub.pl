@@ -315,6 +315,7 @@ foreach (@ARGV) {
       } elsif ($t eq '868') {
         $htype = 'holdingsStatementsForIndexes';
       }
+      # print Dumper($hs);
       foreach my $f (@{ $hs->{$t}}) {
         push @{ $h->{$htype} }, make_statement($f->{text}, $f->{note});
       }
@@ -433,9 +434,13 @@ sub statement {
   foreach (863, 864, 865) {
     my $etag = $_;
     my $ptag = $etag - 10;
+    my @fords;
+    my $pile = {};
+    my $otag = ($etag == 863) ? '866' : ($etag == 864) ? '867' : '868';
     foreach (keys %{ $field->{$etag} }) {
       my $link = $_;
       my $pat = $field->{$ptag}->{$link}[0];
+      my $ford = '';
       foreach (@{ $field->{$etag}->{$link} }) {
         my $enum = $_;
         my $splits = {};
@@ -443,6 +448,10 @@ sub statement {
         my $open = 0;
         foreach (sort keys %{ $enum }) {
           my $c = $_;
+          if ($c eq '8') {
+            $ford = $enum->{$c};
+            push @fords, $ford;
+          }
           if ($enum->{$c} =~ /-$/) { 
             $open = 1;
           }
@@ -500,9 +509,14 @@ sub statement {
         $statement .= '-' if $open;
         my $snote = $enum->{x} || '';
         my $note = $enum->{z} || '';
-        my $otag = ($etag == 863) ? '866' : ($etag == 864) ? '867' : '868';
-        push @{ $out->{$otag} }, { text=>$statement, staffnote=>$snote, note=>$note };
+        my $pkey = "$otag--$ford";
+        $pile->{$pkey} = { text=>$statement, staffnote=>$snote, note=>$note };
       }
+      
+    }
+    foreach my $ford (sort @fords) {
+      my $pkey = "$otag--$ford";
+      push @{ $out->{$otag} }, $pile->{$pkey};
     }
   }
   foreach my $stag ('866', '867', '868') {
@@ -524,7 +538,6 @@ sub parse {
   my $vf = $h->{varFields};
   my $field = {};
   foreach my $v (@{ $vf }) {
-    print Dumper($v);
     my $tag = $v->{marcTag} || '';
     if ($tag && $tag gt '009') {
       my $sub = {};
