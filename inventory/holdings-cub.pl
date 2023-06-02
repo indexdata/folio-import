@@ -370,28 +370,28 @@ foreach (@ARGV) {
           }
           push @{ $vf->{$t} }, $subs;
           my $field = MARC::Field->new($t, $f->{ind1}, $f->{ind2}, @msubs);
-          $marc->insert_fields_ordered($field);
+          $marc->insert_grouped_field($field);
         } elsif ($t =~ /\d/ && $t lt '010') {
           if ($t eq '008') {
             $f008_seen = 1;
             $f->{content} = substr($f->{content}, 0, 32);
           }
           my $field = MARC::Field->new($t, $f->{content}) if $f->{content};
-          $marc->insert_fields_ordered($field); 
+          $marc->insert_grouped_field($field); 
         } elsif ($ft && $f->{content}) {
           push @{ $vf->{$ft} }, $f->{content};
           if ($ft eq '_') {
             $marc->leader($f->{content});
           } else {
             my $field = MARC::Field->new('561', ' ', ' ', 'a' => $f->{content});
-            $marc->insert_fields_ordered($field); 
+            $marc->insert_grouped_field($field); 
           }
         } 
       }
       if (!$f008_seen) {
           $created =~ s/^..(..)-(..)-(..).*/$1$2$3/;
           my $f008 = MARC::Field->new('008', "${created}0u    0   0   uuund       ");
-          $marc->insert_fields_ordered($f008);
+          $marc->insert_grouped_field($f008);
       }
 
       # my $hs = statement($obj);
@@ -399,8 +399,8 @@ foreach (@ARGV) {
         foreach my $f (@{ $hs->{$t}}) {
           my $st = make_statement($f->{text}, $f->{note});
           if ($f->{text}) {
-            my $field = MARC::Field->new($t, ' ', ' ', '8' => '1.1', 'a' => $f->{text}); 
-            $marc->insert_fields_ordered($field); # if !$marc->field($t, 'a');
+            my $field = MARC::Field->new($t, ' ', ' ', '8' => $f->{order}, 'a' => $f->{text}); 
+            $marc->insert_grouped_field($field); # if !$marc->field($t, 'a');
           }
         }
       }
@@ -510,7 +510,7 @@ sub statement {
         my $snote = $enum->{x} || '';
         my $note = $enum->{z} || '';
         my $pkey = "$otag--$ford";
-        $pile->{$pkey} = { text=>$statement, staffnote=>$snote, note=>$note };
+        $pile->{$pkey} = { text=>$statement, staffnote=>$snote, note=>$note, order=>$ford };
       }
       
     }
