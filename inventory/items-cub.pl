@@ -7,7 +7,6 @@
 #
 # You must first create an okapi session by running login.sh to use the above scripts.
 #
-# To add metadata, set FOLIO_USER_ID to user UUID (e.g. export FOLIO_USER_ID=b8e68b41-5473-5d0c-85c8-f4c4eb391b59)
 
 use strict;
 use warnings;
@@ -27,6 +26,7 @@ my $hmap_file = shift;
 if (! $ARGV[0]) {
   die "Usage: ./items-cub.pl <ref_data_dir> <instance_map_file> <holdings_map_file> <item_jsonl_file>\n";
 }
+my $id_admin = 'c83f82f7-1ca3-5512-85d6-e3cb76be16eb';
 
 my $files = {
   h => 'holdings.jsonl',
@@ -288,6 +288,9 @@ sub make_hi {
   my $hinc = sprintf("%03d", $inc->{$bhrid});
 
   my $loc = $item->{fixedFields}->{79}->{value} || '';
+  my $cdate = $item->{fixedFields}->{83}->{value} || '';
+  my $udate = $item->{fixedFields}->{84}->{value} || '';
+  my $metadata = make_meta($id_admin, $cdate, $udate);
   next if !$loc;
   $loc =~ s/(\s*$)//;
   my $hkey = "$bhrid-$loc";
@@ -359,6 +362,7 @@ sub make_hi {
       };
       push @{ $hrec->{notes} }, $hnote;
     }
+    $hrec->{metadata} = $metadata;
     my $hout = $json->encode($hrec);
     $holdings .= $hout . "\n";
     $hseen->{$hkey} = 1;
@@ -462,6 +466,7 @@ sub make_hi {
       $irec->{itemLevelCallNumberTypeId} = $cntype;
     }
     if ($bwc == 0) {
+      $irec->{metadata} = $metadata;
       my $iout = $json->encode($irec);
       $items .= $iout . "\n";
       $icount++;
@@ -475,6 +480,19 @@ sub make_hi {
     icount => $icount,
     bcount => $bcount
   };
+}
+
+sub make_meta {
+  my $user = shift;
+  my $cdate = shift;
+  my $udate = shift;
+  my $out = {
+    createdDate=>$cdate,
+    createdByUserId=>$user,
+    updatedDate=>$udate,
+    updatedByUserId=>$user
+  };
+  return $out;
 }
 
 sub dedupe {
