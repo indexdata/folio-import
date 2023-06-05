@@ -403,13 +403,13 @@ spcsc	CU/B/NOR/RBCSCB
 spcso	CU/B/NOR/RBCSCBOV1
 spcst	CU/B/NOR/RBCST
 spcvt	
-spcwf	CU/B/NOR/RBCIWV
-spcwo	CU/B/NOR/RBCIWCOV
-spcwv	CU/B/NOR/RBCIWCVB
-tec	CU/B/NOR/TSACQ
-tecaq	CU/B/NOR/TSCAT
-tecca	CU/B/NOR/TSPRES
-tecpr	CU/B/NOR/TSSER
-tecse	CU/B/NOR/UNMAPPED
-upmapped (not sierra location, place holder)	CU/B/Online/Online
-web	Online
+spcwf	
+spcwo	CU/B/NOR/RBCIWV
+spcwv	CU/B/NOR/RBCIWCOV
+tec	CU/B/NOR/RBCIWCVB
+tecaq	CU/B/NOR/TSACQ
+tecca	CU/B/NOR/TSCAT
+tecpr	CU/B/NOR/TSPRES
+tecse	CU/B/NOR/TSSER
+upmapped (not sierra location, place holder)	CU/B/NOR/UNMAPPED
+web	CU/B/Online/Online
