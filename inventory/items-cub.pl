@@ -78,12 +78,12 @@ sub getRefData {
               $name = $_->{code};
             } else {
               $name = $_->{name};
-              $name = lc($name);
             }
             if ($refroot eq 'locations') {
               $name =~ s/^.+\///;
             }
             my $id = $_->{id};
+            $name = lc($name);
             $refobj->{$refroot}->{$name} = $id;
           }
         }
@@ -104,7 +104,7 @@ sub makeMapFromTsv {
     my $l = 0;
     while (<$tsv>) {
       $l++;
-      next if $l == 1;
+      # next if $l == 1;
       chomp;
       s/\s+$//;
       my @col = split(/\t/);
@@ -112,7 +112,8 @@ sub makeMapFromTsv {
       $code =~ s/^ +| +$//g;
       my $name = $col[2] || '';
       if ($prop eq 'mtypes') {
-        $name = $col[1];
+        $name = $col[1] || '';
+        $name = lc $name;
       }
       $name =~ s/^ +| +$//g;
       if ($prop eq 'statuses') {
@@ -122,6 +123,7 @@ sub makeMapFromTsv {
         if ($prop eq 'locations') {
           $name = $col[1] || '';
           $name =~ s/^.+\///;
+          $name = lc $name;
         }
         if ($refdata->{$prop}->{$name}) {
           $tsvmap->{$prop}->{$code} = $refdata->{$prop}->{$name};
@@ -154,15 +156,17 @@ while (<MAP>) {
   print "  $mi map lines read\n" if $mi % 1000000 == 0;
   chomp;
   my @d = split(/\|/, $_);
-  my $mkey = $d[0] . '-' . $d[1];
-  push @{ $hold_map->{$mkey} }, $d[2];
+  my $mkey = $d[0] . '-' . $d[1] if $d[0] && $d[1];
+  push @{ $hold_map->{$mkey} }, $d[2] if $d[2];
 }
 close MAP;
 
 $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
+# print Dumper($refdata->{mtypes}); exit;
 my $sierra2folio = makeMapFromTsv($ref_dir, $refdata);
 # print Dumper($sierra2folio->{mtypes}); exit;
+# print Dumper($sierra2folio->{locations}); exit;
 
 my $relations = {
   '0' => 'Resource',
