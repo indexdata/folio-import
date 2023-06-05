@@ -32,6 +32,7 @@ my $snap = {
     status=>'COMMITTED',
     processingStartedDate=>$tm->datetime . '.000+0000'
   };
+my $id_admin = 'c83f82f7-1ca3-5512-85d6-e3cb76be16eb';
 
 binmode STDOUT, ":utf8";
 
@@ -333,6 +334,9 @@ foreach (@ARGV) {
       push @{ $h->{electronicAccess} }, $er;
     }
     
+    my $cdate = $ff->{83}->{value} || '';
+    my $udate = $ff->{84}->{value} || '';
+    $h->{metadata} = make_meta($id_admin, $cdate, $udate);
     my $hr = $json->encode($h);
     write_objects($OUT, $hr . "\n");
 
@@ -642,4 +646,17 @@ sub make_srs {
       $srs->{recordType} = 'MARC_BIB';
     }
     return $srs;
+}
+
+sub make_meta {
+  my $user = shift;
+  my $cdate = shift;
+  my $udate = shift;
+  my $out = {
+    createdDate=>$cdate,
+    createdByUserId=>$user,
+    updatedDate=>$udate,
+    updatedByUserId=>$user
+  };
+  return $out;
 }
