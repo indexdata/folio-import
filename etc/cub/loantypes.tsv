@@ -56,8 +56,7 @@ Sierra iType	FOLIO Material Type	FOLIO Loan Type
 64	Lebowitz Collection	Reading Room	May change depending on reading room workflow decisions		
 68	AMRC PASCAL	Reading Room	May change depending on reading room workflow decisions		
 79	Gov Pres Steward	Reading Room	May change depending on reading room workflow decisions		
-81	Music Scores Limited Use	Can Circulate	May change depending on reading room workflow decisions		
-82	Music Gindes Collection	Can Circulate	May change depending on reading room workflow decisions		
+81	Music Scores Limited Use	Circulating Reference Materials	May change depending on reading room workflow decisions		
 90	Artworks	Cannot Circulate			
 98	3D item semester loan	Can Circulate			
 67	Reserves	Course Reserves			

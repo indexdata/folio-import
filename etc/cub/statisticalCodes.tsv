@@ -1,19 +1,19 @@
-Sierra Code (bcode3)	Sierra Value	Folio Code		
-r	3-D Objects	3Dobjects	Added locally -- CEL	
-m	Books	books		
-k	Charts Posters	charts		
-a	Computer Files	compfiles		
-b	eBooks	ebooks		
-z	Error	error	Added locally; possible clean-up project -- CEL	
-o	Kits	kits	Added locally -- CEL	
-e	Maps	maps		
-p	Mixed Material	mmedia		
-j	Music (Audio)	rmusic		
-d	Music (MSS)	msmusic	Added locally -- CEL	
-c	Music (Scores)	music	Will be used for both electronic & physical music scores. or, if we can separate them out - music for print scores, emusic for electronic scores -- Will review after April dry run to see if any changes needed -- CEL	
-x	Old Code	error	Added locally; possible clean-up project -- CEL	
-s	Serials	serials		
-i	Spoken Record	rnonmusic	Same as non-music sound recordings?  Yes- CEL	
-t	Theses	theses	Added locally -- CEL	
-g	Videorecording	visual		
-w	Web Resources	web	currently contains a mix of books, government documents, etc. Perhaps these can be recooded as Books and eBooks before go live? -- These are integrating resources and need to have their own category -- CEL	Added locally -- CEL
+Sierra Code (bcode3)	Sierra Value	Folio Code	Use When		
+r	3-D Objects	3Dobjects	OCLC Format = Visual Materials, Type = r	Added locally -- CEL	
+m	Books	books	OCLC Format = Books, Type = a		
+k	Charts Posters	charts	OCLC Format = Visual Materials, Type = k		
+a	Computer Files	compfiles	OCLC Format = Computer Files , Type = m		
+b	eBooks	ebooks	OCLC Format = , Type =		
+z	Error	error		Added locally; possible clean-up project -- CEL	
+o	Kits	kits	OCLC Format = Visual Materials, Type = o	Added locally -- CEL	
+e	Maps	maps	OCLC Format = Maps; Type = e		
+p	Mixed Material	mmedia	OCLC Format = Mixed Materials , Type = p		
+j	Music (Audio)	rmusic	OCLC Format = Sound recordings, Type = j		
+d	Music (MSS)	msmusic	OCLC Format = Scores, Type = d	Added locally -- CEL	
+c	Music (Scores)	music	OCLC Format = Scores, Type = c	Will be used for both electronic & physical music scores. or, if we can separate them out - music for print scores, emusic for electronic scores -- Will review after April dry run to see if any changes needed -- CEL	
+x	Old Code	error		Added locally; possible clean-up project -- CEL	
+s	Serials	serials	OCLC Format = Continuing Resource, Type = a, BLvl = s		
+i	Spoken Record	rnonmusic	OCLC Format = Sound Recordings; Type = i	Same as non-music sound recordings?  Yes- CEL	
+t	Theses	theses	OCLC Format = Books, Type = t	Added locally -- CEL	
+g	Videorecording	visual	OCLC Format = Visual Materials, Type = g		
+w	Web Resources	web	OCLC Format = Continuing Resource, Type = a, BLvl = i	currently contains a mix of books, government documents, etc. Perhaps these can be recooded as Books and eBooks before go live? -- These are integrating resources and need to have their own category -- CEL	Added locally -- CEL

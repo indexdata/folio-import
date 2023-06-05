@@ -14,7 +14,7 @@ i	PRESERVATION	In process (non-requestable)		In process (non-requestable)
 k	PROSP LOST OR REPLACED	Declared lost		Declared lost
 l	TRACE LOST	Long missing		Long missing
 m	MISSING	Missing		Missing
-n	BILLED	Aged to lost		Aged to lost
+n	BILLED	Declared lost		Aged to lost
 o	LIB USE ONLY	Restricted		Unavailable
 p	ONSITE ONLY	Restricted		Withdrawn
 q	Reservesscanned	Available		Awaiting pickup
@@ -30,9 +30,9 @@ z	CLMS RETD	Claimed returned		Claimed returned
 #	PROSP RECVD			
 +	RENEW PENDING			
 3	DAMAGED-REPLCD			
-u	REQUEST IT!			
+u	REQUEST IT!	In process		
 (	PROSP PAGED			
-4	Request It!			
+4	Request It!	In process		
 -	PROSP RE-REQ			
-h	Hathi Trust			
+h	Hathi Trust		do not migrate	
 r	LOST--REPLACED			
