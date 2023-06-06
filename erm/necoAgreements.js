@@ -100,7 +100,7 @@ try {
     let oid = r['Product ID'];
     let pnote = r['Product Notes'];
     let ntype = r['Product Note Type'];
-    let org = r['Product Organization ID'];
+    let org = r['Order Organization'];
     let role = r['Product Organization Role'];
     org += '|' + role;
     if (!ag[oid]) { 
@@ -183,7 +183,7 @@ try {
     };
     a.xorgs.forEach((o, i) => {
       let [ orgId, role ] = o.split(/\|/);
-      let roleId = ref.roles[role] || '2c90a37d843a686001847c28f9920016';
+      let roleId = ref.roles[role] || '2c90be3d87d1d07a01888c39bd830053';
       let org = {
         _delete: false,
         roles: [{ role: {id: roleId} }],
