@@ -53,6 +53,21 @@ my $gcodes = {
   '7799'=>1
 };
 
+my $months = {
+  '01'=>"January",
+  '02'=>"February",
+  '03'=>"March",
+  '04'=>"April",
+  '05'=>"May",
+  '06'=>"June",
+  '07'=>"July",
+  '08'=>"August",
+  '09'=>"September",
+  '10'=>"October",
+  '11'=>"November",
+  '12'=>"December"
+};
+
 my $json = JSON->new;
 $json->canonical();
 
@@ -467,8 +482,13 @@ sub make_hi {
       push @{ $irec->{notes} }, $nobj;
     }
     if ($gcodes->{$icode1}) {
+      my $y = $cdate;
+      $y =~ s/^(\d{4}).+/$1/;
+      my $m = $cdate;
+      $m =~ s/^\d{4}-(\d\d).+/$1/;
+      my $mon = $months->{$m};
       my $nobj = {};
-      $nobj->{note} = "Google Batch [month year]";
+      $nobj->{note} = "Google Batch [$mon $y]";
       $nobj->{itemNoteTypeId} = '7a46e1ca-d2eb-49a3-9935-59bed639e6f1';  # Google Books Project
       $nobj->{staffOnly} = 'true'; 
       push @{ $irec->{notes} }, $nobj;
