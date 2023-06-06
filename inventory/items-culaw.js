@@ -132,12 +132,14 @@ const itypes = {
         let c = line.split(/","/);
         let key = c.shift();
         let loc = c.shift();
-        let val = c;
         if (key) {
           key = key.replace(/\w$/, '');
           key = 'l' + key + '-' + loc;
           key = key.trim();
-          cnotes[key] = val;
+          if (!cnotes[key]) cnotes[key] = [];
+          c.forEach(val => {
+            cnotes[key].push(val);
+          });
         }
       }
     }
