@@ -43,6 +43,16 @@ my $cntypes = {
   '099' => '6caca63e-5651-4db6-9247-3205156e9699',
 };
 
+my $gcodes = {
+  '7777'=>1,
+  '7778'=>1,
+  '7779'=>1,
+  '7780'=>1,
+  '7781'=>1,
+  '7786'=>1,
+  '7799'=>1
+};
+
 my $json = JSON->new;
 $json->canonical();
 
@@ -374,6 +384,7 @@ sub make_hi {
   my $iid = $item->{id};
   my $itype = $item->{fixedFields}->{61}->{value};
   my $status = $item->{fixedFields}->{88}->{value} || '';
+  my $icode1 = $item->{fixedFields}->{59}->{value} || '';
   my $bc = '';
   my $ubc = '';
   foreach (@{$vf->{b}}) {
@@ -453,6 +464,13 @@ sub make_hi {
       $nobj->{note} = $_;
       $nobj->{itemNoteTypeId} = '5c9f271c-4960-4356-840e-0a8fc050a420'; # PASCAL Barcode
       $nobj->{staffOnly} = 'true';
+      push @{ $irec->{notes} }, $nobj;
+    }
+    if ($gcodes->{$icode1}) {
+      my $nobj = {};
+      $nobj->{note} = "Google Batch [month year]";
+      $nobj->{itemNoteTypeId} = '7a46e1ca-d2eb-49a3-9935-59bed639e6f1';  # Google Books Project
+      $nobj->{staffOnly} = 'true'; 
       push @{ $irec->{notes} }, $nobj;
     }
     my $icode2 = $item->{fixedFields}->{60}->{value};
