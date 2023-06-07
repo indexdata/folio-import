@@ -165,7 +165,7 @@ otherCodes = {
         let status = 'Open';
         if (statCode === '1') {
           status = 'Pending'
-        } else if (statCode === 'z') {
+        } else if (statCode === 'z' || statCode === 'a') { // ignore "a"
           status = 'Closed'
         }
         let orderType = (statCode.match(/[fz]/) && oType.match(/[dnoqs]/)) ? 'Ongoing' : 'One-Time';
