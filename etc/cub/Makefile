@@ -5,6 +5,7 @@ holdir=$(data)/holdings
 userdir = $(data)/users
 orddir = $(data)/orders
 finedir = $(data)/fines
+reqdir = $(data)/requests
 log=$(data)/log
 law=$(data)/law
 home=/home/charles
@@ -67,6 +68,12 @@ endif
 	cd $(sdir); node downloadOrders.js -c '*' $(orddir) > $(log)/get-orders.log &
 	# cd $(sdir); node downloadOrders.js -c [2000-01-01,2023-06-30] $(orddir) > $(log)/orders.log &
 
+get-requests:
+ifeq ($(wildcard $(reqdir)/.),)
+	mkdir $(reqdir)
+endif
+	cd $(sdir); node downloadHolds.js $(reqdir) > $(log)/get-requests.log &
+
 instances: $(marcdir)/marc0*mrc
 	cd $(marcdir); yaz-marcdump -C 1800000 -s m marc0*mrc >/dev/null
 	cd $(marcdir); for f in m0*; do mv $$f $$f.mrc; done
@@ -76,7 +83,7 @@ items: $(itemdir)/items00000000.jsonl
 	# wc -l $(itemdir)/items00000000.jsonl > $(itemdir)/count
 	date > $(itemdir)/start
 	cat $(marcdir)/*.map > $(itemdir)/instance.map
-	cat $(holdir)/*.map > $(itemdir)/holdings.map
+	cat $(holdir)/h*.map > $(itemdir)/holdings.map
 	cd $(wd)/inventory; ./items-cub.pl $(iref) $(itemdir)/instance.map $(itemdir)/holdings.map $(itemdir)/items00000000.jsonl > $(log)/make-items.log 2>$(log)/make-items-err.log &
 
 clean-items: $(itemdir)/sierra-items.jsonl
@@ -84,7 +91,7 @@ clean-items: $(itemdir)/sierra-items.jsonl
 
 holdings: $(holdir)/*.jsonl
 	cat $(marcdir)/*.map > $(holdir)/instance.map
-	cd $(wd)/inventory; ./holdings-cub.pl $(iref) $(holdir)/instance.map $(holdir)/holdings00*jsonl > $(log)/make-holdings.log 2>$(log)/make-holdings-err.log &
+	cd $(wd)/inventory; ./holdings-cub.pl $(iref) $(holdir)/instance.map $(holdir)/holdings00000000.jsonl > $(log)/make-holdings.log 2>$(log)/make-holdings-err.log &
 
 orders: $(orddir)/orders0*jsonl
 	cat $(orddir)/orders0*.jsonl > $(orddir)/iii-orders.jsonl
@@ -95,12 +102,16 @@ users: $(userdir)/users0*.jsonl
 	cd $(wd)/patrons; node cubUsers.js $(uref) $(userdir)/iii-users.jsonl 'folio@colorado.edu' > $(log)/make-users.log 2>$(log)/make-users-err.log &
 
 checkouts: $(itemdir)/items00000000.jsonl
+	cp $(wd)/etc/cub/spoints.tsv $(itemdir)
 	cd $(wd)/patrons; node cubCheckouts.js $(iref)/service-points.json $(userdir)/users00000000.jsonl $(itemdir)/items00000000.jsonl
 
 fines: $(finedir)/fines0*.jsonl
 	cd $(wd); node authToken.js
 	grep '"tenant":"cu"' $(wd)/.okapi
 	cd $(wd)/patrons; node cubFines.js $(userdir)/users.map $(finedir)/fines0*jsonl > $(log)/make-fines.log 2>$(log)make-fines.err &
+
+requests: $(reqdir)/holds00000000.jsonl
+	cd $(wd)/patrons; node cubRequests.js $(userdir)/users.map $(reqdir)/holds00000000.jsonl Item > $(log)/make-requests.log &
 
 law-setup:
 	cd $(data); mkdir -p law
