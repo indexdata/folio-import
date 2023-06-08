@@ -101,7 +101,7 @@ try {
     let pnote = r['Product Notes'];
     let ntype = r['Product Note Type'];
     let org = r['Order Organization'];
-    let role = r['Product Organization Role'];
+    let role = r['Order Organization Role'];
     org += '|' + role;
     if (!ag[oid]) { 
       ag[oid] = r;

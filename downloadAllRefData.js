@@ -43,7 +43,8 @@ let refDir = process.argv[2];
       'https://raw.githubusercontent.com/folio-org/mod-source-record-manager/3451d3059baefb07bc822574552e5bde58ffae71/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-remote-storage/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/folio-custom-fields/master/descriptors/ModuleDescriptor-template.json',
-      'https://raw.githubusercontent.com/folio-org/mod-calendar/master/descriptors/ModuleDescriptor-template.json'
+      'https://raw.githubusercontent.com/folio-org/mod-calendar/master/descriptors/ModuleDescriptor-template.json',
+      'https://raw.githubusercontent.com/folio-org/mod-agreements/master/service/src/main/okapi/ModuleDescriptor-template.json'
     ];
 
     const skipList = {
@@ -92,7 +93,6 @@ let refDir = process.argv[2];
       '/orders-storage/receiving-history': true,
       '/orders-storage/pieces': true,
       '/orders-storage/titles': true,
-      '/organizations-storage/interfaces': true,
       '/patron-action-session-storage/expired-session-patron-ids': true,
       '/patron-action-session-storage/patron-action-sessions': true,
       '/preceding-succeeding-titles': true,
@@ -139,7 +139,10 @@ let refDir = process.argv[2];
       'request-policy-storage__request-policies',
       'staff-slips-storage__staff-slips',
       'cancellation-reason-storage__cancellation-reasons',
-      'circulation-rules-storage'
+      'circulation-rules-storage',
+      'organizations-storage__organization-types',
+      'organizations-storage__categories',
+      'organizations-storage__organizations'
     ]
 
     let userMod = '';
@@ -164,6 +167,7 @@ let refDir = process.argv[2];
         let res = await superagent.get(url);
         let md = JSON.parse(res.text);
         let name = md.name.replace(/ +/g, '_');
+        if (name === '${info.app.name}') name = 'agreements';
 	      if (url.match(/mod-licenses/)) name = 'licenses'; // for some reason, mod-licenses doesn't have a name
         let prov = md.provides;
         for (let x = 0; x < prov.length; x++) {
