@@ -214,7 +214,8 @@ try {
         userId: uid
       }
       fs.writeFileSync(outPath, JSON.stringify(user) + '\n', { flag: 'as' });
-      fs.writeFileSync(mapPath, `${pid}|${user.id}\n`, { flag: 'as' });
+      let userBc = user.barcode || '';
+      fs.writeFileSync(mapPath, `${pid}|${user.id}|${userBc}|${user.active}\n`, { flag: 'as' });
       fs.writeFileSync(permPath, JSON.stringify(pu) + '\n', { flag: 'as' });
       pcount++;
     } else {

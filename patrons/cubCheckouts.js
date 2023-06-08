@@ -9,7 +9,7 @@ const itemFile = process.argv[4];
 (async () => {
   try {
     if (itemFile === undefined) {
-      throw('Usage: node cubCheckouts.js <service_points_file> <users_file> <sierra_items_file>');
+      throw('Usage: node cubCheckouts.js <service_points_file> <users_map> <sierra_items_file>');
     }
     if (!fs.existsSync(itemFile)) {
       throw new Error('Can\'t find loans file');
@@ -154,11 +154,14 @@ const itemFile = process.argv[4];
     url.on('line', l => {
       let u = JSON.parse(l);
       let exDate = (u.fixedFields['43']) ? u.fixedFields['43'].value : '';
+      let exDateVal = (exDate) ? new Date(exDate).valueOf() : 0;
+      let act = (start > exDateVal) ? false : true;
       let bc = '';
       u.varFields.forEach(v => {
         if (v.fieldTag === 'b' && !bc) bc = v.content;
       });
-      active[u.id] = { active: true, expirationDate: exDate, barcode: bc };
+
+      active[u.id] = { active: act, expirationDate: exDate, barcode: bc };
       ucount++;
     });
     url.on('close', l=> {
