@@ -92,7 +92,6 @@ let refDir = process.argv[2];
       '/orders-storage/receiving-history': true,
       '/orders-storage/pieces': true,
       '/orders-storage/titles': true,
-      '/organizations-storage/interfaces': true,
       '/patron-action-session-storage/expired-session-patron-ids': true,
       '/patron-action-session-storage/patron-action-sessions': true,
       '/preceding-succeeding-titles': true,
