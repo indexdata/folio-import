@@ -257,6 +257,13 @@ foreach (@ARGV) {
           $leader = $f->{content};
         }
       }
+      if ($ft eq 'c') {
+        my @parts;
+        foreach my $sf (@ {$f->{subfields}}) {
+          push @parts, $sf->{content};
+        }
+        $vfcn = join ' ', @parts;
+      }
     }
     # print Dumper($vf);
     my $stitle = $vf->{'843'}->[0]->{a} || '';
@@ -288,17 +295,23 @@ foreach (@ARGV) {
     $h->{holdingsTypeId} = $typeid;
     my $cntype = $b[2];
     my $cn = $b[1];
-    my @tags = ('050', '090');
-    my @csubs = ('a','b');
-    foreach my $tag (@tags) {
-      if ($vf->{$tag}) {
-        my @el;
-        foreach my $sub (@csubs) {
-          push @el, $vf->{$tag}[0]->{$sub} if $vf->{$tag}[0]->{$sub};
-        }
-        $cn = join ' ', @el;
-      }
+    if ($vfcn) {
+      $cntype = '6caca63e-5651-4db6-9247-3205156e9699'; #other
+      $cn = $vfcn;
     }
+    
+    # my @tags = ('050', '090');
+    # my @csubs = ('a','b');
+    # foreach my $tag (@tags) {
+    #  if ($vf->{$tag}) {
+    #    my @el;
+    #    foreach my $sub (@csubs) {
+    #      push @el, $vf->{$tag}[0]->{$sub} if $vf->{$tag}[0]->{$sub};
+    #    }
+    #    $cn = join ' ', @el;
+    #  }
+    # }
+
     $h->{callNumberTypeId} = $cntype || '6caca63e-5651-4db6-9247-3205156e9699'; #other
     $h->{callNumber} = $cn if $cn;
     $h->{discoverySuppress} = ($ff->{118}->{value} ne '-') ? JSON::true : JSON::false ;
