@@ -40,6 +40,7 @@ my $cntypes = {
 };
 my $version = '1';
 my $isls = 'CoU';
+my $id_admin = 'c83f82f7-1ca3-5512-85d6-e3cb76be16eb';
 
 my $rules_file = shift;
 my $ref_dir = shift;
@@ -51,7 +52,9 @@ my $json = JSON->new;
 $json->canonical();
 
 my @lt = localtime();
-my $mdate = sprintf("%04d-%02d-%02dT%02d:%02d:%02d-0500", $lt[5] + 1900, $lt[4] + 1, $lt[3], $lt[2], $lt[1], $lt[0]);
+# my $mdate = sprintf("%04d-%02d-%02dT%02d:%02d:%02d-0500", $lt[5] + 1900, $lt[4] + 1, $lt[3], $lt[2], $lt[1], $lt[0]);
+my $create_date;
+my $update_date;
 
 sub uuid {
   my $text = shift;
@@ -546,7 +549,15 @@ foreach (@ARGV) {
     my @lfields = $marc->field('945');
     $marc->delete_fields(@lfields);
     # lets move the 001 to 035
-    my $iiinum = ($marc->field('907')) ? $marc->subfield('907', 'a') : '';
+    my $iiinum;
+    my $f907 = $marc->field('907'); 
+    if ($f907) {
+      $iiinum = $f907->subfield('a');
+      my $cd = $f907->subfield('c') || '';
+      $create_date = parse_date($cd);
+      my $ud = $f907->subfield('b') || '';
+      $update_date = parse_date($ud);
+    }
     $iiinum =~ s/.(.+).$/$1/;
     if ($marc->field('001')) {
       my $f001 = $marc->field('001')->data();
@@ -738,6 +749,18 @@ foreach (@ARGV) {
     $rec->{subjects} = dedupe(@{ $rec->{subjects} });
     $rec->{languages} = dedupe(@{ $rec->{languages} });
     $rec->{series} = dedupe(@{ $rec->{series} });
+    if ($marc->field('008')) {
+      my $cd = $marc->field('008')->data();
+      my $yr = substr($cd, 0, 2);
+      my $mo = substr($cd, 2, 2);
+      my $dy = substr($cd, 4, 2);
+      if ($yr =~ /^[012]/) {
+        $yr = "20$yr";
+      } else {
+        $yr = "19$yr";
+      }
+      $rec->{catalogedDate} = "$yr-$mo-$dy";
+    }
     
     # Assign uuid based on hrid;
     if (!$rec->{hrid}) {
@@ -753,12 +776,12 @@ foreach (@ARGV) {
       if ($statId) {
         push @{$rec->{statisticalCodeIds}}, $statId;
       }
-      if ($ENV{FOLIO_USER_ID}) {
+      if ($id_admin) {
         $rec->{metadata} = {
-          createdByUserId=>$ENV{FOLIO_USER_ID},
-          updatedByUserId=>$ENV{FOLIO_USER_ID},
-          createdDate=>$mdate,
-          updatedDate=>$mdate
+          createdByUserId=>$id_admin,
+          updatedByUserId=>$id_admin,
+          createdDate=>$create_date,
+          updatedDate=>$update_date
         };
       }
       my $cn = '';
@@ -967,6 +990,12 @@ sub make_hi {
     hcount => $hcount,
     icount => $icount
   };
+}
+
+sub parse_date {
+  my $d = shift;
+  $d =~ s/(\d\d)-(\d\d)-([012]\d)/20$3-$1-$2/ || $d =~ s/(\d\d)-(\d\d)-(\d\d)/19$3-$1-$2/;
+  return $d;
 }
 
 sub write_objects {
