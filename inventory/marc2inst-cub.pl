@@ -491,6 +491,7 @@ foreach (@ARGV) {
   my $idmap_lines = '';
   my $success = 0;
   my $pcount = 0;
+  my $ebsc = 0;
   my $hrids = {};
   my $coll = { instances => [] };
   while (<RAW>) {
@@ -543,6 +544,11 @@ foreach (@ARGV) {
     my $iiinum = ($marc->field('907')) ? $marc->subfield('907', 'a') : '';
     $iiinum =~ s/.(.+).$/$1/;
     if ($marc->field('001')) {
+      my $f001 = $marc->field('001')->data();
+      if ($f001 =~ /^ebs/) {
+        $ebsc++;
+        next;
+      }
       my $cc = 0;
       foreach my $f ($marc->field('001')) {
         if ($cc > 0) {
@@ -827,13 +833,14 @@ foreach (@ARGV) {
   }
   my $tt = time() - $start;
   print "\nDone!\n$count Marc records processed in $tt seconds";
-  print "\nInstances: $success ($save_path)";
+  print "\nInstances:     $success ($save_path)";
   if ($itemtag) {
     print "\nHoldings:  $hcount ($holdings_path)";
     print "\nItems:     $icount ($items_path)";
   }
-  print "\nPreSuc:    $pcount ($presuc_file)";
-  print "\nErrors:    $errcount\n";
+  print "\nPreSuc:        $pcount ($presuc_file)";
+  print "\nEBSCO rejects: $ebsc";
+  print "\nErrors:        $errcount\n";
 }
 
 sub make_hi {
