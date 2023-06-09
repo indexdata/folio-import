@@ -550,10 +550,19 @@ foreach (@ARGV) {
     $iiinum =~ s/.(.+).$/$1/;
     if ($marc->field('001')) {
       my $f001 = $marc->field('001')->data();
-      if ($f001 =~ /^ebs/) {
-        $ebsc++;
-        print $EBSOUT $raw;
-        next;
+      my $reject = 1;
+      if ($f001 =~ /^ebs.+e$/) {
+        foreach my $f956 ($marc->field('956')) {
+          my $fdata = $f956->as_string();
+          if ($fdata =~ /EBSCO ebook collection/) {
+            $reject = 0;
+          }
+        }
+        if ($reject) {
+          $ebsc++;
+          print $EBSOUT $raw;
+          next;
+        }
       }
       my $cc = 0;
       foreach my $f ($marc->field('001')) {
