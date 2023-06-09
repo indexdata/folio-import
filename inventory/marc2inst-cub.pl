@@ -461,6 +461,11 @@ foreach (@ARGV) {
   unlink $presuc_file;
   open my $PSOUT, ">>:encoding(UTF-8)", $presuc_file;
 
+  my $ebs_file = $infile;
+  $ebs_file =~ s/^(.+)\..+$/$1_ebs.mrc/;
+  unlink $ebs_file;
+  open my $EBSOUT, ">>:encoding(UTF-8)", $ebs_file;
+
   my $holdings_path = $infile;
   my $items_path = $infile;
   my $HOUT;
@@ -547,6 +552,7 @@ foreach (@ARGV) {
       my $f001 = $marc->field('001')->data();
       if ($f001 =~ /^ebs/) {
         $ebsc++;
+        print $EBSOUT $raw;
         next;
       }
       my $cc = 0;
