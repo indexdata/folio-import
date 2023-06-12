@@ -60,7 +60,10 @@ const post_put = async (authToken, url, checkout, r) => {
         let name = block.name;
         checkout.overrideBlocks = {
           comment: 'Migration override',
-          [name]: { dueDate: new Date().toISOString() }
+          [name]: { dueDate: new Date().toISOString() },
+        }
+        if (name !== 'patronBlock') {
+          checkout.overrideBlocks.patronBlock = {};
         }
         console.log(`WARN we've encountered a ${name} block, retrying with override...`);
         let body = await post_put(authToken, url, checkout, 1);
