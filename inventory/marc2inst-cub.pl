@@ -559,22 +559,14 @@ foreach (@ARGV) {
       $update_date = parse_date($ud);
     }
     $iiinum =~ s/.(.+).$/$1/;
+    my $f998 = $marc->field('998');
+    if ($f998) {
+      my $c = $f998->subfield('c');
+      $ebsc++;
+      print $EBSOUT $raw;
+      next if $c eq 't'; # skip ebsco records
+    }
     if ($marc->field('001')) {
-      my $f001 = $marc->field('001')->data();
-      my $reject = 1;
-      if ($f001 =~ /^ebs.+e$/) {
-        foreach my $f956 ($marc->field('956')) {
-          my $fdata = $f956->as_string();
-          if ($fdata =~ /EBSCO ebook collection/) {
-            $reject = 0;
-          }
-        }
-        if ($reject) {
-          $ebsc++;
-          print $EBSOUT $raw;
-          next;
-        }
-      }
       my $cc = 0;
       foreach my $f ($marc->field('001')) {
         if ($cc > 0) {
