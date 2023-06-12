@@ -130,9 +130,9 @@ sub makeMapFromTsv {
         $tsvmap->{$prop}->{$code} = $name;
       } else {
         if ($prop =~ /mtypes|holdings-types/) {
-          $name = $col[1];
+          $name = $col[1] || '';
         } elsif ($prop eq 'statisticalCodes') {
-          $name = $col[2];
+          $name = $col[2] || '';
         }
         $tsvmap->{$prop}->{$code} = $refdata->{$prop}->{$name};
       }
