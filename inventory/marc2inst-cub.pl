@@ -533,12 +533,8 @@ foreach (@ARGV) {
     };
     
     $count++;
-    my $raw;
-    if ($_ =~ /^\d{5}....a/) {
-      $raw = $_
-    } else {
-      $raw = marc8_to_utf8($_);
-    }
+    my $raw = $_;
+    $raw =~ s/^(\d{5})d/$1n/;
     my $marc;
     my $ok = eval {
       $marc = MARC::Record->new_from_usmarc($raw);
