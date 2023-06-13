@@ -17,6 +17,8 @@ const inFile = process.argv[2];
 
     const users = require(inFile);
     const ui = { users: [] };
+    ui.included = { departments: [] };
+    let deptSeen = {};
     for (let x = 0; x < users.length; x++) {
       let u = users[x];
       if (u.personal && u.personal.addresses) {
@@ -27,6 +29,16 @@ const inFile = process.argv[2];
             delete a.postal;
           }
         }
+      }
+      if (u.included && u.included.departments) {
+        u.departments = [];
+        u.included.departments.forEach(i => {
+          let d = i.name;
+          u.departments.push(d);
+          if (!deptSeen[d]) ui.included.departments.push(i);
+          deptSeen[d] = 1;
+        });
+        delete u.included;
       }
       ui.users.push(u);
     }
