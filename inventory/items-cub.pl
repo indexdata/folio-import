@@ -251,7 +251,7 @@ foreach (@ARGV) {
         $inc->{$bid} = 0;
       }
       $inc->{$bid}++;
-      my $psv = $inst_map->{$bid};
+      my $psv = $inst_map->{$bid} || '';
       if (!$psv) {
         print "WARN No map entry found for $bid (item: $obj->{id})\n";
         next;
@@ -408,7 +408,7 @@ sub make_hi {
       $_ = uc $_;
       if ($_ =~ /^P/) {
         $bc = $_;
-      } elsif ($_ =~ /^U/) {
+      } else {
         $ubc = $_;
       }
     }
