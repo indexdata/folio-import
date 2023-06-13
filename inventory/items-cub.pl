@@ -322,20 +322,28 @@ sub make_hi {
   my $locid = $sierra2folio->{locations}->{$loc} || '761db5ed-d29d-4e2e-83d1-c6dfd1426cfd'; # defaults to Unmapped location.
   my $vf = {};
   my $local_callno = 0;
-  foreach (@{ $item->{varFields} }) {
-    my $ftag = $_->{fieldTag};
-    push @{ $vf->{$ftag} }, $_->{content};
+  foreach my $f (@{ $item->{varFields} }) {
+    my $ftag = $f->{fieldTag};
+    if ($f->{content}) {
+      push @{ $vf->{$ftag} }, $f->{content};
+    } elsif ($f->{subfields}) {
+      my @allsubs;
+      foreach my $s (@{ $f->{subfields} }) {
+        push @allsubs, $s->{content};
+      }
+      push @{ $vf->{$ftag} }, join ' ', @allsubs if $allsubs[0];
+    }
     if ($ftag eq 'c') {
       my @cntext;
       my $mtag = $_->{marcTag} || 'XXX';
       if ($_->{content}) {
         $cntext[0] = $_->{content};
       } else {
-        foreach(@{ $_->{subfields} }) {
-          if ($_->{tag} eq 'a') {
-            $cntext[0] = $_->{content};
-          } elsif ($_->{tag} eq 'b') {
-            $cntext[1] = $_->{content};
+        foreach(@{ $f->{subfields} }) {
+          if ($f->{tag} eq 'a') {
+            $cntext[0] = $f->{content};
+          } elsif ($f->{tag} eq 'b') {
+            $cntext[1] = $f->{content};
           }  
         }
       }
@@ -419,7 +427,7 @@ sub make_hi {
   }
   my @msgs = $vf->{m};
   my @notes;
-  push @notes, "Former location: $loc";
+  # push @notes, "Former location: $loc";
   push @notes, @{ $vf->{x} } if $vf->{x};
   push @notes, @{ $vf->{w} } if $vf->{w};
   $status =~ s/\s+$//;
