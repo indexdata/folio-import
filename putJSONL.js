@@ -7,6 +7,7 @@ const path = require('path');
 const { getAuthToken } = require('./lib/login');
 let inFile = process.argv[3];
 let ep = process.argv[2];
+let ver = process.env.version;
 
 (async () => {
   try {
@@ -70,6 +71,7 @@ let ep = process.argv[2];
     for await (const line of rl) {
       x++;
       let rec = JSON.parse(line);
+      if (ver) rec._version = ver;
       let id = rec.id;
       if (rec.fund && rec.fund.id) id = rec.fund.id;
       let lDate = new Date();
@@ -86,7 +88,7 @@ let ep = process.argv[2];
         success++;
       } catch (e) {
 	      let errMsg = (e.response) ? e.response.text : e;
-        logger.error(e);
+        logger.error(errMsg);
         fail++;
       }
     }

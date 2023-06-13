@@ -405,6 +405,7 @@ sub make_hi {
   foreach (@{$vf->{b}}) {
     if ($_) {
       s/ +$//;
+      $_ = uc $_;
       if ($_ =~ /^P/) {
         $bc = $_;
       } elsif ($_ =~ /^U/) {
