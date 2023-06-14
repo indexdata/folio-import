@@ -315,7 +315,7 @@ foreach (@ARGV) {
     $h->{callNumberTypeId} = $cntype || '6caca63e-5651-4db6-9247-3205156e9699'; #other
     $h->{callNumber} = $cn if $cn;
     $h->{discoverySuppress} = ($ff->{118}->{value} ne '-') ? JSON::true : JSON::false ;
-    foreach my $t ('n', 'z') {
+    foreach my $t ('f','n','w','z') {
       foreach (@{ $vf->{$t} }) {
         push @{ $h->{notes} }, make_notes($t, $_);
       }
@@ -416,7 +416,8 @@ foreach (@ARGV) {
         foreach my $f (@{ $hs->{$t}}) {
           my $st = make_statement($f->{text}, $f->{note});
           if ($f->{text}) {
-            my $field = MARC::Field->new($t, ' ', ' ', '8' => $f->{order}, 'a' => $f->{text}); 
+            my $ord = $f->{order} || '0';
+            my $field = MARC::Field->new($t, ' ', ' ', '8' => $ord, 'a' => $f->{text}); 
             $marc->insert_grouped_field($field); # if !$marc->field($t, 'a');
           }
         }
@@ -601,7 +602,7 @@ sub make_notes {
   my $note = shift;
   my $n = { note=>$note };
   $n->{holdingsNoteTypeId} = 'b160f13a-ddba-4053-b9c4-60ec5ea45d56'; # note
-  if ($type =~ /[nzx]/) {
+  if ($type =~ /[fnzwx]/) {
     $n->{staffOnly} = JSON::true;
   } else {
     $n->{staffOnly} = JSON::false;
