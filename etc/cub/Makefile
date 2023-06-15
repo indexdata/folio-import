@@ -6,6 +6,7 @@ userdir = $(data)/users
 orddir = $(data)/orders
 finedir = $(data)/fines
 reqdir = $(data)/requests
+chkdir = $(data)/checkouts
 log=$(data)/log
 law=$(data)/law
 home=/home/charles
@@ -74,6 +75,13 @@ ifeq ($(wildcard $(reqdir)/.),)
 endif
 	cd $(sdir); node downloadHolds.js $(reqdir) > $(log)/get-requests.log &
 
+get-checkouts:
+ifeq ($(wildcard $(chkdir)/.),)
+	mkdir $(chkdir)
+endif
+	cd $(sdir); node downloadCheckouts.js $(chkdir) > $(log)/get-checkouts.log &
+
+
 instances: $(marcdir)/marc0*mrc
 	cd $(marcdir); yaz-marcdump -C 1800000 -s m marc0*mrc >/dev/null
 	cd $(marcdir); for f in m0*; do mv $$f $$f.mrc; done
@@ -103,7 +111,8 @@ users: $(userdir)/users0*.jsonl
 
 checkouts: $(itemdir)/items00000000.jsonl
 	cp $(wd)/etc/cub/spoints.tsv $(itemdir)
-	cd $(wd)/patrons; node cubCheckouts.js $(iref)/service-points.json $(userdir)/users00000000.jsonl $(itemdir)/items00000000.jsonl
+	cd $(wd)/patrons; node cubCheckouts.js $(iref)/service-points.json $(userdir)/users00000000.jsonl $(itemdir)/items00000000.jsonl > $(log)/make-checkouts.log &
+	cd $(wd)/patrons; node cubProspectorCheckouts.js $(chkdir)/checkouts00000000.jsonl > $(log)/make-pcheckouts.log 
 
 fines: $(finedir)/fines0*.jsonl
 	cd $(wd); node authToken.js
