@@ -112,7 +112,7 @@ users: $(userdir)/users0*.jsonl
 checkouts: $(itemdir)/items00000000.jsonl
 	cp $(wd)/etc/cub/spoints.tsv $(itemdir)
 	cd $(wd)/patrons; node cubCheckouts.js $(iref)/service-points.json $(userdir)/users00000000.jsonl $(itemdir)/items00000000.jsonl > $(log)/make-checkouts.log &
-	cd $(wd)/patrons; node cubProspectorCheckouts.js $(chkdir)/checkouts00000000.jsonl > $(log)/make-pcheckouts.log 
+	cd $(wd)/patrons; node cubProspectorCheckouts.js $(userdir)/users00000000.jsonl $(chkdir)/checkouts00000000.jsonl > $(log)/make-pcheckouts.log 
 
 fines: $(finedir)/fines0*.jsonl
 	cd $(wd); node authToken.js
