@@ -9,7 +9,7 @@ const itemFile = process.argv[4];
 (async () => {
   try {
     if (itemFile === undefined) {
-      throw('Usage: node cubCheckouts.js <service_points_file> <sierra_users_file> <sierra_checkouts_file>');
+      throw('Usage: node cubCheckouts.js <service_points_file> <users_map> <sierra_items_file>');
     }
     if (!fs.existsSync(itemFile)) {
       throw new Error('Can\'t find loans file');
@@ -78,20 +78,30 @@ const itemFile = process.argv[4];
 
       rl.on('line', l => {
         c++;
-        let co = JSON.parse(l);
-        let pnum = (co.patron) ? co.patron.replace(/^.+\//, '') : '';
-        if (pnum) {
+        let i = JSON.parse(l);
+        let ff = i.fixedFields;
+        let pnum = (ff && ff['66']) ? ff['66'].value : '';
+        if (pnum && pnum !== '0') {
           let user = active[pnum];
           if (!user) { 
             console.log(`User not found for ${pnum}`);
           } else {
             let ubcode = user.barcode;
-            let odate = co.outDate;
-            let due = co.dueDate;
-            // let loc = (ff['64']) ? ff['64'].value : '';
-            let loc = 'xxxxx';
-            let rnum = co.numberOfRenewals;
-            let ibcode = co.barcode;
+            let odate = (ff['63']) ? ff['63'].value : '';
+            let due = (ff['65']) ? ff['65'].value : '';
+            let loc = (ff['64']) ? ff['64'].value : '';
+            let rnum = (ff['71']) ? ff['71'].value : '';
+            let vf = i.varFields || [];
+            let ibcode = '';
+            vf.forEach(v => {
+              if (v.fieldTag === 'b') {
+                if (v.content.match(/^P/)) {
+                  ibcode = v.content;
+                } else if (!ibcode) {
+                  ibcode = v.content
+                }
+              }
+            });
             let loan = {};
             loan.itemBarcode = ibcode.trim();
             loan.userBarcode = ubcode.trim();
