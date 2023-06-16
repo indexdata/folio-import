@@ -27,6 +27,10 @@ let ns = 'ff67f961-a651-4353-b49f-182d50ae7850';
     if (fs.existsSync(gpath)) {
       fs.unlinkSync(gpath);
     }
+    const bpath = `${workingDir}/${baseName}_bec.jsonl`;
+    if (fs.existsSync(bpath)) {
+      fs.unlinkSync(bpath);
+    }
 
     const gf = require(`${workingDir}/finance-storage__group-fund-fiscal-years.json`);
     const gmap = {};
@@ -34,7 +38,14 @@ let ns = 'ff67f961-a651-4353-b49f-182d50ae7850';
       if (!gmap[g.fundId]) gmap[g.fundId] = []
       gmap[g.fundId].push(g.groupId);
     });
-    // console.log(gmap); return;
+
+    const bec = require(`${workingDir}/finance-storage__budget-expense-classes.json`);
+    const becMap = {};
+    bec.budgetExpenseClasses.forEach(g => {
+      if (!becMap[g.budgetId]) becMap[g.budgetId] = []
+      becMap[g.budgetId].push(g.expenseClassId);
+    });
+    // console.log(becMap); return;
     
     const fileStream = fs.createReadStream(inFile);
 
@@ -49,6 +60,7 @@ let ns = 'ff67f961-a651-4353-b49f-182d50ae7850';
       let rec = JSON.parse(line);
       rec.name = rec.name.replace(/(^.+-).+$/, '$1' + fy);
       rec._version = 1;
+      let bid = rec.id;
       rec.id = uuid(rec.name, ns);
       rec.fiscalYearId = fyId;
       rec.expenditures = 0;
@@ -58,6 +70,7 @@ let ns = 'ff67f961-a651-4353-b49f-182d50ae7850';
       rec.overExpended = 0;
       rec.allocated = rec.initialAllocation;
       rec.available = rec.initialAllocation;
+      rec.initialAllocation = 0;
       rec.cashBalance = rec.available;
       fs.writeFileSync(outPath, JSON.stringify(rec) + '\n', { flag: 'a' });
 
@@ -73,6 +86,20 @@ let ns = 'ff67f961-a651-4353-b49f-182d50ae7850';
             fiscalYearId: rec.fiscalYearId
           }
           fs.writeFileSync(gpath, JSON.stringify(gfy) + '\n', { flag: 'a'});
+        });
+      }
+
+      let eids = (becMap[bid]) ? becMap[bid] : [];
+      if (eids && eids[0]) {
+        eids.forEach(eid => {
+          let bec = {
+            _version: 1,
+            id: uuid(rec.id + eid, ns),
+            budgetId: rec.id,
+            expenseClassId: eid,
+            status: 'Active'
+          }
+          fs.writeFileSync(bpath, JSON.stringify(bec) + '\n', { flag: 'a' });
         });
       }
       c++
