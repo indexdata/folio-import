@@ -282,7 +282,7 @@ foreach (@ARGV) {
     $h->{formerIds} = [ $obj->{id} ];
     $h->{hrid} = $hid;
     $h->{instanceId} = $b[0];
-    $h->{shelvingTitle} = $stitle if $stitle;
+    # $h->{shelvingTitle} = $stitle if $stitle;
     my $loc_id = $tofolio->{locations}->{$loc_code} || $refdata->{locations}->{UNMAPPED};
     if (!$tofolio->{locations}->{$loc_code}) {
       print "WARN: LocationId not found for $loc_code\n";
@@ -370,7 +370,7 @@ foreach (@ARGV) {
       $loc_code =~ s/\s*$//;
       my $fcode = $loc_code_map->{$loc_code};
       my $f852 =  MARC::Field->new('852', '0', ' ', 'b' => $fcode);
-      $f852->add_subfields('l', $stitle) if $stitle;
+      $f852->add_subfields('c', $stitle) if $stitle;
       $marc->insert_fields_ordered($f852);
 
       my $f008_seen = 0;
