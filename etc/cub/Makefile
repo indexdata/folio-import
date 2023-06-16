@@ -107,7 +107,7 @@ orders: $(orddir)/orders0*jsonl
 
 users: $(userdir)/users0*.jsonl
 	cat $(userdir)/users0*.jsonl > $(userdir)/iii-users.jsonl
-	cd $(wd)/patrons; node cubUsers.js $(uref) $(userdir)/iii-users.jsonl 'folio@colorado.edu' > $(log)/make-users.log 2>$(log)/make-users-err.log &
+	cd $(wd)/patrons; node cubUsers.js $(uref) $(userdir)/iii-users.jsonl > $(log)/make-users.log 2>$(log)/make-users-err.log &
 
 checkouts: $(itemdir)/items00000000.jsonl
 	cp $(wd)/etc/cub/spoints.tsv $(itemdir)
@@ -156,7 +156,7 @@ law-orders:
 
 setup:
 	cd $(wd); git pull	
-	cp $(wd)/configs/bash/login-cu-test.sh .
+	cp $(wd)/configs/bash/login-cu.sh .
 	cp $(wd)/bash/reference_* .
 	cp $(wd)/inventory/marc2inst-cub.pl .
 	cp $(wd)/mapping_rules/default.json mapping-rules.json
@@ -165,7 +165,7 @@ setup:
 	mkdir -p $(uref)
 	mkdir -p $(aref)
 	mkdir -p $(log)
-	./login-cu-test.sh
+	./login-cu.sh
 	./reference_inventory.sh $(iref)
 	./reference_users.sh $(uref)
 	./reference_finance.sh $(aref)
