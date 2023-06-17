@@ -335,9 +335,9 @@ sub make_hi {
     }
     if ($ftag eq 'c') {
       my @cntext;
-      my $mtag = $_->{marcTag} || 'XXX';
-      if ($_->{content}) {
-        $cntext[0] = $_->{content};
+      my $mtag = $f->{marcTag} || 'XXX';
+      if ($f->{content}) {
+        $cntext[0] = $f->{content};
       } else {
         foreach(@{ $f->{subfields} }) {
           if ($f->{tag} eq 'a') {
