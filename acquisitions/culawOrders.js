@@ -20,7 +20,8 @@ const refFiles = {
   entries: 'fund-codes.json',
   locations: 'locations.json',
   acquisitionMethods: 'acquisition-methods.json',
-  mtypes: 'material-types.json'
+  mtypes: 'material-types.json',
+  expenseClasses: 'expense-classes.json'
 };
 
 const formMap = {
@@ -81,7 +82,22 @@ const payMap = {
         }
       })
     }
-    // console.log(refData.organizations); return;
+    // console.log(refData.expenseClasses); return;
+
+    const exMap = {
+      'l-ser': '790101',
+      'l-bin': '790105',
+      'l-dat': '500400',
+      'l-db': '790112',
+      'l-erc': '790106',
+      'l-ill': '790108',
+      'l-mon': '790100'
+    }
+    for (let k in exMap) {
+      let v = exMap[k];
+      exMap[k] = refData.expenseClasses[v];
+    }
+    // console.log(exMap); return;
 
     // map tsv files
 
@@ -185,10 +201,10 @@ const payMap = {
           let vend = so.VENDOR;
           vend = vend.trim();
           let orgId = orgMap[vend];
-	  if (!orgId) {
-		  vend = vend.replace(/^l/, 'l-');
-          	  orgId = refData.organizations[vend];
-	  }
+          if (!orgId) {
+            vend = vend.replace(/^l/, 'l-');
+            orgId = refData.organizations[vend];
+          }
           if (!orgId) throw (`WARN No organizationId found for ${vend}`);
           let created = so.ODATE;
           if (created.match(/\d/)) {
@@ -200,6 +216,7 @@ const payMap = {
           let otype = so['ORD TYPE'];
           let ostat = so['STATUS'];
           let code2 = so['CODE2'];
+          let exfund = so['FUND'];
           let priceStr = so['E PRICE'] || '0';
           priceStr = priceStr.replace(/[$,]/g, '');
           let price = parseFloat(priceStr);
@@ -312,6 +329,8 @@ const payMap = {
             fundId: fundId,
             code: 'Law'
           }
+          let exClassId = exMap[exfund];
+          if (exClassId) fd.expenseClassId = exClassId;
           pol.fundDistribution.push(fd);
 
           co.compositePoLines.push(pol);
