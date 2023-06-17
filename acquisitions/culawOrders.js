@@ -81,6 +81,7 @@ const payMap = {
         }
       })
     }
+    // console.log(refData.organizations); return;
 
     // map tsv files
 
@@ -89,6 +90,7 @@ const payMap = {
     locData.split(/\n/).forEach(line => {
       let [k, v] = line.split(/\t/);
       k = k.trim();
+      if (!v) v = '';
       v = v.trim();
       v = v.replace(/^.+\//, '');
       locMap[k] = refData.locations[v];
@@ -183,6 +185,10 @@ const payMap = {
           let vend = so.VENDOR;
           vend = vend.trim();
           let orgId = orgMap[vend];
+	  if (!orgId) {
+		  vend = vend.replace(/^l/, 'l-');
+          	  orgId = refData.organizations[vend];
+	  }
           if (!orgId) throw (`WARN No organizationId found for ${vend}`);
           let created = so.ODATE;
           if (created.match(/\d/)) {
