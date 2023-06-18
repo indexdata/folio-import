@@ -91,6 +91,32 @@ let dolog = process.env.LOG;
       } catch (e) {
           let errMsg = (e.response && e.response.text && !debug) ? e.response.text : e;
           logger.error(errMsg);
+          if (errMsg.match(/exceeds/)) {
+            try {
+              let url = `${config.okapi}/accounts/${accId}`;
+              let res = await superagent
+                .get(url)
+                .set('x-okapi-token', authToken);
+              let acc = res.body;
+              rec.amount = acc.remaining;
+              try {
+                console.log(`-----There was an overpayment, reducing the amount to ${rec.amount}----`);
+                let res = await superagent
+                  .post(actionUrl)
+                  .send(rec)
+                  .set('x-okapi-token', authToken)
+                  .set('content-type', 'application/json')
+                  .set('accept', 'application/json');
+                logger.info(`  Successfully added record id ${rec.id}`);
+                fs.writeFileSync(outPath, JSON.stringify(res.body) + '\n', { flag: 'a' });
+                success++;
+              } catch (e) {
+                console.log(e);
+              }
+            } catch (e) {
+              console.log(e);
+            }
+          }
           fs.writeFileSync(errPath, line + '\n', { flag: 'a'});
           fail++;
       }
