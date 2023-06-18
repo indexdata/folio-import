@@ -165,14 +165,14 @@ otherCodes = {
         let oType = (ff['15']) ? ff['15'].value : '';
         let oNote = (ff['14']) ? ff['14'].value : '';
         let statCode = (ff['20']) ? ff['20'].value : '';
-        let status = 'Open';
+        let status = 'Closed';
         if (statCode === '1') {
           status = 'Pending'
-        } else if (statCode === 'z' || statCode === 'a') { // ignore "a"
-          status = 'Closed'
+        } else if (statCode === 'o' || statCode === 'f') { 
+          status = 'Open'
         }
         let orderType = (statCode.match(/[fz]/) && oType.match(/[dnoqs]/)) ? 'Ongoing' : 'One-Time';
-        if (status.match(/Open|Pending/)) {
+        if (status !== 'Closed') {
           let poNum = so.id.toString();
           let poId = uuid(poNum, ns);
           let vcode = ff['22'].value || '';
