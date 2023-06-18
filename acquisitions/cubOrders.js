@@ -319,7 +319,7 @@ otherCodes = {
             pol.fundDistribution = [ fd ];
           }
           else {
-            console.log(`WARN no fundId found for ${fundCode}`);
+            console.log(`WARN no fundId found for Sierra fund code ${fundNum}`);
           }
 
           if (form.match(/[s2lmn]/i)) {
