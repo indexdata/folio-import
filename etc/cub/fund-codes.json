@@ -11085,13 +11085,13 @@
     {
       "code": "9ucar",
       "codeNumber": 749,
-      "fundName": "UCAR Subscriptions",
+      "fundName": "UCAR Subscriptions (2018-2022)",
       "note1": "ST: 13300010"
     },
     {
       "code": "9ucar",
       "codeNumber": 749,
-      "fundName": "UCAR Subscriptions",
+      "fundName": "UCAR Subscriptions (2018-2022)",
       "note1": "ST: 13300010"
     },
     {
@@ -11827,6 +11827,12 @@
       "note1": "GERMANIC&SLAVIC LANG&LITS"
     },
     {
+      "code": "7merr",
+      "codeNumber": 790,
+      "fundName": "MERRITT, ADRIENNE",
+      "note1": "GERMANIC&SLAVIC LANG&LITS"
+    },
+    {
       "code": "7mey",
       "codeNumber": 791,
       "fundName": "MEYERS, SKINNER",
@@ -11837,6 +11843,18 @@
       "codeNumber": 791,
       "fundName": "MEYERS, SKINNER",
       "note1": "CINEMA STUDIES"
+    },
+    {
+      "code": "7mey",
+      "codeNumber": 791,
+      "fundName": "MEYERS, SKINNER",
+      "note1": "CINEMA STUDIES"
+    },
+    {
+      "code": "7lawr",
+      "codeNumber": 792,
+      "fundName": "LAWRENCE-SANDERS, ASHLEIGH",
+      "note1": "HISTORY"
     },
     {
       "code": "7lawr",
@@ -11863,6 +11881,12 @@
       "note1": ""
     },
     {
+      "code": "vidsu",
+      "codeNumber": 793,
+      "fundName": "campus videos",
+      "note1": ""
+    },
+    {
       "code": "3dais",
       "codeNumber": 794,
       "fundName": "Daisy's Endowed Library Fund",
@@ -11873,6 +11897,18 @@
       "codeNumber": 794,
       "fundName": "Daisy's Endowed Library Fund",
       "note1": "ST 13402665"
+    },
+    {
+      "code": "3dais",
+      "codeNumber": 794,
+      "fundName": "Daisy's Endowed Library Fund",
+      "note1": "ST 13402665"
+    },
+    {
+      "code": "zhfgrp",
+      "codeNumber": 795,
+      "fundName": "HF Group SPO",
+      "note1": "To track HF Group SPO pur"
     },
     {
       "code": "zhfgrp",
@@ -11899,6 +11935,18 @@
       "note1": "Backstage SPO purchases"
     },
     {
+      "code": "zbstg",
+      "codeNumber": 796,
+      "fundName": "Backstage SPO",
+      "note1": "Backstage SPO purchases"
+    },
+    {
+      "code": "9health",
+      "codeNumber": 797,
+      "fundName": "Wellbeing & Sexual Health Microgrant",
+      "note1": "FY22 State Grant 13100399"
+    },
+    {
       "code": "9health",
       "codeNumber": 797,
       "fundName": "Wellbeing & Sexual Health Microgrant",
@@ -11921,6 +11969,144 @@
       "codeNumber": 798,
       "fundName": "Microgrant Tattered Cover Hue-man Collection",
       "note1": "FY22 State Grant 13100399"
+    },
+    {
+      "code": "9tatter",
+      "codeNumber": 798,
+      "fundName": "Microgrant Tattered Cover Hue-man Collection",
+      "note1": "FY22 State Grant 13100399"
+    },
+    {
+      "code": "tattermo",
+      "codeNumber": 799,
+      "fundName": "Tattered Cover Grant - additional titles",
+      "note1": "Only for remaining balanc"
+    },
+    {
+      "code": "tattermo",
+      "codeNumber": 799,
+      "fundName": "Tattered Cover Grant - additional titles",
+      "note1": "Only for remaining balanc"
+    },
+    {
+      "code": "tattermo",
+      "codeNumber": 799,
+      "fundName": "Tattered Cover Grant - additional titles",
+      "note1": "Only for remaining balanc"
+    },
+    {
+      "code": "healthmo",
+      "codeNumber": 800,
+      "fundName": "Sexual Health & Wellness grant",
+      "note1": "Remaining titles"
+    },
+    {
+      "code": "healthmo",
+      "codeNumber": 800,
+      "fundName": "Sexual Health & Wellness grant",
+      "note1": "Remaining titles"
+    },
+    {
+      "code": "healthmo",
+      "codeNumber": 800,
+      "fundName": "Sexual Health & Wellness grant",
+      "note1": "Remaining titles"
+    },
+    {
+      "code": "3kett",
+      "codeNumber": 801,
+      "fundName": "Ketterman Endowed Gift Fund (RaD)",
+      "note1": "ST: 13411933"
+    },
+    {
+      "code": "3kett",
+      "codeNumber": 801,
+      "fundName": "Ketterman Endowed Gift Fund (RaD)",
+      "note1": "ST: 13404503"
+    },
+    {
+      "code": "7nels",
+      "codeNumber": 802,
+      "fundName": "Crystal Nelson",
+      "note1": "1st Year FY23"
+    },
+    {
+      "code": "7nels",
+      "codeNumber": 802,
+      "fundName": "Crystal Nelson",
+      "note1": "1st Year FY23"
+    },
+    {
+      "code": "7glad",
+      "codeNumber": 803,
+      "fundName": "Jason Gladstone",
+      "note1": "1st Yr FY23"
+    },
+    {
+      "code": "7glad",
+      "codeNumber": 803,
+      "fundName": "Jason Gladstone",
+      "note1": "1st Yr FY23"
+    },
+    {
+      "code": "7pegel",
+      "codeNumber": 804,
+      "fundName": "Thomas Pegelow",
+      "note1": "1st Year FY23"
+    },
+    {
+      "code": "7pegel",
+      "codeNumber": 804,
+      "fundName": "Thomas Pegelow",
+      "note1": "1st Year FY23"
+    },
+    {
+      "code": "7twood",
+      "codeNumber": 805,
+      "fundName": "Tony Wood",
+      "note1": "1st Year FY23"
+    },
+    {
+      "code": "7twood",
+      "codeNumber": 805,
+      "fundName": "Tony Wood",
+      "note1": "1st Year FY23"
+    },
+    {
+      "code": "zucar",
+      "codeNumber": 806,
+      "fundName": "UCAR Temp funding from Materials",
+      "note1": " ST: Library Materials"
+    },
+    {
+      "code": "zucar",
+      "codeNumber": 806,
+      "fundName": "UCAR Temp funding from Materials",
+      "note1": " ST: Library Materials"
+    },
+    {
+      "code": "1flood",
+      "codeNumber": 807,
+      "fundName": "Gemmill 2022 Flood Insurance Fund",
+      "note1": "ST:  11069985 "
+    },
+    {
+      "code": "1flood",
+      "codeNumber": 807,
+      "fundName": "Gemmill 2022 Flood Insurance Fund",
+      "note1": "ST:  11069985 "
+    },
+    {
+      "code": "1ucar",
+      "codeNumber": 808,
+      "fundName": "UCAR - Rate Based Service Agreement ",
+      "note1": "ST: 12903082"
+    },
+    {
+      "code": "1ucar",
+      "codeNumber": 808,
+      "fundName": "UCAR - Rate Based Service Agreement ",
+      "note1": "ST: 12903082"
     }
   ]
 }
