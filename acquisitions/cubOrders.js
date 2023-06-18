@@ -135,7 +135,7 @@ otherCodes = {
     locData.split(/\n/).forEach(line => {
       let [k, v] = line.split(/\t/);
       k = k.trim();
-      v = v.trim();
+      v = (v) ? v.trim() : '';
       v = v.replace(/^.+\//, '');
       locMap[k] = refData.locations[v];
     });
@@ -169,7 +169,7 @@ otherCodes = {
           status = 'Closed'
         }
         let orderType = (statCode.match(/[fz]/) && oType.match(/[dnoqs]/)) ? 'Ongoing' : 'One-Time';
-        if (created >= startDate || (status.match(/Open|Pending/) && orderType === 'Ongoing')) {
+        if (status.match(/Open|Pending/)) {
           let poNum = so.id.toString();
           let poId = uuid(poNum, ns);
           let vcode = ff['22'].value || '';
