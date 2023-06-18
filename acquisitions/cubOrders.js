@@ -122,13 +122,13 @@ otherCodes = {
         if (prop === 'entries') {
           let codeNum = `${p.codeNumber}`;
           codeNum = codeNum.padStart(5, '0');
-          refData[prop][codeNum] = refData.funds[code];
+          refData[prop][codeNum] = { id: refData.funds[code], code: code };
         } else {
           refData[prop][code] = p.id;
         }
       })
     }
-    // console.log(refData.mtypes); return;
+    // console.log(refData.entries); return;
 
     const locMap = {};
     let locData = fs.readFileSync(locMapFile, { encoding: 'utf8' });
@@ -307,14 +307,19 @@ otherCodes = {
           pol.description = bibId;
 
           let fundNum = ff['12'].value || '';
-          let fundId = refData.entries[fundNum] || '';
+          let fundId = (refData.entries[fundNum]) ? refData.entries[fundNum].id : '';
+          let fundCode = (refData.entries[fundNum]) ? refData.entries[fundNum].code : '';
           if (fundId) {
             let fd = {
               fundId: fundId,
               distributionType: 'percentage',
-              value: 100
+              value: 100,
+              code: fundCode,
             };
             pol.fundDistribution = [ fd ];
+          }
+          else {
+            console.log(`WARN no fundId found for ${fundCode}`);
           }
 
           if (form.match(/[s2lmn]/i)) {
