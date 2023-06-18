@@ -107,6 +107,9 @@ otherCodes = {
     const polFile = `${dir}/folio-${fn}-pols.jsonl`;
     if (fs.existsSync(polFile)) fs.unlinkSync(polFile);
 
+    const errFile = `${dir}/folio-${fn}-errs.jsonl`;
+    if (fs.existsSync(errFile)) fs.unlinkSync(errFile);
+
     const refData = {};
     for (let prop in refFiles) {
       refData[prop] = {};
@@ -176,7 +179,10 @@ otherCodes = {
           vcode = vcode.trim();
           vcode = (otherCodes[vcode]) ? otherCodes[vcode] : vcode;
           let orgId = refData.organizations[vcode];
-          if (!orgId) throw(`ERROR no organizationId found for "${vcode}" (${poNum})`);
+          if (!orgId) {
+            fs.writeFileSync(errFile, line + '\n', { flag: 'a' });
+            throw(`ERROR no organizationId found for "${vcode}" (${poNum})`);
+          }
           let co = {
             id: poId,
             poNumber: poNum,
