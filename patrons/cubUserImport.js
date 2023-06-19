@@ -28,7 +28,7 @@ const inFile = process.argv[2];
           }
         }
       }
-      if (u.username) {
+      if (u.username && u.externalSystemId) {
         ui.users.push(u);
       }
     }
