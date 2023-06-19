@@ -19,6 +19,7 @@ const inFile = process.argv[2];
     const ui = { users: [], included: users.included };
     for (let x = 0; x < users.users.length; x++) {
       let u = users.users[x];
+      u.patronGroup = u.patronGroup.replace(/CU Boulder graduate students/, 'CU Boulder graduate');
       if (u.personal && u.personal.addresses) {
         for (let y = 0; y < u.personal.addresses.length; y++) {
           let a = u.personal.addresses[y];
