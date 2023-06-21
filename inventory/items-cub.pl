@@ -368,7 +368,7 @@ sub make_hi {
   }
 
   # make holdings record from item;
-  $hkey = "$hkey-$cn";
+  $hkey = ($hinc eq '001') ? "$hkey-" : "$hkey-$cn";
   $hid = uuid($hkey);
   if (!$hseen->{$hkey} && !$holdid)  {
     $hcall = $cn || '';
