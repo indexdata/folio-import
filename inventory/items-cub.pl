@@ -340,10 +340,10 @@ sub make_hi {
         $cntext[0] = $f->{content};
       } else {
         foreach(@{ $f->{subfields} }) {
-          if ($f->{tag} eq 'a') {
-            $cntext[0] = $f->{content};
-          } elsif ($f->{tag} eq 'b') {
-            $cntext[1] = $f->{content};
+          if ($_->{tag} eq 'a') {
+            $cntext[0] = $_->{content};
+          } elsif ($_->{tag} eq 'b') {
+            $cntext[1] = $_->{content};
           }  
         }
       }
@@ -469,6 +469,7 @@ sub make_hi {
       my @ntypes = ('Check out', 'Check in');
       foreach my $ntype (@ntypes) {
         my $cnobj = {};
+        $cnobj->{id} = uuid($iid . $ntype);
         $cnobj->{note} = $note;
         $cnobj->{noteType} = $ntype;
         $cnobj->{staffOnly} = 'true';
