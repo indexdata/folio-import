@@ -66,11 +66,13 @@ let dolog = process.env.LOG;
         logger.info(`  Successfully added record id ${rec.id}`);
       } catch (e) {
         let errMsg = (e.response && e.response.text && !debug) ? e.response.text : e;
-        if (errMsg.match(/Hold\/Recall TRL/)) {
+        console.log(errMsg);
+        if (errMsg.match(/Hold\/Recall/)) {
           logger.warn(`  WARN Hold/Recall type request failed, retrying as Page...`)
           rec.requestType = 'Page';
+          console.log(rec);
           await postReq(actionUrl, rec, x);
-        } else if (errMsg.match(/Page TRL/)) { 
+        } else if (errMsg.match(/Page/)) { 
           logger.warn(`  WARN Page type request failed, trying as Hold...`)
           rec.requestType = 'Hold';
           await postReq(actionUrl, rec, x)
