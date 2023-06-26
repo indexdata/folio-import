@@ -72,19 +72,21 @@ const tenant = 'sul';
       let ti = r.title;
       let am = r.amount;
       let re = r.remaining;
+      let ps = r.paymentStatus;
       if (uid) {
         // now that we have a user ID, let's see if we can't find the item ID
         let acc = {
           userId: uid,
           amount: am,
-          remaining: re
+          remaining: re,
+          paymentStatus: ps
         }
         try {
           
           let url = `${base}/item-storage/items?query=barcode==${ibc}`;
           let res = await superagent
             .get(url)
-            .set('x-okapi-token', config.token)
+            .set('x-okapi-token', token)
             .set('accept', 'application/json');
           let item = (res.body && res.body.items) ? res.body.items[0] : '';
           let iid = (item) ? item.id : '';

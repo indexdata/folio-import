@@ -15,7 +15,7 @@ if [ ! -d $REFDIR ]
     mkdir $REFDIR
 fi
 
-EPS='owners, feefines'
+EPS='owners feefines'
 
 for EP in $EPS
 do
@@ -23,7 +23,3 @@ do
     echo "Fetching ${EP}"
     curl --http1.1 -o "${REFDIR}/${FN}.json" -w "\n" "${OKAPI}/${EP}?limit=1000" -H "x-okapi-token: ${TOKEN}"
 done
-
-echo "Fetching configurations/entries?query=configName=tenant.addresses"
-curl --http1.1 -o "${REFDIR}/addresses.json" -w "\n" "${OKAPI}/configurations/entries?query=configName=tenant.addresses" -H "x-okapi-token: ${TOKEN}"
-
