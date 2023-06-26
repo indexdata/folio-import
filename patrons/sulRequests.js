@@ -78,7 +78,8 @@ const tenant = 'sul';
     const files = {
       co: 'requests.jsonl',
       ia: 'inactive_requests.jsonl',
-      nf: 'no_user_requests.jsonl'
+      nf: 'no_user.jsonl',
+      nt: 'not_found.jsonl'
     };
 
     let workDir = path.dirname(csvFile);
@@ -95,6 +96,7 @@ const tenant = 'sul';
 
     let total = 0;
     let succ = 0;
+    let err = 0;
     let iacount = 0;
     const ibcodeSeen = {};
 
@@ -126,7 +128,9 @@ const tenant = 'sul';
           console.log(`WARN User with barcode ${ubc} is inactive`);
         }
       } else {
+        err++;
         console.log(`[${total}] WARN User not found with barcode ${ubcode}`);
+        writeTo(files.nf, r);
       }
       let spId = spMap[sp];
       let item;
@@ -216,6 +220,8 @@ const tenant = 'sul';
           writeTo(files.co, req);
           succ++;
         } else {
+          err++;
+          writeTo(files.nt, r);
           if (reqLevel === 'Item') {
             console.log(`WARN no item found with barcode ${ibcode}`);
           } else {
@@ -226,11 +232,12 @@ const tenant = 'sul';
     }
 
     let end = new Date().valueOf();
-    let tt = (end - begin)/1000;
-    console.log('Time (secs)', tt);
+    let tt = (end - begin)/1000/60;
+    console.log('Time (min)', tt);
     console.log('Processed', total);
     console.log('Created:', succ);
     console.log('Inactives:', iacount);
+    console.log('Errors:', err);
   } catch (e) {
     const msg = (e.message) ? e.message : e;
     console.error(e.message);
