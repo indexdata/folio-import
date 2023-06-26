@@ -67,7 +67,7 @@ let dolog = process.env.LOG;
       } catch (e) {
         let errMsg = (e.response && e.response.text && !debug) ? e.response.text : e;
         console.log(errMsg);
-        if (errMsg.match(/Hold\/Recall/)) {
+        if (errMsg.match(/Hold|Recall/)) {
           logger.warn(`  WARN Hold/Recall type request failed, retrying as Page...`)
           rec.requestType = 'Page';
           console.log(rec);
