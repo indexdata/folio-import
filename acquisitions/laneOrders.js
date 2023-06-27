@@ -69,6 +69,7 @@ const addMap = {
       console.log(`Mapping ${prop}...`);
       refData[prop] = {};
       let path = `${refDir}/${refFiles[prop]}`;
+      console.log(path);
       let obj = require(path);
       obj[prop].forEach(p => {
         let code = p.code || p.name || p.value;
