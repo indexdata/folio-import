@@ -53,7 +53,9 @@ let dolog = process.env.LOG;
       logger = console;
     }
 
-    const postReq = async (actionUrl, rec, x) => {
+    const postReq = async (actionUrl, rec, x, rt) => {
+      if (!rt) rt = {};
+      console.log(rt);
       let lDate = new Date();
       logger.info(`[${x}] ${lDate} POST ${rec.id} to ${actionUrl}`);
       try {
@@ -66,16 +68,16 @@ let dolog = process.env.LOG;
         logger.info(`  Successfully added record id ${rec.id}`);
       } catch (e) {
         let errMsg = (e.response && e.response.text && !debug) ? e.response.text : e;
-        console.log(errMsg);
-        if (errMsg.match(/Hold|Recall/)) {
-          logger.warn(`  WARN Hold/Recall type request failed, retrying as Page...`)
+        if (errMsg.match(/Hold/) && !rt.Page) {
+          logger.warn(`  WARN Hold type request failed, retrying as Page...`)
           rec.requestType = 'Page';
-          console.log(rec);
-          await postReq(actionUrl, rec, x);
-        } else if (errMsg.match(/Page/)) { 
-          logger.warn(`  WARN Page type request failed, trying as Hold...`)
+          rt[rec.requestType] = 1;
+          await postReq(actionUrl, rec, x, rt);
+        } else if (errMsg.match(/Page/) && !rt.Hold) {
+          logger.warn(`  WARN Page type request failed, retrying as Hold...`)
           rec.requestType = 'Hold';
-          await postReq(actionUrl, rec, x)
+          rt[rec.requestType] = 1;
+          await postReq(actionUrl, rec, x, rt);
         } else {
           throw new Error(errMsg);
         }
