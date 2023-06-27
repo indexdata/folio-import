@@ -55,7 +55,6 @@ let dolog = process.env.LOG;
 
     const postReq = async (actionUrl, rec, x, rt) => {
       if (!rt) rt = {};
-      console.log(rt);
       let lDate = new Date();
       logger.info(`[${x}] ${lDate} POST ${rec.id} to ${actionUrl}`);
       try {
