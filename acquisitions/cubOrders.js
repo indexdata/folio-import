@@ -47,7 +47,7 @@ const eFormMap = {
   u: "bibliographic utility acq",
   x: "database acq",
   y: "eresource collection",
-  4: "stream acq"
+  '4': "streaming video acq"
 };
 
 
@@ -274,6 +274,7 @@ otherCodes = {
           pol.cost.currency = 'USD';
           if (format === 'Electronic Resource') {
             pol.cost.listUnitPriceElectronic = price;
+            pol.cost.poLineEstimatedPrice = price;
             pol.cost.quantityElectronic = copies;
             loc.quantityElectronic = copies;
             let mtypeName = eFormMap[form] || otypeMap[oType];
@@ -284,6 +285,7 @@ otherCodes = {
             pol.eresource.userLimit = (oNote === 's') ? 1 : (oNote === 'm') ? 3 : '';
           } else {
             pol.cost.listUnitPrice = price;
+            pol.cost.poLineEstimatedPrice = price;
             pol.cost.quantityPhysical = copies;
             loc.quantityPhysical = copies;
             let mtypeName = formMap[form] || otypeMap[oType];
