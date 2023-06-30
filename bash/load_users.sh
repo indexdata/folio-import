@@ -22,4 +22,6 @@ for f in ${BASH_ARGV[*]}; do
   echo '' >> 'log/users.log'
   echo $f >> 'log/users.log'
   curl --http1.1 "${OKAPI}/user-import" -H 'content-type: application/json' -H "x-okapi-token: ${TOKEN}" -d @$f
+  echo "Sleeping for 10 secs..."
+  sleep 10
 done

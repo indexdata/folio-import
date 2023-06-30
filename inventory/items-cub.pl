@@ -214,6 +214,7 @@ my $start = time();
 my $inc = {};
 my $bseen = {};
 my $hseen = {};
+my $hhrid = '';
 
 foreach (@ARGV) {
   my $infile = $_;
@@ -250,7 +251,6 @@ foreach (@ARGV) {
       if (!$inc->{$bid}) {
         $inc->{$bid} = 0;
       }
-      $inc->{$bid}++;
       my $psv = $inst_map->{$bid} || '';
       if (!$psv) {
         print "WARN No map entry found for $bid (item: $obj->{id})\n";
@@ -310,7 +310,6 @@ sub make_hi {
   my $hcall = '';
   my $bw;
   my $bws = '';
-  my $hinc = sprintf("%03d", $inc->{$bhrid});
 
   my $loc = $item->{fixedFields}->{79}->{value} || '';
   my $cdate = $item->{fixedFields}->{83}->{value} || '';
@@ -348,6 +347,7 @@ sub make_hi {
         }
       }
       my $cnstring = join ' ', @cntext;
+      $cnstring =~ s/\s+$//;
       if ($cnstring) {
         $cn = $cnstring;
         $cntype = $cntypes->{$mtag} || $refdata->{callNumberTypes}->{'Other scheme'};
@@ -368,15 +368,18 @@ sub make_hi {
   }
 
   # make holdings record from item;
-  $hkey = ($hinc eq '001') ? "$hkey-" : "$hkey-$cn";
+  $hkey = "$hkey-$cn";
   $hid = uuid($hkey);
   if (!$hseen->{$hkey} && !$holdid)  {
+    $inc->{$bhrid}++;
+    my $hinc = sprintf("%03d", $inc->{$bhrid});
     $hcall = $cn || '';
     my $iid = 'i' . $item->{id};
     my $bc = $vf->{b}[0] || '[No barcode]';
     $hrec->{id} = $hid;
     $hrec->{_version} = $ver;
-    $hrec->{hrid} = "$bhrid-$hinc";
+    $hhrid = "$bhrid-$hinc";
+    $hrec->{hrid} = $hhrid;
     $hrec->{instanceId} = $bid;
     $hrec->{permanentLocationId} = $locid;
     $hrec->{sourceId} = $refdata->{holdingsRecordsSources}->{folio} || '';
@@ -434,7 +437,8 @@ sub make_hi {
   if ($iid) {
     $iid =~ s/^\.//;
     $irec->{_version} = $ver;
-    $irec->{holdingsRecordId} = $holdid || $hid || die "No holdings record ID found for $iid";
+    # $irec->{holdingsRecordId} = $holdid || $hid || die "No holdings record ID found for $iid";
+    $irec->{holdingsRecordId} = $hhrid;
     my @pnotes;
     if ($bwc == 0) {
       $irec->{barcode} = $bc if $bc && !$bseen->{$bc};
