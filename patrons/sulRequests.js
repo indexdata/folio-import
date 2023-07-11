@@ -185,7 +185,7 @@ const tenant = 'sul';
           exdate += dateOffset(exdate);
           let requestType = (reqLevel === 'Title') ? 'Hold' : 'Page';
           if (item && item.status.name.match(/^(Checked out|Restricted|Awaiting pickup|In process|Aged to lost|On order|Missing|In transit)$/)) {
-            if (rflag) {
+            if (rflag !== 'NO' && item.status.name.match(/^(Checked out|Awaiting pickup|Aged to lost|Awaiting pickup|In transit)$/)) {
               requestType = 'Recall';
             } else {
               requestType = 'Hold';
