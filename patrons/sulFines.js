@@ -98,7 +98,7 @@ const tenant = 'sul';
       let re = r.remaining;
       let ps = r.paymentStatus;
       let dc = r.dateCreated;
-      dc = dc.replace(/(\d{4})(..)(..)/, '$1-$2-$3');
+      dc = dc.replace(/(\d{4})(..)(..)/, '$1-$2-$3T00:00:00.000-12:00');
       let ft = r.feeFinetype.toLowerCase();
       let fft = ffmap[ft] || {};
       let owner = r.feeFineOwner.toLowerCase();
@@ -151,7 +151,12 @@ const tenant = 'sul';
           let ffa = {
             id: uuid(acc.id, ns),
             accountId: acc.id,
-            userId: uid
+            userId: uid,
+            dateAction: dc,
+            amountAction: acc.amount,
+            balance: acc.remaining,
+            typeAction: acc.feeFineType,
+            comments: 'Migrated action'
           }
           writeObj(files.ff, ffa);
           console.log(ffa);
