@@ -145,7 +145,7 @@ const tenant = 'sul';
             console.log(`WARN Item record not found for barcode ${ibc}`);
           }
           writeObj(files.ac, acc);
-          console.log(acc);
+          if (process.env.DEBUG) console.log(acc);
 
           // make feefine actions
           let ffa = {
@@ -159,7 +159,7 @@ const tenant = 'sul';
             comments: 'Migrated action'
           }
           writeObj(files.ff, ffa);
-          console.log(ffa);
+          if (process.env.DEBUG) console.log(ffa);
         } catch (e) {
           console.log(e);
         }
@@ -169,6 +169,7 @@ const tenant = 'sul';
         writeObj(files.nf, r);
         err++;
       }
+    if (total % 100 === 0) console.log('Records processed:', total);
     }
     console.log('Total:', total);
     console.log('Success:', succ);
