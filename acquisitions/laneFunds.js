@@ -7,8 +7,8 @@ const uuid = require('uuid/v5');
 const parse = require('csv-parse/lib/sync');
 
 const ns = 'e35dff4e-9035-4d6a-b621-3d42578f81c7';
-let fy = 'LANEFY2023';
-let suf = 'FY2023';
+let fy = 'LANEFY2024';
+let suf = 'FY2024';
 
 let files = {
   funds: 'funds.jsonl',
@@ -78,6 +78,7 @@ let refFiles = {
       if (!f.match(/group|Expense|compFunds/)) {
         let inFile = outFile.replace(/\.jsonl$/, '.csv');
         let csv = fs.readFileSync(inFile, 'utf8');
+        csv = csv.replace(/^\uFEFF/, ''); // remove BOM
         inRecs = parse(csv, {
           columns: true,
           skip_empty_lines: true
@@ -90,7 +91,7 @@ let refFiles = {
           lcode = r['Ledger ID'];
           lid = refData.ledgers[lcode];
           ftype = r.fundType;
-          ftype = ftype.replace(/^lane/i, 'LANE');
+          ftype = ftype.replace(/^lane/i, 'Lane');
           ftypeId = refData.fundTypes[ftype];
           obj.code = r.Code;
           obj.id = uuid(r.Code, ns);
@@ -117,8 +118,9 @@ let refFiles = {
           obj.budgetStatus = 'Active';
           obj.fundId = fund.id;
           obj.fiscalYearId = refData.fiscalYears[fy];
-          obj.initialAllocation = parseInt(r.Current_Allocation, 10);
-          obj.allocated = obj.initialAllocation;
+          // obj.initialAllocation = parseInt(r.Current_Allocation, 10);
+          obj.allocated = parseInt(r.Current_Allocation, 10);
+          obj.cashBalance = obj.allocated;
           let gfid = uuid(obj.id + fyId, ns);
           let groupFy = {
             id: gfid,

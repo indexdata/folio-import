@@ -82,6 +82,7 @@ const addMap = {
 
     // gather po-lines
     let csv = fs.readFileSync(linesFile, 'utf8');
+    csv = csv.replace(/^\uFEFF/, ''); // remove BOM
     let inRecs = parse(csv, {
       columns: true,
       skip_empty_lines: true
@@ -124,6 +125,7 @@ const addMap = {
 
     // read orders file
     csv = fs.readFileSync(inFile, 'utf8');
+    csv = csv.replace(/^\uFEFF/, ''); // remove BOM
     inRecs = parse(csv, {
       columns: true,
       skip_empty_lines: true

@@ -16,11 +16,12 @@ try {
   const fn = path.basename(inFile, '.csv', '.txt');
   const outFile = `${dir}/${fn}.jsonl`;
   if (fs.existsSync(outFile)) fs.unlinkSync(outFile);
-  const csv = fs.readFileSync(`${inFile}`, 'utf8');
+  let csv = fs.readFileSync(`${inFile}`, 'utf8');
+  csv = csv.replace(/^\uFEFF/, ''); // remove BOM
   const inRecs = parse(csv, {
     columns: true,
     skip_empty_lines: true,
-    from: 2
+    from: 1
   });
 
   const units = require(`${refDir}/units.json`);
@@ -34,20 +35,22 @@ try {
   const seen = {};
   let c = 0;
   inRecs.forEach(r => {
+    // console.log(r);
+    let code = r.VENDOR_CODE;
     let org = {
-      id: uuid(r.Code, ns),
-      code: r.Code + '-Lane',
-      name: r.Name,
+      id: uuid(code, ns),
+      code: code + '-Lane',
+      name: r.VENDOR_NAME,
       status: 'Active',
       acqUnitIds: [ unitId ],
       isVendor: true,
       erpCode: r['Accounting Code'],
     }
     if (r.Description) org.description = 'Create Date: ' + r.Description;
-    if (!seen[r.Code]) {
+    if (!seen[code]) {
       fs.writeFileSync(outFile, JSON.stringify(org) + '\n', { flag: 'a' });
     } else {
-      console.log(`WARN Duplicate code "${r.Code}`);
+      console.log(`WARN Duplicate code "${code}`);
     }
     seen[r.Code] = 1;
     c++;

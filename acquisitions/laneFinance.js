@@ -64,12 +64,14 @@ let refFiles = {
       let inFile = outFile.replace(/\.jsonl$/, '.csv');
       console.log(inFile);
       let csv = fs.readFileSync(inFile, 'utf8');
+      csv = csv.replace(/^\uFEFF/, ''); // remove BOM
       inRecs = parse(csv, {
         columns: true,
         skip_empty_lines: true
       });
 
       inRecs.forEach(r => {
+        console.log(r);
         let obj = {};
         if (f === 'types') {
           let name = r['Fund types'];
