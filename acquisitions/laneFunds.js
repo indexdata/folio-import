@@ -39,8 +39,9 @@ let refFiles = {
   try {
     let refDir = process.argv[2];
     let dir = process.argv[3];
+    let zero = process.argv[4];
     if (!dir) {
-      throw 'Usage: node laneFunds.js <acq_ref_dir> <finance_dir>';
+      throw 'Usage: node laneFunds.js <acq_ref_dir> <finance_dir> [ <zero_out_flag> ]';
     } 
     dir = dir.replace(/\/$/, '');
     refDir = refDir.replace(/\/$/, '');
@@ -119,8 +120,9 @@ let refFiles = {
           obj.fundId = fund.id;
           obj.fiscalYearId = refData.fiscalYears[fy];
           // obj.initialAllocation = parseInt(r.Current_Allocation, 10);
-          obj.allocated = parseInt(r.Current_Allocation, 10);
+          obj.allocated = (zero) ? 0 : parseInt(r.Current_Allocation, 10);
           obj.cashBalance = obj.allocated;
+          obj.allowableExpenditure = 100;
           let gfid = uuid(obj.id + fyId, ns);
           let groupFy = {
             id: gfid,
