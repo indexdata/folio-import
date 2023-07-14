@@ -21,7 +21,7 @@ const titlesFile = process.argv[2];
 (async () => {
   try {
     let start = new Date().valueOf();
-    if (!inFile) throw('Usage: node lanePieces.js <titles.json_file> <pieces.csv_file>');
+    if (!inFile) throw('Usage: node lanePieces.js <titles.jsonl_file> <pieces.csv_file>');
     if (!fs.existsSync(inFile)) throw new Error(`Can't find ${inFile}!`);
     
     const dir = path.dirname(inFile);
@@ -65,6 +65,7 @@ const titlesFile = process.argv[2];
     let fail = 0;
 
     let csv = fs.readFileSync(inFile, 'utf8');
+    csv = csv.replace(/^\uFEFF/, ''); // remove BOM
     let inRecs = parse(csv, {
       columns: true,
       skip_empty_lines: true,
@@ -75,8 +76,11 @@ const titlesFile = process.argv[2];
       if (lineMap[link]) {
         let poLineId = lineMap[link].poLineId
         let format = lineMap[link].format
-        let rdate = p.RECEIPT_DATE;
-        let edate = p.EXPECTED_DATE;
+        let rd = p.RECEIPT_DATE;
+        let ed = p.EXPECTED_DATE.replace(/\s+.+/, '');
+        console.log(rd + 'hey');
+        let rdate = new Date(rd).toISOString();
+        let edate = new Date(ed).toISOString();
         let cap = p.ENUMCHRON;
         let titleId = titleMap[poLineId];
         if (!poLineId) console.log(`WARN No title found for (${link})`);

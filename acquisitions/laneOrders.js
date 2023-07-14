@@ -209,10 +209,11 @@ const addMap = {
             let pmap = {};
             pol.poLineNumber = co.poNumber + '-' + l.LINE_ITEM_NUMBER;
             let liid = pol.poLineNumber;
+            let polId = l.LINE_ITEM_ID;
             if (!polSeen[liid]) { 
               let inst = insts[l.BIB_ID];
               pol.id = uuid(liid + 'poline', ns);
-              pmap[liid] = { poLineId: pol.id };
+              pmap[polId] = { poLineId: pol.id };
               pol.purchaseOrderId = co.id;
               pol.source = 'User';
               pol.checkinItems = true;
@@ -281,14 +282,14 @@ const addMap = {
                   materialType: refData.mtypes['unspecified'],
                   volumes: []
                 };
-                pmap[liid].format = 'Physical';
+                pmap[polId].format = 'Physical';
               } else if (oform === 'Electronic Resource') {
                 pol.cost.listUnitPriceElectronic = price;
                 pol.cost.quantityElectronic = quant;
                 pol.eresource = {
                   createInventory: 'None',
                 };
-                pmap[liid].format = 'Electronic';
+                pmap[polId].format = 'Electronic';
               }
               let fundCode = l.USE_FUND || '';
               let exClassCode = fundCode.replace(/^.+-/, '');
