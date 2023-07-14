@@ -74,11 +74,12 @@ const addMap = {
       obj[prop].forEach(p => {
         let code = p.code || p.name || p.value;
         if (prop === 'locations') {
-          code = p.name.replace(/^Lane /, '');
+          code = p.code.replace(/^LANE-/, '');
         }
         refData[prop][code] = p.id;
       });
     }
+    // console.log(refData.locations); return;
 
     // gather po-lines
     let csv = fs.readFileSync(linesFile, 'utf8');
@@ -214,6 +215,7 @@ const addMap = {
               pmap[liid] = { poLineId: pol.id };
               pol.purchaseOrderId = co.id;
               pol.source = 'User';
+              pol.checkinItems = true;
               if (l.REQUESTOR) {
                 pol.requester = l.REQUESTOR;
               }
