@@ -67,8 +67,14 @@ const poLineFile = process.argv[2];
       skip_empty_lines: true,
       bom: true
     });
+    let curLink;
     inRecs.forEach(p => {
       let link = p['POL Number'];
+      if (link) {
+        curLink = link;
+      } else {
+        link = curLink;
+      }
       if (lineMap[link]) {
         let poLineId = lineMap[link].id;
         let format = lineMap[link].orderFormat.replace(/ .+/, '');
