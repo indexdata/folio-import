@@ -14,14 +14,15 @@ const nons = '00000000-0000-0000-0000-000000000000';
 const version = '1';
 const isil = 'CU';
 
-const inFile = process.argv[4];
+const inFile = process.argv[5];
+const folioPiecesFile = process.argv[4];
 const titlesFile = process.argv[3];
 const poLineFile = process.argv[2];
 
 (async () => {
   try {
     let start = new Date().valueOf();
-    if (!inFile) throw('Usage: node cubExpectedPieces.js <polines_jsonl_file> <titles_jsonl_file> <expected_csv_file>');
+    if (!inFile) throw('Usage: node cubExpectedPieces.js <polines_jsonl_file> <titles_jsonl_file> <downloaded_pieces_file> <expected_csv_file>');
     if (!fs.existsSync(inFile)) throw new Error(`Can't find ${inFile}!`);
     
     const dir = path.dirname(inFile);
@@ -58,6 +59,21 @@ const poLineFile = process.argv[2];
       titleMap[key] = rec.id;
     }
 
+    fileStream = fs.createReadStream(folioPiecesFile);
+    rl = readline.createInterface({
+      input: fileStream,
+      crlfDelay: Infinity
+    });
+
+    console.log('Loading folio pieces...');
+    let pieceMap = {};
+    for await (const line of rl) {
+      let rec = JSON.parse(line);
+      let key = (rec.enumeration) ? rec.poLineId + rec.enumeration : '0';
+      key = key.toLowerCase();
+      pieceMap[key] = 1;
+    }
+
     let c = 0;
     let fail = 0;
 
@@ -88,6 +104,8 @@ const poLineFile = process.argv[2];
         let locs = lineMap[link].locations;
         if (!poLineId) console.log(`WARN No title found for (${link})`);
         if (!titleId) console.log(`WARN No title found for ${poLineId} (${link})`);
+        let matchKey = poLineId + enu;
+        matchKey = matchKey.toLowerCase();
         if (poLineId && titleId) {
           let piece = {
             id: uuid(poLineId + enu + edate + format, ns),
@@ -107,8 +125,12 @@ const poLineFile = process.argv[2];
           if (locs) {
             piece.locationId = locs[0].locationId
           }
-          fs.writeFileSync(outFile, JSON.stringify(piece) + '\n', { flag: 'a' });
-          c++;
+          if (!pieceMap[matchKey]) {
+            fs.writeFileSync(outFile, JSON.stringify(piece) + '\n', { flag: 'a' });
+            c++;
+          } else {
+            console.log(`INFO enumeration (${enu}) already exists for ${link}...`);
+          }
         } else {
           fail++;
         }
