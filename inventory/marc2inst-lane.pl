@@ -1056,6 +1056,7 @@ sub make_items {
     push @{ $ir->{yearCaption} }, $c[9] if $c[9];
     $ir->{numberOfPieces} = $c[10] if $c[10];
     $ir->{status}->{name} = 'Available';
+    my $effloc = $c[12];
     my $permloc = $c[3];
     my $locid = $refdata->{locations}->{$permloc} || '';
     if ($locid) {
@@ -1079,7 +1080,7 @@ sub make_items {
       push @{ $ir->{notes} }, $n;
     }
     my $sc = ($items->{statcodes}->{$link}) ? $items->{statcodes}->{$link}->[0] : '';
-    $ir->{materialTypeId} = $items->{mtypes}->{$permloc} || $refdata->{mtypes}->{unspecified} || die "Can't set material type for $id"; 
+    $ir->{materialTypeId} = $items->{mtypes}->{$effloc} || $refdata->{mtypes}->{unspecified} || die "Can't set material type for $id"; 
     my $tmploc = $c[4];
     if ($tmploc && $refdata->{locations}->{$tmploc}) {
       $ir->{temporaryLocationId} = $refdata->{locations}->{$tmploc};
