@@ -48,10 +48,11 @@ const csvFile = process.argv[2];
       });
       let amt = r.FINE_FEE_BALANCE.replace(/(..)$/, '.$1')
       let fft = r.FINE_FEE_DESC;
+      let cd = r.CREATE_DATE.replace(/^(\d{4})-(\d\d)-(\d\d).*/, '$1$2$3');
       line.push(r.PATRON_BARCODE);
       line.push(r.ITEM_BARCODE);
       line.push('');
-      line.push(r.CREATE_DATE);
+      line.push(cd);
       line.push(amt);
       line.push(amt);
       line.push('Outstanding');

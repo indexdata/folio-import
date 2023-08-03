@@ -120,6 +120,7 @@ const tenant = 'sul';
         acc.dateCreated = dc;
         try {
           let url = `${base}/inventory/items?query=barcode==${ibc}`;
+          console.log(`GET ${url}`);
           let res = await superagent
             .get(url)
             .set('x-okapi-token', token)
@@ -135,12 +136,12 @@ const tenant = 'sul';
             acc.materialType = item.materialType.name;
             acc.materialTypeId = item.materialType.id;
             acc.itemStatus = { name: item.status.name};
-            acc.location = item.permanentLocation.name;
+            acc.location = (item.permanentLocation) ? item.permanentLocation.name : (item.effectiveLocation) ? item.effectiveLocation.name : '';
             acc.holdingsRecordId = item.holdingsRecordId;
             if (item.contributorNames) acc.contributors = item.contributorNames;
           }
           else {
-            acc.title = ti;
+            acc.title = ti || '[ Title unknown ]';
             acc.id = uuid(uid + ti + fft + am, ns);
             console.log(`WARN Item record not found for barcode ${ibc}`);
           }
