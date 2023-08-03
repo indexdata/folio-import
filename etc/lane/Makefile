@@ -5,7 +5,8 @@ mfile=$(invdir)/lane-bibs-and-mfhds.mrc
 ifile=$(invdir)/lane-item-info.xlsx
 iinfo=$(invdir)/item_info.tsv
 orddir=$(data)/orders
-finedir=$(data)/fines
+circdir=$(home)/sul/lane
+cfile=$(circdir)/Circ*xlsx
 log=$(data)/log
 wd=$(home)/folio-import
 iref=$(data)/inv-ref
@@ -19,6 +20,9 @@ endif
 
 clean-inventory: $(iinfo)
 	rm $(invdir)/*.tsv
+
+circ: $(cfile)
+	cd $(wd)/util; node xlsx2csv.js $(cfile)
 
 orders: $(orddir)/orders0*jsonl
 	cat $(orddir)/orders0*.jsonl > $(orddir)/iii-orders.jsonl
