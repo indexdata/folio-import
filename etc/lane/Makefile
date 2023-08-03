@@ -50,7 +50,7 @@ setup:
 	cp $(wd)/configs/bash/login-stanford.sh .
 	cp $(wd)/bash/reference_* .
 	cp $(wd)/inventory/marc2inst-lane.pl .
-	cp $(wd)/mapping_rules/default.json mapping-rules.json
+	# cp $(wd)/mapping_rules/default.json mapping-rules.json
 	mkdir -p $(iref)
 	mkdir -p $(aref)
 	mkdir -p $(log)
@@ -64,7 +64,6 @@ clean:
 	rm -rf $(iref)
 	rm -rf $(uref)
 	rm -rf $(aref)
-	rm mapping-rules.json
 	rm marc2inst-lane.pl
 	rm reference_*
 	rm login-stanford.sh

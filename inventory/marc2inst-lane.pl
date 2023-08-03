@@ -485,7 +485,8 @@ my $ftypes = {
   statusUpdatedDate => 'string',
   tags => 'object',
   holdingsRecords2 => 'array.object',
-  natureOfContentTermIds => 'array.string'
+  natureOfContentTermIds => 'array.string',
+  administrativeNotes => 'array'
 };
 
 # We need to know upfront which tags support repeated subfields or require preprocessing (think 880s).
@@ -719,7 +720,7 @@ foreach (@ARGV) {
             my @entity = @$_;
             my $data_obj = {};
             foreach (@entity) {
-              if ($_->{target} =~ /precedingTitle|succeedingTitle/) {
+              if ($_->{target} =~ /precedingTitle|succeedingTitle|authorityId/) {
                 next;
               }
               my @required;
