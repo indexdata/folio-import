@@ -80,13 +80,15 @@ const titlesFile = process.argv[2];
         let ed = p.EXPECTED_DATE;
         let rdate = (rd) ? new Date(rd).toISOString() : '';
         let edate = (ed) ? new Date(ed).toISOString() : '';
-        let cap = p.ENUMCHRON;
+        let ec = p.ENUMCHRON;
+        let en = ec.replace(/ *\(.+?\)/, '') || '';
+        let cr = ec.replace(/.*?\((.+?)\).*/, '$1') || '';
         let titleId = titleMap[poLineId];
         if (!poLineId) console.log(`WARN No title found for (${link})`);
         if (!titleId) console.log(`WARN No title found for ${poLineId} (${link})`);
         if (poLineId && titleId) {
           let piece = {
-            id: uuid(poLineId + cap + rdate + edate + format, ns),
+            id: uuid(poLineId + ec + rdate + edate + format, ns),
             poLineId: poLineId,
             format: format,
             titleId: titleId
@@ -98,8 +100,11 @@ const titlesFile = process.argv[2];
             piece.receivingStatus = 'Expected';
             piece.receiptDate = edate;
           }
-          if (cap) {
-            piece.caption = cap;
+          if (en) {
+            piece.enumeration = en.trim();
+          }
+          if (cr) {
+            piece.chronology = cr.trim();
           }
           fs.writeFileSync(outFile, JSON.stringify(piece) + '\n', { flag: 'a' });
           c++;
