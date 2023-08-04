@@ -1,25 +1,27 @@
 home=/Users/charles/Folio
 data=$(home)/sul
-loans=$(data)/loans
+ldir=$(data)/loans
+loans=$(ldir)/loans.csv
+pdir=$(data)/proxy
+pfile=$(pdir)/sponsor-proxy.csv
 log=$(data)/log
 wd=$(home)/folio-import
 shared=$(data)/shared
+sp=$(shared)/service-points.json
+users=$(shared)/users.json
 
 circ: $(cfile)
 	cd $(wd)/util; node xlsx2csv.js $(cfile)
 
-checkouts: $(itemdir)/items00000000.jsonl
-	cp $(wd)/etc/cub/spoints.tsv $(itemdir)
-	cd $(wd)/patrons; node cubCheckouts.js $(iref)/service-points.json $(userdir)/users00000000.jsonl $(itemdir)/items00000000.jsonl > $(log)/make-checkouts.log &
-	cd $(wd)/patrons; node cubProspectorCheckouts.js $(userdir)/users00000000.jsonl $(chkdir)/checkouts00000000.jsonl > $(log)/make-pcheckouts.log 
+proxies: $(pfile)
+	cd $(wd)/patrons; node sulProxies.js $(users) $(pfile)
+	
+load-proxies: $(pdir)/proxiesfor.jsonl
+	grep sul $(wd)/config.js
+	cd $(wd); node postJSONL.js proxiesfor $(pdir)/proxiesfor.jsonl
 
-fines: $(finedir)/fines0*.jsonl
-	cd $(wd); node authToken.js
-	grep '"tenant":"cu"' $(wd)/.okapi
-	cd $(wd)/patrons; node cubFines.js $(userdir)/users.map $(finedir)/fines0*jsonl > $(log)/make-fines.log 2>$(log)make-fines.err &
-
-requests: $(reqdir)/holds00000000.jsonl
-	cd $(wd)/patrons; node cubRequests.js $(userdir)/users.map $(reqdir)/holds00000000.jsonl Item > $(log)/make-requests.log &
+checkouts: $(loans)
+	cd $(wd)/patrons; node sulCheckouts.js $(sp) $(users) $(loans)
 
 setup:
 	# cd $(wd); git pull	
