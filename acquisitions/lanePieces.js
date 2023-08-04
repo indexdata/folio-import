@@ -65,7 +65,7 @@ const titlesFile = process.argv[2];
     let fail = 0;
 
     let csv = fs.readFileSync(inFile, 'utf8');
-    csv = csv.replace(/^\uFEFF/, ''); // remove BOM
+    csv = csv.replace(/\uFEFF/g, ''); // remove BOM
     let inRecs = parse(csv, {
       columns: true,
       skip_empty_lines: true,
@@ -77,10 +77,9 @@ const titlesFile = process.argv[2];
         let poLineId = lineMap[link].poLineId
         let format = lineMap[link].format
         let rd = p.RECEIPT_DATE;
-        let ed = p.EXPECTED_DATE.replace(/\s+.+/, '');
-        console.log(rd + 'hey');
-        let rdate = new Date(rd).toISOString();
-        let edate = new Date(ed).toISOString();
+        let ed = p.EXPECTED_DATE;
+        let rdate = (rd) ? new Date(rd).toISOString() : '';
+        let edate = (ed) ? new Date(ed).toISOString() : '';
         let cap = p.ENUMCHRON;
         let titleId = titleMap[poLineId];
         if (!poLineId) console.log(`WARN No title found for (${link})`);
