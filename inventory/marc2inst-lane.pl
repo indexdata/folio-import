@@ -485,8 +485,8 @@ my $ftypes = {
   statusUpdatedDate => 'string',
   tags => 'object',
   holdingsRecords2 => 'array.object',
-  natureOfContentTermIds => 'array.string',
-  administrativeNotes => 'array'
+  administrativeNotes => 'array',
+  natureOfContentTermIds => 'array.string'
 };
 
 # We need to know upfront which tags support repeated subfields or require preprocessing (think 880s).
@@ -617,7 +617,8 @@ foreach (@ARGV) {
         natureOfContentTermIds => [],
         statusId => '52a2ff34-2a12-420d-8539-21aa8d3cf5d8',
         source => 'MARC',
-        instanceTypeId => ''
+        instanceTypeId => '',
+        administrativeNotes => []
       };
       my $relid = '';
       $count++;
