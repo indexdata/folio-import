@@ -4,6 +4,7 @@ const path = require('path');
 const { getAuthToken } = require('./lib/login');
 const readline = require('readline');
 
+const tout = 60000;
 const fn = process.argv[2];
 const checkIn = process.argv[4];
 const offset = (process.argv[3]) ? parseInt(process.argv[3], 10) : 0;
@@ -21,7 +22,7 @@ const post_put = async (authToken, url, checkout, r) => {
     if (url.match(/.{8}-.{4}-.{4}-.{4}-.{12}$/)) {
       await superagent
         .put(url)
-        .timeout(30000)
+        .timeout(tout)
         .set('accept', 'application/json', 'text/plain')
         .set('x-okapi-token', authToken)
         .set('content-type', 'application/json')
@@ -30,7 +31,7 @@ const post_put = async (authToken, url, checkout, r) => {
     } else {
       let res = await superagent
         .post(url)
-        .timeout(30000)
+        .timeout(tout)
         .set('accept', 'application/json', 'text/plain')
         .set('x-okapi-token', authToken)
         .set('content-type', 'application/json')

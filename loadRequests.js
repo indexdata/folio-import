@@ -67,8 +67,8 @@ let dolog = process.env.LOG;
         logger.info(`  Successfully added record id ${rec.id}`);
       } catch (e) {
         let errMsg = (e.response && e.response.text && !debug) ? e.response.text : e;
-        if (errMsg.match(/Hold/) && !rt.Page) {
-          logger.warn(`  WARN Hold type request failed, retrying as Page...`)
+        if (errMsg.match(/Hold|Recall/) && !rt.Page) {
+          logger.warn(`  WARN Hold/Recall type request failed, retrying as Page...`)
           rec.requestType = 'Page';
           rt[rec.requestType] = 1;
           await postReq(actionUrl, rec, x, rt);
@@ -100,12 +100,15 @@ let dolog = process.env.LOG;
     for await (const line of rl) {
       x++;
       let rec = JSON.parse(line);
+      delete rec.errorMessage;
       try {
         await postReq(actionUrl, rec, x);
         success++;
       } catch (e) {
           logger.error(`${e}`);
-          fs.writeFileSync(errPath, line + '\n', { flag: 'a'});
+	  let l = JSON.parse(line);
+	  l.errorMessage = `${e}`;
+          fs.writeFileSync(errPath, JSON.stringify(l) + '\n', { flag: 'a'});
           fail++;
       }
     }

@@ -31,7 +31,7 @@ const tf = process.argv[3];
     for await (const line of rl) {
       d++;
       let data = JSON.parse(line);
-      let bc = data.barcode;
+      let bc = data.barcode || data.userBarcode;
       if (!seen[bc]) {
         seen[bc] = 1;
         let url = `${config.okapi}/users?query=%28barcode%3D%3D%22${bc}%22%29`;
@@ -47,7 +47,13 @@ const tf = process.argv[3];
           let user = userRecs.users[0];
           try {
             let purl = `${config.okapi}/users/${user.id}`;
-            if (!user.active || tf === true) {
+            if (tf === 'false') {
+		    user.active = false
+              	    user.expirationDate = (data.experationDate) ? data.expirationDate : null;
+	    } else if (tf === 'true') {
+		    user.active = true
+              	    user.expirationDate = '2025-12-31T00:00:00.000+0000'
+	    } else if (!user.active) {
               user.active = true;
               user.expirationDate = '2025-12-31T00:00:00.000+0000'
             } else {
