@@ -80,7 +80,7 @@ const nnt = '8d0a5eca-25de-4391-81a9-236eeefdd20b';
           notes.push(n);
         });
       }
-      if (icode && icode.match(/7777|7778|7779|7780|7781|7786|7789/) && !xused) {
+      if (icode && icode.match(/7777|7778|7779|7780|7781|7786|7799/)) {
         let n = noteGen(icode, gnt, true);
         notes.push(n);
       }
