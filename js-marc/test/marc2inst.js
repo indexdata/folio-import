@@ -5,32 +5,43 @@ import fs from 'fs';
 let rulesFile = process.argv[2];
 let rawFile = process.argv[3];
 const schemaDir = './schemas';
+let ldr = '';
 
 const funcs = {
-  remove_prefix_by_indicator: function(data) {
+  remove_prefix_by_indicator: function(data, ind1, ind2) {
+    let n = parseInt(ind2, 10);
+    return data.substring(n);
   },
   capitalize: function (data) {
+    let fl = data.charAt(0);
+    let upfl = fl.toUpperCase();
+    data = data.replace(/^./, upfl);
+    return(data);
+  },
+  set_issuance_mode_id: function (data) {
+    return ldr.substring(6,7);
+  },
+  set_instance_type_id: function (data) {
+    return 'MARC'
   }
 }
 
 const applyRules = function (ent, field) {
-  console.log(ent);
   let data;
   if (ent.subfield && ent.subfield[0]) {
     let subcodes = ent.subfield.join('');
     data = getSubs(field, subcodes);
-    // console.log(JSON.stringify(ent, null, 2));
-    if (ent.rules && ent.rules[0].conditions[0]) {
-      let ctype = ent.rules[0].conditions[0].type;
-      ctype.split(/, */).forEach(c => {
-        // console.log(c);
-        if (funcs[c]) {
-          funcs[c](data);
-        }
-      });
-    }
   } else {
     data = field;
+  }
+  if (ent.rules && ent.rules[0] && ent.rules[0].conditions[0]) {
+    let ctype = ent.rules[0].conditions[0].type;
+    ctype.split(/, */).forEach(c => {
+      console.log(c);
+      if (funcs[c]) {
+        data = funcs[c](data, field.ind1, field.ind2);
+      }
+    });
   }
   const out = {
     prop: ent.target,
@@ -40,10 +51,10 @@ const applyRules = function (ent, field) {
 }
 
 const makeInst = function (map, field) {
-  // console.log(JSON.stringify(map, null, 2));
   let ff = {};
   let data;
   map.forEach(m => {
+    console.log(m);
     if (m.entity) {
       m.entity.forEach(e => {
         data = applyRules(e, field);
@@ -93,12 +104,12 @@ try {
       count++
       let inst = {};
       let marc = parseMarc(r);
+      ldr = marc.fields.leader;
       for (let t in mappingRules) {
-        if (t === '001' && marc.fields[t]) {
+        if (t === '008' && marc.fields[t]) {
           let fields = marc.fields[t];
           if (fields) {
             fields.forEach(f => {
-              // console.log(JSON.stringify(mappingRules[t], null, 2));
               let ff = makeInst(mappingRules[t], f);
               for (let prop in ff) {
                 if (propMap[prop] === 'string' || propMap[prop] === 'boolean') {
