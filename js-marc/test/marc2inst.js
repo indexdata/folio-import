@@ -2,8 +2,9 @@ import { parseMarc } from '../js-marc.mjs';
 import { getSubs } from '../js-marc.mjs';
 import fs from 'fs';
 
-let rulesFile = process.argv[2];
-let rawFile = process.argv[3];
+let refDir = process.argv[2];
+let rulesFile = process.argv[3];
+let rawFile = process.argv[4];
 const schemaDir = './schemas';
 let ldr = '';
 
@@ -68,7 +69,7 @@ const makeInst = function (map, field) {
 }
 
 try {
-  if (!rawFile) { throw "Usage: node marc2inst.js <mapping_rules> <raw_marc_file>" }
+  if (!rawFile) { throw "Usage: node marc2inst.js <ref_dir> <mapping_rules> <raw_marc_file>" }
   let rulesStr = fs.readFileSync(rulesFile, { encoding: 'utf8' });
   const mappingRules = JSON.parse(rulesStr);
   rulesStr = '';
@@ -83,6 +84,27 @@ try {
     let items = (ins.properties[props].items) ? ins.properties[props].items.type : '';
     propMap[props] = (type === 'array') ? `${type}.${items}` : type;
   }
+
+  // map ref data
+  let refFiles = fs.readdirSync(refDir);
+  const refData = {};
+  refFiles.forEach(f => {
+    let fullPath = refDir + '/' + f;
+    let rd = fs.readFileSync(fullPath, { encoding: 'utf8'});
+    let robj = JSON.parse(rd);
+    delete robj.totalRecords;
+    let props = Object.keys(robj);
+    let prop = props[0];
+    robj[prop].forEach(p => {
+      if (!refData[prop]) refData[prop] = {};
+      if (p.code) {
+        refData[prop][p.code] = p.id;
+      } else {
+        refData[prop][p.name] = p.id;
+      }
+    });
+  });
+  console.log(refData);
 
   let start = new Date().valueOf();
 
