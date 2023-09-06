@@ -133,7 +133,7 @@ sub makeMapFromTsv {
       chomp;
       s/\s+$//;
       my @col = split(/\t/);
-      my $code = ($col[0] =~ /\w/) ? $col[0] : '';
+      my $code = ($col[0] && $col[0] =~ /\w/) ? $col[0] : '';
       $code =~ s/^ +| +$//g;
       my $name = $col[2] || '';
       if ($prop eq 'mtypes') {
@@ -188,10 +188,7 @@ close MAP;
 
 $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
-# print Dumper($refdata->{mtypes}); exit;
 my $sierra2folio = makeMapFromTsv($ref_dir, $refdata);
-# print Dumper($sierra2folio->{mtypes}); exit;
-# print Dumper($sierra2folio->{locations}); exit;
 
 my $relations = {
   '0' => 'Resource',
@@ -215,6 +212,7 @@ my $inc = {};
 my $bseen = {};
 my $hseen = {};
 my $hhrid = '';
+my $hhrids = {};
 
 foreach (@ARGV) {
   my $infile = $_;
@@ -258,9 +256,11 @@ foreach (@ARGV) {
       }
       my @b = split(/\|/, $psv);
       my $out = make_hi($obj, $b[0], $bid, $b[1], $b[2], $bwc, $b[3]);
-      print HOUT $out->{holdings};
-      print IOUT $out->{items};
-      print BOUT $out->{bws};
+      if ($out->{write}) {
+      	print HOUT $out->{holdings};
+      	print IOUT $out->{items};
+      	print BOUT $out->{bws};
+      }
       if ($bwc > 0) {
         my $superline = $inst_map->{$main_bib} || '';
         my $subline = $inst_map->{$bid} || '';
@@ -310,6 +310,7 @@ sub make_hi {
   my $hcall = '';
   my $bw;
   my $bws = '';
+  my $repcn = { a=>0, b=>0 };
 
   my $loc = $item->{fixedFields}->{79}->{value} || '';
   my $cdate = $item->{fixedFields}->{83}->{value} || '';
@@ -339,11 +340,9 @@ sub make_hi {
         $cntext[0] = $f->{content};
       } else {
         foreach(@{ $f->{subfields} }) {
-          if ($_->{tag} eq 'a') {
-            $cntext[0] = $_->{content};
-          } elsif ($_->{tag} eq 'b') {
-            $cntext[1] = $_->{content};
-          }  
+	  my $tag = $_->{tag};
+	  $repcn->{$tag}++;
+	  push @cntext, $_->{content} if $_->{content};
         }
       }
       my $cnstring = join ' ', @cntext;
@@ -355,6 +354,8 @@ sub make_hi {
       }
     }
   }
+  # print Dumper($repcn);
+  my $write = ($repcn->{a} > 1 || $repcn->{b} > 1) ? 1 : 0;
   my $hfound = 0;
   my $mloc = $loc;
   my $mkey = "$bhrid-$mloc";
@@ -370,8 +371,8 @@ sub make_hi {
   # make holdings record from item;
   $hkey = "$hkey-$cn";
   $hid = uuid($hkey);
+  $inc->{$bhrid}++;
   if (!$hseen->{$hkey} && !$holdid)  {
-    $inc->{$bhrid}++;
     my $hinc = sprintf("%03d", $inc->{$bhrid});
     $hcall = $cn || '';
     my $iid = 'i' . $item->{id};
@@ -379,6 +380,7 @@ sub make_hi {
     $hrec->{id} = $hid;
     $hrec->{_version} = $ver;
     $hhrid = "$bhrid-$hinc";
+    $hhrids->{$hid} = $hhrid;
     $hrec->{hrid} = $hhrid;
     $hrec->{instanceId} = $bid;
     $hrec->{permanentLocationId} = $locid;
@@ -438,7 +440,7 @@ sub make_hi {
     $iid =~ s/^\.//;
     $irec->{_version} = $ver;
     # $irec->{holdingsRecordId} = $holdid || $hid || die "No holdings record ID found for $iid";
-    $irec->{holdingsRecordId} = $hhrid;
+    $irec->{holdingsRecordId} = $holdid || $hhrids->{$hid};
     my @pnotes;
     if ($bwc == 0) {
       $irec->{barcode} = $bc if $bc && !$bseen->{$bc};
@@ -513,7 +515,7 @@ sub make_hi {
     } else {
       $irec->{discoverySuppress} = 'false';
     }
-    if ($local_callno && $hcall ne $cn) {
+    if ($local_callno) {
       $irec->{itemLevelCallNumber} = $cn;
       $irec->{itemLevelCallNumberTypeId} = $cntype;
     }
@@ -530,7 +532,8 @@ sub make_hi {
     bws => $bws,
     hcount => $hcount,
     icount => $icount,
-    bcount => $bcount
+    bcount => $bcount,
+    write => $write
   };
 }
 
