@@ -277,7 +277,7 @@ foreach (@ARGV) {
     $seen->{$hid} = 1;
     my $hkey = "$bid-$loc_code";
     $h->{id} = uuid($hid);
-    print $HMAP "$bid|$loc_code|$h->{id}|$hid\n";
+    print $HMAP "$bid|$loc_code|$h->{id}|$hid|$vfcn\n";
     $h->{_version} = $ver;
     $h->{formerIds} = [ $obj->{id} ];
     $h->{hrid} = $hid;
