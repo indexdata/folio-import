@@ -36,10 +36,10 @@ try {
       let out = {};
       let marc = parseMarc(r);
       let f907 = marc.fields['907'];
-      let hrid = getSubs(f907[0], 'a')
+      let hrid = (f907) ? getSubs(f907[0], 'a') : '';
       hrid = hrid.replace(/.$/, '');
-      let f998 = marc.fields['998'];
-      let cdate = getSubs(f998[0], 'b');
+      let f998 = marc.fields['998'] || [];
+      let cdate = (f998) ? getSubs(f998[0], 'b') : '';
       let dmy = cdate.split(/-/);
       let dd = dmy[0];
       let mm = dmy[1];
@@ -52,7 +52,7 @@ try {
       out.hrid = hrid;
       out.catalogedDate = `${yr}-${mm}-${dd}`;
       let outStr = JSON.stringify(out);
-      fs.writeFileSync(outFile, outStr + '\n', {flag: 'a'});
+      if (hrid) fs.writeFileSync(outFile, outStr + '\n', {flag: 'a'});
 
       if (process.env.DEBUG) console.log(outStr);
 
