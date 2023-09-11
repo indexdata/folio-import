@@ -37,12 +37,12 @@ try {
       let marc = parseMarc(r);
       let f907 = marc.fields['907'];
       let hrid = (f907) ? getSubs(f907[0], 'a') : '';
-      hrid = hrid.replace(/.$/, '');
+      hrid = hrid.replace(/^.(.+).$/, '$1');
       let f998 = marc.fields['998'] || [];
       let cdate = (f998) ? getSubs(f998[0], 'b') : '';
       let dmy = cdate.split(/-/);
-      let dd = dmy[0];
-      let mm = dmy[1];
+      let dd = dmy[1];
+      let mm = dmy[0];
       let yr = dmy[2];
       if (yr.match(/^[012]/)) {
         yr = '20' + yr;
