@@ -38,7 +38,7 @@ try {
       let f907 = marc.fields['907'];
       let hrid = (f907) ? getSubs(f907[0], 'a') : '';
       hrid = hrid.replace(/^.(.+).$/, '$1');
-      let f998 = marc.fields['998'] || [];
+      let f998 = marc.fields['998'];
       let cdate = (f998) ? getSubs(f998[0], 'b') : '';
       let dmy = cdate.split(/-/);
       let dd = dmy[1];
