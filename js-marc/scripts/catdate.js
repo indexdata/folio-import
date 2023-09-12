@@ -34,32 +34,37 @@ try {
     recs.forEach(r => {
       count++
       let out = {};
-      let marc = parseMarc(r);
-      let f907 = marc.fields['907'];
-      let hrid = (f907) ? getSubs(f907[0], 'a') : '';
-      hrid = hrid.replace(/^.(.+).$/, '$1');
-      let f998 = marc.fields['998'];
-      let cdate = (f998) ? getSubs(f998[0], 'b') : '';
-      let dmy = cdate.split(/-/);
-      let dd = dmy[1];
-      let mm = dmy[0];
-      let yr = dmy[2];
-      if (yr && yr.match(/^[012]/)) {
-        yr = '20' + yr;
-      } else if (yr) {
-        yr = '19' + yr;
-      }
-      if (hrid) out.hrid = hrid;
-      if (yr) out.catalogedDate = `${yr}-${mm}-${dd}`;
-      let outStr = JSON.stringify(out);
-      if (hrid) fs.writeFileSync(outFile, outStr + '\n', {flag: 'a'});
+      try {
+        let marc = parseMarc(r);
+        let f907 = marc.fields['907'];
+        let hrid = (f907) ? getSubs(f907[0], 'a') : '';
+        hrid = hrid.replace(/^.(.+).$/, '$1');
+        let f998 = marc.fields['998'];
+        let cdate = (f998) ? getSubs(f998[0], 'b') : '';
+        if (cdate && !cdate.match(/\d\d-\d\d-\d\d/)) throw(`Invalid catalogedDate of ${cdate} for ${hrid}`);
+        let dmy = cdate.split(/-/);
+        let dd = dmy[1];
+        let mm = dmy[0];
+        let yr = dmy[2];
+        if (yr && yr.match(/^[012]/)) {
+          yr = '20' + yr;
+        } else if (yr) {
+          yr = '19' + yr;
+        }
+        if (hrid) out.hrid = hrid;
+        if (yr) out.catalogedDate = `${yr}-${mm}-${dd}`;
+        let outStr = JSON.stringify(out);
+        if (hrid) fs.writeFileSync(outFile, outStr + '\n', {flag: 'a'});
 
-      if (process.env.DEBUG) console.log(outStr);
+        if (process.env.DEBUG) console.log(outStr);
 
-      if (count % 10000 === 0) {
-        let now = new Date().valueOf();
-        t = (now - start) / 1000;
-        console.log('Records processed', count, `${t} secs.`);
+        if (count % 10000 === 0) {
+          let now = new Date().valueOf();
+          t = (now - start) / 1000;
+          console.log('Records processed', count, `${t} secs.`);
+        }
+      } catch (e) {
+        console.log(`ERROR [${count}] ${e}`);
       } 
     });
   });
