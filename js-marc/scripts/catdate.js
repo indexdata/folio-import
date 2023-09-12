@@ -44,13 +44,13 @@ try {
       let dd = dmy[1];
       let mm = dmy[0];
       let yr = dmy[2];
-      if (yr.match(/^[012]/)) {
+      if (yr && yr.match(/^[012]/)) {
         yr = '20' + yr;
-      } else {
+      } else if (yr) {
         yr = '19' + yr;
       }
-      out.hrid = hrid;
-      out.catalogedDate = `${yr}-${mm}-${dd}`;
+      if (hrid) out.hrid = hrid;
+      if (yr) out.catalogedDate = `${yr}-${mm}-${dd}`;
       let outStr = JSON.stringify(out);
       if (hrid) fs.writeFileSync(outFile, outStr + '\n', {flag: 'a'});
 
