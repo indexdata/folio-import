@@ -1,4 +1,5 @@
 config.js
+configs/
 node_modules
 data
 .okapi
