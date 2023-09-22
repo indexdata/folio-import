@@ -1,3 +1,0 @@
-[submodule "configs"]
-	path = configs
-	url = git@github.com:indexdata/folio-import-config.git
