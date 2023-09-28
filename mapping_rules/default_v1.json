@@ -182,28 +182,24 @@
             {
               "conditions": [
                 {
-                  "type": "concat_subfields_by_name, remove_ending_punc,trim",
-                  "parameter": {
-                    "subfieldsToConcat": [
-                      "c",
-                      "q"
-                    ],
-                    "subfieldsToStopConcat": [
-                      "z"
-                    ]
-                  }
+                  "type": "remove_ending_punc, trim"
                 }
               ]
             }
           ],
           "target": "identifiers.value",
           "subfield": [
+            "a",
+            "c",
+            "q"
+          ],
+          "description": "Valid ISBN",
+          "requiredSubfield": [
             "a"
           ],
-          "description": "Valid ISBN"
+          "applyRulesOnConcatenatedData": true
         }
-      ],
-      "entityPerRepeatedSubfield": true
+      ]
     },
     {
       "entity": [
@@ -231,28 +227,24 @@
             {
               "conditions": [
                 {
-                  "type": "concat_subfields_by_name, remove_ending_punc,trim",
-                  "parameter": {
-                    "subfieldsToConcat": [
-                      "q",
-                      "c"
-                    ],
-                    "subfieldsToStopConcat": [
-                      "a"
-                    ]
-                  }
+                  "type": "remove_ending_punc, trim"
                 }
               ]
             }
           ],
           "target": "identifiers.value",
           "subfield": [
+            "z",
+            "q",
+            "c"
+          ],
+          "description": "Invalid ISBN",
+          "requiredSubfield": [
             "z"
           ],
-          "description": "Invalid ISBN"
+          "applyRulesOnConcatenatedData": true
         }
-      ],
-      "entityPerRepeatedSubfield": true
+      ]
     }
   ],
   "022": [
@@ -1105,28 +1097,33 @@
             {
               "conditions": [
                 {
-                  "type": "set_contributor_type_id_by_code_or_name",
-                  "parameter": {
-                    "contributorCodeSubfield": "4",
-                    "contributorNameSubfield": "e"
-                  }
+                  "type": "set_contributor_type_id"
                 }
               ]
             }
           ],
           "target": "contributors.contributorTypeId",
           "subfield": [
-            "4",
-            "e"
+            "4"
           ],
           "description": "Type of contributor",
-          "alternativeMapping": {
-            "target": "contributors.contributorTypeText",
-            "subfield": [
-              "e"
-            ],
-            "ignoreSubsequentSubfields": true
-          },
+          "applyRulesOnConcatenatedData": true
+        },
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_contributor_type_text"
+                }
+              ]
+            }
+          ],
+          "target": "contributors.contributorTypeText",
+          "subfield": [
+            "e"
+          ],
+          "description": "Contributor type free text",
           "applyRulesOnConcatenatedData": true
         },
         {
@@ -1200,28 +1197,33 @@
             {
               "conditions": [
                 {
-                  "type": "set_contributor_type_id_by_code_or_name",
-                  "parameter": {
-                    "contributorCodeSubfield": "4",
-                    "contributorNameSubfield": "e"
-                  }
+                  "type": "set_contributor_type_text"
+                }
+              ]
+            }
+          ],
+          "target": "contributors.contributorTypeText",
+          "subfield": [
+            "e"
+          ],
+          "description": "Contributor type free text",
+          "applyRulesOnConcatenatedData": true
+        },
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_contributor_type_id"
                 }
               ]
             }
           ],
           "target": "contributors.contributorTypeId",
           "subfield": [
-            "4",
-            "e"
+            "4"
           ],
           "description": "Type of contributor",
-          "alternativeMapping": {
-            "target": "contributors.contributorTypeText",
-            "subfield": [
-              "e"
-            ],
-            "ignoreSubsequentSubfields": true
-          },
           "applyRulesOnConcatenatedData": true
         },
         {
@@ -1293,28 +1295,33 @@
             {
               "conditions": [
                 {
-                  "type": "set_contributor_type_id_by_code_or_name",
-                  "parameter": {
-                    "contributorCodeSubfield": "4",
-                    "contributorNameSubfield": "j"
-                  }
+                  "type": "set_contributor_type_id"
                 }
               ]
             }
           ],
           "target": "contributors.contributorTypeId",
           "subfield": [
-            "4",
-            "j"
+            "4"
           ],
           "description": "Type of contributor",
-          "alternativeMapping": {
-            "target": "contributors.contributorTypeText",
-            "subfield": [
-              "j"
-            ],
-            "ignoreSubsequentSubfields": true
-          },
+          "applyRulesOnConcatenatedData": true
+        },
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_contributor_type_text"
+                }
+              ]
+            }
+          ],
+          "target": "contributors.contributorTypeText",
+          "subfield": [
+            "j"
+          ],
+          "description": "Contributor type free text",
           "applyRulesOnConcatenatedData": true
         },
         {
@@ -5610,282 +5617,219 @@
         {
           "rules": [
             {
-              "conditions": [
-                {
-                  "type": "set_note_staff_only_via_indicator"
-                }
-              ]
+              "value": "false",
+              "conditions": []
             }
           ],
           "target": "notes.staffOnly",
           "subfield": [
             "a"
           ],
-          "description": "If the 1st indicator equals 0, determines that the note should not be visible for others than staff"
+          "description": "If true, determines that the note should not be visible for others than staff"
         }
       ]
     }
   ],
   "600": [
     {
-      "entity": [
+      "rules": [
         {
-          "rules": [
+          "conditions": [
             {
-              "conditions": [
-                {
-                  "type": "trim_period, trim"
-                }
-              ]
+              "type": "trim_period, trim"
             }
-          ],
-          "target": "subjects.value",
-          "subfield": [
+          ]
+        }
+      ],
+      "target": "subjects",
+      "subfield": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "j",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "q",
+        "r",
+        "s",
+        "t",
+        "u",
+        "v",
+        "x",
+        "y",
+        "z"
+      ],
+      "description": "Subject Headings",
+      "subFieldDelimiter": [
+        {
+          "value": " ",
+          "subfields": [
             "a",
             "b",
             "c",
             "d",
-            "e",
+            "j",
+            "q",
+            "t",
             "f",
             "g",
-            "h",
-            "j",
             "k",
             "l",
             "m",
             "n",
             "o",
             "p",
-            "q",
             "r",
-            "s",
-            "t",
-            "u",
-            "v",
+            "s"
+          ]
+        },
+        {
+          "value": "--",
+          "subfields": [
             "x",
             "y",
-            "z"
-          ],
-          "description": "Subject Headings",
-          "subFieldDelimiter": [
-            {
-              "value": " ",
-              "subfields": [
-                "a",
-                "b",
-                "c",
-                "d",
-                "j",
-                "q",
-                "t",
-                "f",
-                "g",
-                "k",
-                "l",
-                "m",
-                "n",
-                "o",
-                "p",
-                "r",
-                "s"
-              ]
-            },
-            {
-              "value": "--",
-              "subfields": [
-                "x",
-                "y",
-                "z",
-                "v"
-              ]
-            },
-            {
-              "value": "--",
-              "subfields": []
-            }
-          ],
-          "applyRulesOnConcatenatedData": true
+            "z",
+            "v"
+          ]
+        },
+        {
+          "value": "--",
+          "subfields": []
         }
-      ]
+      ],
+      "applyRulesOnConcatenatedData": true
     }
   ],
   "610": [
     {
-      "entity": [
+      "rules": [
         {
-          "rules": [
+          "conditions": [
             {
-              "conditions": [
-                {
-                  "type": "trim_period, trim"
-                }
-              ]
+              "type": "trim_period, trim"
             }
-          ],
-          "target": "subjects.value",
-          "subfield": [
+          ]
+        }
+      ],
+      "target": "subjects",
+      "subfield": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "r",
+        "s",
+        "t",
+        "u",
+        "v",
+        "x",
+        "y",
+        "z"
+      ],
+      "description": "Subject Headings",
+      "subFieldDelimiter": [
+        {
+          "value": " ",
+          "subfields": [
             "a",
             "b",
             "c",
             "d",
-            "e",
+            "t",
             "f",
             "g",
-            "h",
             "k",
             "l",
             "m",
             "n",
             "o",
             "p",
-            "r",
-            "s",
-            "t",
-            "u",
-            "v",
+            "s"
+          ]
+        },
+        {
+          "value": "--",
+          "subfields": [
             "x",
             "y",
-            "z"
-          ],
-          "description": "Subject Headings",
-          "subFieldDelimiter": [
-            {
-              "value": " ",
-              "subfields": [
-                "a",
-                "b",
-                "c",
-                "d",
-                "t",
-                "f",
-                "g",
-                "k",
-                "l",
-                "m",
-                "n",
-                "o",
-                "p",
-                "s"
-              ]
-            },
-            {
-              "value": "--",
-              "subfields": [
-                "x",
-                "y",
-                "z",
-                "v"
-              ]
-            },
-            {
-              "value": "--",
-              "subfields": []
-            }
-          ],
-          "applyRulesOnConcatenatedData": true
+            "z",
+            "v"
+          ]
+        },
+        {
+          "value": "--",
+          "subfields": []
         }
-      ]
+      ],
+      "applyRulesOnConcatenatedData": true
     }
   ],
   "611": [
     {
-      "entity": [
+      "rules": [
         {
-          "rules": [
+          "conditions": [
             {
-              "conditions": [
-                {
-                  "type": "trim_period, trim"
-                }
-              ]
+              "type": "trim_period, trim"
             }
-          ],
-          "target": "subjects.value",
-          "subfield": [
+          ]
+        }
+      ],
+      "target": "subjects",
+      "subfield": [
+        "a",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "j",
+        "k",
+        "l",
+        "n",
+        "p",
+        "q",
+        "s",
+        "t",
+        "u",
+        "v",
+        "x",
+        "y",
+        "z"
+      ],
+      "description": "Subject Headings",
+      "subFieldDelimiter": [
+        {
+          "value": " ",
+          "subfields": [
             "a",
             "c",
             "d",
             "e",
-            "f",
-            "g",
-            "h",
-            "j",
-            "k",
-            "l",
-            "n",
-            "p",
             "q",
-            "s",
             "t",
-            "u",
-            "v",
-            "x",
-            "y",
-            "z"
-          ],
-          "description": "Subject Headings",
-          "subFieldDelimiter": [
-            {
-              "value": " ",
-              "subfields": [
-                "a",
-                "c",
-                "d",
-                "e",
-                "q",
-                "t",
-                "f",
-                "g",
-                "k",
-                "l",
-                "m",
-                "n",
-                "o",
-                "p",
-                "r",
-                "s"
-              ]
-            },
-            {
-              "value": "--",
-              "subfields": [
-                "x",
-                "y",
-                "z",
-                "v"
-              ]
-            },
-            {
-              "value": "--",
-              "subfields": []
-            }
-          ],
-          "applyRulesOnConcatenatedData": true
-        }
-      ]
-    }
-  ],
-  "630": [
-    {
-      "entity": [
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "trim_period, trim"
-                }
-              ]
-            }
-          ],
-          "target": "subjects.value",
-          "subfield": [
-            "a",
-            "d",
-            "e",
             "f",
             "g",
-            "h",
             "k",
             "l",
             "m",
@@ -5893,66 +5837,122 @@
             "o",
             "p",
             "r",
-            "s",
-            "t",
-            "v",
+            "s"
+          ]
+        },
+        {
+          "value": "--",
+          "subfields": [
             "x",
             "y",
-            "z"
-          ],
-          "description": "Subject Headings",
-          "subFieldDelimiter": [
-            {
-              "value": " ",
-              "subfields": [
-                "a",
-                "d",
-                "f",
-                "g",
-                "k",
-                "l",
-                "m",
-                "n",
-                "o",
-                "p",
-                "r",
-                "s"
-              ]
-            },
-            {
-              "value": "--",
-              "subfields": [
-                "x",
-                "y",
-                "z",
-                "v"
-              ]
-            },
-            {
-              "value": "--",
-              "subfields": []
-            }
-          ],
-          "applyRulesOnConcatenatedData": true
+            "z",
+            "v"
+          ]
+        },
+        {
+          "value": "--",
+          "subfields": []
         }
-      ]
+      ],
+      "applyRulesOnConcatenatedData": true
+    }
+  ],
+  "630": [
+    {
+      "rules": [
+        {
+          "conditions": [
+            {
+              "type": "trim_period, trim"
+            }
+          ]
+        }
+      ],
+      "target": "subjects",
+      "subfield": [
+        "a",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "r",
+        "s",
+        "t",
+        "v",
+        "x",
+        "y",
+        "z"
+      ],
+      "description": "Subject Headings",
+      "subFieldDelimiter": [
+        {
+          "value": " ",
+          "subfields": [
+            "a",
+            "d",
+            "f",
+            "g",
+            "k",
+            "l",
+            "m",
+            "n",
+            "o",
+            "p",
+            "r",
+            "s"
+          ]
+        },
+        {
+          "value": "--",
+          "subfields": [
+            "x",
+            "y",
+            "z",
+            "v"
+          ]
+        },
+        {
+          "value": "--",
+          "subfields": []
+        }
+      ],
+      "applyRulesOnConcatenatedData": true
     }
   ],
   "647": [
     {
-      "entity": [
+      "rules": [
         {
-          "rules": [
+          "conditions": [
             {
-              "conditions": [
-                {
-                  "type": "trim_period, trim"
-                }
-              ]
+              "type": "trim_period, trim"
             }
-          ],
-          "target": "subjects.value",
-          "subfield": [
+          ]
+        }
+      ],
+      "target": "subjects",
+      "subfield": [
+        "a",
+        "c",
+        "d",
+        "g",
+        "x",
+        "y",
+        "z",
+        "v"
+      ],
+      "description": "Subject Headings",
+      "subFieldDelimiter": [
+        {
+          "value": "--",
+          "subfields": [
             "a",
             "c",
             "d",
@@ -5961,86 +5961,80 @@
             "y",
             "z",
             "v"
-          ],
-          "description": "Subject Headings",
-          "subFieldDelimiter": [
-            {
-              "value": "--",
-              "subfields": [
-                "a",
-                "c",
-                "d",
-                "g",
-                "x",
-                "y",
-                "z",
-                "v"
-              ]
-            },
-            {
-              "value": "--",
-              "subfields": []
-            }
-          ],
-          "applyRulesOnConcatenatedData": true
+          ]
+        },
+        {
+          "value": "--",
+          "subfields": []
         }
-      ]
+      ],
+      "applyRulesOnConcatenatedData": true
     }
   ],
   "648": [
     {
-      "entity": [
+      "rules": [
         {
-          "rules": [
+          "conditions": [
             {
-              "conditions": [
-                {
-                  "type": "trim_period, trim"
-                }
-              ]
+              "type": "trim_period, trim"
             }
-          ],
-          "target": "subjects.value",
-          "subfield": [
+          ]
+        }
+      ],
+      "target": "subjects",
+      "subfield": [
+        "a",
+        "x",
+        "y",
+        "z",
+        "v"
+      ],
+      "description": "Subject Headings",
+      "subFieldDelimiter": [
+        {
+          "value": "--",
+          "subfields": [
             "a",
             "x",
             "y",
             "z",
             "v"
-          ],
-          "description": "Subject Headings",
-          "subFieldDelimiter": [
-            {
-              "value": "--",
-              "subfields": [
-                "a",
-                "x",
-                "y",
-                "z",
-                "v"
-              ]
-            }
-          ],
-          "applyRulesOnConcatenatedData": true
+          ]
         }
-      ]
+      ],
+      "applyRulesOnConcatenatedData": true
     }
   ],
   "650": [
     {
-      "entity": [
+      "rules": [
         {
-          "rules": [
+          "conditions": [
             {
-              "conditions": [
-                {
-                  "type": "trim_period, trim"
-                }
-              ]
+              "type": "trim_period, trim"
             }
-          ],
-          "target": "subjects.value",
-          "subfield": [
+          ]
+        }
+      ],
+      "target": "subjects",
+      "subfield": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "g",
+        "v",
+        "x",
+        "y",
+        "z"
+      ],
+      "description": "Subject Headings",
+      "subFieldDelimiter": [
+        {
+          "value": "--",
+          "subfields": [
             "a",
             "b",
             "c",
@@ -6051,45 +6045,38 @@
             "x",
             "y",
             "z"
-          ],
-          "description": "Subject Headings",
-          "subFieldDelimiter": [
-            {
-              "value": "--",
-              "subfields": [
-                "a",
-                "b",
-                "c",
-                "d",
-                "e",
-                "g",
-                "v",
-                "x",
-                "y",
-                "z"
-              ]
-            }
-          ],
-          "applyRulesOnConcatenatedData": true
+          ]
         }
-      ]
+      ],
+      "applyRulesOnConcatenatedData": true
     }
   ],
   "651": [
     {
-      "entity": [
+      "rules": [
         {
-          "rules": [
+          "conditions": [
             {
-              "conditions": [
-                {
-                  "type": "trim_period, trim"
-                }
-              ]
+              "type": "trim_period, trim"
             }
-          ],
-          "target": "subjects.value",
-          "subfield": [
+          ]
+        }
+      ],
+      "target": "subjects",
+      "subfield": [
+        "a",
+        "e",
+        "g",
+        "v",
+        "x",
+        "y",
+        "z"
+      ],
+      "description": "Subject Headings",
+      "subFieldDelimiter": [
+        {
+          "value": "--",
+          "subfields": [
             "a",
             "e",
             "g",
@@ -6097,68 +6084,49 @@
             "x",
             "y",
             "z"
-          ],
-          "description": "Subject Headings",
-          "subFieldDelimiter": [
-            {
-              "value": "--",
-              "subfields": [
-                "a",
-                "e",
-                "g",
-                "v",
-                "x",
-                "y",
-                "z"
-              ]
-            }
-          ],
-          "applyRulesOnConcatenatedData": true
+          ]
         }
-      ]
+      ],
+      "applyRulesOnConcatenatedData": true
     }
   ],
   "655": [
     {
-      "entity": [
+      "rules": [
         {
-          "rules": [
+          "conditions": [
             {
-              "conditions": [
-                {
-                  "type": "trim_period, trim"
-                }
-              ]
+              "type": "trim_period, trim"
             }
-          ],
-          "target": "subjects.value",
-          "subfield": [
+          ]
+        }
+      ],
+      "target": "subjects",
+      "subfield": [
+        "a",
+        "b",
+        "c",
+        "v",
+        "x",
+        "y",
+        "z"
+      ],
+      "description": "Subject Headings",
+      "subFieldDelimiter": [
+        {
+          "value": "--",
+          "subfields": [
             "a",
-            "b",
-            "c",
+            "e",
+            "g",
             "v",
             "x",
             "y",
             "z"
-          ],
-          "description": "Subject Headings",
-          "subFieldDelimiter": [
-            {
-              "value": "--",
-              "subfields": [
-                "a",
-                "e",
-                "g",
-                "v",
-                "x",
-                "y",
-                "z"
-              ]
-            }
-          ],
-          "applyRulesOnConcatenatedData": true
+          ]
         }
-      ]
+      ],
+      "applyRulesOnConcatenatedData": true
     }
   ],
   "700": [
@@ -6187,28 +6155,33 @@
             {
               "conditions": [
                 {
-                  "type": "set_contributor_type_id_by_code_or_name",
-                  "parameter": {
-                    "contributorCodeSubfield": "4",
-                    "contributorNameSubfield": "e"
-                  }
+                  "type": "set_contributor_type_id"
                 }
               ]
             }
           ],
           "target": "contributors.contributorTypeId",
           "subfield": [
-            "4",
-            "e"
+            "4"
           ],
           "description": "Type of contributor",
-          "alternativeMapping": {
-            "target": "contributors.contributorTypeText",
-            "subfield": [
-              "e"
-            ],
-            "ignoreSubsequentSubfields": true
-          },
+          "applyRulesOnConcatenatedData": true
+        },
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_contributor_type_text"
+                }
+              ]
+            }
+          ],
+          "target": "contributors.contributorTypeText",
+          "subfield": [
+            "e"
+          ],
+          "description": "Contributor type free text",
           "applyRulesOnConcatenatedData": true
         },
         {
@@ -6282,28 +6255,33 @@
             {
               "conditions": [
                 {
-                  "type": "set_contributor_type_id_by_code_or_name",
-                  "parameter": {
-                    "contributorCodeSubfield": "4",
-                    "contributorNameSubfield": "e"
-                  }
+                  "type": "set_contributor_type_id"
                 }
               ]
             }
           ],
           "target": "contributors.contributorTypeId",
           "subfield": [
-            "4",
-            "e"
+            "4"
           ],
           "description": "Type of contributor",
-          "alternativeMapping": {
-            "target": "contributors.contributorTypeText",
-            "subfield": [
-              "e"
-            ],
-            "ignoreSubsequentSubfields": true
-          },
+          "applyRulesOnConcatenatedData": true
+        },
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_contributor_type_text"
+                }
+              ]
+            }
+          ],
+          "target": "contributors.contributorTypeText",
+          "subfield": [
+            "e"
+          ],
+          "description": "Contributor type free text",
           "applyRulesOnConcatenatedData": true
         },
         {
@@ -6375,28 +6353,33 @@
             {
               "conditions": [
                 {
-                  "type": "set_contributor_type_id_by_code_or_name",
-                  "parameter": {
-                    "contributorCodeSubfield": "4",
-                    "contributorNameSubfield": "j"
-                  }
+                  "type": "set_contributor_type_id"
                 }
               ]
             }
           ],
           "target": "contributors.contributorTypeId",
           "subfield": [
-            "4",
-            "j"
+            "4"
           ],
           "description": "Type of contributor",
-          "alternativeMapping": {
-            "target": "contributors.contributorTypeText",
-            "subfield": [
-              "j"
-            ],
-            "ignoreSubsequentSubfields": true
-          },
+          "applyRulesOnConcatenatedData": true
+        },
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_contributor_type_text"
+                }
+              ]
+            }
+          ],
+          "target": "contributors.contributorTypeText",
+          "subfield": [
+            "j"
+          ],
+          "description": "Contributor type free text",
           "applyRulesOnConcatenatedData": true
         },
         {
@@ -6440,263 +6423,6 @@
           "applyRulesOnConcatenatedData": true
         }
       ]
-    }
-  ],
-  "720": [
-    {
-      "entity": [
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "set_contributor_name_type_id",
-                  "parameter": {
-                    "name": "Personal name"
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "contributors.contributorNameTypeId",
-          "subfield": [],
-          "description": "Type for Personal Name",
-          "applyRulesOnConcatenatedData": true
-        },
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "set_contributor_type_id_by_code_or_name",
-                  "parameter": {
-                    "contributorCodeSubfield": "4",
-                    "contributorNameSubfield": "e"
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "contributors.contributorTypeId",
-          "subfield": [
-            "4",
-            "e"
-          ],
-          "description": "Type of contributor",
-          "alternativeMapping": {
-            "target": "contributors.contributorTypeText",
-            "subfield": [
-              "e"
-            ],
-            "description": "Contributor type free text",
-            "ignoreSubsequentSubfields": true
-          },
-          "applyRulesOnConcatenatedData": true
-        },
-        {
-          "rules": [
-            {
-              "value": "false",
-              "conditions": []
-            }
-          ],
-          "target": "contributors.primary",
-          "subfield": [],
-          "description": "Primary contributor",
-          "applyRulesOnConcatenatedData": true
-        },
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "trim_period, trim"
-                }
-              ]
-            }
-          ],
-          "target": "contributors.name",
-          "subfield": [
-            "a"
-          ],
-          "description": "Personal Name",
-          "applyRulesOnConcatenatedData": true
-        }
-      ],
-      "indicators": {
-        "ind1": "1",
-        "ind2": "*"
-      }
-    },
-    {
-      "entity": [
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "set_contributor_name_type_id",
-                  "parameter": {
-                    "name": "Personal name"
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "contributors.contributorNameTypeId",
-          "subfield": [],
-          "description": "Type for Personal Name",
-          "applyRulesOnConcatenatedData": true
-        },
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "set_contributor_type_id_by_code_or_name",
-                  "parameter": {
-                    "contributorCodeSubfield": "4",
-                    "contributorNameSubfield": "e"
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "contributors.contributorTypeId",
-          "subfield": [
-            "4",
-            "e"
-          ],
-          "description": "Type of contributor",
-          "alternativeMapping": {
-            "target": "contributors.contributorTypeText",
-            "subfield": [
-              "e"
-            ],
-            "description": "Contributor type free text",
-            "ignoreSubsequentSubfields": true
-          },
-          "applyRulesOnConcatenatedData": true
-        },
-        {
-          "rules": [
-            {
-              "value": "false",
-              "conditions": []
-            }
-          ],
-          "target": "contributors.primary",
-          "subfield": [],
-          "description": "Primary contributor",
-          "applyRulesOnConcatenatedData": true
-        },
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "trim_period, trim"
-                }
-              ]
-            }
-          ],
-          "target": "contributors.name",
-          "subfield": [
-            "a"
-          ],
-          "description": "Personal Name",
-          "applyRulesOnConcatenatedData": true
-        }
-      ],
-      "indicators": {
-        "ind1": " ",
-        "ind2": "*"
-      }
-    },
-    {
-      "entity": [
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "set_contributor_name_type_id",
-                  "parameter": {
-                    "name": "Corporate name"
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "contributors.contributorNameTypeId",
-          "subfield": [],
-          "description": "Type for Corporate Name",
-          "applyRulesOnConcatenatedData": true
-        },
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "set_contributor_type_id_by_code_or_name",
-                  "parameter": {
-                    "contributorCodeSubfield": "4",
-                    "contributorNameSubfield": "e"
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "contributors.contributorTypeId",
-          "subfield": [
-            "4",
-            "e"
-          ],
-          "description": "Type of contributor",
-          "alternativeMapping": {
-            "target": "contributors.contributorTypeText",
-            "subfield": [
-              "e"
-            ],
-            "description": "Contributor type free text",
-            "ignoreSubsequentSubfields": true
-          },
-          "applyRulesOnConcatenatedData": true
-        },
-        {
-          "rules": [
-            {
-              "value": "false",
-              "conditions": []
-            }
-          ],
-          "target": "contributors.primary",
-          "subfield": [],
-          "description": "Primary contributor",
-          "applyRulesOnConcatenatedData": true
-        },
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "trim_period, trim"
-                }
-              ]
-            }
-          ],
-          "target": "contributors.name",
-          "subfield": [
-            "a"
-          ],
-          "description": "Personal Name",
-          "applyRulesOnConcatenatedData": true
-        }
-      ],
-      "indicators": {
-        "ind1": "2",
-        "ind2": "*"
-      }
     }
   ],
   "780": [
@@ -6895,178 +6621,162 @@
   ],
   "800": [
     {
-      "entity": [
+      "rules": [
         {
-          "rules": [
+          "conditions": [
             {
-              "conditions": [
-                {
-                  "type": "remove_ending_punc, trim"
-                }
-              ]
+              "type": "remove_ending_punc, trim"
             }
-          ],
-          "target": "series.value",
-          "subfield": [
-            "a",
-            "b",
-            "c",
-            "d",
-            "e",
-            "f",
-            "g",
-            "h",
-            "j",
-            "k",
-            "l",
-            "m",
-            "n",
-            "o",
-            "p",
-            "q",
-            "r",
-            "s",
-            "t",
-            "u",
-            "v",
-            "w",
-            "x",
-            "3",
-            "5"
-          ],
-          "description": "Series Statement",
-          "applyRulesOnConcatenatedData": true
+          ]
         }
-      ]
+      ],
+      "target": "series",
+      "subfield": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "j",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "q",
+        "r",
+        "s",
+        "t",
+        "u",
+        "v",
+        "w",
+        "x",
+        "3",
+        "5"
+      ],
+      "description": "Series Statement",
+      "applyRulesOnConcatenatedData": true
     }
   ],
   "810": [
     {
-      "entity": [
+      "rules": [
         {
-          "rules": [
+          "conditions": [
             {
-              "conditions": [
-                {
-                  "type": "remove_ending_punc, trim"
-                }
-              ]
+              "type": "remove_ending_punc, trim"
             }
-          ],
-          "target": "series.value",
-          "subfield": [
-            "a",
-            "b",
-            "c",
-            "d",
-            "e",
-            "f",
-            "g",
-            "h",
-            "k",
-            "l",
-            "m",
-            "n",
-            "o",
-            "p",
-            "r",
-            "s",
-            "t",
-            "u",
-            "v",
-            "w",
-            "x",
-            "3",
-            "5"
-          ],
-          "description": "Series Statement",
-          "applyRulesOnConcatenatedData": true
+          ]
         }
-      ]
+      ],
+      "target": "series",
+      "subfield": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "r",
+        "s",
+        "t",
+        "u",
+        "v",
+        "w",
+        "x",
+        "3",
+        "5"
+      ],
+      "description": "Series Statement",
+      "applyRulesOnConcatenatedData": true
     }
   ],
   "811": [
     {
-      "entity": [
+      "rules": [
         {
-          "rules": [
+          "conditions": [
             {
-              "conditions": [
-                {
-                  "type": "remove_ending_punc, trim"
-                }
-              ]
+              "type": "remove_ending_punc, trim"
             }
-          ],
-          "target": "series.value",
-          "subfield": [
-            "a",
-            "c",
-            "d",
-            "e",
-            "f",
-            "g",
-            "h",
-            "j",
-            "k",
-            "l",
-            "n",
-            "p",
-            "q",
-            "s",
-            "t",
-            "u",
-            "v",
-            "w",
-            "x",
-            "3",
-            "5"
-          ],
-          "description": "Series Statement",
-          "applyRulesOnConcatenatedData": true
+          ]
         }
-      ]
+      ],
+      "target": "series",
+      "subfield": [
+        "a",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "j",
+        "k",
+        "l",
+        "n",
+        "p",
+        "q",
+        "s",
+        "t",
+        "u",
+        "v",
+        "w",
+        "x",
+        "3",
+        "5"
+      ],
+      "description": "Series Statement",
+      "applyRulesOnConcatenatedData": true
     }
   ],
   "830": [
     {
-      "entity": [
+      "rules": [
         {
-          "rules": [
+          "conditions": [
             {
-              "conditions": [
-                {
-                  "type": "remove_ending_punc, trim"
-                }
-              ]
+              "type": "remove_ending_punc, trim"
             }
-          ],
-          "target": "series.value",
-          "subfield": [
-            "a",
-            "d",
-            "f",
-            "g",
-            "h",
-            "k",
-            "l",
-            "m",
-            "n",
-            "o",
-            "p",
-            "r",
-            "s",
-            "t",
-            "v",
-            "w",
-            "x",
-            "3",
-            "5"
-          ],
-          "description": "Series Statement",
-          "applyRulesOnConcatenatedData": true
+          ]
         }
-      ]
+      ],
+      "target": "series",
+      "subfield": [
+        "a",
+        "d",
+        "f",
+        "g",
+        "h",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "r",
+        "s",
+        "t",
+        "v",
+        "w",
+        "x",
+        "3",
+        "5"
+      ],
+      "description": "Series Statement",
+      "applyRulesOnConcatenatedData": true
     }
   ],
   "856": [
