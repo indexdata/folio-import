@@ -106,20 +106,25 @@ try {
     let hr = {};
     let bid = ai.bibId;
     let hkey = bid + ai.coll + ai.cn;
-    console.log(hkey);
-    if (!bseen[bid]) {
-      bseen[bid] = 1;
+    if (!hseen[hkey]) {
+      console.log(hkey);
+      if (!bseen[bid]) {
+        bseen[bid] = 1;
+      } else {
+        bseen[bid]++;
+      }
+      hr.hrid = ai.bibId + '-' + `${bseen[bid]}`.padStart(3,0);
+      hr.id = uuid(hr.hrid, ns);
+      hr.instanceId = ai.instId;
+      hr.permanentLocationId = refData.locations[ai.coll];
+      hr.sourceId = refData.holdingsRecordsSources['FOLIO'];
+      hr.callNumber = ai.cn;
+      hr.callNumberTypeId = (ai.cnType === '0') ? refData.callNumberTypes['Library of Congress classification'] : refData.callNumberTypes['Other scheme'];
+      hseen[hkey] = hr.id;
+      return hr
     } else {
-      bseen[bid]++;
+      return '';
     }
-    hr.hrid = ai.bibId + '-' + `${bseen[bid]}`.padStart(3,0);
-    hr.id = uuid(hr.hrid, ns);
-    hr.instanceId = ai.instId;
-    hr.permanentLocationId = refData.locations[ai.coll];
-    hr.sourceId = refData.holdingsRecordsSources['FOLIO'];
-    hr.callNumber = ai.cn;
-    hr.callNumberTypeId = (ai.cnType === '0') ? refData.callNumberTypes['Library of Congress classification'] : refData.callNumberTypes['Other scheme'];
-    return hr
   }
 
   const main = () => {
@@ -161,7 +166,7 @@ try {
           // console.log(ai);
           console.log(hr);
         }
-        writeJSON(files.items, ai);
+        if (hr) writeJSON(files.holdings, hr);
       }
       
       
