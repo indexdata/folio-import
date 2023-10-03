@@ -26,6 +26,10 @@ const rfiles = {
   itemNoteTypes: 'item-note-types.json'
 };
 
+const tfiles = {
+  mtypes: 'mtypes.tsv',
+  statuses: 'statuses.tsv'
+}
 const htypes = {
   m: 'Monograph',
   a: 'Multi-part monograph',
@@ -99,6 +103,23 @@ try {
   }
   // console.log(refData); return;
 
+  const tmap = {};
+  for (let prop in tfiles) {
+    let tpath = refDir + '/' + tfiles[prop];
+    let tdata = fs.readFileSync(tpath, { encoding: 'utf8'});
+    let arr = tdata.split(/\n/);
+    arr.shift();
+    tmap[prop] = {}
+    arr.forEach(e => {
+      let c = e.split(/\t/);
+      let key = c[0];
+      let val = c[1] || 'unspecified';
+      tmap[prop][key] = (refData[prop]) ? refData[prop][val] : val;
+    });
+  }
+  // console.log(tmap); return;
+
+
   console.log('Making instance map...')
   let instMap = {}
   let fileStream = fs.createReadStream(mapFile);
@@ -148,6 +169,11 @@ try {
     ir.hrid = ai.bibId + '-' + iseq;
     ir.id = uuid(ir.hrid, ns);
     ir.holdingsRecordId = hseen[hkey];
+    ir.materialTypeId = tmap.mtypes[ai.mtype] || refData.mtypes['unspecified'];
+    ir.permanentLoanTypeId = refData.loantypes['Can circulate'];
+    ir.status = { 
+      name: tmap.statuses[ai.status]
+    };
     ir.barcode = ai.bc;
     if (ai.vol) ir.volume = ai.vol;
     let notes = [];
@@ -189,6 +215,7 @@ try {
 
     let total = 0;
     let hrc = 0;
+    let irc = 0;
     rl.on('line', r => {
       total++;
       let ai = {};
@@ -217,15 +244,20 @@ try {
       }
       if (ai.instId) {
         let hr = makeHoldings(ai);
-        hrc++;
         if (process.env.DEBUG) {
           console.log(ai);
           console.log(JSON.stringify(hr, null, 2));
         }
-        if (hr) writeJSON(files.holdings, hr);
+        if (hr.hr) {
+          writeJSON(files.holdings, hr.hr);
+          hrc++;
+        }
+        if (hr.ir) {
+          writeJSON(files.items, hr.ir);
+          irc++;
+        }
       }
-      
-      
+      if (total%10000 === 0) console.log('Records processed:', total);
     });
     rl.on('close', () => {
       let end = new Date().valueOf()
@@ -233,6 +265,7 @@ try {
       console.log('Done!');
       console.log('Lines processed:', total);
       console.log('Holdings:', hrc);
+      console.log('Items:', irc);
       console.log('Total time (secs):', tt);
     });
   }
