@@ -26,6 +26,13 @@ const rfiles = {
   itemNoteTypes: 'item-note-types.json'
 };
 
+const htypes = {
+  m: 'Monograph',
+  a: 'Multi-part monograph',
+  b: 'Serial',
+  s: 'Serial'
+}
+
 const getData = (record, offset, length, format) => {
   let start = offset;
   let end = start + length;
@@ -41,6 +48,15 @@ const getData = (record, offset, length, format) => {
   }
   return data;
 };
+
+const noteGen = (note, type, staffOnly) => {
+  let out = {
+    note: note,
+    itemNoteTypeId: type
+  }
+  out.staffOnly = (staffOnly) ? true : false;
+  return out;
+}
 
 const writeJSON = (fn, data) => {
   const out = JSON.stringify(data) + "\n";
@@ -93,7 +109,7 @@ try {
   rl.on('line', line => {
     let c = line.split(/\|/);
     let bhrid = c[0];
-    instMap[bhrid] = c[1];
+    instMap[bhrid] = { id: c[1], type: c[4] };
   });
   rl.on('close', c => {
     main();
@@ -103,11 +119,12 @@ try {
   hseen = {};
 
   const makeHoldings = (ai) => {
+    let out = {};
     let hr = {};
     let bid = ai.bibId;
     let hkey = bid + ai.coll + ai.cn;
     if (!hseen[hkey]) {
-      console.log(hkey);
+      if (process.env.DEBUG) console.log('hkey:', hkey);
       if (!bseen[bid]) {
         bseen[bid] = 1;
       } else {
@@ -120,11 +137,47 @@ try {
       hr.sourceId = refData.holdingsRecordsSources['FOLIO'];
       hr.callNumber = ai.cn;
       hr.callNumberTypeId = (ai.cnType === '0') ? refData.callNumberTypes['Library of Congress classification'] : refData.callNumberTypes['Other scheme'];
+      let htypeName = htypes[ai.htype] || 'Physical';
+      hr.holdingsTypeId = refData.holdingsTypes[htypeName];
       hseen[hkey] = hr.id;
-      return hr
-    } else {
-      return '';
+      out.hr = hr
+    } 
+    // start making items
+    ir = {};
+    let iseq = ai.iseq.padStart(3,0);
+    ir.hrid = ai.bibId + '-' + iseq;
+    ir.id = uuid(ir.hrid, ns);
+    ir.holdingsRecordId = hseen[hkey];
+    ir.barcode = ai.bc;
+    if (ai.vol) ir.volume = ai.vol;
+    let notes = [];
+    let noteType = refData.itemNoteTypes.Note;
+    if (ai.staffNote) {
+      let n = noteGen(ai.staffNote, noteType, 1);
+      notes.push(n);
     }
+    if (ai.pubNote) {
+      let n = noteGen(ai.pubNote, noteType, 0);
+      notes.push(n);
+    }
+    if (notes[0]) ir.notes = notes;
+    if (ai.circNote) {
+      ir.circulationNotes = [
+        {
+          noteType: 'Check in',
+          id: uuid(ir.id + ai.circNote + noteType, ns),
+          note: ai.circNote
+        },
+        {
+          noteType: 'Check out',
+          id: uuid(ir.id + ai.circNote + noteType, ns),
+          note: ai.circNote
+        }
+      ]
+    }
+
+    out.ir = ir;
+    return out;
   }
 
   const main = () => {
@@ -140,7 +193,7 @@ try {
       total++;
       let ai = {};
       ai.bibId = getData(r, 0, 9);
-      ai.iseq = getData(r, 9, 6, 'n');
+      ai.iseq = getData(r, 9, 5, 'n');
       ai.bc = getData(r, 14, 30, 'n');
       ai.subLib = getData(r, 44, 5);
       ai.mtype = getData(r, 49, 6);
@@ -158,13 +211,16 @@ try {
       ai.staffNote = getData(r, 966, 200);
       if (ai.cn) ai.cn = ai.cn.replace(/\$\$./g, ' ').trim();
 
-      ai.instId = instMap[ai.bibId];
+      if (instMap[ai.bibId]) { 
+        ai.instId = instMap[ai.bibId].id;
+        ai.htype = instMap[ai.bibId].type;
+      }
       if (ai.instId) {
         let hr = makeHoldings(ai);
         hrc++;
         if (process.env.DEBUG) {
-          // console.log(ai);
-          console.log(hr);
+          console.log(ai);
+          console.log(JSON.stringify(hr, null, 2));
         }
         if (hr) writeJSON(files.holdings, hr);
       }
