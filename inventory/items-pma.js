@@ -23,7 +23,8 @@ const rfiles = {
   holdingsTypes: 'holdings-types.json',
   callNumberTypes: 'call-number-types.json',
   loantypes: 'loan-types.json',
-  itemNoteTypes: 'item-note-types.json'
+  itemNoteTypes: 'item-note-types.json',
+  holdingsNoteTypes: 'holdings-note-types'
 };
 
 const tfiles = {
@@ -154,7 +155,16 @@ try {
       hr.hrid = ai.bibId + '-' + `${bseen[bid]}`.padStart(3,0);
       hr.id = uuid(hr.hrid, ns);
       hr.instanceId = ai.instId;
-      hr.permanentLocationId = refData.locations[ai.coll];
+      let locId = refData.locations[ai.coll];
+      if (locId) {
+        hr.permanentLocationId = locId;
+      } else {
+        console.log(`WARN [${ai.bibId} ${ai.iseq}] no location found for:`, ai.coll);
+        let nt = refData.holdingsNoteTypes.Note;
+        let n = noteGen(`Aleph location code: ${ai.coll}`, nt, 1);
+        hr.notes = [ n ];
+        hr.permanentLocationId = refData.locations.UNMAPPED; 
+      }
       hr.sourceId = refData.holdingsRecordsSources['FOLIO'];
       hr.callNumber = ai.cn;
       hr.callNumberTypeId = (ai.cnType === '0') ? refData.callNumberTypes['Library of Congress classification'] : refData.callNumberTypes['Other scheme'];
