@@ -139,6 +139,7 @@ try {
 
   bseen = {};
   hseen = {};
+  bcused = {};
 
   const makeHoldings = (ai) => {
     let out = {};
@@ -186,8 +187,17 @@ try {
     ir.status = { 
       name: tmap.statuses[ai.status]
     };
-    ir.barcode = ai.bc;
-    if (ai.vol) ir.volume = ai.vol;
+    if (ai.bc && !bcused[ai.bc]) {
+      ir.barcode = ai.bc;
+      bcused[ai.bc] = 1;
+    } else {
+      console.log(`WARN duplicate barcode found ${ai.bc}`);
+    }
+    if (ai.vol && ai.htype === 's') {
+      ir.enumeration = ai.vol;
+    } else {
+      if (ai.vol) ir.volume = ai.vol;
+    }
     let notes = [];
     let noteType = refData.itemNoteTypes.Note;
     if (ai.staffNote) {
