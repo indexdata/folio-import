@@ -152,6 +152,7 @@ try {
       } else {
         bseen[bid]++;
       }
+      hr._version = 1;
       hr.hrid = ai.bibId + '-' + `${bseen[bid]}`.padStart(3,0);
       hr.id = uuid(hr.hrid, ns);
       hr.instanceId = ai.instId;
@@ -175,6 +176,7 @@ try {
     } 
     // start making items
     ir = {};
+    ir._version = 1;
     let iseq = ai.iseq.padStart(3,0);
     ir.hrid = ai.bibId + '-' + iseq;
     ir.id = uuid(ir.hrid, ns);
