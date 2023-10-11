@@ -3,10 +3,17 @@ const readline = require('readline');
 const uuid = require('uuid/v5');
 const path = require('path');
 
-const refDir = process.argv[2];
-const sifFile = process.argv[3];
+let refDir = process.argv[2];
+let usersDir = process.argv[3];
+let etcDir = '../etc/pma';
 
 const ns = '53fdafa5-df44-4e0a-a9af-c3740938f5ff';
+
+const inFiles = {
+  users: 'z303.seqaa',
+  addrs: 'z304.seqaa',
+  ids: 'z308.seqaa'
+}
 
 const files = {
   users: 'users.jsonl'
@@ -22,20 +29,20 @@ const tfiles = {
   usergroups: 'groups.tsv'
 };
 
-const getData = (record, offset, length, format) => {
-  let start = offset;
-  let end = start + length;
-  let data = record.substring(start, end);
-  data = data.trim();
-  if (data) {
-    if (format === 'n') {
-      data = data.replace(/^0+/, '');
-    }
-    if (format === 'd') {
-      data = data.replace(/(\d{4})(\d\d)(\d\d)/g, '$1-$2-$3');
-    }
+const ffiles = {
+  users: 'z303-fields.txt',
+  addrs: 'z304-fields.txt',
+  ids: 'z308-fields.txt'
+}
+
+const fieldMap = (fmap, record) => {
+  let f = {};
+  for (let k in fmap) {
+    let v = fmap[k];
+    let d = record.substring(v[0], v[1]).trim();
+    f[k] = d;
   }
-  return data;
+  return f;
 }
 
 const writeJSON = (fn, data) => {
@@ -44,23 +51,24 @@ const writeJSON = (fn, data) => {
 }
 
 try {
-  if (!sifFile) {
-    throw new Error('Usage: $ node pmaUsers.js <ref_dir> <z30_file>');
+  if (!usersDir) {
+    throw new Error('Usage: $ node pmaUsers.js <ref_dir> <users_dir>');
   }
-  if (!fs.existsSync(sifFile)) {
+  if (!fs.existsSync(usersDir)) {
     throw new Error('Can\'t find input file');
   }
 
   let begin = new Date().valueOf();
 
-  let dir = path.dirname(sifFile);
-  let base = path.basename(sifFile, '.seqaa');
+  usersDir = usersDir.replace(/\/$/, '');
+  refDir = refDir.replace(/\/$/, '');
 
   for (let f in files) {
-    let fullPath = dir + '/' + base + '-' + files[f];
+    let fullPath = usersDir + '/' + files[f];
     if (fs.existsSync(fullPath)) fs.unlinkSync(fullPath);
     files[f] = fullPath;
   }
+  // console.log(files); return;
 
   let refData = {};
   for (let prop in rfiles) {
@@ -75,6 +83,29 @@ try {
     });
   }
   // console.log(refData); return;
+
+  const fmap = {};
+
+  for (let ff in ffiles) {
+    let file = etcDir + '/' + ffiles[ff];
+    console.log(`Reading ${file}`);
+    let fields = fs.readFileSync(file, { encoding: 'utf8' });
+    let cstart = 0;
+    fmap[ff] = {};
+    fields.split(/\n/).forEach(f => {
+      let d = f.match(/^.+?-(.+) PICTURE.*\((\d+).+/);
+      if (d) {
+        let k = d[1];
+        let v = d[2]
+        v = parseInt(v, 10);
+        k = k.replace(/\W/g, '_');
+        let cend = cstart + v;
+        fmap[ff][k] = [ cstart, cend, v ];
+        cstart = cend;
+      }
+    });
+  }
+  // console.log(fmap); return;
 
   const tmap = {};
   for (let prop in tfiles) {
@@ -92,17 +123,40 @@ try {
   }
   // console.log(tmap); return;
 
+  // map addresses and ids
+  let addMap = {};
+  let idsMap = {};
+  const getAddsIds = () => {
+    let linkedFile = usersDir + '/' + inFiles.addrs;
+    let fileStream = fs.createReadStream(linkedFile);
+    let rl = readline.createInterface({ input: fileStream, crlfDelay: Infinity });
+    rl.on('line', r => {
+      let j = fieldMap(fmap.addrs, r);
+      if (!addMap[j.ID]) addMap[j.ID] = []
+      addMap[j.ID].push(j);
+    });
+    rl.on('close', r => {
+      let linkedFile = usersDir + '/' + inFiles.ids;
+      let fileStream = fs.createReadStream(linkedFile);
+      let rl = readline.createInterface({ input: fileStream, crlfDelay: Infinity });
+      rl.on('line', r => {
+        let j = fieldMap(fmap.ids, r);
+        if (!idsMap[j.ID]) idsMap[j.ID] = [];
+        idsMap[j.ID].push(j);
+      });
+      rl.on('close', r => {
+        main();
+      });
+    });
+  }
+
   bseen = {};
   hseen = {};
   bcused = {};
 
-  const makeUser = (ai) => {
-    out = {};
-    return out;
-  }
-
   const main = () => {
-    fileStream = fs.createReadStream(sifFile);
+    let userFile = usersDir + '/' + inFiles.users;
+    fileStream = fs.createReadStream(userFile);
     rl = readline.createInterface({
       input: fileStream,
       crlfDelay: Infinity
@@ -113,33 +167,22 @@ try {
     let irc = 0;
     rl.on('line', r => {
       total++;
-      let id = getData(r, 0, 12);
-      let userId = uuid(id, ns);
-      let proxyId = getData(r, 12, 12);
-      let primId = getData(r, 24, 12);
-      let nameKey = getData(r, 36, 50);
-      let userType = getData(r, 86, 5);
-      let oDate = getData(r, 96, 8, 'd');
-      let name = getData(r, 116, 200);
-      let notes = [];
-      notes.push(getData(r, 1073, 200));
-      notes.push(getData(r, 1273, 200));
-      notes.push(getData(r, 1473, 200));
-      notes.push(getData(r, 1673, 200));
-      notes.push(getData(r, 1873, 200));
-      let ai = {
-        aleph: {
-          uid: id,
-          nk: nameKey,
-          ut: userType,
-          odate: oDate,
-          name: name,
-          notes: notes
-        },
-        id: userId
-      };
-      console.log(ai);
-      if (total%10000 === 0) console.log('Records processed:', total);
+      let j = fieldMap(fmap.users, r);
+      let id = j.ID;
+      let a = (addMap[id]) ? addMap[id][0] : '';
+      let ids = idsMap[id] || [];
+      let bc = '';
+      ids.forEach(i => {
+        if (i.KEY_TYPE === '01') bc = i.KEY_DATA;
+      });
+      let user = {
+        id: uuid(id, ns),
+        username: id,
+        active: true,
+        personal: {}
+      }
+      if (bc) user.barcode = bc;
+      console.log(user);
     });
     rl.on('close', () => {
       let end = new Date().valueOf()
@@ -152,7 +195,7 @@ try {
     });
   }
 
-  main();
+  getAddsIds();
 
 } catch (e) {
   console.error(e.message);
