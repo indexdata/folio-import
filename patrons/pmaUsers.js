@@ -11,9 +11,11 @@ const ns = '53fdafa5-df44-4e0a-a9af-c3740938f5ff';
 
 const inFiles = {
   users: 'z303.seqaa',
+  local: 'z305.seqaa',
   addrs: 'z304.seqaa',
   ids: 'z308.seqaa'
 }
+if (process.env.TEST) inFiles.users = 'z303-test.seqaa';
 
 const files = {
   users: 'users.jsonl'
@@ -31,6 +33,7 @@ const tfiles = {
 
 const ffiles = {
   users: 'z303-fields.txt',
+  local: 'z305-fields.txt',
   addrs: 'z304-fields.txt',
   ids: 'z308-fields.txt'
 }
@@ -59,6 +62,7 @@ try {
   }
 
   let begin = new Date().valueOf();
+  let nowDate = new Date().toISOString().replace(/T.+/, '');
 
   usersDir = usersDir.replace(/\/$/, '');
   refDir = refDir.replace(/\/$/, '');
@@ -126,6 +130,7 @@ try {
   // map addresses and ids
   let addMap = {};
   let idsMap = {};
+  let locMap = {};
   const getAddsIds = () => {
     let linkedFile = usersDir + '/' + inFiles.addrs;
     let fileStream = fs.createReadStream(linkedFile);
@@ -136,16 +141,27 @@ try {
       addMap[j.ID].push(j);
     });
     rl.on('close', r => {
-      let linkedFile = usersDir + '/' + inFiles.ids;
+      let linkedFile = usersDir + '/' + inFiles.local;
       let fileStream = fs.createReadStream(linkedFile);
       let rl = readline.createInterface({ input: fileStream, crlfDelay: Infinity });
       rl.on('line', r => {
-        let j = fieldMap(fmap.ids, r);
-        if (!idsMap[j.ID]) idsMap[j.ID] = [];
-        idsMap[j.ID].push(j);
+        let j = fieldMap(fmap.local, r);
+        if (!locMap[j.ID]) locMap[j.ID] = [];
+        locMap[j.ID].push(j);
       });
       rl.on('close', r => {
-        main();
+        // console.log(locMap);
+        let linkedFile = usersDir + '/' + inFiles.ids;
+        let fileStream = fs.createReadStream(linkedFile);
+        let rl = readline.createInterface({ input: fileStream, crlfDelay: Infinity });
+        rl.on('line', r => {
+          let j = fieldMap(fmap.ids, r);
+          if (!idsMap[j.ID]) idsMap[j.ID] = [];
+          idsMap[j.ID].push(j);
+        });
+        rl.on('close', r => {
+          main();
+        });
       });
     });
   }
@@ -165,12 +181,19 @@ try {
     let total = 0;
     let urc = 0;
     let irc = 0;
+    let erc = 0;
     rl.on('line', r => {
       total++;
+      let err = '';
       let j = fieldMap(fmap.users, r);
       let id = j.ID;
+      let loc = (locMap[id]) ? locMap[id][0] : '';
       let a = (addMap[id]) ? addMap[id][0] : '';
       let ids = idsMap[id] || [];
+      let bstatus = (loc) ? loc.BOR_STATUS.replace(/^0*/, '') : '';
+      let expiry = (loc) ? loc.EXPIRY_DATE.replace(/(....)(..)(..)/, '$1-$2-$3') : '';
+      let email = (a) ? a.EMAIL_ADDRESS : '';
+      let phone = (a) ? a.TELEPHONE : '';
       let bc = '';
       ids.forEach(i => {
         if (i.KEY_TYPE === '01') bc = i.KEY_DATA;
@@ -178,19 +201,77 @@ try {
       let user = {
         id: uuid(id, ns),
         username: id,
-        active: true,
+        active: false,
         personal: {}
       }
+      // console.log(loc);
+      user.patronGroup = (bstatus) ? tmap.usergroups[bstatus] : 'ERR';
+      if (expiry) {
+        user.expirationDate = expiry;
+        user.active = (expiry > nowDate) ? true : false;
+      }
+      if (user.patronGroup === 'ERR') err = `No patron group found for "${bstatus}"`;
       if (bc) user.barcode = bc;
-      console.log(user);
+      if (j.NAME) {
+        let [last, first] = j.NAME.split(/, */);
+        if (!first) first = '';
+        user.personal.lastName = last;
+        let f = first.match(/(.+) (.*)$/);
+        if (f && f[1]) first = f[1];
+        user.personal.firstName = first;
+        if (f && f[2]) user.personal.middleName = f[2];
+        user.personal.preferredFirstName = first;
+        if (email) user.personal.email = email;
+        if (phone) user.personal.phone = phone;
+        if (a && a.ADDRESS2) {
+          user.addresses = [];
+          let ad = {
+            countryId: 'US',
+            addressLine1: a.ADDRESS2,
+          }
+          if (a.ADDRESS3) {
+            let cs = a.ADDRESS3.match(/(.+), ([A-Z]{2})$/);
+            if (cs) {
+              ad.city = cs[1];
+              ad.region = cs[2];
+            } else {
+              ad.addressLine2 = a.ADDRESS3;
+              if (a.ADDRESS4) {
+                let cs = a.ADDRESS4.match(/(.+), ([A-Z]{2})$/);
+                if (cs) {
+                  ad.city = cs[1];
+                  ad.region = cs[2];
+                } else {
+                  ad.city = a.ADDRESS4;
+                  if (a.ADDRESS5 && !ad.region) {
+                    ad.region = a.ADDRESS5;
+                  }
+                }
+              }
+            }
+          } 
+          if (a.ZIP) ad.postalCode = a.ZIP;
+          ad.addressTypeId = refData.addressTypes['Home'];
+          ad.primaryAddress = true;
+          user.addresses.push(ad);
+        }
+      }
+      if (err) {
+        console.log(`ERROR [${id}] ${err}`);
+        erc++;
+      } else {
+        writeJSON(files.users, user);
+        urc++;
+      }
+      if (process.env.DEBUG) console.log(user);
     });
     rl.on('close', () => {
       let end = new Date().valueOf()
       let tt = (end - begin)/1000;
       console.log('Done!');
       console.log('Lines processed:', total);
-      console.log('Holdings:', urc);
-      console.log('Items:', irc);
+      console.log('Users:', urc);
+      console.log('Errors:', erc);
       console.log('Total time (secs):', tt);
     });
   }
