@@ -18,7 +18,9 @@ const inFiles = {
 if (process.env.TEST) inFiles.users = 'z303-test.seqaa';
 
 const files = {
-  users: 'users.jsonl'
+  users: 'users.jsonl',
+  perms: 'perms.jsonl',
+  err: 'create-errors.jsonl'
 };
 
 const rfiles = {
@@ -194,6 +196,7 @@ try {
       let expiry = (loc) ? loc.EXPIRY_DATE.replace(/(....)(..)(..)/, '$1-$2-$3') : '';
       let email = (a) ? a.EMAIL_ADDRESS : '';
       let phone = (a) ? a.TELEPHONE : '';
+      let odate = (j.OPEN_DATE) ? j.OPEN_DATE.replace(/(....)(..)(..)/, '$1-$2-$3') : '';
       let bc = '';
       ids.forEach(i => {
         if (i.KEY_TYPE === '01') bc = i.KEY_DATA;
@@ -210,6 +213,9 @@ try {
         user.expirationDate = expiry;
         user.active = (expiry > nowDate) ? true : false;
       }
+      if (odate) {
+        user.enrollmentDate = odate;
+      }
       if (user.patronGroup === 'ERR') err = `No patron group found for "${bstatus}"`;
       if (bc) user.barcode = bc;
       if (j.NAME) {
@@ -221,10 +227,13 @@ try {
         user.personal.firstName = first;
         if (f && f[2]) user.personal.middleName = f[2];
         user.personal.preferredFirstName = first;
-        if (email) user.personal.email = email;
+        if (email) { 
+          user.personal.email = email;
+          user.personal.preferredContactTypeId = 'Email';
+        }
         if (phone) user.personal.phone = phone;
         if (a && a.ADDRESS2) {
-          user.addresses = [];
+          user.personal.addresses = [];
           let ad = {
             countryId: 'US',
             addressLine1: a.ADDRESS2,
@@ -253,14 +262,27 @@ try {
           if (a.ZIP) ad.postalCode = a.ZIP;
           ad.addressTypeId = refData.addressTypes['Home'];
           ad.primaryAddress = true;
-          user.addresses.push(ad);
+          user.personal.addresses.push(ad);
         }
+        
       }
       if (err) {
         console.log(`ERROR [${id}] ${err}`);
+        let errObj = {
+          gobal: j,
+          local: locMap[id],
+          addresses: addMap[id],
+          ids: ids
+        }
+        writeJSON(files.err, errObj);
         erc++;
       } else {
         writeJSON(files.users, user);
+        let perm = {
+          id: uuid(user.id, ns),
+          userId: user.id
+        }
+        writeJSON(files.perms, perm);
         urc++;
       }
       if (process.env.DEBUG) console.log(user);
