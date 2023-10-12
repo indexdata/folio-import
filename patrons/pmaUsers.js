@@ -229,7 +229,7 @@ try {
         user.personal.preferredFirstName = first;
         if (email) { 
           user.personal.email = email;
-          user.personal.preferredContactTypeId = 'Email';
+          user.personal.preferredContactTypeId = '002';
         }
         if (phone) user.personal.phone = phone;
         if (a && a.ADDRESS2) {
