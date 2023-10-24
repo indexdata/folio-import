@@ -64,6 +64,15 @@ const writeJSON = (fn, data) => {
   fs.writeFileSync(fn, out, { flag: 'a' });
 }
 
+const noteGen = (note, type, staffOnly) => {
+  let out = {
+    note: note,
+    itemNoteTypeId: type
+  }
+  out.staffOnly = (staffOnly) ? true : false;
+  return out;
+}
+
 try {
   if (!mainDir) {
     throw new Error('Usage: $ node items-pma2.js <ref_dir> <inst_map> <items_dir>');
@@ -163,18 +172,39 @@ try {
       // console.log(j);
       let bid = j.DOC_NUMBER;
       let hid = j.HOL_DOC_NUMBER;
-      let seq = j.ITEM_SEQUENCE.replace(/^00(.+).$/, '$1').padStart(3, '0');
+      let seq = j.ITEM_SEQUENCE.replace(/^00(.+).$/, '$1');
       let iid = bid + '-' + seq;
       let inst = instMap[bid];
+      let coll = j.COLLECTION;
+      let locId = refData.locations[coll];
+      let cn = j.CALL_NO;
+      let cnType = j.CALL_NO_TYPE;
+      let htype = inst.mtype;
+      if (cn) cn = cn.replace(/\$\$./g, ' ').trim();
       if (inst) {
         if (!hseen[hid]) {
           let hr = {
+            _version: '1',
             id: uuid(hid, ns),
             hrid: hid,
-            instanceId: inst.id
+            instanceId: inst.id,
           };
+          if (locId) {
+            hr.permanentLocationId = locId;
+          } else {
+            console.log(`WARN [${bid} ${seq}] no location found for:`, coll);
+            let nt = refData.holdingsNoteTypes.Note;
+            let n = noteGen(`Aleph location code: ${coll}`, nt, 1);
+            hr.notes = [n];
+            hr.permanentLocationId = refData.locations.UNMAPPED;
+          }
+          hr.sourceId = refData.holdingsRecordsSources['FOLIO'];
+          hr.callNumber = cn;
+          hr.callNumberTypeId = (cnType === '0') ? refData.callNumberTypes['Library of Congress classification'] : refData.callNumberTypes['Other scheme'];
+          let htypeName = htypes[htype] || 'Physical';
+          hr.holdingsTypeId = refData.holdingsTypes[htypeName];
           hrc++;
-          // console.log(hr)
+          console.log(j), console.log(hr);
           writeJSON(files.holdings, hr);
           hseen[hid] = hr.id;
         }
@@ -201,7 +231,6 @@ try {
       }
 
 
-      //if (cn) cn = cn.replace(/\$\$./g, ' ').trim();
      });
     rl.on('close', () => {
       let end = new Date().valueOf()
