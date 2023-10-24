@@ -49,6 +49,8 @@ const htypes = {
   s: 'Serial'
 }
 
+const relType = '758f13db-ffb4-440e-bb10-8a364aa6cb4a';  // bound-with
+
 const fieldMap = (fmap, record) => {
   let f = {};
   for (let k in fmap) {
@@ -152,7 +154,7 @@ try {
   const lmap = {};
   const hseen = {};
   const iseen = {};
-  const bseen = {};
+  const bcused = {};
 
   const main = () => {
     let mainFile = mainDir + '/' + inFiles.items;
@@ -180,6 +182,15 @@ try {
       let cn = j.CALL_NO;
       let cnType = j.CALL_NO_TYPE;
       let htype = inst.mtype;
+      let mtype = j.MATERIAL;
+      let status = j.ITEM_STATUS;
+      let bc = j.BARCODE;
+      let vol = j.DESCRIPTION;
+      let staffNote = j.NOTE_INTERNAL;
+      let pubNote = j.NOTE_OPAC;
+      let circNote = j.NOTE_CIRCULATION;
+      let link = lmap[iid];
+      console.log(link);
       if (cn) cn = cn.replace(/\$\$./g, ' ').trim();
       if (inst) {
         if (!hseen[hid]) {
@@ -204,20 +215,68 @@ try {
           let htypeName = htypes[htype] || 'Physical';
           hr.holdingsTypeId = refData.holdingsTypes[htypeName];
           hrc++;
-          console.log(j), console.log(hr);
+          // console.log(j), console.log(hr);
           writeJSON(files.holdings, hr);
           hseen[hid] = hr.id;
         }
         if (!iseen[iid]) {
           if (hseen[hid]) {
             let ir = {
+              _version: '1',
               id: uuid(iid, ns),
               hrid: iid,
               holdingsRecordId: hseen[hid]
             };
+            ir.materialTypeId = tmap.mtypes[mtype] || refData.mtypes['unspecified'];
+            ir.permanentLoanTypeId = refData.loantypes['Can circulate'];
+            ir.status = {
+              name: tmap.statuses[status] || 'Available'
+            };
+            if (bc && !bcused[bc]) {
+              ir.barcode = bc;
+              bcused[bc] = 1;
+            } else {
+              console.log(`WARN duplicate barcode found ${ai.bc}`);
+            }
+            if (vol && htype === 's') {
+              ir.enumeration = vol;
+            } else if (vol && vol.match(/^c\./)) {
+              ir.copyNumber = vol;
+            } else {
+              if (vol) ir.volume = vol;
+            }
+
+            let notes = [];
+            let noteType = refData.itemNoteTypes.Note;
+            if (staffNote) {
+              let n = noteGen(staffNote, noteType, 1);
+              notes.push(n);
+            }
+            if (pubNote) {
+              let n = noteGen(pubNote, noteType, 0);
+              notes.push(n);
+            }
+            if (notes[0]) ir.notes = notes;
+            if (circNote) {
+              ir.circulationNotes = [
+                {
+                  noteType: 'Check in',
+                  id: uuid(ir.id + circNote + 'i', ns),
+                  note: circNote,
+                  staffOnly: true
+                },
+                {
+                  noteType: 'Check out',
+                  id: uuid(ir.id + circNote + 'o', ns),
+                  note: circNote,
+                  staffOnly: true
+                }
+              ]
+            }
+
             iseen[iid] = ir.id;
             irc++;
-            // console.log(ir)
+            console.log(ir);
             writeJSON(files.items, ir);
           } else {
             console.log('ERROR no holdings record from for', hid);
@@ -259,15 +318,15 @@ try {
       let j = fieldMap(fmap.links, r);
       if (j.LKR_TYPE === 'ITM') {
         ic++
-        // if (process.env.TEST) console.log(j);
-        if (!lmap[j.DOC_NUMBER]) lmap[j.DOC_NUMBER] = [];
-        lmap[j.DOC_NUMBER].push(j.LKR_DOC_NUMBER);
+        // console.log(j);
+        let lkey = j.SOURCE_DOC_NUMBER + '-0' + j.SEQUENCE; 
+        lmap[lkey] = j.DOC_NUMBER;
       }
     });
     rl.on('close', () => {
       console.log('Links found', ic);
-      // console.log(lmap);
       main();
+      // console.log(lmap);
     });
   }
 
