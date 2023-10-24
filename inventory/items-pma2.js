@@ -18,7 +18,8 @@ if (process.env.TEST) inFiles.items = 'test.seqaa';
 
 const files = {
   holdings: 'holdings.jsonl',
-  items: 'items.jsonl'
+  items: 'items.jsonl',
+  rel: 'relationships.jsonl'
 };
 
 const rfiles = {
@@ -149,12 +150,11 @@ try {
   }
   // console.log(tmap); return;
 
- 
-
   const lmap = {};
   const hseen = {};
   const iseen = {};
   const bcused = {};
+  const rseen = {};
 
   const main = () => {
     let mainFile = mainDir + '/' + inFiles.items;
@@ -189,8 +189,22 @@ try {
       let staffNote = j.NOTE_INTERNAL;
       let pubNote = j.NOTE_OPAC;
       let circNote = j.NOTE_CIRCULATION;
-      let link = lmap[iid];
-      console.log(link);
+      let link = lmap[bid];
+      let supIn = (link) ? link.id : '';
+      let subIn = (supIn && instMap[bid]) ? instMap[bid].id : '';
+      if (supIn && subIn) {
+        let rel = {
+          superInstanceId: supIn,
+          subInstanceId: subIn,
+          instanceRelationshipTypeId: relType
+        }
+        rel.id = uuid(supIn + subIn, ns);
+        if (!rseen[rel.id]) {
+          // console.log(rel);
+          writeJSON(files.rel, rel);
+          rseen[rel.id] = 1;
+        }
+      }
       if (cn) cn = cn.replace(/\$\$./g, ' ').trim();
       if (inst) {
         if (!hseen[hid]) {
@@ -276,7 +290,7 @@ try {
 
             iseen[iid] = ir.id;
             irc++;
-            console.log(ir);
+            // console.log(ir);
             writeJSON(files.items, ir);
           } else {
             console.log('ERROR no holdings record from for', hid);
@@ -319,8 +333,9 @@ try {
       if (j.LKR_TYPE === 'ITM') {
         ic++
         // console.log(j);
-        let lkey = j.SOURCE_DOC_NUMBER + '-0' + j.SEQUENCE; 
-        lmap[lkey] = j.DOC_NUMBER;
+        let lkey = j.SOURCE_DOC_NUMBER; 
+        let parentId = (instMap[j.DOC_NUMBER]) ? instMap[j.DOC_NUMBER].id : '';
+        lmap[lkey] = { id: parentId, hrid: j.DOC_NUMBER, seq: '0' + j.SEQUENCE }; 
       }
     });
     rl.on('close', () => {
