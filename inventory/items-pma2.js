@@ -176,41 +176,41 @@ try {
       let j = fieldMap(fmap.items, r);
       // console.log(j);
       let bid = j.DOC_NUMBER;
-      let seq = j.ITEM_SEQUENCE.replace(/^00(.+).$/, '$1');
-      let iid = bid + '-' + seq;
       let inst = instMap[bid];
-      let coll = j.COLLECTION;
-      let locId = refData.locations[coll];
-      let cn = j.CALL_NO;
-      let cnType = j.CALL_NO_TYPE;
-      let htype = inst.mtype;
-      let mtype = j.MATERIAL;
-      let status = j.ITEM_STATUS;
-      let bc = j.BARCODE;
-      let vol = j.DESCRIPTION;
-      let staffNote = j.NOTE_INTERNAL;
-      let pubNote = j.NOTE_OPAC;
-      let circNote = j.NOTE_CIRCULATION;
-      let link = lmap[bid];
-      // console.log(link);
-      let supIn = (link) ? link.id : '';
-      let subIn = (supIn && instMap[bid]) ? instMap[bid].id : '';
-      if (supIn && subIn) {
-        let rel = {
-          superInstanceId: supIn,
-          subInstanceId: subIn,
-          instanceRelationshipTypeId: relType
-        }
-        rel.id = uuid(supIn + subIn, ns);
-        if (!rseen[rel.id]) {
-          writeJSON(files.rel, rel);
-          rseen[rel.id] = 1;
-          rlc++;
-        }
-      }
-      if (cn) cn = cn.replace(/\$\$./g, ' ').trim();
-      let hid = bid + '-' + coll;
       if (inst) {
+        let seq = j.ITEM_SEQUENCE.replace(/^00(.+).$/, '$1');
+        let iid = bid + '-' + seq;
+        let coll = j.COLLECTION;
+        let locId = refData.locations[coll];
+        let cn = j.CALL_NO;
+        let cnType = j.CALL_NO_TYPE;
+        let htype = inst.mtype;
+        let mtype = j.MATERIAL;
+        let status = j.ITEM_STATUS;
+        let bc = j.BARCODE;
+        let vol = j.DESCRIPTION;
+        let staffNote = j.NOTE_INTERNAL;
+        let pubNote = j.NOTE_OPAC;
+        let circNote = j.NOTE_CIRCULATION;
+        let link = lmap[bid];
+        // console.log(link);
+        let supIn = (link) ? link.id : '';
+        let subIn = (supIn && instMap[bid]) ? instMap[bid].id : '';
+        if (supIn && subIn) {
+          let rel = {
+            superInstanceId: supIn,
+            subInstanceId: subIn,
+            instanceRelationshipTypeId: relType
+          }
+          rel.id = uuid(supIn + subIn, ns);
+          if (!rseen[rel.id]) {
+            writeJSON(files.rel, rel);
+            rseen[rel.id] = 1;
+            rlc++;
+          }
+        }
+        if (cn) cn = cn.replace(/\$\$./g, ' ').trim();
+        let hid = bid + '-' + coll;
         if (!hseen[hid]) {
           let hr = {
             _version: '1',
@@ -254,7 +254,7 @@ try {
               ir.barcode = bc;
               bcused[bc] = 1;
             } else {
-              console.log(`WARN duplicate barcode found ${ai.bc}`);
+              console.log(`WARN duplicate barcode found ${bc}`);
             }
             if (vol && htype === 's') {
               ir.enumeration = vol;
@@ -348,7 +348,7 @@ try {
       } else {
         console.log('ERROR instance record not found for', bid);
       }
-     });
+    });
     rl.on('close', () => {
       // console.log(lsmap);
       let end = new Date().valueOf()
