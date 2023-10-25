@@ -123,6 +123,7 @@ try {
     arr.forEach(e => {
       let c = e.split(/\t/);
       let key = c[0];
+      key = key.replace(/^0/, '');
       let val = c[1] || 'unspecified';
       tmap[prop][key] = (refData[prop]) ? refData[prop][val] : val;
     });
@@ -209,6 +210,7 @@ try {
       }
       // console.log(loc);
       user.patronGroup = (bstatus) ? tmap.usergroups[bstatus] : 'ERR';
+      if (!user.patronGroup) user.patronGroup = 'ERR';
       if (expiry) {
         user.expirationDate = expiry;
         user.active = (expiry > nowDate) ? true : false;
