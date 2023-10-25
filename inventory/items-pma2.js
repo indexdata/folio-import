@@ -19,7 +19,8 @@ if (process.env.TEST) inFiles.items = 'test.seqaa';
 const files = {
   holdings: 'holdings.jsonl',
   items: 'items.jsonl',
-  rel: 'relationships.jsonl'
+  rel: 'relationships.jsonl',
+  bwp: 'bound-with-parts.jsonl'
 };
 
 const rfiles = {
@@ -151,6 +152,7 @@ try {
   // console.log(tmap); return;
 
   const lmap = {};
+  const lsmap = {};
   const hseen = {};
   const iseen = {};
   const bcused = {};
@@ -167,13 +169,13 @@ try {
     let total = 0;
     let irc = 0;
     let hrc = 0;
-    let erc = 0;
+    let rlc = 0;
+    let bwc = 0;
     rl.on('line', r => {
       total++;
       let j = fieldMap(fmap.items, r);
       // console.log(j);
       let bid = j.DOC_NUMBER;
-      let hid = j.HOL_DOC_NUMBER;
       let seq = j.ITEM_SEQUENCE.replace(/^00(.+).$/, '$1');
       let iid = bid + '-' + seq;
       let inst = instMap[bid];
@@ -190,6 +192,7 @@ try {
       let pubNote = j.NOTE_OPAC;
       let circNote = j.NOTE_CIRCULATION;
       let link = lmap[bid];
+      // console.log(link);
       let supIn = (link) ? link.id : '';
       let subIn = (supIn && instMap[bid]) ? instMap[bid].id : '';
       if (supIn && subIn) {
@@ -200,12 +203,13 @@ try {
         }
         rel.id = uuid(supIn + subIn, ns);
         if (!rseen[rel.id]) {
-          // console.log(rel);
           writeJSON(files.rel, rel);
           rseen[rel.id] = 1;
+          rlc++;
         }
       }
       if (cn) cn = cn.replace(/\$\$./g, ' ').trim();
+      let hid = bid + '-' + coll;
       if (inst) {
         if (!hseen[hid]) {
           let hr = {
@@ -288,6 +292,48 @@ try {
               ]
             }
 
+            // lets deal with bound-with-parts;
+            let lm = lsmap[iid];
+            if (lm) {
+              let ocr = 0;
+              lm.hrecs.forEach(h => {
+                ocr++;
+                let ostr = ocr.toString().padStart(2, '0');
+                let hrid = `bw${iid}${ostr}`;
+                let hr = {
+                  _version: 1,
+                  id: uuid(hrid, ns),
+                  hrid: hrid,
+                  instanceId: instMap[h].id
+                }
+                if (locId) {
+                  hr.permanentLocationId = locId;
+                } else {
+                  console.log(`WARN [${bid} ${seq}] no location found for:`, coll);
+                  let nt = refData.holdingsNoteTypes.Note;
+                  let n = noteGen(`Aleph location code: ${coll}`, nt, 1);
+                  hr.notes = [n];
+                  hr.permanentLocationId = refData.locations.UNMAPPED;
+                }
+                hr.sourceId = refData.holdingsRecordsSources['FOLIO'];
+                hr.callNumber = cn;
+                hr.callNumberTypeId = (cnType === '0') ? refData.callNumberTypes['Library of Congress classification'] : refData.callNumberTypes['Other scheme'];
+                let htypeName = htypes[htype] || 'Physical';
+                hr.holdingsTypeId = refData.holdingsTypes[htypeName];
+                if (!hseen[hrid]) {
+                  writeJSON(files.holdings, hr);
+                  hrc++;
+                  hseen[hrid] = hr.id;
+                }
+                let bwp = {
+                  id: uuid(hr.id + ir.id, ns),
+                  holdingsRecordId: hr.id,
+                  itemId: ir.id
+                }
+                writeJSON(files.bwp, bwp);
+                bwc++;
+              });
+            }
             iseen[iid] = ir.id;
             irc++;
             // console.log(ir);
@@ -302,16 +348,17 @@ try {
       } else {
         console.log('ERROR instance record not found for', bid);
       }
-
-
      });
     rl.on('close', () => {
+      // console.log(lsmap);
       let end = new Date().valueOf()
       let tt = (end - begin)/1000;
       console.log('Done!');
       console.log('Lines processed:', total);
       console.log('Holdings:', hrc);
       console.log('Items:', irc);
+      console.log('Relationships:', rlc);
+      console.log('Bound withs:', bwc);
       console.log('Total time (secs):', tt);
     });
   }
@@ -335,13 +382,17 @@ try {
         // console.log(j);
         let lkey = j.SOURCE_DOC_NUMBER; 
         let parentId = (instMap[j.DOC_NUMBER]) ? instMap[j.DOC_NUMBER].id : '';
-        lmap[lkey] = { id: parentId, hrid: j.DOC_NUMBER, seq: '0' + j.SEQUENCE }; 
+        lmap[lkey] = { id: parentId, hrid: j.DOC_NUMBER, seq: '0' + j.SEQUENCE };
+        let lskey = j.DOC_NUMBER + '-0' + j.SEQUENCE;
+        if (!lsmap[lskey]) lsmap[lskey] = { hr: {}, hrecs: [] };
+        lsmap[lskey].hrecs.push(j.SOURCE_DOC_NUMBER);
       }
     });
     rl.on('close', () => {
       console.log('Links found', ic);
       main();
       // console.log(lmap);
+      // console.log(lsmap);
     });
   }
 
