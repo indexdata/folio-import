@@ -533,6 +533,19 @@ foreach (@ARGV) {
       1;
     };
     next unless $ok;
+    my $f008 = $marc->field('008');
+    if ($f008) {
+      my $d008 = $f008->data();
+      if (length($d008) == 38) {
+        $d008 .=' d';
+        $f008->data($d008);
+        print $marc->field('001')->data() . "\n";
+      } elsif (length($d008) == 39) {
+        $d008 .='d';
+        $f008->data($d008);
+        print $marc->field('001')->data() . "\n"; 
+      }
+    }
 
     my $srsmarc = $marc->clone();
 
@@ -942,20 +955,6 @@ sub make_srs {
     my $snap_id = shift;
     my $srs_file = shift;
     my $srs = {};
-
-    #### this control number stuff is preprocessed in the <RAW> block.
-    # my $control = $marc->field('001');
-    # my $new_ctrl_field = MARC::Field->new('001', $hrid);
-    # if ($control) {
-    #  my $sys_num = $control->data();
-    #  if ($sys_num ne $hrid) {
-    #    my $field = MARC::Field->new('035', ' ', ' ', a=>$sys_num);
-    #   $marc->insert_fields_ordered($field);
-    #    $control->replace_with($new_ctrl_field);
-    #  }
-    # } else {
-    #  $marc->insert_fields_ordered($new_ctrl_field);
-    # }
 
     my $mij = MARC::Record::MiJ->to_mij($marc);
     my $parsed = decode_json($mij);
