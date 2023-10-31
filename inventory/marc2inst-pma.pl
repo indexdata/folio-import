@@ -536,6 +536,7 @@ foreach (@ARGV) {
 
     my $srsmarc = $marc->clone();
 
+
     my $ldr = $marc->leader();
     my $blevel = substr($ldr, 7, 1);
     my $type = substr($ldr, 6, 1);
@@ -663,6 +664,13 @@ foreach (@ARGV) {
     $rec->{subjects} = dedupe(@{ $rec->{subjects} });
     $rec->{languages} = dedupe(@{ $rec->{languages} });
     $rec->{series} = dedupe(@{ $rec->{series} });
+    if ($marc->field('005')) {
+      my $cd = $marc->field('005')->data();
+      my $yr = substr($cd, 0, 4);
+      my $mo = substr($cd, 4, 2);
+      my $dy = substr($cd, 6, 2);
+      $rec->{catalogedDate} = "$yr-$mo-$dy";
+    }
     
     # Assign uuid based on hrid;
     if (!$rec->{hrid}) {
