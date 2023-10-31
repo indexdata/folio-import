@@ -539,11 +539,9 @@ foreach (@ARGV) {
       if (length($d008) == 38) {
         $d008 .=' d';
         $f008->data($d008);
-        print $marc->field('001')->data() . "\n";
       } elsif (length($d008) == 39) {
         $d008 .='d';
         $f008->data($d008);
-        print $marc->field('001')->data() . "\n"; 
       }
     }
 
