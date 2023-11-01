@@ -38,7 +38,12 @@ let nf = 0;
 
     const logData = fs.readFileSync(logFile, { encoding: 'utf-8'});
     const log = JSON.parse(logData);
-    let f = log.failedUsers;
+    let f = [];
+    for (let x = 0; x < log.failedUsers.length; x++) {
+	    if (!log.failedUsers[x].errorMessage.match(/code 400/)) {
+		    f.push(log.failedUsers[x]);
+            }
+    }
     let fusers = [];
     for (let x = 0; x < f.length; x++) {
       t = x + 1;
@@ -56,8 +61,8 @@ let nf = 0;
         if (curUser) { 
           if (curUser.externalSystemId !== u.externalSystemId) {
             fs.writeFileSync(undoFile, JSON.stringify(curUser) + '\n', {flag: 'a'});
-            curUser.externalSystemId = u.externalSystemId;
             console.log(`Changing externalSystemId from ${curUser.externalSystemId} to ${u.externalSystemId} for ${u.username}`);
+            curUser.externalSystemId = u.externalSystemId;
             try {
               let purl = `${base}/users/${curUser.id}`;
               console.log(`PUT ${purl}`);
