@@ -1,6 +1,5 @@
 const fs = require('fs');
 const readline = require('readline');
-const uuid = require('uuid/v5');
 const path = require('path');
 
 let usersFile = process.argv[2];
@@ -8,7 +7,7 @@ let itemsFile = process.argv[3];
 let circDir = process.argv[4];
 let etcDir = '../etc/pma';
 
-const ns = '76ce8d5f-8da0-4bc6-bebd-f4d108223af6';
+const sp = '58350f6a-40aa-49ef-bac3-cefe5ede1439';
 
 const inFiles = {
   loans: 'z36.seqaa'
@@ -137,7 +136,8 @@ const dateParse = (date, time) => {
         if (ibc) {
           let l = {
             itemBarcode: ibc,
-            userBarcode: user.bc
+            userBarcode: user.bc,
+            servicePointId: sp
           };
           let ldate = j.LOAN_DATE || '';
           let ltime = j.LOAN_HOUR || '';
