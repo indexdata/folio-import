@@ -161,6 +161,7 @@ const post_put = async (authToken, url, checkout, r) => {
             loanObj.loanDate = data.loanDate;
             loanObj.action = 'dueDateChanged';
             loanObj.renewalCount = renewalCount;
+            delete loanObj.dueDateChangedByNearExpireUser;
             if (process.env.DEBUG) console.log(loanObj);
             let lurl = `${config.okapi}/circulation/loans/${loanObj.id}`;
             console.log(`[${d}] PUT ${lurl} (${data.itemBarcode})`);
