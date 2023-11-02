@@ -8,6 +8,7 @@ let circDir = process.argv[4];
 let etcDir = '../etc/pma';
 
 const sp = '58350f6a-40aa-49ef-bac3-cefe5ede1439';
+const sixmo = 182 * 24 * 60 * 60 * 1000;
 
 const inFiles = {
   loans: 'z36.seqaa'
@@ -40,7 +41,7 @@ const writeJSON = (fn, data) => {
 
 const dateParse = (date, time) => {
   let d = date.replace(/(....)(..)(..)/, '$1-$2-$3');
-  let t = (time) ? time.replace(/^(..)(..)/, 'T$1:$2:00-05:00') : 'T11:59:00-05:00';
+  let t = (time) ? time.replace(/^(..)(..)/, 'T$1:$2:00-04:00') : 'T23:59:00-04:00';
   return(d + t)
 }
 
@@ -54,7 +55,9 @@ const dateParse = (date, time) => {
     }
 
     let begin = new Date().valueOf();
-    let nowDate = new Date().toISOString().replace(/T.+/, '');
+    let goLive = new Date('2023-11-13').valueOf();
+    let sixMoLater = new Date(goLive + sixmo).toISOString();
+    sixMoLater = sixMoLater.replace(/T.+/, 'T23:59:00-04:00')
 
     circDir = circDir.replace(/\/$/, '');
 
@@ -145,6 +148,7 @@ const dateParse = (date, time) => {
           let ddate = j.DUE_DATE || '';
           let dtime = j.DUE_HOUR || '';
           l.dueDate = dateParse(ddate, '2359');
+          if (l.dueDate < '2023-11-13T23:59:00-05:00') l.dueDate = sixMoLater;
           let rc = (j.NO_RENEWAL) ? parseInt(j.NO_RENEWAL, 10) : '0'; 
           l.renewalCount = rc;
           writeJSON(files.co, l);
