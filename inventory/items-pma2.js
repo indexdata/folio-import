@@ -192,6 +192,7 @@ try {
         let staffNote = j.NOTE_INTERNAL;
         let pubNote = j.NOTE_OPAC;
         let circNote = j.NOTE_CIRCULATION;
+        let ips = j.ITEM_PROCESS_STATUS || '';
         let link = lmap[bid];
         // console.log(link);
         let supIn = (link) ? link.id : '';
@@ -233,7 +234,6 @@ try {
           let htypeName = htypes[htype] || 'Physical';
           hr.holdingsTypeId = refData.holdingsTypes[htypeName];
           hrc++;
-          // console.log(j), console.log(hr);
           writeJSON(files.holdings, hr);
           hseen[hid] = hr.id;
         }
@@ -250,6 +250,26 @@ try {
             ir.status = {
               name: tmap.statuses[status] || 'Available'
             };
+
+            if (ips === 'WI') {
+              ir.status.name = 'Withdrawn';
+              ir.discoverySuppress = true;
+            } else if (ips.match(/^(CT|IP|RC)$/)) {
+              ir.status.name = 'In process';
+            } else if (ips.match(/^(SR|MI)$/)) {
+              ir.status.name = 'Missing';
+            } else if (ips === 'NA') {
+              ir.status.name = 'Unavailable';
+            } else if (ips === 'LO') {
+              ir.status.name = 'Long missing';
+              ir.discoverySuppress = true; 
+            } else if (ips === 'IL') {
+              ir.discoverySuppress = true; 
+            } else if (ips === 'CA') {
+              ir.temporaryLocationId = refData.locations.ORDERCANCELLED;
+              ir.discoverySuppress = true; 
+            }
+
             if (bc && !bcused[bc]) {
               ir.barcode = bc;
               bcused[bc] = 1;
