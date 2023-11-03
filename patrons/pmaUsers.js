@@ -228,7 +228,7 @@ try {
         if (f && f[1]) first = f[1];
         user.personal.firstName = first;
         if (f && f[2]) user.personal.middleName = f[2];
-        user.personal.preferredFirstName = first;
+        // user.personal.preferredFirstName = first;
         if (email) { 
           user.personal.email = email;
           user.personal.preferredContactTypeId = '002';
