@@ -1,0 +1,9 @@
+Aleph item status code	FOLIO status name	FOLIO Loan Type	Count	Aleph Labels	
+01	Available	Can circulate	219308	Circulates	
+02	Available	Reading room	20008	Reading Room Only	Reading Room Only = Restricted?
+	Available	Can circulate	4539		
+98	Available	EZBorrow	4079	ILL Circulation 	Used for EZBorrow/Reshare "dummy" records. Not sure what happens to them after they're checked in/returned
+05	Available	Reading room	1262	Does not circulate	Does not circulate =  Restricted?
+04	Available	Can circulate	841	Fiction circulation	Not sure why the differentiation between this and "Circulates." Different loan periods?
+36	Available	Can circulate	737		?
+03	Intellectual item	Can circulate	5	Electronic resource	Electronic resource
