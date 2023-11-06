@@ -147,6 +147,10 @@ try {
       let key = c[0];
       let val = c[1] || 'unspecified';
       tmap[prop][key] = (refData[prop]) ? refData[prop][val] : val;
+      if (prop === 'statuses') {
+        if (!tmap.loantypes) tmap.loantypes = {};
+        tmap.loantypes[key] = refData.loantypes[c[2]];
+      }
     });
   }
   // console.log(tmap); return;
@@ -239,6 +243,7 @@ try {
         }
         if (!iseen[iid]) {
           if (hseen[hid]) {
+            let notes = [];
             let ir = {
               _version: '1',
               id: uuid(iid, ns),
@@ -246,7 +251,7 @@ try {
               holdingsRecordId: hseen[hid]
             };
             ir.materialTypeId = tmap.mtypes[mtype] || refData.mtypes['unspecified'];
-            ir.permanentLoanTypeId = refData.loantypes['Can circulate'];
+            ir.permanentLoanTypeId = tmap.loantypes[status] || refData.loantypes['Can circulate'];
             ir.status = {
               name: tmap.statuses[status] || 'Available'
             };
@@ -254,6 +259,8 @@ try {
             if (ips === 'WI') {
               ir.status.name = 'Withdrawn';
               ir.discoverySuppress = true;
+            } else if (ips === 'OS') {
+              ir.temporaryLocationId = refData.locations.OFFSITESTORAGE;
             } else if (ips.match(/^(CT|IP|RC)$/)) {
               ir.status.name = 'In process';
             } else if (ips.match(/^(SR|MI)$/)) {
@@ -268,6 +275,23 @@ try {
             } else if (ips === 'CA') {
               ir.temporaryLocationId = refData.locations.ORDERCANCELLED;
               ir.discoverySuppress = true; 
+            } else if (ips.match(/^(S1|L1|A1|00|1|0)$/)) {
+              let nt = refData.itemNoteTypes.Provenance;
+              let n = noteGen(`Item Process Status = ${ips}`, nt, 1);
+              notes.push(n);
+            } else if (ips === 'CL') {
+              let nt = refData.itemNoteTypes.Provenance;
+              let n = noteGen('Item Process Status = Claimed', nt, 1);
+              notes.push(n);
+              ir.status.name = 'Unavailable';
+            } else if (ips === 'EX') {
+              ir.temporaryLocationId = refData.locations.ONEXHIBITION;
+              ir.status.name = 'Unavailable';
+            } else if (ips.match(/^(OI|OR)$/)) {
+              ir.temporaryLocationId = refData.locations.ONORDER;
+              ir.status.name = 'On order';
+            } else if (ips === 'RS') {
+              ir.temporaryLocationId = refData.locations.RESERVES;
             }
 
             if (bc && !bcused[bc]) {
@@ -284,7 +308,6 @@ try {
               if (vol) ir.volume = vol;
             }
 
-            let notes = [];
             let noteType = refData.itemNoteTypes.Note;
             if (staffNote) {
               let n = noteGen(staffNote, noteType, 1);
