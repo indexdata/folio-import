@@ -426,6 +426,23 @@ foreach (@ARGV) {
   }
   #print Dumper($sups); exit;
 
+  my $ofile = $infile;
+  $ofile =~ s/^(.+\/).*/${1}001map.tsv/;
+  open OMAP, $ofile or die "Can't open $ofile!";
+  my $omap = {};
+  my $ol = 0;
+  while (<OMAP>) {
+    chomp;
+    if ($ol) {
+      my ($n, $k, $v) = split /\t/;
+      $v = sprintf("%09d", $v);
+      $k =~ s/ *$//;
+      $omap->{$k} = $v;
+    }
+    $ol++;
+  }
+  # print Dumper($omap); exit;
+
   my $snapshot_id = make_snapshot($snap_file);
   
   # open a collection of raw marc records
@@ -485,6 +502,15 @@ foreach (@ARGV) {
       1;
     };
     next unless $ok;
+    my $f001 = $marc->field('001');
+    if ($f001) {
+      my $cnum = $f001->data();
+      my $id = $omap->{$cnum} || '';
+      if ($id) {
+        $f001->data($id);
+      }
+    }
+
     my $f008 = $marc->field('008');
     if ($f008) {
       my $d008 = $f008->data();
