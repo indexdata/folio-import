@@ -146,8 +146,8 @@ try {
       let c = e.split(/\t/);
       let key = c[0];
       let val = c[1] || 'unspecified';
-      tmap[prop][key] = (refData[prop]) ? refData[prop][val] : val;
-      if (prop === 'statuses') {
+      if (key) tmap[prop][key] = (refData[prop]) ? refData[prop][val] : val;
+      if (prop === 'statuses' && key) {
         if (!tmap.loantypes) tmap.loantypes = {};
         tmap.loantypes[key] = refData.loantypes[c[2]];
       }
