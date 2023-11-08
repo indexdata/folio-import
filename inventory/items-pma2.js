@@ -175,19 +175,25 @@ try {
     let hrc = 0;
     let rlc = 0;
     let bwc = 0;
+    let ezSeq = 0;
     rl.on('line', r => {
       total++;
       let j = fieldMap(fmap.items, r);
       // console.log(j);
-      let bid = j.DOC_NUMBER;
+      let bid = (j.DOC_NUMBER.match(/^0009/)) ? '000999999' : j.DOC_NUMBER;
       let inst = instMap[bid];
       if (inst) {
         let seq = j.ITEM_SEQUENCE.replace(/^00(.+).$/, '$1');
+        if (bid === '000999999') {
+          ezSeq++;
+          seq = ezSeq.toString().padStart(3, '0');
+        }
         let iid = bid + '-' + seq;
         let coll = j.COLLECTION;
         let locId = refData.locations[coll];
         let cn = j.CALL_NO;
         let cnType = j.CALL_NO_TYPE;
+        let cnTypeId = (cnType === '0') ? refData.callNumberTypes['Library of Congress classification'] : refData.callNumberTypes['Other scheme'];
         let htype = inst.mtype;
         let mtype = j.MATERIAL;
         let status = j.ITEM_STATUS;
@@ -234,12 +240,12 @@ try {
           }
           hr.sourceId = refData.holdingsRecordsSources['FOLIO'];
           hr.callNumber = cn;
-          hr.callNumberTypeId = (cnType === '0') ? refData.callNumberTypes['Library of Congress classification'] : refData.callNumberTypes['Other scheme'];
+          hr.callNumberTypeId = cnTypeId;
           let htypeName = htypes[htype] || 'Physical';
           hr.holdingsTypeId = refData.holdingsTypes[htypeName];
           hrc++;
-          writeJSON(files.holdings, hr);
-          hseen[hid] = hr.id;
+          // writeJSON(files.holdings, hr);
+          hseen[hid] = hr;
         }
         if (!iseen[iid]) {
           if (hseen[hid]) {
@@ -248,10 +254,18 @@ try {
               _version: '1',
               id: uuid(iid, ns),
               hrid: iid,
-              holdingsRecordId: hseen[hid]
+              holdingsRecordId: hseen[hid].id
             };
             ir.materialTypeId = tmap.mtypes[mtype] || refData.mtypes['unspecified'];
             ir.permanentLoanTypeId = tmap.loantypes[status] || refData.loantypes['Can circulate'];
+            if (cn && !hseen[hid].callNumber) {
+              hseen[hid].callNumber = cn;
+              hseen[hid].callNumberTypeId = cnTypeId;
+            }
+            if (cn && cn !== hseen[hid].callNumber) {
+              ir.itemLevelCallNumber = cn;
+              ir.itemLevelCallNumberTypeId = cnTypeId;
+            }
             ir.status = {
               name: tmap.statuses[status] || 'Available'
             };
@@ -299,6 +313,8 @@ try {
               bcused[bc] = 1;
             } else {
               console.log(`WARN duplicate barcode found ${bc}`);
+              let n = noteGen(`Duplicate barcode: ${bc}`, refData.itemNoteTypes.Note, 1);
+              notes.push(n);
             }
             if (vol && htype === 's') {
               ir.enumeration = vol;
@@ -393,7 +409,10 @@ try {
       }
     });
     rl.on('close', () => {
-      // console.log(lsmap);
+      console.log('Writing holdings records...');
+      for (let hr in hseen) {
+        writeJSON(files.holdings, hseen[hr]);
+      };
       let end = new Date().valueOf()
       let tt = (end - begin)/1000;
       console.log('Done!');
