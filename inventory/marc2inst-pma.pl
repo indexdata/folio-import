@@ -445,6 +445,19 @@ foreach (@ARGV) {
 
   my $snapshot_id = make_snapshot($snap_file);
   
+  # create a dummy EZBorrow instance
+  my $ezb_hrid = '000999999';
+  my $ezb = {
+    _version => '1',
+    id => uuid($ezb_hrid),
+    hrid => $ezb_hrid,
+    source => 'FOLIO',
+    title => 'EZBorrow Item',
+    instanceTypeId => '6f6d41bb-868f-45b9-9606-e41f7661257c',
+    discoverySuppress => JSON::true 
+  };
+  my $ezb_out = $json->encode($ezb) . "\n";
+
   # open a collection of raw marc records
   $/ = "\x1D";
  
@@ -452,13 +465,16 @@ foreach (@ARGV) {
   open my $OUT, ">>:encoding(UTF-8)", $save_path;
   open my $SRSOUT, ">>:encoding(UTF-8)", $srs_file;
   open IDMAP, ">>:encoding(UTF-8)", $id_map;
+  
+  write_objects($OUT, $ezb_out);
+  print IDMAP "$ezb_hrid|$ezb->{id}|||m|[]\n";
+
   my $inst_recs;
   my $srs_recs;
   my $idmap_lines = '';
-  my $success = 0;
+  my $success = 1;
   my $pcount = 0;
   my $hrids = {};
-  my $coll = { instances => [] };
   while (<RAW>) {
     my $rec = {
       _version => $ver,
