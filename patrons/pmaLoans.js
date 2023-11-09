@@ -148,7 +148,7 @@ const dateParse = (date, time) => {
           let ddate = j.DUE_DATE || '';
           let dtime = j.DUE_HOUR || '';
           l.dueDate = dateParse(ddate, '2359');
-          if (l.dueDate < '2023-11-13T23:59:00-05:00') l.dueDate = sixMoLater;
+          if (l.dueDate < '2023-11-13T23:59:00-05:00' && !ikey.match(/^0009/)) l.dueDate = sixMoLater;
           let rc = (j.NO_RENEWAL) ? parseInt(j.NO_RENEWAL, 10) : '0'; 
           l.renewalCount = rc;
           writeJSON(files.co, l);
