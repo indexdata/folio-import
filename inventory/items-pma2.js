@@ -186,17 +186,14 @@ try {
       // console.log(j);
       let bid = (j.DOC_NUMBER.match(/^0009/)) ? '000999999' : j.DOC_NUMBER;
       let seq = j.ITEM_SEQUENCE.replace(/^00(.+).$/, '$1');
+      let loanKey = '';
       if (bid === '000999999') {
-        let loanKey = j.DOC_NUMBER + '-' + seq;
+        loanKey = j.DOC_NUMBER + '-' + seq;
         if (!loanMap[loanKey]) doMake = false;
       }
       let inst = instMap[bid];
       if (inst && doMake) {
-        if (bid === '000999999') {
-          ezSeq++;
-          seq = ezSeq.toString().padStart(3, '0');
-        }
-        let iid = bid + '-' + seq;
+        let iid = (bid === '000999999') ? loanKey : bid + '-' + seq;
         let coll = j.COLLECTION;
         let locId = refData.locations[coll];
         let cn = j.CALL_NO;
