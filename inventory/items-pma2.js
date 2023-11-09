@@ -12,7 +12,8 @@ const ns = '89ff2bcb-b0d2-4ccc-a6e8-cb9b5ca3000e';
 
 const inFiles = {
   items: 'z30.seqaa',
-  links: 'z103.seqaa'
+  links: 'z103.seqaa',
+  loans: 'z36.seqaa'
 }
 if (process.env.TEST) inFiles.items = 'test.seqaa';
 
@@ -42,6 +43,7 @@ const tfiles = {
 const ffiles = {
   items: 'z30-fields.txt',
   links: 'z103-fields.txt',
+  loans: 'z36-fields.txt'
 }
 
 const htypes = {
@@ -157,6 +159,7 @@ try {
 
   const lmap = {};
   const lsmap = {};
+  const loanMap = {};
   const hseen = {};
   const iseen = {};
   const bcused = {};
@@ -179,11 +182,16 @@ try {
     rl.on('line', r => {
       total++;
       let j = fieldMap(fmap.items, r);
+      let doMake = true;
       // console.log(j);
       let bid = (j.DOC_NUMBER.match(/^0009/)) ? '000999999' : j.DOC_NUMBER;
+      let seq = j.ITEM_SEQUENCE.replace(/^00(.+).$/, '$1');
+      if (bid === '000999999') {
+        let loanKey = j.DOC_NUMBER + '-' + seq;
+        if (!loanMap[loanKey]) doMake = false;
+      }
       let inst = instMap[bid];
-      if (inst) {
-        let seq = j.ITEM_SEQUENCE.replace(/^00(.+).$/, '$1');
+      if (inst && doMake) {
         if (bid === '000999999') {
           ezSeq++;
           seq = ezSeq.toString().padStart(3, '0');
@@ -425,6 +433,33 @@ try {
     });
   }
 
+  const mapLoans = () => {
+    console.log('Mapping Loans...');
+    let file = mainDir + '/' + inFiles.loans;
+    let fileStream = fs.createReadStream(file);
+    let rl = readline.createInterface({
+      input: fileStream,
+      crlfDelay: Infinity
+    });
+
+    let ic = 0;
+    rl.on('line', r => {
+      let j = fieldMap(fmap.loans, r);
+      // console.log(j);
+      if (j.DOC_NUMBER.match(/^0009/)) {
+        let seq = j.ITEM_SEQUENCE.replace(/^..(...)./, '$1');
+        let iid = j.DOC_NUMBER + '-' + seq;
+        loanMap[iid] = 1;
+        ic++
+      }
+    });
+    rl.on('close', () => {
+      console.log('Loans mapped:', ic);
+      main();
+      // console.log(loanMap);
+    });
+  }
+
   const mapLinks = () => {
     console.log('Mapping links...');
     let file = mainDir + '/' + inFiles.links;
@@ -452,7 +487,7 @@ try {
     });
     rl.on('close', () => {
       console.log('Links found', ic);
-      main();
+      mapLoans();
       // console.log(lmap);
       // console.log(lsmap);
     });
