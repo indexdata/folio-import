@@ -385,9 +385,9 @@ try {
                 let htypeName = htypes[htype] || 'Physical';
                 hr.holdingsTypeId = refData.holdingsTypes[htypeName];
                 if (!hseen[hrid]) {
-                  writeJSON(files.holdings, hr);
+                  // writeJSON(files.holdings, hr);
                   hrc++;
-                  hseen[hrid] = hr.id;
+                  hseen[hrid] = hr;
                 }
                 let bwp = {
                   id: uuid(hr.id + ir.id, ns),

@@ -520,7 +520,7 @@ foreach (@ARGV) {
     next unless $ok;
     my $f001 = $marc->field('001');
     if ($f001) {
-      my $cnum = $f001->data();
+      my $cnum = $f001->data() || '';
       my $id = $omap->{$cnum} || '';
       if ($id) {
         $f001->data($id);
@@ -530,12 +530,9 @@ foreach (@ARGV) {
     my $f008 = $marc->field('008');
     if ($f008) {
       my $d008 = $f008->data();
-      if (length($d008) == 38) {
-        $d008 .=' d';
-        $f008->data($d008);
-      } elsif (length($d008) == 39) {
-        $d008 .='d';
-        $f008->data($d008);
+      if (length($d008) != 40) {
+        my $nd = sprintf("%-40s", $d008);
+        $f008->data($nd);
       }
     }
 
@@ -670,11 +667,14 @@ foreach (@ARGV) {
     $rec->{languages} = dedupe(@{ $rec->{languages} });
     $rec->{series} = dedupe(@{ $rec->{series} });
     if ($marc->field('005')) {
-      my $cd = $marc->field('005')->data();
+      my $cd = $marc->field('005')->data() || '20000101000';
       my $yr = substr($cd, 0, 4);
       my $mo = substr($cd, 4, 2);
       my $dy = substr($cd, 6, 2);
-      $rec->{catalogedDate} = "$yr-$mo-$dy";
+      my $cdstr = "$yr-$mo-$dy";
+      if ($cdstr =~ /^[12]\d\d\d-\d\d-\d\d/) {
+        $rec->{catalogedDate} = $cdstr;
+      }
     }
     
     # Assign uuid based on hrid;
