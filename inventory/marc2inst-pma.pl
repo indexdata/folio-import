@@ -28,8 +28,6 @@ use Time::Piece;
 use Data::Dumper;
 
 binmode(STDOUT, 'utf8');
-# MARC::Charset->ignore_errors(1);
-# MARC::Charset->assume_unicode(1);
 
 my $version = '1';
 my $ver = $ENV{FOLIO_VERSION} || '1';
@@ -535,7 +533,10 @@ foreach (@ARGV) {
         $f008->data($nd);
       }
     }
-
+    # delete alpha tags
+    my @del_fields = $marc->field('EBT','FMT','LDR','LKR','SID','STA','Z30');
+    $marc->delete_fields(@del_fields);
+    
     my $srsmarc = $marc->clone();
 
 
