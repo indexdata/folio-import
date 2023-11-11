@@ -158,7 +158,7 @@ const dateParse = (date, time) => {
           }
           chc++;
         } else {
-          console.log('ERROR No item found for:', ikey);
+          console.log('ERROR No item found for:', ikey + '\t' + un);
           j.errMsg = 'Item not found';
           writeJSON(files.er, j);
           err++;
