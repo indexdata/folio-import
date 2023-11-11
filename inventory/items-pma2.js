@@ -361,41 +361,43 @@ try {
             if (lm) {
               let ocr = 0;
               lm.hrecs.forEach(h => {
-                ocr++;
-                let ostr = ocr.toString().padStart(2, '0');
-                let hrid = `bw${iid}${ostr}`;
-                let hr = {
-                  _version: 1,
-                  id: uuid(hrid, ns),
-                  hrid: hrid,
-                  instanceId: instMap[h].id
+                if (instMap[h]) {
+                  ocr++;
+                  let ostr = ocr.toString().padStart(2, '0');
+                  let hrid = `bw${iid}${ostr}`;
+                  let hr = {
+                    _version: 1,
+                    id: uuid(hrid, ns),
+                    hrid: hrid,
+                    instanceId: instMap[h].id
+                  }
+                  if (locId) {
+                    hr.permanentLocationId = locId;
+                  } else {
+                    console.log(`WARN [${bid} ${seq}] no location found for:`, coll);
+                    let nt = refData.holdingsNoteTypes.Note;
+                    let n = noteGen(`Aleph location code: ${coll}`, nt, 1);
+                    hr.notes = [n];
+                    hr.permanentLocationId = refData.locations.UNMAPPED;
+                  }
+                  hr.sourceId = refData.holdingsRecordsSources['FOLIO'];
+                  hr.callNumber = cn;
+                  hr.callNumberTypeId = (cnType === '0') ? refData.callNumberTypes['Library of Congress classification'] : refData.callNumberTypes['Other scheme'];
+                  let htypeName = htypes[htype] || 'Physical';
+                  hr.holdingsTypeId = refData.holdingsTypes[htypeName];
+                  if (!hseen[hrid]) {
+                    // writeJSON(files.holdings, hr);
+                    hrc++;
+                    hseen[hrid] = hr;
+                  }
+                  let bwp = {
+                    id: uuid(hr.id + ir.id, ns),
+                    holdingsRecordId: hr.id,
+                    itemId: ir.id
+                  }
+                  writeJSON(files.bwp, bwp);
+                  bwc++;
                 }
-                if (locId) {
-                  hr.permanentLocationId = locId;
-                } else {
-                  console.log(`WARN [${bid} ${seq}] no location found for:`, coll);
-                  let nt = refData.holdingsNoteTypes.Note;
-                  let n = noteGen(`Aleph location code: ${coll}`, nt, 1);
-                  hr.notes = [n];
-                  hr.permanentLocationId = refData.locations.UNMAPPED;
-                }
-                hr.sourceId = refData.holdingsRecordsSources['FOLIO'];
-                hr.callNumber = cn;
-                hr.callNumberTypeId = (cnType === '0') ? refData.callNumberTypes['Library of Congress classification'] : refData.callNumberTypes['Other scheme'];
-                let htypeName = htypes[htype] || 'Physical';
-                hr.holdingsTypeId = refData.holdingsTypes[htypeName];
-                if (!hseen[hrid]) {
-                  // writeJSON(files.holdings, hr);
-                  hrc++;
-                  hseen[hrid] = hr;
-                }
-                let bwp = {
-                  id: uuid(hr.id + ir.id, ns),
-                  holdingsRecordId: hr.id,
-                  itemId: ir.id
-                }
-                writeJSON(files.bwp, bwp);
-                bwc++;
               });
             }
             iseen[iid] = ir.id;

@@ -387,6 +387,7 @@ foreach (@ARGV) {
   my $icount = 0;
   my $hcount = 0;
   my $errcount = 0;
+  my $badcount = 0;
   my $start = time();
 
   my $save_path = $infile;
@@ -408,6 +409,10 @@ foreach (@ARGV) {
   my $err_path = $infile;
   $err_path =~ s/^(.+)\..+$/$1_err.mrc/;
   unlink $err_path;
+
+  my $bad_path = $infile;
+  $bad_path =~ s/^(.+)\..+$/$1_bad.mrc/;
+  unlink $bad_path;
 
   my $presuc_file = $infile;
   $presuc_file =~ s/^(.+)\..+$/$1_presuc.jsonl/;
@@ -515,7 +520,13 @@ foreach (@ARGV) {
       $marc = MARC::Record->new_from_usmarc($raw);
       1;
     };
-    next unless $ok;
+    if (!$ok) {
+      open BADOUT, ">>:encoding(UTF-8)", $bad_path;
+      print BADOUT $raw;
+      close BADOUT;
+      $badcount++;
+      next;
+    };
     my $f001 = $marc->field('001');
     if ($f001) {
       my $cnum = $f001->data() || '';
@@ -761,7 +772,8 @@ foreach (@ARGV) {
   print "\nDone!\n$count Marc records processed in $tt seconds";
   print "\nInstances: $success ($save_path)";
   print "\nPreSuc:    $pcount ($presuc_file)";
-  print "\nErrors:    $errcount\n";
+  print "\nErrors:    $errcount";
+  print "\nBad Marc:  $badcount\n";
 }
 
 sub write_objects {
