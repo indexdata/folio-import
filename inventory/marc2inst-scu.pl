@@ -26,6 +26,7 @@ use UUID::Tiny ':std';
 use MARC::Charset 'marc8_to_utf8';
 use Time::Piece;
 use Data::Dumper;
+use Scalar::Util qw(reftype);
 
 binmode(STDOUT, 'utf8');
 
@@ -655,6 +656,7 @@ while (<RAW>) {
   $rec->{subjects} = dedupe(@{ $rec->{subjects} });
   $rec->{languages} = dedupe(@{ $rec->{languages} });
   $rec->{series} = dedupe(@{ $rec->{series} });
+  $rec->{identifiers} = dedupe(@{ $rec->{identifiers} });
   if ($marc->field('005')) {
     my $cd = $marc->field('005')->data() || '20000101000';
     my $yr = substr($cd, 0, 4);
@@ -768,9 +770,20 @@ sub write_objects {
 sub dedupe {
   my @out;
   my $found = {};
-  foreach (@_) { 
-    $found->{$_}++;
-    if ($found->{$_} < 2) {
+  foreach (@_) {
+    my $el = $_;
+    my $key = '';
+    my $rt = reftype($el) || '';
+    if ($rt eq 'HASH') {
+      foreach my $k (sort keys %{ $el }) {
+        $key .= $el->{$k};
+      }
+    } else {
+      $key = $el;
+    }
+    print $key . "\n";
+    $found->{$key}++;
+    if ($found->{$key} < 2) {
       push @out, $_;
     }
   }
