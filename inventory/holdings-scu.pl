@@ -100,9 +100,6 @@ sub getRefData {
             } else {
               $name = $_->{name};
             }
-            if ($refroot eq 'locations') {
-              $name =~ s/^.+\///;
-            }
             my $id = $_->{id};
             $refobj->{$refroot}->{$name} = $id;
           }
@@ -134,8 +131,7 @@ sub makeMapFromTsv {
         $tsvmap->{$prop}->{$code} = $name;
       } else {
         if ($prop eq 'locations') {
-          $name = $col[1] || '';
-          $name =~ s/^.+\///;
+          $name = $col[2] || '';
           $tsvmap->{loc_codes}->{$code} = $name;
           $loc_code_map->{$code} = $name || 'UNMAPPED';
         }
@@ -213,7 +209,7 @@ foreach (@ARGV) {
     my $psv = $inst_map->{$bid} || '';
     my @b = split(/\|/, $psv);
     if (!$b[0]) {
-      print "WARN instanceId not found for $bid!\n";
+      print "ERROR instanceId not found for $bid!\n";
       $errcount++;
       next;
     }
@@ -264,9 +260,11 @@ foreach (@ARGV) {
     $h->{formerIds} = [ $obj->{id} ];
     $h->{hrid} = $hid;
     $h->{instanceId} = $b[0];
-    my $loc_id = $tofolio->{locations}->{$loc_code} || $refdata->{locations}->{UNMAPPED};
-    if (!$tofolio->{locations}->{$loc_code}) {
-      print "WARN: LocationId not found for $loc_code\n";
+    my $loc_id = $tofolio->{locations}->{$loc_code};
+    if (!$loc_id) {
+      print "ERROR: LocationId not found for $loc_code\n";
+      $errcount++;
+      next;
     }
     $h->{permanentLocationId} = $loc_id;
     $h->{sourceId} = $source_id;
@@ -284,23 +282,29 @@ foreach (@ARGV) {
     $h->{callNumberTypeId} = $cntype || '6caca63e-5651-4db6-9247-3205156e9699'; #other
     $h->{callNumber} = $cn if $cn;
     $h->{discoverySuppress} = ($ff->{118}->{value} ne '-') ? JSON::true : JSON::false ;
-    foreach my $t ('f','n','w','z') {
+    foreach my $t ('i', 'f','n','w','z') {
       foreach (@{ $vf->{$t} }) {
         push @{ $h->{notes} }, make_notes($t, $_);
       }
     }
 
-    my $hs = statement($obj);
-    foreach my $t ('866', '867', '868') {
-      my $htype = 'holdingsStatements';
-      if ($t eq '867') {
-        $htype = 'holdingsStatementsForSupplements';
-      } elsif ($t eq '868') {
-        $htype = 'holdingsStatementsForIndexes';
+    if ($vf->{h}) {
+      foreach my $hs (@{ $vf->{h} }) {
+        push @{ $h->{holdingsStatements} }, make_statement($hs)
       }
-      # print Dumper($hs);
-      foreach my $f (@{ $hs->{$t}}) {
-        push @{ $h->{$htype} }, make_statement($f->{text}, $f->{note});
+    } else {
+      my $hs = statement($obj);
+      foreach my $t ('866', '867', '868') {
+        my $htype = 'holdingsStatements';
+        if ($t eq '867') {
+          $htype = 'holdingsStatementsForSupplements';
+        } elsif ($t eq '868') {
+          $htype = 'holdingsStatementsForIndexes';
+        }
+        # print Dumper($hs);
+        foreach my $f (@{ $hs->{$t}}) {
+          push @{ $h->{$htype} }, make_statement($f->{text}, $f->{note});
+        }
       }
     }
 
