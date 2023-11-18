@@ -159,6 +159,7 @@ $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
 # print Dumper($refdata); exit;
 my $tofolio = makeMapFromTsv($ref_dir, $refdata);
+$tofolio->{locations}->{multi} = $refdata->{locations}->{multi};
 # print Dumper($tofolio->{locations}); exit;
 # print Dumper($loc_code_map); exit;
 
