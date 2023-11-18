@@ -131,7 +131,7 @@ sub makeMapFromTsv {
       }
       $name =~ s/^ +| +$//g;
       if ($prop eq 'statuses') {
-        $tsvmap->{$prop}->{$code} = $name;
+        $tsvmap->{$prop}->{$code} = $col[3] || 'Available';
       } else {
         $name = lc($name);
         if ($refdata->{$prop}->{$name}) {
@@ -174,7 +174,8 @@ close MAP;
 $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
 my $sierra2folio = makeMapFromTsv($ref_dir, $refdata);
-# print Dumper($sierra2folio); exit;
+$sierra2folio->{locations}->{multi} = $refdata->{locations}->{multi};
+# print Dumper($sierra2folio->{statuses}); exit;
 
 my $relations = {
   '0' => 'Resource',
@@ -199,7 +200,6 @@ my $inc = {};
 my $bseen = {};
 my $hseen = {};
 my $hhrid = '';
-my $hhrids = {};
 
 foreach (@ARGV) {
   my $infile = $_;
@@ -344,10 +344,9 @@ sub make_hi {
   }
   my $write = ($repcn->{a} > 1 || $repcn->{b} > 1) ? 1 : 0;
   my $hfound = 0;
-  my $mkey = "$bhrid-$loc";
   my $holdid = '';
-  if ($hold_map->{$mkey}) {
-    $holdid = $hold_map->{$mkey}[0];
+  if ($hold_map->{$hkey}) {
+    $holdid = $hold_map->{$hkey}[0];
   }
 
   # make holdings record from item;
@@ -360,7 +359,6 @@ sub make_hi {
     $hrec->{id} = $hid;
     $hrec->{_version} = $ver;
     $hhrid = $hkey;
-    $hhrids->{$hid} = $hhrid;
     $hrec->{hrid} = $hhrid;
     $hrec->{instanceId} = $bid;
     $hrec->{permanentLocationId} = $locid;
@@ -406,23 +404,10 @@ sub make_hi {
   if ($iid) {
     $iid =~ s/^\.//;
     $irec->{_version} = $ver;
-    $irec->{holdingsRecordId} = $holdid || $hhrids->{$hid};
+    $irec->{holdingsRecordId} = $holdid || $hid;
     my @pnotes;
-    if ($bwc == 0) {
-      $irec->{barcode} = $bc if $bc && !$bseen->{$bc};
-      $bseen->{$bc} = 1;
-    } else {
-      push @notes, "This item is bound with $bc";
-      my $main_id = uuid($iid);
-      $bw = {
-        itemId => $main_id,
-        holdingsRecordId => $irec->{holdingsRecordId},
-        id => uuid($main_id . $irec->{holdingsRecordId})
-      };
-      $bws .= $json->encode($bw) . "\n";
-      $bcount++;
-      $iid = "$iid-$bwc";
-    }
+    $irec->{barcode} = $bc if $bc && !$bseen->{$bc};
+    $bseen->{$bc} = 1;
     $irec->{hrid} = "i$iid";
     $irec->{id} = uuid($iid);
     if ($blevel eq 's') {
