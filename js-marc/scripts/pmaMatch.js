@@ -12,7 +12,7 @@ try {
 
   let dir = path.dirname(rawFile);
   let fn = path.basename(rawFile);
-  let outFile = `${dir}/${fn}-sodocs.jsonl`;
+  let outFile = `${dir}/${fn}-id2bc.jsonl`;
   if (fs.existsSync(outFile)) fs.unlinkSync(outFile);
 
   const fileStream = fs.createReadStream(rawFile, { encoding: 'utf8' });
@@ -36,15 +36,19 @@ try {
         let marc = parseMarc(r);
 	
   let f930 = marc.fields['930'];
-	let bc = (f930) ? getSubs(f930[0], '5') : '';
-	if (bc) {
+  let bcs = [];
+  if (f930) {
+    f930.forEach(f => {
+      let bc = getSubs(f, '5');
+      bcs.push(bc);
+    });
+  }
+	if (bcs[0]) {
 		let out = {};
-          let f001 = marc.fields['001'];
-          console.log(f001);
-        	let hrid = (f001) ? f001[0] : '';
-        	out.hrid = hrid;
-		out.barcode = bc;
-		out.num = count;
+    let f001 = marc.fields['001'];
+    let hrid = (f001) ? f001[0] : '';
+    out.hrid = hrid;
+		out.barcode = bcs;
 		fs.writeFileSync(outFile, JSON.stringify(out) + '\n', {flag: 'a'});
 	}
       } catch (e) {

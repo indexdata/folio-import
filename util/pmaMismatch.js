@@ -31,10 +31,16 @@ try {
       let j = JSON.parse(r);
       let k = j.barcode || '';
       let ihrid = j.hrid.replace(/-.+$/, '');
-      if (idMap[k] && idMap[k] !== ihrid && !seen[ihrid]) {
-        console.log(`${k}\t${ihrid}\t${idMap[k]}`);
-        seen[ihrid] = 1;
-        total++;
+      if (idMap[k]) {
+        let imap = idMap[k];
+        let found = 0;
+        imap.forEach(i => {
+          if (i === ihrid) found++;
+        })
+        if (!found > 0) {
+          console.log(`${k}\t${ihrid}`);
+          total++;
+        }
       }
     });
     rl.on('close', () => {
@@ -54,7 +60,11 @@ try {
   rl.on('line', r => {
     total++;
     let j = JSON.parse(r);
-    idMap[j.barcode] = j.hrid;
+    let bcs = j.barcode;
+    bcs.forEach(b => {
+      if (!idMap[b]) idMap[b] = [];
+      idMap[b].push(j.hrid);
+    });
   });
   rl.on('close', () => {
     console.log('Done!');
