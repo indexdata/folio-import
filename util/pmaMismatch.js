@@ -30,6 +30,7 @@ try {
     rl.on('line', r => {
       let j = JSON.parse(r);
       let k = j.barcode || '';
+      let hid = j.holdingsRecordId;
       let ihrid = j.hrid.replace(/-.+$/, '');
       if (idMap[k]) {
         let imap = idMap[k];
@@ -37,15 +38,16 @@ try {
         imap.forEach(i => {
           if (i === ihrid) found++;
         })
-        if (!found > 0) {
-          console.log(`${k}\t${ihrid}`);
+        if (!found > 0 && !seen[hid]) {
+          console.log(`${hid}\t${idMap[k]}`);
           total++;
+          seen[hid] = 1;
         }
       }
     });
     rl.on('close', () => {
-      console.log('Done!');
-      console.log('Found', total);
+      // console.log('Done!');
+      // console.log('Found', total);
     });
   }
 

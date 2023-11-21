@@ -199,6 +199,7 @@ my $start = time();
 my $inc = {};
 my $bseen = {};
 my $hseen = {};
+my $cnmap = {};
 my $hhrid = '';
 
 foreach (@ARGV) {
