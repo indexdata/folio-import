@@ -469,13 +469,13 @@ foreach (@ARGV) {
   open my $SRSOUT, ">>:encoding(UTF-8)", $srs_file;
   open IDMAP, ">>:encoding(UTF-8)", $id_map;
   
-  write_objects($OUT, $ezb_out);
-  print IDMAP "$ezb_hrid|$ezb->{id}|||m|[]\n";
+  # write_objects($OUT, $ezb_out);
+  # print IDMAP "$ezb_hrid|$ezb->{id}|||m|[]\n";
 
   my $inst_recs;
   my $srs_recs;
   my $idmap_lines = '';
-  my $success = 1;
+  my $success = 0;
   my $pcount = 0;
   my $hrids = {};
   while (<RAW>) {
@@ -510,6 +510,7 @@ foreach (@ARGV) {
     
     $count++;
     my $raw = $_;
+
     # if ($_ =~ /^\d{5}....a/) {
       # $raw = $_
     # } else {
@@ -747,8 +748,6 @@ foreach (@ARGV) {
         write_objects($PSOUT, $json->encode($presuc) . "\n");
         $pcount++;
       }
-
-
     } else {
       open ERROUT, ">>:encoding(UTF-8)", $err_path;
       print ERROUT $raw;

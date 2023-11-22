@@ -32,14 +32,24 @@ try {
       let k = j.barcode || '';
       let hid = j.holdingsRecordId;
       let ihrid = j.hrid.replace(/-.+$/, '');
+      let ti = '';
+      let hh = '';
+      let id = '';
       if (idMap[k]) {
         let imap = idMap[k];
+        // console.log(imap);
         let found = 0;
         imap.forEach(i => {
-          if (i === ihrid) found++;
+          ti = i.title;
+          hh = i.hasHoldings;
+          id = i.id;
+          //console.log(i);
+          if (i.id === ihrid) { 
+            found++;
+          }
         })
         if (!found > 0 && !seen[hid]) {
-          console.log(`${hid}\t${idMap[k]}`);
+          console.log(`${hid}\t${id}\t${hh}\t${ti}`);
           total++;
           seen[hid] = 1;
         }
@@ -63,13 +73,15 @@ try {
     total++;
     let j = JSON.parse(r);
     let bcs = j.barcode;
+    let ti = j.title;
+    let hh = j.hasHoldings;
     bcs.forEach(b => {
       if (!idMap[b]) idMap[b] = [];
-      idMap[b].push(j.hrid);
+      idMap[b].push({id: j.hrid, title: ti, hasHoldings: hh});
     });
   });
   rl.on('close', () => {
-    console.log('Done!');
+    // console.log('Done!');
     main();
   });
 
