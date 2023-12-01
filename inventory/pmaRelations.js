@@ -11,6 +11,8 @@ const ns = '89ff2bcb-b0d2-4ccc-a6e8-cb9b5ca3000e';
 
 const inFiles = {
   links: 'z103.seqaa',
+  items: 'items.jsonl',
+  holdings: 'holdings.jsonl'
 }
 
 const files = {
@@ -42,7 +44,7 @@ const writeJSON = (fn, data) => {
 
 try {
   if (!mainDir) {
-    throw new Error('Usage: $ node pmaRelations.js <inst_map> <items_dir>');
+    throw new Error('Usage: $ node pmaRelations.js <inst_map> <relations_dir>');
   }
   if (!fs.existsSync(mainDir)) {
     throw new Error('Can\'t find input file');
@@ -100,7 +102,6 @@ try {
     });
 
     let total = 0;
-    let irc = 0;
     let hrc = 0;
     let rlc = 0;
     let bwc = 0;
@@ -108,8 +109,11 @@ try {
     rl.on('line', r => {
       total++;
       let j = fieldMap(fmap.links, r);
+      // console.log(j);
       let dn = j.DOC_NUMBER;
       let ldn = j.LKR_DOC_NUMBER;
+      let seq = j.SEQUENCE;
+      seq = seq.padStart(3, '0');
       let bid = '';
       let supIn = instMap[dn];
       let subIn = instMap[ldn];
@@ -125,41 +129,31 @@ try {
           rseen[rel.id] = 1;
           rlc++;
         }
-      }
-      // lets deal with bound-with-parts;
-      let iid = '';
-      let lm = lsmap[iid];
-      if (lm) {
-        let ocr = 0;
-        lm.hrecs.forEach(h => {
-          if (instMap[h]) {
-            ocr++;
-            let ostr = ocr.toString().padStart(2, '0');
-            let hrid = `bw${iid}${ostr}`;
-            let hr = {
-              _version: 1,
-              id: uuid(hrid, ns),
-              hrid: hrid,
-              instanceId: instMap[h].id
-            }
-            if (locId) {
-              hr.permanentLocationId = locId;
-            } else {
-              console.log(`WARN [${bid} ${seq}] no location found for:`, coll);
-              let nt = refData.holdingsNoteTypes.Note;
-              let n = noteGen(`Aleph location code: ${coll}`, nt, 1);
-              hr.notes = [n];
-              hr.permanentLocationId = refData.locations.UNMAPPED;
-            }
-            hr.sourceId = refData.holdingsRecordsSources['FOLIO'];
-            hr.callNumber = cn;
-            hr.callNumberTypeId = (cnType === '0') ? refData.callNumberTypes['Library of Congress classification'] : refData.callNumberTypes['Other scheme'];
-            let htypeName = htypes[htype] || 'Physical';
-            hr.holdingsTypeId = refData.holdingsTypes[htypeName];
-            if (!hseen[hrid]) {
-              // writeJSON(files.holdings, hr);
-              hrc++;
-              hseen[hrid] = hr;
+        // lets deal with bound-with-parts;
+
+        let ikey = `${dn}-${seq}`;
+        let ir = itemMap[ikey];
+        if (!ir) {
+          for (s = 1; s < 10; s++) {
+            let seq = s.toString().padStart(3, '0');
+            ikey = `${dn}-${seq}`;
+            ir = itemMap[ikey];
+            if (ir) break;
+          }
+        }
+        if (ir) {
+          let hid = ir.holdingsRecordId;
+          let hr = Object.assign({}, holdMap[hid]);
+          ldn = ldn.replace(/^0+/, '');
+          dn = dn.replace(/^0+/, '');
+          hr.hrid = `bw${ldn}-${dn}`;
+          hr.id = uuid(hr.hrid, ns);
+          hr.instanceId = subIn.id;
+          if (hr) {
+            if (!hseen[hr.id]) {
+              writeJSON(files.holdings, hr);
+              hseen[hr.id] = 1;
+              hrc++
             }
             let bwp = {
               id: uuid(hr.id + ir.id, ns),
@@ -169,20 +163,15 @@ try {
             writeJSON(files.bwp, bwp);
             bwc++;
           }
-        });
+        }
       }
     });
     rl.on('close', () => {
-      console.log('Writing holdings records...');
-      for (let hr in hseen) {
-        writeJSON(files.holdings, hseen[hr]);
-      };
       let end = new Date().valueOf()
       let tt = (end - begin)/1000;
       console.log('Done!');
       console.log('Lines processed:', total);
       console.log('Holdings:', hrc);
-      console.log('Items:', irc);
       console.log('Relationships:', rlc);
       console.log('Bound withs:', bwc);
       console.log('Total time (secs):', tt);
@@ -222,6 +211,53 @@ try {
     });
   }
 
+  let holdMap = {};
+  const mapHoldings = () => {
+    console.log('Making holdings map...');
+    let inFile = `${mainDir}/${inFiles.holdings}`;
+    let fileStream = fs.createReadStream(inFile);
+    let rl = readline.createInterface({
+      input: fileStream,
+      crlfDelay: Infinity
+    });
+    let i = 0;
+    rl.on('line', line => {
+      i++;
+      let j = JSON.parse(line);
+      let k = j.id;
+      holdMap[k] = j;
+    });
+    rl.on('close', c => {
+      // console.log(holdMap);
+      console.log('Holdings read:', i);
+      main();
+    });
+  }
+
+  let itemMap = {};
+  const mapItems = () => {
+    console.log('Making item map...');
+    let itemFile = `${mainDir}/${inFiles.items}`;
+    let fileStream = fs.createReadStream(itemFile);
+    let rl = readline.createInterface({
+      input: fileStream,
+      crlfDelay: Infinity
+    });
+    let i = 0;
+    rl.on('line', line => {
+      i++;
+      let j = JSON.parse(line);
+      let k = j.hrid;
+      itemMap[k] = j;
+    });
+    rl.on('close', c => {
+      // console.log(itemMap)
+      console.log('Items read:', i);
+      mapHoldings();
+    });
+  }
+
+
   console.log('Making instance map...')
   let mc = 0;
   let instMap = {}
@@ -239,7 +275,7 @@ try {
   rl.on('close', c => {
     // console.log(instMap); return;
     console.log('Instance map lines read:', mc);
-    mapLinks();
+    mapItems();
   });
 
 } catch (e) {
