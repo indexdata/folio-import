@@ -57,3 +57,7 @@ export function getSubs(field, codes, delim) {
   });
   return out.join(dl);
 }
+
+export function makeMarc(data) {
+  console.log(data);
+}
