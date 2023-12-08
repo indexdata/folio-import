@@ -394,6 +394,7 @@ my $icount = 0;
 my $hcount = 0;
 my $errcount = 0;
 my $badcount = 0;
+my $purgecount = 0;
 my $start = time();
 
 my $save_path = $infile;
@@ -419,6 +420,11 @@ unlink $err_path;
 my $bad_path = $infile;
 $bad_path =~ s/^(.+)\..+$/$1_bad.mrc/;
 unlink $bad_path;
+
+my $purge_path = $infile;
+$purge_path =~ s/^(.+)\..+$/$1_purged.mrc/;
+unlink $purge_path;
+open PPATH, ">>:encoding(UTF-8)", $purge_path;
 
 my $presuc_file = $infile;
 $presuc_file =~ s/^(.+)\..+$/$1_presuc.jsonl/;
@@ -485,6 +491,13 @@ while (<RAW>) {
     $badcount++;
     next;
   };
+  
+  my $bcode3 = $marc->subfield('998', 'e');
+  if ($bcode3 eq 'z') {
+    print PPATH $raw;
+    $purgecount++;
+    next;
+  }
 
   # lets move the 001 to 035
   my $iiinum = '';
@@ -751,8 +764,9 @@ my $tt = time() - $start;
 print "\nDone!\n$count Marc records processed in $tt seconds";
 print "\nInstances: $success ($save_path)";
 print "\nPreSuc:    $pcount ($presuc_file)";
-print "\nErrors:    $errcount";
-print "\nBad Marc:  $badcount\n";
+print "\nPurged:    $purgecount ($purge_path)";
+print "\nErrors:    $errcount ($err_path)";
+print "\nBad Marc:  $badcount ($bad_path)\n";
 
 sub write_objects {
   my $fh = shift;
