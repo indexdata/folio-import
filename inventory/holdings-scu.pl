@@ -132,10 +132,15 @@ sub makeMapFromTsv {
       } else {
         if ($prop eq 'locations') {
           $name = $col[2] || '';
-          $tsvmap->{loc_codes}->{$code} = $name;
+          # $tsvmap->{loc_codes}->{$code} = $name;
           $loc_code_map->{$code} = $name || 'UNMAPPED';
         }
-        $tsvmap->{$prop}->{$code} = $refdata->{$prop}->{$name}; 
+        if ($prop eq 'choldings-types') {
+          $name = $col[2];
+          $tsvmap->{holdingsTypes}->{$code} = $refdata->{holdingsTypes}->{$name};
+        } else {
+          $tsvmap->{$prop}->{$code} = $refdata->{$prop}->{$name}; 
+        }
       }
     }
   }
@@ -157,10 +162,10 @@ close MAP;
 
 $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
-# print Dumper($refdata); exit;
+# print Dumper($refdata->{holdingsTypes}); exit;
 my $tofolio = makeMapFromTsv($ref_dir, $refdata);
 $tofolio->{locations}->{multi} = $refdata->{locations}->{multi};
-# print Dumper($tofolio->{locations}); exit;
+# print Dumper($tofolio->{holdingsTypes}); exit;
 # print Dumper($loc_code_map); exit;
 
 my $relations = {
@@ -250,6 +255,7 @@ foreach (@ARGV) {
     my $ff = $obj->{fixedFields};
     my $h = {};
     my $loc_code = $ff->{40}->{value} || 'xxxxx';
+    my $scode2 = $ff->{37}->{value} || '-';
     $loc_code =~ s/\s*$//;
     my $hid = "c" . $obj->{id};
     next if $seen->{$hid};
@@ -269,9 +275,7 @@ foreach (@ARGV) {
     }
     $h->{permanentLocationId} = $loc_id;
     $h->{sourceId} = $source_id;
-    my $typecode = substr($leader, 6, 1) || '';
-    my $typestr = $typemap->{$typecode} || '';
-    my $typeid = $refdata->{holdingsTypes}->{$typestr} || $refdata->{holdingsTypes}->{Serial};
+    my $typeid = $tofolio->{holdingsTypes}->{$scode2};
     $h->{holdingsTypeId} = $typeid;
     my $cntype = $b[2];
     my @cnparts = split /\^\^/, $b[1];
