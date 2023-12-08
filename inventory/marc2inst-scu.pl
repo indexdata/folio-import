@@ -497,6 +497,8 @@ while (<RAW>) {
     print PPATH $raw;
     $purgecount++;
     next;
+  } elsif ($bcode3 eq 'y') {
+    $rec->{discoverySuppress} = JSON::true
   }
 
   # lets move the 001 to 035
@@ -673,6 +675,10 @@ while (<RAW>) {
   $rec->{languages} = dedupe(@{ $rec->{languages} });
   $rec->{series} = dedupe(@{ $rec->{series} });
   $rec->{identifiers} = dedupe(@{ $rec->{identifiers} });
+  if (!$rec->{languages}[0]) {
+    my $lang = $marc->subfield('998', 'f');
+    $rec->{languages}[0] = $lang;
+  }
   
   # Assign uuid based on hrid;
   if (!$rec->{hrid}) {
@@ -777,8 +783,7 @@ sub write_objects {
 sub dedupe {
   my @out;
   my $found = {};
-  foreach (@_) {
-    my $el = $_;
+  foreach my $el (@_) {
     my $key = '';
     my $rt = reftype($el) || '';
     if ($rt eq 'HASH') {
@@ -790,7 +795,9 @@ sub dedupe {
     }
     $found->{$key}++;
     if ($found->{$key} < 2) {
-      push @out, $_;
+      if ($rt eq 'HASH' || $el =~ /\w/) {
+        push @out, $el;
+      }
     }
   }
   return [ @out ];
