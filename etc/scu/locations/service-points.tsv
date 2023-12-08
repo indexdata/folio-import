@@ -1,0 +1,5 @@
+Legacy service point code	Folio service point code	Folio label (optional -- need a code or name to connect with location) 
+hcirc	llcircdesk	Law Library Circulation Desk
+ucirc	ulhelpdesk	University Library Help Desk
+uscrr	ulasc	Archives & Special Collections
+-- 	ulars	Automated Retrieval System

@@ -34,10 +34,12 @@ try {
     let tdata = fs.readFileSync(tf, { encoding: 'utf8' });
     let lines = tdata.split(/\n/);
     lines.shift();
+    const lseen = {};
     lines.forEach(l => {
       let o = {};
       l = l.trim();
       let c = l.split(/\t/);
+      let doWrite = true;
 
       if (t === 'sp') {
         spId[c[1]] = uuid(c[1], ns);
@@ -75,8 +77,10 @@ try {
         o.primaryServicePoint = sp;
         o.isActive = true;
         o.discoveryDisplayName = c[4];
+        if (!lseen[c[2]]) lseen[c[2]] = 0;
+        lseen[c[2]]++;
       } 
-      fs.writeFileSync(sf, JSON.stringify(o) + '\n', {flag:'a'});
+      if (!lseen[c[2]] || lseen[c[2]] === 1) fs.writeFileSync(sf, JSON.stringify(o) + '\n', {flag:'a'});
     });
   }
 

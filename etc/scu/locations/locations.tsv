@@ -1,0 +1,162 @@
+Legacy location code	Library	Folio location code	Folio name	Discovery display name	Folio service point (name)
+ars04	ul	ul/ars/ascrareb	UL ARS A&SC Rare Books	University Library Archives & Special Collections - Rare Books, 3rd Floor	ulars
+ars08	ul	ul/ars/ascrc	UL ARS A&SC Research Collection	University Library Archives & Special Collections - Research Collection, 3rd Floor	ulars
+ars20	ul	ul/ars/asccl	UL ARS A&SC College Library	University Library Archives & Special Collections - College Library, 3rd Floor	ulars
+ars22	ul	ul/ars/ascphoto	UL ARS A&SC Photograph Collection	University Library Archives & Special Collections - Photographs, 3rd Floor	ulars
+ars24	ul	ul/ars/ascurec	UL ARS A&SC University Records	University Library Archives & Special Collections - University Records, 3rd Floor	ulars
+ars26	ul	ul/ars/aschr	UL ARS A&SC History Reference	University Library Archives & Special Collections - History Reference	ulars
+ars27	ul	ul/ars/ascfp	UL ARS A&SC Faculty Pubs	University Library Archives & Special Collections - Faculty Publications, 3rd Floor	ulars
+ars29	ul	ul/ars/ascmedia	UL ARS A&SC Multimedia	University Library Archives & Special Collections - Multimedia, 3rd Floor	ulars
+ars31	ul	ul/ars/ascmpp	UL ARS A&SC Manuscripts & Personal Papers	University Library Archives & Special Collections - Manuscripts & Personal Papers, 3rd Floor	ulars
+ars32	ul	ul/ars/asclh	UL ARS A&SC Local History	University Library Archives & Special Collections - Local History, 3rd Floor	ulars
+ars33	ul	ul/ars/ascupub	UL ARS A&SC University Pubs	University Library Archives & Special Collections - University Publications, 3rd Floor	ulars
+arsad	ul	ul/ars/audio	UL ARS Audio Collection	University Library ARS Audio Collection	ulars
+arsca	ul	ul/ars/asccal	UL ARS A&SC California Collection	University Library Archives & Special Collections - California Collection, 3rd Floor	ulars
+arscd	ul	ul/ars/compd	UL ARS Computer Data Files	University Library ARS Computer Data Files Collection	ulars
+arscr	ul	ul/ars/cur	UL ARS Curriculum Collection	University Library ARS Curriculum Collection	ulars
+arsgc	ul	ul/ars/gvdca	UL ARS Gov Docs California	University Library ARS Government Documents - California	ulars
+arsgd	ul	ul/ars/gvd	UL ARS Gov Docs	University Library ARS Government Documents	ulars
+arsgt	ul	ul/ars/gtu	UL ARS Graduate Theological Union	University Library ARS Graduate Theological Union Collection	ulars
+arslw	ll	ll/ars/law	LL ARS	Law Library ARS	ulars
+arsmc	ul	ul/ars/micro	UL ARS Microforms	University Library ARS Microforms	ulars
+arsms	ul	ul/ars/mns	UL ARS Main Stacks	University Library ARS Main Stacks	ulars
+arspr	ul	ul/ars/per	UL ARS Bound Periodicals	University Library ARS Bound Periodicals	ulars
+arsrb	ul	ul/ars/ascrareb	UL ARS A&SC Rare Books	University Library Archives & Special Collections - Rare Books, 3rd Floor	ulars
+arsrf	ul	ul/ars/ref	UL ARS Reference Collection	University Library ARS Reference Collection	ulars
+arsrv	ul	ul/ars/rsrv	UL ARS Course Reserves	University Library ARS Course Reserves	ulars
+arsst	ul	ul/ars/ascsth	UL ARS A&SC Senior Theses	University Library Archives & Special Collections - Senior Theses, 3rd Floor	ulars
+arsth	ul	ul/ars/ascthe	UL ARS A&SC SCU Theses	University Library Archives & Special Collections - SCU Theses, 3rd Floor	ulars
+arsvd	ul	ul/ars/video	UL ARS Video Collection	University Library ARS Video Collection	ulars
+calif	ul	ul/asc/cal	UL A&SC California Collection	University Library Archives & Special Collections - California Collection, 3rd Floor	ulasc
+circ	ul	ul/ads/compd	UL Computer Data Files	University Library Computer Data Files Collection	ulhelpdesk
+curr	ul	ul/cur	UL Curriculum Collection	University Library Curriculum Collection, 2nd Floor	ulhelpdesk
+doc	ul	ul/gvd/lwrlvl	UL Gov Docs, Lower Level	University Library Government Documents, Lower Level	ulhelpdesk
+fiche	ul	ul/micro/fiche	UL Microfiche	University Library Microforms, 3rd Floor	ulhelpdesk
+folio	ul	ul/main/folio	UL Folios	University Library Folios, 3rd Floor	ulhelpdesk
+gdcal	ul	ul/gvd/cal	UL Gov Docs California	University Library Government Documents - California	ulhelpdesk
+gdref	ul	ul/gvd/ref	UL Gov Docs Reference	University Library Government Documents - Reference, Lower Level	ulhelpdesk
+hadir	ll	ll/main/adir	LL Aaron Director Collection	Law Library Aaron Director Collection	llcircdesk
+harch	ll	ll/arch	LL Archives Collection	Law Library Archives Collection	llcircdesk
+haudi	ll	ll/audio	LL Audio Collection	Law Library Audio Collection	llcircdesk
+hcal	ll	ll/main/calif	LL California Collection	Law Library Californic Collection	llcircdesk
+hchar	ll	ll/main/stacks	LL Main Stacks	Law Library Main Stacks, 2nd Floor	llcircdesk
+hcirc	ll	ll/circ	LL Circulation Desk	Law Library Circulation Desk	llcircdesk
+hcirf	ll	ll/circ/offic	LL Circulation Department Office	Law Library Circulation Department Office	llcircdesk
+hcomp	ll	ll/main/comp	LL Compact Shelving	Law Library Compact Shelving	llcircdesk
+heafe	ll	ll/coll	LL Collection	Law Library Collection	llcircdesk
+hfol	ll	ll/main/folio	LL Folio	Law Library Folio Section, 2nd Floor	llcircdesk
+hlcs	ll	ll/main/lcs	LL Law Career Services Collection	Law Library Law Career Services Collection	llcircdesk
+hloff	ll	ll/main/techs	LL Technical Services Department Office	Law Library Technical Services Department Office	llcircdesk
+hloy	ll	ll/main/remot	LL Non-ARS Remote	Law Library Non-ARS Remote	llcircdesk
+hmicr	ll	ll/micro	LL Microform	Law Library Microform Collection	llcircdesk
+hper	ll	ll/main/per	LL Periodicals Collection	Law LIbrary Periodicals Collection	llcircdesk
+href	ll	ll/main/ref	LL Reference Collection	Law Library Reference Collection, 2nd Floor	llcircdesk
+hrem1	ll	ll/main/ref	LL Reference Collection	Law Library Reference Collection, 2nd Floor	llcircdesk
+hrem2	ll	ll/main/ref	LL Reference Collection	Law Library Reference Collection, 2nd Floor	llcircdesk
+hrem3	ll	ll/main/ref	LL Reference Collection	Law Library Reference Collection, 2nd Floor	llcircdesk
+hres	ll	ll/res	LL Closed Reserve	Law Library Closed Reserve Collection	llcircdesk
+hrmic	ll	ll/micro/ref	LL Microform Reference	Law Library Microform Reference	llcircdesk
+hroff	ll	ll/main/refof	LL Reference Office	Law Library Reference Office	llcircdesk
+hrvf	ll	ll/main/vert	LL Vertical File	Law Library Vertical File Collection	llcircdesk
+hstac	ll	ll/main/stacks	LL Main Stacks	Law LIbrary Main Stacks	llcircdesk
+hstau	ll	ll/main/resrm	LL Reserve Room Materials	Law Library Reserve Room Materials	llcircdesk
+hvarc	ll	ll/video	LL Video Collection	Law Library Video Collection	llcircdesk
+hwww	ll	ll/www	LL Internet Resource	Law Library Internet Resource	llcircdesk
+main	ul	ul/main/stacks	UL Main Stacks	University Library Main Stacks, Lower Level	ulhelpdesk
+map	ul	ul/maps	UL Maps Collection	University Library Maps, Lower Level	ulhelpdesk
+mcard	ul	ul/micro/card	UL Microcards	University Library Microforms, Lower Level	ulhelpdesk
+media	ul	ul/video	UL Video Collection	University Library Video Collection	ulhelpdesk
+orper	ul	ul/per	UL Periodicals Collection	University Library Periodicals Collection	ulhelpdesk
+orrad	ul	ul/main/stacks	UL Main Stacks	University Library Main Stacks, Lower Level	ulhelpdesk
+orrch	ul	ul/asc/rc	UL A&SC Research Collection	University Library Archives & Special Collections - Research Collection, 3rd Floor	ulasc
+orsth	ul	ul/asc/sth	UL A&SC Senior Theses	University Library Archives & Special Collections - Senior Theses, 3rd Floor	ulasc
+orthe	ul	ul/asc/the	UL A&SC SCU Theses	University Library Archives & Special Collections - SCU Theses, 3rd Floor	ulasc
+per	ul	ul/per	UL Periodicals Collection	University Library Periodicals Collection	ulhelpdesk
+ref	ul	ul/ref	UL Reference Collection	University Library Reference Collection, Lower Level	ulhelpdesk
+resrv	ul	ul/rsrv	UL Course Reserves	University Library Course Reserves, Library Help Desk	ulhelpdesk
+rsrch	ul	ul/asc/rc	UL A&SC Research Collection	University Library Archives & Special Collections - Research Collection, 3rd Floor	ulasc
+specl	ul	ul/asc/spcl	UL A&SC Special Collections	University Library Archives & Special Collections, 3rd Floor	ulasc
+sthe	ul	ul/asc/sth	UL A&SC Senior Theses	University Library Archives & Special Collections - Senior Theses, 3rd Floor	ulasc
+thsis	ul	ul/asc/the	UL A&SC SCU Theses	University Library Archives & Special Collections - SCU Theses, 3rd Floor	ulasc
+uad	ul	ul/audio	UL Audio Collection	University Library Audio Collection	ulhelpdesk
+uadio	ul	ul/audio	UL Audio Collection	University Library Audio Collection	ulhelpdesk
+uarch	ul	ul/asc/uarch	UL A&SC University Archives	University Library Archives & Special Collections - University Archives, 3rd Floor	ulasc
+ucd	ul	ul/ads/compd	UL Computer Data Files	University Library Computer Data Files Collection	ulhelpdesk
+ucdat	ul	ul/ads/compd	UL Computer Data Files	University Library Computer Data Files Collection	ulhelpdesk
+uci	ul	ul/ads/compd	UL Computer Data Files	University Library Computer Data Files Collection	ulhelpdesk
+ucic1	ul	ul/ads/tablt	UL Tablet Carts	University Library Help Desk - Tablet Carts	ulhelpdesk
+ucic2	ul	ul/ads/tablt	UL Tablet Carts	University Library Help Desk - Tablet Carts	ulhelpdesk
+ucic3	ul	ul/ads/tablt	UL Tablet Carts	University Library Help Desk - Tablet Carts	ulhelpdesk
+ucimd	ul	ul/ads/compd	UL Computer Data Files	University Library Computer Data Files Collection	ulhelpdesk
+ucirc	ul	ul/ads/helpd	UL Help Desk	University Library Help Desk	ulhelpdesk
+ucr	ul	ul/cur	UL Curriculum Collection	University Library Curriculum Collection, 2nd Floor	ulhelpdesk
+ucrst	ul	ul/cur	UL Curriculum Collection	University Library Curriculum Collection, 2nd Floor	ulhelpdesk
+ugd	ul	ul/gvd/lwrlvl	UL Gov Docs, Lower Level	University Library Government Documents, Lower Level	ulhelpdesk
+ugdar	ul	ul/gvd/ars	UL Gov Docs (ARS)	University Library ARS Government Documents	ulhelpdesk
+ugdca	ul	ul/gvd/cal	UL Gov Docs California	University Library Government Documents - California	ulhelpdesk
+ugdcd	ul	ul/gvd/compd	UL Gov Docs Computer Data Files	University Library Government Documents - CD Cabinet, 3rd Floor	ulhelpdesk
+ugdll	ul	ul/gvd/lwrlvl	UL Gov Docs, Lower Level	University Library Government Documents, Lower Level	ulhelpdesk
+ugdmd	ul	ul/gvd/compd	UL Gov Docs Computer Data Files	University Library Government Documents - CD Cabinet, 3rd Floor	ulhelpdesk
+ugdmi	ul	ul/gvd/micro	UL Gov Docs Microforms	University Library Government Documents - Microforms, 3rd Floor	ulhelpdesk
+ugdmp	ul	ul/gvd/maps	UL Gov Docs Maps	University Library Government Documents - Maps, Lower Level	ulhelpdesk
+ugdrf	ul	ul/gvd/ref	UL Gov Docs Reference	University Library Government Documents - Reference, Lower Level	ulhelpdesk
+ugdrl	ul	ul/gvd/ref	UL Gov Docs Reference	University Library Government Documents - Reference, Lower Level	ulhelpdesk
+ugdww	ul	ul/gvd/www	UL Gov Docs Web Resources	University Library Government Documents - Internet Resources	ulhelpdesk
+ugt	ul	ul/gtu	UL Graduate Theological Union	University Library Graduate Theological Union Collection	ulhelpdesk
+ugtmn	ul	ul/gtu	UL Graduate Theological Union	University Library Graduate Theological Union Collection	ulhelpdesk
+uil	ul	ul/ads/ill	UL ILL	University Library Interlibrary Loan, Library Help Desk	ulhelpdesk
+uilll	ul	ul/ads/ill	UL ILL	University Library Interlibrary Loan, Library Help Desk	ulhelpdesk
+umi	ul	ul/micro	UL Microforms	University Library Microforms Collection	ulhelpdesk
+umiar	ul	ul/micro/ars	UL Microforms (ARS)	University Library Microforms Collection	ulhelpdesk
+umifi	ul	ul/micro/fiche	UL Microfiche	University Library Microforms, 3rd Floor	ulhelpdesk
+umimc	ul	ul/micro/card	UL Microcards	University Library Microforms, Lower Level	ulhelpdesk
+umimf	ul	ul/micro/film	UL Microfilm	University Library Microforms, Lower Level	ulhelpdesk
+umn	ul	ul/main/stacks	UL Main Stacks	University Library Main Stacks, Lower Level	ulhelpdesk
+umnar	ul	ul/main/ars	UL Main Stacks (ARS)	University Library Main Stacks, Lower Level	ulhelpdesk
+umnfo	ul	ul/main/folio	UL Folios	University Library Folios, 3rd Floor	ulhelpdesk
+umnst	ul	ul/main/stacks	UL Main Stacks	University Library Main Stacks, Lower Level	ulhelpdesk
+ump	ul	ul/maps	UL Maps Collection	University Library Maps, Lower Level	ulhelpdesk
+umpmp	ul	ul/maps	UL Maps Collection	University Library Maps, Lower Level	ulhelpdesk
+upp	ul	ul/pop	UL Pop Collection	University Library Popular Reading, 1st Floor	ulhelpdesk
+uppst	ul	ul/pop	UL Pop Collection	University Library Popular Reading, 1st Floor	ulhelpdesk
+upr	ul	ul/per	UL Periodicals Collection	University Library Periodicals Collection	ulhelpdesk
+uprar	ul	ul/per/ars	UL Periodicals Collection (ARS)	University Library Periodicals Collection	ulhelpdesk
+uprmd	ul	ul/ads/compd	UL Computer Data Files	University Library Computer Data Files Collection	ulhelpdesk
+uprnp	ul	ul/per/news	UL Current Newspapers	University Library Current Newspapers, Lower Level	ulhelpdesk
+uprpr	ul	ul/per/current	UL Current Periodicals	University Library Current Periodicals, 2nd Floor	ulhelpdesk
+urf	ul	ul/ref	UL Reference Collection	University Library Reference Collection, Lower Level	ulhelpdesk
+urfll	ul	ul/ref	UL Reference Collection	University Library Reference Collection, Lower Level	ulhelpdesk
+urfrf	ul	ul/ref	UL Reference Collection	University Library Reference Collection, Lower Level	ulhelpdesk
+urs	ul	ul/rsrv	UL Course Reserves	University Library Course Reserves, Library Help Desk	ulhelpdesk
+ursrv	ul	ul/rsrv	UL Course Reserves	University Library Course Reserves, Library Help Desk	ulhelpdesk
+usc	ul	ul/asc/spcl	UL A&SC Special Collections	University Library Archives & Special Collections, 3rd Floor	ulasc
+uscar	ul	ul/asc/art	UL A&SC Artifacts	University Library Archives & Special Collections - Artifacts, 3rd Floor	ulasc
+uscca	ul	ul/asc/cal	UL A&SC California Collection	University Library Archives & Special Collections - California Collection, 3rd Floor	ulasc
+uscch	ul	ul/asc/chi	UL A&SC Chiara	University Library Archives & Special Collections - Chiara, 3rd Floor	ulasc
+uscex	ul	ul/asc/exhib	UL A&SC Exhibit Space	University Library Archives & Special Collections - Exhibit Space, 3rd Floor	ulasc
+uscff	ul	ul/asc/flat	UL A&SC Flats	University Library Archives & Special Collections - Flat Files, 3rd Floor	ulasc
+uscfp	ul	ul/asc/fp	UL A&SC Faculty Pubs	University Library Archives & Special Collections - Faculty Publications, 3rd Floor	ulasc
+uscjr	ul	ul/asc/jrb	UL A&SC Jesuit Rare Books	University Library Archives & Special Collections - Jesuit Rare Books, 3rd Floor	ulasc
+usclv	ul	ul/asc/lvs	UL A&SC Leaves	University Library Archives & Special Collections - Leaves, 3rd Floor	ulasc
+uscma	ul	ul/asc/mpp	UL A&SC Manuscripts & Personal Papers	University Library Archives & Special Collections - Manuscripts & Personal Papers, 3rd Floor	ulasc
+uscmd	ul	ul/asc/media	UL A&SC Multimedia	University Library Archives & Special Collections - Multimedia, 3rd Floor	ulasc
+uscml	ul	ul/asc/mssnl	UL A&SC Mission Library	University Library Archives & Special Collections - Mission Library, 3rd Floor	ulasc
+uscol	ul	ul/asc/spcl	UL A&SC Special Collections	University Library Archives & Special Collections, 3rd Floor	ulasc
+uscph	ul	ul/asc/photo	UL A&SC Photograph Collection	University Library Archives & Special Collections - Photographs, 3rd Floor	ulasc
+uscrb	ul	ul/asc/rareb	UL A&SC Rare Books	University Library Archives & Special Collections - Rare Books, 3rd Floor	ulasc
+uscrr	ul	ul/asc/rdrm	UL A&SC Reading Room	University Library Archives & Special Collections - Reading Room, 3rd Floor	ulasc
+uscsh	ul	ul/asc/shf	UL A&SC SHF	University Library Archives & Special Collections - Sisters of the Holy Family, 3rd Floor	ulasc
+uscua	ul	ul/asc/uarch	UL A&SC University Archives	University Library Archives & Special Collections - University Archives, 3rd Floor	ulasc
+uscup	ul	ul/asc/upub	UL A&SC University Pubs	University Library Archives & Special Collections - University Publications, 3rd Floor	ulasc
+uscur	ul	ul/asc/urec	UL A&SC University Records	University Library Archives & Special Collections - University Records, 3rd Floor	ulasc
+ust	ul	ul/asc/sth	UL A&SC Senior Theses	University Library Archives & Special Collections - Senior Theses, 3rd Floor	ulasc
+usthe	ul	ul/asc/sth	UL A&SC Senior Theses	University Library Archives & Special Collections - Senior Theses, 3rd Floor	ulasc
+uth	ul	ul/asc/the	UL A&SC SCU Theses	University Library Archives & Special Collections - SCU Theses, 3rd Floor	ulasc
+uthes	ul	ul/asc/the	UL A&SC SCU Theses	University Library Archives & Special Collections - SCU Theses, 3rd Floor	ulasc
+uts	ul	ul/tsv	UL Technical Services	University Library Technical Services	ulhelpdesk
+utsnc	ul	ul/tsv	UL Technical Services	University Library Technical Services	ulhelpdesk
+uvd	ul	ul/video	UL Video Collection	University Library Video Collection	ulhelpdesk
+uvdeo	ul	ul/video	UL Video Collection	University Library Video Collection	ulhelpdesk
+uww	ul	ul/www	UL Internet Resources	University Library Internet Resources	ulhelpdesk
+uwwww	ul	ul/www	UL Internet Resources	University Library Internet Resources	ulhelpdesk
+video	ul	ul/video	UL Video Collection	University Library Video Collection	ulhelpdesk

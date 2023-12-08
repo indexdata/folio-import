@@ -23,7 +23,6 @@ use MARC::Record;
 use MARC::Record::MiJ;
 use JSON;
 use UUID::Tiny ':std';
-use MARC::Charset 'marc8_to_utf8';
 use Time::Piece;
 use Data::Dumper;
 use Scalar::Util qw(reftype);
@@ -474,11 +473,6 @@ while (<RAW>) {
   
   $count++;
   my $raw = $_;
-  # if ($_ =~ /^\d{5}....a/) {
-    # $raw = $_
-  # } else {
-    # $raw = marc8_to_utf8($_);
-  # }
   my $marc;
   my $ok = eval {
     $marc = MARC::Record->new_from_usmarc($raw);
