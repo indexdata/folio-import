@@ -701,6 +701,8 @@ while (<RAW>) {
     foreach (@cntags) {
       if ($marc->field($_)) {
         $cn = $marc->field($_)->as_string('ab', ' ');
+        my $pre = $marc->subfield($_, 'f') || '';
+        $cn = "$pre^^$cn";
         $cntag = $_;
         last;
       }
