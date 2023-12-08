@@ -191,9 +191,9 @@ foreach (@ARGV) {
   unlink $outfile;
   open my $OUT, ">>:encoding(UTF-8)", $outfile;
 
-  my $hmapfile = "$dir/holdings.map";
-  unlink $hmapfile;
-  open my $HMAP, ">>:encoding(UTF-8)", $hmapfile;
+  # my $hmapfile = "$dir/holdings.map";
+  # unlink $hmapfile;
+  # open my $HMAP, ">>:encoding(UTF-8)", $hmapfile;
 
   my $count = 0;
   my $hcount = 0;
@@ -256,7 +256,7 @@ foreach (@ARGV) {
     $seen->{$hid} = 1;
     my $hkey = "$bid-$loc_code";
     $h->{id} = uuid($hid);
-    print $HMAP "$bid|$loc_code|$h->{id}|$hid|$vfcn\n";
+    # print $HMAP "$bid|$loc_code|$h->{id}|$hid|$vfcn\n";
     $h->{_version} = $ver;
     $h->{formerIds} = [ $obj->{id} ];
     $h->{hrid} = $hid;
@@ -274,15 +274,19 @@ foreach (@ARGV) {
     my $typeid = $refdata->{holdingsTypes}->{$typestr} || $refdata->{holdingsTypes}->{Serial};
     $h->{holdingsTypeId} = $typeid;
     my $cntype = $b[2];
-    my $cn = $b[1];
+    my @cnparts = split /\^\^/, $b[1];
+    my $cnpre = $cnparts[0] || '';
+    my $cn = $cnparts[1] || '';
     if ($vfcn) {
       $cntype = '6caca63e-5651-4db6-9247-3205156e9699'; #other
       $cn = $vfcn;
+      $cnpre = '';
     }
     
+    $h->{callNumberPrefix} = $cnpre if $cnpre;
     $h->{callNumberTypeId} = $cntype || '6caca63e-5651-4db6-9247-3205156e9699'; #other
     $h->{callNumber} = $cn if $cn;
-    $h->{discoverySuppress} = ($ff->{118}->{value} ne '-') ? JSON::true : JSON::false ;
+    $h->{discoverySuppress} = JSON::true;
     foreach my $t ('i', 'f','n','w','z') {
       foreach (@{ $vf->{$t} }) {
         push @{ $h->{notes} }, make_notes($t, $_);
