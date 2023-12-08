@@ -487,40 +487,36 @@ while (<RAW>) {
   };
 
   # lets move the 001 to 035
-    my $iiinum = '';
-    foreach ($marc->field('907')) {
-      $iiinum = $_->subfield('a') || '';
-      last if ($iiinum =~ /^\.b\d\d\d/);
-    }
-    $iiinum =~ s/.(.+).$/$1/;
-    if ($marc->field('001')) {
-      my $in_ctrl = $marc->field('001')->data();
-      my $in_ctrl_type = ($marc->field('003')) ? $marc->field('003')->data() : '';
-      my $id_data = ($in_ctrl_type) ? "($in_ctrl_type)$in_ctrl" : $in_ctrl;
-      my $field = MARC::Field->new('035', ' ', ' ', 'a' => $id_data);
-      $marc->insert_fields_ordered($field);
-      $marc->field('001')->update($iiinum);
-      if ($marc->field('003')) {
-        $marc->field('003')->update($isls);
-      } else {
-        my $field = MARC::Field->new('003', $isls);
-        $marc->insert_fields_ordered($field);  
-      }
+  my $iiinum = '';
+  foreach ($marc->field('907')) {
+    $iiinum = $_->subfield('a') || '';
+    last if ($iiinum =~ /^\.b\d\d\d/);
+  }
+  $iiinum =~ s/.(.+).$/$1/;
+  if ($marc->field('001')) {
+    my $in_ctrl = $marc->field('001')->data();
+    my $in_ctrl_type = ($marc->field('003')) ? $marc->field('003')->data() : '';
+    my $id_data = ($in_ctrl_type) ? "($in_ctrl_type)$in_ctrl" : $in_ctrl;
+    my $field = MARC::Field->new('035', ' ', ' ', 'a' => $id_data);
+    $marc->insert_fields_ordered($field);
+    $marc->field('001')->update($iiinum);
+    if ($marc->field('003')) {
+      $marc->field('003')->update($isls);
     } else {
-      my $field = MARC::Field->new('001', $iiinum);
-      $marc->insert_fields_ordered($field);
-      if ($marc->field('003')) {
-        $marc->field('003')->update($isls);
-      } else {
-        my $field = MARC::Field->new('003', $isls);
-        $marc->insert_fields_ordered($field); 
-      }
+      my $field = MARC::Field->new('003', $isls);
+      $marc->insert_fields_ordered($field);  
     }
+  } else {
+    my $field = MARC::Field->new('001', $iiinum);
+    $marc->insert_fields_ordered($field);
+    if ($marc->field('003')) {
+      $marc->field('003')->update($isls);
+    } else {
+      my $field = MARC::Field->new('003', $isls);
+      $marc->insert_fields_ordered($field); 
+    }
+  }
 
-  # delete alpha tags
-  # my @del_fields = $marc->field('EBT','FMT','LDR','LKR','SID','STA','Z30');
-  # $marc->delete_fields(@del_fields);
-  
   my $srsmarc = $marc->clone();
 
   my $ldr = $marc->leader();
@@ -539,6 +535,19 @@ while (<RAW>) {
   } else {
     $rec->{modeOfIssuanceId} = $refdata->{issuanceModes}->{unspecified};
   }
+
+  # map catalogedDate from 998$b
+  my $catdate = $marc->subfield('998',"b");
+  if ($catdate =~ /\d{6}/) {
+    if ($catdate =~ /^[0-2]/) {
+      $catdate = "20$catdate";
+    } else {
+      $catdate = "19$catdate";
+    }
+    $catdate =~ s/(....)(..)(..)/$1-$2-$3/;
+    $rec->{catalogedDate} = $catdate;
+  }
+
   my @marc_fields = $marc->fields();
   MARC_FIELD: foreach (@marc_fields) {
     my $tag = $_->tag();
@@ -651,16 +660,6 @@ while (<RAW>) {
   $rec->{languages} = dedupe(@{ $rec->{languages} });
   $rec->{series} = dedupe(@{ $rec->{series} });
   $rec->{identifiers} = dedupe(@{ $rec->{identifiers} });
-  if ($marc->field('005')) {
-    my $cd = $marc->field('005')->data() || '20000101000';
-    my $yr = substr($cd, 0, 4);
-    my $mo = substr($cd, 4, 2);
-    my $dy = substr($cd, 6, 2);
-    my $cdstr = "$yr-$mo-$dy";
-    if ($cdstr =~ /^[12]\d\d\d-\d\d-\d\d/) {
-      $rec->{catalogedDate} = $cdstr;
-    }
-  }
   
   # Assign uuid based on hrid;
   if (!$rec->{hrid}) {
@@ -775,7 +774,6 @@ sub dedupe {
     } else {
       $key = $el;
     }
-    print $key . "\n";
     $found->{$key}++;
     if ($found->{$key} < 2) {
       push @out, $_;
