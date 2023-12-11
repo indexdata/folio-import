@@ -23,9 +23,8 @@ my $isil = 'CStclU';
 my $ver = $ENV{_VERSION} || '1';
 my $ref_dir = shift;
 my $map_file = shift;
-my $hmap_file = shift;
 if (! $ARGV[0]) {
-  die "Usage: ./items-scu.pl <ref_data_dir> <instance_map_file> <holdings_map_file> <item_jsonl_file>\n";
+  die "Usage: ./items-scu.pl <ref_data_dir> <instance_map_file> <item_jsonl_file>\n";
 }
 my $id_admin = '23787404-089b-5efe-a8da-b207cbab9514';
 
@@ -156,21 +155,6 @@ while (<MAP>) {
 }
 close MAP;
 
-my $hold_map = {};
-print "Opening holdings map file-- this may take a while...\n";
-open MAP, $hmap_file;
-$mi = 0;
-while (<MAP>) {
-  $mi++;
-  print "  $mi map lines read\n" if $mi % 1000000 == 0;
-  chomp;
-  my @d = split(/\|/, $_);
-  my $mkey = $d[0] . '-' . $d[1] if $d[0] && $d[1];
-  push @{ $hold_map->{$mkey} }, $d[2] if $d[2];
-}
-close MAP;
-# print Dumper($hold_map); exit;
-
 $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
 my $sierra2folio = makeMapFromTsv($ref_dir, $refdata);
@@ -285,7 +269,10 @@ sub make_hi {
   my $item = shift;
   my $bid = shift;
   my $bhrid = shift;
-  my $cn = shift || '';
+  my $cnfull = shift;
+  my @cnparts = split /\^\^/, $cnfull;
+  my $cnpre = $cnparts[0] || '';
+  my $cn = $cnparts[1] || '';
   my $cntype = shift || '';
   my $bwc = shift;
   my $blevel = shift || '';
@@ -296,7 +283,6 @@ sub make_hi {
   my $hcount = 0;
   my $icount = 0;
   my $bcount = 0;
-  my $hcall = '';
   my $bw;
   my $bws = '';
   my $repcn = { a=>0, b=>0 };
@@ -345,16 +331,11 @@ sub make_hi {
   }
   my $write = ($repcn->{a} > 1 || $repcn->{b} > 1) ? 1 : 0;
   my $hfound = 0;
-  my $holdid = '';
-  if ($hold_map->{$hkey}) {
-    $holdid = $hold_map->{$hkey}[0];
-  }
 
   # make holdings record from item;
   $hid = uuid($hkey);
   $inc->{$bhrid}++;
-  if (!$hseen->{$hkey} && !$holdid)  {
-    $hcall = $cn || '';
+  if (!$hseen->{$hkey})  {
     my $iid = 'i' . $item->{id};
     my $bc = $vf->{b}[0] || '[No barcode]';
     $hrec->{id} = $hid;
@@ -370,6 +351,7 @@ sub make_hi {
     if ($cn) {
       $hrec->{callNumber} = $cn;
       $hrec->{callNumberTypeId} = $cntype;
+      $hrec->{callNumberPrefix} = $cnpre if $cnpre;
     }
     if ($bwc > 0) {
       my $hnote = {
@@ -382,7 +364,7 @@ sub make_hi {
     $hrec->{metadata} = $metadata;
     my $hout = $json->encode($hrec);
     $holdings .= $hout . "\n";
-    $hseen->{$hkey} = 1;
+    $hseen->{$hkey} = $cn || 1;
     $hcount++;
   }
 
@@ -405,7 +387,7 @@ sub make_hi {
   if ($iid) {
     $iid =~ s/^\.//;
     $irec->{_version} = $ver;
-    $irec->{holdingsRecordId} = $holdid || $hid;
+    $irec->{holdingsRecordId} = $hid;
     my @pnotes;
     $irec->{barcode} = $bc if $bc && !$bseen->{$bc};
     $bseen->{$bc} = 1;
@@ -417,6 +399,9 @@ sub make_hi {
       $irec->{volume} = $vf->{v}[0] || '';
     }
     $irec->{copyNumber} = $item->{fixedFields}->{58}->{value} || '';
+    if ($irec->{copyNumber}) {
+      $irec->{copyNumber} = 'c.' . $irec->{copyNumber};
+    }
     $irec->{permanentLoanTypeId} = $sierra2folio->{loantypes}->{$itype} || $refdata->{loantypes}->{'can circulate'};
     $irec->{materialTypeId} = $sierra2folio->{mtypes}->{$itype} || '71fbd940-1027-40a6-8a48-49b44d795e46'; # defaulting to unspecified
     $irec->{status}->{name} = $sierra2folio->{statuses}->{$status} || 'Available'; # defaulting to available;
@@ -448,7 +433,7 @@ sub make_hi {
     }
     
     my $icode2 = $item->{fixedFields}->{60}->{value};
-    if ($icode2 eq 'n') {
+    if ($icode2 eq 'y') {
       $irec->{discoverySuppress} = 'true';
     } else {
       $irec->{discoverySuppress} = 'false';
