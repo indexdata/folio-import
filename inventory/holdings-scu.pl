@@ -223,6 +223,7 @@ foreach (@ARGV) {
     my $vf = {};
     my $leader = '';
     my $vfcn = '';
+    my $vfpre = '';
     foreach my $f (@{ $obj->{varFields} }) {
       my $t = $f->{marcTag};
       my $ft = $f->{fieldTag};
@@ -241,12 +242,21 @@ foreach (@ARGV) {
           $leader = $f->{content};
         }
       }
-      if ($ft eq 'c') {
-        my @parts;
-        foreach my $sf (@ {$f->{subfields}}) {
-          push @parts, $sf->{content};
+      if ($ft eq 'c')  {
+        if ($t) {
+          my @parts;
+          foreach my $sf (@ {$f->{subfields}}) {
+            if ($sf->{tag} eq 'f') {
+              $vfpre = $sf->{content};
+            } else {
+              push @parts, $sf->{content};
+            }
+          }
+          $vfcn = join ' ', @parts;
+        } else {
+          $vfcn = $f->{content};
         }
-        $vfcn = join ' ', @parts;
+        print $vfcn . "\n";
       }
     }
     # print Dumper($vf);
@@ -284,7 +294,7 @@ foreach (@ARGV) {
     if ($vfcn) {
       $cntype = '6caca63e-5651-4db6-9247-3205156e9699'; #other
       $cn = $vfcn;
-      $cnpre = '';
+      $cnpre = $vfpre;
     }
     
     $h->{callNumberPrefix} = $cnpre if $cnpre;
