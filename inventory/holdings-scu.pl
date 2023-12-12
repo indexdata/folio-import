@@ -62,6 +62,12 @@ my $months = {
   '24' => 'Winter'
 };
 
+my $cntypes = {
+  '050' => '95467209-6d7b-468b-94df-0f5d7ad2747d',
+  '090' => '95467209-6d7b-468b-94df-0f5d7ad2747d',
+  '099' => '6caca63e-5651-4db6-9247-3205156e9699',
+};
+
 my $json = JSON->new;
 $json->canonical();
 
@@ -256,7 +262,6 @@ foreach (@ARGV) {
         } else {
           $vfcn = $f->{content};
         }
-        print $vfcn . "\n";
       }
     }
     # print Dumper($vf);

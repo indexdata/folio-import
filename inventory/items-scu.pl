@@ -157,6 +157,7 @@ close MAP;
 
 $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
+# print Dumper($refdata->{callNumberTypes}); exit;
 my $sierra2folio = makeMapFromTsv($ref_dir, $refdata);
 $sierra2folio->{locations}->{multi} = $refdata->{locations}->{multi};
 # print Dumper($sierra2folio->{statuses}); exit;
@@ -293,7 +294,6 @@ sub make_hi {
   my $metadata = make_meta($id_admin, $cdate, $udate);
   next if !$loc;
   $loc =~ s/(\s*$)//;
-  my $hkey = "$bhrid-$loc";
   my $locid = $sierra2folio->{locations}->{$loc} || '761db5ed-d29d-4e2e-83d1-c6dfd1426cfd'; # defaults to Unmapped location.
   my $vf = {};
   my $local_callno = 0;
@@ -308,40 +308,41 @@ sub make_hi {
       }
       push @{ $vf->{$ftag} }, join ' ', @allsubs if $allsubs[0];
     }
-    if ($ftag eq 'c') {
-      my @cntext;
-      my $mtag = $f->{marcTag} || 'XXX';
-      if ($f->{content}) {
-        $cntext[0] = $f->{content};
-      } else {
-        foreach(@{ $f->{subfields} }) {
-	        my $tag = $_->{tag};
-	        $repcn->{$tag}++;
-	        push @cntext, $_->{content} if $_->{content};
+    if ($ftag eq 'c')  {
+      my $t = $f->{marcTag} || '';
+      if ($t) {
+        my @parts;
+        foreach my $sf (@ {$f->{subfields}}) {
+          if ($sf->{tag} eq 'f') {
+            $cnpre = $sf->{content};
+          } else {
+            push @parts, $sf->{content};
+          }
         }
+        $cn = join ' ', @parts;
+        $cntype = $cntypes->{$t} || $refdata->{callNumberTypes}->{'other scheme'}; 
+      } else {
+        $cn = $f->{content};
+        $cntype = $refdata->{callNumberTypes}->{'other scheme'}; 
       }
-      my $cnstring = join ' ', @cntext;
-      $cnstring =~ s/\s+$//;
-      if ($cnstring) {
-        $cn = $cnstring;
-        $cntype = $cntypes->{$mtag} || $refdata->{callNumberTypes}->{'Other scheme'};
-        $local_callno = 1;
-      }
-    }
+      $local_callno = 1;
+    } 
   }
   my $write = ($repcn->{a} > 1 || $repcn->{b} > 1) ? 1 : 0;
   my $hfound = 0;
 
   # make holdings record from item;
+  my $hkey = "$bhrid-$loc-$cn";
   $hid = uuid($hkey);
   $inc->{$bhrid}++;
+  my $incstr = sprintf("%03d", $inc->{$bhrid});
   if (!$hseen->{$hkey})  {
     my $iid = 'i' . $item->{id};
     my $bc = $vf->{b}[0] || '[No barcode]';
     $hrec->{id} = $hid;
     $hrec->{_version} = $ver;
     $hhrid = $hkey;
-    $hrec->{hrid} = $hhrid;
+    $hrec->{hrid} = "$bhrid-$incstr";
     $hrec->{instanceId} = $bid;
     $hrec->{permanentLocationId} = $locid;
     $hrec->{sourceId} = $refdata->{holdingsRecordsSources}->{folio} || '';
@@ -361,10 +362,16 @@ sub make_hi {
       };
       push @{ $hrec->{notes} }, $hnote;
     }
+    my $lnote = {
+      note => "Legacy location code: $loc",
+      holdingsNoteTypeId => $refdata->{holdingsNoteTypes}->{provenance},
+      staffOnly => JSON::true 
+    };
+    push @{ $hrec->{notes} }, $lnote;
     $hrec->{metadata} = $metadata;
     my $hout = $json->encode($hrec);
     $holdings .= $hout . "\n";
-    $hseen->{$hkey} = $cn || 1;
+    $hseen->{$hkey} = 1;
     $hcount++;
   }
 
@@ -438,10 +445,10 @@ sub make_hi {
     } else {
       $irec->{discoverySuppress} = 'false';
     }
-    if ($local_callno) {
-      $irec->{itemLevelCallNumber} = $cn;
-      $irec->{itemLevelCallNumberTypeId} = $cntype;
-    }
+    # if ($local_callno) {
+      #$irec->{itemLevelCallNumber} = $cn;
+      #$irec->{itemLevelCallNumberTypeId} = $cntype;
+    #}
     if ($bwc == 0) {
       $irec->{metadata} = $metadata;
       my $iout = $json->encode($irec);
