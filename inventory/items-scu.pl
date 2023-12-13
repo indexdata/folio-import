@@ -32,7 +32,8 @@ my $files = {
   h => 'holdings.jsonl',
   i => 'items.jsonl',
   b => 'bound-withs.jsonl',
-  r => 'relationships.jsonl'
+  r => 'relationships.jsonl',
+  'm' => 'map.tsv'
 };
 
 my $cntypes = {
@@ -41,6 +42,13 @@ my $cntypes = {
   '090' => '95467209-6d7b-468b-94df-0f5d7ad2747d',
   '092' => '03dd64d0-5626-4ecd-8ece-4531e0069f35',
   '099' => '6caca63e-5651-4db6-9247-3205156e9699',
+};
+
+my $inotes = {
+  'x' => 'note',
+  'g' => 'gift note',
+  'r' => 'reserve history',
+  '108' => 'note'
 };
 
 my $months = {
@@ -208,6 +216,7 @@ foreach (@ARGV) {
   open IOUT, '>>:encoding(UTF-8)', $paths->{i} or die "Can't open $paths->{i} for writing\n";
   open BOUT, '>>:encoding(UTF-8)', $paths->{b} or die "Can't open $paths->{b} for writing\n";
   open ROUT, '>>:encoding(UTF-8)', $paths->{r} or die "Can't open $paths->{r} for writing\n";
+  open MOUT, '>>:encoding(UTF-8)', $paths->{m} or die "Can't open $paths->{m} for writing\n";
   
   open IN, $infile;
 
@@ -232,7 +241,7 @@ foreach (@ARGV) {
       if (1) {
       	print HOUT $out->{holdings};
       	print IOUT $out->{items};
-      	# print BOUT $out->{bws};
+      	print BOUT $out->{bws};
       }
       if ($bwc > 0) {
         my $superline = $inst_map->{$main_bib} || '';
@@ -277,7 +286,6 @@ sub make_hi {
   my $cntype = shift || '';
   my $bwc = shift;
   my $blevel = shift || '';
-  my $hid = '';
   my $hrec = {};
   my $holdings = '';
   my $items = '';
@@ -333,16 +341,17 @@ sub make_hi {
 
   # make holdings record from item;
   my $hkey = "$bhrid-$loc-$cn";
-  $hid = uuid($hkey);
-  $inc->{$bhrid}++;
-  my $incstr = sprintf("%03d", $inc->{$bhrid});
+  my $hid = uuid($hkey);
   if (!$hseen->{$hkey})  {
+    $inc->{$bhrid}++;
+    my $incstr = sprintf("%03d", $inc->{$bhrid});
+    my $hrid = "$bhrid-$incstr";
     my $iid = 'i' . $item->{id};
     my $bc = $vf->{b}[0] || '[No barcode]';
     $hrec->{id} = $hid;
     $hrec->{_version} = $ver;
     $hhrid = $hkey;
-    $hrec->{hrid} = "$bhrid-$incstr";
+    $hrec->{hrid} = $hrid;
     $hrec->{instanceId} = $bid;
     $hrec->{permanentLocationId} = $locid;
     $hrec->{sourceId} = $refdata->{holdingsRecordsSources}->{folio} || '';
@@ -373,6 +382,7 @@ sub make_hi {
     $holdings .= $hout . "\n";
     $hseen->{$hkey} = 1;
     $hcount++;
+    print MOUT "$hrid\t$hid\t$hkey\n";
   }
 
   # make item record;
@@ -386,16 +396,17 @@ sub make_hi {
     $bc = $_;
   }
   my @msgs = $vf->{m};
-  my @notes;
-  # push @notes, "Former location: $loc";
-  push @notes, @{ $vf->{x} } if $vf->{x};
-  push @notes, @{ $vf->{w} } if $vf->{w};
+  my @xnotes;
+  my @gnotes;
+  my @rnotes;
+  push @xnotes, @{ $vf->{x} } if $vf->{x};
+  push @gnotes, @{ $vf->{g} } if $vf->{g};
+  push @rnotes, @{ $vf->{r} } if $vf->{r};
   $status =~ s/\s+$//;
   if ($iid) {
     $iid =~ s/^\.//;
     $irec->{_version} = $ver;
     $irec->{holdingsRecordId} = $hid;
-    my @pnotes;
     $irec->{barcode} = $bc if $bc && !$bseen->{$bc};
     $bseen->{$bc} = 1;
     $irec->{hrid} = "i$iid";
@@ -424,19 +435,38 @@ sub make_hi {
         push @{ $irec->{circulationNotes} }, $cnobj;
       }
     }
-    foreach (@notes) {
+    foreach (@xnotes) {
       my $nobj = {};
+      my $tname = $inotes->{x};
       $nobj->{note} = $_;
-      $nobj->{itemNoteTypeId} = '8d0a5eca-25de-4391-81a9-236eeefdd20b';  # Note
-      $nobj->{staffOnly} = 'true';
+      $nobj->{itemNoteTypeId} = $refdata->{itemNoteTypes}->{$tname};
+      $nobj->{staffOnly} = JSON::true;
       push @{ $irec->{notes} }, $nobj;
     }
-    foreach (@pnotes) {
+    foreach (@gnotes) {
       my $nobj = {};
+      my $tname = $inotes->{g};
       $nobj->{note} = $_;
-      $nobj->{itemNoteTypeId} = '5c9f271c-4960-4356-840e-0a8fc050a420'; # PASCAL Barcode
-      $nobj->{staffOnly} = 'true';
+      $nobj->{itemNoteTypeId} = $refdata->{itemNoteTypes}->{$tname};
+      $nobj->{staffOnly} = JSON::true;
       push @{ $irec->{notes} }, $nobj;
+    }
+    foreach (@rnotes) {
+      my $nobj = {};
+      my $tname = $inotes->{r};
+      $nobj->{note} = $_;
+      $nobj->{itemNoteTypeId} = $refdata->{itemNoteTypes}->{$tname};
+      $nobj->{staffOnly} = JSON::true;
+      push @{ $irec->{notes} }, $nobj;
+    }
+    my $pubnote = $item->{fixedFields}->{108}->{display};
+    if ($pubnote =~ /\w/) {
+      my $nobj = {};
+      my $tname = $inotes->{'108'};
+      $nobj->{note} = $pubnote;
+      $nobj->{itemNoteTypeId} = $refdata->{itemNoteTypes}->{$tname};
+      $nobj->{staffOnly} = JSON::false;
+      push @{ $irec->{notes} }, $nobj; 
     }
     
     my $icode2 = $item->{fixedFields}->{60}->{value};
@@ -454,6 +484,16 @@ sub make_hi {
       my $iout = $json->encode($irec);
       $items .= $iout . "\n";
       $icount++;
+    } else {
+      my $main_id = uuid($iid);
+      $bw = {
+        itemId => $main_id,
+        holdingsRecordId => $irec->{holdingsRecordId},
+        id => uuid($main_id . $irec->{holdingsRecordId})
+      };
+      $bws .= $json->encode($bw) . "\n";
+      $bcount++;
+      $iid = "$iid-$bwc";
     }
   }
   return {
