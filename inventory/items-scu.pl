@@ -120,7 +120,6 @@ sub makeMapFromTsv {
   foreach (<$refdir/*.tsv>) {
     my $prop = $_;
     $prop =~ s/^(.+\/)?(.+?)\.tsv/$2/;
-    print $prop . "\n";
     open my $tsv, $_ or die "Can't open $_";
     my $l = 0;
     while (<$tsv>) {
@@ -178,8 +177,13 @@ my $relations = {
 };
 
 my $htype_map = {
-  'm' => 'Monograph',
-  's' => 'Serial'
+  'a' => 'multi-volume monograph',
+  'b' => 'serial',
+  'c' => 'collection',
+  'd' => 'sub collection',
+  'i' => 'integrating resource',
+  'm' => 'monograph',
+  's' => 'serial'
 };
 
 my $count = 0;
@@ -295,6 +299,8 @@ sub make_hi {
   my $bw;
   my $bws = '';
   my $repcn = { a=>0, b=>0 };
+  my $url = '';
+  my $urlnote = '';
 
   my $loc = $item->{fixedFields}->{79}->{value} || '';
   my $cdate = $item->{fixedFields}->{83}->{value} || '';
@@ -335,6 +341,15 @@ sub make_hi {
       }
       $local_callno = 1;
     } 
+    if ($ftag eq 'y') {
+      foreach my $sf (@{$f->{subfields}}) {
+        if ($sf->{tag} eq 'u') {
+          $url = $sf->{content};
+        } elsif ($sf->{tag} eq 'z') {
+          $urlnote = $sf->{content};
+        }
+      }
+    }
   }
   my $write = ($repcn->{a} > 1 || $repcn->{b} > 1) ? 1 : 0;
   my $hfound = 0;
@@ -467,6 +482,10 @@ sub make_hi {
       $nobj->{itemNoteTypeId} = $refdata->{itemNoteTypes}->{$tname};
       $nobj->{staffOnly} = JSON::false;
       push @{ $irec->{notes} }, $nobj; 
+    }
+    if ($url) {
+      my $ea = { uri=>$url, publicNote=>$urlnote };
+      push @{ $irec->{electronicAccess} }, $ea;
     }
     
     my $icode2 = $item->{fixedFields}->{60}->{value};
