@@ -186,6 +186,16 @@ my $htype_map = {
   's' => 'serial'
 };
 
+my $msg_map = {
+  'f'=>'On the Fly',
+  'd'=>'Discarded',
+  '1'=>'On Search 1',
+  '2'=>'On Search 2',
+  '3'=>'On Search 3',
+  '4'=>'On Search 4',
+  'w'=>'Discard Candidate'
+};
+
 my $count = 0;
 my $hcount = 0;
 my $icount = 0;
@@ -438,6 +448,12 @@ sub make_hi {
     $irec->{permanentLoanTypeId} = $sierra2folio->{loantypes}->{$itype} || $refdata->{loantypes}->{'can circulate'};
     $irec->{materialTypeId} = $sierra2folio->{mtypes}->{$itype} || '71fbd940-1027-40a6-8a48-49b44d795e46'; # defaulting to unspecified
     $irec->{status}->{name} = $sierra2folio->{statuses}->{$status} || 'Available'; # defaulting to available;
+    my $msg = $item->{fixedFields}->{97}->{value} || '';
+    my $msg_text = $msg_map->{$msg};
+    if ($msg_text) {
+      push @{ $vf->{m} }, $msg_text;
+    }
+
     foreach my $note (@{ $vf->{m} }) {
       my @ntypes = ('Check out', 'Check in');
       foreach my $ntype (@ntypes) {
