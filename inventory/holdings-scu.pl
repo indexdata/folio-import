@@ -22,9 +22,9 @@ my $version = '1';
 my $isil = 'CStclU';
 my $ver = '1';
 
-my $source_id = 'f32d531e-df79-46b3-8932-cdd35f7a2264'; #MARC
+my $source_id = 'f32d531e-df79-46b3-8932-cdd35f7a2264'; #FOLIO
 my $tm = localtime;
-my $id_admin = '23787404-089b-5efe-a8da-b207cbab9514';
+my $id_admin = '4822b028-11d1-5a36-8525-597d7b6f7dd7';
 
 binmode STDOUT, ":utf8";
 
@@ -271,6 +271,7 @@ foreach (@ARGV) {
     my $h = {};
     my $loc_code = $ff->{40}->{value} || 'xxxxx';
     my $scode2 = $ff->{37}->{value} || '-';
+    my $scode1 = $ff->{36}->{value} || '-';
     $loc_code =~ s/\s*$//;
     my $hid = "c" . $obj->{id};
     next if $seen->{$hid};
@@ -305,7 +306,9 @@ foreach (@ARGV) {
     $h->{callNumberPrefix} = $cnpre if $cnpre;
     $h->{callNumberTypeId} = $cntype || '6caca63e-5651-4db6-9247-3205156e9699'; #other
     $h->{callNumber} = $cn if $cn;
-    $h->{discoverySuppress} = JSON::true;
+    if ($scode1 eq 'y' || $scode2 eq 'y') {
+      $h->{discoverySuppress} = JSON::true;
+    } 
     foreach my $t ('i', 'f','n','w','z') {
       foreach (@{ $vf->{$t} }) {
         push @{ $h->{notes} }, make_notes($t, $_);
