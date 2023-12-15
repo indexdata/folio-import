@@ -34,14 +34,12 @@ my $ver = ($ENV{_VERSION}) ? $ENV{_VERSION} : '1';
 binmode STDOUT, ":utf8";
 $| = 1;
 
-my $version = '2';
-my $isil = 'CSt-L';
-my $prefix = 'L';
-my $hprefix = "${prefix}H";
-my $iprefix = "${prefix}I";
+my $version = '1';
+my $isil = 'AU';
+my $prefix = 'au';
 my $srstype = 'MARC';
 my @hnotes = qw(852z 907abcdefixy 931a 9613anwx 963adfghklnpqsw 9663abcdeqrw 9673aberw 990a);
-my $source_id = '036ee84a-6afd-4c3c-9ad3-4a12ab875f59'; # MARC
+my $source_id = 'f32d531e-df79-46b3-8932-cdd35f7a2264'; # FOLIO
 
 my $rules_file = shift;
 my $ref_dir = shift;
@@ -146,36 +144,21 @@ sub makeMapFromTsv {
       if ($prop =~ /locations/) {
         $code = "$col[0] $col[1]";
         $name = $col[2];
+        my $mtype = $col[5];
+        my $ltype = $col[6];
+        $tsvmap->{$prop}->{$code} = $refdata->{$prop}->{$name};
+        $tsvmap->{mtypes}->{$code} = $refdata->{mtypes}->{$mtype};
+        $tsvmap->{loantypes}->{$code} = $refdata->{loantypes}->{$ltype};
       }      
-      $tsvmap->{$prop}->{$code} = $refdata->{$prop}->{$name};
     }
   }
  return $tsvmap;
 }
 
-my $supids = {};
-sub getSups {
-  foreach my $fn (keys %{ $sfiles }) {
-    my $f = "$dir/$sfiles->{$fn}";
-    open SUP, $f or die "Can't open suppressed ids file $f !";
-    $supids->{$fn} = {};
-    while (<SUP>) {
-      s/\s//g;
-      my $key = $prefix . $_;
-      if ($fn eq 'mfhds') {
-        $key = $hprefix . $_;
-      }
-      $supids->{$fn}->{$key} = 1;
-    }
-  }
-}
-getSups();
-
 my $refdata = getRefData($ref_dir);
 my $tofolio = makeMapFromTsv($ref_dir, $refdata);
 # print Dumper($tofolio); exit;
 # print Dumper($refdata->{locations}); exit;
-# print Dumper($supids); exit;
 
 print "Loading items...\n";
 my $items = {};
@@ -437,10 +420,10 @@ my $ftypes = {
   indexTitle => 'string',
   alternativeTitles => 'array.object',
   editions => 'array',
-  series => 'array',
+  series => 'array.object',
   identifiers => 'array.object',
   contributors => 'array.object',
-  subjects => 'array',
+  subjects => 'array.object',
   classifications => 'array.object',
   publication => 'array.object',
   publicationFrequency => 'array',
@@ -525,7 +508,7 @@ foreach (@ARGV) {
   }
 
   open my $HOUT, ">>:encoding(UTF-8)", $paths->{holds};
-  open my $HSRSOUT, ">>:encoding(UTF-8)", $paths->{hsrs};
+  # open my $HSRSOUT, ">>:encoding(UTF-8)", $paths->{hsrs};
   open my $IOUT, ">>:encoding(UTF-8)", $paths->{items};
   open my $PSOUT, ">>:encoding(UTF-8)", $paths->{presuc};
   open my $ROUT, ">>:encoding(UTF-8)", $paths->{relate};
@@ -543,18 +526,19 @@ foreach (@ARGV) {
   my $inst_recs;
   my $srs_recs;
   my $hrecs;
-  my $hsrs;
+  # my $hsrs;
   my $irecs;
   my $idmap_lines = '';
   my $success = 0;
   my $hrids = {};
+  my $hrid;
   my $rec;
   while (<RAW>) {
     my $raw = $_;
     if (/^\d{5}.[uvxy] /) {
       my $h = make_holdings($raw, $snapshot_id);
       $hrecs .= $h->{holdings} . "\n";
-      $hsrs .= $h->{srs} . "\n";
+      # $hsrs .= $h->{srs} . "\n";
       if ($h->{items}->[0]) {
         foreach (@{ $h->{items} }) {
           $irecs .= $json->encode($_) . "\n";
@@ -610,10 +594,12 @@ foreach (@ARGV) {
         MARC::Record->new_from_usmarc($raw);
       };
       next unless $marc;
-      # lets add an "L" in to the front of the 001
       if ($marc->field('001')) {
         my $in_ctrl = $marc->field('001')->data();
-        $marc->field('001')->update("$prefix$in_ctrl");
+        $in_ctrl =~ s/^oc.//;
+        $in_ctrl =~ s/ +$//;
+        $hrid = $prefix . $in_ctrl;
+        $marc->field('001')->data($hrid);
       }
 
       my $srsmarc = $marc;
@@ -769,9 +755,6 @@ foreach (@ARGV) {
       if (!$hrid) {
         die "No HRID found in record $count";
       }
-      if ($supids->{bibs}->{$hrid}) {
-        $rec->{discoverySuppress} = JSON::true;
-      }
       if (!$hrids->{$hrid} && $marc->title()) {
         # set FOLIO_USER_ID environment variable to create the following metadata object.
         $rec->{id} = uuid($hrid);
@@ -860,10 +843,10 @@ foreach (@ARGV) {
         $hrecs = '';
       }
 
-      if ($hsrs) {
-        print $HSRSOUT $hsrs;
-        $hsrs = '';
-      }
+      # if ($hsrs) {
+        # print $HSRSOUT $hsrs;
+        # $hsrs = '';
+      # }
 
       if ($irecs) {
         print $IOUT $irecs;
@@ -890,6 +873,9 @@ sub make_holdings {
   };
   my $id = $marc->field('001')->data();
   my $bid = $marc->field('004')->data();
+  $bid =~ s/^oc.//;
+  $bid =~ s/ +$//;
+  $bid = $prefix . $bid;
   my $lfield = $marc->field('852');
   my $loc = $lfield->as_string('bc');
   my $cn = $lfield->as_string('hi');
@@ -911,12 +897,11 @@ sub make_holdings {
   }
   my @f655 = $marc->field('655');
 
-  $bid = "$prefix$bid";
-  my $hrid = "$hprefix$id";
-  $marc->field('001')->update($hrid);
-  $marc->field('004')->update($bid);
+  my $hrid = $prefix . $id;
+  # $marc->field('001')->update($hrid);
+  # $marc->field('004')->update($bid);
   my $hid = uuid($hrid);
-  my $srs = make_srs($marc, $marc->as_usmarc(), $hid, $hrid, $snap_id, $hid);
+  # my $srs = make_srs($marc, $marc->as_usmarc(), $hid, $hrid, $snap_id, $hid);
 
   my $hr = {};
   $hr->{_version} = $ver;
@@ -932,9 +917,6 @@ sub make_holdings {
   $hr->{callNumber} = $cn;
   $hr->{callNumberTypeId} = $refdata->{callNumberTypes}->{$cntype_str} if $cntype_str =~ /\w/;
   $hr->{discoverySuppress} = JSON::false;
-  if ($supids->{mfhds}->{$hrid}) {
-    $hr->{discoverySuppress} = JSON::true;
-  }
   foreach (@f655) {
     my $val = $_->as_string('a');
     if ($_->{_ind1} eq '7' && $_->{_ind2} eq '7' && $val eq 'Suppressed') {
@@ -975,37 +957,63 @@ sub make_holdings {
     }
   }
 
+  # make items 
+
   my $out;
-  my @items = make_items($hr->{hrid}, $hr->{id}, $hr->{callNumberTypeId});
-  push @{ $out->{items} }, @items;
-  if ($subw && $items->{bc2iid}->{$subw}) {
-    my $ihrid = $items->{bc2iid}->{$subw};
-    my $itemid = uuid($iprefix . $ihrid);
-    if (!$bwmain->{$subw} && $items->{iid2hid}->{$ihrid}) {
-      my $hhrid = $hprefix . $items->{iid2hid}->{$ihrid};
-      my $bw = {
-        holdingsRecordId => uuid($hhrid),
-        itemId => $itemid,
-        id => uuid($hhrid . $itemid)
+  my $inc = 0;
+  foreach ($marc->field('876')) {
+    my $bc = $_->as_string('p');
+    $inc++;
+    my $incstr = sprintf("%03d", $inc);
+    my $ihrid = "$hrid-$incstr";
+    my $iid = uuid($ihrid);
+    my $mtype = $tofolio->{mtypes}->{$loc} || $refdata->{mtypes}->{unspecified};
+    my $ltype = $tofolio->{loantypes}->{$loc};
+    if ($bc) {
+      my $ir = {
+        id=>$iid,
+        holdingsRecordId=>$hid,
+        hrid=>$ihrid,
+        barcode=>$bc,
+        materialTypeId=>$mtype,
+        permanentLoanTypeId=>$ltype,
+        status=>{ name=>'Available' }
       };
-      push @{ $out->{bwp} }, $bw;
+      push @{ $out->{items} }, $ir;
     }
-    my $bw = {
-      holdingsRecordId => $hr->{id},
-      itemId => $itemid,
-      id => uuid($hr->{id} . $itemid)
-    };
-    push @{ $out->{bwp} }, $bw;
-    $bwmain->{$subw} = 1;
-    my $hnote = {
-      note => "Bound with $subw",
-      holdingsNoteTypeId => $refdata->{holdingsNoteTypes}->{Binding},
-      staffOnly => 'true'
-    };
-    push @{ $hr->{notes} }, $hnote;
   }
+
+  # my @items = make_items($hr->{hrid}, $hr->{id}, $hr->{callNumberTypeId});
+  # push @{ $out->{items} }, @items;
+  # if ($subw && $items->{bc2iid}->{$subw}) {
+    # my $ihrid = $items->{bc2iid}->{$subw};
+    # my $itemid = uuid($ihrid);
+    # if (!$bwmain->{$subw} && $items->{iid2hid}->{$ihrid}) {
+      # my $hhrid = $items->{iid2hid}->{$ihrid};
+      # my $bw = {
+        # holdingsRecordId => uuid($hhrid),
+        # itemId => $itemid,
+        # id => uuid($hhrid . $itemid)
+      # };
+      # push @{ $out->{bwp} }, $bw;
+    # }
+    # my $bw = {
+      # holdingsRecordId => $hr->{id},
+      # itemId => $itemid,
+      # id => uuid($hr->{id} . $itemid)
+    # };
+    # push @{ $out->{bwp} }, $bw;
+    # $bwmain->{$subw} = 1;
+    # my $hnote = {
+      # note => "Bound with $subw",
+      # holdingsNoteTypeId => $refdata->{holdingsNoteTypes}->{Binding},
+      # staffOnly => 'true'
+    # };
+    # push @{ $hr->{notes} }, $hnote;
+  # }
+
   $out->{holdings} = $json->encode($hr);
-  $out->{srs} = $json->encode($srs);
+  # $out->{srs} = $json->encode($srs);
   return $out;
 }
 
@@ -1018,7 +1026,7 @@ sub make_items {
   foreach (@{ $items->{items}->{$hhrid} }) {
     my @c = split /\t/, $_;
     my $link = $c[1];
-    my $id = $iprefix . $link;
+    my $id = $link;
     my $ir = {
       id => uuid($id),
       _version => $ver,
