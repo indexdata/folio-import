@@ -59,5 +59,38 @@ export function getSubs(field, codes, delim) {
 }
 
 export function makeMarc(data) {
-  console.log(data);
+  let line = data.split(/\n/);
+  let ldr = '';
+  let dir = '';
+  let pos = 0;
+  let varFields = '';
+  line.forEach(l => {
+    if (l.match(/^\d{3} /)) {
+      let tag = l.substring(0, 3);
+      let data = l.substring(4);
+      if (tag > '009') {
+        data = data.replace(/ \$(.) */g, '\x1F$1');
+      }
+      data += '\x1E';
+      varFields += data;
+      let len = data.length;
+      let lenStr = len.toString().padStart(4, '0');
+      let posStr = pos.toString().padStart(5, '0');
+      let dirPart = tag + lenStr + posStr;
+      dir += dirPart;
+      pos += len;
+    } else if (l.match(/^\d{5}/)) {
+      ldr = l.substring(5);
+    }
+  });
+  let base = dir.length + 24;
+  let baseStr = base.toString().padStart(5, '0');
+  console.log('1', ldr);
+  ldr = ldr.replace(/^(.{7}).{5}/, '$1' + baseStr);
+  console.log('2', ldr);
+  let rec = ldr + dir + varFields + '\x1D';
+  let rlen = rec.length + 5;
+  let rlinStr = rlen.toString().padStart(5, '0');
+  rec = rlinStr + rec;
+  return rec;
 }
