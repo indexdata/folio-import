@@ -68,7 +68,7 @@ try {
         let locId = uuid(c[2], ns);
         let sp =  spId[c[4]];
         o.id = locId;
-        o.name = c[3];
+        o.name = c[3].replace(/ +/g, ' ');
         o.code = c[2];
         o.campusId = campId;
         o.libraryId = libIds[c[0]];
@@ -76,7 +76,7 @@ try {
         o.servicePointIds = [ sp ];
         o.primaryServicePoint = sp;
         o.isActive = true;
-        o.discoveryDisplayName = c[3];
+        o.discoveryDisplayName = o.name;
         if (!lseen[c[2]]) lseen[c[2]] = 0;
         lseen[c[2]]++;
       } 
