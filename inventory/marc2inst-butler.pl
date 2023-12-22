@@ -936,7 +936,7 @@ sub make_holdings {
   $hr->{permanentLocationId} = $tofolio->{locations}->{$loc} || '';
   $hr->{sourceId} = $source_id;
   if (!$hr->{permanentLocationId}) { 
-    $hr->{permanentLocationId} = $refdata->{locations}->{'UNMAPPED'};
+    $hr->{permanentLocationId} = $refdata->{locations}->{'EDUCERROR'};
     print "WARN FOLIO location not found for $loc! ($id)\n";
   }
   $hr->{callNumberPrefix} = $cnpre if $cnpre;
