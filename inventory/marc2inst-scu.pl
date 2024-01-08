@@ -214,7 +214,7 @@ sub process_entity {
     }
     if ($ent->{subFieldDelimiter}) {
       my @sects;
-      my $del = '';
+      my $del = ' ';
       foreach (@{ $ent->{subFieldDelimiter} }) {
         my $subs = join '', @{ $_->{subfields} };
         if ($subs) {
