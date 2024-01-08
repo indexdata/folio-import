@@ -323,10 +323,18 @@ sub process_entity {
       }
     }
     if ($ent->{subFieldDelimiter}) {
+      my @sects;
+      my $del = ' ';
       foreach (@{ $ent->{subFieldDelimiter} }) {
         my $subs = join '', @{ $_->{subfields} };
-        push @data, $tmp_field->as_string($subs, $_->{value}) if $subs; 
+        if ($subs) {
+          my $sdata = $tmp_field->as_string($subs, $_->{value}); 
+          push @sects, $sdata if $sdata;
+        } else {
+          $del = $_->{value};
+        }
       }
+      push @data, join $del, @sects;
     } else {
       push @data, $tmp_field->as_string($subs) if $subs;
     }
