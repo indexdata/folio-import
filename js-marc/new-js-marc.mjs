@@ -1,3 +1,5 @@
+import { Buffer } from 'node:buffer';
+
 export function parseMarc(raw) {
   let record = {};
   let leader = raw.substring(0, 24);
@@ -73,7 +75,7 @@ export function makeMarc(data) {
       }
       data += '\x1E';
       varFields += data;
-      let len = data.length;
+      let len = Buffer.byteLength(data, 'utf8');
       let lenStr = len.toString().padStart(4, '0');
       let posStr = pos.toString().padStart(5, '0');
       let dirPart = tag + lenStr + posStr;
@@ -83,11 +85,10 @@ export function makeMarc(data) {
       ldr = l.substring(5);
     }
   });
+  dir += '\x1E';
   let base = dir.length + 24;
   let baseStr = base.toString().padStart(5, '0');
-  console.log('1', ldr);
   ldr = ldr.replace(/^(.{7}).{5}/, '$1' + baseStr);
-  console.log('2', ldr);
   let rec = ldr + dir + varFields + '\x1D';
   let rlen = rec.length + 5;
   let rlinStr = rlen.toString().padStart(5, '0');

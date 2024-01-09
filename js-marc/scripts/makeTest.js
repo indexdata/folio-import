@@ -24,17 +24,18 @@ try {
     let total = 0;
     let trec = '';
     rl.on('line', r => {
-      total++;
       if (r.match(/^\d{3}/)) {
         trec += r + "\n";
       } else {
         let raw = makeMarc(trec);
         fs.writeFileSync(outFile, raw, {flag: 'a'});
         trec = '';
+        total++;
       }
     });
     rl.on('close', () => {
       console.log('Done!');
+      console.log('Records created:', total);
     });
 } catch (e) {
   console.log(e);
