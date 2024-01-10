@@ -1,0 +1,48 @@
+02548nam a2200577 i 4500
+001 ebc7206109
+003 OCoLC
+005 20230824200118.2
+006 m     o  d        
+007 cr |||||||||||
+008 221208t20232023nyu     ob    001 0 eng  
+010    $a 2022052348
+020    $a 9780593239926 $q (ebook)
+020    $a 059323992X $q (ebook)
+020    $z 9780593239919 $q (hardcover)
+035    $a (OCoLC)1362868203 $z (OCoLC)1371754418 $z (OCoLC)1373780286
+037    $a 10F5A9C5-BCC1-4E87-876B-3B5FCB3739DB $b OverDrive, Inc. $n http://www.overdrive.com
+040    $a DLC $b eng $e rda $e pn $c DLC $d EBLCP $d TEFOD $d YDX $d N$T $d OCLCF $d TOH $d GZM $d CDS $d CLU $d CTU $d OCLCQ
+042    $a pcc
+043    $a n-us---
+050  4 $a HC110.P6 $b D47 2023
+082 00 $a 362.50973 $2 23/eng/20230118
+100 1  $a Desmond, Matthew, $e author.
+245 10 $a Poverty, by America / $c Matthew Desmond.
+250    $a First edition.
+263    $a 2303.
+264  1 $a New York : $b Crown, $c [2023]
+264  4 $c ©2023.
+300    $a 1 online resource ( xii, 284 pages) :
+336    $a text $b txt $2 rdacontent.
+337    $a computer $b c $2 rdamedia.
+338    $a online resource $b cr $2 rdacarrier.
+504    $a Includes bibliographic references and index.
+505 00 $t The kind of problem poverty is -- $t Why haven't we made more progress? -- $t How we undercut workers -- $t How we force the poor to pay more -- $t How we rely on welfare -- $t How we buy opportunity -- $t Invest in ending poverty -- $t Empower the poor -- $t Tear down the walls.
+533    $a Electronic reproduction. $b Ann Arbor, MI $n Available via World Wide Web.
+588 0  $a Online resource; title from digital title page (viewed April 26, 2023).
+650  0 $a Poverty $z United States.
+650  0 $a Poverty $x Prevention.
+650  0 $a Poor $z United States.
+650  7 $a Poor. $2 fast $0 (OCoLC)fst01071040.
+650  7 $a Poverty. $2 fast $0 (OCoLC)fst01074093.
+650  7 $a Poverty $x Prevention. $2 fast $0 (OCoLC)fst01074116.
+651  7 $a United States. $2 fast $0 (OCoLC)fst01204155.
+655  7 $a Electronic book. $2 local.
+710 2  $a ProQuest (Firm)
+776 08 $i Print version: $a Desmond, Matthew. $t Poverty, by America. $d New York : Crown, [2023] $z 0593239911 $w (DLC)  2022052347 $w (OCoLC)1333920883.
+856 40 $u https://ebookcentral.proquest.com/lib/santaclara/detail.action?docID=7206109 $z Connect to this title online (one simultaneous user allowed)
+907    $a .b3996291x $b 231004 $c 231004
+998    $a uww $b 231004 $c m $d z   $e l $f eng $g nyu $h 0
+916    $a GOBI ProQuest DDA purchased
+919    $a .pcat $b 2022-07-07
+
