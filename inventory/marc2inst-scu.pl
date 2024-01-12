@@ -296,7 +296,7 @@ sub processing_funcs {
     } elsif ($_ eq 'set_instance_type_id') {
       if ($field->tag() gt '009') {
         my $code = $field->subfield('b');
-        $out = $refdata->{instanceTypes}->{$out};
+        $out = $refdata->{instanceTypes}->{$code};
       } else {
         $out = '';
       }
