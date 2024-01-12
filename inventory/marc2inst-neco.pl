@@ -256,7 +256,7 @@ sub process_entity {
       $add = 1;
     } else {
       foreach ($field->subfields()) {
-        if ($subs =~ /$_->[0]/ && $_->[1] =~ /\S/) {
+        if ($subs =~ /\Q$_->[0]\E/ && $_->[1] =~ /\S/) {
           $add = 1;
           last;
         }
@@ -274,7 +274,7 @@ sub process_entity {
       my $i = 0;
       my $sf;
       foreach (@{ $tmp_field->{_subfields} }) {
-        if ($i % 2 && $subs =~ /$sf/) {
+        if ($i % 2 && $subs =~ /\Q$sf\E/) {
           $_ = processing_funcs($_, $tmp_field, $params, @funcs);
         } else {
           $sf = $_;
@@ -283,10 +283,18 @@ sub process_entity {
       }
     }
     if ($ent->{subFieldDelimiter}) {
+      my @sects;
+      my $del = ' ';
       foreach (@{ $ent->{subFieldDelimiter} }) {
         my $subs = join '', @{ $_->{subfields} };
-        push @data, $tmp_field->as_string($subs, $_->{value}) if $subs; 
+        if ($subs) {
+          my $sdata = $tmp_field->as_string($subs, $_->{value}); 
+          push @sects, $sdata if $sdata;
+        } else {
+          $del = $_->{value};
+        }
       }
+      push @data, join $del, @sects;
     } else {
       push @data, $tmp_field->as_string($subs) if $subs;
     }
@@ -358,7 +366,7 @@ sub processing_funcs {
     } elsif ($_ eq 'set_instance_type_id') {
       if ($field->tag() gt '009') {
         my $code = $field->subfield('b');
-        $out = $refdata->{instanceTypes}->{$out};
+        $out = $refdata->{instanceTypes}->{$code};
       } else {
         $out = '';
       }
@@ -378,9 +386,9 @@ sub processing_funcs {
       $out =~ s/$ss//g;
     } elsif ($_ eq 'set_note_staff_only_via_indicator') {
       if ($field->indicator(1) eq '1') {
-        $out = 'true';
-      } else {
         $out = 'false';
+      } else {
+        $out = 'true';
       }
     }
   }
