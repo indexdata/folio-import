@@ -19,7 +19,7 @@ PATHS='contributor-name-types contributor-types alternative-title-types call-num
   classification-types electronic-access-relationships holdings-note-types holdings-types holdings-sources
   identifier-types ill-policies instance-formats instance-note-types instance-relationship-types
   instance-statuses instance-types item-damaged-statuses item-note-types loan-types locations material-types
-  modes-of-issuance nature-of-content-terms service-points shelf-locations statistical-code-types statistical-codes'
+  modes-of-issuance nature-of-content-terms service-points shelf-locations statistical-code-types statistical-codes authority-note-types'
 curl
 
 for PATH in $PATHS
