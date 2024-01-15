@@ -6,12 +6,12 @@ import readline from 'readline';
 let textFile = process.argv[2];
 
 try {
-  if (!textFile) { throw "Usage: node makeTest.js <marc_text_file>" }
+  if (!textFile) { throw "Usage: node sierraAuth.js <autority_file_jsonl>" }
 
   let start = new Date().valueOf();
 
   let dir = path.dirname(textFile);
-  let fn = path.basename(textFile);
+  let fn = path.basename(textFile, '.jsonl');
   let outFile = `${dir}/${fn}.mrc`;
   if (fs.existsSync(outFile)) fs.unlinkSync(outFile);
 
@@ -43,8 +43,9 @@ try {
         }
       });
       let out = vfs.sort().join('\n');
+      out = ldr + out;
       let mrc = makeMarc(out);
-      console.log(mrc);
+      fs.writeFileSync(outFile, mrc, {flag: 'a'});
     });
     rl.on('close', () => {
       console.log('Done!');
