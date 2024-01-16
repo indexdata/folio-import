@@ -91,15 +91,21 @@ sub getRefData {
           my $refroot = $_;
           $refobj->{$refroot} = {};
           foreach (@{ $json->{$_} }) {
-            my $name;
-            if ($refroot =~ /^(instanceTypes|contributorTypes|instanceFormats)$/) {
-              $name = $_->{code};
+            if ($refroot eq 'authoritySourceFiles') {
+              foreach my $c (@{ $_->{codes}}) {
+                $refobj->{$refroot}->{$c} = $_->{id} if $c;
+              }
             } else {
-              $name = $_->{name};
+              my $name;
+              if ($refroot =~ /^(instanceTypes|contributorTypes|instanceFormats)$/) {
+                $name = $_->{code};
+              } else {
+                $name = $_->{name};
+              }
+              my $id = $_->{id};
+              $name =~ s/\s+$//;
+              $refobj->{$refroot}->{$name} = $id;
             }
-            my $id = $_->{id};
-            $name =~ s/\s+$//;
-            $refobj->{$refroot}->{$name} = $id;
           }
         }
       }
@@ -308,7 +314,7 @@ my $ftypes = {
   genreTerm => 'string',
   sftPersonalName => 'array',
   sftPersonalNameTitle => 'array',
-  sftCoporateName => 'array',
+  sftCorporateName => 'array',
   sftCorporateNameTitle => 'array',
   sftMeetingName => 'array',
   sftMeetingNameTitle => 'array',
@@ -327,6 +333,7 @@ my $ftypes = {
   saftGeographicName => 'array',
   saftGenreTerm => 'array',
   subjectHeadings => 'string',
+  uniformTitle => 'string',
   notes => 'array.object'
 };
 
@@ -409,6 +416,9 @@ foreach (@ARGV) {
       $f008 .= " " x 40;
       $f008 = substr($f008, 0, 40);
       $marc->field('008')->data($f008);
+      my $atype = $hrid;
+      $atype =~ s/^([A-z]+).+/$1/;
+      # print $atype . "\n";
 
       my $srsmarc = $marc;
       my $ldr = $marc->leader();
@@ -482,6 +492,7 @@ foreach (@ARGV) {
               my $flavor;
               if ($_->{target}) {
                 @targ = split /\./, $_->{target};
+                # print $targ[0] . "\n";
                 $flavor = $ftypes->{$targ[0]};
               }
               my $data = process_entity($field, $_);
@@ -515,6 +526,7 @@ foreach (@ARGV) {
       $rec->{id} = uuid($hrid);
       $rec->{_version} = $ver;
       $rec->{naturalId} = $nid;
+      $rec->{sourceFileId} = $refdata->{authoritySourceFiles}->{$atype} || '';
       $inst_recs .= $json->encode($rec) . "\n";
       $srs_recs .= $json->encode(make_srs($srsmarc, $raw, $rec->{id}, $nid, $snapshot_id)) . "\n";
       $hrids->{$hrid} = 1;
