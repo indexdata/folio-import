@@ -402,8 +402,12 @@ foreach (@ARGV) {
       next unless $marc;
       my $hrid = $marc->field('001')->data();
       my $nid = $hrid;
-      $nid =~ s/ //g;
+      # $nid =~ s/ //g;
       $marc->field('001')->data($nid);
+      my $f008 = $marc->field('008')->data();
+      $f008 .= " " x 40;
+      $f008 = substr($f008, 0, 40);
+      $marc->field('008')->data($f008);
 
       my $srsmarc = $marc;
       my $ldr = $marc->leader();
@@ -506,7 +510,6 @@ foreach (@ARGV) {
           }
         }
       }
-      # Assign uuid based on hrid;
       
       $rec->{id} = uuid($hrid);
       $rec->{_version} = $ver;
