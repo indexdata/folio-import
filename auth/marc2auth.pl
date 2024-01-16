@@ -326,6 +326,7 @@ my $ftypes = {
   saftTopicalTerm => 'array',
   saftGeographicName => 'array',
   saftGenreTerm => 'array',
+  subjectHeadings => 'string',
   notes => 'array.object'
 };
 
@@ -402,7 +403,7 @@ foreach (@ARGV) {
       next unless $marc;
       my $hrid = $marc->field('001')->data();
       my $nid = $hrid;
-      # $nid =~ s/ //g;
+      $nid =~ s/ //g;
       $marc->field('001')->data($nid);
       my $f008 = $marc->field('008')->data();
       $f008 .= " " x 40;
@@ -530,7 +531,7 @@ foreach (@ARGV) {
   }
   my $tt = time() - $start;
   print "\nDone!\n$count Marc records processed in $tt seconds";
-  print "\nInstances:   $success ($paths->{auth})";
+  print "\nAuthority records:   $success ($paths->{auth})";
 }
 
 sub make_notes {
