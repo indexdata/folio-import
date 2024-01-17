@@ -7,7 +7,6 @@ const fs = require('fs');
 const superagent = require('superagent');
 const readline = require('readline');
 const { getAuthToken } = require('./lib/login');
-const { getCipherInfo } = require('crypto');
 let endpoint = process.argv[2];
 const objFile = process.argv[3];
 

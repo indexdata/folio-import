@@ -14,8 +14,6 @@ const argv = require('minimist')(process.argv.slice(2));
 
 const { getAuthToken } = require('./lib/login');
 let inFile = argv._[0];
-let root = (argv.r) ? argv.r + '.*' : '*';
-let method = (argv.m && argv.m.match(/put/i)) ? 'put' : 'post';
 let startRec = 1;
 let upsert = '';
 if (argv.s) {
