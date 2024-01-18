@@ -118,8 +118,6 @@ $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
 # print Dumper($refdata); exit;
 
-my $bcseen = {};
-
 sub process_entity {
   my $field = shift;
   my $ent = shift;
@@ -305,7 +303,7 @@ my $ftypes = {
   source => 'string',
   personalName => 'string',
   personalNameTitle => 'string',
-  coporateName => 'string',
+  corporateName => 'string',
   coporateNameTitle => 'string',
   meetingName => 'string',
   meetingNameTitle => 'string',
@@ -361,6 +359,7 @@ foreach (keys %{ $mapping_rules }) {
   }
 }
 
+my $hrids = {};
 foreach (@ARGV) {
   my $infile = $_;
   if (! -e $infile) {
@@ -396,7 +395,7 @@ foreach (@ARGV) {
   my $inst_recs;
   my $srs_recs;
   my $success = 0;
-  my $hrids = {};
+  my $errors = 0;
   my $rec;
   while (<RAW>) {
     my $raw = $_;
@@ -410,8 +409,13 @@ foreach (@ARGV) {
       next unless $marc;
       my $hrid = $marc->field('001')->data();
       my $nid = $hrid;
+      if ($hrids->{$hrid}) {
+        print "WARN duplicate 001 found: $hrid\n";
+        $errors++;
+        next;
+      }
       $nid =~ s/ //g;
-      $marc->field('001')->data($nid);
+      # $marc->field('001')->data($hrid);
       my $f008 = $marc->field('008')->data();
       $f008 .= " " x 40;
       $f008 = substr($f008, 0, 40);
@@ -492,20 +496,12 @@ foreach (@ARGV) {
               my $flavor;
               if ($_->{target}) {
                 @targ = split /\./, $_->{target};
-                # print $targ[0] . "\n";
                 $flavor = $ftypes->{$targ[0]};
               }
               my $data = process_entity($field, $_);
               next unless $data;
               if ($flavor eq 'array') {
-                my $first_targ_data = $rec->{$targ[0]};
-                if ($_->{subFieldSplit}) { # subFieldSplit is only used for one field, 041, which may have a lang string like engfreger.
-                  my $val = $_->{subFieldSplit}->{value};
-                  my @splitdata = $data =~ /(\w{$val})/g;
-                  push @$first_targ_data, @splitdata;
-                } else {
-                  push @$first_targ_data, $data;
-                }
+                push @{ $rec->{$targ[0]} }, $data;
               } elsif ($flavor eq 'array.object') {
                 $data_obj->{$targ[0]}->{$targ[1]} = $data;
               } elsif ($flavor eq 'object') {
@@ -544,6 +540,7 @@ foreach (@ARGV) {
   my $tt = time() - $start;
   print "\nDone!\n$count Marc records processed in $tt seconds";
   print "\nAuthority records:   $success ($paths->{auth})";
+  print "\nErrors:              $errors";
 }
 
 sub make_notes {
