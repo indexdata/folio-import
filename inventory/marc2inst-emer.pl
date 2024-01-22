@@ -154,7 +154,7 @@ sub makeMapFromTsv {
 $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
 my $tofolio = makeMapFromTsv($ref_dir, $refdata);
-# print Dumper($tofolio->{locations}); exit;
+# print Dumper($tofolio->{mtypes}); exit;
 # print Dumper($refdata->{locations}); exit;
 
 my $blvl = {
@@ -204,15 +204,15 @@ my $typemap = {
 
 my $statmap = {
   'In Process' => 'In process', 
+  'Damaged' => 'Restricted',
   'In Transit Discharged' => 'In transit',
   'In Transit On Hold' => 'In transit',
   'Lost--Library Applied' => 'Declared lost',
-  'Lost--System Applied' => 'Declared lost',
-  'Missing' => 'Missing',
-  'At Bindery' => 'Unavailable'
+  'Missing' => 'Missing'
 };
 
 my $bcseen = {};
+my $hrseen = {};
 
 sub process_entity {
   my $field = shift;
@@ -517,21 +517,22 @@ foreach (@ARGV) {
     my $raw = $_;
     if (/^\d{5}.[uvxy] /) {
       my $h = make_holdings($raw, $snapshot_id);
-      $hrecs .= $h->{holdings} . "\n";
-      # $hsrs .= $h->{srs} . "\n";
-      if ($h->{items}->[0]) {
-        foreach (@{ $h->{items} }) {
-          $irecs .= $json->encode($_) . "\n";
-          $icount++;
+      if ($h) {
+        $hrecs .= $h->{holdings} . "\n";
+        if ($h->{items}->[0]) {
+          foreach (@{ $h->{items} }) {
+            $irecs .= $json->encode($_) . "\n";
+            $icount++;
+          }
         }
-      }
-      if ($h->{bwp}->[0]) {
-        foreach (@{ $h->{bwp} }) {
-          print $BWOUT $json->encode($_) . "\n";
-          $bwcount++;
+        if ($h->{bwp}->[0]) {
+          foreach (@{ $h->{bwp} }) {
+            print $BWOUT $json->encode($_) . "\n";
+            $bwcount++;
+          }
         }
+        $hcount++;
       }
-      $hcount++;
     } else {
       $rec = {
         id => '',
@@ -848,10 +849,17 @@ sub make_holdings {
   $tcode =~ s/^......(.).+/$1/;
   my $id = $marc->field('001')->data();
   my $bid = $marc->field('004')->data();
+  if ($hrseen->{$id}) {
+    print "WARN Holdings record $id already seen-- Skipping...\n";
+    return '';
+  }
+  $hrseen->{$id} = 1; 
 
   my $lfield = $marc->field('852');
   my $loc = $lfield->as_string('b');
+  my $hloc = $loc;
   my $cn = $lfield->as_string('hi');
+  my $hcn = $cn;
   my $cnpre = $lfield->as_string('k');
   my $cnsuf = $lfield->as_string('m');
   my $cntype = $lfield->indicator(1);
@@ -894,7 +902,7 @@ sub make_holdings {
   $hr->{sourceId} = $source_id;
   if (!$hr->{permanentLocationId}) { 
     $hr->{permanentLocationId} = $refdata->{locations}->{'Unmapped location'};
-    print "WARN FOLIO location not found for $loc! ($id)\n";
+    print "WARN FOLIO location not found for \"$loc\"! ($id)\n";
   }
   $hr->{callNumber} = $cn;
   $hr->{callNumberTypeId} = $refdata->{callNumberTypes}->{$cntype_str} if $cntype_str =~ /\w/;
@@ -906,7 +914,7 @@ sub make_holdings {
   if ($notes[0]) {
     push @{ $hr->{notes} }, @notes;
   }
-  my @notes = make_notes($marc, '852', 'z', '', 0);
+  @notes = make_notes($marc, '852', 'z', '', 0);
   if ($notes[0]) {
     push @{ $hr->{notes} }, @notes;
   }
@@ -950,26 +958,27 @@ sub make_holdings {
     my $cn = $item->as_string('ab') || '';
     my $ntype = $item->as_string('r') || '';
     my $no = $item->as_string('q') || '';
-    my $circs = $item->as_string('f') || '';
+    # my $circs = $item->as_string('f') || '';
 
     my $ir = {
       id => uuid($inumstr),
       hrid => $inumstr,
       holdingsRecordId => $hr->{id}
     };
-    $ir->{materialTypeId} = $tofolio->{mtypes}->{$mt};
-    # add hardcoded unavailable locations here (ie: Offsite Storage" (NCO-OFFSTE) )
-    if ($loc eq 'NCO-OFFSTE') {
-      $ir->{status}->{name} = 'Unavailable';
+    if ($tofolio->{mtypes}->{$mt}) {
+      $ir->{materialTypeId} = $tofolio->{mtypes}->{$mt};
     } else {
-      $ir->{status}->{name} = $statmap->{$st} || 'Available';
+      $ir->{materialTypeId} = $refdata->{mtypes}->{Unspecified};
+      print "WARN Material Type not found for \"$mt\"!\n";
     }
+
+    $ir->{status}->{name} = $statmap->{$st} || 'Available';
     $ir->{permanentLoanTypeId} = $refdata->{loantypes}->{'Can circulate'};
     if ($bc && !$bcseen->{$bc}) {
       $ir->{barcode} = $bc if ($bc);
       $bcseen->{$bc} = 1;
     } elsif ($bc) {
-      print "WARN duplicat barcode found $bc\n";
+      print "WARN Duplicate barcode found $bc\n";
     }
     if ($vl && $tcode =~ /[y]/) {
       $ir->{enumeration} = $vl;
@@ -980,11 +989,11 @@ sub make_holdings {
     $ir->{yearCaption} = [ $yc ] if ($yc);
     $ir->{descriptionOfPieces} = $dp if ($dp);
     $ir->{copyNumber} = $cp if ($cp);
-    if ($cn) {
+    if ($cn && $cn ne $hcn) {
       $ir->{itemLevelCallNumber} = $cn;
       $ir->{itemLevelCallNumberTypeId} = '95467209-6d7b-468b-94df-0f5d7ad2747d' # LC
     }
-    if ($loc) {
+    if ($loc && $loc ne $hloc) {
       $ir->{permanentLocationId} = $tofolio->{locations}->{$loc} || $refdata->{locations}->{'Unmapped Location'};
     }
     if ($tmploc) {
@@ -1000,17 +1009,18 @@ sub make_holdings {
         push @{ $ir->{notes} }, $n;
       }
     }
-    if ($circs =~ /\d/) {
-      my $n = {
-          note => $circs,
-          itemNoteTypeId => $refdata->{itemNoteTypes}->{'Historical circs'},
-          staffOnly => JSON::true
-        };
-        push @{ $ir->{notes} }, $n; 
-    }
-    $ir->{circulationNotes} = [];
+    # if ($circs =~ /\d/) {
+      # my $n = {
+          # note => $circs,
+          # itemNoteTypeId => $refdata->{itemNoteTypes}->{'Historical circs'},
+          # staffOnly => JSON::true
+        # };
+        # push @{ $ir->{notes} }, $n; 
+    # }
+    # $ir->{circulationNotes} = [];
     if ($no && $ntype eq 'charge') {
       my $nobj = {
+        id => uuid($no . 'Check out'),
         note => $no,
         noteType => 'Check out',
         staffOnly => JSON::true
@@ -1019,6 +1029,7 @@ sub make_holdings {
     }
     if ($no && $ntype eq 'discharge') {
       my $nobj = {
+        id => uuid($no . 'Check in'),
         note => $no,
         noteType => 'Check in',
         staffOnly => JSON::true
