@@ -602,7 +602,7 @@ foreach (@ARGV) {
           my $sdata = $field->subfield($sf) || next;
           $sdata =~ s/^(\d{3}).*/$1/;
           my $rtag = $fr->{frules}->{$sdata} || $sdata;
-          if ($rtag =~ /^\d\d\d$/) {
+          if ($rtag ne '880' && $rtag =~ /^\d\d\d$/) {
             $field->set_tag($rtag);
             push @marc_fields, $field;
           }
