@@ -872,6 +872,8 @@ sub make_holdings {
     $cntype_str = 'Library of Congress classification'; 
   } elsif ($cntype eq '1') {
     $cntype_str = 'Dewey Decimal classification';
+  } elsif ($cntype eq '2') {
+    $cntype_str = 'National Library of Medicine classification';
   } elsif ($cntype eq '3') {
     $cntype_str = 'Superintendent of Documents classification';
   } elsif ($cntype eq '5') {
