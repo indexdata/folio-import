@@ -802,7 +802,7 @@ foreach (@ARGV) {
         $errcount++;
       }
     }
-    if (1 || eof RAW || $success % 10000 == 0) {
+    if (eof RAW || $success % 10000 == 0) {
       my $tt = time() - $start;
       print "Processed #$count (" . $rec->{hrid} . ") [ instances: $success, holdings: $hcount, items: $icount, time: $tt secs ]\n" if $rec->{hrid};
       write_objects($OUT, $inst_recs);
@@ -909,7 +909,6 @@ sub make_holdings {
   $hr->{callNumberTypeId} = $refdata->{callNumberTypes}->{$cntype_str} if $cntype_str =~ /\w/;
   $hr->{callNumberPrefix} = $cnpre if $cnpre;
   # $hr->{callNumberSuffix} = $cnsuf if $cnsuf;
-  $hr->{discoverySuppress} = ($f908 && $f908->subfield('x') && $f908->subfield('x') eq 'Y') ? JSON::true : JSON::false; 
   
   my @notes = make_notes($marc, '852', 'x', '', 1);
   if ($notes[0]) {
@@ -950,7 +949,7 @@ sub make_holdings {
     my $vl = $item->as_string('c') || '';
     my $cr = $item->as_string('k') || '';
     my $yc = $item->as_string('d') || '';
-    # my $dp = $item->as_string('n') || '';
+    my $dp = $item->as_string('n') || '';
     my $nop = $item->as_string('m') || '';
     my $mt = $item->as_string('t') || '';
     my $st = $item->as_string('s') || '';
@@ -958,8 +957,9 @@ sub make_holdings {
     my $tmploc = $item->as_string('h') || '';
     my $cp = $item->as_string('g') || '';
     my $cn = $item->as_string('ab') || '';
-    my $ntype = $item->as_string('r') || '';
-    # my $circs = $item->as_string('f') || '';
+    my $cin = $item->as_string('r') || '';
+    my $cout = $item->as_string('u') || '';
+    my $circs = $item->as_string('f') || '';
 
     my $ir = {
       id => uuid($inumstr),
@@ -988,7 +988,7 @@ sub make_holdings {
     }
     $ir->{chronology} = $cr if ($cr);
     $ir->{yearCaption} = [ $yc ] if ($yc);
-    # $ir->{descriptionOfPieces} = $dp if ($dp);
+    $ir->{descriptionOfPieces} = $dp if ($dp);
     $ir->{numberOfPieces} = $nop if ($nop);
     $ir->{copyNumber} = $cp if ($cp);
     if ($cn && $cn ne $hcn) {
@@ -1017,33 +1017,33 @@ sub make_holdings {
       };
       push @{ $ir->{notes} }, $n;
     }
-    # if ($circs =~ /\d/) {
-      # my $n = {
-          # note => $circs,
-          # itemNoteTypeId => $refdata->{itemNoteTypes}->{'Historical circs'},
-          # staffOnly => JSON::true
-        # };
-        # push @{ $ir->{notes} }, $n; 
-    # }
-    # $ir->{circulationNotes} = [];
-    # if ($no && $ntype eq 'charge') {
-      # my $nobj = {
-        # id => uuid($no . 'Check out'),
-        # note => $no,
-        # noteType => 'Check out',
-        # staffOnly => JSON::true
-      # };
-      # push @{ $ir->{circulationNotes} }, $nobj;
-    # }
-    # if ($no && $ntype eq 'discharge') {
-      # my $nobj = {
-        # id => uuid($no . 'Check in'),
-        # note => $no,
-        # noteType => 'Check in',
-        # staffOnly => JSON::true
-      # };
-      # push @{ $ir->{circulationNotes} }, $nobj;
-    # }
+    $ir->{discoverySuppress} = ($f908 && $f908->subfield('x') && $f908->subfield('x') eq 'Y') ? JSON::true : JSON::false; 
+    if ($circs =~ /\d/) {
+      my $n = {
+        note => $circs,
+        itemNoteTypeId => $refdata->{itemNoteTypes}->{'Historical charges'},
+        staffOnly => JSON::true
+      };
+      push @{ $ir->{notes} }, $n; 
+    }
+    if ($cout) {
+      my $nobj = {
+        id => uuid($cout . 'Check out'),
+        note => $cout,
+        noteType => 'Check out',
+        staffOnly => JSON::true
+      };
+      push @{ $ir->{circulationNotes} }, $nobj;
+    }
+    if ($cin) {
+      my $nobj = {
+        id => uuid($cin . 'Check in'),
+        note => $cin,
+        noteType => 'Check in',
+        staffOnly => JSON::true
+      };
+      push @{ $ir->{circulationNotes} }, $nobj;
+    }
     
     # my $irstr = $json->pretty->encode($ir);
     push @{ $out->{items} }, $ir;
