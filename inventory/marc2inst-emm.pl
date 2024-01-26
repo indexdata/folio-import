@@ -954,7 +954,7 @@ sub make_holdings {
     my $mt = $item->as_string('t') || '';
     my $st = $item->as_string('s') || '';
     my $loc = $item->as_string('l') || '';
-    my $tmploc = $item->as_string('h') || '';
+    # my $tmploc = $item->as_string('h') || '';
     my $cp = $item->as_string('g') || '';
     my $cn = $item->as_string('ab') || '';
     my $ntype = $item->as_string('r') || '';
@@ -997,9 +997,9 @@ sub make_holdings {
     if ($loc && $loc ne $hloc) {
       $ir->{permanentLocationId} = $tofolio->{locations}->{$loc} || $refdata->{locations}->{'Unmapped Location'};
     }
-    if ($tmploc) {
-      $ir->{temporaryLocationId} = $tofolio->{locations}->{$tmploc} || $refdata->{locations}->{'Unmapped Location'};
-    }
+    # if ($tmploc) {
+      # $ir->{temporaryLocationId} = $tofolio->{locations}->{$tmploc} || $refdata->{locations}->{'Unmapped Location'};
+    # }
     foreach my $nt ($item->subfield('q')) {
       my $n = {
         note => $nt,
