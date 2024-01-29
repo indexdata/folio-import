@@ -440,7 +440,6 @@ foreach (keys %{ $mapping_rules }) {
   foreach (@{ $mapping_rules->{$rtag} }) {
     if ($_->{entityPerRepeatedSubfield}) {
       my $conf = $_;
-      # $repeat_subs->{$rtag} = [] unless $repeat_subs->{$rtag};
       foreach (@{ $conf->{entity} }) {
         push @{ $repeat_subs->{$rtag} }, $_->{subfield}->[0] if $_->{target} !~ /Id$/;
       }
@@ -630,7 +629,7 @@ foreach (@ARGV) {
                 $new_field->add_subfields($code => $sdata );
               }
               $i++;
-              my @ncode = [''];
+              my @ncode = ('');
               if ($subs[$i]) {
                 @ncode = @{ $subs[$i] };
               }
@@ -639,6 +638,7 @@ foreach (@ARGV) {
             next MARC_FIELD;
           }
         }
+
         my $fld_conf = $mapping_rules->{$tag};
         my @entities;
         if ($fld_conf) {
