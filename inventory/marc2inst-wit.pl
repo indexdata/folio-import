@@ -204,9 +204,6 @@ my $typemap = {
 
 my $statmap = {
   'In Process' => 'In process', 
-  'Damaged' => 'Restricted',
-  'In Transit Discharged' => 'In transit',
-  'In Transit On Hold' => 'In transit',
   'Lost--Library Applied' => 'Declared lost',
   'Missing' => 'Missing'
 };

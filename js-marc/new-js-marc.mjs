@@ -44,6 +44,9 @@ export function parseMarc(raw) {
     }
 
   });
+  // let k = Object.keys(fields).sort();
+  // console.log(k);
+
   record = { mij: mij, fields: fields };
   return record;
 }
