@@ -1,0 +1,661 @@
+GET:
+
+https://indexdata-test-okapi.folio.indexdata.com/data-import-profiles/profileSnapshots/16fd6f33-fe6f-4bf9-af75-5fcdc8c29002?profileType=JOB_PROFILE&jobProfileId=16fd6f33-fe6f-4bf9-af75-5fcdc8c29002
+
+{
+  "id" : "3dba4b9c-6f91-4000-b5e6-8ef9e642dea3",
+  "profileId" : "16fd6f33-fe6f-4bf9-af75-5fcdc8c29002",
+  "profileWrapperId" : "230cec1c-076c-4997-adcf-45f748bd6dd1",
+  "contentType" : "JOB_PROFILE",
+  "content" : {
+    "id" : "16fd6f33-fe6f-4bf9-af75-5fcdc8c29002",
+    "name" : "Charles test",
+    "description" : "",
+    "dataType" : "MARC",
+    "deleted" : false,
+    "userInfo" : {
+      "firstName" : "IndexData",
+      "lastName" : "Administrator",
+      "userName" : "indexdata_admin"
+    },
+    "parentProfiles" : [ ],
+    "childProfiles" : [ ],
+    "hidden" : false,
+    "metadata" : {
+      "createdDate" : "2024-02-02T18:48:34.108+00:00",
+      "createdByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67",
+      "updatedDate" : "2024-02-03T17:59:21.880+00:00",
+      "updatedByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67"
+    }
+  },
+  "order" : 0,
+  "childSnapshotWrappers" : [ {
+    "id" : "ce8f4511-613a-4181-9f0e-c9b6041a68f5",
+    "profileId" : "fd3d9a27-b936-4126-a58d-28810b2fbc29",
+    "profileWrapperId" : "022d4e31-f32e-4a21-9e1a-11a968d72958",
+    "contentType" : "MATCH_PROFILE",
+    "content" : {
+      "id" : "fd3d9a27-b936-4126-a58d-28810b2fbc29",
+      "name" : "035$a -> System Control #",
+      "description" : "",
+      "incomingRecordType" : "MARC_BIBLIOGRAPHIC",
+      "existingRecordType" : "MARC_BIBLIOGRAPHIC",
+      "matchDetails" : [ {
+        "incomingRecordType" : "MARC_BIBLIOGRAPHIC",
+        "existingRecordType" : "MARC_BIBLIOGRAPHIC",
+        "incomingMatchExpression" : {
+          "dataValueType" : "VALUE_FROM_RECORD",
+          "fields" : [ {
+            "label" : "field",
+            "value" : "035"
+          }, {
+            "label" : "indicator1",
+            "value" : ""
+          }, {
+            "label" : "indicator2",
+            "value" : "9"
+          }, {
+            "label" : "recordSubfield",
+            "value" : "a"
+          } ]
+        },
+        "matchCriterion" : "EXACTLY_MATCHES",
+        "existingMatchExpression" : {
+          "dataValueType" : "VALUE_FROM_RECORD",
+          "fields" : [ {
+            "label" : "field",
+            "value" : "035"
+          }, {
+            "label" : "indicator1",
+            "value" : ""
+          }, {
+            "label" : "indicator2",
+            "value" : "9"
+          }, {
+            "label" : "recordSubfield",
+            "value" : "a"
+          } ]
+        }
+      } ],
+      "deleted" : false,
+      "userInfo" : {
+        "firstName" : "IndexData",
+        "lastName" : "Administrator",
+        "userName" : "indexdata_admin"
+      },
+      "parentProfiles" : [ ],
+      "childProfiles" : [ ],
+      "hidden" : false,
+      "metadata" : {
+        "createdDate" : "2023-03-31T21:22:22.506+00:00",
+        "createdByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67",
+        "updatedDate" : "2024-02-02T18:57:22.334+00:00",
+        "updatedByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67"
+      }
+    },
+    "order" : 0,
+    "childSnapshotWrappers" : [ {
+      "id" : "45ce236a-939a-4501-ad31-3ac6a8472083",
+      "profileId" : "fa45f3ec-9b83-11eb-a8b3-0242ac130003",
+      "profileWrapperId" : "4d017abf-bc86-48a3-9e21-91484b6690f8",
+      "contentType" : "ACTION_PROFILE",
+      "reactTo" : "NON_MATCH",
+      "content" : {
+        "id" : "fa45f3ec-9b83-11eb-a8b3-0242ac130003",
+        "name" : "Default - Create instance",
+        "description" : "This action profile is used with FOLIO's default job profile for creating Inventory Instances and SRS MARC Bibliographic records. It can be edited, duplicated, or deleted.",
+        "action" : "CREATE",
+        "folioRecord" : "INSTANCE",
+        "deleted" : false,
+        "userInfo" : {
+          "firstName" : "System",
+          "lastName" : "System",
+          "userName" : "System"
+        },
+        "parentProfiles" : [ ],
+        "childProfiles" : [ ],
+        "hidden" : false,
+        "remove9Subfields" : true,
+        "metadata" : {
+          "createdDate" : "2021-04-13T14:00:00.000+00:00",
+          "createdByUserId" : "00000000-0000-0000-0000-000000000000",
+          "updatedDate" : "2021-04-13T15:00:00.462+00:00",
+          "updatedByUserId" : "00000000-0000-0000-0000-000000000000"
+        }
+      },
+      "order" : 0,
+      "childSnapshotWrappers" : [ {
+        "id" : "02375513-8ffd-4f30-8a1b-731faa219a51",
+        "profileId" : "bf7b3b86-9b84-11eb-a8b3-0242ac130003",
+        "profileWrapperId" : "ac20be72-0dc2-4bc1-8126-275e0257af13",
+        "contentType" : "MAPPING_PROFILE",
+        "content" : {
+          "id" : "bf7b3b86-9b84-11eb-a8b3-0242ac130003",
+          "name" : "Default - Create instance",
+          "description" : "This field mapping profile is used with FOLIO's default job profile for creating Inventory Instances and SRS MARC Bibliographic records. It can be edited, duplicated, deleted, or linked to additional action profiles.",
+          "incomingRecordType" : "MARC_BIBLIOGRAPHIC",
+          "existingRecordType" : "INSTANCE",
+          "deleted" : false,
+          "userInfo" : {
+            "firstName" : "System",
+            "lastName" : "System",
+            "userName" : "System"
+          },
+          "marcFieldProtectionSettings" : [ ],
+          "parentProfiles" : [ ],
+          "childProfiles" : [ ],
+          "mappingDetails" : {
+            "name" : "instance",
+            "recordType" : "INSTANCE",
+            "mappingFields" : [ {
+              "name" : "discoverySuppress",
+              "enabled" : "true",
+              "required" : false,
+              "path" : "instance.discoverySuppress",
+              "value" : "",
+              "subfields" : [ ]
+            }, {
+              "name" : "staffSuppress",
+              "enabled" : "true",
+              "required" : false,
+              "path" : "instance.staffSuppress",
+              "value" : "",
+              "subfields" : [ ]
+            }, {
+              "name" : "previouslyHeld",
+              "enabled" : "true",
+              "required" : false,
+              "path" : "instance.previouslyHeld",
+              "value" : "",
+              "subfields" : [ ]
+            }, {
+              "name" : "hrid",
+              "enabled" : "false",
+              "required" : false,
+              "path" : "instance.hrid",
+              "value" : "",
+              "subfields" : [ ]
+            }, {
+              "name" : "source",
+              "enabled" : "false",
+              "required" : false,
+              "path" : "instance.source",
+              "value" : "",
+              "subfields" : [ ]
+            }, {
+              "name" : "catalogedDate",
+              "enabled" : "true",
+              "required" : false,
+              "path" : "instance.catalogedDate",
+              "value" : "",
+              "subfields" : [ ]
+            }, {
+              "name" : "statusId",
+              "enabled" : "true",
+              "required" : false,
+              "path" : "instance.statusId",
+              "value" : "",
+              "subfields" : [ ],
+              "acceptedValues" : {
+                "26f5208e-110a-4394-be29-1569a8c84a65" : "Uncataloged",
+                "52a2ff34-2a12-420d-8539-21aa8d3cf5d8" : "Batch Loaded",
+                "f5cc2ab6-bb92-4cab-b83f-5a3d09261a41" : "Not yet assigned",
+                "2a340d34-6b70-443a-bb1b-1b8d1c65d862" : "Other",
+                "9634a5ab-9228-4703-baf2-4d12ebc77d56" : "Cataloged",
+                "daf2681c-25af-4202-a3fa-e58fdf806183" : "Temporary"
+              }
+            }, {
+              "name" : "modeOfIssuanceId",
+              "enabled" : "false",
+              "required" : false,
+              "path" : "instance.modeOfIssuanceId",
+              "value" : "",
+              "subfields" : [ ]
+            }, {
+              "name" : "statisticalCodeIds",
+              "enabled" : "true",
+              "required" : false,
+              "path" : "instance.statisticalCodeIds[]",
+              "value" : "",
+              "subfields" : [ ]
+            }, {
+              "name" : "title",
+              "enabled" : "false",
+              "required" : false,
+              "path" : "instance.title",
+              "value" : "",
+              "subfields" : [ ]
+            }, {
+              "name" : "alternativeTitles",
+              "enabled" : "false",
+              "required" : false,
+              "path" : "instance.alternativeTitles[]",
+              "value" : "",
+              "subfields" : [ ]
+            }, {
+              "name" : "indexTitle",
+              "enabled" : "false",
+              "required" : false,
+              "path" : "instance.indexTitle",
+              "value" : "",
+              "subfields" : [ ]
+            }, {
+              "name" : "series",
+              "enabled" : "false",
+              "required" : false,
+              "path" : "instance.series[]",
+              "value" : "",
+              "subfields" : [ ]
+            }, {
+              "name" : "precedingTitles",
+              "enabled" : "false",
+              "required" : false,
+              "path" : "instance.precedingTitles[]",
+              "value" : "",
+              "subfields" : [ ]
+            }, {
+              "name" : "succeedingTitles",
+              "enabled" : "false",
+              "required" : false,
+              "path" : "instance.succeedingTitles[]",
+              "value" : "",
+              "subfields" : [ ]
+            }, {
+              "name" : "identifiers",
+              "enabled" : "false",
+              "required" : false,
+              "path" : "instance.identifiers[]",
+              "value" : "",
+              "subfields" : [ ]
+            }, {
+              "name" : "contributors",
+              "enabled" : "false",
+              "required" : false,
+              "path" : "instance.contributors[]",
+              "value" : "",
+              "subfields" : [ ]
+            }, {
+              "name" : "publication",
+              "enabled" : "false",
+              "required" : false,
+              "path" : "instance.publication[]",
+              "value" : "",
+              "subfields" : [ ]
+            }, {
+              "name" : "editions",
+              "enabled" : "false",
+              "required" : false,
+              "path" : "instance.editions[]",
+              "value" : "",
+              "subfields" : [ ]
+            }, {
+              "name" : "physicalDescriptions",
+              "enabled" : "false",
+              "required" : false,
+              "path" : "instance.physicalDescriptions[]",
+              "value" : "",
+              "subfields" : [ ]
+            }, {
+              "name" : "instanceTypeId",
+              "enabled" : "false",
+              "required" : false,
+              "path" : "instance.instanceTypeId",
+              "value" : "",
+              "subfields" : [ ]
+            }, {
+              "name" : "natureOfContentTermIds",
+              "enabled" : "true",
+              "required" : false,
+              "path" : "instance.natureOfContentTermIds[]",
+              "value" : "",
+              "subfields" : [ ]
+            }, {
+              "name" : "instanceFormatIds",
+              "enabled" : "false",
+              "required" : false,
+              "path" : "instance.instanceFormatIds[]",
+              "value" : "",
+              "subfields" : [ ]
+            }, {
+              "name" : "languages",
+              "enabled" : "false",
+              "required" : false,
+              "path" : "instance.languages[]",
+              "value" : "",
+              "subfields" : [ ]
+            }, {
+              "name" : "publicationFrequency",
+              "enabled" : "false",
+              "required" : false,
+              "path" : "instance.publicationFrequency[]",
+              "value" : "",
+              "subfields" : [ ]
+            }, {
+              "name" : "publicationRange",
+              "enabled" : "false",
+              "required" : false,
+              "path" : "instance.publicationRange[]",
+              "value" : "",
+              "subfields" : [ ]
+            }, {
+              "name" : "notes",
+              "enabled" : "false",
+              "required" : false,
+              "path" : "instance.notes[]",
+              "value" : "",
+              "subfields" : [ ]
+            }, {
+              "name" : "electronicAccess",
+              "enabled" : "false",
+              "required" : false,
+              "path" : "instance.electronicAccess[]",
+              "value" : "",
+              "subfields" : [ ]
+            }, {
+              "name" : "subjects",
+              "enabled" : "false",
+              "required" : false,
+              "path" : "instance.subjects[]",
+              "value" : "",
+              "subfields" : [ ]
+            }, {
+              "name" : "classifications",
+              "enabled" : "false",
+              "required" : false,
+              "path" : "instance.classifications[]",
+              "value" : "",
+              "subfields" : [ ]
+            }, {
+              "name" : "parentInstances",
+              "enabled" : "true",
+              "required" : false,
+              "path" : "instance.parentInstances[]",
+              "value" : "",
+              "subfields" : [ ]
+            }, {
+              "name" : "childInstances",
+              "enabled" : "true",
+              "required" : false,
+              "path" : "instance.childInstances[]",
+              "value" : "",
+              "subfields" : [ ]
+            } ],
+            "marcMappingDetails" : [ ]
+          },
+          "hidden" : false,
+          "metadata" : {
+            "createdDate" : "2021-04-13T14:00:00.000+00:00",
+            "createdByUserId" : "00000000-0000-0000-0000-000000000000",
+            "updatedDate" : "2021-04-13T15:00:00.462+00:00",
+            "updatedByUserId" : "00000000-0000-0000-0000-000000000000"
+          }
+        },
+        "order" : 0,
+        "childSnapshotWrappers" : [ ]
+      } ]
+    }, {
+      "id" : "b2feee2d-cfcc-4990-9af2-837db0745021",
+      "profileId" : "8c429895-0b61-48a2-bcda-a6868c38747c",
+      "profileWrapperId" : "8b4664bc-94e0-4f47-aef7-812331eedf90",
+      "contentType" : "ACTION_PROFILE",
+      "reactTo" : "MATCH",
+      "content" : {
+        "id" : "8c429895-0b61-48a2-bcda-a6868c38747c",
+        "name" : "Corrie test: Update SRS",
+        "description" : "",
+        "action" : "UPDATE",
+        "folioRecord" : "MARC_BIBLIOGRAPHIC",
+        "deleted" : false,
+        "userInfo" : {
+          "firstName" : "IndexData",
+          "lastName" : "Administrator",
+          "userName" : "indexdata_admin"
+        },
+        "parentProfiles" : [ ],
+        "childProfiles" : [ ],
+        "hidden" : false,
+        "remove9Subfields" : true,
+        "metadata" : {
+          "createdDate" : "2023-07-28T19:02:45.416+00:00",
+          "createdByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67",
+          "updatedDate" : "2023-07-28T19:02:45.416+00:00",
+          "updatedByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67"
+        }
+      },
+      "order" : 0,
+      "childSnapshotWrappers" : [ {
+        "id" : "c2a0a2b9-11d8-4465-bf37-e88225244f80",
+        "profileId" : "399b6626-4d07-471c-8bac-7032a1f0f02d",
+        "profileWrapperId" : "20289629-28a3-4217-bb6c-22f16a7ac060",
+        "contentType" : "MAPPING_PROFILE",
+        "content" : {
+          "id" : "399b6626-4d07-471c-8bac-7032a1f0f02d",
+          "name" : "Update SRS record (w/ field protections)",
+          "description" : "",
+          "incomingRecordType" : "MARC_BIBLIOGRAPHIC",
+          "existingRecordType" : "MARC_BIBLIOGRAPHIC",
+          "deleted" : false,
+          "userInfo" : {
+            "firstName" : "IndexData",
+            "lastName" : "Administrator",
+            "userName" : "indexdata_admin"
+          },
+          "marcFieldProtectionSettings" : [ ],
+          "parentProfiles" : [ ],
+          "childProfiles" : [ ],
+          "mappingDetails" : {
+            "name" : "marcBib",
+            "recordType" : "MARC_BIBLIOGRAPHIC",
+            "mappingFields" : [ ],
+            "marcMappingDetails" : [ ],
+            "marcMappingOption" : "UPDATE"
+          },
+          "hidden" : false,
+          "metadata" : {
+            "createdDate" : "2023-07-28T19:01:57.829+00:00",
+            "createdByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67",
+            "updatedDate" : "2023-08-04T15:32:56.346+00:00",
+            "updatedByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67"
+          }
+        },
+        "order" : 0,
+        "childSnapshotWrappers" : [ ]
+      } ]
+    } ]
+  } ]
+}
+
+
+https://indexdata-test-okapi.folio.indexdata.com/data-import-profiles/jobProfiles/16fd6f33-fe6f-4bf9-af75-5fcdc8c29002
+
+POST:
+https://indexdata-test-okapi.folio.indexdata.com/data-import-profiles/jobProfiles
+
+{
+  "profile": {
+    "name": "Charles test2",
+    "description": "",
+    "dataType": "MARC",
+    "deleted": false,
+    "userInfo": {
+      "firstName": "IndexData",
+      "lastName": "Administrator",
+      "userName": "indexdata_admin"
+    },
+    "hidden": false,
+    "metadata": {
+      "createdDate": "2024-02-02T18:48:34.108+00:00",
+      "createdByUserId": "7e0558c1-8cae-5e19-920e-46feadb81b67",
+      "updatedDate": "2024-02-03T17:59:21.880+00:00",
+      "updatedByUserId": "7e0558c1-8cae-5e19-920e-46feadb81b67"
+    }
+  },
+  "addedRelations": [
+    {
+      "masterProfileId": null,
+      "masterProfileType": "JOB_PROFILE",
+      "detailProfileId": "fd3d9a27-b936-4126-a58d-28810b2fbc29",
+      "detailProfileType": "MATCH_PROFILE",
+      "order": 0
+    },
+    {
+      "masterProfileId": "fd3d9a27-b936-4126-a58d-28810b2fbc29",
+      "masterProfileType": "MATCH_PROFILE",
+      "detailProfileId": "fa45f3ec-9b83-11eb-a8b3-0242ac130003",
+      "detailProfileType": "ACTION_PROFILE",
+      "order": 0,
+      "reactTo": "NON_MATCH"
+    },
+    {
+      "masterProfileId": "fd3d9a27-b936-4126-a58d-28810b2fbc29",
+      "masterProfileType": "MATCH_PROFILE",
+      "detailProfileId": "8c429895-0b61-48a2-bcda-a6868c38747c",
+      "detailProfileType": "ACTION_PROFILE",
+      "order": 0,
+      "reactTo": "MATCH"
+    }
+  ],
+  "deletedRelations": []
+}
+
+------ Match Profiles -------
+
+GET https://indexdata-test-okapi.folio.indexdata.com/data-import-profiles/matchProfiles
+
+{
+  "id" : "fd3d9a27-b936-4126-a58d-28810b2fbc29",
+  "name" : "035$a -> System Control #",
+  "description" : "",
+  "incomingRecordType" : "MARC_BIBLIOGRAPHIC",
+  "existingRecordType" : "MARC_BIBLIOGRAPHIC",
+  "matchDetails" : [ {
+    "incomingRecordType" : "MARC_BIBLIOGRAPHIC",
+    "existingRecordType" : "MARC_BIBLIOGRAPHIC",
+    "incomingMatchExpression" : {
+      "dataValueType" : "VALUE_FROM_RECORD",
+      "fields" : [ {
+        "label" : "field",
+        "value" : "035"
+      }, {
+        "label" : "indicator1",
+        "value" : ""
+      }, {
+        "label" : "indicator2",
+        "value" : "9"
+      }, {
+        "label" : "recordSubfield",
+        "value" : "a"
+      } ]
+    },
+    "matchCriterion" : "EXACTLY_MATCHES",
+    "existingMatchExpression" : {
+      "dataValueType" : "VALUE_FROM_RECORD",
+      "fields" : [ {
+        "label" : "field",
+        "value" : "035"
+      }, {
+        "label" : "indicator1",
+        "value" : ""
+      }, {
+        "label" : "indicator2",
+        "value" : "9"
+      }, {
+        "label" : "recordSubfield",
+        "value" : "a"
+      } ]
+    }
+  } ],
+  "deleted" : false,
+  "userInfo" : {
+    "firstName" : "IndexData",
+    "lastName" : "Administrator",
+    "userName" : "indexdata_admin"
+  },
+  "parentProfiles" : [ ],
+  "childProfiles" : [ ],
+  "hidden" : false,
+  "metadata" : {
+    "createdDate" : "2023-03-31T21:22:22.506+00:00",
+    "createdByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67",
+    "updatedDate" : "2024-02-02T18:57:22.334+00:00",
+    "updatedByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67"
+  }
+}
+
+
+POST https://indexdata-test-okapi.folio.indexdata.com/data-import-profiles/matchProfiles
+{
+  "profile": {
+    "name": "035$a -> System Control # ZZZ",
+    "description": "",
+    "incomingRecordType": "MARC_BIBLIOGRAPHIC",
+    "existingRecordType": "MARC_BIBLIOGRAPHIC",
+    "matchDetails": [
+      {
+        "incomingRecordType": "MARC_BIBLIOGRAPHIC",
+        "existingRecordType": "MARC_BIBLIOGRAPHIC",
+        "incomingMatchExpression": {
+          "dataValueType": "VALUE_FROM_RECORD",
+          "fields": [
+            {
+              "label": "field",
+              "value": "035"
+            },
+            {
+              "label": "indicator1",
+              "value": ""
+            },
+            {
+              "label": "indicator2",
+              "value": "9"
+            },
+            {
+              "label": "recordSubfield",
+              "value": "a"
+            }
+          ]
+        },
+        "matchCriterion": "EXACTLY_MATCHES",
+        "existingMatchExpression": {
+          "dataValueType": "VALUE_FROM_RECORD",
+          "fields": [
+            {
+              "label": "field",
+              "value": "035"
+            },
+            {
+              "label": "indicator1",
+              "value": ""
+            },
+            {
+              "label": "indicator2",
+              "value": "9"
+            },
+            {
+              "label": "recordSubfield",
+              "value": "a"
+            }
+          ]
+        }
+      }
+    ],
+    "deleted": false,
+    "userInfo": {
+      "firstName": "IndexData",
+      "lastName": "Administrator",
+      "userName": "indexdata_admin"
+    },
+    "hidden": false,
+    "metadata": {
+      "createdDate": "2023-03-31T21:22:22.506+00:00",
+      "createdByUserId": "7e0558c1-8cae-5e19-920e-46feadb81b67",
+      "updatedDate": "2024-02-02T18:57:22.334+00:00",
+      "updatedByUserId": "7e0558c1-8cae-5e19-920e-46feadb81b67"
+    }
+  },
+  "addedRelations": [],
+  "deletedRelations": []
+}
+
+
+
