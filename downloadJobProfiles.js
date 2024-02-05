@@ -24,6 +24,25 @@ let profId = process.argv[2];
         console.error(e.message);
       }
     }
+    
+    const addRelation = (profileId, contentType, childSnapshotWrappers) => {
+      childSnapshotWrappers.forEach(c => {
+        const out = {
+          masterProfileId: profileId,
+          masterProfileType: contentType,
+          detailProfileId: c.profileId,
+          detailProfileType: c.contentType,
+          order: c.order
+        }
+        if (c.reactTo) out.reactTo = c.reactTo;
+        console.log(out);
+        if (c.childSnapshotWrappers) {
+          addRelation(c.profileId, c.contentType, c.childSnapshotWrappers);
+        }
+      });
+      
+      return out
+    }
 
     if (profId) {
       jids.push(profId);
@@ -46,7 +65,7 @@ let profId = process.argv[2];
     for (let z = 0; z < jids.length; z++) {
       let jid = jids[z];
       let prof = await getProfs(jid, ptype);
-      console.log(JSON.stringify(prof, null, 2));
+      // console.log(JSON.stringify(prof, null, 2));
       const pc = prof.content;
       delete pc.parentProfiles;
       delete pc.childProfiles;
@@ -56,10 +75,9 @@ let profId = process.argv[2];
         addedRelations: [],
         deletedRelations: [],
       }
-      while (prof.childSnapshotWrappers) {
-        console.log(prof);
-        prof = prof.childSnapshotWrappers[0];
-      }
+      addRelation(prof.profileId, prof.contentType, prof.childSnapshotWrappers);
+      
+      // console.log(out);
     }
  } catch (e) {
     console.error(e.message);
