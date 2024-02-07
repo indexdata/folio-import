@@ -12,6 +12,7 @@ let refDir = process.argv[2];
     } else if (!fs.lstatSync(refDir).isDirectory()) {
       throw new Error(`${refDir} is not a directory!`)
     }
+    refDir = refDir.replace(/\/$/, '');
     const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
 
     const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
@@ -248,7 +249,7 @@ let refDir = process.argv[2];
             .set('x-okapi-token', authToken)
         }
         let jsonStr = JSON.stringify(res.body, null, 2);
-        let fullSaveDir = refDir + saveDir;
+        let fullSaveDir = refDir + '/' + saveDir;
         if (!fs.existsSync(fullSaveDir)) {
           console.log(`(Creating directory: ${saveDir})`);
           fs.mkdirSync(fullSaveDir);
