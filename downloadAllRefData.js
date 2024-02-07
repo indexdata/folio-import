@@ -2,11 +2,12 @@ const fs = require('fs');
 const superagent = require('superagent');
 const { getAuthToken } = require('./lib/login');
 let refDir = process.argv[2];
+let modName = process.argv[3];
 
 (async () => {
   try {
     if (!refDir) {
-      throw new Error('Usage: node downloadAllRefData.js <reference_dir>');
+      throw new Error('Usage: node downloadAllRefData.js <reference_dir> <mod_name_regexp>');
     } else if (!fs.existsSync(refDir)) {
       throw new Error('Reference directory does\'t exist!');
     } else if (!fs.lstatSync(refDir).isDirectory()) {
@@ -47,6 +48,20 @@ let refDir = process.argv[2];
       'https://raw.githubusercontent.com/folio-org/mod-calendar/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-agreements/master/service/src/main/okapi/ModuleDescriptor-template.json'
     ];
+
+    if (modName) {
+      let tmp = [];
+      for (let x = 0; x < mdUrls.length; x++) {
+        if (mdUrls[x].match(modName)) {
+          tmp.push(mdUrls[x]);
+        }
+      }
+      if (tmp.length > 0) {
+        mdUrls = tmp;
+      } else {
+        throw new Error(`No match found for module "${modName}!`);
+      }
+    }
 
     const skipList = {
       '/accounts': true,
@@ -213,7 +228,7 @@ let refDir = process.argv[2];
       } else if (!url.match(/\?/)) {
         url += '?limit=2000';
       } 
-      if (url.match(/data-import-profiles/)) {
+      if (url.match(/data-import-profiles/ && !url.match(/jobProfiles/))) {
         url += '&withRelations=true';
       }
       if (paths[x].path === 'data-import-profiles/profileAssociations') {
@@ -234,6 +249,7 @@ let refDir = process.argv[2];
       
       try {
         let res = {};
+        // console.log(url);
         if (url.match(/custom-fields/)) {
           res = await superagent
             .get(url)
