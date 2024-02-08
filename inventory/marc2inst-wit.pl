@@ -968,6 +968,7 @@ sub make_holdings {
     my $ntype = $item->as_string('r') || '';
     my $no = $item->as_string('q') || '';
     my $circs = $item->as_string('f') || '';
+    my $rcharges = $item->as_string('o') || '';
 
     my $ir = {
       id => uuid($inumstr),
@@ -1023,6 +1024,14 @@ sub make_holdings {
       my $n = {
           note => $circs,
           itemNoteTypeId => $refdata->{itemNoteTypes}->{'Historical charges'},
+          staffOnly => JSON::true
+        };
+        push @{ $ir->{notes} }, $n; 
+    }
+    if ($rcharges =~ /\d/) {
+      my $n = {
+          note => $rcharges,
+          itemNoteTypeId => $refdata->{itemNoteTypes}->{'Reserve charges'},
           staffOnly => JSON::true
         };
         push @{ $ir->{notes} }, $n; 
