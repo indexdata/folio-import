@@ -77,6 +77,17 @@ let ver = process.env.version;
       let lDate = new Date();
       logger.info(`[${x}] ${lDate} PUT ${id} to ${actionUrl}`);
       let recUrl = `${actionUrl}/${id}`;
+      if (recUrl.match(/instances|holdings|items/)) {
+        try {
+          let res = await superagent
+            .get(recUrl)
+            .set('x-okapi-token', authToken);
+          logger.info(`  Setting version number to ${res.body._version}`);
+          rec._version = res.body._version;
+        } catch (e) {
+          logger.error(`${e}`); 
+        }
+      }
       try {
         await superagent
           .put(recUrl)
@@ -96,7 +107,7 @@ let ver = process.env.version;
     const ms = end - start;
     const time = Math.floor(ms / 1000);
     logger.info(`\nTime:            ${time} sec`);
-    logger.info(`Records updated:   ${success}`);
+    logger.info(`Records updated: ${success}`);
     logger.info(`Failures:        ${fail}\n`);
   } catch (e) {
     console.error(e);
