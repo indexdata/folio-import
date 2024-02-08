@@ -644,6 +644,15 @@ foreach (@ARGV) {
         if ($fld_conf) {
           if ($fld_conf->[0]->{entity}) {
             foreach (@{ $fld_conf }) {
+              if ($tag eq '024') {
+                if ($_->{indicators}) {
+                  my $ind1 = $_->{indicators}->{ind1};
+                  $ind1 =~ s/\*//;
+                  next if $ind1 && $field->indicator(1) ne $ind1;
+                } elsif ($field->indicator(1) =~ /[12]/) {
+                  next;
+                }
+              }
               if ($_->{entity}) {
                 push @entities, $_->{entity};
               }
