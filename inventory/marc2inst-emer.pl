@@ -960,6 +960,7 @@ sub make_holdings {
     my $cr = $item->as_string('k') || '';
     my $yc = $item->as_string('d') || '';
     my $dp = $item->as_string('n') || '';
+    my $nop = $item->as_string('m') || '';
     my $mt = $item->as_string('t') || '';
     my $st = $item->as_string('s') || '';
     my $loc = $item->as_string('l') || '';
@@ -997,6 +998,7 @@ sub make_holdings {
     }
     $ir->{chronology} = $cr if ($cr);
     $ir->{yearCaption} = [ $yc ] if ($yc);
+    $ir->{numberOfPieces} = $nop if ($nop);
     $ir->{descriptionOfPieces} = $dp if ($dp);
     $ir->{copyNumber} = $cp if ($cp);
     if ($cn && $cn ne $hcn) {
