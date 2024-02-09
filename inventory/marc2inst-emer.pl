@@ -998,7 +998,7 @@ sub make_holdings {
     my $ntype = $item->as_string('r') || '';
     my $no = $item->as_string('q') || '';
     my $circs = $item->as_string('f') || '';
-    my $rcount = $item->as_string('o') || '';
+    my $hbrowses = $item->as_string('e') || '';
 
     my $ir = {
       id => uuid($inumstr),
@@ -1058,18 +1058,26 @@ sub make_holdings {
       };
       push @{ $ir->{notes} }, $n;
     }
+    if ($circs =~ /\d/) {
+      my $n = {
+          note => $circs,
+          itemNoteTypeId => $refdata->{itemNoteTypes}->{'Historical charges'},
+          staffOnly => JSON::true
+        };
+        push @{ $ir->{notes} }, $n; 
+    }
+    if ($hbrowses =~ /\d/) {
+      my $n = {
+          note => $hbrowses,
+          itemNoteTypeId => $refdata->{itemNoteTypes}->{'Historical browses'},
+          staffOnly => JSON::true
+        };
+        push @{ $ir->{notes} }, $n; 
+    }
+
     if ($st eq 'Damaged') {
       $ir->{itemDamagedStatusId} = '54d1dd76-ea33-4bcb-955b-6b29df4f7930'; # Damaged
     }
-    # if ($circs =~ /\d/) {
-      # my $n = {
-          # note => $circs,
-          # itemNoteTypeId => $refdata->{itemNoteTypes}->{'Historical circs'},
-          # staffOnly => JSON::true
-        # };
-        # push @{ $ir->{notes} }, $n; 
-    # }
-    # $ir->{circulationNotes} = [];
     if ($no && $ntype eq 'charge') {
       my $nobj = {
         id => uuid($no . 'Check out'),
@@ -1088,6 +1096,7 @@ sub make_holdings {
       };
       push @{ $ir->{circulationNotes} }, $nobj;
     }
+    
     
     # my $irstr = $json->pretty->encode($ir);
     push @{ $out->{items} }, $ir;
