@@ -871,6 +871,8 @@ sub make_holdings {
   my $cnpre = $lfield->as_string('k');
   my $cnsuf = $lfield->as_string('m');
   my $cntype = $lfield->indicator(1);
+  my @snotes = $lfield->subfield('x');
+  my @pnotes = $lfield->subfield('z');
 
   my $f908 = $marc->field('908');
   
@@ -919,14 +921,24 @@ sub make_holdings {
   $hr->{callNumberPrefix} = $cnpre if $cnpre;
   $hr->{callNumberSuffix} = $cnsuf if $cnsuf;
   $hr->{discoverySuppress} = ($f908 && $f908->subfield('x') && $f908->subfield('x') eq 'Y') ? JSON::true : JSON::false; 
-  
-  my @notes = make_notes($marc, '852', 'x', '', 1);
-  if ($notes[0]) {
-    push @{ $hr->{notes} }, @notes;
+
+  foreach (@pnotes) {
+    my $htype = $refdata->{holdingsNoteTypes}->{Note};
+    my $n = {
+      note=>$_,
+      staffOnly=>JSON::false,
+      holdingsNoteTypeId=>$htype
+    };
+    push @{ $hr->{notes} }, $n;
   }
-  @notes = make_notes($marc, '852', 'z', '', 0);
-  if ($notes[0]) {
-    push @{ $hr->{notes} }, @notes;
+  foreach (@snotes) {
+    my $htype = $refdata->{holdingsNoteTypes}->{Note};
+    my $n = {
+      note=>$_,
+      staffOnly=>JSON::true,
+      holdingsNoteTypeId=>$htype
+    };
+    push @{ $hr->{notes} }, $n;
   }
 
   foreach ($marc->field('866')) {
