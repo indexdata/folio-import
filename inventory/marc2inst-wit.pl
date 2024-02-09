@@ -864,7 +864,7 @@ sub make_holdings {
   my $lfield = $marc->field('852');
   my $loc = $lfield->as_string('b');
   my $hloc = $loc;
-  my $cn = $lfield->as_string('hi');
+  my $cn = $lfield->as_string('hik');
   my $hcn = $cn;
   # my $cnpre = $lfield->as_string('k');
   # my $cnsuf = $lfield->as_string('m');
