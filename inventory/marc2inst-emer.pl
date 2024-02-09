@@ -861,9 +861,26 @@ sub make_holdings {
     print "WARN Holdings record $id already seen-- Skipping...\n";
     return '';
   }
-  $hrseen->{$id} = 1; 
+  $hrseen->{$id} = 1;
 
-  my $lfield = $marc->field('852');
+  my $lfield;
+  my @snotes;
+  my @pnotes;
+  foreach ($marc->field('852')) {
+    if ($_->subfield('b')) {
+      $lfield = $_;
+    } else {
+      @snotes = $_->subfield('x');
+      @pnotes = $_->subfield('z');
+    }
+  }
+  if (!$lfield) {
+    print "WARN No 852b field found in MFHD record $id\n";
+    return;
+  }
+  push @snotes, $lfield->subfield('x');
+  push @pnotes, $lfield->subfield('z');
+  
   my $loc = $lfield->as_string('b');
   my $hloc = $loc;
   my $cn = $lfield->as_string('hi');
@@ -871,8 +888,7 @@ sub make_holdings {
   my $cnpre = $lfield->as_string('k');
   my $cnsuf = $lfield->as_string('m');
   my $cntype = $lfield->indicator(1);
-  my @snotes = $lfield->subfield('x');
-  my @pnotes = $lfield->subfield('z');
+
 
   my $f908 = $marc->field('908');
   
