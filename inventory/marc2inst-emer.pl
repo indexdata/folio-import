@@ -880,7 +880,7 @@ sub make_holdings {
   }
   push @snotes, $lfield->subfield('x');
   push @pnotes, $lfield->subfield('z');
-  
+
   my $loc = $lfield->as_string('b');
   my $hloc = $loc;
   my $cn = $lfield->as_string('hi');
@@ -997,7 +997,8 @@ sub make_holdings {
     my $cn = $item->as_string('ab') || '';
     my $ntype = $item->as_string('r') || '';
     my $no = $item->as_string('q') || '';
-    # my $circs = $item->as_string('f') || '';
+    my $circs = $item->as_string('f') || '';
+    my $rcount = $item->as_string('o') || '';
 
     my $ir = {
       id => uuid($inumstr),
@@ -1048,6 +1049,14 @@ sub make_holdings {
         };
         push @{ $ir->{notes} }, $n;
       }
+    }
+    if ($st eq 'Cataloging Review') {
+      my $n = {
+        note => $st,
+        itemNoteTypeId => $refdata->{itemNoteTypes}->{Note},
+        staffOnly => JSON::true 
+      };
+      push @{ $ir->{notes} }, $n;
     }
     # if ($circs =~ /\d/) {
       # my $n = {
