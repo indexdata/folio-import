@@ -861,9 +861,26 @@ sub make_holdings {
     print "WARN Holdings record $id already seen-- Skipping...\n";
     return '';
   }
-  $hrseen->{$id} = 1; 
+  $hrseen->{$id} = 1;
 
-  my $lfield = $marc->field('852');
+  my $lfield;
+  my @snotes;
+  my @pnotes;
+  foreach ($marc->field('852')) {
+    if ($_->subfield('b')) {
+      $lfield = $_;
+    } else {
+      @snotes = $_->subfield('x');
+      @pnotes = $_->subfield('z');
+    }
+  }
+  if (!$lfield) {
+    print "WARN No 852b field found in MFHD record $id\n";
+    return;
+  }
+  push @snotes, $lfield->subfield('x');
+  push @pnotes, $lfield->subfield('z');
+
   my $loc = $lfield->as_string('b');
   my $hloc = $loc;
   my $cn = $lfield->as_string('hi');
@@ -920,13 +937,23 @@ sub make_holdings {
   # $hr->{callNumberSuffix} = $cnsuf if $cnsuf;
   $hr->{discoverySuppress} = ($f908 && $f908->subfield('x') && $f908->subfield('x') eq 'Y') ? JSON::true : JSON::false; 
   
-  my @notes = make_notes($marc, '852', 'x', '', 1);
-  if ($notes[0]) {
-    push @{ $hr->{notes} }, @notes;
+  foreach (@pnotes) {
+    my $htype = $refdata->{holdingsNoteTypes}->{Note};
+    my $n = {
+      note=>$_,
+      staffOnly=>JSON::false,
+      holdingsNoteTypeId=>$htype
+    };
+    push @{ $hr->{notes} }, $n;
   }
-  @notes = make_notes($marc, '852', 'z', '', 0);
-  if ($notes[0]) {
-    push @{ $hr->{notes} }, @notes;
+  foreach (@snotes) {
+    my $htype = $refdata->{holdingsNoteTypes}->{Note};
+    my $n = {
+      note=>$_,
+      staffOnly=>JSON::true,
+      holdingsNoteTypeId=>$htype
+    };
+    push @{ $hr->{notes} }, $n;
   }
 
   foreach ($marc->field('866')) {
@@ -1004,9 +1031,9 @@ sub make_holdings {
       $ir->{itemLevelCallNumber} = $cn;
       $ir->{itemLevelCallNumberTypeId} = '95467209-6d7b-468b-94df-0f5d7ad2747d' # LC
     }
-    if ($loc && $loc ne $hloc) {
-      $ir->{permanentLocationId} = $tofolio->{locations}->{$loc} || $refdata->{locations}->{'Unmapped Location'};
-    }
+    # if ($loc && $loc ne $hloc) {
+      # $ir->{permanentLocationId} = $tofolio->{locations}->{$loc} || $refdata->{locations}->{'Unmapped Location'};
+    # }
     # if ($tmploc) {
       # $ir->{temporaryLocationId} = $tofolio->{locations}->{$tmploc} || $refdata->{locations}->{'Unmapped Location'};
     # }
