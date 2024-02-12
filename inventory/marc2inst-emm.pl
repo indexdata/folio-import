@@ -203,7 +203,7 @@ my $typemap = {
 };
 
 my $statmap = {
-  'Damaged' => 'Restricted',
+  'Damaged' => 'Unavailable',
   'In Transit Discharged' => 'In transit',
   'In Transit On Hold' => 'In transit',
   'Lost--Library Applied' => 'Declared lost',
@@ -870,8 +870,8 @@ sub make_holdings {
     if ($_->subfield('b')) {
       $lfield = $_;
     } else {
-      @snotes = $_->subfield('x');
-      @pnotes = $_->subfield('z');
+      push @snotes, $_->subfield('x');
+      push @pnotes, $_->subfield('z');
     }
   }
   if (!$lfield) {
@@ -948,6 +948,9 @@ sub make_holdings {
   }
   foreach (@snotes) {
     my $htype = $refdata->{holdingsNoteTypes}->{Note};
+    if (/^[12]\d{13}/) {
+      $htype = $refdata->{holdingsNoteTypes}->{'Voyager update date'};
+    }
     my $n = {
       note=>$_,
       staffOnly=>JSON::true,
@@ -1052,6 +1055,10 @@ sub make_holdings {
         staffOnly => JSON::true
       };
       push @{ $ir->{notes} }, $n;
+    }
+
+    if ($st eq 'Damaged') {
+      $ir->{itemDamagedStatusId} = '54d1dd76-ea33-4bcb-955b-6b29df4f7930'; # Damaged
     }
     # if ($circs =~ /\d/) {
       # my $n = {

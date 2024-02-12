@@ -870,8 +870,8 @@ sub make_holdings {
     if ($_->subfield('b')) {
       $lfield = $_;
     } else {
-      @snotes = $_->subfield('x');
-      @pnotes = $_->subfield('z');
+      push @snotes, $_->subfield('x');
+      push @pnotes, $_->subfield('z');
     }
   }
   if (!$lfield) {
