@@ -568,6 +568,7 @@ foreach (@ARGV) {
       next unless $marc;
       if ($marc->field('001')) {
         my $in_ctrl = $marc->field('001')->data();
+        $in_ctrl = sprintf("%011d", $in_ctrl);
         $marc->field('001')->update("$prefix$in_ctrl");
         # print "$in_ctrl\n";
       }
@@ -715,15 +716,17 @@ foreach (@ARGV) {
       $rec->{series} = dedupe(@{ $rec->{series} });
       if ($marc->field('008')) {
         my $cd = $marc->field('008')->data();
-        my $yr = substr($cd, 0, 2);
-        my $mo = substr($cd, 2, 2);
-        my $dy = substr($cd, 4, 2);
-        if ($yr =~ /^[012]/) {
-          $yr = "20$yr";
-        } else {
-          $yr = "19$yr";
+        if ($cd =~ /^\d{6}/) {
+          my $yr = substr($cd, 0, 2);
+          my $mo = substr($cd, 2, 2);
+          my $dy = substr($cd, 4, 2);
+          if ($yr =~ /^[012]/) {
+            $yr = "20$yr";
+          } else {
+            $yr = "19$yr";
+          }
+          $rec->{catalogedDate} = "$yr-$mo-$dy";
         }
-        $rec->{catalogedDate} = "$yr-$mo-$dy";
       }
       
       # Assign uuid based on hrid;
@@ -858,14 +861,34 @@ sub make_holdings {
   my $tcode = $ldr;
   $tcode =~ s/^......(.).+/$1/;
   my $id = $marc->field('001')->data();
+  $id = sprintf("%011d", $id);
   my $bid = $marc->field('004')->data();
+  $bid = sprintf("%011d", $bid);
+  print "$bid\n";
   if ($hrseen->{$id}) {
     print "WARN Holdings record $id already seen-- Skipping...\n";
     return '';
   }
   $hrseen->{$id} = 1; 
+  
+  my $lfield;
+  my @snotes;
+  my @pnotes;
+  foreach ($marc->field('852')) {
+    if ($_->subfield('b')) {
+      $lfield = $_;
+    } else {
+      push @snotes, $_->subfield('x');
+      push @pnotes, $_->subfield('z');
+    }
+  }
+  if (!$lfield) {
+    print "WARN No 852b field found in MFHD record $id\n";
+    return;
+  }
+  push @snotes, $lfield->subfield('x');
+  push @pnotes, $lfield->subfield('z');
 
-  my $lfield = $marc->field('852');
   my $loc = $lfield->as_string('b');
   my $hloc = $loc;
   my $cn = $lfield->as_string('hi');
@@ -896,8 +919,7 @@ sub make_holdings {
 
   $bid = "$prefix$bid";
   my $hrid = "$hprefix$id";
-  $marc->field('001')->update($hrid);
-  $marc->field('004')->update($bid);
+  
   my $hid = uuid($hrid);
   # my $srs = make_srs($marc, $marc->as_usmarc(), $hid, $hrid, $snap_id, $hid);
 
@@ -921,13 +943,23 @@ sub make_holdings {
   $hr->{callNumberPrefix} = $cnpre if $cnpre;
   # $hr->{callNumberSuffix} = $cnsuf if $cnsuf;
   
-  my @notes = make_notes($marc, '852', 'x', '', 1);
-  if ($notes[0]) {
-    push @{ $hr->{notes} }, @notes;
+  foreach (@pnotes) {
+    my $htype = $refdata->{holdingsNoteTypes}->{Note};
+    my $n = {
+      note=>$_,
+      staffOnly=>JSON::false,
+      holdingsNoteTypeId=>$htype
+    };
+    push @{ $hr->{notes} }, $n;
   }
-  @notes = make_notes($marc, '852', 'z', '', 0);
-  if ($notes[0]) {
-    push @{ $hr->{notes} }, @notes;
+  foreach (@snotes) {
+    my $htype = $refdata->{holdingsNoteTypes}->{Note};
+    my $n = {
+      note=>$_,
+      staffOnly=>JSON::true,
+      holdingsNoteTypeId=>$htype
+    };
+    push @{ $hr->{notes} }, $n;
   }
 
   foreach ($marc->field('866')) {
