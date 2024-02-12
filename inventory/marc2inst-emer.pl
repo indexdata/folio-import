@@ -160,7 +160,8 @@ my $tofolio = makeMapFromTsv($ref_dir, $refdata);
 my $blvl = {
   'm' => 'Monograph',
   'i' => 'Integrating Resource',
-  's' => 'Serial'
+  's' => 'Serial',
+  'a' => 'single unit'
 };
 
 my $relations = {
