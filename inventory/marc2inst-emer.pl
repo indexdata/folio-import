@@ -100,12 +100,18 @@ sub getRefData {
           $refobj->{$refroot} = {};
           foreach (@{ $json->{$_} }) {
             my $name;
-            if ($refroot =~ /^(instanceTypes|contributorTypes|instanceFormats)$/) {
+            my $id = $_->{id};
+            if ($refroot eq 'contributorTypes') {
+              my $n = lc $_->{name};
+              my $c = $_->{code};
+              $refobj->{$refroot}->{$n} = $id;
+              $refobj->{$refroot}->{$c} = $id;
+              next;
+            } elsif ($refroot =~ /^(instanceTypes|instanceFormats)$/) {
               $name = $_->{code};
             } else {
               $name = $_->{name};
             }
-            my $id = $_->{id};
             $name =~ s/\s+$//;
             $refobj->{$refroot}->{$name} = $id;
           }
@@ -134,7 +140,7 @@ sub makeMapFromTsv {
       my $code = $col[0] || '';
       my $name = $col[1] || '';
       if ($prop eq 'locations') {
-        $name = $col[8] || '';
+        $name = $col[7] || '';
       } elsif ($prop eq 'mtypes') {
         $name = $col[6] || '';
       } 
@@ -155,7 +161,7 @@ $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
 my $tofolio = makeMapFromTsv($ref_dir, $refdata);
 # print Dumper($tofolio->{mtypes}); exit;
-# print Dumper($refdata->{locations}); exit;
+# print Dumper($refdata->{contributorTypes}); exit;
 
 my $blvl = {
   'm' => 'Monograph',
@@ -308,7 +314,7 @@ sub process_entity {
 }
 
 sub processing_funcs {
-  my $out = shift;
+  my $out = shift || '';
   my $field = shift;
   my $params = shift;
   foreach (@_) {
@@ -334,6 +340,17 @@ sub processing_funcs {
       $out = $refdata->{contributorNameTypes}->{$name} or die "Can't find contributorNameType for $name";
     } elsif ($_ eq 'set_contributor_type_id') {
       $out = $refdata->{contributorTypes}->{$out} || '';
+    } elsif ($_ eq 'set_contributor_type_id_by_code_or_name') {
+      my $cc = $params->{contributorCodeSubfield};
+      my $nc = $params->{contributorNameSubfield};
+      my $ccode = $field->subfield($cc);
+      my $cname = $field->subfield($nc);
+      if ($ccode) {
+        $out = $refdata->{contributorTypes}->{$ccode};
+      } elsif ($cname && !$out) {
+        $cname =~ s/[,.]//g;
+        $out = $refdata->{contributorTypes}->{$cname};
+      }
     } elsif ($_ eq 'set_contributor_type_text') {
       # Not sure what's supposed to happen here...
     } elsif ($_ eq 'set_note_type_id') {
@@ -663,6 +680,9 @@ foreach (@ARGV) {
             my @entity = @$_;
             my $data_obj = {};
             foreach (@entity) {
+              if ($_->{alternativeMapping}) {
+                push @entity, $_->{alternativeMapping};
+              }
               if ($_->{target} =~ /precedingTitle|succeedingTitle/) {
                 next;
               }
@@ -723,6 +743,13 @@ foreach (@ARGV) {
           $yr = "19$yr";
         }
         $rec->{catalogedDate} = "$yr-$mo-$dy";
+      }
+      
+      # delete duplicate contributor types.
+      foreach (@{ $rec->{contributors} }) {
+        if ($_->{contributorTypeId} && $_->{contributorTypeText}) {
+          delete $_->{contributorTypeText};
+        }
       }
       
       # Assign uuid based on hrid;
