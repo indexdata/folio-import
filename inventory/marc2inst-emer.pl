@@ -140,7 +140,7 @@ sub makeMapFromTsv {
       my $code = $col[0] || '';
       my $name = $col[1] || '';
       if ($prop eq 'locations') {
-        $name = $col[7] || '';
+        $name = $col[8] || '';
       } elsif ($prop eq 'mtypes') {
         $name = $col[6] || '';
       } 
