@@ -658,6 +658,9 @@ while (<RAW>) {
         my @entity = @$_;
         my $data_obj = {};
         foreach (@entity) {
+          if ($_->{alternativeMapping}) {
+            push @entity, $_->{alternativeMapping};
+          }
           if ($_->{target} =~ /precedingTitle|succeedingTitle/) {
             next;
           }
