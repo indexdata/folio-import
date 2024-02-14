@@ -891,7 +891,6 @@ sub make_holdings {
   $id = sprintf("%011d", $id);
   my $bid = $marc->field('004')->data();
   $bid = sprintf("%011d", $bid);
-  print "$bid\n";
   if ($hrseen->{$id}) {
     print "WARN Holdings record $id already seen-- Skipping...\n";
     return '';
@@ -1083,6 +1082,14 @@ sub make_holdings {
       my $n = {
         note => $nt,
         itemNoteTypeId => $refdata->{itemNoteTypes}->{'Reserve charges'},
+        staffOnly => JSON::true
+      };
+      push @{ $ir->{notes} }, $n;
+    }
+    foreach my $nt ($item->subfield('v')) {
+      my $n = {
+        note => $nt,
+        itemNoteTypeId => $refdata->{itemNoteTypes}->{'Last return date'},
         staffOnly => JSON::true
       };
       push @{ $ir->{notes} }, $n;
