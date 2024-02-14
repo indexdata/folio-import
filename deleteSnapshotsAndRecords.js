@@ -7,8 +7,9 @@ const superagent = require('superagent');
 const { getAuthToken } = require('./lib/login');
 let anything = process.argv[2];
 
+try {
 if (!anything) {
-  throw new Error('This script will delete all SRS records. You must provide an argument (anything)');
+  throw new Error ('This script will delete all SRS records. You must provide the tenant');
 }
 
 const wait = (ms) => {
@@ -20,6 +21,9 @@ const wait = (ms) => {
     let inData;
 
     const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
+    if (config.tenant !== anything) {
+      throw new Error(`Tenant "${anything}" does not match the current tenant "${config.tenant}!`);
+    }
 
     const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
     const endpoint = 'source-storage/snapshots';
@@ -56,3 +60,6 @@ const wait = (ms) => {
     console.error(e.message);
   }
 })();
+} catch (e) {
+  console.log(`${e}`);
+}
