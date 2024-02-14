@@ -805,7 +805,7 @@ foreach (@ARGV) {
           foreach my $sf (('w', 'x')) {
             my $idtype = $refdata->{identifierTypes}->{'Other standard identifier'};
             foreach ($f->subfield($sf)) {
-              if ($sf eq 'w') {
+              if ($sf eq 'Z') {
                 my $instid = uuid($prefix . $_);
                 if ($pstype == 1) {
                   $presuc->{succeedingInstanceId} = $instid;
