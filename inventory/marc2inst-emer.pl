@@ -1023,10 +1023,11 @@ sub make_holdings {
     my $tmploc = $item->as_string('h') || '';
     my $cp = $item->as_string('g') || '';
     my $cn = $item->as_string('ab') || '';
-    my $ntype = $item->as_string('r') || '';
     my $no = $item->as_string('q') || '';
     my $circs = $item->as_string('f') || '';
     my $hbrowses = $item->as_string('e') || '';
+    my $cin = $item->as_string('r') || '';
+    my $cout = $item->as_string('u') || '';
 
     my $ir = {
       id => uuid($inumstr),
@@ -1068,21 +1069,20 @@ sub make_holdings {
     if ($tmploc) {
       $ir->{temporaryLocationId} = $tofolio->{locations}->{$tmploc} || $refdata->{locations}->{'Unmapped Location'};
     }
-    if ($ntype eq 'regular') {
-      foreach my $nt ($item->subfield('q')) {
-        my $n = {
-          note => $nt,
-          itemNoteTypeId => $refdata->{itemNoteTypes}->{Note},
-          staffOnly => JSON::true
-        };
-        push @{ $ir->{notes} }, $n;
-      }
-    }
+    
     if ($st eq 'Cataloging Review') {
       my $n = {
         note => $st,
         itemNoteTypeId => $refdata->{itemNoteTypes}->{Note},
         staffOnly => JSON::true 
+      };
+      push @{ $ir->{notes} }, $n;
+    }
+    foreach my $nt ($item->subfield('q')) {
+      my $n = {
+        note => $nt,
+        itemNoteTypeId => $refdata->{itemNoteTypes}->{'Note'},
+        staffOnly => JSON::true
       };
       push @{ $ir->{notes} }, $n;
     }
@@ -1106,19 +1106,20 @@ sub make_holdings {
     if ($st eq 'Damaged') {
       $ir->{itemDamagedStatusId} = '54d1dd76-ea33-4bcb-955b-6b29df4f7930'; # Damaged
     }
-    if ($no && $ntype eq 'charge') {
+
+    if ($cout) {
       my $nobj = {
-        id => uuid($no . 'Check out'),
-        note => $no,
+        id => uuid($cout . 'Check out'),
+        note => $cout,
         noteType => 'Check out',
         staffOnly => JSON::true
       };
       push @{ $ir->{circulationNotes} }, $nobj;
     }
-    if ($no && $ntype eq 'discharge') {
+    if ($cin) {
       my $nobj = {
-        id => uuid($no . 'Check in'),
-        note => $no,
+        id => uuid($cin . 'Check in'),
+        note => $cin,
         noteType => 'Check in',
         staffOnly => JSON::true
       };
