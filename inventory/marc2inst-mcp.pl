@@ -586,7 +586,7 @@ foreach (@ARGV) {
       next unless $marc;
       if ($marc->field('001')) {
         my $in_ctrl = $marc->field('001')->data();
-        $in_ctrl = sprintf("%011d", $in_ctrl);
+        # $in_ctrl = sprintf("%011d", $in_ctrl);
         $marc->field('001')->update("$prefix$in_ctrl");
         # print "$in_ctrl\n";
       }
@@ -888,9 +888,9 @@ sub make_holdings {
   my $tcode = $ldr;
   $tcode =~ s/^......(.).+/$1/;
   my $id = $marc->field('001')->data();
-  $id = sprintf("%011d", $id);
+  # $id = sprintf("%011d", $id);
   my $bid = $marc->field('004')->data();
-  $bid = sprintf("%011d", $bid);
+  # $bid = sprintf("%011d", $bid);
   if ($hrseen->{$id}) {
     print "WARN Holdings record $id already seen-- Skipping...\n";
     return '';
