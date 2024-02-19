@@ -115,8 +115,10 @@ let inFile = process.argv[2];
           ep = 'orders-storage/purchase-orders';
       } else if (rec.titleOrPackage && rec.purchaseOrderId) {
           ep = 'orders-storage/po-lines';
-      } else if (inFile.match(/organizations/)) {
+      } else if (inFile.match(/organizations.jsonl/)) {
           ep = 'organizations-storage/organizations';
+      } else if (inFile.match(/contacts.jsonl/)) {
+          ep = 'organizations-storage/contacts';
       } else if (rec.batchGroupId && rec.invoiceDate) {
           ep = 'invoice-storage/invoices';
       } else if (rec.invoiceLineStatus) {
