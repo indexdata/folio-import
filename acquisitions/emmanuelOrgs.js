@@ -100,7 +100,7 @@ try {
           name: name,
           status: 'Active',
           acqUnitIds: [ unitId ],
-          isVendor: false,
+          isVendor: true,
           aliases: [],
           contacts: [],
           interfaces: [],
@@ -118,7 +118,7 @@ try {
         if (desc[0]) org.description = desc.join('\n ');
       }
       let role = r['Organization Role'];
-      if (role === 'Vendor') org.isVendor = true;
+      // if (role === 'Vendor') org.isVendor = true;
       let typeId = ref.organizationTypes[role] || '';
       if (typeId && org.organizationTypes.indexOf(typeId) === -1 ) org.organizationTypes.push(typeId);
       let aliasName = r['Alias Name'];
