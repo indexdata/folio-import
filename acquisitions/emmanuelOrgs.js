@@ -86,11 +86,11 @@ try {
     let contacts = {}
     rows.forEach(r => {
       rc++;
+      let name = r['Organization Name'];
       for (let f in r) {
         r[f] = r[f].replace(/\\N/g, '');
       }
       if (!org.name) {
-        let name = r['Organization Name'];
         let desca = r['Organization Account Details'];
         let descb = r['Organization Notes'];
         let url = r['Organization Company URL'];
@@ -99,7 +99,7 @@ try {
           code: oid,
           name: name,
           status: 'Active',
-          acqUnitIds: [ unitId ],
+          // acqUnitIds: [ unitId ],
           isVendor: true,
           aliases: [],
           contacts: [],
@@ -133,13 +133,14 @@ try {
       }
       let cname = r['Contact Name'];
       let crole = r['Contact Role'];
-      let rollkey = cname + crole;
       let phone = r['Contact Phone'];
       let altPhone = r['Contact Alt Phone'];
       let email = r['Contact Email'];
       let cadd = r['Contact Address'];
       let cnote = r['Contact Notes'];
       let notes = [];
+      if (!cname) cname = name;
+      let rollkey = cname + crole;
       if (cname && !cseen[cname]) {
         let names = cname.match(/(.+) (.+)/) || ['Unknown', cname];
         let fn = names[1];
