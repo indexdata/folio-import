@@ -22,7 +22,7 @@ const rfiles = {
 };
 
 try {
-  if (!inFile) throw(`Usage: node emmanualOrgs.js <ref_dir> <organizations_csv_file>`);
+  if (!inFile) throw(`Usage: node mcphsOrgs.js <ref_dir> <organizations_csv_file>`);
 
   const dir = path.dirname(inFile);
   refDir = refDir.replace(/\/$/, '');
@@ -56,7 +56,7 @@ try {
     });
   }
   // console.log(ref); return;
-  let unitId = ref.acquisitionsUnits[unit];
+  let unitId = ref.acquisitionsUnits[unit] || '';
 
   const writeTo = (fileName, data) => {
     let outStr = JSON.stringify(data) + '\n';
@@ -99,7 +99,6 @@ try {
           code: oid,
           name: name,
           status: 'Active',
-          acqUnitIds: [ unitId ],
           isVendor: true,
           aliases: [],
           contacts: [],
