@@ -586,8 +586,13 @@ while (<RAW>) {
   }
 
   my @marc_fields = $marc->fields();
-  MARC_FIELD: foreach (@marc_fields) {
-    my $tag = $_->tag();
+  my $f336seen = 0;
+  MARC_FIELD: foreach my $field (@marc_fields) {
+    my $tag = $field->tag();
+    if ($tag eq '336') {
+      next if $f336seen == 1; 
+      $f336seen = 1;
+    }
     next unless $mapping_rules->{$tag} || $tag eq '880';  # No need to iterate through tags that aren't in the mapping rules
     my $field = $_;
     my $fr = $field_replace->{$tag} || '';

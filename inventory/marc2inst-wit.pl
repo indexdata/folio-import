@@ -607,8 +607,13 @@ foreach (@ARGV) {
         $rec->{modeOfIssuanceId} = $refdata->{issuanceModes}->{unspecified};
       }
       my @marc_fields = $marc->fields();
+      my $f336seen = 0;
       MARC_FIELD: foreach my $field (@marc_fields) {
         my $tag = $field->tag();
+        if ($tag eq '336') {
+          next if $f336seen == 1; 
+          $f336seen = 1;
+        }
         my $fr = $field_replace->{$tag} || '';
         if ($fr) {
           my $sf = $fr->{subfield}[0];
