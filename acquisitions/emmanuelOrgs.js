@@ -118,7 +118,6 @@ try {
         if (desc[0]) org.description = desc.join('\n ');
       }
       let role = r['Organization Role'];
-      // if (role === 'Vendor') org.isVendor = true;
       let typeId = ref.organizationTypes[role] || '';
       if (typeId && org.organizationTypes.indexOf(typeId) === -1 ) org.organizationTypes.push(typeId);
       let aliasName = r['Alias Name'];
@@ -139,7 +138,7 @@ try {
       let cadd = r['Contact Address'];
       let cnote = r['Contact Notes'];
       let notes = [];
-      if (!cname) cname = name;
+      // if (!cname) cname = name;
       let rollkey = cname + crole;
       if (cname && !cseen[cname]) {
         let names = cname.match(/(.+) (.+)/) || ['Unknown', cname];
