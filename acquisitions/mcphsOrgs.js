@@ -138,6 +138,7 @@ try {
       let email = r['Contact Email'];
       let cadd = r['Contact Address'];
       let cnote = r['Contact Notes'];
+      let cstat = r['Contact Status'];
       let notes = [];
       if (cname && !cseen[cname]) {
         let names = cname.match(/(.+) (.+)/) || ['Unknown', cname];
@@ -148,6 +149,7 @@ try {
         obj.id = uuid(cname, ns);
         obj.firstName = fn.trim();
         obj.lastName = (ln) ? ln.trim() : obj.firstName;
+        obj.inactive = (cstat && cstat === 'Y') ? false : true;
         obj.categories = [];
         if (phone) { 
           obj.phoneNumbers = [{ phoneNumber: phone, isPrimary: true }];
