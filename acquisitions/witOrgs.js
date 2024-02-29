@@ -99,7 +99,7 @@ try {
           code: oid,
           name: name,
           status: 'Active',
-          acqUnitIds: [ unitId ],
+          // acqUnitIds: [ unitId ],
           isVendor: true,
           aliases: [],
           contacts: [],
