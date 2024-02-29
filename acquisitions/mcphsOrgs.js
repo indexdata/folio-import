@@ -40,7 +40,7 @@ try {
     columns: true,
     skip_empty_lines: true,
     delimiter: '|',
-    from: 2
+    from: 1
   });
 
   const ref = {};
