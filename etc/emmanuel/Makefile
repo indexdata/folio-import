@@ -1,39 +1,41 @@
 lib=emmanuel
+lscript=login-$(lib)-test.sh
 home=/home/charles
 data=$(home)/$(lib)
 invdir=$(data)/inv
 mfile=$(invdir)/bibs.mrc
 log=$(data)/log
 wd=$(home)/folio-import
+tsvdir=$(wd)/etc/$(lib)
 iref=$(data)/ref/inv
 aref=$(data)/ref/acq
-rules=$(wd)/mapping-rules/default.json
+rules=$(wd)/mapping_rules/default.json
 
-inventory: $(mfile)
-ifeq ($(wildcard $(iinfo)),)
-	cd $(wd)/util; node xlsx2csv.js $(ifile) tsv
-endif
-	./marc2inst-lane.pl $(rules) $(iref) $(mfile) > $(log)/make-marc.log 2>$(log)/make-marc-err.log &
+inventory:
+	cd $(invdir); mv *.mrc raw.marc
+	yaz-marcdump -f marc8 -t utf8 -l 9=97 -o marc $(invdir)/raw.marc > $(mfile)
+	./marc2inst-$(lib).pl $(rules) $(iref) $(mfile) > $(log)/make-marc.log 2>$(log)/make-marc-err.log &
 
 clean-inventory: $(iinfo)
-	rm $(invdir)/*.tsv
+	cd $(invdir); rm bibs.mrc; mv raw.marc raw.mrc
 
 setup:
 	cd $(wd); git pull	
-	cp $(wd)/configs/bash/login-$(lib)-test.sh .
-	cp $(wd)/bash/reference_* .
+	cp $(wd)/configs/bash/$(lscript) .
+	cp $(wd)/bash/reference_inventory.sh .
+	cp $(wd)/bash/reference_acq.sh .
 	cp $(wd)/inventory/marc2inst-$(lib).pl .
 	mkdir -p $(iref)
 	mkdir -p $(aref)
 	mkdir -p $(log)
-	./login-*.sh
+	./$(lscript)
 	./reference_inventory.sh $(iref)
 	./reference_acq.sh $(aref)
+	cp $(tsvdir)/*.tsv $(iref)
 
 clean:
 	rm -rf $(iref)
-	rm -rf $(uref)
 	rm -rf $(aref)
-	rm marc2inst-lane.pl
-	rm reference_*
-	rm login-stanford.sh
+	rm marc2inst-$(lib).pl
+	rm reference_*.sh
+	rm $(lscript)
