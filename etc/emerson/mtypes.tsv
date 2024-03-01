@@ -1,0 +1,57 @@
+Legacy material type code	Legacy material type name	Perm itype count	Temp itype count	Action to take	Notes	Folio name
+Unsuppressed items (as of 1/12/2024)						
+2dayReserv	2 day reserve	1	1	Keep	"happy light"	2 Day Reserve
+2hrReserve	2 hour reserve	4	373	Keep		2 Hour Reserve
+Audio Cass	Audio Cass	445		Keep		Audio Cassette 
+Blu-ray	Blu-ray	144		Keep		Blu-ray
+Book	Book	133,611		Keep		Book
+Reference	Reference	4,297		Merge		Book
+CD	CD	1,628		Keep		CD
+CD-ROM	CD-ROM	2		Merge		CD-ROM
+CDROM	CDROM	653		Merge		CD-ROM
+Ref CDROM	Ref CDROM	1		Merge		CD-ROM
+DVD	DVD	5,887		Keep		DVD
+DVD Player	DVD Player	1		Merge	Mislabelled DVD	DVD
+DVDCirc	DVDCirc	6,420		Merge	Circulation differences for DVD and DVDCirc will be determined by location	DVD
+Equipment	Equipment	17		Keep	EMERSON REVIEW	Equipment
+Film	Film	332		Keep		Film
+Juv Book	Juv Book	3,103		Keep	EMERSON REVIEW NAME CHOICE	Juvenile Books
+Juv. Book	Juv. Book	1		Merge	with whatever Juv Book is named	Juvenile Books
+Kit	Kit	34		Keep		Kit
+Laptop	Laptop Computer	6		Keep		Laptop
+Laser Disc	Laser Disc	56		Keep		Laser Disc
+Map	Map	4		Keep		Map
+Microfiche	Microfiche	10		Keep		Microfiche
+Microfilm	Microfilm	576		Keep		Microfilm
+Multimedia	Multimedia	5		Keep	EMERSON REVIEW - package? DVD plus something, maybe in Maureen's office	Multimedia 
+Realia	Realia	4		Keep		Realia
+Serial	Serial	2,522		Keep	EMERSON REVIEW (In storage)	Serial
+Slide	Slide	40		Keep		Slide
+Software	Software	61		Keep		Software
+Thesis	Thesis	3,996		Keep	Possibly purge later	Thesis
+MEDIA	MEDIA	1		Keep	usb drive that came with DVD, which has a separate item record and is shelved separately	USB Drive
+Video Cass	Video Cass	2,626		Keep		Video Cassette 
+Video Circ	Video Circ	3		Merge		Video Cassette 
+Record	Record	739		Keep		Vinyl Record
+Archive	Archive	4		Purge	EMERSON REVIEW	
+Misc AV	Misc AV	3		Purge	was circulating ipads	
+Rare	Rare	0		Purge		
+ONLINE	Online					E-Reserve
+Total unsuppressed items 		167237				
+*Counts for items attached to unsuppressed MFHDs, suppressed counts below						
+						
+Suppressed Items (as of 1/12/2024) - Keep any suppressed holdings in the shelving locations ECL-ACQ or ECL-ONLINE						
+2dayReserv	2 day reserve	1		Purge	Some suppressed things are not able to be deleted due to orders/fines/checkouts	
+2hrReserve	2 hour reserve	24	285	Purge		
+Audio Cass	Audio Cass	1		Purge		
+Book	Book	505		Purge		
+CD	CD	71		Purge		CD
+DVD	DVD	134		Purge		
+DVDCirc	DVDCirc	5		Purge		DVD
+Juv Book	Juv Book	2		Purge		
+Reference	Reference	3		Purge		
+Software	Software	6		Purge		
+Thesis	Thesis	1		Purge		
+Video Cass	Video Cass	5		Purge		Video Cassette
+Videotape	Videotape	51		Purge	1/2 inch videotape - reel to reel - Maureen thinks we don't have anymore	
+Total suppressed items		809				

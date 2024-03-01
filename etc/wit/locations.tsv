@@ -1,0 +1,38 @@
+Legacy location code	Legacy location name	Legacy location display name	MFHD count	Item count (perm)	Item count (temp)	Action to take	FOLIO location code	FOLIO label (optional)	FOLIO service point	Note
+Unsuppressed (as of 1/12/2024)										
+WIT-EBOOKS	WIT-EBOOKS	Wentworth E-Books	223,577		1	Keep	ebk	Ebooks		
+WITCIRC	WITCIRC	Wentworth Circulation Desk	119	331	30	Keep	lsd	Library Services Desk		
+WITDISPLAY	WITDISPLAY	Wentworth - Display			348	Keep	dsp	Display		
+WITFICTION	WITFICTION	Wentworth Fiction	2,222	2,304	9	Keep	fict	Fiction		
+WITONLINE	WITONLINE	Wentworth Online Resource	53,462			Keep	on	Online		
+WITORDER	WITORDER	Wentworth order	46			Keep	od	Order		
+WITOVERSIZ	WITOVERSIZED	Wentworth Oversized -- Upper Level	156	159		Keep	os	Oversized		
+WITREF	WITREF	Wentworth Reference -- Main Level	963	1,035		Keep	rhd	Research Help Desk		
+WITSERDSK	WITSERDSK	Wentworth Serials	741	483		Keep	srl	Serials		
+WITSTACKS	WITSTACKS	Wentworth Stacks -- Upper Level	32,343	33,465	3	Keep	stk	Stacks		
+WITTECH	WITTECH	Schumann Library Tech Sandbox	51	69		Keep	tch	Technology 		
+WITVIEW	WITVIEW	Wentworth Movies	1,658	1,933	4	Keep	dvd	DVDs		
+WITCIRCDSK	WIT Circ Desk	Wentworth Circulation Desk			12	Merge	lsd	Library Services Desk		
+WITEXHIBIT	WITEXHIBIT	Wentworth - Exhibits Area				Merge	dsp	Display		
+WITREDGALL	WITREDGALL	Wentworth - Red Gallery				Merge	dsp	Display		
+WITACQDESK	WIT Aca Desk	Wentworth Acquisitions Desk	1			Purge				
+WITDRAWER	WITDRAWER	Wentworth Circulation Desk -- CD/DVD Drawers	28	29		Purge				
+WITNEW	WITNEW	Wentworth - New Items (Mezzanine)				Purge				KO/PE use?
+							prs	Processing		New Location 
+							ts	Theses		Maybe pull some items out of Reference with a call no. that indicates they are theses
+Total unsuppressed MFHDs			315,367							
+*These are unsuppressed MFHDs, suppressed locations below										
+										
+Suppressed (as of 1/12/2024) - Keep any suppressed holdings in the shelving locations WITONLINE or WITSTACKS that were created within the last year (check create date of MARC record) 										
+WIT-EBOOKS	WIT-EBOOKS	Wentworth E-Books	27			Purge				
+WITCIRC	WITCIRC	Wentworth Circulation Desk	49	82		Purge				
+WITCIRCDSK	WIT Circ Desk	Wentworth Circulation Desk	118	2		Purge				
+WITDISPLAY	WITDISPLAY	Wentworth - Display			1	Purge				
+WITFICTION	WITFICTION	Wentworth Fiction	5	5		Purge				
+WITONLINE	WITONLINE	Wentworth Online Resource	32			Keep				
+WITREF	WITREF	Wentworth Reference -- Main Level	2	1		Purge				
+WITSERDSK	WITSERDSK	Wentworth Serials	54			Purge				
+WITSTACKS	WITSTACKS	Wentworth Stacks -- Upper Level	35	27		Keep				
+WITSTAFF	WITSTAFF	Wentworth Staff Collection	1			Purge				
+WITVIEW	WITVIEW	Wentworth Movies	7	8		Purge				
+Total suppressed MFHDs			330							

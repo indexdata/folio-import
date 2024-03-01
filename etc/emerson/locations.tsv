@@ -1,0 +1,65 @@
+Legacy location code	Legacy location name	Legacy location display name	MFHD count	Item count (perm)	Item count (temp)	Action to take	FOLIO location code	FOLIO label (optional)	FOLIO service point	Note
+Unsuppressed record counts as of 1/12/2024										
+ECL-ARCV	ECL-ARCHIVES	Emerson Archives	1,703	1,921		Keep		Archives and Special Collections - contact archives@emerson.edu		
+ECL-BIND	ECL-BINDERY	Emerson Bindery	1	0		Keep		Bindery 		
+ECL-MEDIAC	ECL-MEDIA CIRC	Emerson Circulating Media	7,586	7,800	53	Keep	Media Circulating	Circulating Media Collection		
+ECL-DIR	ECL-DIRECTOR'S OFFICE	Emerson Director's Office	4	6	6	Keep		Director's Office - Ask at Service Desk		
+ECL-DSPL	ECL-DISPLAY	Emerson Display	0	0	6	Keep		Display		Only use as temporary 
+ECL-EBOOKS	ECL-EBOOKS	Emerson eBooks	5,758	0		Keep		EBooks		
+ECL-EJOURN	ECL-EJOURNALS	Emerson eJournals	247	0		Keep		EJournals		
+ECL-STOR02	ECL-STORAGE02	Emerson In-House Storage - Ask at Service Desk	233	533		Merge		In-House Storage - Ask at Service Desk		
+ECL-STOR03	ECL-STORAGE03	Emerson In-House Storage - Ask at Service Desk	992	1,126		Merge		In-House Storage - Ask at Service Desk		
+ECL-STOR04	ECL-STORAGE04	Emerson In-House Storage - Ask at Service Desk	867	1,048		Merge		In-House Storage - Ask at Service Desk		
+ECL-STOR05	ECL-STORAGE05	Emerson In-House Storage - Ask at Service Desk	389	763		Merge		In-House Storage - Ask at Service Desk		
+ECL-STOR06	ECL-STORAGE06	Emerson In-House Storage - Ask at Service Desk	130	207		Merge		In-House Storage - Ask at Service Desk		
+ECL-STOR08	ECL-STORAGE08	Emerson In-House Storage - Ask at Service Desk	42	65		Merge		In-House Storage - Ask at Service Desk		
+ECL-STOR97	ECL-STORAGE97	Emerson In-House Storage - Ask at Service Desk	4	4		Merge		In-House Storage - Ask at Service Desk		
+ECL-STOR98	ECL-STORAGE98	Emerson In-House Storage - Ask at Service Desk	6	6		Merge		In-House Storage - Ask at Service Desk		
+ECL-STOR99	ECL-STORAGE99	Emerson In-House Storage - Ask at Service Desk	22	36		Merge		In-House Storage - Ask at Service Desk		
+ECL-INDEX	ECL-INDEXES	Emerson Indexes - Non-Circulating	7	0		Keep		Indexes 		
+ECL-NEWSPR	ECL-NEWSPAPER	Emerson Newspaper	1	0		Merge		Journals, Magazines & Newspapers - Non-Circulating		
+ECL-PERIOD	ECL-PERIODICALS	Emerson Journals, Magazines & Newspapers - Non-Circulating	597	2		Keep		Journals, Magazines & Newspapers - Non-Circulating		
+ECL	ECL	Emerson Main Stacks	130,532	133,584	54	Keep		Main Stacks 		
+ECL-MCRFM	ECL-MICROFORM	Emerson Microform	581	585		Keep		Microform		
+ECL-REMOTE	ECL-REMOTE STORAGE	Emerson Off-Site Storage - Ask at Service Desk	4,132	6,494		Keep		Off-Site Storage - Ask at Service Desk 		
+ECL-ACQ	ECL Acquistions Desk	Emerson Acquisitions - Ask at Service Desk	17	0		Keep		On Order		Used when placing orders via Gobi. (On order items) 
+ECL-READYR	ECL-READY REFERENCE	Emerson Ready Reference - Ask at Service Desk	54	78		Keep		Ready Reference - Ask at Service Desk		
+ECL-REF	ECL-REFERENCE	Emerson Reference - Non-Circulating	2,344	4,153	1	Keep		Reference - Non-Circulating		
+ECL-REFOFF	ECL-REF  OFFICE	Emerson Reference Office	146	151		Keep		Reference Office - Ask at Service Desk		
+ECL-RESERV	ECL-RESERVE	Emerson Reserve - Ask at Service Desk	1,179	27	360	Keep		Reserve - Ask at Service Desk		
+ECL-ONLINE	ECL-STREAMING MEDIA	Emerson Streaming Media	25,342	0		Keep		Streaming Media		
+ECL-MEDIA	ECL-MEDIA CENTER	Emerson Teaching Media - Ask at Service Desk	5,771	6,077		Keep	Media Teaching	Teaching Media Collection - Ask at Service Desk		
+ECL-MEDIAS	ECL-MEDIA STORAGE	Emerson Teaching Media - Ask at Service Desk	2,399	2,535		Keep	Media Storage	Teaching Media Collection (storage) - Ask at Service Desk		
+ECL-IR	ECL-IR OFFICE	Emerson Information Resources Office	27	25	370	Keep		Technical Services - Ask at Service Desk		
+ECL-CIRC	ECL Service Desk	Emerson Service Desk 	0	1		Purge				
+ECL-ILL	ECL-ILL OFFICE	Emerson ILL Office	4	4		Purge				
+ECL-MSCOFF	ECL-MEDIA DESK	Emerson Media Collection Desk	0	1	2	Purge				was used for Media reserves - no longer needed
+ECL-THESIS	ECL-THESIS	Emerson Archives	233	4		Purge				
+Total unsuppressed MFHDs			18,589							
+*These are unsuppressed MFHDs, suppressed locations below										
+										
+Suppressed MFHDs - As of 1/12/2024 - Keep any suppressed holdings in the shelving locations ECL-ACQ or ECL-ONLINE										
+ECL	ECL	Emerson Main Stacks	886	432	10	Purge				
+ECL-ACQ	ECL Acquisitions Desk	Emerson Acquisitions - Ask at Service Desk	86			Keep				
+ECL-ARCV	ECL-ARCHIVES	Emerson Archives	1	1		Purge				
+ECL-CARSER	ECL-CAREER SERVICES	Emerson Career Services	2			Purge				
+ECL-EBOOKS	ECL-EBOOKS	Emerson eBooks	8			Purge				
+ECL-INDEX	ECL-INDEXES	Emerson Indexes - Non-Circulating	5	1		Purge				
+ECL-IR	ECL-IR OFFICE	Emerson Information Resources Office	3	1		Purge				
+ECL-MEDIA	ECL-MEDIA CENTER	Emerson Teaching Media - Ask at Service Desk	8	8		Purge				
+ECL-MEDIAC	ECL-MEDIA CIRC	Emerson Circulating Media	8	63		Purge				
+ECL-MEDIAS	ECL-MEDIA STORAGE	Emerson Teaching Media - Ask at Service Desk	5	5		Purge				
+ECL-MSCOFF	ECL-MEDIA DESK	Emerson Media Collection Desk	206	189	60	Purge				
+ECL-ONLINE	ECL-STREAMING MEDIA	Emerson Streaming Media	586			Keep				
+ECL-PERIOD	ECL-PERIODICALS	Emerson Journals, Magazines & Newspapers - Non-Circulating	71			Purge				
+ECL-READYR	ECL-READY REFERENCE	Emerson Ready Reference - Ask at Service Desk	1			Purge				
+ECL-REF	ECL-REFERENCE	Emerson Reference - Non-Circulating	53	1		Purge				
+ECL-REFOFF	ECL-REF OFFICE	Emerson Reference Office	7	1		Purge				
+ECL-REMOTE	ECL-REMOTE STORAGE	Emerson Off-Site Storage - Ask at Service Desk	1	1		Purge				
+ECL-RESERV	ECL-RESERVE	Emerson Reserve - Ask at Service Desk	106	87	127	Purge				
+ECL-STOR02	ECL-STORAGE02	Emerson In-House Storage - Ask at Service Desk	2	2		Purge				
+ECL-STOR03	ECL-STORAGE03	Emerson In-House Storage - Ask at Service Desk	6	5		Purge				
+ECL-STOR04	ECL-STORAGE04	Emerson In-House Storage - Ask at Service Desk	6	6		Purge				
+ECL-STOR05	ECL-STORAGE05	Emerson In-House Storage - Ask at Service Desk	5	4		Purge				
+ECL-STOR06	ECL-STORAGE06	Emerson In-House Storage - Ask at Service Desk	2	2		Purge				
+Total suppressed MFHDs			2064							

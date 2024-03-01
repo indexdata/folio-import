@@ -1,0 +1,125 @@
+Legacy material type code	Legacy material type name	Perm itype count	Temp itype count	Action to take	Notes	Folio name	
+Unsuppressed items (as of 1/12/2024)							
+3hreserve	3 hour reserve	1		Keep		3 Hour Reserve	
+24hreserve	24 hour reserve	0	1	Merge		3 Hour Reserve	
+7daytech	7 day tech	87		Keep		7 Day Loan	
+3dayReserv	3 day reserve	0		Merge		7 Day Loan	
+Book	Book	36,007	19	Keep		Book	
+BOOK	BOOK	2		Merge	merge to Book	Book	
+CircBook	CircBook	0	1	Merge	We don't know what this is - but think just a book	Book	
+DVD	DVD	1,896		Keep		DVD	
+CD-ROM	CD-ROM	0		Merge		DVD	
+CDROM	CDROM	13		Merge		DVD	
+DVDCirc	DVDCirc	6		Merge	merge to DVD	DVD	
+BookCirc	BookCirc	76	41	Merge	Located at the circ desk (staff copies) or course reserves (if temp). Not 100% sure what this is, but think merge temp ones to 3 Hour Reserve, and Permanent ones to Book	Book	WIT to manually add reserves post load (for temp itype BookCirc)
+MUSEUMPASS	MUSEUMPASS	13		Keep		Museum Pass	
+Access	Accessories	185		Keep		Peripheral	
+Reference	Reference	1,501		Keep		Reference	
+REFERENCE	REFERENCE	3		Merge	merge to Reference	Reference	
+Serial	Serial	1		Keep		Serial	
+Magazine	Magazine	17		Merge	merge to Serial	Serial	
+2dayReserv	2 day reserve	0		Purge			
+Total unsuppressed items 		39,807					
+*Counts for items attached to unsuppressed MFHDs, suppressed counts below							
+							
+Suppressed Items (as of 1/12/2024) - Keep any suppressed holdings in the shelving locations WITONLINE or WITSTACKS that were created within the last year (check create date of MARC record) 							
+Book	Book	66		Purge			
+BookCirc	BookCirc	50		Purge			
+DVD	DVD	8		Purge			
+Reference	Reference	1		Purge			
+Total suppressed items		125					
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+Total Suppressed Items		250					

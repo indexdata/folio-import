@@ -1,0 +1,66 @@
+Legacy location code	Legacy location name	MFHD count	Item count (perm)	Item count (temp)	Action to take	FOLIO location code	FOLIO label (optional)	FOLIO service point	Note
+Unsuppressed (as of 1/12/2024)									
+MCP-CIRC	MCPHS Circulation Boston	4,572	4,864	1	Keep	BOS-CIRC	Boston Circulation	BOS-LIB	
+MCP-VCR	MCPHS Video Cabinet	444	535		Keep	BOS-DVD	Boston DVD Cabinet	BOS-LIB	
+MCP-DIR	MCPHS Graphic Medicine	333	339		Keep	BOS-GM	Boston Graphic Medicine	BOS-LIB	
+MCP-REPAIR	MCPHS History of Pharmacy	138	143		Keep	BOS-HIST	Boston History of Pharmacy	BOS-LIB	
+MCP-SERIAL	MCPHS Journals Boston	99	51		Keep	BOS-SER	Boston Journals	BOS-LIB	
+MCP-L.R.	MCPHS Leisure Reading	317	318		Keep	BOS-LR	Boston Leisure Reading	BOS-LIB	
+MCP-REF	MCPHS Reference Boston	780	1,002		Keep	BOS-REF	Boston Reference	BOS-LIB	
+MCP-REFDSK	MCPHS Reference Desk	17	18	1	Keep	BOS-REFDSK	Boston Reference Desk	BOS-LIB	ELIANA REVIEW (fixed incorrect counts 11/29), MCPHS REVIEW need temp item report
+MCP-MEDIA	MCPHS Media	4	9	15	Merge	BOS-RES	Boston Reserves	BOS-LIB	
+MCP-RESDK	MCPHS Reserve Desk Boston	65	130	577	Keep	BOS-RES	Boston Reserves	BOS-LIB	
+MCP-4thFLR	MCPHS Retrospective Pharm	475	576		Keep	BOS-RETRO	Boston Retrospective Pharmacy	BOS-LIB	MCPHS REVIEW, Half in Boston half in Worcester, potentially merge with archives
+MCP-TECH	MCPHS Technical Services	74	70	39	Keep	BOS-TECH	Boston Technical Services	BOS-LIB	MCPHS REVIEW
+MCP-ELECT	MCPHS E-Collections	11,109			Keep	ELEC-COLL	E-Collections	BOS-LIB	
+MCP-EBARC	MCPHS eBook Archives	247			Keep	ELEC-BACK	E-Collections Backfile	BOS-LIB	Permanently licensed materials
+MCP-EMEDIA	MCPHS E-media	4,190			Keep	ELEC-MED	E-Media	BOS-LIB	
+MCP-MANC	MCPHS Manchester Circul.	424	477		Keep	MAN-CIRC	Manchester Circulation	MAN-LIB	
+MCP-MANMED	MCPHS Manchester Media	69	73		Keep	MAN-MEDIA	Manchester Media	MAN-LIB	
+MCP-MANRES	MCPHS Manchester Reserves	1	2	170	Keep	MAN-RES	Manchester Reserves	MAN-LIB	
+MCP-ARCHIV	MCPHS Archives	1,059	1,521	1	Keep	WOR-ARCH	Archives	WOR-LIB	
+MCP-LOCKCS	MCPHS Locked Case	14	16		Keep	WOR-ARCLC	Archives Locked Case	WOR-LIB	MCPHS REVIEW, move to other locations
+MCP-THESIS	MCPHS Thesis Collection	959	886		Keep	WOR-ARCTHE	Archives Thesis Collection	WOR-LIB	MCPHS REVIEW Located in the archives
+MCP-NWTCLN	MCPHS Newton Clinic	61	61		Keep	NES-CLN	NESA Newton Clinic	WOR-LIB	
+MCP-NWTMED	MCPHS Newton Media	171	168		Keep	NES-MED	NESA Newton Media	WOR-LIB	MCPHS REVIEW Partially in Boston
+WOR-ACUCLN	MCPHS NESA Clinic	61	60		Keep	WOR-ACUCLN	Worcester Acupuncture Clinic	WOR-LIB	
+WOR-ACUMED	MCPHS NESA Media	43	52		Keep	WOR-ACUMED	Worcester Acupuncture Media	WOR-LIB	MCPHS REVIEW
+WOR-CIRC	MCPHS Circulation Worcest	954	1,081	3	Keep	WOR-CIRC	Worcester Circulation	WOR-LIB	
+WOR-SER	MCPHS Journals Worcester	5	2		Keep	WOR-SER	Worcester Journals	WOR-LIB	
+WOR-MEDIA	MCPHS Media Worcester	250	292		Keep	WOR-MEDIA	Worcester Media	WOR-LIB	
+MCP-NESA	MCPHS NESA Worcester	2,567	1,947		Keep	WOR-NESAW	Worcester NESA	WOR-LIB	NESA = Accupuncture school
+MCP-NEWTON	MCPHS NESA Newton	313	332		Keep	NES-CIRC	NESA Newton Circulation	WOR-LIB	MCPHS REVIEW (where are these books?)
+WOR-REF	MCPHS Reference Worcester	282	326	1	Keep	WOR-REF	Worcester Reference	WOR-LIB	
+WOR-CIRDSK	MCPHS Wor. Circ. Desk	0	0	500	Keep	WOR-RES	Worcester Reserves	WOR-LIB	
+MCP-CDROM	MCPHS CD-ROM Cabinet	0	0		Purge				all deleted 11/7
+MCP-DIT	MCPHS Thesis Storage	0	0		Purge				all moved 11/14
+MCP-FACDEV	MCPHS Faculty Development	3	2		Purge				bibs can be deleted
+MCP-LIBOFF	MCPHS Librarians' Offices	2	2	3	Purge				
+MCP-MANREF	MCPHS Manchester Ref.	87	102		Keep	MAN-REF	Manchester Reference	MAN-LIB	
+	Totals	25,683	15,355	1311					
+*These are unsuppressed MFHDs, suppressed locations below									
+									
+Suppressed (as of 1/12/2024)									
+MCP-4thFLR	MCPHS Retrospective Pharm	39	43		Keep	BOS-RETRO	Boston Retrospective Pharm	BOS-LIB	only keep items if the itype is CircBook, RefBook, or CircVideo
+MCP-ARCHIV	MCPHS Archives	43	52		Keep	WOR-ARCH	Archives	WOR-LIB	only keep items if the itype is CircBook, RefBook, or CircVideo
+MCP-CIRC	MCPHS Circulation Boston	6	6		Purge				purge all regardless of itype
+MCP-EBARC	MCPHS eBook Archives	6			Purge				purge all regardless of itype
+MCP-ELECT	MCPHS E-Collections	8			Purge				purge all regardless of itype
+MCP-EMEDIA	MCPHS E-media	2			Purge				purge all regardless of itype
+MCP-FACDEV	MCPHS Faculty Development		1		Purge				purge all regardless of itype
+MCP-L.R.	MCPHS Leisure Reading	2	2		Purge				purge all regardless of itype
+MCP-MANC	MCPHS Manchester Circul.	1	1		Purge				purge all regardless of itype
+MCP-MEDIA	MCPHS Media	2	4		Purge				purge all regardless of itype
+MCP-NESA	MCPHS NESA Worcester	14	3		Purge				purge all regardless of itype
+MCP-REPAIR	MCPHS History of Pharmacy	1	1		Keep	BOS-HIST	Boston History of Pharmacy	BOS-LIB	only keep items if the itype is CircBook, RefBook, or CircVideo
+MCP-RESDK	MCPHS Reserve Desk Boston	14	15	1	Keep	BOS-RES	Boston Reserves	BOS-LIB	only keep items if the itype is CircBook, RefBook, or CircVideo
+MCP-SERIAL	MCPHS Journals Boston	33			Purge				purge all regardless of itype
+MCP-TECH	MCPHS Technical Services	2	2		Purge				purge all regardless of itype
+MCP-THESIS	MCPHS Thesis Collection	18	18		Keep	WOR-ARCTHE	Archives Thesis Collection	WOR-LIB	only keep items if the itype is CircBook, RefBook, or CircVideo
+MCP-VCR	MCPHS Video Cabinet	8	22		Purge				purge all regardless of itype
+WOR-CIRC	MCPHS Circulation Worcest	6	7		Purge				purge all regardless of itype
+WOR-CIRDSK	MCPHS Wor. Circ. Desk	1		7	Purge				purge all regardless of itype
+WOR-MEDIA	MCPHS Media Worcester	2	2		Purge				purge all regardless of itype
+WOR-REF	MCPHS Reference Worcester	36	90		Purge				purge all regardless of itype
+WOR-SER	MCPHS Journals Worcester	5			Purge				purge all regardless of itype
+Total suppressed MFHDs		249	269						

@@ -1,0 +1,51 @@
+Legacy location code	Legacy location name	MFHD count	Item count (perm)	Item count (temp)	Action to take	FOLIO location code	FOLIO label (optional)	FOLIO service point	Note
+Unsuppressed (as of 1/12/24)								always circ?	
+EMCARC	Emmanuel Archives	55	53		Keep	ARC	Archives		
+EMCATG	Emmanuel ATIG Office	18	18		Keep	ATIG	ATIG Office		Separate print book location for ATIG group and faculty they use these books for events
+EMCDIS	Emmanuel Discovery Lab	4	1	78	Keep	DIS	Discovery Lab		 There are books in the Discovery lab
+EMCAUTH	Emmanuel Authors	128	126		Keep	EMCAUTH	Emmanuel Authors		This is for Emmanuel (ONLY) Authors so we are keeping the word Emmanuel
+EMCILL	Emmanuel ILL	178	163		Keep	ILL	Inter-Library Loan		
+EMCJSTORPU	Emmanuel JSTOR: purchased	1,497			Keep	JSTORPU	JSTOR purchased		Online purchased titles from JSTOR
+EMCJUV	Emmanuel Juvenile	647	646		Keep	JUV	Juvenile		
+EMCLEIS	Emmanuel Leisure	292	288		Keep	LEIS	Leisure		
+EMCSTKS	Emmanuel Main	57,001	58,275	9	Keep	STKS	Main Stacks		
+EMCMED	Emmanuel Media Office	1,028	1,410		Keep	MED	Media		
+EMCVIDEO	Emmanuel Video	32	47		Merge	MED	Media		on delete location list
+EMCMUL	Emmanuel Mulvaney	500	493		Keep	MUL	Mulvaney		
+EMCONL	Emmanuel Online	1,568	13		Keep	ONL	Online		
+EMCPER	Emmanuel Periodical	62	49		Keep	PER	Periodicals		
+EMCB	Emmanuel Rare Book	306	446		Keep	RBR	Rare Book Room		
+EMCREF	Emmanuel Reference	1,303	1,204	2	Keep	REF	Reference		
+EMCREFDK	Emmanuel Ref Desk	24	33		Merge	REF	Reference		on delete location list
+EMCRES	Emmanuel Reserve	158	158	89	Keep	RES	Reserve		
+EMCACQ	Emmanuel Acquisitions	53	19		Purge	ACQ	Acquisitions		Voyager creates bib and holding in this location when a purchase order is created
+EMCCIRC	Emmanuel Circulation	13	6		Purge				To Eli from Cat: is this for the circ service point?
+EMCDIR	Emmanuel Director	9	9		Purge				on delete location list
+EMCINDEX	Emmanuel Index	3	4		Purge				this is on delete location list
+EMCJSTOR	Emmanuel JSTOR	3			Purge				on delete location list
+EMCSTOR	Emmanuel Storage	18			Purge				on delete location list
+EMCTECH	Emmanuel Tech Services	16	15		Purge				on delete location list
+emclib	Emmanuel Library		1		Purge				on delete location list-Eli I think this an old FLO vestige or I forgot what it was - Cat
+Total unsuppressed MFHDs		64916							
+*These are unsuppressed MFHDs, suppressed locations below									
+									
+Suppressed (as of 1/12/2024)									
+EMCACQ	Emmanuel Acquisitions	136			Purge				PURGE ALL SURPRESSED
+EMCB	Emmanuel Rare Book	1			Purge				PURGE ALL SURPRESSED
+EMCDIR	Emmanuel Director	4			Purge				PURGE ALL SURPRESSED
+EMCDIS	Emmanuel Discovery Lab	3			Purge				PURGE ALL SURPRESSED
+EMCINDEX	Emmanuel Index	5			Purge				PURGE ALL SURPRESSED
+EMCJSTOR	Emmanuel JSTOR	1			Purge				PURGE ALL SURPRESSED
+EMCJUV	Emmanuel Juvenile	75	9		Purge				PURGE ALL SURPRESSED
+EMCLEIS	Emmanuel Leisure	64	1		Purge				PURGE ALL SURPRESSED
+EMCMED	Emmanuel Media Office	125	42		Purge				PURGE ALL SURPRESSED
+EMCMUL	Emmanuel Mulvaney	4			Purge				PURGE ALL SURPRESSED
+EMCONL	Emmanuel Online	36	2		Purge				PURGE ALL SURPRESSED
+EMCPER	Emmanuel Periodical	64	23		Purge				PURGE ALL SURPRESSED
+EMCREF	Emmanuel Reference	298	1		Purge				PURGE ALL SURPRESSED
+EMCREFDK	Emmanuel Ref Desk	8			Purge				PURGE ALL SURPRESSED
+EMCRES	Emmanuel Reserve	1			Purge				PURGE ALL SURPRESSED
+EMCSTKS	Emmanuel Main	826	180		Purge				PURGE ALL SURPRESSED
+EMCSTOR	Emmanuel Storage	3			Purge				PURGE ALL SURPRESSED
+EMCVIDEO	Emmanuel Video	1	1		Purge				PURGE ALL SURPRESSED
+Total suppressed MFHDs		1655							

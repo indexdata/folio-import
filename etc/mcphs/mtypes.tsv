@@ -1,0 +1,31 @@
+Legacy material type code	Legacy material type name	Perm itype count	Temp itype count	Action to take	Notes	Folio name	
+Unsuppressed items (as of 1/5/24)							
+CircBook	CircBook	9,488		Keep		Book	
+RefBook	RefBook	4,680		Merge		Book	
+Reference	Reference	6		Merge		Book	
+Reserve	Reserve	3		Merge		Book	
+WCircBook	WCircBook	1		Merge		Book	
+Archive	Archive	6		Merge	currently all DVDs	DVD	
+CircVideo	CircVideo	1,069		Merge	merge all other video here	DVD	
+Video Circ	Video Circ	1		Merge		DVD	
+Video Disc	Video Disc	1		Merge		DVD	
+VideoCirc	VideoCirc	2		Merge		DVD	
+RefKit	RefKit	10		Keep		Equipment	
+24hreserve	24 hour reserve	1		Merge	We're working on changing the itypes on these - for test import, these can be merged into Book	Book	MCPHS will move these to other itypes (mix of books and other things)
+3dayReserv	3 day reserve	6	1	Merge	We're working on changing the itypes on these - for test import, these can be merged into Book	Book	MCPHS will move these to other itypes (mix of books and other things)
+3hreserve	3 hour reserve	48	1,119	Merge	We're working on changing the itypes on these - for test import, these can be merged into Book	Book	MCPHS will move these to other itypes (mix of books and other things)
+Serial	Serial	4		Keep		Serial	
+5hreserve	5 hour reserve		105	Purge	I don't think FOLIO has temp item types and reserves items will be put in a temp location		MCPHS will move these to other itypes (mix of books and other things)
+CircCass	CircCass	6		Keep		Cassette	
+CircCD	CircCD	111		Keep	MCPHS review (make report) 	CD	
+ONLINE	Online					E-Reserve	
+Total unsuppressed items 		15,443					
+*Counts for items attached to unsuppressed MFHDs, suppressed counts below							
+							
+Suppressed Items (as of 1/5/2024)							
+3hreserve	3 hour reserve	3	10	Purge	delete items regardless of location		
+CircBook	CircBook	24		Keep	only if in locations to keep		
+CircVideo	CircVideo	28		Keep	only if in locations to keep		
+RefBook	RefBook	219		Keep	only if in locations to keep		
+Reference	Reference	1		Purge	delete items regardless of location		
+Total suppressed items		275					

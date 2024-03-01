@@ -1,0 +1,54 @@
+Legacy material type code	Legacy material type name	Perm itype count	Temp itype count	Action to take	Notes	Folio name
+Unsuppressed items (as of 1/12/2024)				All items marked purged will be moved to the proper item type in Voyager or deleted 		
+2hrReserve	2 hour reserve	151	89	Keep		2 Hour Reserve
+Archive	Archive	38		Keep	valid	Archive
+Book	Book	59,468	8	Keep		Book
+DVD	DVD	924		Keep		DVD
+ILL	ILL	161		Keep	On the fly records	ILL
+Juv Book	Juv Book	2		Merge	Merge with Juv. Book	Juvenile Book
+Juv. Book	Juv. Book	632		Keep		Juvenile Book
+PERIODICAL	PERIODICAL	63		Keep		Periodical
+SPECIALCOL	SPECIALCOL	374		Keep	Not necessarily books (objects too) 	Rare Book Room 
+REFBOOK	REFBOOK	580	1	Merge		Reference
+RefBook	RefBook	6		Merge		Reference
+Reference	Reference	664		Keep		Reference
+1wkReserve	1 week reserve	5		Purge	Only reserves should be 2hr, these will be taken off reserve	
+AV	AV	1		Purge	This will be resolved	
+Access	Accessories	18		Purge		
+AudPlay	Audio Playback	1		Purge	This will be resolved	
+Book/CD	Book/CD	17		Purge	Emmanuel is weeding CD collection	
+Book/DVD	Book/DVD	43		Purge		
+CD	CD	97		Purge	Emmanuel is weeding CD collection	
+CDROM	CDROM	203		Purge	Emmanuel is weeding CD collection	
+Cassette	Cassette	2		Purge	removed record	
+DV Camera	DV Camera	1		Purge		
+DVDCirc	DVDCirc	1		Purge	Emmanuel will update to DVD itype	
+Index	Index	5		Purge		
+Juv. Video	Juv. Video	3		Purge	Maybe move to DVD, Emmanuel review	
+Laptop	Laptop Computer	3		Purge		
+MUSEUMPASS	MUSEUMPASS	1		Purge	0	
+Newspaper	Newspaper	2		Purge	I did some cleanup/updates on these in opac (moved to periodical)	
+RESPER	RESPER	5		Purge		
+Thesis	Thesis	2		Purge		
+VIDEO	VIDEO	49		Purge		
+Total unsuppressed items 		63,522				
+*Counts for items attached to unsuppressed MFHDs, suppressed counts below						
+						
+Suppressed Items (as of 1/12/2024)						
+1wkReserve	1 week reserve	2		Purge	PURGE ALL SURPRESSED	
+2hrReserve	2 hour reserve	8		Purge	PURGE ALL SURPRESSED	
+Access	Accessories	28		Purge	PURGE ALL SURPRESSED	
+Batteries	Batteries	5		Purge	PURGE ALL SURPRESSED	
+Book	Book	175		Purge	PURGE ALL SURPRESSED	
+CDROM	CDROM	1		Purge	PURGE ALL SURPRESSED	
+DV Camera	DV Camera	0		Purge	PURGE ALL SURPRESSED	
+DVD	DVD	1		Purge	PURGE ALL SURPRESSED	
+Juv. Book 	Juv. Book	8		Purge	PURGE ALL SURPRESSED	
+Laptop	Laptop Computer	0		Purge	PURGE ALL SURPRESSED	
+Newspaper	Newspaper	0		Purge	PURGE ALL SURPRESSED	
+PERIODICAL	PERIODICAL	23		Purge	PURGE ALL SURPRESSED	
+REFBOOK	REFBOOK	1		Purge	PURGE ALL SURPRESSED	
+VIDEO	VIDEO	1		Purge	PURGE ALL SURPRESSED	
+Video Cam	Video Cam	3		Purge	PURGE ALL SURPRESSED	
+Video Proj	Video Proj	3		Purge	PURGE ALL SURPRESSED	
+Total suppressed items		259				
