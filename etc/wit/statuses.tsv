@@ -1,0 +1,27 @@
+Legacy item status	Item count	FOLIO item status	notes									
+Unsuppressed items	(as of 1/12/2024)											
+Charged	159	Checked out	Migrate checkouts with circ data									FOLIO Statuses:
+Damaged	3	Available	Do not migrate damaged condition									Aged to Lost
+Hold Request	0	Paged	Migrate holds with circ data									Available
+In Transit Discharged	8											Awaiting delivery 
+In Transit On Hold	15											Awaiting pickup
+Lost--Library Applied	1	Missing	Maybe move to missing									Checked out
+Lost--System Applied	71	Aged to Lost										Claimed Returned
+Missing	15	Missing										Declared lost
+Not Charged	39,272	Available										In process
+On Hold	2	Paged	Migrate holds with circ data									In process (not requestable)
+Overdue	114	Checked out	Migrate checkouts with circ data									Intellectual item
+Renewed	148	Checked out	Migrate checkouts with circ data									In transit
+	39808											Long missing
+												Lost and paid
+												Missing
+												On order
+												Order closed
+*Item status will be stored in the 949$s												Paged
+**Method for removing duplicate IDs https://superuser.com/questions/920276/remove-duplicate-rows-and-keep-newest-row-based-on-date-column												Unavailable
+												Unknown
+Suppressed items (as of 1/12/2024)												Restricted
+In Transit Discharged	1											Withdrawn 
+Lost--System Applied	1											
+Not Charged	121											
+Overdue	2											

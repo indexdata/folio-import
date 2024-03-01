@@ -1,0 +1,24 @@
+Legacy item status	Item count	FOLIO item status	notes							
+Unsuppressed items (As of 1/12/2024)										
+Charged	9	Checked Out								FOLIO Statuses:
+In Process	9	In Process								Aged to Lost
+In Transit Discharged	17	In Transit								Available
+In Transit On Hold	3	In Transit								Awaiting delivery 
+Lost--Library Applied	5		Purge							Awaiting pickup
+Lost--System Applied	92	Aged to Lost	Keep							Checked out
+Missing	70	Missing	Keep							Claimed Returned
+Not Charged	15,231	Available								Declared lost
+Overdue	19	Checked Out								In process
+Renewed	1	Checked Out								In process (not requestable)
+										Intellectual item
+*Item status will be stored in the 949$s										In transit
+**Method for removing duplicate IDs https://superuser.com/questions/920276/remove-duplicate-rows-and-keep-newest-row-based-on-date-column										Long missing
+										Lost and paid
+Suppressed items (As of 1/12/2024)										Missing
+Lost--System Applied	1									On order
+Missing	5									Order closed
+Not Charged	321									Paged
+										Unavailable
+										Unknown
+										Restricted
+										Withdrawn 
