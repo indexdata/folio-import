@@ -1,0 +1,13 @@
+{
+  "domain": "agreements",
+  "typeId": "e491e0d5-695d-468b-8d8d-7cb7ce48a981",
+  "content": "<p>This is a test</p>",
+  "title": "Test note",
+  "links": [
+    {
+      "type": "agreement",
+      "id": "8ab0a5e1-8b7e-48b9-9974-dc4955b20097"
+    }
+  ],
+  "id": "25091670-1659-4080-bf00-a9d5d4a9a312"
+}
