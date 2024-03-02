@@ -10,11 +10,18 @@ tsvdir=$(wd)/etc/$(lib)
 iref=$(data)/ref/inv
 aref=$(data)/ref/acq
 rules=$(wd)/mapping_rules/default.json
+split=-l 65000
 
 inventory:
 	cd $(invdir); mv *.mrc raw.marc
 	yaz-marcdump -f marc8 -t utf8 -l 9=97 -o marc $(invdir)/raw.marc > $(mfile)
 	./marc2inst-$(lib).pl $(rules) $(iref) $(mfile) > $(log)/make-marc.log 2>$(log)/make-marc-err.log &
+
+split-inventory: $(invdir)/*.jsonl
+	split $(split) $(invdir)/*instances.jsonl $(invdir)/in
+	split $(split) $(invdir)/*holdings.jsonl $(invdir)/ho
+	split $(split) $(invdir)/*items.jsonl $(invdir)/it
+	split $(split) $(invdir)/*srs.jsonl $(invdir)/sr
 
 clean-inventory: $(iinfo)
 	cd $(invdir); rm bibs.mrc; mv raw.marc raw.mrc
