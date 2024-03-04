@@ -10,7 +10,7 @@ tsvdir=$(wd)/etc/$(lib)
 iref=$(data)/ref/inv
 aref=$(data)/ref/acq
 rules=$(wd)/mapping_rules/default.json
-split=-l 65000
+split=-l 6000
 
 inventory:
 	cd $(invdir); mv *.mrc raw.marc
