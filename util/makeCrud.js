@@ -7,13 +7,14 @@ const ns = 'e3398111-2ca9-4c06-b849-7301325e0786';
 const tsvFile = argv._.shift();
 const ncol = argv.n;
 const ccol = argv.c;
+const desc = argv.d;
 const source = argv.s;
 const normalize = argv.z;
 const group = argv.g;
 
 try {
   if (!tsvFile) {
-    throw 'Usage: node makeCrud.js [ -n name_col, -c code_col, -s source_value, -g group, -z normlize_code ] <tsv_file> [ field=value, vield=value, ...]';
+    throw 'Usage: node makeCrud.js [ -n name_col, -c code_col, -s source_value, -g group, -d desc, -z normlize_code_or_group ] <tsv_file> [ field=value, vield=value, ...]';
   }
   let fields = {};
   argv._.forEach(a => {
@@ -48,6 +49,15 @@ try {
         c = group - 1;
         out.group = col[c].trim();
       }
+      if (desc) {
+        c = desc - 1;
+        if (normalize) {
+          col[c] = col[c].replace(/'/g, '');
+          col[c] = col[c].replace(/\W+/g, '_');
+          col[c] = col[c].toLowerCase();
+        }
+        out.desc = col[c].trim();
+      } 
       if (nseen[out.name] && out.code) {
         out.name += ` (${out.code})`;
       }
