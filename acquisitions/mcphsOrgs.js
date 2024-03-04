@@ -161,7 +161,7 @@ try {
           obj.emails = [{ value: email, isPrimary: true }];
         }
         if (cadd) {
-          obj.addresses = [{ addressLine1: cadd }];
+          obj.addresses = [{ addressLine1: cadd, isPrimary: true }];
         }
         if (note) notes.push('Contact title: ' + note);
         if (cnote) notes.push('Contact note: ' + cnote);
