@@ -308,6 +308,8 @@ sub process_entity {
   if ($data[0]) {
     $out = join ' ', @data;
     $out = processing_funcs($out, $field, $params, @funcs) if $ent->{applyRulesOnConcatenatedData};
+    $out =~ s/^false false$/false/;
+    $out =~ s/^true true$/true/;
   }
   return $out;
 }
