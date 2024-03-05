@@ -15,7 +15,7 @@ if [ ! -d $REFDIR ]
     mkdir $REFDIR
 fi
 
-EPS='groups addresstypes departments custom-fields note-types'
+EPS='groups addresstypes departments custom-fields note-types service-points'
 
 for EP in $EPS
 do

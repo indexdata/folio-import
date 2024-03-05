@@ -6,7 +6,7 @@ const uuid = require('uuid/v5');
 const ns = '70c937ca-c54a-49cd-8c89-6edcf336e9ff';
 let refDir = process.argv[2];
 const patronFile = process.argv[3];
-const defEmail = process.argv[4];
+const defEmail = process.argv[4] || 'oscarmail@scu.edu';
 
 const parseAddress = (saddr, type, primary) => {
   let addresses = [];
@@ -56,11 +56,13 @@ try {
   const outPath = `${saveDir}/folio-${fileName}.jsonl`;
   const notePath = `${saveDir}/notes-${fileName}.jsonl`;
   const permPath = `${saveDir}/permusers-${fileName}.jsonl`;
+  const reqPath = `${saveDir}/request-prefs-${fileName}.jsonl`;
   const mapPath = `${saveDir}/users.map`;
   const errPath = `${saveDir}/${fileName}-errors.jsonl`;
   if (fs.existsSync(outPath)) fs.unlinkSync(outPath);
   if (fs.existsSync(notePath)) fs.unlinkSync(notePath);
   if (fs.existsSync(permPath)) fs.unlinkSync(permPath);
+  if (fs.existsSync(reqPath)) fs.unlinkSync(reqPath);
   if (fs.existsSync(mapPath)) fs.unlinkSync(mapPath);
   if (fs.existsSync(errPath)) fs.unlinkSync(errPath);
 
@@ -72,12 +74,16 @@ try {
   // map folio groups from file
   const groups = require(`${refDir}/groups.json`);
   groups.usergroups.forEach(g => {
-    // g.group = g.group.toLowerCase();
     groupMap[g.group] = g.id;
   });
-  // let staff = groupMap['Library Departments'];
-  // if (!staff) throw("Can't find 'staff' patron group!");
-  let staff = 'hey!';
+
+  // map service points
+  const spMap = {};
+  const spoints = require(`${refDir}/service-points.json`);
+  spoints.servicepoints.forEach(s => {
+    spMap[s.code] = s.id;
+  });
+  // console.log(spMap); return;
   
   // map ptypes from tsv file
   const ptypeGroup = {};
@@ -86,13 +92,10 @@ try {
     l = l.trim();
     if (l) {
       let c = l.split(/\t/);
-      let ptype = c[1].trim();
-      let pcode3 = (c[2]) ? c[2].trim() : '';
-      let k = `${ptype}_${pcode3}`;
-      // let gname = (c[4]) ? c[4].toLowerCase() : '';
-      gname = (c[4]) ? c[4].trim() : '';
+      let ptype = c[0].trim();
+      gname = (c[2]) ? c[2].trim() : '';
       if (groupMap[gname]) {
-        ptypeGroup[k] = groupMap[gname];
+        ptypeGroup[ptype] = groupMap[gname];
       } else {
         console.log(`WARN patron group "${gname}" not found...`);
       }
@@ -148,51 +151,65 @@ try {
       }
       varFields[tag].push(vf.content);
     }
-    let name = [];
+    let name = {};
     if (varFields.n) {
-      name = varFields.n[0].split(/, | /);
+      let full = varFields.n[0];
+      let [l, fs] = full.split(/, /);
+      name.l = l;
+      if (fs) {
+      let [f, m] = fs.split(/ /);
+        name.f = f;
+        name.m = m;
+      }
     }
     let active = true;
     let exptime = new Date(fixedFields['EXP DATE']).valueOf();
     if (exptime < today) active = false;
-    let ptype = fixedFields['P TYPE'].trim();
-    let pcode3 = fixedFields.PCODE3.trim();
-    let groupKey = ptype + '_' + pcode3;
-    let groupId = (ptypeGroup[groupKey]) ? ptypeGroup[groupKey] : ptypeGroup[ptype + '_*'];
-    let uniId = (varFields.u) ? varFields.u[0] : '';
-    let identaKey = (varFields.q) ? varFields.q[0] : (uniId) ? uniId : pid;
-    let barcode = (varFields.b) ? varFields.b[0] : '';
+    let ptype = (fixedFields['P TYPE']) ? fixedFields['P TYPE'].trim() : '';
+    let utype = (ptype === '2' || ptype === '18') ? 'staff' : 'patron';
+    let pcode2 = (fixedFields.PCODE3) ? fixedFields.PCODE3.trim() : '';
+    let groupId = (ptypeGroup[ptype]) ? ptypeGroup[ptype] : '';
+    let exId = (varFields.f) ? varFields.f[0] : '';
+    let un = (varFields.y) ? varFields.y[0].replace(/@.+$/, '') : '';
+    let barcode = (varFields.b) ? varFields.b.shift() : '';
+    let phone = (varFields.t) ? varFields.t.shift() : '';
+    let sp = (fixedFields['HOME LIBR']) ? fixedFields['HOME LIBR'].trim() : '';
     let user = {
       id: uuid(pid, ns),
-      username: identaKey,
-      patronGroup: groupId || `No group ID found for PTYPE ${ptype} PCODE3 ${pcode3}`,
+      patronGroup: groupId || `No group ID found for PTYPE ${ptype}`,
       expirationDate: fixedFields['EXP DATE'],
       enrollmentDate: fixedFields['CREATED'],
       active: active,
+      type: utype,
       personal: {
-        lastName: name[0],
-        firstName: name[1],
-        middleName: name.slice(2).join(' ') || '',
+        lastName: name.l,
+        firstName: name.f,
+        middleName: name.m || '',
         email: (varFields.z) ? varFields.z[0] : '',
-        phone: (varFields.p) ? varFields.p[0] : '',
-        mobilePhone: (varFields.t) ? varFields.t[0] : '',
+        phone: phone,
         addresses: [],
         preferredContactTypeId: '002'
-      }
+      },
+      customFields: {}
     }
-    if (identaKey && !useen[identaKey]) {
-      user.username = identaKey;
-      useen[identaKey] = 1;
-    }
-    if (uniId && !eseen[uniId]) {
-      user.externalSystemId = uniId;
-      eseen[uniId] = 1;
-    }
+    if (un) user.username = un;
+    if (exId) user.externalSystemId = exId;
+    if (un) useen[un] = 1;
     if (defEmail) user.personal.email = defEmail;
     if (barcode && !bseen[barcode]) {
       user.barcode = barcode;
       bseen[barcode] = 1;
+    } else if (barcode) {
+      varFields.b.unshift(barcode);
     }
+
+    if (varFields.b && varFields.b[0]) {
+      user.customFields.sierraPBarcode = varFields.b.join(', ');
+    }
+    if (varFields.p) {
+      user.customFields.sierraTelephone = varFields.p.join(', ');
+    }
+
     if (varFields.h) {
       user.personal.addresses = parseAddress(varFields.h, atypeMap['Home'], true);
     }
@@ -206,17 +223,40 @@ try {
         fs.writeFileSync(notePath, JSON.stringify(note) + '\n', { flag: 'as' });
       }
     }
+    if (varFields.m) {
+      for (let n = 0; n < varFields.m.length; n++) {
+        ncount++;
+        let note = makeNote(varFields.m[n], user.id, noteTypeId);
+        fs.writeFileSync(notePath, JSON.stringify(note) + '\n', { flag: 'as' });
+      }
+    }
 
-    if (user.username && groupId && groupId !== staff) {
+    if (groupId && pcode2 !== 'z') {
       let uid = user.id;
+
+      // create perms user
       let pu = {
         id: uuid(uid, ns),
         userId: uid
       }
+
+      // create request preference
+      let rp = {
+        userId: uid,
+        holdShelf: true,
+        delivery: false,
+      }
+      if (sp === 'ulpat') {
+        rp.defaultServicePointId = spMap['ulhelpdesk'];
+      } else if (sp === 'heafe') {
+        rp.defaultServicePointId = spMap['llcircdesk'];
+      }
+
       fs.writeFileSync(outPath, JSON.stringify(user) + '\n', { flag: 'as' });
       let userBc = user.barcode || '';
       fs.writeFileSync(mapPath, `${pid}|${user.id}|${userBc}|${user.active}\n`, { flag: 'as' });
       fs.writeFileSync(permPath, JSON.stringify(pu) + '\n', { flag: 'as' });
+      fs.writeFileSync(reqPath, JSON.stringify(rp) + '\n', { flag: 'as' });
       pcount++;
     } else {
       fs.writeFileSync(errPath, JSON.stringify(user) + '\n', { flag: 'a'});
