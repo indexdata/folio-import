@@ -131,6 +131,7 @@ try {
         aseen[akey] = 1
       }
       let cname = r['Contact Name'];
+      let ckey = oid + cname;
       let crole = r['Contact Role'];
       let phone = r['Contact Phone'];
       let altPhone = r['Contact Alt Phone'];
@@ -140,13 +141,13 @@ try {
       let notes = [];
       // if (!cname) cname = name;
       let rollkey = cname + crole;
-      if (cname && !cseen[cname]) {
+      if (cname && !cseen[ckey]) {
         let names = cname.match(/(.+) (.+)/) || ['Unknown', cname];
         let fn = names[1];
         let ln = names[2];
         let note = r['Contact Title'];
         let obj = {};
-        obj.id = uuid(cname, ns);
+        obj.id = uuid(ckey, ns);
         obj.firstName = fn.trim();
         obj.lastName = (ln) ? ln.trim() : obj.firstName;
         obj.categories = [];
@@ -166,17 +167,17 @@ try {
         if (cnote) notes.push('Contact note: ' + cnote);
         if (notes[0]) obj.notes = notes.join('; ');
         cc++;
-        cseen[cname] = obj;
+        cseen[ckey] = obj;
       }
       if (cname && crole && !rseen[rollkey]) {
         let crollId = ref.categories[crole];
         if (crollId) {
-          cseen[cname].categories.push(crollId);
+          cseen[ckey].categories.push(crollId);
           rseen[rollkey] = 1;
         }
       }
-      if (cseen[cname]) {
-        let cid = cseen[cname].id;
+      if (cseen[ckey]) {
+        let cid = cseen[ckey].id;
         if (!contacts[cid]) org.contacts.push(cid);
         contacts[cid] = 1
       }
