@@ -140,7 +140,7 @@ try {
       let cnote = r['Contact Notes'];
       let notes = [];
       // if (!cname) cname = name;
-      let rollkey = cname + crole;
+      let rollkey = ckey + crole;
       if (cname && !cseen[ckey]) {
         let names = cname.match(/(.+) (.+)/) || ['Unknown', cname];
         let fn = names[1];

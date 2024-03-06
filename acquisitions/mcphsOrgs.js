@@ -133,7 +133,7 @@ try {
       let cname = r['Contact Name'];
       let ckey = oid + cname;
       let crole = r['Contact Role'];
-      let rollkey = cname + crole;
+      let rollkey = ckey + crole;
       let phone = r['Contact Phone'];
       let altPhone = r['Contact Alt Phone'];
       let email = r['Contact Email'];
