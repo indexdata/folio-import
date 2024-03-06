@@ -2,6 +2,7 @@
 
 grep okapi: config.js
 grep tenant: config.js
+grep logpath: config.js || echo "  (logpath not set)"
 
 while true; do
     read -n 1 -p "Change config? (y/n) " change
@@ -23,3 +24,4 @@ done
 echo "Config set to:"
 grep okapi: config.js
 grep tenant: config.js
+grep logpath: config.js || echo "  (logpath not set)"
