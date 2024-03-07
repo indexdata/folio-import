@@ -167,7 +167,7 @@ try {
     if (exptime < today) active = false;
     let ptype = (fixedFields['P TYPE']) ? fixedFields['P TYPE'].trim() : '';
     let utype = (ptype === '2' || ptype === '18') ? 'staff' : 'patron';
-    let pcode2 = (fixedFields.PCODE3) ? fixedFields.PCODE3.trim() : '';
+    let pcode2 = (fixedFields.PCODE2) ? fixedFields.PCODE2.trim() : '';
     let groupId = (ptypeGroup[ptype]) ? ptypeGroup[ptype] : '';
     let exId = (varFields.f) ? varFields.f[0] : '';
     let un = (varFields.y) ? varFields.y[0].replace(/@.+$/, '') : '';
