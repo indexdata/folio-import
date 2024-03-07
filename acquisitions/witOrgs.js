@@ -142,6 +142,7 @@ try {
       let cnote = r['Contact Notes'];
       let notes = [];
       if (cname && !cseen[ckey]) {
+        cname = cname.trim();
         let names = cname.match(/(.+) (.+)/) || ['Unknown', cname];
         let fn = names[1];
         let ln = names[2];
