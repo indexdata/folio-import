@@ -45,7 +45,6 @@ const makeNote = (mesg, userId, noteTypeId) => {
   return note;
 }
 
-
 try {
   if (!patronFile) throw 'Usage: node scuUsers.js <ref_directory> <sierra_patron_file> [ <default_email> ]';
   if (!fs.existsSync(patronFile)) throw `Can't find patron file: ${patronFile}!`;
@@ -53,19 +52,18 @@ try {
   const saveDir = path.dirname(patronFile);
   const fileExt = path.extname(patronFile);
   const fileName = path.basename(patronFile, fileExt);
-  const outPath = `${saveDir}/folio-${fileName}.jsonl`;
-  const notePath = `${saveDir}/notes-${fileName}.jsonl`;
-  const permPath = `${saveDir}/permusers-${fileName}.jsonl`;
-  const reqPath = `${saveDir}/request-prefs-${fileName}.jsonl`;
-  const mapPath = `${saveDir}/users.map`;
-  const errPath = `${saveDir}/${fileName}-errors.jsonl`;
+  const outPath = `${saveDir}/${fileName}-users.jsonl`;
+  const notePath = `${saveDir}/${fileName}-notes.jsonl`;
+  const permPath = `${saveDir}/${fileName}-perms-users.jsonl`;
+  const reqPath = `${saveDir}/${fileName}-request-prefs.jsonl`;
+  const mapPath = `${saveDir}/${fileName}-users.map`;
+  const errPath = `${saveDir}/${fileName}-rejects.jsonl`;
   if (fs.existsSync(outPath)) fs.unlinkSync(outPath);
   if (fs.existsSync(notePath)) fs.unlinkSync(notePath);
   if (fs.existsSync(permPath)) fs.unlinkSync(permPath);
   if (fs.existsSync(reqPath)) fs.unlinkSync(reqPath);
   if (fs.existsSync(mapPath)) fs.unlinkSync(mapPath);
   if (fs.existsSync(errPath)) fs.unlinkSync(errPath);
-
 
   refDir = refDir.replace(/\/$/, '');
 
@@ -88,7 +86,9 @@ try {
   // map ptypes from tsv file
   const ptypeGroup = {};
   let tsv = fs.readFileSync(`${refDir}/ptypes.tsv`, { encoding: 'utf8' });
+  let lc = 0;
   tsv.split(/\n/).forEach(l => {
+    lc++;
     l = l.trim();
     if (l) {
       let c = l.split(/\t/);
@@ -96,7 +96,7 @@ try {
       gname = (c[2]) ? c[2].trim() : '';
       if (groupMap[gname]) {
         ptypeGroup[ptype] = groupMap[gname];
-      } else {
+      } else if (lc !== 1) {
         console.log(`WARN patron group "${gname}" not found...`);
       }
     }
@@ -121,8 +121,8 @@ try {
 
   const today = new Date().valueOf();
   let count = 0;
+  let success = 0;
   let ncount = 0;
-  let pcount = 0;
   let ecount = 0;
   const bseen = {};
   const eseen = {};
@@ -176,7 +176,7 @@ try {
     let sp = (fixedFields['HOME LIBR']) ? fixedFields['HOME LIBR'].trim() : '';
     let user = {
       id: uuid(pid, ns),
-      patronGroup: groupId || `No group ID found for PTYPE ${ptype}`,
+      patronGroup: groupId || '',
       expirationDate: fixedFields['EXP DATE'],
       enrollmentDate: fixedFields['CREATED'],
       active: active,
@@ -192,6 +192,7 @@ try {
       },
       customFields: {}
     }
+    if (!user.patronGroup) patRec.errMessage = `No group ID found for PTYPE '${ptype}'`;
     if (un) user.username = un;
     if (exId) user.externalSystemId = exId;
     if (un) useen[un] = 1;
@@ -257,9 +258,10 @@ try {
       fs.writeFileSync(mapPath, `${pid}|${user.id}|${userBc}|${user.active}\n`, { flag: 'as' });
       fs.writeFileSync(permPath, JSON.stringify(pu) + '\n', { flag: 'as' });
       fs.writeFileSync(reqPath, JSON.stringify(rp) + '\n', { flag: 'as' });
-      pcount++;
+      success++;
     } else {
-      fs.writeFileSync(errPath, JSON.stringify(user) + '\n', { flag: 'a'});
+      if (!patRec.errMessage) patRec.errMessage = "PCODE2 = 'z'";
+      fs.writeFileSync(errPath, JSON.stringify(patRec) + '\n', { flag: 'a'});
       ecount++
     }
   
@@ -271,11 +273,13 @@ try {
     const t = (new Date().valueOf() - today) / 1000;
     console.log('------------');
     console.log('Finished!');
-    console.log(`Saved ${count} users to ${outPath}`);
-    console.log(`Saved ${ncount} notes to ${notePath}`);
-    console.log(`Saved ${pcount} permusers to ${permPath}`);
-    console.log('Errors:', ecount);
-    console.log(`Time: ${t} secs.`);
+    console.log('Processed:', count);
+    console.log('Users created:', success, '-->', outPath);
+    console.log('Perms created:', success, '-->', permPath);
+    console.log('Prefs created:', success, '-->', reqPath);
+    console.log('Notes created:', ncount, '-->', notePath);
+    console.log('Rejects:', ecount, '-->', errPath);
+    console.log('Time (secs):', t);
   })
 
 } catch (e) {
