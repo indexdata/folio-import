@@ -210,12 +210,16 @@ try {
     if (varFields.p) {
       user.customFields.sierraTelephone = varFields.p.join(', ');
     }
+    if (varFields.d) {
+      user.customFields.universityId = varFields.d.join(', ');
+    }
 
     if (varFields.h) {
-      user.personal.addresses = parseAddress(varFields.h, atypeMap['Home'], true);
+      let atype = (varFields.a) ? false : true;
+      user.personal.addresses = parseAddress(varFields.h, atypeMap['Home'], atype);
     }
     if (varFields.a) {
-      user.personal.addresses = user.personal.addresses.concat(parseAddress(varFields.a, atypeMap['Work'], false));
+      user.personal.addresses = user.personal.addresses.concat(parseAddress(varFields.a, atypeMap['Work'], true));
     }
     if (varFields.x) {
       for (let n = 0; n < varFields.x.length; n++) {
