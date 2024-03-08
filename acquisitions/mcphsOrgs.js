@@ -12,41 +12,33 @@ const files = {
   orgs: 'organizations.jsonl',
   cont: 'contacts.jsonl',
   faces: 'interfaces.jsonl',
-  creds: 'interface-credentials.jsonl'
+  creds: 'interface-credentials.jsonl',
+  notes: 'notes.jsonl'
 };
 
 const rfiles = {
   acquisitionsUnits: 'units.json',
   organizationTypes: 'organization-types.json',
-  categories: 'categories.json'
+  categories: 'categories.json',
+  noteTypes: 'note-types.json'
 };
 
 try {
   if (!inFile) throw(`Usage: node mcphsOrgs.js <ref_dir> <organizations_csv_file>`);
 
-  const dir = path.dirname(inFile);
-  refDir = refDir.replace(/\/$/, '');
-
-  for (let f in files) {
-    let fn = dir + '/' + files[f];
-    if (fs.existsSync(fn)) {
-      fs.unlinkSync(fn);
-    }
-    files[f] = fn;
+  const writeTo = (fileName, data) => {
+    let outStr = JSON.stringify(data) + '\n';
+    fs.writeFileSync(fileName, outStr, { flag: 'a' });
   }
 
-  const csv = fs.readFileSync(`${inFile}`, 'utf8');
-  const inRecs = parse(csv, {
-    columns: true,
-    skip_empty_lines: true,
-    delimiter: '|',
-    from: 1
-  });
+  const dir = path.dirname(inFile);
+  const notesFile = dir + '/notes.csv';
+
+  refDir = refDir.replace(/\/$/, '');
 
   const ref = {};
   for (let f in rfiles) {
     let rfile = refDir + '/' + rfiles[f];
-    console.log(rfile);
     let rdata = require(rfile);
     ref[f] = {};
     rdata[f].forEach(r => {
@@ -56,12 +48,57 @@ try {
     });
   }
   // console.log(ref); return;
+
+  for (let f in files) {
+    let fn = dir + '/' + files[f];
+    if (fs.existsSync(fn)) {
+      fs.unlinkSync(fn);
+    }
+    files[f] = fn;
+  }
+
+  let csv = fs.readFileSync(notesFile, 'utf8');
+  const notes = parse(csv, {
+    columns: true,
+    skip_empty_lines: true,
+    delimiter: '|',
+    from: 1
+  });
+
+  let nc = 0;
+  notes.forEach(n => {
+    let id = n['Organization ID'];
+    let title = n['Note Title'];
+    let note = n.Note;
+    let type = n['Note Type'];
+    let nkey = id + title + note + type;
+    let nobj = {
+      id: uuid(nkey, ns),
+      title: title,
+      content: note,
+      domain: 'organizations',
+      typeId: ref.noteTypes[type],
+      links: [ {
+        id: uuid(id, ns),
+        type: 'organization'
+      } ]
+    } 
+    writeTo(files.notes, nobj)
+    nc++;
+  });
+
+  csv = fs.readFileSync(inFile, 'utf8');
+  const inRecs = parse(csv, {
+    columns: true,
+    skip_empty_lines: true,
+    delimiter: '|',
+    from: 1
+  });
+
+  
   let unitId = ref.acquisitionsUnits[unit] || '';
 
-  const writeTo = (fileName, data) => {
-    let outStr = JSON.stringify(data) + '\n';
-    fs.writeFileSync(fileName, outStr, { flag: 'a' });
-  }
+  
 
   const seen = {};
   const orgRows = {};
@@ -92,7 +129,7 @@ try {
       if (!org.name) {
         let name = r['Organization Name'];
         let desca = r['Organization Account Details'];
-        let descb = r['Organization Notes'];
+        // let descb = r['Organization Notes'];
         let url = r['Organization Company URL'];
         org = {
           id: uuid(oid, ns),
@@ -113,10 +150,11 @@ try {
         }
         let desc = []
         if (desca) desc.push(desca);
-        if (descb) desc.push(descb);
+        // if (descb) desc.push(descb);
         if (desc[0]) org.description = desc.join('\n ');
       }
       let role = r['Organization Role'];
+      if (role === 'Zombie') role = 'Defunct';
       // if (role === 'Vendor') org.isVendor = true;
       let typeId = ref.organizationTypes[role] || '';
       if (typeId && org.organizationTypes.indexOf(typeId) === -1 ) org.organizationTypes.push(typeId);
@@ -229,11 +267,11 @@ try {
   for (let k in cseen) {
     writeTo(files.cont, cseen[k]);
   }
-
   console.log('Finished!');
   console.log('Organizations: ', c);
   console.log('Contacts: ', cc);
   console.log('Interfaces: ', ic);
+  console.log('Notes: ', nc);
 } catch (e) {
   console.log(e);
 }
