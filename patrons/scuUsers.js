@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const uuid = require('uuid/v5');
 
-const ns = '70c937ca-c54a-49cd-8c89-6edcf336e9ff';
+const ns = '6b8c1026-32cc-4388-a3a4-b84f34482fca';
 let refDir = process.argv[2];
 const patronFile = process.argv[3];
 const defEmail = process.argv[4] || 'oscarmail@scu.edu';
@@ -238,11 +238,13 @@ try {
       // create perms user
       let pu = {
         id: uuid(uid, ns),
-        userId: uid
+        userId: uid,
+        permissions: []
       }
 
       // create request preference
       let rp = {
+        id: uuid(uid + 'rp', ns),
         userId: uid,
         holdShelf: true,
         delivery: false,

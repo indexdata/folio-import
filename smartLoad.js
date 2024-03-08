@@ -127,6 +127,10 @@ let inFile = process.argv[2];
           ep = 'invoice-storage/invoice-lines';
       } else if (rec.itemId && rec.userId && rec.loanDate) {
           ep = 'loan-storage/loans';
+      } else if (rec.content && rec.domain && rec.links) {
+          ep = 'notes';
+      } else if (rec.userId && rec.hasOwnProperty('holdShelf') && rec.hasOwnProperty('delivery')) {
+          ep = 'request-preference-storage/request-preference';
       } else {
         throw new Error(`Endpoint not found for ${line}`);
       }
