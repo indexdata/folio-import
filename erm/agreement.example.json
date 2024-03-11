@@ -1,88 +1,186 @@
 {
-  "periods": [
+  "id": "0d435aad-2e37-4f2d-ba97-5430f5db2c4c",
+  "dateCreated": "2024-02-05T22:28:01Z",
+  "agreementContentTypes": [
     {
-      "startDate": "2023-03-16",
-      "endDate": "2023-03-17",
-      "cancellationDeadline": "2023-03-31",
-      "note": "Period note"
+      "id": "c9e54144-5233-4041-ae12-27a772b530b0",
+      "contentType": {
+        "id": "2c902d378d19822a018dfaf0ef4e0001",
+        "value": "ebook_collection",
+        "label": "eBook Collection"
+      }
     }
   ],
-  "customProperties": {
-    "resalturl": [
-      {
-        "_delete": false,
-        "value": "https://folio.org",
-        "note": "Internal note",
-        "publicNote": "Public note"
-      }
-    ],
-    "authcreds": [
-      {
-        "_delete": true
-      }
-    ],
-    "prodissn": [
-      {
-        "_delete": true
-      }
-    ],
-    "resnote": [
-      {
-        "_delete": true
-      }
-    ],
-    "resurl": [
-      {
-        "_delete": true
-      }
-    ],
-    "userlimit": [
-      {
-        "_delete": true
-      }
-    ]
-  },
   "name": "Test",
-  "description": "Test description",
-  "agreementStatus": "closed",
-  "reasonForClosure": "cancelled",
-  "renewalPriority": "definitely_cancel",
-  "isPerpetual": "no",
-  "alternateNames": [
-    {
-      "_delete": false,
-      "name": "Alt test name"
-    },
-    {
-      "_delete": false,
-      "name": "Alt test name 2"
-    }
-  ],
-  "contacts": [
-    {
-      "_delete": false,
-      "user": "fc387b15-dc0d-51b0-8329-8c460147e772",
-      "role": "agreement_owner"
-    }
-  ],
-  "licenseNote": "License note",
   "orgs": [
     {
       "_delete": false,
       "roles": [
         {
           "role": {
-            "id": "2c90a37d843a686001847c28f9920016"
+            "id": "2c90b5068b6d6a83018b71272116011c"
           }
         }
       ],
       "org": {
-        "name": "Third Iron",
-        "orgsUuid": "b2e0c829-58a3-5462-a4fa-fa421c49b2a3"
-      },
-      "note": "org note"
+        "name": "Momentum Press",
+        "orgsUuid": "430356dd-6996-5769-afec-37408d50b7f6"
+      }
     }
   ],
+  "externalLicenseDocs": [],
   "outwardRelationships": [],
-  "inwardRelationships": []
+  "customProperties": {
+    "accessMethod": [
+      {
+        "id": 3,
+        "internal": true,
+        "value": {
+          "id": "2c902d378d19822a018dfb557f2f0009",
+          "value": "ezproxy",
+          "label": "EZproxy"
+        },
+        "type": {
+          "id": "2c902d378d19822a018dfb58948b000f",
+          "retired": false,
+          "name": "accessMethod",
+          "primary": true,
+          "category": {
+            "id": "2c902d378d19822a018dfb552d770007",
+            "desc": "Access Method",
+            "internal": false,
+            "values": [
+              {
+                "id": "2c902d378d19822a018dfb5567430008",
+                "value": "external_host",
+                "label": "External Host"
+              },
+              {
+                "id": "2c902d378d19822a018dfb55989d000a",
+                "value": "local_host",
+                "label": "Local Host"
+              },
+              {
+                "id": "2c902d378d19822a018dfb55b5ec000b",
+                "value": "open_access",
+                "label": "Open Access"
+              },
+              {
+                "id": "2c902d378d19822a018dfb55ca1f000c",
+                "value": "sso",
+                "label": "SSO"
+              },
+              {
+                "id": "2c902d378d19822a018dfb561eca000e",
+                "value": "standalone_cd",
+                "label": "Standalone CD"
+              },
+              {
+                "id": "2c902d378d19822a018dfb557f2f0009",
+                "value": "ezproxy",
+                "label": "EZproxy"
+              }
+            ]
+          },
+          "defaultInternal": true,
+          "label": "Access Method",
+          "description": "Method for accessing the resource",
+          "weight": 0,
+          "type": "com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata"
+        }
+      }
+    ],
+    "authType": [
+      {
+        "_delete": true
+      }
+    ],
+    "authSite": [
+      {
+        "_delete": true
+      }
+    ],
+    "provider": [
+      {
+        "_delete": true
+      }
+    ],
+    "resourceURL": [
+      {
+        "_delete": true
+      }
+    ],
+    "simulUsers": [
+      {
+        "_delete": true
+      }
+    ],
+    "AuthorIdentification": [
+      {
+        "_delete": true
+      }
+    ],
+    "Eligible authors": [
+      {
+        "_delete": true
+      }
+    ],
+    "SupportPublishing": [
+      {
+        "_delete": true
+      }
+    ]
+  },
+  "contacts": [],
+  "tags": [],
+  "lastUpdated": "2024-03-11T21:28:37Z",
+  "inwardRelationships": [],
+  "endDate": "2024-02-22",
+  "startDate": "2018-03-01",
+  "linkedLicenses": [],
+  "docs": [],
+  "periods": [
+    {
+      "id": "3a32fb2a-4849-44c4-bea5-3bb7f850010b",
+      "startDate": "2018-03-01",
+      "owner": {
+        "id": "0d435aad-2e37-4f2d-ba97-5430f5db2c4c"
+      },
+      "note": "CL note",
+      "endDate": "2021-03-11",
+      "periodStatus": null
+    },
+    {
+      "id": "93196d9c-50e0-4ae2-8027-c8e8a5a0f08b",
+      "startDate": "2024-02-06",
+      "owner": {
+        "id": "0d435aad-2e37-4f2d-ba97-5430f5db2c4c"
+      },
+      "endDate": "2024-02-22",
+      "periodStatus": "previous"
+    }
+  ],
+  "usageDataProviders": [],
+  "agreementStatus": "active",
+  "supplementaryDocs": [],
+  "description": "Test",
+  "cancellationDeadline": null,
+  "alternateNames": [
+    {
+      "id": "add8d0dd-33b4-4353-86d3-547d4ff24800",
+      "owner": {
+        "id": "0d435aad-2e37-4f2d-ba97-5430f5db2c4c"
+      },
+      "name": "Zest"
+    },
+    {
+      "id": "be5be8a5-8911-44a9-bc65-e20bc5ed1d15",
+      "owner": {
+        "id": "0d435aad-2e37-4f2d-ba97-5430f5db2c4c"
+      },
+      "name": "monkey"
+    }
+  ],
+  "version": 5,
+  "relatedAgreements": []
 }
