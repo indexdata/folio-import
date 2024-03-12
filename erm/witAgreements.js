@@ -39,26 +39,32 @@ const typeMap = {
   Journal: 'journals',
   Newspaper: 'online_newspaper',
   Website: 'website'						
-}
+};
 
 const supProps = {
-  resnote: 'Resource Note',
-  resurl: 'Resource URL',
-  resalturl: 'Alternate Resource URL',
-  prodissn: 'Product ISSN/ISBN',
-  authcreds: 'Authentication Username & Password',
-  userlimit: 'Simultaneous User Limit',
-  format: 'Product Format',
-  restype: 'Product Resource Type',
-  sites: 'Order Purchasing Sites',
-  authtype: 'Access Authentication Type',
-  coverage: 'Access Coverage'
-}
+  accessMethod: "Access Method",
+  authType: "Authentication Type",
+  AuthorIdentification: "Author Identification",
+  authSite: "Authorized Site",
+  provider: "Resource Provider",
+  resourceURL: "Resource URL",
+  simulUsers: "Simultaneous Users",
+  'Eligible authors': 'Eligible authors',
+  SupportPublishing: 'SupportPublishing'
+};
+
+periodNotes = [
+  'Order Acquisition Type',
+  'Order Number',
+  'Fund',
+  'Payment',
+  'Cost Note'
+];
 
 const scriptName = process.argv[1].replace(/^.+\//, '');
 
 try {
-  if (!inFile) throw(`Usage: node.js ${scriptName} <ref_dir> <agreements_csv_file>`);
+  if (!inFile) throw(`Usage: node.js ${scriptName} <ref_dir> <notes_csv_file> <agreements_csv_file>`);
 
   const dir = path.dirname(inFile);
 
@@ -74,7 +80,7 @@ try {
     let outStr = JSON.stringify(data) + '\n';
     fs.writeFileSync(fileName, outStr, { flag: 'a' });
   }
-
+  
   refDir = refDir.replace(/\/$/, '');
   const ref = {};
   for (let f in rfiles) {
@@ -138,6 +144,7 @@ try {
     escape: '\\'
   });
 
+  let today = new Date().toISOString().substring(0, 10);
   const seen = {};
   const ag = {};
   inRecs.forEach(r => {
@@ -149,17 +156,35 @@ try {
     let role = r['Order Organization Role'];
     let alt = r['Product Alias'];
     let altType = r['Product Alias Type'];
-    let start = r['Order Sub Start'];
-    let end = r['Order Current Sub End'];
+    let ostart = r['Order Sub Start'];
+    let start = (ostart) ? new Date(ostart).toISOString() : '';
+    start = start.substring(0, 10);
+    let oend = r['Order Current Sub End'];
+    let end = (oend) ? new Date(oend).toISOString() : '';
+    end = end.substring(0,10);
     org += '|' + role;
     if (altType) alt = `${alt} (${altType})`;
+    let per = (start) ? `${start}|${end}` : '';
+    let pnotes = [];
+    periodNotes.forEach(h => {
+      let txt = r[h];
+      if (txt) {
+        pnotes.push(`${h}: ${txt}`);
+      }
+    });
+    let pnoteStr = pnotes.join('; ');
+    if (per && pnoteStr) {
+      per += '|' + pnoteStr;
+    }
     if (!ag[oid]) { 
       ag[oid] = r;
       ag[oid].xorgs = [];
       ag[oid].xalt = [];
+      ag[oid].xper = [];
     }
     if (org && ag[oid].xorgs.indexOf(org) === -1) ag[oid].xorgs.push(org);
     if (alt && ag[oid].xalt.indexOf(alt) === -1) ag[oid].xalt.push(alt);
+    if (per && ag[oid].xper.indexOf(per) === -1) ag[oid].xper.push(per);
   });
   // console.log(ag); return;
 
@@ -178,31 +203,21 @@ try {
     let end = a['Order Current Sub End'];
 
     // map custom props below
-    let resurl = a['Product URL'];
-    let resalturl = a['Product Alt URL'];
-    let prodissn = a['Product ISSN/ISBN'];
-    let format = a['Product Format'];
-    let restype = a['Product Resource Type'];
-    let sites = a['Order Purchasing Sites'];
-    let authtype = a['Access Authentication Type'];
-    let coverage = a['Access Coverage'];
-    let creds = [];
-    let creda = a['Access Username'];
-    let credb = a['Access Password'];
-    if (creda) creds.push(creda);
-    if (credb) creds.push(credb);
-    let userlimit = a['Access Simultaneous User Limit'];
+    let accessMethod = a['Access Method'];
+    let authType = a['Access Authentication Type'];
+    let AuthorIdentification = a['Author Identification'];
+    let authSite = a['Access Authorized Sites'];
+    let provider = a['Resource Provider'];
+    let resourceUrl = a['Resource URL'];
+    let simulUsers = a['Access Simultaneous User Limit'];
 
-    if (resurl) cprops.resurl[0].value = resurl;
-    if (resalturl) cprops.resalturl[0].value = resalturl;
-    if (prodissn) cprops.prodissn[0].value = prodissn;
-    if (format) cprops.format[0].value = format;
-    if (restype) cprops.restype[0].value = restype;
-    if (sites) cprops.sites[0].value = sites;
-    if (authtype) cprops.authtype[0].value = authtype;
-    if (coverage) cprops.coverage[0].value = coverage;
-    if (creds[0]) cprops.authcreds[0].value = creds.join('/');
-    if (userlimit) cprops.userlimit[0].value = userlimit;
+    if (accessMethod) cprops.accessMethod[0].value = accessMethod.toLowerCase().replace(/\W/g, '_');
+    if (authType) cprops.authType[0].value = authType.toLowerCase().replace(/\W/g, '_');
+    if (AuthorIdentification) cprops.AuthorIdentification[0].value = AuthorIdentification.toLowerCase().replace(/\W/g, '_');
+    if (authSite) cprops.authSite[0].value = authSite.toLowerCase().replace(/\W/g, '_');
+    if (provider) cprops.provider[0].value = provider;
+    if (resourceUrl) cprops.resourceUrl[0].value = resourceUrl;
+    if (simulUsers) cprops.simulUsers[0].value = simulUsers;
 
     let oid = a['Product ID'];
     let relId = a['Product Related Products ID'] || '';
@@ -215,17 +230,18 @@ try {
         }
       });
     }
-
+    cprops = {};
     let agr = {
       id: uuid(al, ns),
       name: name,
       customProperties: cprops,
       orgs: [],
-      alternateNames: []
+      alternateNames: [],
+      periods: []
     };
     a.xorgs.forEach((o, i) => {
       let [ orgId, role ] = o.split(/\|/);
-      let roleId = ref.roles[role] || '2c90be3d87d1d07a01888c39bd830053';
+      let roleId = ref.roles[role] || '2c90b5068b6d6a83018b71272116011c';
       let org = {
         _delete: false,
         roles: [{ role: {id: roleId} }],
@@ -236,7 +252,7 @@ try {
         org.org = { orgsUuid: orgMap.id, name: orgMap.name };
       }
       if (i === 0) org.primaryOrg = true
-      // agr.orgs.push(org);
+      agr.orgs.push(org);
     });
 
     agr.agreementStatus = statusMap[status];
@@ -255,13 +271,18 @@ try {
       agr.alternateNames.push({ name: t });
     });
 
-    if (start) {
-      if (start === '0000-00-00') start = '2000-01-01';
-      let per = {};
-      per.startDate = start;
-      if (end && end !== '0000-00-00') per.endDate = end;
-      agr.periods= [ per ];
-    }
+    a.xper.forEach(p => {
+      let [s, e, n] = p.split(/\|/);
+      let ps = (e < today) ? 'previous' : null;
+      let o = {
+        startDate: s,
+        endDate: e,
+        periodStatus: ps,
+        note: n
+      };
+      agr.periods.push(o);
+    });
+
     if (dbug) console.log(JSON.stringify(agr, null, 2)); 
     writeTo(files.agree, agr);
     c++;
