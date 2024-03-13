@@ -162,7 +162,6 @@ try {
     let oend = r['Order Current Sub End'];
     let end = (oend) ? new Date(oend).toISOString() : '';
     end = end.substring(0,10);
-    org += '|' + role;
     if (altType) alt = `${alt} (${altType})`;
     let per = (start) ? `${start}|${end}` : '';
     let pnotes = [];
@@ -178,15 +177,16 @@ try {
     }
     if (!ag[oid]) { 
       ag[oid] = r;
-      ag[oid].xorgs = [];
+      ag[oid].xorgs = {};
       ag[oid].xalt = [];
       ag[oid].xper = [];
     }
-    if (org && ag[oid].xorgs.indexOf(org) === -1) ag[oid].xorgs.push(org);
+    if (!ag[oid].xorgs[org]) ag[oid].xorgs[org] = [];
+    if (role && ag[oid].xorgs[org].indexOf(role) === -1) ag[oid].xorgs[org].push(role);
     if (alt && ag[oid].xalt.indexOf(alt) === -1) ag[oid].xalt.push(alt);
     if (per && ag[oid].xper.indexOf(per) === -1) ag[oid].xper.push(per);
   });
-  // console.log(ag); return;
+  // console.log(JSON.stringify(ag, null, 2)); return;
 
   let c = 0;
   for (let al in ag) {
@@ -199,8 +199,6 @@ try {
     let desc = a['Product Description'];
     let type = a['Product Resource Type'];
     let status = a['Product Status'];
-    let start = a['Order Sub Start'];
-    let end = a['Order Current Sub End'];
 
     // map custom props below
     let accessMethod = a['Access Method'];
@@ -239,12 +237,20 @@ try {
       alternateNames: [],
       periods: []
     };
-    a.xorgs.forEach((o, i) => {
-      let [ orgId, role ] = o.split(/\|/);
-      let roleId = ref.roles[role] || '2c90b5068b6d6a83018b71272116011c';
+
+    let i = 0;
+    for (let orgId in a.xorgs) {
+      let roles = [];
+      a.xorgs[orgId].forEach(role => {
+        let roleId = ref.roles[role] || '2c90b5068b6d6a83018b71272116011c';
+        robj = {
+          role: { id: roleId }
+        };
+        roles.push(robj);
+      });
       let org = {
         _delete: false,
-        roles: [{ role: {id: roleId} }],
+        roles: roles,
         primaryOrg: false
       };
       orgMap = ref.organizations[orgId];
@@ -253,7 +259,8 @@ try {
       }
       if (i === 0) org.primaryOrg = true
       agr.orgs.push(org);
-    });
+      i++;
+    };
 
     agr.agreementStatus = statusMap[status];
     if (desc) agr.description = desc;
@@ -273,7 +280,7 @@ try {
 
     a.xper.forEach(p => {
       let [s, e, n] = p.split(/\|/);
-      let ps = (e < today) ? 'previous' : null;
+      let ps = (e < today) ? 'previous' : 'current';
       let o = {
         startDate: s,
         endDate: e,
