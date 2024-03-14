@@ -173,18 +173,22 @@ try {
     });
     let pnoteStr = pnotes.join('; ');
     if (per && pnoteStr) {
-      per += '|' + pnoteStr;
+      // per += '|' + pnoteStr;
     }
+    let aus = r['Access Authorized Sites'].toLowerCase().replace(/\W/g, '_');
     if (!ag[oid]) { 
       ag[oid] = r;
       ag[oid].xorgs = {};
+      ag[oid].xper = {};
       ag[oid].xalt = [];
-      ag[oid].xper = [];
+      ag[oid].xaus = [];
     }
     if (!ag[oid].xorgs[org]) ag[oid].xorgs[org] = [];
+    if (!ag[oid].xper[per]) ag[oid].xper[per] = pnoteStr;
     if (role && ag[oid].xorgs[org].indexOf(role) === -1) ag[oid].xorgs[org].push(role);
     if (alt && ag[oid].xalt.indexOf(alt) === -1) ag[oid].xalt.push(alt);
-    if (per && ag[oid].xper.indexOf(per) === -1) ag[oid].xper.push(per);
+    // if (per && ag[oid].xper.indexOf(per) === -1) ag[oid].xper.push(per);
+    if (aus && ag[oid].xaus.indexOf(aus) === -1) ag[oid].xaus.push(aus);
   });
   // console.log(JSON.stringify(ag, null, 2)); return;
 
@@ -204,17 +208,19 @@ try {
     let accessMethod = a['Access Method'];
     let authType = a['Access Authentication Type'];
     let AuthorIdentification = a['Author Identification'];
-    let authSite = a['Access Authorized Sites'];
     let provider = a['Resource Provider'];
-    let resourceUrl = a['Resource URL'];
+    let resourceURL = a['Resource URL'];
     let simulUsers = a['Access Simultaneous User Limit'];
 
     if (accessMethod) cprops.accessMethod[0].value = accessMethod.toLowerCase().replace(/\W/g, '_');
     if (authType) cprops.authType[0].value = authType.toLowerCase().replace(/\W/g, '_');
     if (AuthorIdentification) cprops.AuthorIdentification[0].value = AuthorIdentification.toLowerCase().replace(/\W/g, '_');
-    if (authSite) cprops.authSite[0].value = authSite.toLowerCase().replace(/\W/g, '_');
+    a.xaus.forEach((v) => {
+      if (!cprops.authSite[0].value) cprops.authSite[0].value = [];
+      cprops.authSite[0].value.push(v);
+    });
     if (provider) cprops.provider[0].value = provider;
-    if (resourceUrl) cprops.resourceUrl[0].value = resourceUrl;
+    if (resourceURL) cprops.resourceURL[0].value = resourceURL;
     if (simulUsers) cprops.simulUsers[0].value = simulUsers;
 
     let oid = a['Product ID'];
@@ -228,7 +234,7 @@ try {
         }
       });
     }
-    cprops = {};
+    // cprops = {};
     let agr = {
       id: uuid(al, ns),
       name: name,
@@ -278,8 +284,9 @@ try {
       agr.alternateNames.push({ name: t });
     });
 
-    a.xper.forEach(p => {
-      let [s, e, n] = p.split(/\|/);
+    for (let p in a.xper) {
+      let n = a.xper[p];
+      let [s, e] = p.split(/\|/);
       let ps = (e < today) ? 'previous' : 'current';
       let o = {
         startDate: s,
@@ -288,7 +295,7 @@ try {
         note: n
       };
       agr.periods.push(o);
-    });
+    };
 
     if (dbug) console.log(JSON.stringify(agr, null, 2)); 
     writeTo(files.agree, agr);
