@@ -71,7 +71,7 @@ const wait = (ms) => {
       }
     });
 
-    if (endpoint.match(/^erm\//)) root = 'results';
+    if (endpoint.match(/^erm\//) && !objFile) root = 'results';
     console.log(`Deleting ${refData.totalRecords} ${root}...`);
     for (let x = 0; x < refData[root].length; x++) {
       let id = refData[root][x].id;
