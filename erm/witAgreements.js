@@ -103,39 +103,8 @@ try {
       });
     }
   }
-  let unitId = ref.acquisitionsUnits['NECO Library'];
 
-  let csv = fs.readFileSync(notesFile, 'utf8');
-  const notes = parse(csv, {
-    columns: true,
-    skip_empty_lines: true,
-    delimiter: '|',
-    from: 1
-  });
-
-  let nc = 0;
-  notes.forEach(n => {
-    let id = n['Product ID'];
-    let title = n['Resource Note Tab Name'];
-    let note = n['Resource Note'];
-    let type = n['Resource Note Type'];
-    let nkey = id + note + type;
-    let nobj = {
-      id: uuid(nkey, ns),
-      title: title,
-      content: note,
-      domain: 'organizations',
-      typeId: ref.noteTypes[type],
-      links: [ {
-        id: uuid(id, ns),
-        type: 'organization'
-      } ]
-    } 
-    writeTo(files.notes, nobj)
-    nc++;
-  });
-
-  csv = fs.readFileSync(`${inFile}`, 'utf8');
+  let csv = fs.readFileSync(`${inFile}`, 'utf8');
   const inRecs = parse(csv, {
     columns: true,
     skip_empty_lines: true,
@@ -191,6 +160,40 @@ try {
     if (aus && ag[oid].xaus.indexOf(aus) === -1) ag[oid].xaus.push(aus);
   });
   // console.log(JSON.stringify(ag, null, 2)); return;
+
+  csv = fs.readFileSync(notesFile, 'utf8');
+  const notes = parse(csv, {
+    columns: true,
+    skip_empty_lines: true,
+    delimiter: '|',
+    from: 1
+  });
+
+  let nc = 0;
+  notes.forEach(n => {
+    let id = n['Product ID'];
+    if (ag[id]) {
+      let agrName = ag[id]['Product Name'];
+      let title = n['Resource Note Tab Name'];
+      let note = n['Resource Note'];
+      let type = n['Resource Note Type'];
+      let nkey = id + note + type;
+      let nobj = {
+        id: uuid(nkey, ns),
+        title: title,
+        content: `<p>${note}</p>`,
+        domain: 'agreements',
+        typeId: ref.noteTypes[type],
+        links: [ {
+          id: agrName,
+          type: 'agreement'
+        } ]
+      } 
+      writeTo(files.notes, nobj)
+      nc++;
+    }
+  });
+
 
   let c = 0;
   for (let al in ag) {
