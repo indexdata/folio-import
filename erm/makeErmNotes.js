@@ -43,20 +43,25 @@ const inFile = process.argv[3];
       crlfDelay: Infinity
     });
 
-    let c = 0
+    let c = 0;
+    let e = 0;
     for await (const line of rl) {
       let j = JSON.parse(line);
-      let k = j.links[0].id;
+      let k = j.links[0].id.trim();
       let aid = idMap[k];
       if (aid) {
         j.links[0].id = aid;
         let out = JSON.stringify(j);
         fs.writeFileSync(outFile, out + '\n', { flag: 'a' });
+        c++;
+      } else {
+        console.log(`ERROR No agreement match for "${k}"`);
+        e++;
       }
-      c++;
     }
     console.log('Notes created:', c);
     console.log('Saved to:', outFile);
+    console.log('Errors:', e);
   } catch (e) {
     console.error(e);
   }

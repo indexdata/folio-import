@@ -28,7 +28,7 @@ const statusMap = {
   'In Progress': 'Active',
   'Completed': 'Active',
   'Saved': 'Active',
-  'Archived': 'Nonrenewed'
+  'Archived': 'closed'
 };
 
 const typeMap = {
@@ -337,7 +337,9 @@ try {
   
   console.log('Finished!');
   console.log('Agreements:', c);
-  console.log('Custom Properties', cpc);
+  console.log('Custom Props:', cpc);
+  console.log('Notes:', nc);
+  if (nc > 0) console.log('*** Make sure to run makeErmNotes.js after loading agreements! ***');
 } catch (e) {
   console.log(e);
 }
