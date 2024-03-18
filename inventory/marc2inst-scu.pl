@@ -312,7 +312,7 @@ sub processing_funcs {
       }
     } elsif ($_ eq 'set_instance_type_id') {
       if ($field->tag() gt '009') {
-        my $code = $field->subfield('b');
+        my $code = $field->subfield('b') || '';
         $out = $refdata->{instanceTypes}->{$code};
       } else {
         $out = '';
@@ -590,14 +590,13 @@ while (<RAW>) {
   my @marc_fields = $marc->fields();
   my $f336seen = 0;
   MARC_FIELD: foreach my $field (@marc_fields) {
-    print Dumper($field->tag());
     my $tag = $field->tag();
     if ($tag eq '336') {
       next if $f336seen == 1; 
       $f336seen = 1;
     }
     next unless $mapping_rules->{$tag} || $tag eq '880';  # No need to iterate through tags that aren't in the mapping rules
-    my $field = $_;
+    # my $field = $_;
     my $fr = $field_replace->{$tag} || '';
     if ($fr) {
       my $sf = $fr->{subfield}[0];
