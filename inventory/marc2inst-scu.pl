@@ -237,8 +237,8 @@ sub process_entity {
   if ($data[0]) {
     $out = join ' ', @data;
     $out = processing_funcs($out, $field, $params, @funcs) if $ent->{applyRulesOnConcatenatedData};
-    $out =~ s/^false false$/false/;
-    $out =~ s/^true true$/true/;
+    $out =~ s/^false false.*$/false/;
+    $out =~ s/^true true.*$/true/;
   }
   return $out;
 }
@@ -733,6 +733,7 @@ while (<RAW>) {
     $rec->{hrid} = sprintf("%4s%010d", "marc", $count);  # if there is no hrid, make one up.
   }
   my $hrid = $rec->{hrid};
+  $rec->{source} = 'MARC';
   if (!$hrids->{$hrid} && $marc->title()) {
     # set FOLIO_USER_ID environment variable to create the following metadata object.
     $rec->{id} = uuid($hrid);
