@@ -272,6 +272,7 @@ foreach (@ARGV) {
     my $loc_code = $ff->{40}->{value} || 'xxxxx';
     my $scode2 = $ff->{37}->{value} || '-';
     my $scode1 = $ff->{36}->{value} || '-';
+    my $scode3 = $ff->{118}->{value} || '';
     $loc_code =~ s/\s*$//;
     my $hid = "c" . $obj->{id};
     next if $seen->{$hid};

@@ -42,7 +42,7 @@ my $cntypes = {
 my $rules_file = shift;
 my $ref_dir = shift;
 if (! $ARGV[0]) {
-  die "Usage: ./marc2inst-culaw.pl <mapping_rules> <ref_data_dir> <raw_marc_files>\n";
+  die "Usage: ./marc2inst-scu.pl <mapping_rules> <ref_data_dir> <raw_marc_files>\n";
 }
 
 my $json = JSON->new;
@@ -590,6 +590,7 @@ while (<RAW>) {
   my @marc_fields = $marc->fields();
   my $f336seen = 0;
   MARC_FIELD: foreach my $field (@marc_fields) {
+    print Dumper($field->tag());
     my $tag = $field->tag();
     if ($tag eq '336') {
       next if $f336seen == 1; 
