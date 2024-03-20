@@ -113,6 +113,7 @@ try {
   const inRecs = parse(csv, {
     columns: true,
     skip_empty_lines: true,
+    relax_quotes: true,
     delimiter: '|',
     bom: true,
     trim: true,
@@ -135,8 +136,7 @@ try {
     ostart = ostart.replace(/0000-00-00/, '2000-01-01');
     let start = (ostart) ? new Date(ostart).toISOString() : '';
     start = start.substring(0, 10);
-    let oend = r['Payment Sub End'];
-    oend = oend.replace(/0000-00-00/, '2000-01-02');
+    let oend = (ostart === '2000-01-01') ? '2000-01-02' : r['Payment Sub End'].replace(/0000-00-00/, ostart);
     let end = (oend) ? new Date(oend).toISOString() : '';
     end = end.substring(0,10);
     if (altType) alt = `${alt} (${altType})`;
@@ -171,6 +171,7 @@ try {
     columns: true,
     skip_empty_lines: true,
     delimiter: '|',
+    trim: true,
     from: 1
   });
 
@@ -213,20 +214,29 @@ try {
     let status = a['Product Status'];
 
     // map custom props below
-    let accessMethod = a['Access Method'];
+    let ru = [];
+    let ed = [];
     let authenticationType = a['Access Authentication Type'];
     let AuthorIdentification = a['Author Identification'];
-    let provider = a['Resource Provider'];
-    let resourceURL = a['Resource URL'];
+    if (a['Resource URL']) ru.push(a['Resource URL']);
+    if (a['Resource Alt URL']) ru.push(a['Resource Alt URL']);
+    let resourceURL = (ru[0]) ? ru.join(', ') : '';
     let simulUsers = a['Access Simultaneous User Limit'];
+    let isbnOrIssn = a['ISBN'];
+    let purchaseSite = a['Purchase Site'];
+    let systemNumber = a['System Number'];
+    if (a['Order Sub Start']) ed.push(a['Order Sub Start']);
+    if (a['Order Current Sub End']) ed.push(a['Order Current Sub End']);
+    let entitlementDates = (ed[0]) ? ed.join(', ') : '';
 
-    if (accessMethod) cprops.accessMethod[0].value = accessMethod.toLowerCase().replace(/\W/g, '_');
     if (authenticationType) cprops.authenticationType[0].value = authenticationType.toLowerCase().replace(/\W/g, '_');
     if (AuthorIdentification) cprops.AuthorIdentification[0].value = AuthorIdentification.toLowerCase().replace(/\W/g, '_');
-    if (purchaseSite) cprops.purchaseSite[0].value = purchaseSite.toLowerCase().replace(/\W/g, '_');
-    if (provider) cprops.provider[0].value = provider;
-    if (resourceURL) cprops.resourceURL[0].value = resourceURL;
     if (simulUsers) cprops.simulUsers[0].value = simulUsers;
+    if (isbnOrIssn) cprops.isbnOrIssn[0].value = isbnOrIssn;
+    if (purchaseSite) cprops.purchaseSite[0].value = purchaseSite.toLowerCase().replace(/\W/g, '_');
+    if (resourceURL) cprops.resourceURL[0].value = resourceURL;
+    if (systemNumber) cprops.systemNumber[0].value = systemNumber;
+    if (entitlementDates) cprops.entitlementDates[0].value = entitlementDates;
 
     let oid = a['Product ID'];
     let relId = a['Product Related Products ID'] || '';
@@ -253,7 +263,7 @@ try {
     for (let orgId in a.xorgs) {
       let roles = [];
       a.xorgs[orgId].forEach(role => {
-        let roleId = ref.roles[role] || '2c90b5068b6d6a83018b71272116011c';
+        let roleId = ref.roles[role] || '2c902d378d19822a018e51fc7f41005c';
         robj = {
           role: { id: roleId }
         };
@@ -277,6 +287,7 @@ try {
     if (desc) agr.description = desc;
 
     if (type) {
+      type = type.replace(/Ebook/, 'E-Book');
       agr.agreementContentTypes = [ 
         { 
           _delete: false,
