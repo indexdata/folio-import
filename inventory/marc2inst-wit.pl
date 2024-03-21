@@ -25,7 +25,6 @@ use MARC::Record;
 use MARC::Record::MiJ;
 use JSON;
 use UUID::Tiny ':std';
-use MARC::Charset 'marc8_to_utf8';
 use Time::Piece;
 use File::Basename;
 use Data::Dumper;
