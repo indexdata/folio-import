@@ -5,11 +5,20 @@ import fs from 'fs';
 let refDir = process.argv[2];
 let rulesFile = process.argv[3];
 let rawFile = process.argv[4];
+let limitTag = process.argv[5] || '';
 const schemaDir = './schemas';
 let ldr = '';
+const refData = {};
+
+const modeMap = {
+ a: 'single unit',
+ m: 'multipart monograph',
+ s: 'serial',
+ i: 'integrating resource'
+};
 
 const funcs = {
-  remove_prefix_by_indicator: function(data, ind1, ind2) {
+  remove_prefix_by_indicator: function(data, params, ind1, ind2) {
     let n = parseInt(ind2, 10);
     return data.substring(n);
   },
@@ -19,11 +28,21 @@ const funcs = {
     data = data.replace(/^./, upfl);
     return(data);
   },
-  set_issuance_mode_id: function (data) {
-    return ldr.substring(6,7);
+  char_select: function (data, param) {
+    let out = data.substring(param.from, param.to);
+    return out;
   },
-  set_instance_type_id: function (data) {
-    return 'MARC'
+  set_issuance_mode_id: function () {
+    let c = ldr.substring(6,7);
+    let cstr = modeMap[c] || 'unspecified';
+    let out = refData.issuanceModes[cstr];
+    return out;
+  },
+  set_instance_type_id: function (data, param) {
+    let c = data;
+    let u = param.unspecifiedInstanceTypeCode;
+    let out = refData.instanceTypes[c] || refData.instanceTypes[u]; 
+    return out
   }
 }
 
@@ -35,15 +54,18 @@ const applyRules = function (ent, field) {
   } else {
     data = field;
   }
-  if (ent.rules && ent.rules[0] && ent.rules[0].conditions[0]) {
-    let ctype = ent.rules[0].conditions[0].type;
+  let rule = (ent.rules) ? ent.rules[0] : ''; 
+  if (rule && rule.conditions[0]) {
+    let con = rule.conditions[0];
+    let ctype = con.type;
+    let param = con.parameter || '';
     ctype.split(/, */).forEach(c => {
-      console.log(c);
       if (funcs[c]) {
-        data = funcs[c](data, field.ind1, field.ind2);
+        data = funcs[c](data, param, field.ind1, field.ind2);
       }
     });
   }
+  if (rule && rule.value) data = rule.value;
   const out = {
     prop: ent.target,
     data: data
@@ -55,7 +77,7 @@ const makeInst = function (map, field) {
   let ff = {};
   let data;
   map.forEach(m => {
-    console.log(m);
+    console.log(JSON.stringify(m, null, 2));
     if (m.entity) {
       m.entity.forEach(e => {
         data = applyRules(e, field);
@@ -87,22 +109,23 @@ try {
 
   // map ref data
   let refFiles = fs.readdirSync(refDir);
-  const refData = {};
   refFiles.forEach(f => {
     let fullPath = refDir + '/' + f;
-    let rd = fs.readFileSync(fullPath, { encoding: 'utf8'});
-    let robj = JSON.parse(rd);
-    delete robj.totalRecords;
-    let props = Object.keys(robj);
-    let prop = props[0];
-    robj[prop].forEach(p => {
-      if (!refData[prop]) refData[prop] = {};
-      if (p.code) {
-        refData[prop][p.code] = p.id;
-      } else {
-        refData[prop][p.name] = p.id;
-      }
-    });
+    try {
+      let rd = fs.readFileSync(fullPath, { encoding: 'utf8'});
+      let robj = JSON.parse(rd);
+      delete robj.totalRecords;
+      let props = Object.keys(robj);
+      let prop = props[0];
+      robj[prop].forEach(p => {
+        if (!refData[prop]) refData[prop] = {};
+        if (p.code) {
+          refData[prop][p.code] = p.id;
+        } else {
+          refData[prop][p.name] = p.id;
+        }
+      });
+    } catch {}
   });
   // console.log(refData);
 
@@ -128,14 +151,19 @@ try {
       let marc = parseMarc(r);
       ldr = marc.fields.leader;
       for (let t in mappingRules) {
-        if (t === '008' && marc.fields[t]) {
+        if (t.match(limitTag) && marc.fields[t]) {
           let fields = marc.fields[t];
           if (fields) {
             fields.forEach(f => {
               let ff = makeInst(mappingRules[t], f);
               for (let prop in ff) {
+                console.log(propMap[prop]);
                 if (propMap[prop] === 'string' || propMap[prop] === 'boolean') {
                   inst[prop] = ff[prop].data;
+                }
+                if (propMap[prop] === 'array.string') {
+                  if (!inst[prop]) inst[prop] = [];
+                  inst[prop].push(ff[prop].data);
                 }
               }
             });
