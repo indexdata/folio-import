@@ -33,7 +33,8 @@ my $files = {
   i => 'items.jsonl',
   b => 'bound-withs.jsonl',
   r => 'relationships.jsonl',
-  'm' => 'map.tsv'
+  'm' => 'map.tsv',
+  ip => 'item-purge.jsonl'
 };
 
 my $cntypes = {
@@ -231,6 +232,7 @@ foreach (@ARGV) {
   open BOUT, '>>:encoding(UTF-8)', $paths->{b} or die "Can't open $paths->{b} for writing\n";
   open ROUT, '>>:encoding(UTF-8)', $paths->{r} or die "Can't open $paths->{r} for writing\n";
   open MOUT, '>>:encoding(UTF-8)', $paths->{m} or die "Can't open $paths->{m} for writing\n";
+  open IPURGE, '>>:encoding(UTF-8)', $paths->{ip} or die "Can't open $paths->{ip} for writing\n";
   
   open IN, $infile;
 
@@ -251,28 +253,32 @@ foreach (@ARGV) {
         next;
       }
       my @b = split(/\|/, $psv);
-      my $out = make_hi($obj, $b[0], $bid, $b[1], $b[2], $bwc, $b[3]);
-      if (1) {
-      	print HOUT $out->{holdings};
-      	print IOUT $out->{items};
-      	print BOUT $out->{bws};
-      }
-      if ($bwc > 0) {
-        my $superline = $inst_map->{$main_bib} || '';
-        my $subline = $inst_map->{$bid} || '';
-        if ($superline && $subline) {
-          my @super = split(/\|/, $superline);
-          my @sub = split(/\|/, $subline);
-          my $robj = { superInstanceId=>$super[0], subInstanceId=>$sub[0], instanceRelationshipTypeId=>'758f13db-ffb4-440e-bb10-8a364aa6cb4a' };
-          print ROUT $json->encode($robj) . "\n";
-          $rcount++;
+      my $opacmsg = $obj->{fixedFields}->{108}->{value};
+      if ($opacmsg eq 'z') {
+        print IPURGE $obj . "\n";
+      } else {
+        my $out = make_hi($obj, $b[0], $bid, $b[1], $b[2], $bwc, $b[3]);
+        print HOUT $out->{holdings};
+        print IOUT $out->{items};
+        print BOUT $out->{bws};
+        
+        if ($bwc > 0) {
+          my $superline = $inst_map->{$main_bib} || '';
+          my $subline = $inst_map->{$bid} || '';
+          if ($superline && $subline) {
+            my @super = split(/\|/, $superline);
+            my @sub = split(/\|/, $subline);
+            my $robj = { superInstanceId=>$super[0], subInstanceId=>$sub[0], instanceRelationshipTypeId=>'758f13db-ffb4-440e-bb10-8a364aa6cb4a' };
+            print ROUT $json->encode($robj) . "\n";
+            $rcount++;
+          }
         }
+        $bwc++;
+        $hcount += $out->{hcount};
+        $icount += $out->{icount};
+        $bcount += $out->{bcount};
       }
       $count++;
-      $bwc++;
-      $hcount += $out->{hcount};
-      $icount += $out->{icount};
-      $bcount += $out->{bcount};
       if ($count % 10000 == 0) {
         print "$count items processed [ holdings: $hcount, items: $icount, bound-withs: $bcount, file: $rawfn]\n"
       }
@@ -514,6 +520,7 @@ sub make_hi {
       #$irec->{itemLevelCallNumber} = $cn;
       #$irec->{itemLevelCallNumberTypeId} = $cntype;
     #}
+
     if ($bwc == 0) {
       $irec->{metadata} = $metadata;
       my $iout = $json->encode($irec);
