@@ -85,6 +85,8 @@ sub getRules {
   open my $rules, $rfile or die "Can't open $rfile";
   my $jsonstr = <$rules>;
   my $json = decode_json($jsonstr);
+  $json->{'020'} = $j20;
+  $json->{'024'} = $j24;
   return $json;
 }
 
