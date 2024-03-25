@@ -34,7 +34,7 @@ my $files = {
   b => 'bound-withs.jsonl',
   r => 'relationships.jsonl',
   'm' => 'map.tsv',
-  ip => 'item-purge.jsonl'
+  ip => 'purge.jsonl'
 };
 
 my $cntypes = {
@@ -236,7 +236,8 @@ foreach (@ARGV) {
   
   open IN, $infile;
 
-  while (<IN>) { 
+  while (<IN>) {
+    my $raw = $_;
     chomp;
     my $obj = $json->decode($_);
     my $bwc = 0;
@@ -255,7 +256,7 @@ foreach (@ARGV) {
       my @b = split(/\|/, $psv);
       my $opacmsg = $obj->{fixedFields}->{108}->{value};
       if ($opacmsg eq 'z') {
-        print IPURGE $obj . "\n";
+        print IPURGE $raw;
       } else {
         my $out = make_hi($obj, $b[0], $bid, $b[1], $b[2], $bwc, $b[3]);
         print HOUT $out->{holdings};
