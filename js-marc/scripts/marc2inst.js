@@ -50,9 +50,20 @@ const funcs = {
   set_contributor_name_type_id: function (data, param) {
     return refData.contributorNameTypes[param.name] || refData.contributorNameTypes['Personal name'];
   },
-  set_contributor_type_id_by_code_or_name: function(data, param) {
+  set_contributor_type_id_by_code_or_name: function (data, param) {
     data = data.toLowerCase().trim().replace(/[,.]/g, '');
     return refData.contributorTypes[data] || refData.contributorTypes['author'];
+  },
+  set_classification_type_id: function (data, param) {
+    return refData.classificationTypes[param.name] || 'ERROR';
+  },
+  set_identifier_type_id_by_value: function (data, param) {
+    let type = 'System control number';
+    if (data.match(param.oclc_regex)) {
+      type = 'OCLC';
+    }
+    // return refData.identifierTypes[type];
+    return 'hey';
   }
 }
 
