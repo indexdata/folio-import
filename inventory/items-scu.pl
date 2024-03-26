@@ -34,7 +34,7 @@ my $files = {
   b => 'bound-withs.jsonl',
   r => 'relationships.jsonl',
   'm' => 'map.tsv',
-  ip => 'purge.jsonl'
+  ip => 'purged.jsonl'
 };
 
 my $cntypes = {
@@ -201,6 +201,7 @@ my $count = 0;
 my $hcount = 0;
 my $icount = 0;
 my $bcount = 0;
+my $pcount = 0;
 my $rcount = 0;
 my $errcount = 0;
 my $start = time();
@@ -237,9 +238,14 @@ foreach (@ARGV) {
   open IN, $infile;
 
   while (<IN>) {
-    my $raw = $_;
     chomp;
     my $obj = $json->decode($_);
+    my $opacmsg = $obj->{fixedFields}->{108}->{value};
+    if ($opacmsg eq 'z') {
+      print IPURGE $_ . "\n";
+      $pcount++;
+      next;
+    }
     my $bwc = 0;
     my $main_bib = 'b' . $obj->{bibIds}->[0];
     foreach my $it_bid (@{ $obj->{bibIds} }) {
@@ -254,31 +260,27 @@ foreach (@ARGV) {
         next;
       }
       my @b = split(/\|/, $psv);
-      my $opacmsg = $obj->{fixedFields}->{108}->{value};
-      if ($opacmsg eq 'z') {
-        print IPURGE $raw;
-      } else {
-        my $out = make_hi($obj, $b[0], $bid, $b[1], $b[2], $bwc, $b[3]);
-        print HOUT $out->{holdings};
-        print IOUT $out->{items};
-        print BOUT $out->{bws};
-        
-        if ($bwc > 0) {
-          my $superline = $inst_map->{$main_bib} || '';
-          my $subline = $inst_map->{$bid} || '';
-          if ($superline && $subline) {
-            my @super = split(/\|/, $superline);
-            my @sub = split(/\|/, $subline);
-            my $robj = { superInstanceId=>$super[0], subInstanceId=>$sub[0], instanceRelationshipTypeId=>'758f13db-ffb4-440e-bb10-8a364aa6cb4a' };
-            print ROUT $json->encode($robj) . "\n";
-            $rcount++;
-          }
+      
+      my $out = make_hi($obj, $b[0], $bid, $b[1], $b[2], $bwc, $b[3]);
+      print HOUT $out->{holdings};
+      print IOUT $out->{items};
+      print BOUT $out->{bws};
+      
+      if ($bwc > 0) {
+        my $superline = $inst_map->{$main_bib} || '';
+        my $subline = $inst_map->{$bid} || '';
+        if ($superline && $subline) {
+          my @super = split(/\|/, $superline);
+          my @sub = split(/\|/, $subline);
+          my $robj = { superInstanceId=>$super[0], subInstanceId=>$sub[0], instanceRelationshipTypeId=>'758f13db-ffb4-440e-bb10-8a364aa6cb4a' };
+          print ROUT $json->encode($robj) . "\n";
+          $rcount++;
         }
-        $bwc++;
-        $hcount += $out->{hcount};
-        $icount += $out->{icount};
-        $bcount += $out->{bcount};
       }
+      $bwc++;
+      $hcount += $out->{hcount};
+      $icount += $out->{icount};
+      $bcount += $out->{bcount};
       $count++;
       if ($count % 10000 == 0) {
         print "$count items processed [ holdings: $hcount, items: $icount, bound-withs: $bcount, file: $rawfn]\n"
@@ -294,7 +296,8 @@ print "Holdings:  $hcount\n";
 print "Items:     $icount\n";
 print "Bounds:    $bcount\n";
 print "Relations: $rcount\n";
-print "Errors:   $errcount\n";
+print "Purges:    $pcount\n";
+print "Errors:    $errcount\n";
 
 sub make_hi {
   my $item = shift;

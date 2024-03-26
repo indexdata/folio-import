@@ -188,6 +188,7 @@ my $typemap = {
 };
 
 my $ttl = 0;
+my $pcount = 0;
 my $errcount = 0;
 
 foreach (@ARGV) {
@@ -198,9 +199,13 @@ foreach (@ARGV) {
   my $dir = dirname($infile);
   my $fn = basename($infile, '.jsonl');
 
-  my $outfile = "$dir/${fn}_holdings.jsonl";
+  my $outfile = "$dir/${fn}-holdings.jsonl";
   unlink $outfile;
   open my $OUT, ">>:encoding(UTF-8)", $outfile;
+
+  my $purgefile = "$dir/${fn}-purged.jsonl";
+  unlink $purgefile;
+  open PFILE, ">>:encoding(UTF-8)", $purgefile; 
 
   # my $hmapfile = "$dir/holdings.map";
   # unlink $hmapfile;
@@ -216,6 +221,12 @@ foreach (@ARGV) {
   while (<IN>) { 
     chomp;
     my $obj = $json->decode($_);
+    my $sc3 = $obj->{fixedFields}->{'118'}->{value};
+    if ($sc3 eq 'z') {
+      print PFILE $_ . "\n", 
+      $pcount++;
+      next;
+    }
     my $iii_bid = $obj->{bibIds}->[0];
     my $bid = "b$iii_bid";
     my $psv = $inst_map->{$bid} || '';
@@ -363,6 +374,7 @@ my $end = time;
 my $secs = $end - $start;
 my $mins = $secs/60;
 print "\n$ttl Sierra holdings processed in $mins min.";
+print "\n$pcount purged";
 print "\n$errcount Errors\n\n";
 
 sub statement {
