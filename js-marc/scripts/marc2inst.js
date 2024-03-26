@@ -1,5 +1,5 @@
-import { parseMarc } from '../js-marc.mjs';
-import { getSubs } from '../js-marc.mjs';
+import { parseMarc } from '../new-js-marc.mjs';
+import { getSubs } from '../new-js-marc.mjs';
 import fs from 'fs';
 
 let refDir = process.argv[2];
@@ -43,6 +43,16 @@ const funcs = {
     let u = param.unspecifiedInstanceTypeCode;
     let out = refData.instanceTypes[c] || refData.instanceTypes[u]; 
     return out
+  },
+  set_instance_format_id: function (data) {
+    return refData.instanceFormats[data] || refData.instanceFormats.zu;
+  },
+  set_contributor_name_type_id: function (data, param) {
+    return refData.contributorNameTypes[param.name] || refData.contributorNameTypes['Personal name'];
+  },
+  set_contributor_type_id_by_code_or_name: function(data, param) {
+    data = data.toLowerCase().trim().replace(/[,.]/g, '');
+    return refData.contributorTypes[data] || refData.contributorTypes['author'];
   }
 }
 
@@ -77,15 +87,15 @@ const makeInst = function (map, field) {
   let ff = {};
   let data;
   map.forEach(m => {
-    console.log(JSON.stringify(m, null, 2));
     if (m.entity) {
       m.entity.forEach(e => {
         data = applyRules(e, field);
+        ff[data.prop] = data;
       })
     } else {
       data = applyRules(m, field);
+      ff[data.prop] = data;
     }
-    ff[data.prop] = data;
   });
   return ff;
 }
@@ -119,7 +129,12 @@ try {
       let prop = props[0];
       robj[prop].forEach(p => {
         if (!refData[prop]) refData[prop] = {};
-        if (p.code) {
+        if (prop === 'contributorTypes') {
+          let code = p.code.toLowerCase();
+          let name = p.name.toLowerCase();
+          refData[prop][code] = p.id; 
+          refData[prop][name] = p.id;
+        } else if (p.code) {
           refData[prop][p.code] = p.id;
         } else {
           refData[prop][p.name] = p.id;
@@ -127,7 +142,7 @@ try {
       });
     } catch {}
   });
-  // console.log(refData);
+  // console.log(refData.contributorTypes);
 
   let start = new Date().valueOf();
 
@@ -156,15 +171,24 @@ try {
           if (fields) {
             fields.forEach(f => {
               let ff = makeInst(mappingRules[t], f);
+              let obj = {};
+              let root = '';
               for (let prop in ff) {
-                console.log(propMap[prop]);
+                let [rt, pr] = prop.split('.');
                 if (propMap[prop] === 'string' || propMap[prop] === 'boolean') {
                   inst[prop] = ff[prop].data;
-                }
-                if (propMap[prop] === 'array.string') {
+                } else if (propMap[prop] === 'array.string') {
                   if (!inst[prop]) inst[prop] = [];
                   inst[prop].push(ff[prop].data);
-                }
+                } else if (propMap[rt] === 'array.object') {
+                  if (!inst[rt]) inst[rt] = [];
+                  obj[pr] = ff[prop].data;
+                  root = rt;
+                } 
+              }
+              if (root) {
+                if (!inst[root]) inst[root] = [];
+                inst[root].push(obj); 
               }
             });
           }
