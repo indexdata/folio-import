@@ -131,6 +131,35 @@
       "name": "Charlie test"
     }
   ],
+  "orgs": [
+    {
+      "_delete": false,
+      "roles": [
+        {
+          "role": {
+            "id": "2c90baa78b6d6a4f018b711bdbb20036"
+          },
+          "note": "This is a role note"
+        }
+      ],
+      "org": {
+        "name": "Academy of Management",
+        "orgsUuid": "8a29aefb-9498-5c3b-83e8-fb0aa4457cef"
+      },
+      "note": "This is an org note"
+    }
+  ],
+  "supplementaryDocs": [
+    {
+      "_delete": false,
+      "fileUpload": "e7a3e66b-8386-4560-b873-af31fef0804f",
+      "name": "Sup Doc",
+      "atType": "letter",
+      "note": "This is a test notes",
+      "location": "Some physical location",
+      "url": "https://indexdata.com"
+    }
+  ],
   "contacts": [
     {
       "_delete": false,
