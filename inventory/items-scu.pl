@@ -132,7 +132,7 @@ sub makeMapFromTsv {
       my $code = ($col[0] =~ /\w/) ? $col[0] : '';
       $code =~ s/^ +| +$//g;
       my $name = $col[2] || '';
-      if ($prop eq 'mtypes') {
+      if ($prop =~ /mtypes|loantypes/) {
         $code .= ':' . $col[1];
       }
       $name =~ s/^ +| +$//g;
@@ -146,7 +146,7 @@ sub makeMapFromTsv {
       }
     }
   }
- return $tsvmap;
+  return $tsvmap;
 }
 
 my $inst_map = {};
@@ -164,10 +164,10 @@ close MAP;
 
 $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
-# print Dumper($refdata->{callNumberTypes}); exit;
+# print Dumper($refdata->{loantypes}); exit;
 my $sierra2folio = makeMapFromTsv($ref_dir, $refdata);
 $sierra2folio->{locations}->{multi} = $refdata->{locations}->{multi};
-# print Dumper($sierra2folio->{mtypes}); exit;
+# print Dumper($sierra2folio->{loantypes}); exit;
 
 my $relations = {
   '0' => 'Resource',
@@ -454,11 +454,14 @@ sub make_hi {
     if ($irec->{copyNumber}) {
       $irec->{copyNumber} = 'c.' . $irec->{copyNumber};
     }
-    $irec->{permanentLoanTypeId} = $sierra2folio->{loantypes}->{$itype} || $refdata->{loantypes}->{'can circulate'};
     my $mtkey = "$itype:$loc";
+    $irec->{permanentLoanTypeId} = $sierra2folio->{loantypes}->{$mtkey} || $refdata->{loantypes}->{'can circulate'};
     $irec->{materialTypeId} = $sierra2folio->{mtypes}->{$mtkey} || '24a36257-ddae-4309-bae3-593d53a81e5e'; # defaulting to unspecified
     if ($irec->{materialTypeId} eq '24a36257-ddae-4309-bae3-593d53a81e5e') {
-      print "WARN FOLIO material type not for $mtkey\n";
+      print "WARN FOLIO material type not found for $mtkey\n";
+    }
+    if ($irec->{permanentLoanTypeId} eq '2b94c631-fca9-4892-a730-03ee529ffe27') {
+      print "WARN FOLIO loan type not found for $mtkey\n";
     }
     $irec->{status}->{name} = $sierra2folio->{statuses}->{$status} || 'Available'; # defaulting to available;
     my $msg = $item->{fixedFields}->{97}->{value} || '';
