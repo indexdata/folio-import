@@ -88,7 +88,7 @@ let dolog = process.env.LOG;
           .set('content-type', 'application/json')
           .set('accept', 'application/json');
         logger.info(`  Successfully added record id ${rec.id}`);
-        if (actionUrl.match(/\/erm\//)) {
+        if (actionUrl.match(/\/(erm|licenses)\//)) {
           fs.writeFileSync(outPath, JSON.stringify(res.body) + '\n', {flag: 'a'});
         }
         success++;

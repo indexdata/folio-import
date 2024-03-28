@@ -152,11 +152,10 @@
   "supplementaryDocs": [
     {
       "_delete": false,
-      "fileUpload": "e7a3e66b-8386-4560-b873-af31fef0804f",
-      "name": "Sup Doc",
-      "atType": "letter",
-      "note": "This is a test notes",
-      "location": "Some physical location",
+      "name": "Test doc with no file",
+      "atType": "addendum",
+      "note": "Test note",
+      "location": "Location",
       "url": "https://indexdata.com"
     }
   ],

@@ -15,11 +15,13 @@ if [ ! -d $REFDIR ]
     mkdir $REFDIR
 fi
 
-EPS='erm/refdata'
+EPS='erm/custprops erm/refdata licenses/custprops licenses/refdata'
 
 for EP in $EPS
 do
-    FN=`echo $EP | sed 's/.*\///'`;
+    FN=`echo $EP | sed 's/licenses\//licenses-/'`;
+    FN=`echo $FN | sed 's/.*\///'`;
+    echo $FN
     echo "Fetching ${EP}"
     curl --http1.1 -o "${REFDIR}/${FN}.json" -w "\n" "${OKAPI}/${EP}?max=1000" -H "x-okapi-token: ${TOKEN}"
 done
