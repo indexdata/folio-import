@@ -27,6 +27,8 @@ const statusMap = {
   'NLR': 'active'
 };
 
+docNoteFields = [ 'Document Effective Date', 'Document Expiration Date', 'Document Hierarchy Note' ];
+
 const scriptName = process.argv[1].replace(/^.+\//, '');
 
 try {
@@ -66,6 +68,7 @@ try {
         let k = r.desc;
         ref[f][k] = {};
         r.values.forEach(v => {
+          ref[f][k][v.label] = v.id;
           ref[f][k][v.value] = v.id;
         });
       });
@@ -93,7 +96,9 @@ try {
   let today = new Date().toISOString().substring(0, 10);
   const seen = {
     main: {},
-    org: {}
+    org: {},
+    doc: {},
+    ex: {}
   }
   let l;
   let last = inRecs.length;
@@ -101,7 +106,9 @@ try {
   let c = 0;
   const stats = {
     licenses: 0,
-    orgs: 0
+    orgs: 0,
+    docs: 0,
+    terms: 0
   }
   inRecs.forEach(r => {
     c++;
@@ -109,8 +116,24 @@ try {
       r[f] = r[f].replace(/\\N/g, '');
     }
     let id = r['License ID'];
+
     let oid = r['License Organization'];
     let orgKey = id + ':' + oid;
+
+    let docName = r['Document Name'];
+    let docType = r['Document Type'];
+    let docNotes= [];
+    docNoteFields.forEach(f => {
+      if (r[f]) docNotes.push(`${f}: ${r[f]}`);
+    });
+    let docNote = docNotes.join('; ')
+    let docKey = id + ':' + docName + ':' + docType;
+
+    let exType = r['Expression Type'];
+    let exText = r['Expression Document Text'];
+    let exNote = r['Expression Note'];
+    let exKey = id + ':' + exType + ':' + exText;
+
     if (!seen.main[id]) {
       let status = r['License Status'];
       let name = r['License Name'];
@@ -121,11 +144,27 @@ try {
         type: 'local',
         customProperties: custProps,
         openEnded: false,
-        orgs: []
+        orgs: [],
+        supplementaryDocs: [],
       };
       seen.main[id] = 1;
-      stats.licenses++;
     }
+
+    if (!seen.ex[exKey]) {
+      let exTypeValue = ref.cprops[exType];
+      if (exTypeValue) {
+        if (l.customProperties[exTypeValue]) {
+          l.customProperties[exTypeValue][0] = {
+            _delete: false,
+            value: exText,
+            note: exNote
+          }
+        }
+      }
+      seen.ex[exKey] = 1;
+      stats.terms++;
+    }
+
     if (!seen.org[orgKey]) {
       let org = ref.organizations[oid];
       if (org) {
@@ -150,9 +189,26 @@ try {
       }
       seen.org[orgKey] = 1;
     }
-    if (prevId !== id || c === last && prevId !== id) {
+    if (!seen.doc[docKey]) {
+      let atTypeValue = ref.ref['DocumentAttachment.AtType'][docType];
+      let dfile = r['Document File'] || '';
+      let url = r['Signature '] || '';
+      let o = {
+        _delete: false,
+        name: docName,
+        atType: atTypeValue,
+        note: docNote,
+      };
+      if (dfile) o.location = dfile;
+      if (url) o.url = url;
+      l.supplementaryDocs.push(o);
+      stats.docs++;
+      seen.doc[docKey] = 1;
+    }
+    if (prevId && prevId !== id || c === last) {
       if (dbug) console.log(JSON.stringify(l, null, 2));
       writeTo(files.lic, l);
+      stats.licenses++;
     }
     prevId = id;
   });
