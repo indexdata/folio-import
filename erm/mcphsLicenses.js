@@ -15,7 +15,8 @@ const files = {
 
 const rfiles = {
   organizations: 'organizations.json',
-  cprops: 'licenses-custprops.json'
+  cprops: 'licenses-custprops.json',
+  ref: 'licenses-refdata.json'
 };
 
 const statusMap = {
@@ -60,6 +61,14 @@ try {
         ref[f][k] = v;
         custProps[v] = [{ _delete: true }];
       });
+    } else if (f === 'ref') {
+      rdata.forEach(r => {
+        let k = r.desc;
+        ref[f][k] = {};
+        r.values.forEach(v => {
+          ref[f][k][v.value] = v.id;
+        });
+      });
     } else {
       rdata[f].forEach(r => {
         let k = (f === 'organizations') ? r.code : r.name;
@@ -68,7 +77,7 @@ try {
       });
     }
   }
-  // console.log(ref); return;
+  // console.log(ref.ref); return;
 
   let csv = fs.readFileSync(`${inFile}`, 'utf8');
   const inRecs = parse(csv, {
@@ -90,6 +99,10 @@ try {
   let last = inRecs.length;
   let prevId = '';
   let c = 0;
+  const stats = {
+    licenses: 0,
+    orgs: 0
+  }
   inRecs.forEach(r => {
     c++;
     for (let f in r) {
@@ -111,19 +124,43 @@ try {
         orgs: []
       };
       seen.main[id] = 1;
+      stats.licenses++;
     }
     if (!seen.org[orgKey]) {
       let org = ref.organizations[oid];
+      if (org) {
+        let o = {
+          _delete: false,
+          roles: [ 
+            {
+              role: { 
+                id: ref.ref['LicenseOrg.Role'].licensor 
+              } 
+            } 
+          ],
+          org: {
+            orgsUuid: org.id,
+            name: org.name
+          }
+        }
+        l.orgs.push(o);
+        stats.orgs++;
+      } else {
+        console.log(`WARN organization not found for ID ${oid}`);
+      }
       seen.org[orgKey] = 1;
     }
     if (prevId !== id || c === last && prevId !== id) {
-      console.log(l);
+      if (dbug) console.log(JSON.stringify(l, null, 2));
       writeTo(files.lic, l);
     }
     prevId = id;
   });
   
   console.log('Finished!');
+  for (let k in stats) {
+    console.log(k + ':', stats[k]);
+  }
 } catch (e) {
   console.log(e);
 }
