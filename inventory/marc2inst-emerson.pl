@@ -392,7 +392,7 @@ sub processing_funcs {
       }
     } elsif ($_ eq 'set_instance_type_id') {
       if ($field->tag() gt '009') {
-        my $code = $field->subfield('b');
+        my $code = $field->subfield('b') || '';
         $out = $refdata->{instanceTypes}->{$code};
       } else {
         $out = '';
@@ -639,7 +639,7 @@ foreach (@ARGV) {
           }
           next;
         }
-        if (($tag =~ /^(70|71|1)/ && !$field->subfield('a')) || ($tag == '856' && !$field->subfield('u'))) {
+        if (($tag =~ /^(70|71|1)/ && !$field->subfield('a')) || ($tag eq '856' && !$field->subfield('u'))) {
           next;
         }
         
@@ -758,11 +758,15 @@ foreach (@ARGV) {
           $yr = "19$yr";
         }
         my $cdate = "$yr-$mo-$dy";
-        my $vdate = eval { Time::Piece->strptime($cdate, "%F")->datetime() };
-        if ($vdate) { 
-          $vdate =~ s/T.+//;
-          $rec->{catalogedDate} = $vdate 
+        my $vdate = '';
+        if ($cdate =~ /\d\d\d\d-\d\d-\d\d/) {
+          $vdate = eval { Time::Piece->strptime($cdate, "%F")->datetime(); };
+          if ($vdate) {
+            $vdate =~ s/T.+//;
+            $rec->{catalogedDate} = $vdate;
+          }
         }
+        if ($vdate ne $cdate) { $rec->{_errorMessage} = 'reLoad' }
       }
       
       # delete duplicate contributor types.

@@ -72,6 +72,7 @@ let ver = process.env.version;
       x++;
       let rec = JSON.parse(line);
       if (ver) rec._version = ver;
+      if (rec._errorMessage) delete rec._errorMessage;
       let id = rec.id;
       if (rec.fund && rec.fund.id) id = rec.fund.id;
       let lDate = new Date();
