@@ -766,7 +766,7 @@ foreach (@ARGV) {
             $rec->{catalogedDate} = $vdate;
           }
         }
-        if ($vdate ne $cdate) { $rec->{_errorMessage} = 'reLoad' }
+        if ($ENV{FIX_BAD_DATES} && $vdate ne $cdate) { $rec->{_errorMessage} = 'reLoad' }
       }
       
       # delete duplicate contributor types.
