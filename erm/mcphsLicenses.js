@@ -1,6 +1,5 @@
 const parse = require('csv-parse/lib/sync');
 const fs = require('fs');
-const uuid = require('uuid/v5');
 const path = require('path');
 
 let refDir = process.argv[2];
@@ -102,7 +101,7 @@ try {
   }
   let l;
   let last = inRecs.length;
-  let prevId = '';
+  let prevId = 0;
   let c = 0;
   const stats = {
     licenses: 0,
@@ -134,20 +133,26 @@ try {
     let exNote = r['Expression Note'];
     let exKey = id + ':' + exType + ':' + exText;
 
+    if (l && prevId !== id) {
+      writeTo(files.lic, l);
+    }
+
     if (!seen.main[id]) {
       let status = r['License Status'];
       let name = r['License Name'];
+      let newCust = JSON.parse(JSON.stringify(custProps));
       l = {
         id: id,
         name: name,
         status: statusMap[status],
         type: 'local',
-        customProperties: custProps,
         openEnded: false,
+        customProperties: newCust,
         orgs: [],
         supplementaryDocs: [],
       };
       seen.main[id] = 1;
+      stats.licenses++;
     }
 
     if (!seen.ex[exKey]) {
@@ -192,7 +197,7 @@ try {
     if (!seen.doc[docKey]) {
       let atTypeValue = ref.ref['DocumentAttachment.AtType'][docType];
       let dfile = r['Document File'] || '';
-      let url = r['Signature '] || '';
+      let url = r['Signature'] || '';
       let o = {
         _delete: false,
         name: docName,
@@ -205,12 +210,13 @@ try {
       stats.docs++;
       seen.doc[docKey] = 1;
     }
-    if (prevId && prevId !== id || c === last) {
-      if (dbug) console.log(JSON.stringify(l, null, 2));
+
+    if (c === last) {
       writeTo(files.lic, l);
-      stats.licenses++;
     }
+    
     prevId = id;
+    
   });
   
   console.log('Finished!');
