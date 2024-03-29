@@ -25,7 +25,6 @@ use MARC::Record;
 use MARC::Record::MiJ;
 use JSON;
 use UUID::Tiny ':std';
-use MARC::Charset 'marc8_to_utf8';
 use Time::Piece;
 use File::Basename;
 use Data::Dumper;
@@ -45,7 +44,7 @@ my $source_id = 'f32d531e-df79-46b3-8932-cdd35f7a2264'; # Folio
 my $rules_file = shift;
 my $ref_dir = shift;
 if (! $ARGV[0]) {
-  die "Usage: ./marc2inst-neco.pl <mapping_rules> <ref_data_dir> <raw_marc_files>\n";
+  die "Usage: ./marc2inst-emerson.pl <mapping_rules> <ref_data_dir> <raw_marc_files>\n";
 }
 my $dir = dirname($ARGV[0]);
 
@@ -758,7 +757,12 @@ foreach (@ARGV) {
         } else {
           $yr = "19$yr";
         }
-        $rec->{catalogedDate} = "$yr-$mo-$dy";
+        my $cdate = "$yr-$mo-$dy";
+        my $vdate = eval { Time::Piece->strptime($cdate, "%F")->datetime() };
+        if ($vdate) { 
+          $vdate =~ s/T.+//;
+          $rec->{catalogedDate} = $vdate 
+        }
       }
       
       # delete duplicate contributor types.
