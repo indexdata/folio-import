@@ -526,7 +526,7 @@ while (<RAW>) {
   };
   
   my $bcode3 = $marc->subfield('998', 'e');
-  if ($bcode3 eq 'z') {
+  if ($bcode3 eq 'z' || $bcode3 eq 'x') {
     print PPATH $raw;
     $purgecount++;
     next;
