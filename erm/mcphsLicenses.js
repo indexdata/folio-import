@@ -9,7 +9,8 @@ const ns = '3f32a0f4-be48-4cba-b02e-27633ca9518f';
 const unit = 'Boston';
 
 const files = {
-  lic: 'licenses.jsonl'
+  lic: 'licenses.jsonl',
+  map: 'licensesMap.jsonl'
 };
 
 const rfiles = {
@@ -153,6 +154,8 @@ try {
       };
       seen.main[id] = 1;
       stats.licenses++;
+      let moj = { name: name, id: id };
+      writeTo(files.map, moj);
     }
 
     if (!seen.ex[exKey]) {
