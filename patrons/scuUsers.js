@@ -1,3 +1,5 @@
+// migration email address should be oscarmail@scu.edu
+
 const readline = require('readline');
 const fs = require('fs');
 const path = require('path');
@@ -6,7 +8,19 @@ const uuid = require('uuid/v5');
 const ns = '6b8c1026-32cc-4388-a3a4-b84f34482fca';
 let refDir = process.argv[2];
 const patronFile = process.argv[3];
-const defEmail = process.argv[4] || 'oscarmail@scu.edu';
+const defEmail = process.argv[4];
+
+const ctagMap = {
+  '007':'opt_0',
+  '008':'opt_1',
+  '009':'opt_2',
+  '050':'opt_3',
+  '051':'opt_4',
+  '052':'opt_8',
+  '053':'opt_5',
+  '070':'opt_6',
+  'xxx':'opt_7'
+};
 
 const parseAddress = (saddr, type, primary) => {
   let addresses = [];
@@ -46,7 +60,7 @@ const makeNote = (mesg, userId, noteTypeId) => {
 }
 
 try {
-  if (!patronFile) throw 'Usage: node scuUsers.js <ref_directory> <sierra_patron_file> [ <default_email> ]';
+  if (!patronFile) throw 'Usage: node scuUsers.js <ref_directory> <sierra_patron_file> [ <default_email: oscarmail@scu.edu> ]';
   if (!fs.existsSync(patronFile)) throw `Can't find patron file: ${patronFile}!`;
   if (!fs.existsSync(refDir)) throw `Can't find ref data directory: ${refDir}!`;
   const saveDir = path.dirname(patronFile);
@@ -185,7 +199,6 @@ try {
         lastName: name.l,
         firstName: name.f,
         middleName: name.m || '',
-        email: (varFields.z) ? varFields.z[0] : '',
         phone: phone,
         addresses: [],
         preferredContactTypeId: '002'
@@ -196,7 +209,11 @@ try {
     if (un) user.username = un;
     if (exId) user.externalSystemId = exId;
     if (un) useen[un] = 1;
-    if (defEmail) user.personal.email = defEmail;
+    if (defEmail) { 
+      user.personal.email = defEmail;
+    } else if (varFields.z) {
+      user.personal.email = varFields.z.shift();
+    }
     if (barcode && !bseen[barcode]) {
       user.barcode = barcode;
       bseen[barcode] = 1;
@@ -204,23 +221,51 @@ try {
       varFields.b.unshift(barcode);
     }
 
-    if (varFields.b && varFields.b[0]) {
-      user.customFields.sierraPBarcode = varFields.b.join(', ');
+    user.customFields.sierraRecordNumber = 'p' + pid;
+
+    let addEmails = [];
+    if (varFields.z) {
+      varFields.z.forEach(e => {
+        if (addEmails.indexOf(e) === -1 && e !== user.personal.email) addEmails.push(e);
+      });
     }
-    if (varFields.p) {
-      user.customFields.sierraTelephone = varFields.p.join(', ');
+    if (varFields.y) {
+      varFields.y.forEach(e => {
+        if (addEmails.indexOf(e) === -1 && e !== user.personal.email) addEmails.push(e);
+      });
     }
+    let uniIds = [];
     if (varFields.d) {
-      user.customFields.universityId = varFields.d.join(', ');
+      varFields.d.forEach(x => {
+        if (uniIds.indexOf(x) === -1 && x !== user.externalSystemId) uniIds.push(x);
+      });
     }
 
+    if (addEmails[0]) {
+      user.customFields.additionalEmailAddresses = addEmails.join(', ');
+    }
+    if (varFields.b && varFields.b[0]) {
+      user.customFields.additionalBarcodes = varFields.b.join(', ');
+    }
+    if (varFields.p) {
+      user.customFields.additionalPhoneNumbers = varFields.p.join(', ');
+    }
+    if (uniIds[0]) {
+      user.customFields.universityId = varFields.d.join(', ');
+    }
+    if (varFields.c) {
+      let v = varFields.c[0];
+      user.customFields.specialPatronGroup = ctagMap[v] || ctagMap.xxx;
+    }
+
+    if (varFields.a) {
+      user.personal.addresses = user.personal.addresses.concat(parseAddress(varFields.a, atypeMap['Mailing'], true));
+    }
     if (varFields.h) {
       let atype = (varFields.a) ? false : true;
-      user.personal.addresses = parseAddress(varFields.h, atypeMap['Home'], atype);
+      user.personal.addresses = parseAddress(varFields.h, atypeMap['Additional'], atype);
     }
-    if (varFields.a) {
-      user.personal.addresses = user.personal.addresses.concat(parseAddress(varFields.a, atypeMap['Work'], true));
-    }
+
     if (varFields.x) {
       for (let n = 0; n < varFields.x.length; n++) {
         ncount++;
