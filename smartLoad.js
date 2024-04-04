@@ -103,7 +103,7 @@ let inFile = process.argv[2];
           ep = 'source-storage/snapshots';
       } else if (rec.userId && rec.permissions) {
           ep = 'perms/users';
-      } else if (rec.patronGroup) {
+      } else if (rec.patronGroup && rec.personal) {
           ep = 'users';
       } else if (rec.succeedingInstanceId || rec.precedingInstanceId) {
           ep = 'preceding-succeeding-titles';

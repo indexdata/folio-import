@@ -83,7 +83,7 @@ const wait = (ms) => {
           .set('x-okapi-tenant', config.tenant)
           .set('x-okapi-token', authToken);
       } catch (e) {
-        console.log(e.response.text);
+        console.log(`${e}`);
       }
       await wait(config.delay);
     }
