@@ -1129,6 +1129,8 @@ sub make_holdings {
 
     if ($st eq 'Damaged') {
       $ir->{itemDamagedStatusId} = '54d1dd76-ea33-4bcb-955b-6b29df4f7930'; # Damaged
+      my $dd = $item->as_string('v') || '';
+      $ir->{itemDamagedStatusDate} = $dd if $dd;
     }
 
     if ($cout) {
