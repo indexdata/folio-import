@@ -356,9 +356,9 @@ const scriptName = process.argv[1].replace(/^.+\//, '');
       if (rid) {
         if (!agr.linkedLicenses) agr.linkedLicenses = [];
         let o = {
-          delete_: false,
+          _delete: false,
           status: 'historical',
-          remoted: rid,
+          remoteId: rid,
         }
         agr.linkedLicenses.push(o);
       }
