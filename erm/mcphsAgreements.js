@@ -2,6 +2,7 @@ const parse = require('csv-parse/lib/sync');
 const fs = require('fs');
 const uuid = require('uuid/v5');
 const path = require('path');
+const readline = require('readline');
 
 let refDir = process.argv[2];
 const notesFile = process.argv[3];
@@ -23,6 +24,11 @@ const rfiles = {
   roles: 'refdata.json',
   noteTypes: 'note-types.json'
 };
+
+const mfiles = {
+  map: 'licensesMap.jsonl',
+  out: 'licensesOut.jsonl'
+}
 
 const statusMap = {
   'In Progress': 'Active',
@@ -58,7 +64,8 @@ periodNotes = [
 
 const scriptName = process.argv[1].replace(/^.+\//, '');
 
-try {
+(async() => {
+  try {
   if (!inFile) throw(`Usage: node.js ${scriptName} <ref_dir> <notes_csv_file> <agreements_csv_file>`);
 
   const dir = path.dirname(inFile);
@@ -109,6 +116,33 @@ try {
   }
   // console.log(ref); return;
 
+
+  let fileStream = fs.createReadStream(dir + '/' + mfiles.out);
+  let rl = readline.createInterface({
+    input: fileStream,
+    crlfDelay: Infinity
+  });
+
+  const outMap = {};
+  for await (const line of rl) {
+    let j = JSON.parse(line);
+    outMap[j.name] = j.id;
+  }
+  // console.log(outMap); return;
+
+  fileStream = fs.createReadStream(dir + '/' + mfiles.map);
+  rl = readline.createInterface({
+    input: fileStream,
+    crlfDelay: Infinity
+  });
+
+  const licMap = {};
+  for await (const line of rl) {
+    let j = JSON.parse(line);
+    licMap[j.id] = outMap[j.name];
+  }
+  // console.log(licMap);
+
   let csv = fs.readFileSync(`${inFile}`, 'utf8');
   const inRecs = parse(csv, {
     columns: true,
@@ -116,7 +150,6 @@ try {
     relax_quotes: true,
     delimiter: '|',
     bom: true,
-    trim: true,
     escape: '\\'
   });
 
@@ -124,6 +157,7 @@ try {
   const seen = {};
   const ag = {};
   inRecs.forEach(r => {
+    // console.log(r);
     for (let f in r) {
       r[f] = r[f].replace(/\\N/g, '');
     }
@@ -132,12 +166,14 @@ try {
     let role = r['Product Organization Role'];
     let alt = r['Product Alias'];
     let altType = r['Product Alias Type'];
+    let lic = r['License ID'];
     let ostart = r['Payment Sub Start'];
     ostart = ostart.replace(/0000-00-00/, '2000-01-01');
     let start = (ostart) ? new Date(ostart).toISOString() : '';
     start = start.substring(0, 10);
     let oend = (ostart === '2000-01-01') ? '2000-01-02' : r['Payment Sub End'].replace(/0000-00-00/, ostart);
-    let end = (oend) ? new Date(oend).toISOString() : '';
+    let end = '';
+    try { end = (oend) ? new Date(oend).toISOString() : ''; } catch {}
     end = end.substring(0,10);
     if (altType) alt = `${alt} (${altType})`;
     let per = (start) ? `${start}|${end}` : '';
@@ -157,12 +193,13 @@ try {
       ag[oid].xorgs = {};
       ag[oid].xper = {};
       ag[oid].xalt = [];
+      ag[oid].xlic = [];
     }
     if (!ag[oid].xorgs[org]) ag[oid].xorgs[org] = [];
     if (!ag[oid].xper[per]) ag[oid].xper[per] = pnoteStr;
     if (role && ag[oid].xorgs[org].indexOf(role) === -1) ag[oid].xorgs[org].push(role);
     if (alt && ag[oid].xalt.indexOf(alt) === -1) ag[oid].xalt.push(alt);
-    // if (per && ag[oid].xper.indexOf(per) === -1) ag[oid].xper.push(per);
+    if (lic && ag[oid].xlic.indexOf(lic) === -1) ag[oid].xlic.push(lic);
   });
   // console.log(JSON.stringify(ag, null, 2)); return;
 
@@ -172,7 +209,8 @@ try {
     skip_empty_lines: true,
     delimiter: '|',
     trim: true,
-    from: 1
+    from: 1,
+    escape: '\\'
   });
 
   let nc = 0;
@@ -313,6 +351,19 @@ try {
       agr.periods.push(o);
     };
 
+    a.xlic.forEach(l => {
+      let rid = licMap[l];
+      if (rid) {
+        if (!agr.linkedLicenses) agr.linkedLicenses = [];
+        let o = {
+          delete_: false,
+          status: 'historical',
+          remoted: rid,
+        }
+        agr.linkedLicenses.push(o);
+      }
+    });
+
     if (dbug) console.log(JSON.stringify(agr, null, 2)); 
     writeTo(files.agree, agr);
     c++;
@@ -356,3 +407,4 @@ try {
 } catch (e) {
   console.log(e);
 }
+})();

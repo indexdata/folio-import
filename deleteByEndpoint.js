@@ -27,8 +27,8 @@ const wait = (ms) => {
 
     endpoint = endpoint.replace(/^\//, '');
     let getUrl = config.okapi + '/' + endpoint + '?limit=1000';
-    if (endpoint.match(/^erm\//)) {
-      getUrl = config.okapi + '/' + endpoint + '?perPage=100&stats=true';
+    if (endpoint.match(/^(erm|licenses)\//)) {
+      getUrl = config.okapi + '/' + endpoint + '?perPage=200&stats=true';
     }
     const deleteUrl = config.okapi + '/' + endpoint;
     let refData = {};
@@ -71,7 +71,7 @@ const wait = (ms) => {
       }
     });
 
-    if (endpoint.match(/^erm\//) && !objFile) root = 'results';
+    if (endpoint.match(/^(erm|licenses)\//) && !objFile) root = 'results';
     console.log(`Deleting ${refData.totalRecords} ${root}...`);
     for (let x = 0; x < refData[root].length; x++) {
       let id = refData[root][x].id;
