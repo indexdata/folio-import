@@ -27,9 +27,11 @@ const wait = (ms) => {
 
     endpoint = endpoint.replace(/^\//, '');
     let getUrl = config.okapi + '/' + endpoint + '?limit=1000';
+    if (endpoint.match(/\?/)) getUrl = config.okapi + '/' + endpoint;
     if (endpoint.match(/^(erm|licenses)\//)) {
-      getUrl = config.okapi + '/' + endpoint + '?perPage=200&stats=true';
+      getUrl = config.okapi + '/' + endpoint + '?perPage=100&stats=true';
     }
+    endpoint = endpoint.replace(/\?.+/, '');
     const deleteUrl = config.okapi + '/' + endpoint;
     let refData = {};
     console.log(getUrl);
