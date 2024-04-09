@@ -105,6 +105,12 @@ const scriptName = process.argv[1].replace(/^.+\//, '');
             }
           })
         }
+        if (r.desc === 'AgreementRelationship.Type') {
+          ref.relTypes = {};
+          r.values.forEach(v => {
+            ref.relTypes[v.label] = v.id;
+          });
+        }
       });
     } else {
       rdata[f].forEach(r => {
@@ -114,7 +120,7 @@ const scriptName = process.argv[1].replace(/^.+\//, '');
       });
     }
   }
-  // console.log(ref); return;
+  // console.log(ref.relType); return;
 
 
   let fileStream = fs.createReadStream(dir + '/' + mfiles.out);
@@ -156,11 +162,13 @@ const scriptName = process.argv[1].replace(/^.+\//, '');
   let today = new Date().toISOString().substring(0, 10);
   const seen = {};
   const ag = {};
+  const nameMap = {};
   inRecs.forEach(r => {
     // console.log(r);
     for (let f in r) {
       r[f] = r[f].replace(/\\N/g, '');
     }
+    let name = r['Product Name'];
     let oid = r['Product ID'];
     let org = r['Product Organization'];
     let role = r['Product Organization Role'];
@@ -200,8 +208,10 @@ const scriptName = process.argv[1].replace(/^.+\//, '');
     if (role && ag[oid].xorgs[org].indexOf(role) === -1) ag[oid].xorgs[org].push(role);
     if (alt && ag[oid].xalt.indexOf(alt) === -1) ag[oid].xalt.push(alt);
     if (lic && ag[oid].xlic.indexOf(lic) === -1) ag[oid].xlic.push(lic);
+    nameMap[oid] = name;
   });
   // console.log(JSON.stringify(ag, null, 2)); return;
+  // console.log(nameMap); return;
 
   csv = fs.readFileSync(notesFile, 'utf8');
   const notes = parse(csv, {
@@ -370,9 +380,9 @@ const scriptName = process.argv[1].replace(/^.+\//, '');
 
     if (relId && oid) {
       let rel = {
-        id: oid,
-        rid: relId,
-        type: relType
+        id: name,
+        rid: nameMap[relId],
+        type: ref.relTypes['Related to']
       };
       writeTo(files.rel, rel);
     }

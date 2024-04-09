@@ -95,7 +95,7 @@ let ver = process.env.version;
           .send(rec)
           .set('x-okapi-token', authToken)
           .set('content-type', 'application/json')
-          .set('accept', 'text/plain');
+          .set('accept', '*/*');
         logger.info(`  Successfully updated record id ${id}`);
         success++;
       } catch (e) {
