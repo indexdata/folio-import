@@ -166,6 +166,7 @@ try {
     columns: true,
     skip_empty_lines: true,
     delimiter: '|',
+    escape: '\\',
     from: 1
   });
 
@@ -208,11 +209,11 @@ try {
     let status = a['Product Status'];
 
     // map custom props below
-    let accessMethod = a['Access Method'];
-    let authType = a['Access Authentication Type'];
+    let accessMethod = a['Access Method'].trim();
+    let authType = a['Access Authentication Type'].trim();
     let AuthorIdentification = a['Author Identification'];
-    let provider = a['Resource Provider'];
-    let resourceURL = a['Resource URL'];
+    let provider = a['Resource Provider'].trim();
+    let resourceURL = a['Resource URL'].trim();
     let simulUsers = a['Access Simultaneous User Limit'];
 
     if (accessMethod) cprops.accessMethod[0].value = accessMethod.toLowerCase().replace(/\W/g, '_');
@@ -239,7 +240,7 @@ try {
     }
     // cprops = {};
     let agr = {
-      id: uuid(al, ns),
+      id: al,
       name: name,
       customProperties: cprops,
       orgs: [],
