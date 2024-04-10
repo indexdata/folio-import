@@ -204,10 +204,10 @@ try {
 
     // map custom props below
     let accessMethod = a['Access Method'];
-    let authenticationType = a['Access Authentication Type'];
+    let authenticationType = a['Access Authentication Type'].trim();
     let AuthorIdentification = a['Author Identification'];
     let provider = a['Resource Provider'];
-    let resourceURL = a['Resource URL'];
+    let resourceURL = a['Resource URL'].trim();
     let simulUsers = a['Access Simultaneous User Limit'];
 
     if (accessMethod) cprops.accessMethod[0].value = accessMethod.toLowerCase().replace(/\W/g, '_');
