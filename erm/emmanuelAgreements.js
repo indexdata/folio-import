@@ -160,6 +160,7 @@ try {
     columns: true,
     skip_empty_lines: true,
     delimiter: '|',
+    escape: '\\',
     from: 1
   });
 
@@ -229,7 +230,7 @@ try {
     }
     // cprops = {};
     let agr = {
-      id: uuid(al, ns),
+      id: al,
       name: name,
       customProperties: cprops,
       orgs: [],

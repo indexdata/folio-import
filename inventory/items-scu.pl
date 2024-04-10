@@ -445,11 +445,7 @@ sub make_hi {
     $bseen->{$bc} = 1;
     $irec->{hrid} = "i$iid";
     $irec->{id} = uuid($iid);
-    if ($blevel eq 's') {
-      $irec->{enumeration} = $vf->{v}[0] || '';
-    } else {
-      $irec->{volume} = $vf->{v}[0] || '';
-    }
+    $irec->{volume} = $vf->{v}[0] if $vf->{v};
     $irec->{copyNumber} = $item->{fixedFields}->{58}->{value} || '';
     if ($irec->{copyNumber}) {
       $irec->{copyNumber} = 'c.' . $irec->{copyNumber};
