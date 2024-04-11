@@ -6,7 +6,6 @@ const path = require('path');
 let startDate = '1980-01-01';
 const ns = '72132a0f-e27c-4462-8b30-4f9dafe1f710';
 const nullns = '00000000-0000-0000-0000-000000000000';
-const unit = '24c4baf7-0653-517f-b901-bde483894fdd';  // CU Boulder
 const ver = '1';
 
 let refDir = process.argv[2];
@@ -18,6 +17,7 @@ const refFiles = {
   entries: 'fund-codes.json',
   locations: 'locations.json',
   acquisitionMethods: 'acquisition-methods.json',
+  acquisitionsUnits: 'units.json',
   mtypes: 'material-types.json'
 };
 
@@ -56,37 +56,6 @@ const otypeMap = {
   x: "accounting acq"
 };
 
-otherCodes = {
-  "aaass": "aaas",
-  "aiaas": "aiaa",
-  "aiphs": "aip",
-  "alas": "ala",
-  "alexs": "alexa",
-  "arls": "arl",
-  "aspre": "ap",
-  "assps": "assp",
-  "astms": "astm",
-  "bobkc": "bosto",
-  "briln": "brill",
-  "casas": "casal",
-  "ciss": "umis",
-  "harrs": "harra",
-  "isis": "clari",
-  "japas": "japan",
-  "maruz": "maruj",
-  "moods": "fiss",
-  "oecds": "oecd",
-  "orint": "corne",
-  "priss": "prima",
-  "sages": "conqs",
-  "spcrs": "spcms",
-  "spies": "spie",
-  "ucp": "uchic",
-  "ugss": "utgss",
-  "uillp": "illpr",
-  "uslcs": "loc",
-  "visin": "sdvs",
-};
 
 (async () => {
   let startTime = new Date().valueOf();
@@ -100,13 +69,16 @@ otherCodes = {
     const dir = path.dirname(inFile);
     const fn = path.basename(inFile, '.jsonl');
 
-    const outFile = `${dir}/folio-${fn}.jsonl`;
+    const outFile = `${dir}/f${fn}-composite.jsonl`;
     if (fs.existsSync(outFile)) fs.unlinkSync(outFile);
 
-    const polFile = `${dir}/folio-${fn}-pols.jsonl`;
+    const poFile = `${dir}/f${fn}-orders.jsonl`;
+    if (fs.existsSync(poFile)) fs.unlinkSync(poFile);
+
+    const polFile = `${dir}/f${fn}-lines.jsonl`;
     if (fs.existsSync(polFile)) fs.unlinkSync(polFile);
 
-    const errFile = `${dir}/folio-${fn}-errs.jsonl`;
+    const errFile = `${dir}/f${fn}-errs.jsonl`;
     if (fs.existsSync(errFile)) fs.unlinkSync(errFile);
 
     const refData = {};
@@ -130,7 +102,7 @@ otherCodes = {
         }
       })
     }
-    // console.log(refData.entries);
+    // console.log(refData); return;
     fs.writeFileSync(`${dir}/fund-code-map.json`, JSON.stringify(refData.entries, null, 2));
 
     const locMap = {};
@@ -155,29 +127,23 @@ otherCodes = {
     let c = 0;
     let lnum = 0;
     let fail = 0;
-    let skipped = 0;
     for await (const line of rl) {
       lnum++;
       try {
         let so = JSON.parse(line);
         let ff = so.fixedFields;
-        let created = (ff['13']) ? ff['13'].value : '1970-01-01';
+        let created = (ff['83']) ? ff['83'].value.substring(0, 10) : '';
         let oType = (ff['15']) ? ff['15'].value : '';
-        let oNote = (ff['14']) ? ff['14'].value : '';
-        let statCode = (ff['20']) ? ff['20'].value : '';
-        let status = 'Closed';
-        if (statCode === '1') {
-          status = 'Pending'
-        } else if (statCode === 'o' || statCode === 'f') { 
-          status = 'Open'
-        }
-        let orderType = (statCode.match(/[fz]/) && oType.match(/[dnoqs]/)) ? 'Ongoing' : 'One-Time';
+        let status = 'Pending';
+        let orderType = 'Ongoing';
+        let location = ff['2'].value || '';
+        location = location.trim();
+        let unitId = (location.match(/^h/)) ? refData.acquisitionsUnits['Law Library'] : refData.acquisitionsUnits['University Library'];
         if (status !== 'Closed') {
           let poNum = so.id.toString();
           let poId = uuid(poNum, ns);
           let vcode = ff['22'].value || '';
           vcode = vcode.trim();
-          vcode = (otherCodes[vcode]) ? otherCodes[vcode] : vcode;
           let orgId = refData.organizations[vcode];
           if (!orgId) {
             fs.writeFileSync(errFile, line + '\n', { flag: 'a' });
@@ -188,10 +154,10 @@ otherCodes = {
             poNumber: poNum,
             vendor: orgId,
             dateOrdered: created,
-            compositePoLines: [],
             notes: [],
-            acqUnitIds: [ unit ],
-            reEncumber: false
+            acqUnitIds: [ unitId ],
+            reEncumber: false,
+            workflowStatus: status,
           }
           let acqType = (ff['1']) ? ff['1'].value : '';
           let form = (ff['11']) ? ff['11'].value : '';
@@ -199,17 +165,20 @@ otherCodes = {
           let rdate = (ff['17']) ? ff['17'].value : '';
 
           co.orderType = orderType;
-          if (co.orderType === 'Ongoing') {
+          if (co.orderType === 'Ongoingx') {
             co.ongoing = {
               interval: 365,
-              isSubscription: true,
+              isSubscription: false,
               renewalDate: co.dateOrdered
             };
           }
-          
-          co.workflowStatus = status;
+
+          let coString = JSON.stringify(co) + '\n';
+          fs.writeFileSync(poFile, coString, { flag: 'a' });
 
           // PO lines start here
+
+          co.compositePoLines = [];
 
           let pol = {
             purchaseOrderId: poId,
@@ -224,8 +193,7 @@ otherCodes = {
             pol.receiptStatus = 'Fully Received';
             pol.receiptDate = rdate;
           }
-          pol.paymentStatus = (statCode.match(/^[az]$/)) ? 'Fully Paid' : 'Awaiting Payment';
-
+          pol.paymentStatus = 'Pending';
 
           if (oType === 'a') {
             pol.acquisitionMethod = refData.acquisitionMethods['Approval Plan'];
@@ -259,8 +227,6 @@ otherCodes = {
           }
           pol.orderFormat = format;
 
-          let location = ff['2'].value;
-          location = location.trim();
           let copies = ff['5'].value;
           copies = parseInt(copies);
           let price = ff['10'].value;
@@ -282,7 +248,6 @@ otherCodes = {
               createInventory: 'None',
               materialType: refData.mtypes[mtypeName] || refData.mtypes.unspecified,
             }
-            pol.eresource.userLimit = (oNote === 's') ? 1 : (oNote === 'm') ? 3 : '';
           } else {
             pol.cost.listUnitPrice = price;
             pol.cost.poLineEstimatedPrice = price;
@@ -334,7 +299,7 @@ otherCodes = {
             pol.checkinItems = true;
           }
           if (form === 'c' && oType === 'o') pol.checkinItems = true; 
-          
+
           co.compositePoLines.push(pol);
           let coStr = JSON.stringify(co) + '\n';
           fs.writeFileSync(outFile, coStr, { flag: 'a' });
@@ -342,15 +307,6 @@ otherCodes = {
           let polStr = JSON.stringify(pol) + '\n';
           fs.writeFileSync(polFile, polStr, { flag: 'a' });
           c++;
-        } else {
-          let reason;
-          if (status === 'Closed') {
-            reason = `it has a status of ${status}`;
-          } else {
-            reason = `it was created before ${startDate} on ${created}`; 
-          }
-          console.log(`[${lnum}] INFO Skipping ${so.id} since ${reason}`);
-          skipped++;
         }
       } catch (e) {
         console.log(`[${lnum}] ${e}`);
@@ -362,7 +318,6 @@ otherCodes = {
     console.log('Total time (seconds)', ttime);
     console.log('Orders created', c);
     console.log('Orders failed', fail);
-    console.log('Orders skipped', skipped);
   } catch (e) {
     console.log(e);
   }
