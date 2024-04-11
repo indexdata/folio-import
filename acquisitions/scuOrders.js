@@ -9,7 +9,8 @@ const nullns = '00000000-0000-0000-0000-000000000000';
 const ver = '1';
 
 let refDir = process.argv[2];
-const inFile = process.argv[3];
+let instMapFile = process.argv[3];
+const inFile = process.argv[4];
 
 const refFiles = {
   organizations: 'organizations.json',
@@ -20,6 +21,13 @@ const refFiles = {
   acquisitionsUnits: 'units.json',
   mtypes: 'material-types.json'
 };
+
+const formatMap = {
+  cre: 'Electronic Resource',
+  stane: 'Electronic Resource',
+  crp: 'Physical Resource',
+  stanp: 'Physical Resource',
+}
 
 const formMap = {
   b: "book",
@@ -49,18 +57,16 @@ const eFormMap = {
   '4': "streaming video acq"
 };
 
-
 const otypeMap = {
   r: "annual access fee",
   z: "open access article processing charge (apc)",
   x: "accounting acq"
 };
 
-
 (async () => {
   let startTime = new Date().valueOf();
   try {
-    if (!inFile) throw('Usage: node scuOrders.js <acq_ref_dir> <sierra_orders_json_file>');
+    if (!inFile) throw('Usage: node scuOrders.js <acq_ref_dir> <instance_map_file> <sierra_orders_json_file>');
     if (!fs.existsSync(inFile)) throw new Error(`Can't find ${inFile}!`);
     refDir = refDir.replace(/\/$/, '');
     let locMapFile = `${refDir}/locations.tsv`;
@@ -102,8 +108,8 @@ const otypeMap = {
         }
       })
     }
-    // console.log(refData); return;
-    fs.writeFileSync(`${dir}/fund-code-map.json`, JSON.stringify(refData.entries, null, 2));
+    // console.log(refData.entries); return;
+    // fs.writeFileSync(`${dir}/fund-code-map.json`, JSON.stringify(refData.entries, null, 2));
 
     const locMap = {};
     let locData = fs.readFileSync(locMapFile, { encoding: 'utf8' });
@@ -117,9 +123,28 @@ const otypeMap = {
     });
     // console.log(locMap); return;
 
-    const fileStream = fs.createReadStream(inFile);
 
-    const rl = readline.createInterface({
+    let fileStream = fs.createReadStream(instMapFile);
+
+    let rl = readline.createInterface({
+      input: fileStream,
+      crlfDelay: Infinity
+    });
+
+    const instMap = {};
+    console.log('Reading instance map...');
+    for await (const line of rl) {
+      console.log(line);
+      let cols = line.split(/\|/);
+      let k = cols[0];
+      let v = cols[1];
+      instMap[k] = v;
+    }
+    // console.log(instMap); return;
+
+    fileStream = fs.createReadStream(inFile);
+
+    rl = readline.createInterface({
       input: fileStream,
       crlfDelay: Infinity
     });
@@ -165,13 +190,16 @@ const otypeMap = {
           let rdate = (ff['17']) ? ff['17'].value : '';
 
           co.orderType = orderType;
-          if (co.orderType === 'Ongoingx') {
+          co.ongoing = {};
+          /*
+          if (co.orderType === 'Ongoing') {
             co.ongoing = {
               interval: 365,
               isSubscription: false,
               renewalDate: co.dateOrdered
             };
           }
+          */
 
           let coString = JSON.stringify(co) + '\n';
           fs.writeFileSync(poFile, coString, { flag: 'a' });
@@ -183,39 +211,26 @@ const otypeMap = {
           let pol = {
             purchaseOrderId: poId,
             poLineNumber: poNum + '-1',
-            source: 'User',
+            source: 'MARC',
             checkinItems: false,
             locations: []
           };
           pol.id = uuid(pol.poLineNumber, ns);
-          pol.rush = (raction.match(/[anrm]/)) ? true : false;
-          if (rdate.match(/\d{4}-\d\d-\d\d/)) {
-            pol.receiptStatus = 'Fully Received';
-            pol.receiptDate = rdate;
-          }
-          pol.paymentStatus = 'Pending';
 
-          if (oType === 'a') {
-            pol.acquisitionMethod = refData.acquisitionMethods['Approval Plan'];
-          } else if (oType.match(/[ew]/)) {
-            pol.acquisitionMethod = refData.acquisitionMethods['Demand Driven Acquisitions (DDA)'];
-          } else if (acqType === 'd') {
-            pol.acquisitionMethod = refData.acquisitionMethods['Depository'];
-          } else if (acqType === 'e') {
-            pol.acquisitionMethod = refData.acquisitionMethods['Exchange'];
-          } else if (acqType === 'g') {
-            pol.acquisitionMethod = refData.acquisitionMethods['Gift'];
-          } else if (oType === '2') {
-            pol.acquisitionMethod = refData.acquisitionMethods['Evidence Based Acquisitions (EBA)'];
-          } else {
-            pol.acquisitionMethod = refData.acquisitionMethods['Purchase'];
-          }
+          pol.paymentStatus = 'Pending';
+          pol.acquisitionMethod = refData.acquisitionMethods['Approval Plan'];
 
           if (!pol.acquisitionMethod) {
             throw new Error(`No acquisitionMethod found for plNum`);
           }
 
-          let format;
+          let fundNum = ff['12'].value || '';
+          let fundId = (refData.entries[fundNum]) ? refData.entries[fundNum].id : '';
+          let fundCode = (refData.entries[fundNum]) ? refData.entries[fundNum].code : '';
+
+          let format = formatMap[fundCode] || 'Physical Resource';
+
+          /*
           if (form.match(/[erxy4]/)) {
             format = 'Electronic Resource';
           } else if (form.match(/[ajuz]/)) {
@@ -225,6 +240,12 @@ const otypeMap = {
           } else {
             format = 'Physical Resource';
           }
+          */
+
+          if (so.bibs && so.bibs[0] && so.bibs[0].materialType && so.bibs[0].materialType.value.match(/^(Internet|Streaming)/)) {
+            format = 'Electronic Resource'
+          }
+
           pol.orderFormat = format;
 
           let copies = ff['5'].value;
@@ -233,7 +254,6 @@ const otypeMap = {
           price = price.replace(/(\d\d)\.0+/, '.$1');
           price = parseFloat(price);
           co.totalEstimatedPrice = price;
-
 
           let loc = {};
           pol.cost = {};
@@ -273,15 +293,16 @@ const otypeMap = {
             }
             pol.contributors = [ au ];
           }
-          pol.publicationDate = `${so.bibs[0].publishYear}`;
+          pol.publicationDate = so.bibs[0].publishYear;
           let bibId = so.bibs[0].id;
           bibId = 'b' + bibId;
-          pol.instanceId = uuid(bibId + ver, nullns);
+          // pol.instanceId = uuid(bibId + ver, nullns);
+          if (instMap[bibId]) {
+            pol.instanceId = instMap[bibId];
+          }
           pol.description = bibId;
 
-          let fundNum = ff['12'].value || '';
-          let fundId = (refData.entries[fundNum]) ? refData.entries[fundNum].id : '';
-          let fundCode = (refData.entries[fundNum]) ? refData.entries[fundNum].code : '';
+
           if (fundId) {
             let fd = {
               fundId: fundId,
@@ -294,11 +315,6 @@ const otypeMap = {
           else {
             console.log(`WARN no fundId found for Sierra fund code ${fundNum} (${fundCode})`);
           }
-
-          if (form.match(/[s2lmn]/i)) {
-            pol.checkinItems = true;
-          }
-          if (form === 'c' && oType === 'o') pol.checkinItems = true; 
 
           co.compositePoLines.push(pol);
           let coStr = JSON.stringify(co) + '\n';
