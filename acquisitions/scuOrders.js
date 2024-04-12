@@ -153,7 +153,7 @@ const otypeMap = {
       if (j.identifiers) {
         v.i = [];
         j.identifiers.forEach(x => {
-          if (!x.identifierTypeId.match(/7e591197-f335-4afb-bc6d-a6d76ca3bace|439bfbae-75bc-4f74-9fc7-b2a2d47ce3ef|fc4e3f2a-887a-46e5-8057-aeeb271a4e56/)) {
+          if (!x.identifierTypeId.match(/c858e4f2-2b6b-4385-842b-60732ee14abb|5d164f4b-0b15-4e42-ae75-cfcf85318ad9|7e591197-f335-4afb-bc6d-a6d76ca3bace|439bfbae-75bc-4f74-9fc7-b2a2d47ce3ef|fc4e3f2a-887a-46e5-8057-aeeb271a4e56/)) {
             v.i.push({ v: x.value, t: x.identifierTypeId });
           }
         });
