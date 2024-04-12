@@ -5,7 +5,7 @@ const okapi = '.okapi';
 
 (async () => {
   const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
-  const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
+  const authToken = await getAuthToken(config, superagent);
   const out = {
     url: config.okapi,
     tenant: config.tenant,
