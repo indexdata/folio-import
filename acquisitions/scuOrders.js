@@ -134,13 +134,33 @@ const otypeMap = {
     const instMap = {};
     console.log('Reading instance map...');
     for await (const line of rl) {
-      console.log(line);
-      let cols = line.split(/\|/);
-      let k = cols[0];
-      let v = cols[1];
+      let j = JSON.parse(line);
+      let k = j.hrid;
+      let v = {
+        id: j.id,
+        t: j.title
+      }
+      if (j.publication && j.publication[0]) {
+        v.p = j.publication[0].publisher;
+        v.d = j.publication[0].dateOfPublication;
+      }
+      if (j.contributors) {
+        v.c = [];
+        j.contributors.forEach(c => {
+          v.c.push({ n: c.name, t: c.contributorNameTypeId });
+        });
+      }
+      if (j.identifiers) {
+        v.i = [];
+        j.identifiers.forEach(x => {
+          if (!x.identifierTypeId.match(/7e591197-f335-4afb-bc6d-a6d76ca3bace|439bfbae-75bc-4f74-9fc7-b2a2d47ce3ef|fc4e3f2a-887a-46e5-8057-aeeb271a4e56/)) {
+            v.i.push({ v: x.value, t: x.identifierTypeId });
+          }
+        });
+      }
       instMap[k] = v;
     }
-    // console.log(instMap); return;
+    // console.log(JSON.stringify(instMap, null, 2)); return;
 
     fileStream = fs.createReadStream(inFile);
 
@@ -285,22 +305,39 @@ const otypeMap = {
           if (!loc.locationId) throw(`ERROR no locationId found for "${location}"`)
           pol.locations.push(loc);
 
-          pol.titleOrPackage = so.bibs[0].title;
-          if (so.bibs[0].author) {
-            let au = {
-              contributor: so.bibs[0].author,
-              contributorNameTypeId: '2b94c631-fca9-4892-a730-03ee529ffe2a' // personal name
-            }
-            pol.contributors = [ au ];
-          }
-          pol.publicationDate = so.bibs[0].publishYear;
           let bibId = so.bibs[0].id;
           bibId = 'b' + bibId;
-          // pol.instanceId = uuid(bibId + ver, nullns);
-          if (instMap[bibId]) {
-            pol.instanceId = instMap[bibId];
+          let inst = instMap[bibId];
+          if (inst) {
+            pol.instanceId = inst.id;
+            pol.titleOrPackage = inst.t;
+            if (inst.c) {
+              pol.contributors = [];
+              inst.c.forEach(c => {
+                let au = {
+                  contributor: c.n,
+                  contributorNameTypeId: c.t
+                }
+                pol.contributors.push(au);
+              });
+            }
+            if (inst.i) {
+              pol.details = {}
+              pol.details.productIds = [];
+              inst.i.forEach(x => {
+                let o = {
+                  productId: x.v,
+                  productIdType: x.t
+                };
+                pol.details.productIds.push(o);
+              });
+            }
+            if (inst.p) pol.publisher = inst.p;
+            if (inst.d) pol.publicationDate = inst.d;
+          } else if (so.bibs && so.bibs[0]) {
+            pol.titleOrPackage = so.bibs[0].title
+            pol.description = bibId;
           }
-          pol.description = bibId;
 
 
           if (fundId) {
