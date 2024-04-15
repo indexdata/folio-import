@@ -23,10 +23,8 @@ const req = async (url, authToken) => {
 
 (async () => {
   try {
-    if (!ep) throw(`Usage node get.js <end_point>`);
-    const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
-    let authToken = await getAuthToken(config, superagent);
-    let authExpiry = new Date().valueOf() + (60 * 10 * 1000);
+    if (!ep) throw(`Usage node get-test.js <end_point>`);
+    let config = await getAuthToken(superagent);
 
     if (ep.match(/^\.x/)) {
       ep = ep.replace(/^\.x\//, '');
@@ -35,17 +33,14 @@ const req = async (url, authToken) => {
     let url = `${config.okapi}/${ep}`;
 
     for (x = 0; x<100; x++) {
-      let out = await req(url, authToken);
+      let out = await req(url, config.token);
       console.log('Rep', x, out.totalRecords);
       let now = new Date().valueOf();
       await wait(60000);
-      if (now >= authExpiry) {
-        authToken = await getAuthToken(config, superagent);
-        authExpiry = new Date().valueOf() + (60 * 10 * 1000);
+      if (now >= config.expiry) {
+        config = await getAuthToken(superagent);
       }
     }
-
-    
   } catch(e) {
       console.log(`${e}`);
   }
