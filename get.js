@@ -6,8 +6,7 @@ let ep = process.argv[2];
 (async () => {
   try {
     if (!ep) throw(`Usage node get.js <end_point>`);
-    const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
-    const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
+    const config = await getAuthToken(superagent);
 
     if (ep.match(/^\.x/)) {
       ep = ep.replace(/^\.x\//, '');
@@ -18,7 +17,7 @@ let ep = process.argv[2];
     try {
       const res = await superagent
       .get(url)
-      .set('x-okapi-token', authToken)
+      .set('x-okapi-token', config.token)
       .set('accept', 'application/json');
       console.log(JSON.stringify(res.body, null, 2));
     } catch (e) {
