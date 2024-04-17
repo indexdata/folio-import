@@ -10,6 +10,11 @@ let ep = process.argv[2];
 let debug = process.env.DEBUG;
 let dolog = process.env.LOG;
 
+const wait = (ms) => {
+  console.log(`(Waiting ${ms}ms...)`);
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
 (async () => {
   try {
     const start = new Date().valueOf();
@@ -38,7 +43,7 @@ let dolog = process.env.LOG;
       fs.unlinkSync(outPath);
     }
     
-    const config = await getAuthToken(superagent);
+    let config = await getAuthToken(superagent);
 
     var logger;
 
@@ -77,8 +82,10 @@ let dolog = process.env.LOG;
       x++;
       let rec = JSON.parse(line);
       let lDate = new Date();
+      if (config.expiry && config.expiry <= lDate.valueOf()) {
+        config = await getAuthToken(superagent);
+      }
       logger.info(`[${x}] ${lDate} POST ${rec.id} to ${actionUrl}`);
-      let recUrl = (actionUrl.match(/mapping-rules/)) ? actionUrl : `${actionUrl}/${rec.id}`;
       try {
         let res = await superagent
           .post(actionUrl)
@@ -96,6 +103,9 @@ let dolog = process.env.LOG;
           logger.error(errMsg);
           fs.writeFileSync(errPath, line + '\n', { flag: 'a'});
           fail++;
+      }
+      if (config.delay) {
+        await wait(config.delay);
       }
     }
     const end = new Date().valueOf();

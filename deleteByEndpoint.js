@@ -11,6 +11,7 @@ let endpoint = process.argv[2];
 const objFile = process.argv[3];
 
 const wait = (ms) => {
+  console.log(`(Waiting ${ms} ms...)`);
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
@@ -21,9 +22,7 @@ const wait = (ms) => {
       throw new Error('Usage: node deleteByEndpoint.js <endpoint> [ object_file ]');
     }
 
-    const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
-
-    const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
+    let config = await getAuthToken(superagent);
 
     endpoint = endpoint.replace(/^\//, '');
     let getUrl = config.okapi + '/' + endpoint + '?limit=1000';
@@ -58,7 +57,7 @@ const wait = (ms) => {
           .get(getUrl)
           .set('accept', 'application/json')
           .set('x-okapi-tenant', config.tenant)
-          .set('x-okapi-token', authToken);
+          .set('x-okapi-token', config.token);
         refData = res.body;
       } catch (e) {
         console.log(e);
@@ -77,17 +76,21 @@ const wait = (ms) => {
     console.log(`Deleting ${refData.totalRecords} ${root}...`);
     for (let x = 0; x < refData[root].length; x++) {
       let id = refData[root][x].id;
-      console.log(`[${x}] Deleting ${id}`);
+      let lDate = new Date();
+      if (config.expiry && config.expiry <= lDate.valueOf()) {
+        config = await getAuthToken(superagent);
+      }
+      console.log(`[${x}] ${lDate.toISOString()} Deleting ${id}`);
       try {
       	await superagent
           .delete(`${deleteUrl}/${id}`)
           .set('accept', 'text/plain')
           .set('x-okapi-tenant', config.tenant)
-          .set('x-okapi-token', authToken);
+          .set('x-okapi-token', config.token);
       } catch (e) {
         console.log(`${e}`);
       }
-      await wait(config.delay);
+      if (config.delay) await wait(config.delay);
     }
   } catch (e) {
     console.log(e.message);

@@ -14,8 +14,7 @@ const wait = (ms) => {
 (async () => {
   try {
     if (!ep) throw('Usage: node delete.js <end_point>');
-    const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
-    const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
+    let config = await getAuthToken(superagent);
 
     if (ep.match(/^\.x/)) {
       ep = ep.replace(/^\.x\//, '');
@@ -29,7 +28,7 @@ const wait = (ms) => {
     try {
       const res = await superagent
         .delete(url)
-        .set('x-okapi-token', authToken);
+        .set('x-okapi-token', config.token);
         console.log('HTTP status:', res.status);
     } catch (e) {
       console.log(`${e}`);
