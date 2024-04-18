@@ -12,23 +12,24 @@ const mod = process.argv[2];
     if (!fn) {
       throw new Error('Usage: node putCustomFields.js <mod-users version> <file>\nNOTE: Module set to ' + mod);
     }
-    const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
 
-    const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
+    let config = await getAuthToken(superagent);
     let url = `${config.okapi}/custom-fields`;
     let collStr = fs.readFileSync(fn, 'utf8');
     if (!collStr.match(/customFields/)) {
       throw new Error('Payload object must contain a "customFields" array property!');
     }
+    let coll = JSON.parse(collStr);
+    delete coll.totalRecords;
     console.log(`PUT ${url}...`);
     try {
       let res = await superagent
         .put(url)
         .set('accept', 'text/plain')
-        .set('x-okapi-token', authToken)
+        .set('x-okapi-token', config.token)
         .set('content-type', 'application/json')
-	.set('x-okapi-module-id', mod)
-        .send(collStr);
+	      .set('x-okapi-module-id', mod)
+        .send(coll);
       updated++;
     } catch (e) {
       let msg;
