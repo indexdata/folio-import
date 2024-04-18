@@ -185,6 +185,14 @@ const otypeMap = {
       try {
         let so = JSON.parse(line);
         let ff = so.fixedFields;
+        let vfs = so.varFields || [];
+        let vf = {};
+        vfs.forEach(v => {
+          let t = v.fieldTag;
+          if (!vf[t]) vf[t] = [];
+          vf[t].push(v.content);
+        });
+        
         let created = (ff['83']) ? ff['83'].value.substring(0, 10) : '';
         let oType = (ff['15']) ? ff['15'].value : '';
         let status = 'Pending';
@@ -241,7 +249,8 @@ const otypeMap = {
             poLineNumber: poNum + '-1',
             source: 'MARC',
             checkinItems: false,
-            locations: []
+            locations: [],
+            details: {}
           };
           pol.id = uuid(pol.poLineNumber, ns);
 
@@ -330,7 +339,6 @@ const otypeMap = {
               });
             }
             if (inst.i) {
-              pol.details = {}
               pol.details.productIds = [];
               inst.i.forEach(x => {
                 let o = {
