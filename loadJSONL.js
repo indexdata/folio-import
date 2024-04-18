@@ -8,15 +8,21 @@ const { getAuthToken } = require('./lib/login');
 let inFile = process.argv[3];
 let ep = process.argv[2];
 
+const wait = (ms) => {
+  console.log(`(Waiting ${ms} ms...)`);
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
 (async () => {
   try {
     const start = new Date().valueOf();
     if (!inFile) {
-      throw 'Usage: node loadJSONL.js <endpoint> <jsonl_file> [ <limit> ]\nNOTE: set PUT_ONLY=1 env variable to run PUT requests only';
+      throw 'Usage: node loadJSONL.js <endpoint> <jsonl_file> [ <limit> ]';
     } else if (!fs.existsSync(inFile)) {
       throw new Error('Can\'t find input file');
-    } 
-    const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
+    }
+
+    let config = await getAuthToken(superagent);
 
     let limit = (process.argv[4]) ? parseInt(process.argv[4], 10) : 10000000;
     if (isNaN(limit)) {
@@ -53,7 +59,6 @@ let ep = process.argv[2];
       logger = console;
     }
 
-    const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
 
     const actionUrl = `${config.okapi}/${ep}`;
     let updated = 0;
@@ -72,37 +77,40 @@ let ep = process.argv[2];
       x++;
       let rec = JSON.parse(line);
       let lDate = new Date();
+      if (config.expiry && config.expiry <= lDate.valueOf()) {
+        config = await getAuthToken(superagent);
+      }
       logger.info(`[${x}] ${lDate} POST ${rec.id} to ${actionUrl}`);
       let recUrl = (actionUrl.match(/mapping-rules/)) ? actionUrl : `${actionUrl}/${rec.id}`;
       try {
-	if (process.env.PUT_ONLY) throw 'INFO -- PUT requests only';
         await superagent
           .post(actionUrl)
           .send(rec)
-          .set('x-okapi-token', authToken)
+          .set('x-okapi-token', config.token)
           .set('content-type', 'application/json')
           .set('accept', 'application/json');
         logger.info(`  Successfully added record id ${rec.id}`);
         success++;
       } catch (e) {
-	let errMsg = (e.response) ? e.response.text : e;
+	      let errMsg = (e.response) ? e.response.text : e;
         logger.warn(`  WARN ${errMsg}`);
         logger.info('  Trying PUT request...');
         try {
           await superagent
             .put(recUrl)
             .send(rec)
-            .set('x-okapi-token', authToken)
+            .set('x-okapi-token', config.token)
             .set('content-type', 'application/json')
             .set('accept', 'text/plain');
           logger.info(`    Successfully updated record id ${rec.id}`);
           updated++;
         } catch (e) {
           logger.error(`     ERROR ${rec.id}: ${e}`);
-	  fs.writeFileSync(errPath, `${line}\n`, { flag: 'a'});
+	        fs.writeFileSync(errPath, `${line}\n`, { flag: 'a'});
           fail++;
         }
       }
+      if (config.delay) await wait(config.delay);
     }
     const end = new Date().valueOf();
     const ms = end - start;

@@ -10,6 +10,11 @@ let ep = process.argv[2];
 let debug = process.env.DEBUG;
 let dolog = process.env.LOG;
 
+const wait = (ms) => {
+  console.log(`(Waiting ${ms}ms...)`);
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
 (async () => {
   try {
     const start = new Date().valueOf();
@@ -18,7 +23,6 @@ let dolog = process.env.LOG;
     } else if (!fs.existsSync(inFile)) {
       throw new Error('Can\'t find input file');
     } 
-    const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
 
     let limit = (process.argv[4]) ? parseInt(process.argv[4], 10) : 10000000;
     if (isNaN(limit)) {
@@ -39,6 +43,8 @@ let dolog = process.env.LOG;
       fs.unlinkSync(outPath);
     }
     
+    let config = await getAuthToken(superagent);
+
     var logger;
 
     if (config.logpath || dolog) {
@@ -60,8 +66,6 @@ let dolog = process.env.LOG;
       logger = console;
     }
 
-    const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
-
     const actionUrl = `${config.okapi}/${ep}`;
     let success = 0;
     let fail = 0;
@@ -78,13 +82,15 @@ let dolog = process.env.LOG;
       x++;
       let rec = JSON.parse(line);
       let lDate = new Date();
+      if (config.expiry && config.expiry <= lDate.valueOf()) {
+        config = await getAuthToken(superagent);
+      }
       logger.info(`[${x}] ${lDate} POST ${rec.id} to ${actionUrl}`);
-      let recUrl = (actionUrl.match(/mapping-rules/)) ? actionUrl : `${actionUrl}/${rec.id}`;
       try {
         let res = await superagent
           .post(actionUrl)
           .send(rec)
-          .set('x-okapi-token', authToken)
+          .set('x-okapi-token', config.token)
           .set('content-type', 'application/json')
           .set('accept', 'application/json');
         logger.info(`  Successfully added record id ${rec.id}`);
@@ -97,6 +103,9 @@ let dolog = process.env.LOG;
           logger.error(errMsg);
           fs.writeFileSync(errPath, line + '\n', { flag: 'a'});
           fail++;
+      }
+      if (config.delay) {
+        await wait(config.delay);
       }
     }
     const end = new Date().valueOf();
