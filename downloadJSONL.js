@@ -13,9 +13,8 @@ let writeStream;
     if (!fileName) {
       throw new Error('Usage: node downloadJSONL.js <endpoint> <filename> [ <start> <stop> ]');
     }
-    const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
 
-    const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
+    let config = await getAuthToken(superagent);
 
     if (endPoint.match(/^.x/)) {
       endPoint = endPoint.replace(/^.x\//, '');
@@ -63,7 +62,7 @@ let writeStream;
           .get(url)
           .timeout({response: 10000})
           .set('accept', 'application/json')
-          .set('x-okapi-token', authToken);
+          .set('x-okapi-token', config.token);
         for (let x in res.body) {
           if (Array.isArray(res.body[x])) {
             prop = x;
