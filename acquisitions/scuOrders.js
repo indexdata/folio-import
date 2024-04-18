@@ -22,6 +22,14 @@ const refFiles = {
   mtypes: 'material-types.json'
 };
 
+const idSkip = {
+  'c858e4f2-2b6b-4385-842b-60732ee14abb': 1,
+  '5d164f4b-0b15-4e42-ae75-cfcf85318ad9': 1,
+  '7e591197-f335-4afb-bc6d-a6d76ca3bace': 1,
+  '439bfbae-75bc-4f74-9fc7-b2a2d47ce3ef': 1,
+  'fc4e3f2a-887a-46e5-8057-aeeb271a4e56': 1
+}
+
 const formatMap = {
   cre: 'Electronic Resource',
   stane: 'Electronic Resource',
@@ -66,7 +74,7 @@ const otypeMap = {
 (async () => {
   let startTime = new Date().valueOf();
   try {
-    if (!inFile) throw('Usage: node scuOrders.js <acq_ref_dir> <instance_map_file> <sierra_orders_json_file>');
+    if (!inFile) throw('Usage: node scuOrders.js <acq_ref_dir> <instances_file_jsonl> <sierra_orders_file_jsonl>');
     if (!fs.existsSync(inFile)) throw new Error(`Can't find ${inFile}!`);
     refDir = refDir.replace(/\/$/, '');
     let locMapFile = `${refDir}/locations.tsv`;
@@ -153,7 +161,7 @@ const otypeMap = {
       if (j.identifiers) {
         v.i = [];
         j.identifiers.forEach(x => {
-          if (!x.identifierTypeId.match(/c858e4f2-2b6b-4385-842b-60732ee14abb|5d164f4b-0b15-4e42-ae75-cfcf85318ad9|7e591197-f335-4afb-bc6d-a6d76ca3bace|439bfbae-75bc-4f74-9fc7-b2a2d47ce3ef|fc4e3f2a-887a-46e5-8057-aeeb271a4e56/)) {
+          if (!idSkip[x.identifierTypeId]) {
             v.i.push({ v: x.value, t: x.identifierTypeId });
           }
         });
