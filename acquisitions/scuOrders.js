@@ -19,7 +19,8 @@ const refFiles = {
   locations: 'locations.json',
   acquisitionMethods: 'acquisition-methods.json',
   acquisitionsUnits: 'units.json',
-  mtypes: 'material-types.json'
+  mtypes: 'material-types.json',
+  expenseClasses: 'expense-classes.json'
 };
 
 const idSkip = {
@@ -30,12 +31,35 @@ const idSkip = {
   'fc4e3f2a-887a-46e5-8057-aeeb271a4e56': 1
 }
 
+const methodMap = {
+  '-': 'Uncategorized',
+  a: 'Approval Plan',
+  b: 'Backfile',
+  c: 'Continuation (Law)',
+  f: 'Uncategorized',
+  g: 'Item Gift (Law)',
+  i: 'Item S.O. (Law)',
+  m: 'Membership',
+  o: 'Standing order',
+  r: 'Replacement (Law)',
+  s: 'Subscription',
+  v: 'Services',
+  w: 'Free With Sub (Law)'
+};
+
 const formatMap = {
   cre: 'Electronic Resource',
   stane: 'Electronic Resource',
   crp: 'Physical Resource',
   stanp: 'Physical Resource',
-}
+  ddav: 'Electronic Resource'
+};
+
+const exClassMap = {
+  cre: 'Online',
+  crp: 'Periodical',
+  ddav: 'Video'
+};
 
 const formMap = {
   b: "book",
@@ -106,6 +130,9 @@ const otypeMap = {
         if (prop === 'mtypes') {
           code = code.toLowerCase();
         }
+        if (prop === 'expenseClasses') {
+          code = p.name;
+        }
         code = code.trim();
         if (prop === 'entries') {
           let codeNum = `${p.extCode}`;
@@ -116,8 +143,18 @@ const otypeMap = {
         }
       })
     }
-    // console.log(refData.entries); return;
+    // console.log(refData.expenseClasses); return;
     // fs.writeFileSync(`${dir}/fund-code-map.json`, JSON.stringify(refData.entries, null, 2));
+
+    for (let k in methodMap) {
+      methodMap[k] = refData.acquisitionMethods[methodMap[k]];
+    }
+    // console.log(methodMap); return;
+
+    for (let k in exClassMap) {
+      exClassMap[k] = refData.expenseClasses[exClassMap[k]];
+    }
+    // console.log(methodMap); return;
 
     const locMap = {};
     let locData = fs.readFileSync(locMapFile, { encoding: 'utf8' });
@@ -140,7 +177,7 @@ const otypeMap = {
     });
 
     const instMap = {};
-    console.log('Reading instance map...');
+    console.log('Reading instances (this could take awhile)...');
     for await (const line of rl) {
       let j = JSON.parse(line);
       let k = j.hrid;
@@ -199,7 +236,15 @@ const otypeMap = {
         let orderType = 'Ongoing';
         let location = ff['2'].value || '';
         location = location.trim();
-        let unitId = (location.match(/^h/)) ? refData.acquisitionsUnits['Law Library'] : refData.acquisitionsUnits['University Library'];
+        let unitId;
+        let lib;
+        if (location.match(/^h/)) { 
+          unitId = refData.acquisitionsUnits['Law Library']
+          unitName = 'LL';
+        } else { 
+          unitId = refData.acquisitionsUnits['University Library'];
+          lib = 'UL'
+        }
         if (status !== 'Closed') {
           let poNum = so.id.toString();
           let poId = uuid(poNum, ns);
@@ -237,6 +282,17 @@ const otypeMap = {
           }
           */
 
+          let catNotes = [];
+          if (vf.n) {
+            vf.n.forEach(n => {
+              if (n.match(/^CAT:/)) {
+                catNotes.push(n);
+              } else {
+                co.notes.push(n);
+              }
+            });
+          }
+
           let coString = JSON.stringify(co) + '\n';
           fs.writeFileSync(poFile, coString, { flag: 'a' });
 
@@ -255,17 +311,33 @@ const otypeMap = {
           pol.id = uuid(pol.poLineNumber, ns);
 
           pol.paymentStatus = 'Pending';
-          pol.acquisitionMethod = refData.acquisitionMethods['Approval Plan'];
-
+          pol.acquisitionMethod = methodMap[oType];
           if (!pol.acquisitionMethod) {
-            throw new Error(`No acquisitionMethod found for plNum`);
+            throw new Error(`No acquisitionMethod found for "${oType}"`);
+          }
+          if (catNotes[0]) {
+            pol.details.receivingNote = catNotes.join('; ');
           }
 
           let fundNum = ff['12'].value || '';
           let fundId = (refData.entries[fundNum]) ? refData.entries[fundNum].id : '';
           let fundCode = (refData.entries[fundNum]) ? refData.entries[fundNum].code : '';
-
-          let format = formatMap[fundCode] || 'Physical Resource';
+          let format;
+          if (lib === 'UL') {
+            format = formatMap[fundCode] || 'Other';
+          } else {
+            if (so.bibs && so.bibs[0] && so.bibs[0].materialType) {
+              let code = so.bibs[0].materialType.code;
+              if (code === 'a' || code === '1') {
+                format = 'Physical Resource';
+              } else if (code === 'n' ) {
+                format = 'Electronic Resource';
+              } else {
+                format = 'Other';
+              }
+            }
+          }
+          // if (format === 'Other') console.log(`INFO no orderFormat found for fundCode "${fundCode}"`);
 
           /*
           if (form.match(/[erxy4]/)) {
@@ -278,10 +350,6 @@ const otypeMap = {
             format = 'Physical Resource';
           }
           */
-
-          if (so.bibs && so.bibs[0] && so.bibs[0].materialType && so.bibs[0].materialType.value.match(/^(Internet|Streaming)/)) {
-            format = 'Electronic Resource'
-          }
 
           pol.orderFormat = format;
 
@@ -296,20 +364,20 @@ const otypeMap = {
           pol.cost = {};
           pol.cost.currency = 'USD';
           if (format === 'Electronic Resource') {
-            pol.cost.listUnitPriceElectronic = price;
-            pol.cost.poLineEstimatedPrice = price;
-            pol.cost.quantityElectronic = copies;
-            loc.quantityElectronic = copies;
+            pol.cost.listUnitPriceElectronic = 0;
+            pol.cost.poLineEstimatedPrice = 0;
+            pol.cost.quantityElectronic = 1;
+            loc.quantityElectronic = 1;
             let mtypeName = eFormMap[form] || otypeMap[oType];
             pol.eresource = {
               createInventory: 'None',
               materialType: refData.mtypes[mtypeName] || refData.mtypes.unspecified,
             }
           } else {
-            pol.cost.listUnitPrice = price;
-            pol.cost.poLineEstimatedPrice = price;
-            pol.cost.quantityPhysical = copies;
-            loc.quantityPhysical = copies;
+            pol.cost.listUnitPrice = 0;
+            pol.cost.poLineEstimatedPrice = 0;
+            pol.cost.quantityPhysical = 1;
+            loc.quantityPhysical = 1;
             let mtypeName = formMap[form] || otypeMap[oType];
             pol.physical = {
               createInventory: 'None',
@@ -363,6 +431,7 @@ const otypeMap = {
               value: 100,
               code: fundCode,
             };
+            if (exClassMap[fundCode]) { fd.expenseClassId = exClassMap[fundCode] };
             pol.fundDistribution = [ fd ];
           }
           else {
