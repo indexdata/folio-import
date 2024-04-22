@@ -1,4 +1,5 @@
 Legacy location code	Library	Folio location code	Folio name	Discovery display name	Folio service point (name)
+archv	ul	ul/asc/uarch	UL A&SC University Archives	University Library Archives & Special Collections - University Archives, 3rd Floor	ulasc
 ars04	ul	ul/ars/ascrareb	UL ARS A&SC Rare Books	University Library Archives & Special Collections - Rare Books, 3rd Floor	ulars
 ars08	ul	ul/ars/ascrc	UL ARS A&SC Research Collection	University Library Archives & Special Collections - Research Collection, 3rd Floor	ulars
 ars20	ul	ul/ars/asccl	UL ARS A&SC College Library	University Library Archives & Special Collections - College Library, 3rd Floor	ulars
@@ -38,7 +39,7 @@ gdref	ul	ul/gvd/ref	UL Gov Docs Reference	University Library Government Document
 hadir	ll	ll/main/adir	LL Aaron Director Collection	Law Library Aaron Director Collection	llcircdesk
 harch	ll	ll/arch	LL Archives Collection	Law Library Archives Collection	llcircdesk
 haudi	ll	ll/audio	LL Audio Collection	Law Library Audio Collection	llcircdesk
-hcal	ll	ll/main/calif	LL California Collection	Law Library Californic Collection	llcircdesk
+hcal	ll	ll/main/calif	LL California Collection	Law Library California Collection	llcircdesk
 hchar	ll	ll/main/stacks	LL Main Stacks	Law Library Main Stacks, 2nd Floor	llcircdesk
 hcirc	ll	ll/circ	LL Circulation Desk	Law Library Circulation Desk	llcircdesk
 hcirf	ll	ll/circ/offic	LL Circulation Department Office	Law Library Circulation Department Office	llcircdesk
@@ -49,7 +50,7 @@ hlcs	ll	ll/main/lcs	LL Law Career Services Collection	Law Library Law Career Ser
 hloff	ll	ll/main/techs	LL Technical Services Department Office	Law Library Technical Services Department Office	llcircdesk
 hloy	ll	ll/main/remot	LL Non-ARS Remote	Law Library Non-ARS Remote	llcircdesk
 hmicr	ll	ll/micro	LL Microform	Law Library Microform Collection	llcircdesk
-hper	ll	ll/main/per	LL Periodicals Collection	Law LIbrary Periodicals Collection	llcircdesk
+hper	ll	ll/main/per	LL Periodicals Collection	Law Library Periodicals Collection	llcircdesk
 href	ll	ll/main/ref	LL Reference Collection	Law Library Reference Collection, 2nd Floor	llcircdesk
 hrem1	ll	ll/main/ref	LL Reference Collection	Law Library Reference Collection, 2nd Floor	llcircdesk
 hrem2	ll	ll/main/ref	LL Reference Collection	Law Library Reference Collection, 2nd Floor	llcircdesk
@@ -58,7 +59,7 @@ hres	ll	ll/res	LL Closed Reserve	Law Library Closed Reserve Collection	llcircdes
 hrmic	ll	ll/micro/ref	LL Microform Reference	Law Library Microform Reference	llcircdesk
 hroff	ll	ll/main/refof	LL Reference Office	Law Library Reference Office	llcircdesk
 hrvf	ll	ll/main/vert	LL Vertical File	Law Library Vertical File Collection	llcircdesk
-hstac	ll	ll/main/stacks	LL Main Stacks	Law LIbrary Main Stacks	llcircdesk
+hstac	ll	ll/main/stacks	LL Main Stacks	Law Library Main Stacks, 2nd Floor	llcircdesk
 hstau	ll	ll/main/resrm	LL Reserve Room Materials	Law Library Reserve Room Materials	llcircdesk
 hvarc	ll	ll/video	LL Video Collection	Law Library Video Collection	llcircdesk
 hwww	ll	ll/www	LL Internet Resource	Law Library Internet Resource	llcircdesk
@@ -92,7 +93,7 @@ ucirc	ul	ul/ads/helpd	UL Help Desk	University Library Help Desk	ulhelpdesk
 ucr	ul	ul/cur	UL Curriculum Collection	University Library Curriculum Collection, 2nd Floor	ulhelpdesk
 ucrst	ul	ul/cur	UL Curriculum Collection	University Library Curriculum Collection, 2nd Floor	ulhelpdesk
 ugd	ul	ul/gvd/lwrlvl	UL Gov Docs, Lower Level	University Library Government Documents, Lower Level	ulhelpdesk
-ugdar	ul	ul/gvd/ars	UL Gov Docs (ARS)	University Library ARS Government Documents	ulhelpdesk
+ugdar	ul	ul/gvd/ars	UL Gov Docs (ARS)	University Library Government Documents - ARS	ulhelpdesk
 ugdca	ul	ul/gvd/cal	UL Gov Docs California	University Library Government Documents - California	ulhelpdesk
 ugdcd	ul	ul/gvd/compd	UL Gov Docs Computer Data Files	University Library Government Documents - CD Cabinet, 3rd Floor	ulhelpdesk
 ugdll	ul	ul/gvd/lwrlvl	UL Gov Docs, Lower Level	University Library Government Documents, Lower Level	ulhelpdesk
