@@ -1,0 +1,11 @@
+{
+  "weight": 0,
+  "primary": true,
+  "retired": false,
+  "defaultInternal": true,
+  "type": "Text",
+  "label": "Resource Note",
+  "name": "resourcenote",
+  "description": "Resource Note",
+  "ctx": "OpenAccess"
+}

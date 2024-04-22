@@ -1,0 +1,169 @@
+{
+  "status": "active",
+  "type": "local",
+  "customProperties": {
+    "accessibilityADA": [
+      {
+        "_delete": false,
+        "value": "Accessibility",
+        "note": "Internal note",
+        "publicNote": "Public note"
+      }
+    ],
+    "authorizedUsers": [
+      {
+        "_delete": true
+      }
+    ],
+    "cancellationRestrictions": [
+      {
+        "_delete": true
+      }
+    ],
+    "confidentialityClause": [
+      {
+        "_delete": true
+      }
+    ],
+    "coursepacks": [
+      {
+        "_delete": true
+      }
+    ],
+    "coursepacksElectronic": [
+      {
+        "_delete": true
+      }
+    ],
+    "courseReserves": [
+      {
+        "_delete": true
+      }
+    ],
+    "ereserves": [
+      {
+        "_delete": true
+      }
+    ],
+    "generalNotes": [
+      {
+        "_delete": true
+      }
+    ],
+    "imageUsage": [
+      {
+        "_delete": true
+      }
+    ],
+    "interlibraryLoan": [
+      {
+        "_delete": true
+      }
+    ],
+    "interlibraryLoanElectronic": [
+      {
+        "_delete": true
+      }
+    ],
+    "journalClub": [
+      {
+        "_delete": true
+      }
+    ],
+    "jurisdiction": [
+      {
+        "_delete": true
+      }
+    ],
+    "multiYearTerm": [
+      {
+        "_delete": true
+      }
+    ],
+    "postCancellationAccess": [
+      {
+        "_delete": true
+      }
+    ],
+    "privacy": [
+      {
+        "_delete": true
+      }
+    ],
+    "sites": [
+      {
+        "_delete": true
+      }
+    ],
+    "substitutionRights": [
+      {
+        "_delete": true
+      }
+    ],
+    "dataMining": [
+      {
+        "_delete": true
+      }
+    ],
+    "thirdPartyArchiving": [
+      {
+        "_delete": true
+      }
+    ],
+    "transferTitles": [
+      {
+        "_delete": true
+      }
+    ]
+  },
+  "openEnded": false,
+  "name": "Charles test",
+  "startDate": "2024-03-27",
+  "endDate": "2024-03-31",
+  "description": "This is a test description",
+  "alternateNames": [
+    {
+      "_delete": false,
+      "name": "Chas test"
+    },
+    {
+      "_delete": false,
+      "name": "Charlie test"
+    }
+  ],
+  "orgs": [
+    {
+      "_delete": false,
+      "roles": [
+        {
+          "role": {
+            "id": "2c90baa78b6d6a4f018b711bdbb20036"
+          },
+          "note": "This is a role note"
+        }
+      ],
+      "org": {
+        "name": "Academy of Management",
+        "orgsUuid": "8a29aefb-9498-5c3b-83e8-fb0aa4457cef"
+      },
+      "note": "This is an org note"
+    }
+  ],
+  "supplementaryDocs": [
+    {
+      "_delete": false,
+      "name": "Test doc with no file",
+      "atType": "addendum",
+      "note": "Test note",
+      "location": "Location",
+      "url": "https://indexdata.com"
+    }
+  ],
+  "contacts": [
+    {
+      "_delete": false,
+      "user": "b91c12a2-ce14-527e-b09f-f067a3f9250c",
+      "role": "license_owner"
+    }
+  ]
+}
