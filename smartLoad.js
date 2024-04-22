@@ -7,15 +7,19 @@ const path = require('path');
 const { getAuthToken } = require('./lib/login');
 let inFile = process.argv[2];
 
+const wait = (ms) => {
+  console.log(`(Waiting ${ms}ms...)`);
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
 (async () => {
   try {
     const start = new Date().valueOf();
     if (!inFile) {
-      throw 'Usage: node loadJSONL.js <jsonl_file> [ <limit> ]\nNOTE: set PUT_ONLY=1 env variable to run PUT requests only';
+      throw 'Usage: node smartLoad.js <jsonl_file> [ <limit> ]';
     } else if (!fs.existsSync(inFile)) {
       throw new Error('Can\'t find input file');
     } 
-    const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
 
     let limit = (process.argv[4]) ? parseInt(process.argv[4], 10) : 10000000;
     if (isNaN(limit)) {
@@ -28,6 +32,8 @@ let inFile = process.argv[2];
     if (fs.existsSync(errPath)) {
       fs.unlinkSync(errPath);
     }
+
+    let config = await getAuthToken(superagent);
     
     var logger;
 
@@ -50,8 +56,6 @@ let inFile = process.argv[2];
       logger = console;
     }
 
-    const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
-
     let updated = 0;
     let success = 0;
     let fail = 0;
@@ -68,6 +72,9 @@ let inFile = process.argv[2];
       x++;
       let rec = JSON.parse(line);
       let lDate = new Date();
+      if (config.expiry && config.expiry <= lDate.valueOf()) {
+        config = await getAuthToken(superagent);
+      }
       let ep;
       if (rec.periodStart && rec.periodEnd) {
           ep = 'finance-storage/fiscal-years';
@@ -142,7 +149,7 @@ let inFile = process.argv[2];
         await superagent
           .post(actionUrl)
           .send(rec)
-          .set('x-okapi-token', authToken)
+          .set('x-okapi-token', config.token)
           .set('content-type', 'application/json')
           .set('accept', 'application/json');
         logger.info(`  Successfully added record id ${rec.id}`);
@@ -155,16 +162,19 @@ let inFile = process.argv[2];
           await superagent
             .put(recUrl)
             .send(rec)
-            .set('x-okapi-token', authToken)
+            .set('x-okapi-token', config.token)
             .set('content-type', 'application/json')
             .set('accept', 'text/plain');
           logger.info(`    Successfully updated record id ${rec.id}`);
           updated++;
         } catch (e) {
           logger.error(`     ERROR ${rec.id}: ${e}`);
-	  fs.writeFileSync(errPath, `${line}\n`, { flag: 'a'});
+	        fs.writeFileSync(errPath, `${line}\n`, { flag: 'a'});
           fail++;
         }
+      }
+      if (config.delay) {
+        await wait(config.delay);
       }
     }
     const end = new Date().valueOf();
