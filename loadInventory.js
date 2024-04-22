@@ -30,6 +30,7 @@ if (argv.b) {
 }
 
 const wait = (ms) => {
+  console.log(`(Waiting ${ms}ms...)`);
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
@@ -43,7 +44,7 @@ const wait = (ms) => {
       throw new Error('Can\'t find input file');
     }
   
-    const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
+    let config = await getAuthToken(superagent, true);
 
     var logger;
 
@@ -63,17 +64,17 @@ const wait = (ms) => {
       logger = console;
     }
 
-    const res = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password, true);
-    const authToken = res.headers['x-okapi-token'];
-    const userId = res.body.user.id;
+    const userId = (config.res && config.res.user) ? config.res.user.id : '';
     const now = new Date().toISOString(); 
 
     const metadata = {
       createdDate: now,
       updatedDate: now,
-      createdByUserId: userId,
-      updatedByUserId: userId
     };
+    if (userId) {
+      metadata.createdByUserId = userId,
+      metadata.updatedByUserId = userId
+    }
 
     let success = 0;
     let fail = 0;
@@ -81,7 +82,11 @@ const wait = (ms) => {
 
     const runRequest = (data, count, end) => {
       return new Promise(async (resolve, reject) => {
-        let date = new Date().toISOString();
+        let lDate = new Date();
+        if (config.expiry && config.expiry <= lDate.valueOf()) {
+          config = await getAuthToken(superagent, true);
+        }
+        let date = lDate.toISOString();
         let endpoint = null;
         let root = null;
         if (data.holdingsRecords) {
@@ -103,7 +108,7 @@ const wait = (ms) => {
           await superagent
             .post(actionUrl)
             .send(data)
-            .set('x-okapi-token', authToken)
+            .set('x-okapi-token', config.token)
             .set('content-type', 'application/json')
             .set('accept', 'text/plain')
             .set('connection', 'keep-alive');
