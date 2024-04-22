@@ -11,17 +11,12 @@ const fileNames = process.argv.slice(2);
     if (fileNames.length === 0) {
       throw new Error('Usage: node loadRefData.js <files>');
     }
-    const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
 
-    const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
+    const config = await getAuthToken(superagent);
 
     for (let x = 0; x < fileNames.length; x++) {
-      let refDir = fileNames[x].replace(/^(.+\/).+/, '$1');
-      let doneDir = refDir + 'Done';
-      let errDir = refDir + 'Err';
       
       let path = fileNames[x].replace(/^.+\//, '');
-      let name = path;
 
       path = path.replace(/__/g, '/');
       path = path.replace(/\.json$/, '');
@@ -57,13 +52,12 @@ const fileNames = process.argv.slice(2);
             .post(url)
             .timeout({ response: 5000 })
             .set('accept', 'application/json', 'text/plain')
-            .set('x-okapi-token', authToken)
+            .set('x-okapi-token', config.token)
             .set('content-type', 'application/json')
             .send(data[d]);
           added++;
         } catch (e) {
-          let postErr = e;
-          console.log('  ' + postErr.response.text);
+          console.log(`  ${e}`);
           try {
             console.log(`  Trying PUT...`);
             let purl = url;
@@ -75,29 +69,15 @@ const fileNames = process.argv.slice(2);
               .put(purl)
               .timeout({ response: 5000 })
               .set('accept', 'text/plain')
-              .set('x-okapi-token', authToken)
+              .set('x-okapi-token', config.token)
               .set('content-type', 'application/json')
               .send(data[d]);
             updated++;
           } catch (e) {
-            let msg;
-            let err1 = e;
-            try {
-              msg = e.response.res.text;
-            } catch (e) {
-              msg = err1.message;
-            }
-            console.log(`  ERROR: ${msg}`);
+            console.log(`  ${e}`);
             errors++;
           } 
         }
-      }
-      if (errors == 0) {
-        // if (!fs.existsSync(doneDir)) fs.mkdirSync(doneDir);
-        // fs.renameSync(fileNames[x], doneDir + '/' + name);
-      } else {
-        // if (!fs.existsSync(errDir)) fs.mkdirSync(errDir);
-        // fs.renameSync(fileNames[x], errDir + '/' + name);
       }
     } 
     console.log(`Added:   ${added}`);

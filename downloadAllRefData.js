@@ -14,9 +14,11 @@ let modName = process.argv[3];
       throw new Error(`${refDir} is not a directory!`)
     }
     refDir = refDir.replace(/\/$/, '');
-    const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
 
-    const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
+    let startTime = new Date().valueOf();
+
+    let config = await getAuthToken(superagent);
+    let authToken = config.token;
 
     let mdUrls = [
       'https://raw.githubusercontent.com/folio-org/mod-configuration/master/descriptors/ModuleDescriptor-template.json',
@@ -294,6 +296,9 @@ let modName = process.argv[3];
         }
       }
     }
+    let endTime = new Date().valueOf();
+    let ttl = (endTime - startTime) / 1000;
+    console.log(`Done in ${ttl} secs`);
   } catch (e) {
     console.error(e.message);
   }
