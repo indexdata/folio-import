@@ -1,0 +1,28 @@
+Sierra Item status code	Sierra Status Display	To migrate?	FOLIO status (choices) 	Notes
+!	ON HOLDSHELF	N		Sierra System Defined (Circ Transaction)
+#	LINK+ RECVD	N		Inn-Reach System Defined
+$	LOST AND PAID	N		Sierra System Defined (Circ Transaction)
+%	LINK+ RET'D	N		Inn-Reach System Defined
+&	LINK+ REQUEST	N		Inn-Reach System Defined
+(	LINK+ PAGED	N		Inn-Reach System Defined
+)	LINK+ CANCELED	N		Inn-Reach System Defined
++	RENEW PENDING	N		Inn-Reach System Defined
+-	AVAILABLE	Y	Available	Sierra System Defined
+=	RENEW DENIED	N		Inn-Reach System Defined
+@	OFF CAMPUS	N		Inn-Reach System Defined
+_	LINK+ RE-REQ	N		Inn-Reach System Defined
+b	BINDERY	Y	In process	Locally defined.
+c	Awaiting Cataloging	Y	In process	Locally defined.
+d	Discarded	Y	Withdrawn	Locally defined.
+l	LOST	Y	Long missing	Locally defined.
+m	MISSING	Y	Missing	Sierra System Defined
+n	BILLED	N		Sierra System Defined (Circ Transaction)
+o	LIB USE ONLY	Y	Restricted	Folio lacks sticky status. Sierra System Defined
+p	ARS DELIVERED	N		Sierra System Defined (ASRSv2)
+r	IN REPAIR	Y	In process	Locally defined.
+s	ON SEARCH	Y	Missing	Locally defined.
+t	IN TRANSIT	N		Sierra System Defined (Circ Transaction)
+v	In Process	Y	In process	Locally defined.
+x	NON-CIRC.	Y	Restricted	Folio lacks sticky status.
+y	UNBD. CHECKOUT	Y	Available	Folio lacks sticky status. Locally defined.
+z	CLMS RETD	N		Sierra System Defined (Circ Transaction)

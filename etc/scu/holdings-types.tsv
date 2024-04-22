@@ -1,0 +1,8 @@
+LDR07	LC Label	BCODE1 Label	Folio HoldingsType
+a	Monographic component part	MONOGRAPH PART	Multi-volume Monograph
+b	Serial component part	SERIAL PART	Serial
+c	Collection	COLLECTION	Collection
+d	Subunit	SUBCOLLECTION	Sub Collection
+i	Integrating resource	INTEGRATING	Integrating Resource
+m	Monograph/Item	MONOGRAPH/BOOK	Monograph
+s	Serial	SERIAL	Serial

@@ -1,0 +1,206 @@
+Legacy loan type code (from item record)		Folio loan type name or ID	Legacy material type label		Legacy notes	Record Count
+Itype (61)	Shelving Location (79)		ITYPE Label (61)	Shelving Location Label (79)		
+0	arscr	circulating	Circulating	University Library ARS Curriculum Collection		6819
+0	arsgc	circulating	Circulating	University Library ARS Government Documents - California		178
+0	arsgd	circulating	Circulating	University Library ARS Government Documents		2959
+0	arsms	circulating	Circulating	University Library ARS Main Stacks		425023
+0	arsrf	circulating	Circulating	University Library ARS Reference Collection		3949
+0	hchar	locally circulating	Circulating	Law Charney Hall		9832
+0	hcirc	locally circulating	Circulating	Law Circulation Desk		11
+0	hfol	locally circulating	Circulating	Law Folio		315
+0	hloy	locally circulating	Circulating	Law Remote Storage		8
+0	hroff	locally circulating	Circulating	Law Reference Desk		1
+0	hstac	locally circulating	Circulating	Law Stacks		319
+0	hstau	locally circulating	Circulating	Law Reserve Room		13
+0	ucrst	circulating	Circulating	University Library Curriculum Collection, 2nd Floor		2519
+0	ugdar	circulating	Circulating	University Library ARS Government Documents		14482
+0	ugdca	circulating	Circulating	University Library Government Documents - California		100
+0	ugdll	circulating	Circulating	University Library Government Documents, Lower Level		24004
+0	ugdmi	circulating	Circulating	University Library Government Documents - Microforms, 3rd Floor		421
+0	umnfo	circulating	Circulating	University Library Folios, 3rd Floor		19910
+0	umnst	circulating	Circulating	University Library Main Stacks, Lower Level		128474
+0	urfll	circulating	Circulating	University Library Reference, Lower Level		8
+1	ars04	library use only	Non-Circulating	University Library Archives & Special Collections, 3rd Floor		6
+1	ars08	library use only	Non-Circulating	University Library ARS Research Collection		1311
+1	ars20	library use only	Non-Circulating	University Library Archives & Special Collections - College Library, 3rd Floor		75
+1	ars22	library use only	Non-Circulating	University Library Archives & Special Collections - Photographs, 3rd Floor		13
+1	ars24	library use only	Non-Circulating	University Library Archives & Special Collections - University Records, 3rd Floor	Reports, personal papers, etc.	1138
+1	ars26	library use only	Non-Circulating	University Library Archives & Special Collections - History Reference		18
+1	ars27	library use only	Non-Circulating	University Library Archives & Special Collections - Faculty Publications, 3rd Floor		244
+1	ars31	library use only	Non-Circulating	University Library Archives & Special Collections - Manuscripts & Personal Papers, 3rd Floor		325
+1	ars32	library use only	Non-Circulating	University Library Archives & Special Collections - Local History, 3rd Floor		31
+1	ars33	library use only	Non-Circulating	University Library Archives & Special Collections - University Publications, 3rd Floor	Some monographs, but mostly serials	21
+1	arsca	library use only	Non-Circulating	University Library Archives & Special Collections - California Collection, 3rd Floor		108
+1	arsgd	library use only	Non-Circulating	University Library ARS Government Documents		23
+1	arslw	library use only	Non-Circulating	Law Remote Storage (ARS)		4014
+1	arsmc	library use only	Non-Circulating	University Library ARS Microforms		29790
+1	arsms	library use only	Non-Circulating	University Library ARS Main Stacks		3419
+1	arsrb	library use only	Non-Circulating	University Library Archives & Special Collections, 3rd Floor (ARS)		5430
+1	arsrf	library use only	Non-Circulating	University Library ARS Reference Collection		11796
+1	arsst	library use only	Non-Circulating	University Library Archives & Special Collections - Senior Theses, 3rd Floor		1341
+1	arsth	library use only	Non-Circulating	University Library Archives & Special Collections - SCU Theses, 3rd Floor		992
+1	hcal	library use only	Non-Circulating	Law California Collection		777
+1	hchar	library use only	Non-Circulating	Law Charney Hall		6529
+1	hfol	library use only	Non-Circulating	Law Folio		84
+1	hloff	library use only	Non-Circulating	Law Library Office		66
+1	hloy	library use only	Non-Circulating	Law Remote Storage		33
+1	hmicr	library use only	Non-Circulating	Law Microform		119370
+1	hper	library use only	Non-Circulating	Law Periodicals		1334
+1	href	library use only	Non-Circulating	Law Reference		381
+1	hres	library use only	Non-Circulating	Law Closed Reserve Room		1
+1	hrmic	library use only	Non-Circulating	Law Microform Reference		9
+1	hroff	library use only	Non-Circulating	Law Reference Desk		23
+1	hstac	library use only	Non-Circulating	Law Stacks		83
+1	hstau	library use only	Non-Circulating	Law Reserve Room		223
+1	rsrch	library use only	Non-Circulating	University Library Archives & Special Collections - Research Collection, 3rd Floor		106
+1	ucrst	library use only	Non-Circulating	University Library Curriculum Collection, 2nd Floor		3
+1	ugdar	library use only	Non-Circulating	University Library ARS Government Documents		342
+1	ugdca	library use only	Non-Circulating	University Library Government Documents - California		3
+1	ugdcd	library use only	Non-Circulating	University Library Government Documents - CD Cabinet, 3rd Floor		4
+1	ugdll	library use only	Non-Circulating	University Library Government Documents, Lower Level		167
+1	ugdmi	library use only	Non-Circulating	University Library Government Documents - Microforms, 3rd Floor		86
+1	ugdrf	library use only	Non-Circulating	University Library Government Documents - Reference, 1st Floor		12
+1	ugdrl	library use only	Non-Circulating	University Library Government Documents - Reference, Lower Level		5
+1	umifi	library use only	Non-Circulating	University Library Microforms, 3rd Floor		4107
+1	umimc	library use only	Non-Circulating	University Library Microforms, Lower Level		512
+1	umimf	library use only	Non-Circulating	University Library Microforms, Lower Level		72
+1	umnfo	library use only	Non-Circulating	University Library Folios, 3rd Floor		76
+1	umnst	library use only	Non-Circulating	University Library Main Stacks, Lower Level		53
+1	urfll	library use only	Non-Circulating	University Library Reference, Lower Level		8775
+1	uscar	library use only	Non-Circulating	University Library Archives & Special Collections - Artifacts, 3rd Floor		106
+1	uscca	library use only	Non-Circulating	University Library Archives & Special Collections - California Collection, 3rd Floor		80
+1	uscch	library use only	Non-Circulating	University Library Archives & Special Collections - Chiara, 3rd Floor		255
+1	uscff	library use only	Non-Circulating	University Library Archives & Special Collections - Flat Files, 3rd Floor		4
+1	uscfp	library use only	Non-Circulating	University Library Archives & Special Collections - Faculty Publications, 3rd Floor		1641
+1	uscjr	library use only	Non-Circulating	University Library Archives & Special Collections - Jesuit Rare Books, 3rd Floor		684
+1	usclv	library use only	Non-Circulating	University Library Archives & Special Collections - Leaves, 3rd Floor		4
+1	uscma	library use only	Non-Circulating	University Library Archives & Special Collections - Manuscripts & Personal Papers, 3rd Floor		1161
+1	uscmd	library use only	Non-Circulating	University Library Archives & Special Collections - Multimedia, 3rd Floor		484
+1	uscml	library use only	Non-Circulating	University Library Archives & Special Collections - Mission Library, 3rd Floor		63
+1	uscol	library use only	Non-Circulating	University Library Archives & Special Collections, 3rd Floor		11679
+1	uscph	library use only	Non-Circulating	University Library Archives & Special Collections - Photographs, 3rd Floor		717
+1	uscrb	library use only	Non-Circulating	University Library Archives & Special Collections - Rare Books, 3rd Floor		1
+1	uscrr	library use only	Non-Circulating	University Library Archives & Special Collections - Reading Room, 3rd Floor		2235
+1	uscsh	library use only	Non-Circulating	University Library Archives & Special Collections - Sisters of the Holy Family, 3rd Floor		355
+1	uscua	library use only	Non-Circulating	University Library Archives & Special Collections - University Archives, 3rd Floor		153
+1	uscup	library use only	Non-Circulating	University Library Archives & Special Collections - University Publications, 3rd Floor	Some monographs, but mostly serials	1045
+1	uscur	library use only	Non-Circulating	University Library Archives & Special Collections - University Records, 3rd Floor	Reports, personal papers, etc.	3349
+1	usthe	library use only	Non-Circulating	University Library Archives & Special Collections - Senior Theses, 3rd Floor		1025
+1	uthes	library use only	Non-Circulating	University Library Archives & Special Collections - SCU Theses, 3rd Floor		106
+1	utsnc	library use only	Non-Circulating	University Library Technical Services		13
+2	hcal	library use only	In-Library Use	Law California Collection		3
+2	hchar	library use only	In-Library Use	Law Charney Hall		7
+2	hcirc	library use only	In-Library Use	Law Circulation Desk		11
+2	hstau	library use only	In-Library Use	Law Reserve Room		303
+3	arsvd	circulating	DVD	University Library ARS Video Collection		1060
+3	ugdcd	circulating	DVD	University Library Government Documents - CD Cabinet, 3rd Floor		6
+3	uvdeo	circulating	DVD	University Library Video Collection		42
+4	arscd	locally circulating	Computer Data Storage Media	University Library ARS Computer Data Files Collection		1547
+4	arscr	locally circulating	Computer Data Storage Media	University Library ARS Curriculum Collection		3
+4	arsgd	locally circulating	Computer Data Storage Media	University Library ARS Government Documents		13
+4	hloff	locally circulating	Computer Data Storage Media	Law Library Office		32
+4	hres	locally circulating	Computer Data Storage Media	Law Closed Reserve Room		1
+4	ucdat	locally circulating	Computer Data Storage Media	University Library Computer Data Files Collection		23
+4	ucrst	locally circulating	Computer Data Storage Media	University Library Curriculum Collection, 2nd Floor		8
+4	ugdar	locally circulating	Computer Data Storage Media	University Library ARS Government Documents		20
+4	ugdcd	locally circulating	Computer Data Storage Media	University Library Government Documents - CD Cabinet, 3rd Floor		326
+5	ugdar	library use only	Sheet Maps	University Library ARS Government Documents		14
+5	ugdmp	library use only	Sheet Maps	University Library Government Documents - Maps, Lower Level		1097
+5	umpmp	library use only	Sheet Maps	University Library Maps, Lower Level		173
+5	urfll	library use only	Sheet Maps	University Library Reference, Lower Level		1
+10	hcirc	3 hour	Conference Room/Classroom	Law Circulation Desk		78
+13	hchar	2 hour	2-Hour Reserve Heafey	Law Charney Hall		3
+13	hcirc	2 hour	2-Hour Reserve Heafey	Law Circulation Desk		7
+13	hres	2 hour	2-Hour Reserve Heafey	Law Closed Reserve Room		123
+13	hstau	2 hour	2-Hour Reserve Heafey	Law Reserve Room		1
+14	hcirc	1 hour	1-Hour Reserve Heafey	Law Circulation Desk		3
+15	hcirc	24 hour	24-Hour Reserve Heafey	Law Circulation Desk		2
+15	hloff	24 hour	24-Hour Reserve Heafey	Law Library Office		3
+16	hcal	3 day	3-Day Reserve Heafey	Law California Collection		18
+16	hchar	3 day	3-Day Reserve Heafey	Law Charney Hall		14
+16	hfol	3 day	3-Day Reserve Heafey	Law Folio		1
+16	hstau	3 day	3-Day Reserve Heafey	Law Reserve Room		393
+17	haudi	locally circulating	7-Day Reserve Heafey	Law Audio Collection		90
+17	hchar	7 day	7-Day Reserve Heafey	Law Charney Hall		94
+17	hloff	7 day	7-Day Reserve Heafey	Law Library Office		1
+17	hstac	7 day	7-Day Reserve Heafey	Law Stacks		1
+18	hcirc	2 hour	Stauf 2hr non-reserve	Law Circulation Desk		48
+18	hres	2 hour	Stauf 2hr non-reserve	Law Closed Reserve Room		452
+18	hstau	2 hour	Stauf 2hr non-reserve	Law Reserve Room		14
+23	hchar	24 hour	Heafey 24-Hour Non-Reserve	Law Charney Hall		34
+23	hcirc	24 hour	Heafey 24-Hour Non-Reserve	Law Circulation Desk		5
+23	hstac	24 hour	Heafey 24-Hour Non-Reserve	Law Stacks		1
+23	hstau	24 hour	Heafey 24-Hour Non-Reserve	Law Reserve Room		1646
+24	arslw	locally circulating	Heafey 3-Weeks	Law Remote Storage (ARS)		14251
+24	hchar	3 week	Heafey 3-Weeks	Law Charney Hall		6
+24	hstau	3 week	Heafey 3-Weeks	Law Reserve Room		1
+25	arspr	locally circulating	UL Bound Periodicals	University Library ARS Bound Periodicals		175975
+25	umnfo	locally circulating	UL Bound Periodicals	University Library Folios, 3rd Floor		13
+25	uprar	locally circulating	UL Bound Periodicals	University Library ARS Bound Periodicals		3
+25	uprpr	locally circulating	UL Bound Periodicals	University Library Periodicals, 2nd Floor		2295
+26	ursrv	4 hour	UL 4-Hour Reserve	University Library Course Reserves, Library Help Desk		26
+27	ursrv	24 hour	UL 24-Hour Reserve	University Library Course Reserves, Library Help Desk		6
+28	ursrv	4 hour NR	UL 4-Hour Reserve, No Renewal	University Library Course Reserves, Library Help Desk		17
+30	arscr	locally circulating	VHS - No LINK+	University Library ARS Curriculum Collection		1
+30	arsgd	locally circulating	VHS - No LINK+	University Library ARS Government Documents		2
+30	arsvd	locally circulating	VHS - No LINK+	University Library ARS Video Collection		4011
+30	hchar	locally circulating	VHS - No LINK+	Law Charney Hall		41
+30	hcirc	locally circulating	VHS - No LINK+	Law Circulation Desk		1
+30	hfol	locally circulating	VHS - No LINK+	Law Folio		3
+30	hres	locally circulating	VHS - No LINK+	Law Closed Reserve Room		15
+30	hstac	locally circulating	VHS - No LINK+	Law Stacks		10
+30	hstau	locally circulating	VHS - No LINK+	Law Reserve Room		5
+30	ucrst	locally circulating	VHS - No LINK+	University Library Curriculum Collection, 2nd Floor		2
+30	uvdeo	locally circulating	VHS - No LINK+	University Library Video Collection		100
+31	ars29	library use only	VHS - Non-Circulating	University Library Archives & Special Collections - Multimedia, 3rd Floor		17
+31	arslw	locally circulating	VHS - Non-Circulating	Law Remote Storage (ARS)		191
+31	arsvd	library use only	VHS - Non-Circulating	University Library ARS Video Collection		465
+31	hstac	library use only	VHS - Non-Circulating	Law Stacks		2
+31	hstau	library use only	VHS - Non-Circulating	Law Reserve Room		2
+31	uscmd	library use only	VHS - Non-Circulating	University Library Archives & Special Collections - Multimedia, 3rd Floor		143
+31	uscol	library use only	VHS - Non-Circulating	University Library Archives & Special Collections, 3rd Floor		1
+31	uscua	library use only	VHS - Non-Circulating	University Library Archives & Special Collections - University Archives, 3rd Floor		1
+31	utsnc	library use only	VHS - Non-Circulating	University Library Technical Services		1
+31	uvdeo	library use only	VHS - Non-Circulating	University Library Video Collection		5
+32	arscr	locally circulating	DVD - No LINK+	University Library ARS Curriculum Collection		2
+32	arsvd	locally circulating	DVD - No LINK+	University Library ARS Video Collection		2229
+32	hchar	locally circulating	DVD - No LINK+	Law Charney Hall		24
+32	hcirc	locally circulating	DVD - No LINK+	Law Circulation Desk		1
+32	hres	locally circulating	DVD - No LINK+	Law Closed Reserve Room		334
+32	hstau	locally circulating	DVD - No LINK+	Law Reserve Room		101
+32	ucrst	locally circulating	DVD - No LINK+	University Library Curriculum Collection, 2nd Floor		4
+32	ugdcd	locally circulating	DVD - No LINK+	University Library Government Documents - CD Cabinet, 3rd Floor		1
+32	uvdeo	locally circulating	DVD - No LINK+	University Library Video Collection		16
+33	arslw	library use only	DVD - Non-Circulating	Law Remote Storage (ARS)		203
+33	arsvd	library use only	DVD - Non-Circulating	University Library ARS Video Collection		4
+33	hres	library use only	DVD - Non-Circulating	Law Closed Reserve Room		2
+33	ucrst	library use only	DVD - Non-Circulating	University Library Curriculum Collection, 2nd Floor		1
+33	uscrr	library use only	DVD - Non-Circulating	University Library Archives & Special Collections - Reading Room, 3rd Floor		2
+34	arsvd	locally circulating	Blu-Ray - No LINK+	University Library ARS Video Collection		11
+36	ursrv	library use only	UL 4-Hour Rsrv, Office Supplies	University Library Course Reserves, Library Help Desk		28
+38	ursrv	library use only	UL 4-HR Rsrv, Electronic, NoRnwl	University Library Course Reserves, Library Help Desk		55
+50	arscr	locally circulating	Circulating - No LINK+	University Library ARS Curriculum Collection		18
+50	arsgd	locally circulating	Circulating - No LINK+	University Library ARS Government Documents		197
+50	arsgt	locally circulating	Circulating - No LINK+	University Library ARS Graduate Theological Union Collection		43054
+50	arsms	locally circulating	Circulating - No LINK+	University Library ARS Main Stacks		635
+50	arsrf	locally circulating	Circulating - No LINK+	University Library ARS Reference Collection		122
+50	ucrst	locally circulating	Circulating - No LINK+	University Library Curriculum Collection, 2nd Floor		25
+50	ugdar	locally circulating	Circulating - No LINK+	University Library ARS Government Documents		6192
+50	ugdll	locally circulating	Circulating - No LINK+	University Library Government Documents, Lower Level		52
+50	ugdmi	locally circulating	Circulating - No LINK+	University Library Government Documents - Microforms, 3rd Floor		5843
+50	ugdmp	locally circulating	Circulating - No LINK+	University Library Government Documents - Maps, Lower Level	Atlases, posters, flats	46
+50	ugtmn	locally circulating	Circulating - No LINK+	University Library Graduate Theological Union Collection		6
+50	umnfo	locally circulating	Circulating - No LINK+	University Library Folios, 3rd Floor		356
+50	umnst	locally circulating	Circulating - No LINK+	University Library Main Stacks, Lower Level		3262
+50	umpmp	locally circulating	Circulating - No LINK+	University Library Maps, Lower Level	Atlases, posters, flats	14
+50	uppst	locally circulating	Circulating - No LINK+	University Library Popular Reading, 1st Floor		665
+50	urfll	locally circulating	Circulating - No LINK+	University Library Reference, Lower Level		2
+50	ursrv	locally circulating	Circulating - No LINK+	University Library Course Reserves, Library Help Desk		49
+50	utsnc	locally circulating	Circulating - No LINK+	University Library Technical Services		1
+60	arsad	locally circulating	Audio Recordings	University Library ARS Audio Collection		418
+60	uadio	locally circulating	Audio Recordings	University Library Audio Collection		18
+60	ucrst	locally circulating	Audio Recordings	University Library Curriculum Collection, 2nd Floor		3
+60	ugdcd	locally circulating	Audio Recordings	University Library Government Documents - CD Cabinet, 3rd Floor		2
+60	umnfo	locally circulating	Audio Recordings	University Library Folios, 3rd Floor		2
+60	uscfp	library use only	Audio Recordings	University Library Archives & Special Collections - Faculty Publications, 3rd Floor		5
+60	uscmd	library use only	Audio Recordings	University Library Archives & Special Collections - Multimedia, 3rd Floor		7

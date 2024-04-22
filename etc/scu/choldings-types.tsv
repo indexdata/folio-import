@@ -1,0 +1,29 @@
+SCODE2	SCODE2 Label	Folio HoldingsType
+-	 ---	Undetermined
+1	EJRNAL+PAPER	Electronic Journal and Paper
+a	ARCHIVE	Undetermined
+b	PREBOUND JRNL	Prebound Journal
+c	SEP.MONO.SER.	Monograph Series - Classed Separately
+d	CDROM IND+ABS	CD-Rom Index and Abstracts
+e	CDROM (OTHER)	CD-Rom (Other)
+f	MFICHE ONLY	Microfiche
+g	MFICHE+PAPER	Microfiche and Paper
+h	MONO W/SUPPL	Monograph with Supplements
+i	INDEX	Index
+j	ELECTRONIC JRN	Electronic Journal
+k	SER.HARDCOPY	Serial
+l	LOOSE-LEAF	Loose-leaf
+m	MONOGRAPH	Monograph
+n	NEWSPAPER	Newspaper
+o	OTHER CHK-IN	Undetermined
+p	PERIOD. UNBND	Unbound Periodical
+q	MFILM+PAPER	Microfilm and Paper
+r	MFILM ONLY	Microfilm
+s	SERIAL	Serial
+t	ANAL.MONO.SER	Monographic Series - Classed Together
+u	UNBND CONT.	Unbound Continuation
+v	MULTI-VOLUME	Multi-volume Monograph
+w	MONO W/POCKET	Monograph with Pocket
+x	ELECTRONIC REF	Electronic Reference
+y	SUPPRESS	Undetermined
+z	E-CONFERENCE	E-Conference
