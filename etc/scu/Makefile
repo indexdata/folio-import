@@ -10,11 +10,19 @@ tsvdir=$(wd)/etc/$(lib)
 iref=$(data)/ref/inv
 aref=$(data)/ref/acq
 rules=$(wd)/etc/scu/mapping-rules.json
-split=-l 300000
+split=-l 350000
 
-inventory:
+instances:
 	cd $(invdir); cat marc0*.mrc > bibs.mrc
 	./marc2inst-$(lib).pl $(rules) $(iref) $(mfile) > $(log)/make-marc.log 2>$(log)/make-marc-err.log &
+
+checkin-holdings:
+	cd $(invdir); cat holdings0*.jsonl > checkins.jsonl
+	./holdings-$(lib).pl $(iref) $(invdir)/bibs.map $(invdir)/checkins.jsonl > $(log)/make-holdings.log &
+
+item:
+	cd $(invdir); cat items0*.jsonl > items.jsonl
+	./items-$(lib).pl $(iref) $(invdir)/bibs.map $(invdir)/items.jsonl > $(log)/make-items.log &
 
 split-inventory: $(invdir)/*.jsonl
 	split $(split) $(invdir)/*instances.jsonl $(invdir)/in
@@ -32,6 +40,8 @@ setup:
 	cp $(wd)/bash/reference_acq.sh .
 	cp $(wd)/bash/reference_finance.sh .
 	cp $(wd)/inventory/marc2inst-$(lib).pl .
+	cp $(wd)/inventory/holdings-$(lib).pl .
+	cp $(wd)/inventory/items-$(lib).pl .
 	mkdir -p $(iref)
 	mkdir -p $(aref)
 	mkdir -p $(log)

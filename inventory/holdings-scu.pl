@@ -159,11 +159,11 @@ open MAP, $map_file;
 my $mi = 0;
 while (<MAP>) {
   $mi++;
-  print "  $mi map lines read\n" if $mi % 1000000 == 0;
   chomp;
   my @d = split(/\|/, $_, 2);
   $inst_map->{$d[0]} = $d[1];
 }
+print "  $mi map lines read\n";
 close MAP;
 
 $ref_dir =~ s/\/$//;
@@ -221,18 +221,18 @@ foreach (@ARGV) {
   while (<IN>) { 
     chomp;
     my $obj = $json->decode($_);
-    my $sc3 = $obj->{fixedFields}->{'118'}->{value};
+    my $sc3 = $obj->{fixedFields}->{'118'}->{value} || '';
     if ($sc3 eq 'z') {
       print PFILE $_ . "\n", 
       $pcount++;
       next;
     }
-    my $iii_bid = $obj->{bibIds}->[0];
+    my $iii_bid = $obj->{bibIds}->[0] || '-------';
     my $bid = "b$iii_bid";
     my $psv = $inst_map->{$bid} || '';
     my @b = split(/\|/, $psv);
     if (!$b[0]) {
-      print "ERROR instanceId not found for $bid!\n";
+      print "ERROR instanceId not found for $bid! (c$obj->{id})\n";
       $errcount++;
       next;
     }
@@ -372,8 +372,7 @@ foreach (@ARGV) {
 }
 my $end = time;
 my $secs = $end - $start;
-my $mins = $secs/60;
-print "\n$ttl Sierra holdings processed in $mins min.";
+print "\n$ttl Sierra holdings processed in $secs secs.";
 print "\n$pcount purged";
 print "\n$errcount Errors\n\n";
 

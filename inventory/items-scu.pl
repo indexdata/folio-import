@@ -452,8 +452,8 @@ sub make_hi {
     }
     my $mtkey = "$itype:$loc";
     $irec->{permanentLoanTypeId} = $sierra2folio->{loantypes}->{$mtkey} || $refdata->{loantypes}->{'can circulate'};
-    $irec->{materialTypeId} = $sierra2folio->{mtypes}->{$mtkey} || '24a36257-ddae-4309-bae3-593d53a81e5e'; # defaulting to unspecified
-    if ($irec->{materialTypeId} eq '24a36257-ddae-4309-bae3-593d53a81e5e') {
+    $irec->{materialTypeId} = $sierra2folio->{mtypes}->{$mtkey} || $refdata->{mtypes}->{unspecified};
+    if ($irec->{materialTypeId} eq '71fbd940-1027-40a6-8a48-49b44d795e46') {
       print "WARN FOLIO material type not found for $mtkey\n";
     }
     if ($irec->{permanentLoanTypeId} eq '2b94c631-fca9-4892-a730-03ee529ffe27') {
