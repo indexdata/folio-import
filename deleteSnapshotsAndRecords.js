@@ -20,12 +20,12 @@ const wait = (ms) => {
   try {
     let inData;
 
-    const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
+    let config = await getAuthToken(superagent);
+
     if (config.tenant !== anything) {
       throw new Error(`Tenant "${anything}" does not match the current tenant "${config.tenant}!`);
     }
 
-    const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
     const endpoint = 'source-storage/snapshots';
     const getUrl = config.okapi + '/' + endpoint + '?limit=1000';
     let refData;
@@ -35,7 +35,7 @@ const wait = (ms) => {
         .get(getUrl)
         .set('accept', 'application/json')
         .set('x-okapi-tenant', config.tenant)
-        .set('x-okapi-token', authToken); 
+        .set('x-okapi-token', config.token); 
       refData = res.body;
     } catch (e) {
       console.log(e);
@@ -50,7 +50,7 @@ const wait = (ms) => {
           .delete(`${config.okapi}/source-storage/snapshots/${id}`)
           .set('accept', 'text/plain')
           .set('x-okapi-tenant', config.tenant)
-          .set('x-okapi-token', authToken);
+          .set('x-okapi-token', config.token);
       } catch (e) {
         console.error(e.response || e);
       }

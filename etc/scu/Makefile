@@ -10,7 +10,7 @@ tsvdir=$(wd)/etc/$(lib)
 iref=$(data)/ref/inv
 aref=$(data)/ref/acq
 rules=$(wd)/etc/scu/mapping-rules.json
-split=-l 350000
+odir=$(data)/orders
 
 instances:
 	cd $(invdir); cat marc0*.mrc > bibs.mrc
@@ -24,17 +24,27 @@ item:
 	cd $(invdir); cat items0*.jsonl > items.jsonl
 	./items-$(lib).pl $(iref) $(invdir)/bibs.map $(invdir)/items.jsonl > $(log)/make-items.log &
 
-split-inventory: $(invdir)/*.jsonl
-	split $(split) $(invdir)/*instances.jsonl $(invdir)/in
-	split $(split) $(invdir)/*holdings.jsonl $(invdir)/ho
-	split $(split) $(invdir)/*items.jsonl $(invdir)/it
-	split $(split) $(invdir)/*srs.jsonl $(invdir)/sr
+split-inventory: $(invdir)/bibs_instances.jsonl
+	cd $(invdir); cat *-holdings.jsonl > all_holdings.jsonl
+	split -l 325000 $(invdir)/bibs_instances.jsonl $(invdir)/in
+	split -l 3000 $(invdir)/bibs_presuc.jsonl $(invdir)/ps
+	split -l 160000 $(invdir)/all_holdings.jsonl $(invdir)/ho
+	rm $(invdir)/all_holdings.jsonl
+	split -l 240000 $(invdir)/items-items.jsonl $(invdir)/it
+	split -l 325000 $(invdir)/bibs_srs.jsonl $(invdir)/sr
+
+order:
+	cd $(odir); cat orders0* > all_orders.jsonl
+	cd $(wd)/acquisitions; node scuOrders.js $(aref) $(invdir)/bibs_instances.jsonl $(odir)/all_orders.jsonl
 
 clean-inventory: $(iinfo)
 	cd $(invdir); rm bibs.mrc; mv raw.marc raw.mrc
 
 setup:
 	cd $(wd); git pull	
+	cp $(tsvdir)/*.tsv $(iref)
+	cp $(tsvdir)/locations.tsv $(aref)
+	cp $(tsvdir)/fund-codes.json $(aref)
 	cp $(wd)/configs/bash/$(lscript) .
 	cp $(wd)/bash/reference_inventory.sh .
 	cp $(wd)/bash/reference_acq.sh .
@@ -49,7 +59,6 @@ setup:
 	./reference_inventory.sh $(iref)
 	./reference_acq.sh $(aref)
 	./reference_finance.sh $(aref)
-	cp $(tsvdir)/*.tsv $(iref)
 
 clean:
 	rm -rf $(iref)
