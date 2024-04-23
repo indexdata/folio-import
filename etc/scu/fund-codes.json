@@ -1,0 +1,5524 @@
+{
+  "entries": [
+    {
+      "code": "lcbal",
+      "fundName": "Business - Pool",
+      "note1": "libraq-46347-bus-lce",
+      "extCode": 185,
+      "extFundName": "libraq-46347-bus-lce",
+      "fundType": "fbal"
+    },
+    {
+      "code": "bbk",
+      "fundName": "BUSI BKS 7802 PRINT",
+      "note1": "7802-11001-BUS-PRNT",
+      "extCode": 140,
+      "extFundName": "7802-11001-BUS-PRNT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "bbk",
+      "fundName": "BUSI BKS 7802 PRINT",
+      "note1": "7802-11001-BUS-PRNT",
+      "extCode": 140,
+      "extFundName": "7802-11001-BUS-PRNT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "bbk",
+      "fundName": "BUSI BKS 7802 PRINT",
+      "note1": "7802-11001-BUS-PRNT",
+      "extCode": 140,
+      "extFundName": "7802-11001-BUS-PRNT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "ebk",
+      "fundName": "ENGR BKS 7802 PRNT",
+      "note1": "7802-11001-ENGR-PRNT",
+      "extCode": 146,
+      "extFundName": "7802-11001-ENGR-PRNT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "ebk",
+      "fundName": "ENGR BKS 7802 PRNT",
+      "note1": "7802-11001-ENGR-PRNT",
+      "extCode": 146,
+      "extFundName": "7802-11001-ENGR-PRNT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ebk",
+      "fundName": "ENGR BKS 7802 PRNT",
+      "note1": "7802-11001-ENGR-PRNT",
+      "extCode": 146,
+      "extFundName": "7802-11001-ENGR-PRNT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cbk",
+      "fundName": "ECPPM- BKS. 7802",
+      "note1": "7802-11001-ULACQ-ECPPM",
+      "extCode": 152,
+      "extFundName": "7802-11001-ECPPM",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cbk",
+      "fundName": "ECPPM- BKS. 7802",
+      "note1": "7802-11001-ULACQ-ECPPM",
+      "extCode": 152,
+      "extFundName": "7802-11001-ECPPM",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cbk",
+      "fundName": "ECPPM- BKS. 7802",
+      "note1": "7802-11001-ULACQ-ECPPM",
+      "extCode": 152,
+      "extFundName": "7802-11001-ECPPM",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "rbk",
+      "fundName": "REF  BKS 7802 PRNT",
+      "note1": "7802-11001-ULACQ-RBK",
+      "extCode": 158,
+      "extFundName": "7802-11001-REF-PRNT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "rbk",
+      "fundName": "REF  BKS 7802 PRNT",
+      "note1": "7802-11001-ULACQ-RBK",
+      "extCode": 158,
+      "extFundName": "7802-11001-REF-PRNT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "rbk",
+      "fundName": "REF  BKS 7802 PRNT",
+      "note1": "7802-11001-ULACQ-RBK",
+      "extCode": 158,
+      "extFundName": "7802-11001-REF-PRNT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "gbk",
+      "fundName": "GENL BKS 7802 PRNT",
+      "note1": "7802-11001-GENL-PRNT",
+      "extCode": 164,
+      "extFundName": "7802-11001-GENL-PRNT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "gbk",
+      "fundName": "GENL BKS 7802 PRNT",
+      "note1": "7802-11001-GENL-PRNT",
+      "extCode": 164,
+      "extFundName": "7802-11001-GENL-PRNT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "gbk",
+      "fundName": "GENL BKS 7802 PRNT",
+      "note1": "7802-11001-GENL-PRNT",
+      "extCode": 164,
+      "extFundName": "7802-11001-GENL-PRNT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "ogaal",
+      "fundName": "ORRADRE GIFT 46348",
+      "note1": "libraq-46348-arsci",
+      "extCode": 0,
+      "extFundName": "",
+      "fundType": "fbal"
+    },
+    {
+      "code": "lcbbk",
+      "fundName": "7802 - books",
+      "note1": "7802-46347-bus-lce",
+      "extCode": 60,
+      "extFundName": "7802-46347-bus-lce",
+      "fundType": "fbal"
+    },
+    {
+      "code": "lcbbk",
+      "fundName": "7802 - books",
+      "note1": "7802-46347-bus-lce",
+      "extCode": 60,
+      "extFundName": "7802-46347-bus-lce",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "lcbbk",
+      "fundName": "7802 - books",
+      "note1": "7802-46347-bus-lce",
+      "extCode": 60,
+      "extFundName": "7802-46347-bus-lce",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "ogbhu",
+      "fundName": "7802 - BOOKS",
+      "note1": "7802-46348-arsci-urhu",
+      "extCode": 201,
+      "extFundName": "7802-46348-ARSCI-URHU",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ogbhu",
+      "fundName": "7802 - BOOKS",
+      "note1": "7802-46348-arsci-urhu",
+      "extCode": 201,
+      "extFundName": "7802-46348-ARSCI-URHU",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "ogbhu",
+      "fundName": "7802 - BOOKS",
+      "note1": "7802-46348-arsci-urhu",
+      "extCode": 201,
+      "extFundName": "7802-46348-ARSCI-URHU",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "bindl",
+      "fundName": "BINDING -  POOL",
+      "note1": "",
+      "extCode": 47,
+      "extFundName": "libraq-11001-bind",
+      "fundType": "fbal"
+    },
+    {
+      "code": "pbk",
+      "fundName": "bk binding 7802",
+      "note1": "7802-11001-ULACQ-BIND",
+      "extCode": 170,
+      "extFundName": "7802-11001-BIND",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ogbsc",
+      "fundName": "7802 - books/sci",
+      "note1": "7802-46348-arsci-ursc",
+      "extCode": 202,
+      "extFundName": "7802-46348-ARSCI-URSC",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "ogbsc",
+      "fundName": "7802 - books/sci",
+      "note1": "7802-46348-arsci-ursc",
+      "extCode": 202,
+      "extFundName": "7802-46348-ARSCI-URSC",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "ogbsc",
+      "fundName": "7802 - books/sci",
+      "note1": "7802-46348-arsci-ursc",
+      "extCode": 202,
+      "extFundName": "7802-46348-ARSCI-URSC",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ogbss",
+      "fundName": "7802 - books/so.sci",
+      "note1": "7802-46348-arsci-urss",
+      "extCode": 203,
+      "extFundName": "7802-46348-ARSCI-URSS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ogbss",
+      "fundName": "7802 - books/so.sci",
+      "note1": "7802-46348-arsci-urss",
+      "extCode": 203,
+      "extFundName": "7802-46348-ARSCI-URSS",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "ogbss",
+      "fundName": "7802 - books/so.sci",
+      "note1": "7802-46348-arsci-urss",
+      "extCode": 203,
+      "extFundName": "7802-46348-ARSCI-URSS",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "ogvhu",
+      "fundName": "7850 - audvid/human",
+      "note1": "7850-46348-arsci-urhu",
+      "extCode": 204,
+      "extFundName": "7850-46348-ARSCI-URHU",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "ogvhu",
+      "fundName": "7850 - audvid/human",
+      "note1": "7850-46348-arsci-urhu",
+      "extCode": 204,
+      "extFundName": "7850-46348-ARSCI-URHU",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "ogvhu",
+      "fundName": "7850 - audvid/human",
+      "note1": "7850-46348-arsci-urhu",
+      "extCode": 204,
+      "extFundName": "7850-46348-ARSCI-URHU",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ogvsc",
+      "fundName": "7850 - audvid/sci",
+      "note1": "7850-46348-arsci-ursc",
+      "extCode": 205,
+      "extFundName": "7850-46348-ARSCI-URSC",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "ogvsc",
+      "fundName": "7850 - audvid/sci",
+      "note1": "7850-46348-arsci-ursc",
+      "extCode": 205,
+      "extFundName": "7850-46348-ARSCI-URSC",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ogvsc",
+      "fundName": "7850 - audvid/sci",
+      "note1": "7850-46348-arsci-ursc",
+      "extCode": 205,
+      "extFundName": "7850-46348-ARSCI-URSC",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "aal",
+      "fundName": "HUMAN/ARTS-POOL",
+      "note1": "11001-ULACQ-ASLIB-CASHUM",
+      "extCode": 196,
+      "extFundName": "LIBRAQ-11001-ARSCI",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ogvss",
+      "fundName": "7850 - audvid/so.sc",
+      "note1": "7850-46348-arsci-urss",
+      "extCode": 206,
+      "extFundName": "7850-46348-ARSCI-URSS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ogvss",
+      "fundName": "7850 - audvid/so.sc",
+      "note1": "7850-46348-arsci-urss",
+      "extCode": 206,
+      "extFundName": "7850-46348-ARSCI-URSS",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "ogvss",
+      "fundName": "7850 - audvid/so.sc",
+      "note1": "7850-46348-arsci-urss",
+      "extCode": 206,
+      "extFundName": "7850-46348-ARSCI-URSS",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "bse",
+      "fundName": "BUSI  SER 7840 PRNT",
+      "note1": "7840-11001-BUS-PRNT",
+      "extCode": 142,
+      "extFundName": "7840-11001-BUS-PRNT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "bse",
+      "fundName": "BUSI  SER 7840 PRNT",
+      "note1": "7840-11001-BUS-PRNT",
+      "extCode": 142,
+      "extFundName": "7840-11001-BUS-PRNT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "bse",
+      "fundName": "BUSI  SER 7840 PRNT",
+      "note1": "7840-11001-BUS-PRNT",
+      "extCode": 142,
+      "extFundName": "7840-11001-BUS-PRNT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "bal",
+      "fundName": "BUS -  POOL",
+      "note1": "libraq-11001-bus",
+      "extCode": 197,
+      "extFundName": "LIBRAQ-11001-BUS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "bon",
+      "fundName": "Business  MRDF 7860",
+      "note1": "7860-11001-ULACQ-BUS",
+      "extCode": 145,
+      "extFundName": "7860-11001-BUS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "bon",
+      "fundName": "Business  MRDF 7860",
+      "note1": "7860-11001-ULACQ-BUS",
+      "extCode": 145,
+      "extFundName": "7860-11001-BUS",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "bon",
+      "fundName": "Business  MRDF 7860",
+      "note1": "7860-11001-ULACQ-BUS",
+      "extCode": 145,
+      "extFundName": "7860-11001-BUS",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "bav",
+      "fundName": "BUSINESS  AV 7850",
+      "note1": "7850-11001-BUS",
+      "extCode": 144,
+      "extFundName": "7850-11001-BUS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "bav",
+      "fundName": "BUSINESS  AV 7850",
+      "note1": "7850-11001-BUS",
+      "extCode": 144,
+      "extFundName": "7850-11001-BUS",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "bav",
+      "fundName": "BUSINESS  AV 7850",
+      "note1": "7850-11001-BUS",
+      "extCode": 144,
+      "extFundName": "7850-11001-BUS",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "eal",
+      "fundName": "ENGR-  POOL",
+      "note1": "libraq-11001-engr",
+      "extCode": 49,
+      "extFundName": "libraq-11001-engr",
+      "fundType": "fbal"
+    },
+    {
+      "code": "bmi",
+      "fundName": "BUS  MISC 7822 PRNT",
+      "note1": "7822-11001-BUS-PRNT",
+      "extCode": 141,
+      "extFundName": "7822-11001-BUS-PRNT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ral",
+      "fundName": "REF -  POOL",
+      "note1": "libraq-11001-re|fPOP|a",
+      "extCode": 198,
+      "extFundName": "LIBRAQ-11001-REF",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cal",
+      "fundName": "CPE- POOL",
+      "note1": "libraq-11001-cpess",
+      "extCode": 50,
+      "extFundName": "libraq-11001-cpess",
+      "fundType": "fbal"
+    },
+    {
+      "code": "boaal",
+      "fundName": "Boland/ARSCI- POOL",
+      "note1": "41142-ULACQ-ASLIB-ARSCI",
+      "extCode": 0,
+      "extFundName": "",
+      "fundType": "fbal"
+    },
+    {
+      "code": "gal",
+      "fundName": "GENL -  POOL",
+      "note1": "libraq-11001-genl",
+      "extCode": 51,
+      "extFundName": "libraq-11001-genl",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cbp",
+      "fundName": "Commemorative Books",
+      "note1": "",
+      "extCode": 0,
+      "extFundName": "",
+      "fundType": "fbal"
+    },
+    {
+      "code": "bral",
+      "fundName": "Brown-Ecppm- POOL",
+      "note1": "41143-ULACQ-ECPPM-BROWN",
+      "extCode": 0,
+      "extFundName": "",
+      "fundType": "fbal"
+    },
+    {
+      "code": "gifts",
+      "fundName": "Gifts  -  Orradre",
+      "note1": "",
+      "extCode": 0,
+      "extFundName": "",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "gifts",
+      "fundName": "Gifts  -  Orradre",
+      "note1": "",
+      "extCode": 0,
+      "extFundName": "",
+      "fundType": "fbal"
+    },
+    {
+      "code": "gifts",
+      "fundName": "Gifts  -  Orradre",
+      "note1": "",
+      "extCode": 0,
+      "extFundName": "",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "ogbal",
+      "fundName": "Business - Pool",
+      "note1": "libraq-46348-ulacq-bus",
+      "extCode": 207,
+      "extFundName": "libraq-46348-ulacq-bus",
+      "fundType": "fbal"
+    },
+    {
+      "code": "eon",
+      "fundName": "Engineer. MRDF 7860",
+      "note1": "7860-11001-ULACQ-ENGR",
+      "extCode": 151,
+      "extFundName": "7860-11001-ENGR",
+      "fundType": "fbal"
+    },
+    {
+      "code": "emi",
+      "fundName": "ENGR MISC 7822 PRNT",
+      "note1": "7822-11001-ENGR-PRNT",
+      "extCode": 147,
+      "extFundName": "7822-11001-ENGR-PRNT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ese",
+      "fundName": "ENGR SER 7840 PRNT",
+      "note1": "7840-11001-ENGR-PRNT",
+      "extCode": 148,
+      "extFundName": "7840-11001-ENGR-PRNT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ese",
+      "fundName": "ENGR SER 7840 PRNT",
+      "note1": "7840-11001-ENGR-PRNT",
+      "extCode": 148,
+      "extFundName": "7840-11001-ENGR-PRNT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "ese",
+      "fundName": "ENGR SER 7840 PRNT",
+      "note1": "7840-11001-ENGR-PRNT",
+      "extCode": 148,
+      "extFundName": "7840-11001-ENGR-PRNT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "eav",
+      "fundName": "ENGR AV 7850",
+      "note1": "7850-11001-ENGR",
+      "extCode": 150,
+      "extFundName": "7850-11001-ENGR",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "eav",
+      "fundName": "ENGR AV 7850",
+      "note1": "7850-11001-ENGR",
+      "extCode": 150,
+      "extFundName": "7850-11001-ENGR",
+      "fundType": "fbal"
+    },
+    {
+      "code": "eav",
+      "fundName": "ENGR AV 7850",
+      "note1": "7850-11001-ENGR",
+      "extCode": 150,
+      "extFundName": "7850-11001-ENGR",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "con",
+      "fundName": "ECPPM -  MRDF 7860",
+      "note1": "7860-11001-ULACQ-ECPPM",
+      "extCode": 157,
+      "extFundName": "7860-11001-ECPPM",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cmi",
+      "fundName": "ECPPM -  MISC 7822",
+      "note1": "7822-11001-ULACQ-ECPPM",
+      "extCode": 153,
+      "extFundName": "7822-11001-ECPPM",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cse",
+      "fundName": "ECPPM- SER. 7840",
+      "note1": "7840-11001-ULACQ-ECPPM",
+      "extCode": 154,
+      "extFundName": "7840-11001-ECPPM",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cse",
+      "fundName": "ECPPM- SER. 7840",
+      "note1": "7840-11001-ULACQ-ECPPM",
+      "extCode": 154,
+      "extFundName": "7840-11001-ECPPM",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cse",
+      "fundName": "ECPPM- SER. 7840",
+      "note1": "7840-11001-ULACQ-ECPPM",
+      "extCode": 154,
+      "extFundName": "7840-11001-ECPPM",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cav",
+      "fundName": "ECPPM-  A.V. 7850",
+      "note1": "7850-11001-ULACQ-ECPPM",
+      "extCode": 156,
+      "extFundName": "7850-11001-ECPPM",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cav",
+      "fundName": "ECPPM-  A.V. 7850",
+      "note1": "7850-11001-ULACQ-ECPPM",
+      "extCode": 156,
+      "extFundName": "7850-11001-ECPPM",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cav",
+      "fundName": "ECPPM-  A.V. 7850",
+      "note1": "7850-11001-ULACQ-ECPPM",
+      "extCode": 156,
+      "extFundName": "7850-11001-ECPPM",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "ron",
+      "fundName": "REF -  MRDF 7860",
+      "note1": "7860-11001-ULACQ-REF",
+      "extCode": 163,
+      "extFundName": "7860-11001-REF",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "ron",
+      "fundName": "REF -  MRDF 7860",
+      "note1": "7860-11001-ULACQ-REF",
+      "extCode": 163,
+      "extFundName": "7860-11001-REF",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ron",
+      "fundName": "REF -  MRDF 7860",
+      "note1": "7860-11001-ULACQ-REF",
+      "extCode": 163,
+      "extFundName": "7860-11001-REF",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "rmi",
+      "fundName": "REF  MISC 7822 PRNT",
+      "note1": "7822-11001-REF-PRNT",
+      "extCode": 159,
+      "extFundName": "7822-11001-REF-PRNT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "rmi",
+      "fundName": "REF  MISC 7822 PRNT",
+      "note1": "7822-11001-REF-PRNT",
+      "extCode": 159,
+      "extFundName": "7822-11001-REF-PRNT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "rmi",
+      "fundName": "REF  MISC 7822 PRNT",
+      "note1": "7822-11001-REF-PRNT",
+      "extCode": 159,
+      "extFundName": "7822-11001-REF-PRNT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "rse",
+      "fundName": "REF SER 7840 PRNT",
+      "note1": "7840-11001-REF-PRNT",
+      "extCode": 160,
+      "extFundName": "7840-11001-REF-PRNT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "rse",
+      "fundName": "REF SER 7840 PRNT",
+      "note1": "7840-11001-REF-PRNT",
+      "extCode": 160,
+      "extFundName": "7840-11001-REF-PRNT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "rse",
+      "fundName": "REF SER 7840 PRNT",
+      "note1": "7840-11001-REF-PRNT",
+      "extCode": 160,
+      "extFundName": "7840-11001-REF-PRNT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "rav",
+      "fundName": "REF AV 7850",
+      "note1": "7850-11001-REF",
+      "extCode": 162,
+      "extFundName": "7850-11001-REF",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "rav",
+      "fundName": "REF AV 7850",
+      "note1": "7850-11001-REF",
+      "extCode": 162,
+      "extFundName": "7850-11001-REF",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "rav",
+      "fundName": "REF AV 7850",
+      "note1": "7850-11001-REF",
+      "extCode": 162,
+      "extFundName": "7850-11001-REF",
+      "fundType": "fbal"
+    },
+    {
+      "code": "gon",
+      "fundName": "GENL  MRDF- 7860",
+      "note1": "7860-11001-ULACQ-GENL",
+      "extCode": 169,
+      "extFundName": "7860-11001-GENL",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "gon",
+      "fundName": "GENL  MRDF- 7860",
+      "note1": "7860-11001-ULACQ-GENL",
+      "extCode": 169,
+      "extFundName": "7860-11001-GENL",
+      "fundType": "fbal"
+    },
+    {
+      "code": "gon",
+      "fundName": "GENL  MRDF- 7860",
+      "note1": "7860-11001-ULACQ-GENL",
+      "extCode": 169,
+      "extFundName": "7860-11001-GENL",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "gmi",
+      "fundName": "General miscellaneous",
+      "note1": "7860-11001-ULACQ-GMI",
+      "extCode": 320,
+      "extFundName": "7860-11001-ULACQ-GMI",
+      "fundType": "fbal"
+    },
+    {
+      "code": "gmi",
+      "fundName": "General miscellaneous",
+      "note1": "7860-11001-ULACQ-GMI",
+      "extCode": 320,
+      "extFundName": "7860-11001-ULACQ-GMI",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "gmi",
+      "fundName": "General miscellaneous",
+      "note1": "7860-11001-ULACQ-GMI",
+      "extCode": 320,
+      "extFundName": "7860-11001-ULACQ-GMI",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "gse",
+      "fundName": "GENL  SER 7840 PRNT",
+      "note1": "7840-11001-GENL-PRNT",
+      "extCode": 166,
+      "extFundName": "7840-11001-GENL-PRNT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "gse",
+      "fundName": "GENL  SER 7840 PRNT",
+      "note1": "7840-11001-GENL-PRNT",
+      "extCode": 166,
+      "extFundName": "7840-11001-GENL-PRNT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "gse",
+      "fundName": "GENL  SER 7840 PRNT",
+      "note1": "7840-11001-GENL-PRNT",
+      "extCode": 166,
+      "extFundName": "7840-11001-GENL-PRNT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "gav",
+      "fundName": "GENL  AV 7850",
+      "note1": "7850-11001-GENL",
+      "extCode": 168,
+      "extFundName": "7850-11001-GENL",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "gav",
+      "fundName": "GENL  AV 7850",
+      "note1": "7850-11001-GENL",
+      "extCode": 168,
+      "extFundName": "7850-11001-GENL",
+      "fundType": "fbal"
+    },
+    {
+      "code": "gav",
+      "fundName": "GENL  AV 7850",
+      "note1": "7850-11001-GENL",
+      "extCode": 168,
+      "extFundName": "7850-11001-GENL",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "abkhu",
+      "fundName": "7802 - BOOKS",
+      "note1": "7802-11001-ARSCI-URHU",
+      "extCode": 74,
+      "extFundName": "7802-11001-ARSCI-URHU",
+      "fundType": "fbal"
+    },
+    {
+      "code": "abkhu",
+      "fundName": "7802 - BOOKS",
+      "note1": "7802-11001-ARSCI-URHU",
+      "extCode": 74,
+      "extFundName": "7802-11001-ARSCI-URHU",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "abkhu",
+      "fundName": "7802 - BOOKS",
+      "note1": "7802-11001-ARSCI-URHU",
+      "extCode": 74,
+      "extFundName": "7802-11001-ARSCI-URHU",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "ogbbk",
+      "fundName": "7802 - books",
+      "note1": "7802-46348-ulacq-bus",
+      "extCode": 208,
+      "extFundName": "7802-46348-ulacq-bus",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ogbbk",
+      "fundName": "7802 - books",
+      "note1": "7802-46348-ulacq-bus",
+      "extCode": 208,
+      "extFundName": "7802-46348-ulacq-bus",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "ogbbk",
+      "fundName": "7802 - books",
+      "note1": "7802-46348-ulacq-bus",
+      "extCode": 208,
+      "extFundName": "7802-46348-ulacq-bus",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "ppr",
+      "fundName": "PRESERV 7816 PRNT",
+      "note1": "7816-11001-BIND-PRNT",
+      "extCode": 171,
+      "extFundName": "7816-11001-BIND-PRNT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ppr",
+      "fundName": "PRESERV 7816 PRNT",
+      "note1": "7816-11001-BIND-PRNT",
+      "extCode": 171,
+      "extFundName": "7816-11001-BIND-PRNT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "ppr",
+      "fundName": "PRESERV 7816 PRNT",
+      "note1": "7816-11001-BIND-PRNT",
+      "extCode": 171,
+      "extFundName": "7816-11001-BIND-PRNT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "pse",
+      "fundName": "bind serials 7840",
+      "note1": "7840-11001-ULACQ-BIND",
+      "extCode": 172,
+      "extFundName": "7840-11001-BIND",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "pse",
+      "fundName": "bind serials 7840",
+      "note1": "7840-11001-ULACQ-BIND",
+      "extCode": 172,
+      "extFundName": "7840-11001-BIND",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "pse",
+      "fundName": "bind serials 7840",
+      "note1": "7840-11001-ULACQ-BIND",
+      "extCode": 172,
+      "extFundName": "7840-11001-BIND",
+      "fundType": "fbal"
+    },
+    {
+      "code": "amisc",
+      "fundName": "7822 -MISCELLANEOUS",
+      "note1": "7822-11001-ARSCI-URSC",
+      "extCode": 78,
+      "extFundName": "7822-11001-ARSCI-URSC",
+      "fundType": "fbal"
+    },
+    {
+      "code": "amihu",
+      "fundName": "7822 -MISCELLANEOUS",
+      "note1": "7822-11001-ARSCI-URHU",
+      "extCode": 77,
+      "extFundName": "7822-11001-ARSCI-URHU",
+      "fundType": "fbal"
+    },
+    {
+      "code": "abkss",
+      "fundName": "7802 - BOOKS",
+      "note1": "7802-11001-ARSCI-URSS",
+      "extCode": 76,
+      "extFundName": "7802-11001-ARSCI-URSS",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "abkss",
+      "fundName": "7802 - BOOKS",
+      "note1": "7802-11001-ARSCI-URSS",
+      "extCode": 76,
+      "extFundName": "7802-11001-ARSCI-URSS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "abkss",
+      "fundName": "7802 - BOOKS",
+      "note1": "7802-11001-ARSCI-URSS",
+      "extCode": 76,
+      "extFundName": "7802-11001-ARSCI-URSS",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "abksc",
+      "fundName": "7802 - BOOKS",
+      "note1": "7802-11001-ARSCI-URSC",
+      "extCode": 75,
+      "extFundName": "7802-11001-ARSCI-URSC",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "abksc",
+      "fundName": "7802 - BOOKS",
+      "note1": "7802-11001-ARSCI-URSC",
+      "extCode": 75,
+      "extFundName": "7802-11001-ARSCI-URSC",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "abksc",
+      "fundName": "7802 - BOOKS",
+      "note1": "7802-11001-ARSCI-URSC",
+      "extCode": 75,
+      "extFundName": "7802-11001-ARSCI-URSC",
+      "fundType": "fbal"
+    },
+    {
+      "code": "asess",
+      "fundName": "7840-Serials",
+      "note1": "7840-11001-ARSCI-URSS",
+      "extCode": 82,
+      "extFundName": "7840-11001-ARSCI-URSS",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "asess",
+      "fundName": "7840-Serials",
+      "note1": "7840-11001-ARSCI-URSS",
+      "extCode": 82,
+      "extFundName": "7840-11001-ARSCI-URSS",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "asess",
+      "fundName": "7840-Serials",
+      "note1": "7840-11001-ARSCI-URSS",
+      "extCode": 82,
+      "extFundName": "7840-11001-ARSCI-URSS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "asesc",
+      "fundName": "7840-Serials",
+      "note1": "7840-11001-ARSCI-URSC",
+      "extCode": 81,
+      "extFundName": "7840-11001-ARSCI-URSC",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "asesc",
+      "fundName": "7840-Serials",
+      "note1": "7840-11001-ARSCI-URSC",
+      "extCode": 81,
+      "extFundName": "7840-11001-ARSCI-URSC",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "asesc",
+      "fundName": "7840-Serials",
+      "note1": "7840-11001-ARSCI-URSC",
+      "extCode": 81,
+      "extFundName": "7840-11001-ARSCI-URSC",
+      "fundType": "fbal"
+    },
+    {
+      "code": "asehu",
+      "fundName": "7840-Serials",
+      "note1": "7840-11001-ARSCI-URHU",
+      "extCode": 80,
+      "extFundName": "7840-11001-ARSCI-URHU",
+      "fundType": "fbal"
+    },
+    {
+      "code": "asehu",
+      "fundName": "7840-Serials",
+      "note1": "7840-11001-ARSCI-URHU",
+      "extCode": 80,
+      "extFundName": "7840-11001-ARSCI-URHU",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "asehu",
+      "fundName": "7840-Serials",
+      "note1": "7840-11001-ARSCI-URHU",
+      "extCode": 80,
+      "extFundName": "7840-11001-ARSCI-URHU",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "amiss",
+      "fundName": "7822 -MISCELLANEOUS",
+      "note1": "7822-11001-ARSCI-URSS",
+      "extCode": 79,
+      "extFundName": "7822-11001-ARSCI-URSS",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "amiss",
+      "fundName": "7822 -MISCELLANEOUS",
+      "note1": "7822-11001-ARSCI-URSS",
+      "extCode": 79,
+      "extFundName": "7822-11001-ARSCI-URSS",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "amiss",
+      "fundName": "7822 -MISCELLANEOUS",
+      "note1": "7822-11001-ARSCI-URSS",
+      "extCode": 79,
+      "extFundName": "7822-11001-ARSCI-URSS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "aavhu",
+      "fundName": "7850 - AUDIO-VISUAL",
+      "note1": "7850-11001-ARSCI-URHU",
+      "extCode": 86,
+      "extFundName": "7850-11001-ARSCI-URHU",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "aavhu",
+      "fundName": "7850 - AUDIO-VISUAL",
+      "note1": "7850-11001-ARSCI-URHU",
+      "extCode": 86,
+      "extFundName": "7850-11001-ARSCI-URHU",
+      "fundType": "fbal"
+    },
+    {
+      "code": "aavhu",
+      "fundName": "7850 - AUDIO-VISUAL",
+      "note1": "7850-11001-ARSCI-URHU",
+      "extCode": 86,
+      "extFundName": "7850-11001-ARSCI-URHU",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "addss",
+      "fundName": "7842 - DOC DELIVERY",
+      "note1": "7842-11001-ARSCI-URSS",
+      "extCode": 85,
+      "extFundName": "7842-11001-ARSCI-URSS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "addsc",
+      "fundName": "7842 - DOC DELIVERY",
+      "note1": "7842-11001-ARSCI-URSC",
+      "extCode": 84,
+      "extFundName": "7842-11001-ARSCI-URSC",
+      "fundType": "fbal"
+    },
+    {
+      "code": "addhu",
+      "fundName": "7842 - DOC DELIVERY",
+      "note1": "7842-11001-ARSCI-URHU",
+      "extCode": 83,
+      "extFundName": "7842-11001-ARSCI-URHU",
+      "fundType": "fbal"
+    },
+    {
+      "code": "addhu",
+      "fundName": "7842 - DOC DELIVERY",
+      "note1": "7842-11001-ARSCI-URHU",
+      "extCode": 83,
+      "extFundName": "7842-11001-ARSCI-URHU",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "addhu",
+      "fundName": "7842 - DOC DELIVERY",
+      "note1": "7842-11001-ARSCI-URHU",
+      "extCode": 83,
+      "extFundName": "7842-11001-ARSCI-URHU",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "aonss",
+      "fundName": "7860 - MRDF",
+      "note1": "7860-11001-ARSCI-URSS",
+      "extCode": 91,
+      "extFundName": "7860-11001-ARSCI-URSS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "bobhu",
+      "fundName": "BOLAND/BKS/HU7802",
+      "note1": "7802-41142-ARSCI-BOLHU",
+      "extCode": 92,
+      "extFundName": "7802-41142-ARSCI-BOLHU",
+      "fundType": "fbal"
+    },
+    {
+      "code": "bobhu",
+      "fundName": "BOLAND/BKS/HU7802",
+      "note1": "7802-41142-ARSCI-BOLHU",
+      "extCode": 92,
+      "extFundName": "7802-41142-ARSCI-BOLHU",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "bobhu",
+      "fundName": "BOLAND/BKS/HU7802",
+      "note1": "7802-41142-ARSCI-BOLHU",
+      "extCode": 92,
+      "extFundName": "7802-41142-ARSCI-BOLHU",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "bobsc",
+      "fundName": "BOLAND/BKS/SC7802",
+      "note1": "7802-41142-ARSCI-BOLSC",
+      "extCode": 93,
+      "extFundName": "7802-41142-ARSCI-BOLSC",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "bobsc",
+      "fundName": "BOLAND/BKS/SC7802",
+      "note1": "7802-41142-ARSCI-BOLSC",
+      "extCode": 93,
+      "extFundName": "7802-41142-ARSCI-BOLSC",
+      "fundType": "fbal"
+    },
+    {
+      "code": "bobsc",
+      "fundName": "BOLAND/BKS/SC7802",
+      "note1": "7802-41142-ARSCI-BOLSC",
+      "extCode": 93,
+      "extFundName": "7802-41142-ARSCI-BOLSC",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "bobss",
+      "fundName": "BOLAND/BKS/SS7802",
+      "note1": "7802-41142-ARSCI-BOLSS",
+      "extCode": 94,
+      "extFundName": "7802-41142-ARSCI-BOLSS",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "bobss",
+      "fundName": "BOLAND/BKS/SS7802",
+      "note1": "7802-41142-ARSCI-BOLSS",
+      "extCode": 94,
+      "extFundName": "7802-41142-ARSCI-BOLSS",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "bobss",
+      "fundName": "BOLAND/BKS/SS7802",
+      "note1": "7802-41142-ARSCI-BOLSS",
+      "extCode": 94,
+      "extFundName": "7802-41142-ARSCI-BOLSS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "aavsc",
+      "fundName": "7850 - AUDIO-VISUAL",
+      "note1": "7850-11001-ARSCI-URSC",
+      "extCode": 87,
+      "extFundName": "7850-11001-ARSCI-URSC",
+      "fundType": "fbal"
+    },
+    {
+      "code": "aavsc",
+      "fundName": "7850 - AUDIO-VISUAL",
+      "note1": "7850-11001-ARSCI-URSC",
+      "extCode": 87,
+      "extFundName": "7850-11001-ARSCI-URSC",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "aavsc",
+      "fundName": "7850 - AUDIO-VISUAL",
+      "note1": "7850-11001-ARSCI-URSC",
+      "extCode": 87,
+      "extFundName": "7850-11001-ARSCI-URSC",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "aavss",
+      "fundName": "7850 - AUDIO-VISUAL",
+      "note1": "7850-11001-ARSCI-URSS",
+      "extCode": 88,
+      "extFundName": "7850-11001-ARSCI-URSS",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "aavss",
+      "fundName": "7850 - AUDIO-VISUAL",
+      "note1": "7850-11001-ARSCI-URSS",
+      "extCode": 88,
+      "extFundName": "7850-11001-ARSCI-URSS",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "aavss",
+      "fundName": "7850 - AUDIO-VISUAL",
+      "note1": "7850-11001-ARSCI-URSS",
+      "extCode": 88,
+      "extFundName": "7850-11001-ARSCI-URSS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "aonhu",
+      "fundName": "7860 - MRDF",
+      "note1": "7860-11001-ARSCI-URHU",
+      "extCode": 89,
+      "extFundName": "7850-11001-ARSCI-URHU",
+      "fundType": "fbal"
+    },
+    {
+      "code": "aonhu",
+      "fundName": "7860 - MRDF",
+      "note1": "7860-11001-ARSCI-URHU",
+      "extCode": 89,
+      "extFundName": "7850-11001-ARSCI-URHU",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "aonhu",
+      "fundName": "7860 - MRDF",
+      "note1": "7860-11001-ARSCI-URHU",
+      "extCode": 89,
+      "extFundName": "7850-11001-ARSCI-URHU",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "aonsc",
+      "fundName": "7860 - MRDF",
+      "note1": "7860-11001-ARSCI-URSC",
+      "extCode": 90,
+      "extFundName": "7860-11001-ARSCI-URSC",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ogebk",
+      "fundName": "7802 - books",
+      "note1": "7802-46348-engr",
+      "extCode": 211,
+      "extFundName": "7802-46348-engr",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "ogebk",
+      "fundName": "7802 - books",
+      "note1": "7802-46348-engr",
+      "extCode": 211,
+      "extFundName": "7802-46348-engr",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ogebk",
+      "fundName": "7802 - books",
+      "note1": "7802-46348-engr",
+      "extCode": 211,
+      "extFundName": "7802-46348-engr",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "borbk",
+      "fundName": "Boland/REF/BKS/7802",
+      "note1": "7802-41142-ULACQ-REF-BOL",
+      "extCode": 173,
+      "extFundName": "7802-41142-REF-BOL",
+      "fundType": "fbal"
+    },
+    {
+      "code": "borbk",
+      "fundName": "Boland/REF/BKS/7802",
+      "note1": "7802-41142-ULACQ-REF-BOL",
+      "extCode": 173,
+      "extFundName": "7802-41142-REF-BOL",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "borbk",
+      "fundName": "Boland/REF/BKS/7802",
+      "note1": "7802-41142-ULACQ-REF-BOL",
+      "extCode": 173,
+      "extFundName": "7802-41142-REF-BOL",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "borse",
+      "fundName": "Boland/REF/SER/7840",
+      "note1": "7840-41142-ULACQ-REF-BOL",
+      "extCode": 174,
+      "extFundName": "7822-41142-REF-BOL",
+      "fundType": "fbal"
+    },
+    {
+      "code": "bogbk",
+      "fundName": "Boland/GEN/BKS/7802",
+      "note1": "7802-41142-ULACQ-GENL-BOL",
+      "extCode": 175,
+      "extFundName": "7802-41142-GENL-BOL",
+      "fundType": "fbal"
+    },
+    {
+      "code": "bogbk",
+      "fundName": "Boland/GEN/BKS/7802",
+      "note1": "7802-41142-ULACQ-GENL-BOL",
+      "extCode": 175,
+      "extFundName": "7802-41142-GENL-BOL",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "bogbk",
+      "fundName": "Boland/GEN/BKS/7802",
+      "note1": "7802-41142-ULACQ-GENL-BOL",
+      "extCode": 175,
+      "extFundName": "7802-41142-GENL-BOL",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "bomhu",
+      "fundName": "BOLAND/MISC/HU7822",
+      "note1": "7822-41142-ARSCI-BOLHU",
+      "extCode": 95,
+      "extFundName": "7822-41142-ARSCI-BOLHU",
+      "fundType": "fbal"
+    },
+    {
+      "code": "bomsc",
+      "fundName": "BOLAND/MISC/SC7822",
+      "note1": "7822-41142-ARSCI-BOLSC",
+      "extCode": 96,
+      "extFundName": "7822-41142-ARSCI-BOLSC",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ogbav",
+      "fundName": "7850 - audio visual",
+      "note1": "7850-46348-ulacq-bus",
+      "extCode": 209,
+      "extFundName": "7850-46348-ulacq-bus",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ogbav",
+      "fundName": "7850 - audio visual",
+      "note1": "7850-46348-ulacq-bus",
+      "extCode": 209,
+      "extFundName": "7850-46348-ulacq-bus",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "ogbav",
+      "fundName": "7850 - audio visual",
+      "note1": "7850-46348-ulacq-bus",
+      "extCode": 209,
+      "extFundName": "7850-46348-ulacq-bus",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "ogeal",
+      "fundName": "Engineering - Pool",
+      "note1": "libraq-46348-engr",
+      "extCode": 210,
+      "extFundName": "libraq-46348-engr",
+      "fundType": "fbal"
+    },
+    {
+      "code": "otphp",
+      "fundName": "OTP Human/Arts Pool",
+      "note1": "libraq-11001-otphp",
+      "extCode": 53,
+      "extFundName": "libraq-11001-otphp",
+      "fundType": "fbal"
+    },
+    {
+      "code": "sal",
+      "fundName": "SOCIAL SCI- POOL",
+      "note1": "libraq-11001-casss",
+      "extCode": 46,
+      "extFundName": "libraq-11001-casss",
+      "fundType": "fbal"
+    },
+    {
+      "code": "otpsp",
+      "fundName": "OTP SocSci Pool",
+      "note1": "libraq-11001-otpsp",
+      "extCode": 55,
+      "extFundName": "libraq-11001-otpsp",
+      "fundType": "fbal"
+    },
+    {
+      "code": "otpmp",
+      "fundName": "OTP Math/Sci Pool",
+      "note1": "libraq-11001-otpmp",
+      "extCode": 54,
+      "extFundName": "libraq-11001-otpmp",
+      "fundType": "fbal"
+    },
+    {
+      "code": "brcav",
+      "fundName": "Ecppm/AV /7850",
+      "note1": "7850-41143-ECPPM-BROWN",
+      "extCode": 177,
+      "extFundName": "7822-41143-ECPPM-BROWN",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "brcav",
+      "fundName": "Ecppm/AV /7850",
+      "note1": "7850-41143-ECPPM-BROWN",
+      "extCode": 177,
+      "extFundName": "7822-41143-ECPPM-BROWN",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "brcav",
+      "fundName": "Ecppm/AV /7850",
+      "note1": "7850-41143-ECPPM-BROWN",
+      "extCode": 177,
+      "extFundName": "7822-41143-ECPPM-BROWN",
+      "fundType": "fbal"
+    },
+    {
+      "code": "brcbk",
+      "fundName": "Brown/EcppmBKS/7802",
+      "note1": "7802-41143-ECPPM-BROWN",
+      "extCode": 176,
+      "extFundName": "7802-41143-ECPPM-BROWN",
+      "fundType": "fbal"
+    },
+    {
+      "code": "brcbk",
+      "fundName": "Brown/EcppmBKS/7802",
+      "note1": "7802-41143-ECPPM-BROWN",
+      "extCode": 176,
+      "extFundName": "7802-41143-ECPPM-BROWN",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "brcbk",
+      "fundName": "Brown/EcppmBKS/7802",
+      "note1": "7802-41143-ECPPM-BROWN",
+      "extCode": 176,
+      "extFundName": "7802-41143-ECPPM-BROWN",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cbabk",
+      "fundName": "",
+      "note1": "026601-248205-7802",
+      "extCode": 39,
+      "extFundName": "7840-11001-REF-ELECT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "mal",
+      "fundName": "MATHSCI- POOL",
+      "note1": "libraq-11001-casmns",
+      "extCode": 22,
+      "extFundName": "libraq-11001-camns",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cbgbk",
+      "fundName": "CBP /GEN /BKS./7802",
+      "note1": "7802-46345-GENL",
+      "extCode": 182,
+      "extFundName": "7802-46345-GENL-CBP",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cbgbk",
+      "fundName": "CBP /GEN /BKS./7802",
+      "note1": "7802-46345-GENL",
+      "extCode": 182,
+      "extFundName": "7802-46345-GENL-CBP",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cbgbk",
+      "fundName": "CBP /GEN /BKS./7802",
+      "note1": "7802-46345-GENL",
+      "extCode": 182,
+      "extFundName": "7802-46345-GENL-CBP",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cagal",
+      "fundName": "Calif./GEN -  POOL",
+      "note1": "46346-ULACQ-ASLIB-GENL-CA",
+      "extCode": 0,
+      "extFundName": "",
+      "fundType": "fbal"
+    },
+    {
+      "code": "caaal",
+      "fundName": "Calif./ARSCI- POOL",
+      "note1": "46346-ULACQ-ASLIB-ARSCI",
+      "extCode": 199,
+      "extFundName": "LIBRAQ-46346-GENL-CA",
+      "fundType": "fbal"
+    },
+    {
+      "code": "otpep",
+      "fundName": "OTP Eng Pool",
+      "note1": "libraq-11001-otpep",
+      "extCode": 57,
+      "extFundName": "libraq-11001-otpep",
+      "fundType": "fbal"
+    },
+    {
+      "code": "otpbp",
+      "fundName": "OTP Bus Pool",
+      "note1": "libraq-11001-otpbp",
+      "extCode": 56,
+      "extFundName": "libraq-11001-otpbp",
+      "fundType": "fbal"
+    },
+    {
+      "code": "otprp",
+      "fundName": "OTP Ref Pool",
+      "note1": "libraq-11001-otprp",
+      "extCode": 58,
+      "extFundName": "libraq-11001-otprp",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ogcav",
+      "fundName": "7850 - audio visual",
+      "note1": "7850-46348-ecppm",
+      "extCode": 215,
+      "extFundName": "7850-46348-ECPPM",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "ogcav",
+      "fundName": "7850 - audio visual",
+      "note1": "7850-46348-ecppm",
+      "extCode": 215,
+      "extFundName": "7850-46348-ECPPM",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ogcav",
+      "fundName": "7850 - audio visual",
+      "note1": "7850-46348-ecppm",
+      "extCode": 215,
+      "extFundName": "7850-46348-ECPPM",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "ogral",
+      "fundName": "Reference - Pool",
+      "note1": "libraq-46348-ulacq-ref",
+      "extCode": 216,
+      "extFundName": "libraq-46348-ulacq-ref",
+      "fundType": "fbal"
+    },
+    {
+      "code": "boral",
+      "fundName": "Boland/REF     POOL",
+      "note1": "41142-ULACQ-ASLIB-REF-BOL",
+      "extCode": 0,
+      "extFundName": "",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ogcbk",
+      "fundName": "7802 - books",
+      "note1": "7802-46348-ecppm",
+      "extCode": 214,
+      "extFundName": "7802-46348-ECPPM",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "ogcbk",
+      "fundName": "7802 - books",
+      "note1": "7802-46348-ecppm",
+      "extCode": 214,
+      "extFundName": "7802-46348-ECPPM",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "ogcbk",
+      "fundName": "7802 - books",
+      "note1": "7802-46348-ecppm",
+      "extCode": 214,
+      "extFundName": "7802-46348-ECPPM",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ogcal",
+      "fundName": "ECPPM - Pool",
+      "note1": "libraq-46348-ecppm",
+      "extCode": 213,
+      "extFundName": "LIBRAQ-46348-ECPPM",
+      "fundType": "fbal"
+    },
+    {
+      "code": "bogal",
+      "fundName": "Boland/GEN     POOL",
+      "note1": "41142-ULACQ-GENL-BOL",
+      "extCode": 0,
+      "extFundName": "",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ogeav",
+      "fundName": "7850 - audio visual",
+      "note1": "7850-46348-engr",
+      "extCode": 212,
+      "extFundName": "7850-46348-engr",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cagbk",
+      "fundName": "Calif./GEN/BKS/7802",
+      "note1": "7802-46346-GENL-CA",
+      "extCode": 183,
+      "extFundName": "7802-46346-GENL-CA",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cagbk",
+      "fundName": "Calif./GEN/BKS/7802",
+      "note1": "7802-46346-GENL-CA",
+      "extCode": 183,
+      "extFundName": "7802-46346-GENL-CA",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cagbk",
+      "fundName": "Calif./GEN/BKS/7802",
+      "note1": "7802-46346-GENL-CA",
+      "extCode": 183,
+      "extFundName": "7802-46346-GENL-CA",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "oggav",
+      "fundName": "7850 - audio visual",
+      "note1": "7850-46348-ulacq-genl",
+      "extCode": 221,
+      "extFundName": "7850-46348-genl",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ogshu",
+      "fundName": "7840-serials/human",
+      "note1": "7840-46348-ARSCI-URHU",
+      "extCode": 222,
+      "extFundName": "7840-46348-ARSCI-URHU",
+      "fundType": "fbal"
+    },
+    {
+      "code": "oggbk",
+      "fundName": "7802 - books",
+      "note1": "7802-46348-ulacq-genl",
+      "extCode": 220,
+      "extFundName": "7802-46348-genl",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "oggbk",
+      "fundName": "7802 - books",
+      "note1": "7802-46348-ulacq-genl",
+      "extCode": 220,
+      "extFundName": "7802-46348-genl",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "oggbk",
+      "fundName": "7802 - books",
+      "note1": "7802-46348-ulacq-genl",
+      "extCode": 220,
+      "extFundName": "7802-46348-genl",
+      "fundType": "fbal"
+    },
+    {
+      "code": "lcbon",
+      "fundName": "LCE/BUS/MRDF/7860",
+      "note1": "7860-46347-ULACQ-BUS-LCE",
+      "extCode": 188,
+      "extFundName": "",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ograv",
+      "fundName": "7850 - audio visual",
+      "note1": "7850-46348-ulacq-ref",
+      "extCode": 218,
+      "extFundName": "7850-46348-ulacq-ref",
+      "fundType": "fbal"
+    },
+    {
+      "code": "oggal",
+      "fundName": "General - Pool",
+      "note1": "libraq-46348-ulacq-genl",
+      "extCode": 219,
+      "extFundName": "libraq-46348-genl",
+      "fundType": "fbal"
+    },
+    {
+      "code": "lcabk",
+      "fundName": "LCE/ARSCI/7802",
+      "note1": "026604-248205-7802",
+      "extCode": 47,
+      "extFundName": "libraq-11001-bind",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ogrbk",
+      "fundName": "7802 - books",
+      "note1": "7802-46348-ulacq-ref",
+      "extCode": 217,
+      "extFundName": "7802-46348-ulacq-ref",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ogrbk",
+      "fundName": "7802 - books",
+      "note1": "7802-46348-ulacq-ref",
+      "extCode": 217,
+      "extFundName": "7802-46348-ulacq-ref",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "ogrbk",
+      "fundName": "7802 - books",
+      "note1": "7802-46348-ulacq-ref",
+      "extCode": 217,
+      "extFundName": "7802-46348-ulacq-ref",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "oggse",
+      "fundName": "7840 - serials",
+      "note1": "7840-46348-ULACQ-GENL",
+      "extCode": 228,
+      "extFundName": "7840-46348-ULACQ-GENL",
+      "fundType": "fbal"
+    },
+    {
+      "code": "oggse",
+      "fundName": "7840 - serials",
+      "note1": "7840-46348-ULACQ-GENL",
+      "extCode": 228,
+      "extFundName": "7840-46348-ULACQ-GENL",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "oggse",
+      "fundName": "7840 - serials",
+      "note1": "7840-46348-ULACQ-GENL",
+      "extCode": 228,
+      "extFundName": "7840-46348-ULACQ-GENL",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "orase",
+      "fundName": "Orradre/ARSCI/7840",
+      "note1": "020643-248205-7840",
+      "extCode": 62,
+      "extFundName": "",
+      "fundType": "fbal"
+    },
+    {
+      "code": "oraal",
+      "fundName": "Arsci- POOL",
+      "note1": "41144-ARSCI",
+      "extCode": 0,
+      "extFundName": "",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ogrse",
+      "fundName": "7840 - serials",
+      "note1": "7840-46348-ULACQ-REF",
+      "extCode": 227,
+      "extFundName": "7840-46348-ULACQ-REF",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "ogrse",
+      "fundName": "7840 - serials",
+      "note1": "7840-46348-ULACQ-REF",
+      "extCode": 227,
+      "extFundName": "7840-46348-ULACQ-REF",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ogrse",
+      "fundName": "7840 - serials",
+      "note1": "7840-46348-ULACQ-REF",
+      "extCode": 227,
+      "extFundName": "7840-46348-ULACQ-REF",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "ogcse",
+      "fundName": "7840 - serials",
+      "note1": "7840-46348-ULACQ-ECPPM",
+      "extCode": 226,
+      "extFundName": "7840-46348-ECPPM",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ogese",
+      "fundName": "7840 - serials",
+      "note1": "7840-46348-ULACQ-ENGR",
+      "extCode": 225,
+      "extFundName": "7840-46348-ULACQ-ENGR",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "ogese",
+      "fundName": "7840 - serials",
+      "note1": "7840-46348-ULACQ-ENGR",
+      "extCode": 225,
+      "extFundName": "7840-46348-ULACQ-ENGR",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "ogese",
+      "fundName": "7840 - serials",
+      "note1": "7840-46348-ULACQ-ENGR",
+      "extCode": 225,
+      "extFundName": "7840-46348-ULACQ-ENGR",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ogbse",
+      "fundName": "7840 - serials",
+      "note1": "7840-46348-ULACQ-BUS",
+      "extCode": 224,
+      "extFundName": "7840-46348-ULACQ-BUS",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "ogbse",
+      "fundName": "7840 - serials",
+      "note1": "7840-46348-ULACQ-BUS",
+      "extCode": 224,
+      "extFundName": "7840-46348-ULACQ-BUS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ogbse",
+      "fundName": "7840 - serials",
+      "note1": "7840-46348-ULACQ-BUS",
+      "extCode": 224,
+      "extFundName": "7840-46348-ULACQ-BUS",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "ogssc",
+      "fundName": "7840 - serials/sci.",
+      "note1": "7840-46348-ARSCI-URSC",
+      "extCode": 223,
+      "extFundName": "7840-46348-ARSCI-URSC",
+      "fundType": "fbal"
+    },
+    {
+      "code": "rdd",
+      "fundName": "REF -  D.D. 7842",
+      "note1": "7842-11001-ULACQ-REF",
+      "extCode": 161,
+      "extFundName": "7842-11001-REF",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cdd",
+      "fundName": "ECPPM -   D.D. 7842",
+      "note1": "7842-11001-ULACQ-ECPPM",
+      "extCode": 155,
+      "extFundName": "7842-11001-ECPPM",
+      "fundType": "fbal"
+    },
+    {
+      "code": "edd",
+      "fundName": "Engineer. D.D. 7842",
+      "note1": "7842-11001-ULACQ-ENGR",
+      "extCode": 149,
+      "extFundName": "7842-11001-ENGR",
+      "fundType": "fbal"
+    },
+    {
+      "code": "bdd",
+      "fundName": "Business  D.D. 7842",
+      "note1": "7842-11001-ULACQ-BUS",
+      "extCode": 143,
+      "extFundName": "7842-11001-BUS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ogsss",
+      "fundName": "7840 - serials/so.s",
+      "note1": "7840-46348-ARSCI-URSS",
+      "extCode": 229,
+      "extFundName": "7840-46348-ARSCI-URSS",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "ogsss",
+      "fundName": "7840 - serials/so.s",
+      "note1": "7840-46348-ARSCI-URSS",
+      "extCode": 229,
+      "extFundName": "7840-46348-ARSCI-URSS",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "ogsss",
+      "fundName": "7840 - serials/so.s",
+      "note1": "7840-46348-ARSCI-URSS",
+      "extCode": 229,
+      "extFundName": "7840-46348-ARSCI-URSS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cagse",
+      "fundName": "Calif./GEN/SER/7840",
+      "note1": "7840-46346-ULACQ-GENL-CA",
+      "extCode": 184,
+      "extFundName": "7840-46346-GENL-CA",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cagse",
+      "fundName": "Calif./GEN/SER/7840",
+      "note1": "7840-46346-ULACQ-GENL-CA",
+      "extCode": 184,
+      "extFundName": "7840-46346-GENL-CA",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cagse",
+      "fundName": "Calif./GEN/SER/7840",
+      "note1": "7840-46346-ULACQ-GENL-CA",
+      "extCode": 184,
+      "extFundName": "7840-46346-GENL-CA",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "orami",
+      "fundName": "Orradre/ARSCI7822",
+      "note1": "020643-248205-7822",
+      "extCode": 65,
+      "extFundName": "",
+      "fundType": "fbal"
+    },
+    {
+      "code": "oraon",
+      "fundName": "Orradre/ARSCI/7860",
+      "note1": "020643-248205-7860",
+      "extCode": 64,
+      "extFundName": "",
+      "fundType": "fbal"
+    },
+    {
+      "code": "orbsc",
+      "fundName": "ORR/BKS/SC7802",
+      "note1": "7802-41144-ARSCI-ORRSC",
+      "extCode": 105,
+      "extFundName": "7802-41144-ARSCI-ORRSC",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "orbsc",
+      "fundName": "ORR/BKS/SC7802",
+      "note1": "7802-41144-ARSCI-ORRSC",
+      "extCode": 105,
+      "extFundName": "7802-41144-ARSCI-ORRSC",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "orbsc",
+      "fundName": "ORR/BKS/SC7802",
+      "note1": "7802-41144-ARSCI-ORRSC",
+      "extCode": 105,
+      "extFundName": "7802-41144-ARSCI-ORRSC",
+      "fundType": "fbal"
+    },
+    {
+      "code": "orbhu",
+      "fundName": "ORR/BKS/HU7802",
+      "note1": "7802-41144-ARSCI-ORRHU",
+      "extCode": 104,
+      "extFundName": "7802-41144-ARSCI-ORRHU",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "orbhu",
+      "fundName": "ORR/BKS/HU7802",
+      "note1": "7802-41144-ARSCI-ORRHU",
+      "extCode": 104,
+      "extFundName": "7802-41144-ARSCI-ORRHU",
+      "fundType": "fbal"
+    },
+    {
+      "code": "orbhu",
+      "fundName": "ORR/BKS/HU7802",
+      "note1": "7802-41144-ARSCI-ORRHU",
+      "extCode": 104,
+      "extFundName": "7802-41144-ARSCI-ORRHU",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "ormhu",
+      "fundName": "ORR/MISC/HU7822",
+      "note1": "7822-41144-ARSCI-ORRHU",
+      "extCode": 107,
+      "extFundName": "7822-41144-ARSCI-ORRHU",
+      "fundType": "fbal"
+    },
+    {
+      "code": "orbss",
+      "fundName": "ORR/BKS/SS7802",
+      "note1": "7802-41144-ARSCI-ORRSS",
+      "extCode": 106,
+      "extFundName": "7802-41144-ARSCI-ORRSS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "orbss",
+      "fundName": "ORR/BKS/SS7802",
+      "note1": "7802-41144-ARSCI-ORRSS",
+      "extCode": 106,
+      "extFundName": "7802-41144-ARSCI-ORRSS",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "orbss",
+      "fundName": "ORR/BKS/SS7802",
+      "note1": "7802-41144-ARSCI-ORRSS",
+      "extCode": 106,
+      "extFundName": "7802-41144-ARSCI-ORRSS",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "ormss",
+      "fundName": "ORR/MISC/SS7822",
+      "note1": "7822-41144-ARSCI-ORRSS",
+      "extCode": 109,
+      "extFundName": "7822-41144-ARSCI-ORRSS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ormsc",
+      "fundName": "ORR/MISC/SC7822",
+      "note1": "7822-41144-ARSCI-ORRSC",
+      "extCode": 108,
+      "extFundName": "7822-41144-ARSCI-ORRSC",
+      "fundType": "fbal"
+    },
+    {
+      "code": "orssc",
+      "fundName": "ORR/SER/SC7840",
+      "note1": "7840-41144-ARSCI-ORRSC",
+      "extCode": 111,
+      "extFundName": "7840-41144-ARSCI-ORRSC",
+      "fundType": "fbal"
+    },
+    {
+      "code": "orshu",
+      "fundName": "ORR/SER/HU7840",
+      "note1": "7840-41144-ARSCI-ORRHU",
+      "extCode": 110,
+      "extFundName": "7840-41144-ARSCI-ORRHU",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "orshu",
+      "fundName": "ORR/SER/HU7840",
+      "note1": "7840-41144-ARSCI-ORRHU",
+      "extCode": 110,
+      "extFundName": "7840-41144-ARSCI-ORRHU",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "orshu",
+      "fundName": "ORR/SER/HU7840",
+      "note1": "7840-41144-ARSCI-ORRHU",
+      "extCode": 110,
+      "extFundName": "7840-41144-ARSCI-ORRHU",
+      "fundType": "fbal"
+    },
+    {
+      "code": "bomss",
+      "fundName": "BOLAND/MISC/SS7822",
+      "note1": "7822-41442-ARSCI-BOLSS",
+      "extCode": 97,
+      "extFundName": "7822-41142-ARSCI-BOLSS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "gdd",
+      "fundName": "GENL  DD 7842 PRNT",
+      "note1": "7842-11001-GENL-PRNT",
+      "extCode": 167,
+      "extFundName": "7842-11001-GENL-PRNT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "gdd",
+      "fundName": "GENL  DD 7842 PRNT",
+      "note1": "7842-11001-GENL-PRNT",
+      "extCode": 167,
+      "extFundName": "7842-11001-GENL-PRNT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "gdd",
+      "fundName": "GENL  DD 7842 PRNT",
+      "note1": "7842-11001-GENL-PRNT",
+      "extCode": 167,
+      "extFundName": "7842-11001-GENL-PRNT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "bossc",
+      "fundName": "BOLAND/SER/SC7840",
+      "note1": "7840-41142-ARSCI-BOLSC",
+      "extCode": 99,
+      "extFundName": "7840-41142-ARSCI-BOLSC",
+      "fundType": "fbal"
+    },
+    {
+      "code": "boshu",
+      "fundName": "BOLAND/SER/HU7840",
+      "note1": "7840-41142-ARSCI-BOLHU",
+      "extCode": 98,
+      "extFundName": "7840-41142-ARSCI-BOLHU",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "boshu",
+      "fundName": "BOLAND/SER/HU7840",
+      "note1": "7840-41142-ARSCI-BOLHU",
+      "extCode": 98,
+      "extFundName": "7840-41142-ARSCI-BOLHU",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "boshu",
+      "fundName": "BOLAND/SER/HU7840",
+      "note1": "7840-41142-ARSCI-BOLHU",
+      "extCode": 98,
+      "extFundName": "7840-41142-ARSCI-BOLHU",
+      "fundType": "fbal"
+    },
+    {
+      "code": "boahu",
+      "fundName": "BOLAND/AV/HU7850",
+      "note1": "7850-41142-ARSCI-BOLHU",
+      "extCode": 101,
+      "extFundName": "7850-41142-ARSCI-BOLHU",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "boahu",
+      "fundName": "BOLAND/AV/HU7850",
+      "note1": "7850-41142-ARSCI-BOLHU",
+      "extCode": 101,
+      "extFundName": "7850-41142-ARSCI-BOLHU",
+      "fundType": "fbal"
+    },
+    {
+      "code": "boahu",
+      "fundName": "BOLAND/AV/HU7850",
+      "note1": "7850-41142-ARSCI-BOLHU",
+      "extCode": 101,
+      "extFundName": "7850-41142-ARSCI-BOLHU",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "boass",
+      "fundName": "BOLAND/AV/SS7850",
+      "note1": "7850-41142-ARSCI-BOLSS",
+      "extCode": 103,
+      "extFundName": "7850-41142-ARSCI-BOLSS",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "boass",
+      "fundName": "BOLAND/AV/SS7850",
+      "note1": "7850-41142-ARSCI-BOLSS",
+      "extCode": 103,
+      "extFundName": "7850-41142-ARSCI-BOLSS",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "boass",
+      "fundName": "BOLAND/AV/SS7850",
+      "note1": "7850-41142-ARSCI-BOLSS",
+      "extCode": 103,
+      "extFundName": "7850-41142-ARSCI-BOLSS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "boasc",
+      "fundName": "BOLAND/AV/SC7850",
+      "note1": "7850-41142-ARSCI-BOLSC",
+      "extCode": 102,
+      "extFundName": "7850-41142-ARSCI-BOLSC",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "boasc",
+      "fundName": "BOLAND/AV/SC7850",
+      "note1": "7850-41142-ARSCI-BOLSC",
+      "extCode": 102,
+      "extFundName": "7850-41142-ARSCI-BOLSC",
+      "fundType": "fbal"
+    },
+    {
+      "code": "boasc",
+      "fundName": "BOLAND/AV/SC7850",
+      "note1": "7850-41142-ARSCI-BOLSC",
+      "extCode": 102,
+      "extFundName": "7850-41142-ARSCI-BOLSC",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "bosss",
+      "fundName": "BOLAND/SER/SS7840",
+      "note1": "7840-41142-ARSCI-BOLSS",
+      "extCode": 100,
+      "extFundName": "7840-41142-ARSCI-BOLSS",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "bosss",
+      "fundName": "BOLAND/SER/SS7840",
+      "note1": "7840-41142-ARSCI-BOLSS",
+      "extCode": 100,
+      "extFundName": "7840-41142-ARSCI-BOLSS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "bosss",
+      "fundName": "BOLAND/SER/SS7840",
+      "note1": "7840-41142-ARSCI-BOLSS",
+      "extCode": 100,
+      "extFundName": "7840-41142-ARSCI-BOLSS",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cbbss",
+      "fundName": "CBP/BKS/SS7802",
+      "note1": "7802-46345-casss",
+      "extCode": 121,
+      "extFundName": "7802-46345-ARSCI-CBPSS",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cbbss",
+      "fundName": "CBP/BKS/SS7802",
+      "note1": "7802-46345-casss",
+      "extCode": 121,
+      "extFundName": "7802-46345-ARSCI-CBPSS",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cbbss",
+      "fundName": "CBP/BKS/SS7802",
+      "note1": "7802-46345-casss",
+      "extCode": 121,
+      "extFundName": "7802-46345-ARSCI-CBPSS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cabhu",
+      "fundName": "CALIF/BKS/HU7802",
+      "note1": "7802-46346-ARSCI-CAHU",
+      "extCode": 125,
+      "extFundName": "7802-46346-ARSCI-CAHU",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cabhu",
+      "fundName": "CALIF/BKS/HU7802",
+      "note1": "7802-46346-ARSCI-CAHU",
+      "extCode": 125,
+      "extFundName": "7802-46346-ARSCI-CAHU",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cabhu",
+      "fundName": "CALIF/BKS/HU7802",
+      "note1": "7802-46346-ARSCI-CAHU",
+      "extCode": 125,
+      "extFundName": "7802-46346-ARSCI-CAHU",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cabsc",
+      "fundName": "CALIF/BKS/SC7802",
+      "note1": "7802-46346-ARSCI-CASC",
+      "extCode": 126,
+      "extFundName": "7802-46346-ARSCI-CASC",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cabsc",
+      "fundName": "CALIF/BKS/SC7802",
+      "note1": "7802-46346-ARSCI-CASC",
+      "extCode": 126,
+      "extFundName": "7802-46346-ARSCI-CASC",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cabsc",
+      "fundName": "CALIF/BKS/SC7802",
+      "note1": "7802-46346-ARSCI-CASC",
+      "extCode": 126,
+      "extFundName": "7802-46346-ARSCI-CASC",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cabss",
+      "fundName": "CALIF/BKS/SS7802",
+      "note1": "7802-46346-ARSCI-CASS",
+      "extCode": 127,
+      "extFundName": "7802-46346-ARSCI-CASS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cabss",
+      "fundName": "CALIF/BKS/SS7802",
+      "note1": "7802-46346-ARSCI-CASS",
+      "extCode": 127,
+      "extFundName": "7802-46346-ARSCI-CASS",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cabss",
+      "fundName": "CALIF/BKS/SS7802",
+      "note1": "7802-46346-ARSCI-CASS",
+      "extCode": 127,
+      "extFundName": "7802-46346-ARSCI-CASS",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "orsss",
+      "fundName": "ORR/SER/SS7840",
+      "note1": "7840-41144-ARSCI-ORRSS",
+      "extCode": 112,
+      "extFundName": "7840-41144-ARSCI-ORRSS",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "orsss",
+      "fundName": "ORR/SER/SS7840",
+      "note1": "7840-41144-ARSCI-ORRSS",
+      "extCode": 112,
+      "extFundName": "7840-41144-ARSCI-ORRSS",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "orsss",
+      "fundName": "ORR/SER/SS7840",
+      "note1": "7840-41144-ARSCI-ORRSS",
+      "extCode": 112,
+      "extFundName": "7840-41144-ARSCI-ORRSS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "orahu",
+      "fundName": "ORR/AV/HU7850",
+      "note1": "7850-41144-ARSCI-ORRHU",
+      "extCode": 113,
+      "extFundName": "7850-41144-ARSCI-ORRHU",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "orahu",
+      "fundName": "ORR/AV/HU7850",
+      "note1": "7850-41144-ARSCI-ORRHU",
+      "extCode": 113,
+      "extFundName": "7850-41144-ARSCI-ORRHU",
+      "fundType": "fbal"
+    },
+    {
+      "code": "orahu",
+      "fundName": "ORR/AV/HU7850",
+      "note1": "7850-41144-ARSCI-ORRHU",
+      "extCode": 113,
+      "extFundName": "7850-41144-ARSCI-ORRHU",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "orasc",
+      "fundName": "ORR/AV/SC7850",
+      "note1": "7850-41144-ARSCI-ORRSC",
+      "extCode": 114,
+      "extFundName": "7850-41144-ARSCI-ORRSC",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "orasc",
+      "fundName": "ORR/AV/SC7850",
+      "note1": "7850-41144-ARSCI-ORRSC",
+      "extCode": 114,
+      "extFundName": "7850-41144-ARSCI-ORRSC",
+      "fundType": "fbal"
+    },
+    {
+      "code": "orasc",
+      "fundName": "ORR/AV/SC7850",
+      "note1": "7850-41144-ARSCI-ORRSC",
+      "extCode": 114,
+      "extFundName": "7850-41144-ARSCI-ORRSC",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "orass",
+      "fundName": "ORR/AV/SS7850",
+      "note1": "7850-41144-ARSCI-ORRSS",
+      "extCode": 115,
+      "extFundName": "7850-41144-ARSCI-ORRSS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "orass",
+      "fundName": "ORR/AV/SS7850",
+      "note1": "7850-41144-ARSCI-ORRSS",
+      "extCode": 115,
+      "extFundName": "7850-41144-ARSCI-ORRSS",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "orass",
+      "fundName": "ORR/AV/SS7850",
+      "note1": "7850-41144-ARSCI-ORRSS",
+      "extCode": 115,
+      "extFundName": "7850-41144-ARSCI-ORRSS",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "orohu",
+      "fundName": "ORR/MRDF/HU7860",
+      "note1": "7860-41144-ARSCI-ORRHU",
+      "extCode": 116,
+      "extFundName": "7860-41144-ARSCI-ORRHU",
+      "fundType": "fbal"
+    },
+    {
+      "code": "orosc",
+      "fundName": "ORR/MRDF/SC7860",
+      "note1": "7860-41144-ARSCI-ORRSC",
+      "extCode": 117,
+      "extFundName": "7860-41144-ARSCI-ORRSC",
+      "fundType": "fbal"
+    },
+    {
+      "code": "orosc",
+      "fundName": "ORR/MRDF/SC7860",
+      "note1": "7860-41144-ARSCI-ORRSC",
+      "extCode": 117,
+      "extFundName": "7860-41144-ARSCI-ORRSC",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "orosc",
+      "fundName": "ORR/MRDF/SC7860",
+      "note1": "7860-41144-ARSCI-ORRSC",
+      "extCode": 117,
+      "extFundName": "7860-41144-ARSCI-ORRSC",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "oross",
+      "fundName": "ORR/MRDF/SS7860",
+      "note1": "7860-41144-ARSCI-ORRSS",
+      "extCode": 118,
+      "extFundName": "7860-41144-ARSCI-ORRSS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cbbhu",
+      "fundName": "CBP/BKS/HU7802",
+      "note1": "7802-46345-cashum",
+      "extCode": 119,
+      "extFundName": "7802-46345-ARSCI-CBPHU",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cbbhu",
+      "fundName": "CBP/BKS/HU7802",
+      "note1": "7802-46345-cashum",
+      "extCode": 119,
+      "extFundName": "7802-46345-ARSCI-CBPHU",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cbbhu",
+      "fundName": "CBP/BKS/HU7802",
+      "note1": "7802-46345-cashum",
+      "extCode": 119,
+      "extFundName": "7802-46345-ARSCI-CBPHU",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cgbal",
+      "fundName": "Pool",
+      "note1": "11001-ULACQ-ASLIB-BUS",
+      "extCode": 240,
+      "extFundName": "LIBRAQ-46197-ASLIB-BUS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cgvss",
+      "fundName": "7850-audvid/so.sci",
+      "note1": " ",
+      "extCode": 239,
+      "extFundName": "7850-46197-ARSCI-URSS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cgvss",
+      "fundName": "7850-audvid/so.sci",
+      "note1": " ",
+      "extCode": 239,
+      "extFundName": "7850-46197-ARSCI-URSS",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cgvss",
+      "fundName": "7850-audvid/so.sci",
+      "note1": " ",
+      "extCode": 239,
+      "extFundName": "7850-46197-ARSCI-URSS",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cgvsc",
+      "fundName": "7850-audvid/sci",
+      "note1": " ",
+      "extCode": 238,
+      "extFundName": "7850-46197-ARSCI-URSC",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cgvsc",
+      "fundName": "7850-audvid/sci",
+      "note1": " ",
+      "extCode": 238,
+      "extFundName": "7850-46197-ARSCI-URSC",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cgvsc",
+      "fundName": "7850-audvid/sci",
+      "note1": " ",
+      "extCode": 238,
+      "extFundName": "7850-46197-ARSCI-URSC",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cascv",
+      "fundName": "MATHSCI AV 7850",
+      "note1": "7850-11001-CASMNS",
+      "extCode": 14,
+      "extFundName": "7850-11001-CASMNS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cascv",
+      "fundName": "MATHSCI AV 7850",
+      "note1": "7850-11001-CASMNS",
+      "extCode": 14,
+      "extFundName": "7850-11001-CASMNS",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cascv",
+      "fundName": "MATHSCI AV 7850",
+      "note1": "7850-11001-CASMNS",
+      "extCode": 14,
+      "extFundName": "7850-11001-CASMNS",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "caser",
+      "fundName": "SSCI SER 7840 PRNT",
+      "note1": "7840-11001-CASSS-PRNT",
+      "extCode": 19,
+      "extFundName": "7840-11001-CASSS-PRNT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "caser",
+      "fundName": "SSCI SER 7840 PRNT",
+      "note1": "7840-11001-CASSS-PRNT",
+      "extCode": 19,
+      "extFundName": "7840-11001-CASSS-PRNT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "caser",
+      "fundName": "SSCI SER 7840 PRNT",
+      "note1": "7840-11001-CASSS-PRNT",
+      "extCode": 19,
+      "extFundName": "7840-11001-CASSS-PRNT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "casos",
+      "fundName": "SSCI MISC 7822 PRNT",
+      "note1": "7822-11001-CASSS-PRNT",
+      "extCode": 17,
+      "extFundName": "7822-11001-CASSS-PRNT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "casss",
+      "fundName": "SSCI BKS 7802 PRNT",
+      "note1": "7802-11001-CASSS-PRNT",
+      "extCode": 15,
+      "extFundName": "7802-11001-CASSS-PRNT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "casss",
+      "fundName": "SSCI BKS 7802 PRNT",
+      "note1": "7802-11001-CASSS-PRNT",
+      "extCode": 15,
+      "extFundName": "7802-11001-CASSS-PRNT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "casss",
+      "fundName": "SSCI BKS 7802 PRNT",
+      "note1": "7802-11001-CASSS-PRNT",
+      "extCode": 15,
+      "extFundName": "7802-11001-CASSS-PRNT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "bogse",
+      "fundName": "Boland/GEN/SER/7840",
+      "note1": "7840-41142-ULACQ-GENL-BOL",
+      "extCode": 195,
+      "extFundName": "7840-41142-GENL-BOL",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "bogse",
+      "fundName": "Boland/GEN/SER/7840",
+      "note1": "7840-41142-ULACQ-GENL-BOL",
+      "extCode": 195,
+      "extFundName": "7840-41142-GENL-BOL",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "bogse",
+      "fundName": "Boland/GEN/SER/7840",
+      "note1": "7840-41142-ULACQ-GENL-BOL",
+      "extCode": 195,
+      "extFundName": "7840-41142-GENL-BOL",
+      "fundType": "fbal"
+    },
+    {
+      "code": "casse",
+      "fundName": "HUM SER 7840 PRNT",
+      "note1": "7840-11001-CASHUM-PRNT",
+      "extCode": 6,
+      "extFundName": "7840-11001-CASHUM-PRNT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "casse",
+      "fundName": "HUM SER 7840 PRNT",
+      "note1": "7840-11001-CASHUM-PRNT",
+      "extCode": 6,
+      "extFundName": "7840-11001-CASHUM-PRNT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "casse",
+      "fundName": "HUM SER 7840 PRNT",
+      "note1": "7840-11001-CASHUM-PRNT",
+      "extCode": 6,
+      "extFundName": "7840-11001-CASHUM-PRNT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "camis",
+      "fundName": "HUM MISC 7822 PRNT",
+      "note1": "7822-11001-CASHUM-PRNT",
+      "extCode": 3,
+      "extFundName": "7822-11001-CASHUM-PRNT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cashu",
+      "fundName": "HUM  BKS 7802 PRNT",
+      "note1": "7802-11001-CASHUM-PRNT",
+      "extCode": 1,
+      "extFundName": "7802-11001-CASHUM-PRNT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cashu",
+      "fundName": "HUM  BKS 7802 PRNT",
+      "note1": "7802-11001-CASHUM-PRNT",
+      "extCode": 1,
+      "extFundName": "7802-11001-CASHUM-PRNT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cashu",
+      "fundName": "HUM  BKS 7802 PRNT",
+      "note1": "7802-11001-CASHUM-PRNT",
+      "extCode": 1,
+      "extFundName": "7802-11001-CASHUM-PRNT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "lcbhu",
+      "fundName": "LCE/BKS/HU7802",
+      "note1": "7802-46347-ARSCI-LCEHU",
+      "extCode": 128,
+      "extFundName": "7802-46347-ARSCI-LCEHU",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cases",
+      "fundName": "MATHS SER 7840 PRNT",
+      "note1": "7840-11001-CASMNS-PRNT",
+      "extCode": 12,
+      "extFundName": "7840-11001-CASMNS-PRNT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cases",
+      "fundName": "MATHS SER 7840 PRNT",
+      "note1": "7840-11001-CASMNS-PRNT",
+      "extCode": 12,
+      "extFundName": "7840-11001-CASMNS-PRNT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cases",
+      "fundName": "MATHS SER 7840 PRNT",
+      "note1": "7840-11001-CASMNS-PRNT",
+      "extCode": 12,
+      "extFundName": "7840-11001-CASMNS-PRNT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cassm",
+      "fundName": "MATHS MISC7822 PRNT",
+      "note1": "7822-11001-CASMNS-PRNT",
+      "extCode": 10,
+      "extFundName": "7822-11001-CASMNS-PRNT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cassc",
+      "fundName": "MATHS BKS 7802 PRNT",
+      "note1": "7802-11001-CASMNS-PRNT",
+      "extCode": 8,
+      "extFundName": "7802-11001-CASMNS-PRNT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cassc",
+      "fundName": "MATHS BKS 7802 PRNT",
+      "note1": "7802-11001-CASMNS-PRNT",
+      "extCode": 8,
+      "extFundName": "7802-11001-CASMNS-PRNT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cassc",
+      "fundName": "MATHS BKS 7802 PRNT",
+      "note1": "7802-11001-CASMNS-PRNT",
+      "extCode": 8,
+      "extFundName": "7802-11001-CASMNS-PRNT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "casvd",
+      "fundName": "HUMART AV 7850",
+      "note1": "7850-11001-CASHUM",
+      "extCode": 7,
+      "extFundName": "7850-11001-CASHUM",
+      "fundType": "fbal"
+    },
+    {
+      "code": "casvd",
+      "fundName": "HUMART AV 7850",
+      "note1": "7850-11001-CASHUM",
+      "extCode": 7,
+      "extFundName": "7850-11001-CASHUM",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "casvd",
+      "fundName": "HUMART AV 7850",
+      "note1": "7850-11001-CASHUM",
+      "extCode": 7,
+      "extFundName": "7850-11001-CASHUM",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cgrse",
+      "fundName": "7840-serials",
+      "note1": "7840-46197-aslib-ref",
+      "extCode": 254,
+      "extFundName": "7840-46197-ASLIB-REF",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cgrav",
+      "fundName": "7850-audio visual",
+      "note1": "7850-46197-aslib-ref",
+      "extCode": 255,
+      "extFundName": "7850-46197-ASLIB-REF",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cgral",
+      "fundName": "ref-pool",
+      "note1": "libraq-46197-aslib ref",
+      "extCode": 252,
+      "extFundName": "LIBRAQ-46197-ASLIB-REF",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cgral",
+      "fundName": "ref-pool",
+      "note1": "libraq-46197-aslib ref",
+      "extCode": 252,
+      "extFundName": "LIBRAQ-46197-ASLIB-REF",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cgral",
+      "fundName": "ref-pool",
+      "note1": "libraq-46197-aslib ref",
+      "extCode": 252,
+      "extFundName": "LIBRAQ-46197-ASLIB-REF",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cgrbk",
+      "fundName": "7802-books",
+      "note1": "7802-46197-aslib-ref",
+      "extCode": 253,
+      "extFundName": "7802-46197-ASLIB-REF",
+      "fundType": "fbal"
+    },
+    {
+      "code": "csere",
+      "fundName": "SSCI SER 7840 ELECT",
+      "note1": "7840-11001-CASSS-ELECT",
+      "extCode": 20,
+      "extFundName": "7840-11001-CASSS-ELECT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "csere",
+      "fundName": "SSCI SER 7840 ELECT",
+      "note1": "7840-11001-CASSS-ELECT",
+      "extCode": 20,
+      "extFundName": "7840-11001-CASSS-ELECT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "csere",
+      "fundName": "SSCI SER 7840 ELECT",
+      "note1": "7840-11001-CASSS-ELECT",
+      "extCode": 20,
+      "extFundName": "7840-11001-CASSS-ELECT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "csese",
+      "fundName": "MATHS SER7840 ELECT",
+      "note1": "7840-11001-CASMNS-ELECT",
+      "extCode": 13,
+      "extFundName": "7840-11001-CASMNS-ELECT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "csese",
+      "fundName": "MATHS SER7840 ELECT",
+      "note1": "7840-11001-CASMNS-ELECT",
+      "extCode": 13,
+      "extFundName": "7840-11001-CASMNS-ELECT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "csese",
+      "fundName": "MATHS SER7840 ELECT",
+      "note1": "7840-11001-CASMNS-ELECT",
+      "extCode": 13,
+      "extFundName": "7840-11001-CASMNS-ELECT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "bsee",
+      "fundName": "BUS SER 7840 ELECT",
+      "note1": "7840-11001-BUS-ELECT",
+      "extCode": 26,
+      "extFundName": "7840-11001-BUS-ELECT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "bsee",
+      "fundName": "BUS SER 7840 ELECT",
+      "note1": "7840-11001-BUS-ELECT",
+      "extCode": 26,
+      "extFundName": "7840-11001-BUS-ELECT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "bsee",
+      "fundName": "BUS SER 7840 ELECT",
+      "note1": "7840-11001-BUS-ELECT",
+      "extCode": 26,
+      "extFundName": "7840-11001-BUS-ELECT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cmise",
+      "fundName": "HUM MISC 7822 ELECT",
+      "note1": "7822-11001-CASHUM-ELECT",
+      "extCode": 4,
+      "extFundName": "7822-11001-CASHUM-ELECT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cpsep",
+      "fundName": "ECPPM BKS 7802 PRNT",
+      "note1": "7802-11001-CPESS-PRNT",
+      "extCode": 30,
+      "extFundName": "7802-11001-CPESS-PRNT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cpsep",
+      "fundName": "ECPPM BKS 7802 PRNT",
+      "note1": "7802-11001-CPESS-PRNT",
+      "extCode": 30,
+      "extFundName": "7802-11001-CPESS-PRNT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cpsep",
+      "fundName": "ECPPM BKS 7802 PRNT",
+      "note1": "7802-11001-CPESS-PRNT",
+      "extCode": 30,
+      "extFundName": "7802-11001-CPESS-PRNT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cpmis",
+      "fundName": "ECPPM MISC7822 PRNT",
+      "note1": "7822-11001-CPESS-PRNT",
+      "extCode": 32,
+      "extFundName": "7822-11001-CPESS-PRNT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cgeal",
+      "fundName": "engr.pool",
+      "note1": "libraq-46197-aslib-engr",
+      "extCode": 244,
+      "extFundName": "LIBRAQ-46197-ASLIB-ENGR",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cssvd",
+      "fundName": "SSCI AV 7850",
+      "note1": "7850-11001-CASSS",
+      "extCode": 21,
+      "extFundName": "7850-11001-CASSS",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cssvd",
+      "fundName": "SSCI AV 7850",
+      "note1": "7850-11001-CASSS",
+      "extCode": 21,
+      "extFundName": "7850-11001-CASSS",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cssvd",
+      "fundName": "SSCI AV 7850",
+      "note1": "7850-11001-CASSS",
+      "extCode": 21,
+      "extFundName": "7850-11001-CASSS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "bbke",
+      "fundName": "BUSI BKS 7802 ELECT",
+      "note1": "7802-11001-BUS-ELECT",
+      "extCode": 23,
+      "extFundName": "7802-11001-BUS-ELECT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "bbke",
+      "fundName": "BUSI BKS 7802 ELECT",
+      "note1": "7802-11001-BUS-ELECT",
+      "extCode": 23,
+      "extFundName": "7802-11001-BUS-ELECT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "bbke",
+      "fundName": "BUSI BKS 7802 ELECT",
+      "note1": "7802-11001-BUS-ELECT",
+      "extCode": 23,
+      "extFundName": "7802-11001-BUS-ELECT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "bmie",
+      "fundName": "BUS MISC7822ELECT",
+      "note1": "7822-11001-BUS-ELECT",
+      "extCode": 25,
+      "extFundName": "7822-11001-BUS-ELECT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cpser",
+      "fundName": "ECPPM SER 7840 PRNT",
+      "note1": "7840-11001-CPESS-PRNT",
+      "extCode": 34,
+      "extFundName": "7840-11001-CPESS-PRNT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cpser",
+      "fundName": "ECPPM SER 7840 PRNT",
+      "note1": "7840-11001-CPESS-PRNT",
+      "extCode": 34,
+      "extFundName": "7840-11001-CPESS-PRNT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cpser",
+      "fundName": "ECPPM SER 7840 PRNT",
+      "note1": "7840-11001-CPESS-PRNT",
+      "extCode": 34,
+      "extFundName": "7840-11001-CPESS-PRNT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cpmiv",
+      "fundName": "ECPPM AV 7850",
+      "note1": "7850-11001-CPESS",
+      "extCode": 36,
+      "extFundName": "7850-11001-CPESS",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cpmiv",
+      "fundName": "ECPPM AV 7850",
+      "note1": "7850-11001-CPESS",
+      "extCode": 36,
+      "extFundName": "7850-11001-CPESS",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cpmiv",
+      "fundName": "ECPPM AV 7850",
+      "note1": "7850-11001-CPESS",
+      "extCode": 36,
+      "extFundName": "7850-11001-CPESS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "gbke",
+      "fundName": "GENL BKS 7802 ELECT",
+      "note1": "7802-11001-GENL-ELECT",
+      "extCode": 40,
+      "extFundName": "7802-11001-GENL-ELECT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "gbke",
+      "fundName": "GENL BKS 7802 ELECT",
+      "note1": "7802-11001-GENL-ELECT",
+      "extCode": 40,
+      "extFundName": "7802-11001-GENL-ELECT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "gbke",
+      "fundName": "GENL BKS 7802 ELECT",
+      "note1": "7802-11001-GENL-ELECT",
+      "extCode": 40,
+      "extFundName": "7802-11001-GENL-ELECT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "esee",
+      "fundName": "ENGR SER 7840 ELECT",
+      "note1": "7840-11001-ENGR-ELECT",
+      "extCode": 29,
+      "extFundName": "7840-11001-ENGR-ELECT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "esee",
+      "fundName": "ENGR SER 7840 ELECT",
+      "note1": "7840-11001-ENGR-ELECT",
+      "extCode": 29,
+      "extFundName": "7840-11001-ENGR-ELECT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "esee",
+      "fundName": "ENGR SER 7840 ELECT",
+      "note1": "7840-11001-ENGR-ELECT",
+      "extCode": 29,
+      "extFundName": "7840-11001-ENGR-ELECT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "gmie",
+      "fundName": "GENL MSC 7822 ELECT",
+      "note1": "7822-11001-GENL-ELECT",
+      "extCode": 41,
+      "extFundName": "7822-11001-GENL-ELECT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "gmie",
+      "fundName": "GENL MSC 7822 ELECT",
+      "note1": "7822-11001-GENL-ELECT",
+      "extCode": 41,
+      "extFundName": "7822-11001-GENL-ELECT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "gmie",
+      "fundName": "GENL MSC 7822 ELECT",
+      "note1": "7822-11001-GENL-ELECT",
+      "extCode": 41,
+      "extFundName": "7822-11001-GENL-ELECT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "gdde",
+      "fundName": "GENL DD 7842 ELECT",
+      "note1": "7842-11001-GENL-ELECT",
+      "extCode": 43,
+      "extFundName": "7842-11001-GENL-ELECT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cssse",
+      "fundName": "SSCI BKS 7802 ELECT",
+      "note1": "7802-11001-CASSS-ELECT",
+      "extCode": 16,
+      "extFundName": "7802-11001-CASSS-ELECT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cssse",
+      "fundName": "SSCI BKS 7802 ELECT",
+      "note1": "7802-11001-CASSS-ELECT",
+      "extCode": 16,
+      "extFundName": "7802-11001-CASSS-ELECT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cssse",
+      "fundName": "SSCI BKS 7802 ELECT",
+      "note1": "7802-11001-CASSS-ELECT",
+      "extCode": 16,
+      "extFundName": "7802-11001-CASSS-ELECT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cssme",
+      "fundName": "MATHS MSC7822 ELECT",
+      "note1": "7822-11001-CASMNS-ELECT",
+      "extCode": 11,
+      "extFundName": "7822-11001-CASMNS-ELECT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cssme",
+      "fundName": "MATHS MSC7822 ELECT",
+      "note1": "7822-11001-CASMNS-ELECT",
+      "extCode": 11,
+      "extFundName": "7822-11001-CASMNS-ELECT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cssme",
+      "fundName": "MATHS MSC7822 ELECT",
+      "note1": "7822-11001-CASMNS-ELECT",
+      "extCode": 11,
+      "extFundName": "7822-11001-CASMNS-ELECT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "emie",
+      "fundName": "ENGR MSC 7822 ELECT",
+      "note1": "7822-11001-ENGR-ELECT",
+      "extCode": 28,
+      "extFundName": "7822-11001-ENGR-ELECT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ebke",
+      "fundName": "ENGR BKS 7802 ELECT",
+      "note1": "7802-11001-ENGR-ELECT",
+      "extCode": 27,
+      "extFundName": "7802-11001-ENGR-ELECT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "ebke",
+      "fundName": "ENGR BKS 7802 ELECT",
+      "note1": "7802-11001-ENGR-ELECT",
+      "extCode": 27,
+      "extFundName": "7802-11001-ENGR-ELECT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ebke",
+      "fundName": "ENGR BKS 7802 ELECT",
+      "note1": "7802-11001-ENGR-ELECT",
+      "extCode": 27,
+      "extFundName": "7802-11001-ENGR-ELECT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "csose",
+      "fundName": "SSCI BKS 7822 ELECT",
+      "note1": "7822-11001-CASSS-ELECT",
+      "extCode": 18,
+      "extFundName": "7822-11001-CASSS-ELECT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "csose",
+      "fundName": "SSCI BKS 7822 ELECT",
+      "note1": "7822-11001-CASSS-ELECT",
+      "extCode": 18,
+      "extFundName": "7822-11001-CASSS-ELECT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "csose",
+      "fundName": "SSCI BKS 7822 ELECT",
+      "note1": "7822-11001-CASSS-ELECT",
+      "extCode": 18,
+      "extFundName": "7822-11001-CASSS-ELECT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cshue",
+      "fundName": "HUM BKS 7802 ELECT",
+      "note1": "7802-11001-CASHUM-ELECT",
+      "extCode": 2,
+      "extFundName": "7802-11001-CASHUM-ELECT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cshue",
+      "fundName": "HUM BKS 7802 ELECT",
+      "note1": "7802-11001-CASHUM-ELECT",
+      "extCode": 2,
+      "extFundName": "7802-11001-CASHUM-ELECT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cshue",
+      "fundName": "HUM BKS 7802 ELECT",
+      "note1": "7802-11001-CASHUM-ELECT",
+      "extCode": 2,
+      "extFundName": "7802-11001-CASHUM-ELECT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cssee",
+      "fundName": "HUM SER 7840 ELECT",
+      "note1": "7840-11001-CASHUM-ELECT",
+      "extCode": 5,
+      "extFundName": "7840-11001-CASHUM-ELECT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cssee",
+      "fundName": "HUM SER 7840 ELECT",
+      "note1": "7840-11001-CASHUM-ELECT",
+      "extCode": 5,
+      "extFundName": "7840-11001-CASHUM-ELECT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cssee",
+      "fundName": "HUM SER 7840 ELECT",
+      "note1": "7840-11001-CASHUM-ELECT",
+      "extCode": 5,
+      "extFundName": "7840-11001-CASHUM-ELECT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cssce",
+      "fundName": "MATHS BKS7802 ELECT",
+      "note1": "7802-11001-CASMNS-ELECT",
+      "extCode": 9,
+      "extFundName": "7802-11001-CASMNS-ELECT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cssce",
+      "fundName": "MATHS BKS7802 ELECT",
+      "note1": "7802-11001-CASMNS-ELECT",
+      "extCode": 9,
+      "extFundName": "7802-11001-CASMNS-ELECT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cssce",
+      "fundName": "MATHS BKS7802 ELECT",
+      "note1": "7802-11001-CASMNS-ELECT",
+      "extCode": 9,
+      "extFundName": "7802-11001-CASMNS-ELECT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "lcgal",
+      "fundName": "Coll.  Enhance Gen",
+      "note1": "",
+      "extCode": 0,
+      "extFundName": "",
+      "fundType": "fbal"
+    },
+    {
+      "code": "lcaal",
+      "fundName": "ARSCI Pool",
+      "note1": "",
+      "extCode": 186,
+      "extFundName": "libraq 46347 arsci",
+      "fundType": "fbal"
+    },
+    {
+      "code": "lcgbk",
+      "fundName": "7802-books",
+      "note1": "",
+      "extCode": 0,
+      "extFundName": "",
+      "fundType": "fbal"
+    },
+    {
+      "code": "lcbsc",
+      "fundName": "7802-books/sci",
+      "note1": "",
+      "extCode": 0,
+      "extFundName": "",
+      "fundType": "fbal"
+    },
+    {
+      "code": "chprg",
+      "fundName": "hum/prg/7802/prnt",
+      "note1": "7802-11001-cashum-chprg",
+      "extCode": 265,
+      "extFundName": "7802-11001-CASHUM-CHPRG",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "chprg",
+      "fundName": "hum/prg/7802/prnt",
+      "note1": "7802-11001-cashum-chprg",
+      "extCode": 265,
+      "extFundName": "7802-11001-CASHUM-CHPRG",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "chprg",
+      "fundName": "hum/prg/7802/prnt",
+      "note1": "7802-11001-cashum-chprg",
+      "extCode": 265,
+      "extFundName": "7802-11001-CASHUM-CHPRG",
+      "fundType": "fbal"
+    },
+    {
+      "code": "chpre",
+      "fundName": "hum/prg/7802/elect",
+      "note1": "7802-11001-cashum-chpre",
+      "extCode": 266,
+      "extFundName": "7802-11001-CASHUM-CHPRE",
+      "fundType": "fbal"
+    },
+    {
+      "code": "chdbs",
+      "fundName": "hum/dbase/7840",
+      "note1": "7840-11001-cashum-chdbs",
+      "extCode": 267,
+      "extFundName": "7840-11001-CASHUM-CHDBS",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "chdbs",
+      "fundName": "hum/dbase/7840",
+      "note1": "7840-11001-cashum-chdbs",
+      "extCode": 267,
+      "extFundName": "7840-11001-CASHUM-CHDBS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "chdbs",
+      "fundName": "hum/dbase/7840",
+      "note1": "7840-11001-cashum-chdbs",
+      "extCode": 267,
+      "extFundName": "7840-11001-CASHUM-CHDBS",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "chdvd",
+      "fundName": "hum/dvd/7850",
+      "note1": "7850-11001-cashum-chdvd",
+      "extCode": 268,
+      "extFundName": "7850-11001-CASHUM-CHDVD",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "chdvd",
+      "fundName": "hum/dvd/7850",
+      "note1": "7850-11001-cashum-chdvd",
+      "extCode": 268,
+      "extFundName": "7850-11001-CASHUM-CHDVD",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "chdvd",
+      "fundName": "hum/dvd/7850",
+      "note1": "7850-11001-cashum-chdvd",
+      "extCode": 268,
+      "extFundName": "7850-11001-CASHUM-CHDVD",
+      "fundType": "fbal"
+    },
+    {
+      "code": "chret",
+      "fundName": "hum/bk/7802/prnt",
+      "note1": "7802-11001-cashum-chret",
+      "extCode": 261,
+      "extFundName": "7802-11001-CASHUM-CHRET",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "chret",
+      "fundName": "hum/bk/7802/prnt",
+      "note1": "7802-11001-cashum-chret",
+      "extCode": 261,
+      "extFundName": "7802-11001-CASHUM-CHRET",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "chret",
+      "fundName": "hum/bk/7802/prnt",
+      "note1": "7802-11001-cashum-chret",
+      "extCode": 261,
+      "extFundName": "7802-11001-CASHUM-CHRET",
+      "fundType": "fbal"
+    },
+    {
+      "code": "chrte",
+      "fundName": "hum/bk/7802/elect",
+      "note1": "7802-11001-cashum-chrte",
+      "extCode": 262,
+      "extFundName": "7802-11001-CASHUM-CHRTE",
+      "fundType": "fbal"
+    },
+    {
+      "code": "chcor",
+      "fundName": "hum/core/7802/prnt",
+      "note1": "7802-11001-cashum-chcor",
+      "extCode": 263,
+      "extFundName": "7802-11001-CASHUM-CHCOR",
+      "fundType": "fbal"
+    },
+    {
+      "code": "chcor",
+      "fundName": "hum/core/7802/prnt",
+      "note1": "7802-11001-cashum-chcor",
+      "extCode": 263,
+      "extFundName": "7802-11001-CASHUM-CHCOR",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "chcor",
+      "fundName": "hum/core/7802/prnt",
+      "note1": "7802-11001-cashum-chcor",
+      "extCode": 263,
+      "extFundName": "7802-11001-CASHUM-CHCOR",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "chcre",
+      "fundName": "hum/core/7802/elect",
+      "note1": "7802-11001-cashum-chcre",
+      "extCode": 264,
+      "extFundName": "7802-11001-CASHUM-CHCRE",
+      "fundType": "fbal"
+    },
+    {
+      "code": "psere",
+      "fundName": "ECPPM SER7840 ELECT",
+      "note1": "7840-11001-CPESS-ELECT",
+      "extCode": 35,
+      "extFundName": "7840-11001-CPESS-ELECT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "psere",
+      "fundName": "ECPPM SER7840 ELECT",
+      "note1": "7840-11001-CPESS-ELECT",
+      "extCode": 35,
+      "extFundName": "7840-11001-CPESS-ELECT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "psere",
+      "fundName": "ECPPM SER7840 ELECT",
+      "note1": "7840-11001-CPESS-ELECT",
+      "extCode": 35,
+      "extFundName": "7840-11001-CPESS-ELECT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "rbke",
+      "fundName": "REF BKS 7802 ELECT",
+      "note1": "7802-11001-REF-ELECT",
+      "extCode": 37,
+      "extFundName": "7802-11001-REF-ELECT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "rbke",
+      "fundName": "REF BKS 7802 ELECT",
+      "note1": "7802-11001-REF-ELECT",
+      "extCode": 37,
+      "extFundName": "7802-11001-REF-ELECT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "rbke",
+      "fundName": "REF BKS 7802 ELECT",
+      "note1": "7802-11001-REF-ELECT",
+      "extCode": 37,
+      "extFundName": "7802-11001-REF-ELECT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "rmie",
+      "fundName": "REF MISC 7822 ELECT",
+      "note1": "7822-11001-REF-ELECT",
+      "extCode": 38,
+      "extFundName": "7822-11001-REF-ELECT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "rsee",
+      "fundName": "REF SER 7840 ELECT",
+      "note1": "7840-11001-REF-ELECT",
+      "extCode": 39,
+      "extFundName": "7840-11001-REF-ELECT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "rsee",
+      "fundName": "REF SER 7840 ELECT",
+      "note1": "7840-11001-REF-ELECT",
+      "extCode": 39,
+      "extFundName": "7840-11001-REF-ELECT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "rsee",
+      "fundName": "REF SER 7840 ELECT",
+      "note1": "7840-11001-REF-ELECT",
+      "extCode": 39,
+      "extFundName": "7840-11001-REF-ELECT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "gsee",
+      "fundName": "GENL SER 7840 ELECT",
+      "note1": "7840-11001-GENL-ELECT",
+      "extCode": 42,
+      "extFundName": "7840-11001-GENL-ELECT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "gsee",
+      "fundName": "GENL SER 7840 ELECT",
+      "note1": "7840-11001-GENL-ELECT",
+      "extCode": 42,
+      "extFundName": "7840-11001-GENL-ELECT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "gsee",
+      "fundName": "GENL SER 7840 ELECT",
+      "note1": "7840-11001-GENL-ELECT",
+      "extCode": 42,
+      "extFundName": "7840-11001-GENL-ELECT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "pmise",
+      "fundName": "ECPPM MSC7822 ELECT",
+      "note1": "7822-11001-CPESS-ELECT",
+      "extCode": 33,
+      "extFundName": "7822-11001-CPESS-ELECT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ppre",
+      "fundName": "PRESERV 7816 ELECT",
+      "note1": "7816-11001-BIND-ELECT",
+      "extCode": 44,
+      "extFundName": "7816-11001-BIND-ELECT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "psepe",
+      "fundName": "ECPPM BKS7802 ELECT",
+      "note1": "7802-11001-CPESS-ELECT",
+      "extCode": 31,
+      "extFundName": "7802-11001-CPESS-ELECT",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "psepe",
+      "fundName": "ECPPM BKS7802 ELECT",
+      "note1": "7802-11001-CPESS-ELECT",
+      "extCode": 31,
+      "extFundName": "7802-11001-CPESS-ELECT",
+      "fundType": "fbal"
+    },
+    {
+      "code": "psepe",
+      "fundName": "ECPPM BKS7802 ELECT",
+      "note1": "7802-11001-CPESS-ELECT",
+      "extCode": 31,
+      "extFundName": "7802-11001-CPESS-ELECT",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "csdvd",
+      "fundName": "ssci/dvd/7850",
+      "note1": "7850-11001-casss-csdvd",
+      "extCode": 284,
+      "extFundName": "7850-11001-CASSS-CSDVD",
+      "fundType": "fbal"
+    },
+    {
+      "code": "csdvd",
+      "fundName": "ssci/dvd/7850",
+      "note1": "7850-11001-casss-csdvd",
+      "extCode": 284,
+      "extFundName": "7850-11001-CASSS-CSDVD",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "csdvd",
+      "fundName": "ssci/dvd/7850",
+      "note1": "7850-11001-casss-csdvd",
+      "extCode": 284,
+      "extFundName": "7850-11001-CASSS-CSDVD",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "csdbs",
+      "fundName": "ssci/dbase/7840",
+      "note1": "7840-11001-casss-csdbs",
+      "extCode": 283,
+      "extFundName": "7840-11001-CASSS-CSDBS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cspre",
+      "fundName": "ssci/prg/7802/ele",
+      "note1": "7802-11001-casss-cspre",
+      "extCode": 282,
+      "extFundName": "7802-11001-CASSS-CSPRE",
+      "fundType": "fbal"
+    },
+    {
+      "code": "csprg",
+      "fundName": "ssci/prg/7802/prnt",
+      "note1": "7802-11001-casss-csprg",
+      "extCode": 281,
+      "extFundName": "7802-11001-CASSS-CSPRG",
+      "fundType": "fbal"
+    },
+    {
+      "code": "csprg",
+      "fundName": "ssci/prg/7802/prnt",
+      "note1": "7802-11001-casss-csprg",
+      "extCode": 281,
+      "extFundName": "7802-11001-CASSS-CSPRG",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "csprg",
+      "fundName": "ssci/prg/7802/prnt",
+      "note1": "7802-11001-casss-csprg",
+      "extCode": 281,
+      "extFundName": "7802-11001-CASSS-CSPRG",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cscre",
+      "fundName": "ssci/core/7802/ele",
+      "note1": "7802-11001-casss-cscre",
+      "extCode": 280,
+      "extFundName": "7802-11001-CASSS-CSCRE",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cscor",
+      "fundName": "ssci/core/7802/prnt",
+      "note1": "7802-11001-casss-cscor",
+      "extCode": 279,
+      "extFundName": "7802-11001-CASSS-CSCOR",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cscor",
+      "fundName": "ssci/core/7802/prnt",
+      "note1": "7802-11001-casss-cscor",
+      "extCode": 279,
+      "extFundName": "7802-11001-CASSS-CSCOR",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cscor",
+      "fundName": "ssci/core/7802/prnt",
+      "note1": "7802-11001-casss-cscor",
+      "extCode": 279,
+      "extFundName": "7802-11001-CASSS-CSCOR",
+      "fundType": "fbal"
+    },
+    {
+      "code": "csrte",
+      "fundName": "ssci/bk/7802/ele",
+      "note1": "7802-11001-casss-csrte",
+      "extCode": 278,
+      "extFundName": "7802-11001-CASSS-CSRTE",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "csrte",
+      "fundName": "ssci/bk/7802/ele",
+      "note1": "7802-11001-casss-csrte",
+      "extCode": 278,
+      "extFundName": "7802-11001-CASSS-CSRTE",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "csrte",
+      "fundName": "ssci/bk/7802/ele",
+      "note1": "7802-11001-casss-csrte",
+      "extCode": 278,
+      "extFundName": "7802-11001-CASSS-CSRTE",
+      "fundType": "fbal"
+    },
+    {
+      "code": "csret",
+      "fundName": "ssci/bk/7802/prnt",
+      "note1": "7802-11001-casss-csret",
+      "extCode": 277,
+      "extFundName": "7802-11001-CASSS-CSRET",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "csret",
+      "fundName": "ssci/bk/7802/prnt",
+      "note1": "7802-11001-casss-csret",
+      "extCode": 277,
+      "extFundName": "7802-11001-CASSS-CSRET",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "csret",
+      "fundName": "ssci/bk/7802/prnt",
+      "note1": "7802-11001-casss-csret",
+      "extCode": 277,
+      "extFundName": "7802-11001-CASSS-CSRET",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cmdvd",
+      "fundName": "maths/dvd/7850",
+      "note1": "7850-11001-casmns-cmdvd",
+      "extCode": 276,
+      "extFundName": "7850-11001-CASMNS-CMDVD",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cmdvd",
+      "fundName": "maths/dvd/7850",
+      "note1": "7850-11001-casmns-cmdvd",
+      "extCode": 276,
+      "extFundName": "7850-11001-CASMNS-CMDVD",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cmdvd",
+      "fundName": "maths/dvd/7850",
+      "note1": "7850-11001-casmns-cmdvd",
+      "extCode": 276,
+      "extFundName": "7850-11001-CASMNS-CMDVD",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cmdbs",
+      "fundName": "maths/dbase/7840",
+      "note1": "7802-11001-casmns-cmdbs",
+      "extCode": 275,
+      "extFundName": "7840-11001-CASMNS-CMDBS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cmpre",
+      "fundName": "maths/prg/7802/elec",
+      "note1": "7802-11001-casmns-cmpre",
+      "extCode": 274,
+      "extFundName": "7802-11001-CASMNS-CMPRE",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cmpre",
+      "fundName": "maths/prg/7802/elec",
+      "note1": "7802-11001-casmns-cmpre",
+      "extCode": 274,
+      "extFundName": "7802-11001-CASMNS-CMPRE",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cmpre",
+      "fundName": "maths/prg/7802/elec",
+      "note1": "7802-11001-casmns-cmpre",
+      "extCode": 274,
+      "extFundName": "7802-11001-CASMNS-CMPRE",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cmprg",
+      "fundName": "maths/prg/7802/prnt",
+      "note1": "7802-11001-casmns-cmprg",
+      "extCode": 273,
+      "extFundName": "7802-11001-CASMNS-CMPRG",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cmprg",
+      "fundName": "maths/prg/7802/prnt",
+      "note1": "7802-11001-casmns-cmprg",
+      "extCode": 273,
+      "extFundName": "7802-11001-CASMNS-CMPRG",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cmprg",
+      "fundName": "maths/prg/7802/prnt",
+      "note1": "7802-11001-casmns-cmprg",
+      "extCode": 273,
+      "extFundName": "7802-11001-CASMNS-CMPRG",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cmcre",
+      "fundName": "maths/cor/7802/elec",
+      "note1": "7802-11001-casmns-cmcre",
+      "extCode": 272,
+      "extFundName": "7802-11001-CASMNS-CMCRE",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cmcor",
+      "fundName": "maths/cor/7802/prnt",
+      "note1": "7802-11001-casmns-cmcor",
+      "extCode": 271,
+      "extFundName": "7802-11001-CASMNS-CMCOR",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cmrte",
+      "fundName": "maths/bk/7802/elect",
+      "note1": "7802-11001-casmns-cmrte",
+      "extCode": 270,
+      "extFundName": "7802-11001-CASMNS-CMRTE",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cmrte",
+      "fundName": "maths/bk/7802/elect",
+      "note1": "7802-11001-casmns-cmrte",
+      "extCode": 270,
+      "extFundName": "7802-11001-CASMNS-CMRTE",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cmrte",
+      "fundName": "maths/bk/7802/elect",
+      "note1": "7802-11001-casmns-cmrte",
+      "extCode": 270,
+      "extFundName": "7802-11001-CASMNS-CMRTE",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cmret",
+      "fundName": "maths/bk/7802/prnt",
+      "note1": "7802-11001-casmns-cmret",
+      "extCode": 269,
+      "extFundName": "7802-11001-CASMNS-CMRET",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cmret",
+      "fundName": "maths/bk/7802/prnt",
+      "note1": "7802-11001-casmns-cmret",
+      "extCode": 269,
+      "extFundName": "7802-11001-CASMNS-CMRET",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cmret",
+      "fundName": "maths/bk/7802/prnt",
+      "note1": "7802-11001-casmns-cmret",
+      "extCode": 269,
+      "extFundName": "7802-11001-CASMNS-CMRET",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cedbs",
+      "fundName": "engr/dbase/7840",
+      "note1": "7840-11001-engr-cedbs",
+      "extCode": 299,
+      "extFundName": "7840-11001-ENGR-CEDBS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cedvd",
+      "fundName": "engr/dvd/7850",
+      "note1": "7850-11001-engr-cedvd",
+      "extCode": 300,
+      "extFundName": "7850-11001-ENGR-CEDVD",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ceprg",
+      "fundName": "engr/prg/7802/prnt",
+      "note1": "7802-11001-engr-ceprg",
+      "extCode": 297,
+      "extFundName": "7802-11001-ENGR-CEPRG",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ceprg",
+      "fundName": "engr/prg/7802/prnt",
+      "note1": "7802-11001-engr-ceprg",
+      "extCode": 297,
+      "extFundName": "7802-11001-ENGR-CEPRG",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "ceprg",
+      "fundName": "engr/prg/7802/prnt",
+      "note1": "7802-11001-engr-ceprg",
+      "extCode": 297,
+      "extFundName": "7802-11001-ENGR-CEPRG",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cepre",
+      "fundName": "engr/prg/7802/elect",
+      "note1": "7802-11001-engr-cepre",
+      "extCode": 298,
+      "extFundName": "7802-11001-ENGR-CEPRE",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cecor",
+      "fundName": "engr/core/7802/prnt",
+      "note1": "7802-11001-engr-cecor",
+      "extCode": 295,
+      "extFundName": "7802-11001-ENGR-CECOR",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cecor",
+      "fundName": "engr/core/7802/prnt",
+      "note1": "7802-11001-engr-cecor",
+      "extCode": 295,
+      "extFundName": "7802-11001-ENGR-CECOR",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cecor",
+      "fundName": "engr/core/7802/prnt",
+      "note1": "7802-11001-engr-cecor",
+      "extCode": 295,
+      "extFundName": "7802-11001-ENGR-CECOR",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cecre",
+      "fundName": "engr/core/7802/elec",
+      "note1": "7802-11001-engr-cecre",
+      "extCode": 296,
+      "extFundName": "7802-11001-ENGR-CECRE",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ceret",
+      "fundName": "engr/bk/7802/prnt",
+      "note1": "7802-11001-engr-ceret",
+      "extCode": 293,
+      "extFundName": "7802-11001-ENGR-CERET",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "ceret",
+      "fundName": "engr/bk/7802/prnt",
+      "note1": "7802-11001-engr-ceret",
+      "extCode": 293,
+      "extFundName": "7802-11001-ENGR-CERET",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ceret",
+      "fundName": "engr/bk/7802/prnt",
+      "note1": "7802-11001-engr-ceret",
+      "extCode": 293,
+      "extFundName": "7802-11001-ENGR-CERET",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "certe",
+      "fundName": "engr/bk/7802/elect",
+      "note1": "7802-11001-engr-certe",
+      "extCode": 294,
+      "extFundName": "7802-11001-ENGR-CERTE",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cbdbs",
+      "fundName": "bus/dbase/7840",
+      "note1": "7840-11001-bus-cbdbs",
+      "extCode": 291,
+      "extFundName": "7840-11001-BUS-CBDBS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cbdvd",
+      "fundName": "bus/dvd-7850",
+      "note1": "7850-11001-bus-cbdvd",
+      "extCode": 292,
+      "extFundName": "7850-11001-BUS-CBDVD",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cbprg",
+      "fundName": "bus/prg/7802/prnt",
+      "note1": "7802-11001-bus-cbprg",
+      "extCode": 289,
+      "extFundName": "7802-11001-BUS-CBPRG",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cbpre",
+      "fundName": "bus/prg/7802/ele",
+      "note1": "7802-11001-bus-cbpre",
+      "extCode": 290,
+      "extFundName": "7802-11001-BUS-CBPRE",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cbcor",
+      "fundName": "bus/core/7802/prnt",
+      "note1": "7802-11001-bus-cbcor",
+      "extCode": 287,
+      "extFundName": "7802-11001-BUS-CBCOR",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cbcre",
+      "fundName": "bus/core/7802/ele",
+      "note1": "7802-11001-bus-cbcre",
+      "extCode": 288,
+      "extFundName": "7802-11001-BUS-CBCRE",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cbret",
+      "fundName": "bus/bk/7802/prnt",
+      "note1": "7802-11001-bus-cbret",
+      "extCode": 285,
+      "extFundName": "7802-11001-BUS-CBRET",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cbret",
+      "fundName": "bus/bk/7802/prnt",
+      "note1": "7802-11001-bus-cbret",
+      "extCode": 285,
+      "extFundName": "7802-11001-BUS-CBRET",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cbret",
+      "fundName": "bus/bk/7802/prnt",
+      "note1": "7802-11001-bus-cbret",
+      "extCode": 285,
+      "extFundName": "7802-11001-BUS-CBRET",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cbrte",
+      "fundName": "bus/bk/7802/elect",
+      "note1": "7802-11001-bus-cbrte",
+      "extCode": 286,
+      "extFundName": "7802-11001-BUS-CBRTE",
+      "fundType": "fbal"
+    },
+    {
+      "code": "crdvd",
+      "fundName": "ref/dvd/7850",
+      "note1": "7850-11001-ref-crdvd",
+      "extCode": 318,
+      "extFundName": "7850-11001-REF-CRDVD",
+      "fundType": "fbal"
+    },
+    {
+      "code": "crdbs",
+      "fundName": "ref/dbase/7840",
+      "note1": "7840-11001-ref-crdbs",
+      "extCode": 317,
+      "extFundName": "7840-11004-REF-CRDBS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cpcor",
+      "fundName": "cpe/core/7802/prnt",
+      "note1": "7802-11001-cpess-cpcor",
+      "extCode": 303,
+      "extFundName": "7802-11001-CPESS-CPCOR",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cpcor",
+      "fundName": "cpe/core/7802/prnt",
+      "note1": "7802-11001-cpess-cpcor",
+      "extCode": 303,
+      "extFundName": "7802-11001-CPESS-CPCOR",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cpcor",
+      "fundName": "cpe/core/7802/prnt",
+      "note1": "7802-11001-cpess-cpcor",
+      "extCode": 303,
+      "extFundName": "7802-11001-CPESS-CPCOR",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cpnce",
+      "fundName": "cpe/core/7802/elect",
+      "note1": "7802-11001-cpess-cpnce",
+      "extCode": 304,
+      "extFundName": "7802-11001-CPESS-CPNCE",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cpret",
+      "fundName": "cpe/bk/7802/prnt",
+      "note1": "7802-11001-cpess-cpret",
+      "extCode": 301,
+      "extFundName": "7802-11001-CPESS-CPRET",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cpret",
+      "fundName": "cpe/bk/7802/prnt",
+      "note1": "7802-11001-cpess-cpret",
+      "extCode": 301,
+      "extFundName": "7802-11001-CPESS-CPRET",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cpret",
+      "fundName": "cpe/bk/7802/prnt",
+      "note1": "7802-11001-cpess-cpret",
+      "extCode": 301,
+      "extFundName": "7802-11001-CPESS-CPRET",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cprte",
+      "fundName": "cpe/bk/7802/elect",
+      "note1": "7802-11001-cpess-cprte",
+      "extCode": 302,
+      "extFundName": "7802-11001-CPESS-CPRTE",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cpcur",
+      "fundName": "cpe/curr/7802/prnt",
+      "note1": "7802-11001-cpess-cpcur",
+      "extCode": 307,
+      "extFundName": "7802-11001-CPESS-CPCUR",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cpcur",
+      "fundName": "cpe/curr/7802/prnt",
+      "note1": "7802-11001-cpess-cpcur",
+      "extCode": 307,
+      "extFundName": "7802-11001-CPESS-CPCUR",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cpcur",
+      "fundName": "cpe/curr/7802/prnt",
+      "note1": "7802-11001-cpess-cpcur",
+      "extCode": 307,
+      "extFundName": "7802-11001-CPESS-CPCUR",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cpcre",
+      "fundName": "cpe/curr/7802/elect",
+      "note1": "7802-11001-cpess-cpcre",
+      "extCode": 308,
+      "extFundName": "7802-11001-CPESS-CPCRE",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cpprg",
+      "fundName": "cpe/prg/7802/prnt",
+      "note1": "7802-11001-cpess-cpprg",
+      "extCode": 305,
+      "extFundName": "7802-11001-CPESS-CPPRG",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cppre",
+      "fundName": "cpe/prg/7802/elect",
+      "note1": "7802-11001-cpess-cppre",
+      "extCode": 306,
+      "extFundName": "7802-11001-CPESS-CPPRE",
+      "fundType": "fbal"
+    },
+    {
+      "code": "crret",
+      "fundName": "ref/bk/7802/prnt",
+      "note1": "7802-11001-ref-crret",
+      "extCode": 311,
+      "extFundName": "7802-11001-REF-CRRET",
+      "fundType": "fbal"
+    },
+    {
+      "code": "crrte",
+      "fundName": "ref/bk/7802/elect",
+      "note1": "7802-11001-ref-crrte",
+      "extCode": 312,
+      "extFundName": "7802-11001-REF-CRRTE",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cpdbs",
+      "fundName": "cpe/dbase/7840",
+      "note1": "7840-11001-cpess-cpdbs",
+      "extCode": 309,
+      "extFundName": "7840-11001-CPESS-CPDBS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cpdvd",
+      "fundName": "cpe/dvd/7850",
+      "note1": "7850-11001-cpess-cpdvd",
+      "extCode": 310,
+      "extFundName": "7850-11001-CPESS-CPDVD",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cpdvd",
+      "fundName": "cpe/dvd/7850",
+      "note1": "7850-11001-cpess-cpdvd",
+      "extCode": 310,
+      "extFundName": "7850-11001-CPESS-CPDVD",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cpdvd",
+      "fundName": "cpe/dvd/7850",
+      "note1": "7850-11001-cpess-cpdvd",
+      "extCode": 310,
+      "extFundName": "7850-11001-CPESS-CPDVD",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "crprg",
+      "fundName": "ref/prg/7802/prnt",
+      "note1": "7802-11001-ref-crprg",
+      "extCode": 315,
+      "extFundName": "7802-11001-REF-CRPRG",
+      "fundType": "fbal"
+    },
+    {
+      "code": "crpre",
+      "fundName": "ref/prg/7802/elec",
+      "note1": "7802-11001-ref-crpre",
+      "extCode": 316,
+      "extFundName": "7802-11001-REF-CRPRE",
+      "fundType": "fbal"
+    },
+    {
+      "code": "crcor",
+      "fundName": "ref/core/7802/prnt",
+      "note1": "7802-11001-ref-crcor",
+      "extCode": 313,
+      "extFundName": "7802-11001-REF-CRCOR",
+      "fundType": "fbal"
+    },
+    {
+      "code": "crcre",
+      "fundName": "ref/core/7802/elec",
+      "note1": "7802-11001-ref-crcre",
+      "extCode": 314,
+      "extFundName": "7802-11001-REF-CRCRE",
+      "fundType": "fbal"
+    },
+    {
+      "code": "arcbk",
+      "fundName": "LARCH-7802-BOOKS",
+      "note1": "7802-11001-ULACQ-LARCH",
+      "extCode": 45,
+      "extFundName": "7802-11001-LARCH",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "arcbk",
+      "fundName": "LARCH-7802-BOOKS",
+      "note1": "7802-11001-ULACQ-LARCH",
+      "extCode": 45,
+      "extFundName": "7802-11001-LARCH",
+      "fundType": "fbal"
+    },
+    {
+      "code": "arcbk",
+      "fundName": "LARCH-7802-BOOKS",
+      "note1": "7802-11001-ULACQ-LARCH",
+      "extCode": 45,
+      "extFundName": "7802-11001-LARCH",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "arcbi",
+      "fundName": "LARCH-7816-BIND",
+      "note1": "7816-11001-ULACQ-LARCH",
+      "extCode": 48,
+      "extFundName": "7816-11001-LARCH",
+      "fundType": "fbal"
+    },
+    {
+      "code": "arcbi",
+      "fundName": "LARCH-7816-BIND",
+      "note1": "7816-11001-ULACQ-LARCH",
+      "extCode": 48,
+      "extFundName": "7816-11001-LARCH",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "arcbi",
+      "fundName": "LARCH-7816-BIND",
+      "note1": "7816-11001-ULACQ-LARCH",
+      "extCode": 48,
+      "extFundName": "7816-11001-LARCH",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "auto",
+      "fundName": "YBP Autoship",
+      "note1": "7802-11001-ULACQ-AUTO",
+      "extCode": 323,
+      "extFundName": "7802-11001-ULACQ-AUTO",
+      "fundType": "fbal"
+    },
+    {
+      "code": "auto",
+      "fundName": "YBP Autoship",
+      "note1": "7802-11001-ULACQ-AUTO",
+      "extCode": 323,
+      "extFundName": "7802-11001-ULACQ-AUTO",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "auto",
+      "fundName": "YBP Autoship",
+      "note1": "7802-11001-ULACQ-AUTO",
+      "extCode": 323,
+      "extFundName": "7802-11001-ULACQ-AUTO",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "crp",
+      "fundName": "Continuing print",
+      "note1": "7828-11001-ULACQ-CRP",
+      "extCode": 322,
+      "extFundName": "7836-11001-ULACQ-CRP",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "crp",
+      "fundName": "Continuing print",
+      "note1": "7828-11001-ULACQ-CRP",
+      "extCode": 322,
+      "extFundName": "7836-11001-ULACQ-CRP",
+      "fundType": "fbal"
+    },
+    {
+      "code": "crp",
+      "fundName": "Continuing print",
+      "note1": "7828-11001-ULACQ-CRP",
+      "extCode": 322,
+      "extFundName": "7836-11001-ULACQ-CRP",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cre",
+      "fundName": "Continuing elec",
+      "note1": "7828-11001-ULACQ-CRE",
+      "extCode": 321,
+      "extFundName": "7840-11001-ULACQ-CRE",
+      "fundType": "fbal"
+    },
+    {
+      "code": "cre",
+      "fundName": "Continuing elec",
+      "note1": "7828-11001-ULACQ-CRE",
+      "extCode": 321,
+      "extFundName": "7840-11001-ULACQ-CRE",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cre",
+      "fundName": "Continuing elec",
+      "note1": "7828-11001-ULACQ-CRE",
+      "extCode": 321,
+      "extFundName": "7840-11001-ULACQ-CRE",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "dda",
+      "fundName": "Demand Driven Acq",
+      "note1": "7824-11001-ULACQ-DDA",
+      "extCode": 324,
+      "extFundName": "7824-11001-ULACQ-DDA",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "dda",
+      "fundName": "Demand Driven Acq",
+      "note1": "7824-11001-ULACQ-DDA",
+      "extCode": 324,
+      "extFundName": "7824-11001-ULACQ-DDA",
+      "fundType": "fbal"
+    },
+    {
+      "code": "dda",
+      "fundName": "Demand Driven Acq",
+      "note1": "7824-11001-ULACQ-DDA",
+      "extCode": 324,
+      "extFundName": "7824-11001-ULACQ-DDA",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "aar",
+      "fundName": "Anthony Raymond",
+      "note1": "7802-11001-ULACQ-AAR",
+      "extCode": 325,
+      "extFundName": "7802-11001-ULACQ-AAR",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "aar",
+      "fundName": "Anthony Raymond",
+      "note1": "7802-11001-ULACQ-AAR",
+      "extCode": 325,
+      "extFundName": "7802-11001-ULACQ-AAR",
+      "fundType": "fbal"
+    },
+    {
+      "code": "aar",
+      "fundName": "Anthony Raymond",
+      "note1": "7802-11001-ULACQ-AAR",
+      "extCode": 325,
+      "extFundName": "7802-11001-ULACQ-AAR",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "gag",
+      "fundName": "Gail Gradowski",
+      "note1": "7802-11001-ULACQ-GAG",
+      "extCode": 326,
+      "extFundName": "7802-11001-ULACQ-GAG",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "gag",
+      "fundName": "Gail Gradowski",
+      "note1": "7802-11001-ULACQ-GAG",
+      "extCode": 326,
+      "extFundName": "7802-11001-ULACQ-GAG",
+      "fundType": "fbal"
+    },
+    {
+      "code": "gag",
+      "fundName": "Gail Gradowski",
+      "note1": "7802-11001-ULACQ-GAG",
+      "extCode": 326,
+      "extFundName": "7802-11001-ULACQ-GAG",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "emc",
+      "fundName": "Elizabeth McKeigue",
+      "note1": "7802-11001-ULACQ-EMC",
+      "extCode": 327,
+      "extFundName": "7802-11001-ULACQ-EMC",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "emc",
+      "fundName": "Elizabeth McKeigue",
+      "note1": "7802-11001-ULACQ-EMC",
+      "extCode": 327,
+      "extFundName": "7802-11001-ULACQ-EMC",
+      "fundType": "fbal"
+    },
+    {
+      "code": "emc",
+      "fundName": "Elizabeth McKeigue",
+      "note1": "7802-11001-ULACQ-EMC",
+      "extCode": 327,
+      "extFundName": "7802-11001-ULACQ-EMC",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "hel",
+      "fundName": "Helene LeFrance",
+      "note1": "7802-11001-ULACQ-HEL",
+      "extCode": 328,
+      "extFundName": "7802-11001-ULACQ-HEL",
+      "fundType": "fbal"
+    },
+    {
+      "code": "hel",
+      "fundName": "Helene LeFrance",
+      "note1": "7802-11001-ULACQ-HEL",
+      "extCode": 328,
+      "extFundName": "7802-11001-ULACQ-HEL",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "hel",
+      "fundName": "Helene LeFrance",
+      "note1": "7802-11001-ULACQ-HEL",
+      "extCode": 328,
+      "extFundName": "7802-11001-ULACQ-HEL",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "lkg",
+      "fundName": "Leanna Goodwater",
+      "note1": "7802-11001-ULACQ-LKG",
+      "extCode": 329,
+      "extFundName": "7802-11001-ULACQ-LKG",
+      "fundType": "fbal"
+    },
+    {
+      "code": "lkg",
+      "fundName": "Leanna Goodwater",
+      "note1": "7802-11001-ULACQ-LKG",
+      "extCode": 329,
+      "extFundName": "7802-11001-ULACQ-LKG",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "lkg",
+      "fundName": "Leanna Goodwater",
+      "note1": "7802-11001-ULACQ-LKG",
+      "extCode": 329,
+      "extFundName": "7802-11001-ULACQ-LKG",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "mss",
+      "fundName": "Michal Strutin",
+      "note1": "7802-11001-ULACQ-MSS",
+      "extCode": 330,
+      "extFundName": "7802-11001-ULACQ-MSS",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "mss",
+      "fundName": "Michal Strutin",
+      "note1": "7802-11001-ULACQ-MSS",
+      "extCode": 330,
+      "extFundName": "7802-11001-ULACQ-MSS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "mss",
+      "fundName": "Michal Strutin",
+      "note1": "7802-11001-ULACQ-MSS",
+      "extCode": 330,
+      "extFundName": "7802-11001-ULACQ-MSS",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "pjn",
+      "fundName": "Sophia Neuhaus",
+      "note1": "7802-11001-ULACQ-PJN",
+      "extCode": 334,
+      "extFundName": "7802-11001-ULACQ-PJN",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "pjn",
+      "fundName": "Sophia Neuhaus",
+      "note1": "7802-11001-ULACQ-PJN",
+      "extCode": 334,
+      "extFundName": "7802-11001-ULACQ-PJN",
+      "fundType": "fbal"
+    },
+    {
+      "code": "pjn",
+      "fundName": "Sophia Neuhaus",
+      "note1": "7802-11001-ULACQ-PJN",
+      "extCode": 334,
+      "extFundName": "7802-11001-ULACQ-PJN",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "skb",
+      "fundName": "Susan Boyd",
+      "note1": "7802-11001-ULACQ-SKB",
+      "extCode": 331,
+      "extFundName": "7802-11001-ULACQ-SKB",
+      "fundType": "fbal"
+    },
+    {
+      "code": "skb",
+      "fundName": "Susan Boyd",
+      "note1": "7802-11001-ULACQ-SKB",
+      "extCode": 331,
+      "extFundName": "7802-11001-ULACQ-SKB",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "skb",
+      "fundName": "Susan Boyd",
+      "note1": "7802-11001-ULACQ-SKB",
+      "extCode": 331,
+      "extFundName": "7802-11001-ULACQ-SKB",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "rice",
+      "fundName": "Discretionary",
+      "note1": "7802-11001-ULACQ-RICE",
+      "extCode": 335,
+      "extFundName": "7802-11001-ULACQ-RICE",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "rice",
+      "fundName": "Discretionary",
+      "note1": "7802-11001-ULACQ-RICE",
+      "extCode": 335,
+      "extFundName": "7802-11001-ULACQ-RICE",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "rice",
+      "fundName": "Discretionary",
+      "note1": "7802-11001-ULACQ-RICE",
+      "extCode": 335,
+      "extFundName": "7802-11001-ULACQ-RICE",
+      "fundType": "fbal"
+    },
+    {
+      "code": "pop",
+      "fundName": "Popular Reading",
+      "note1": "7802-11001-ULACQ-POP",
+      "extCode": 333,
+      "extFundName": "7802-11001-ULACQ-POP",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "pop",
+      "fundName": "Popular Reading",
+      "note1": "7802-11001-ULACQ-POP",
+      "extCode": 333,
+      "extFundName": "7802-11001-ULACQ-POP",
+      "fundType": "fbal"
+    },
+    {
+      "code": "pop",
+      "fundName": "Popular Reading",
+      "note1": "7802-11001-ULACQ-POP",
+      "extCode": 333,
+      "extFundName": "7802-11001-ULACQ-POP",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "rare",
+      "fundName": "Rare books & SpC",
+      "note1": "7802-11001-ULACQ-RARE",
+      "extCode": 332,
+      "extFundName": "7802-11001-ULACQ-RARE",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "rare",
+      "fundName": "Rare books & SpC",
+      "note1": "7802-11001-ULACQ-RARE",
+      "extCode": 332,
+      "extFundName": "7802-11001-ULACQ-RARE",
+      "fundType": "fbal"
+    },
+    {
+      "code": "rare",
+      "fundName": "Rare books & SpC",
+      "note1": "7802-11001-ULACQ-RARE",
+      "extCode": 332,
+      "extFundName": "7802-11001-ULACQ-RARE",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "auth",
+      "fundName": "AUTH",
+      "note1": "7844-11001-ULACQ-AUTH",
+      "extCode": 336,
+      "extFundName": "7844-11001-ULACQ-AUTH",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "auth",
+      "fundName": "AUTH",
+      "note1": "7844-11001-ULACQ-AUTH",
+      "extCode": 336,
+      "extFundName": "7844-11001-ULACQ-AUTH",
+      "fundType": "fbal"
+    },
+    {
+      "code": "auth",
+      "fundName": "AUTH",
+      "note1": "7844-11001-ULACQ-AUTH",
+      "extCode": 336,
+      "extFundName": "7844-11001-ULACQ-AUTH",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "sbk",
+      "fundName": "Shannon Kealey",
+      "note1": "7802 11001-ULACQ-SBK",
+      "extCode": 337,
+      "extFundName": "7802-11001-ULACQ-SBK",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "sbk",
+      "fundName": "Shannon Kealey",
+      "note1": "7802 11001-ULACQ-SBK",
+      "extCode": 337,
+      "extFundName": "7802-11001-ULACQ-SBK",
+      "fundType": "fbal"
+    },
+    {
+      "code": "sbk",
+      "fundName": "Shannon Kealey",
+      "note1": "7802 11001-ULACQ-SBK",
+      "extCode": 337,
+      "extFundName": "7802-11001-ULACQ-SBK",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "nab",
+      "fundName": "Nicole Branch",
+      "note1": "7802 11001-ULACQ-NAB",
+      "extCode": 338,
+      "extFundName": "7802-11001-ULACQ-NAB",
+      "fundType": "fbal"
+    },
+    {
+      "code": "nab",
+      "fundName": "Nicole Branch",
+      "note1": "7802 11001-ULACQ-NAB",
+      "extCode": 338,
+      "extFundName": "7802-11001-ULACQ-NAB",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "nab",
+      "fundName": "Nicole Branch",
+      "note1": "7802 11001-ULACQ-NAB",
+      "extCode": 338,
+      "extFundName": "7802-11001-ULACQ-NAB",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "illmo",
+      "fundName": "ILL Patron Request",
+      "note1": "7802-11001-ULACQ-ILLMO",
+      "extCode": 339,
+      "extFundName": "7802-11001-ULACQ-ILLMO",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "illmo",
+      "fundName": "ILL Patron Request",
+      "note1": "7802-11001-ULACQ-ILLMO",
+      "extCode": 339,
+      "extFundName": "7802-11001-ULACQ-ILLMO",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "illmo",
+      "fundName": "ILL Patron Request",
+      "note1": "7802-11001-ULACQ-ILLMO",
+      "extCode": 339,
+      "extFundName": "7802-11001-ULACQ-ILLMO",
+      "fundType": "fbal"
+    },
+    {
+      "code": "illdd",
+      "fundName": "ILLDD",
+      "note1": "7842-11001-ULACQ-ILLDD",
+      "extCode": 340,
+      "extFundName": "7842-11001-ULACQ-ILLDD",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "illdd",
+      "fundName": "ILLDD",
+      "note1": "7842-11001-ULACQ-ILLDD",
+      "extCode": 340,
+      "extFundName": "7842-11001-ULACQ-ILLDD",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "illdd",
+      "fundName": "ILLDD",
+      "note1": "7842-11001-ULACQ-ILLDD",
+      "extCode": 340,
+      "extFundName": "7842-11001-ULACQ-ILLDD",
+      "fundType": "fbal"
+    },
+    {
+      "code": "illcc",
+      "fundName": "ILLCC",
+      "note1": "7842-11001-ULACQ-ILLCC",
+      "extCode": 341,
+      "extFundName": "7842-11001-ULACQ-ILLCC",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "illcc",
+      "fundName": "ILLCC",
+      "note1": "7842-11001-ULACQ-ILLCC",
+      "extCode": 341,
+      "extFundName": "7842-11001-ULACQ-ILLCC",
+      "fundType": "fbal"
+    },
+    {
+      "code": "illcc",
+      "fundName": "ILLCC",
+      "note1": "7842-11001-ULACQ-ILLCC",
+      "extCode": 341,
+      "extFundName": "7842-11001-ULACQ-ILLCC",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "illtr",
+      "fundName": "ILLTR",
+      "note1": "7802-11001-ULACQ-ILLTR",
+      "extCode": 342,
+      "extFundName": "7802-11001-ULACQ-ILLTR",
+      "fundType": "fbal"
+    },
+    {
+      "code": "illtr",
+      "fundName": "ILLTR",
+      "note1": "7802-11001-ULACQ-ILLTR",
+      "extCode": 342,
+      "extFundName": "7802-11001-ULACQ-ILLTR",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "illtr",
+      "fundName": "ILLTR",
+      "note1": "7802-11001-ULACQ-ILLTR",
+      "extCode": 342,
+      "extFundName": "7802-11001-ULACQ-ILLTR",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "prebi",
+      "fundName": "PREBI",
+      "note1": "7816-11001-ULACQ-PREBI",
+      "extCode": 343,
+      "extFundName": "7816-11001-ULACQ-PREBI",
+      "fundType": "fbal"
+    },
+    {
+      "code": "prebi",
+      "fundName": "PREBI",
+      "note1": "7816-11001-ULACQ-PREBI",
+      "extCode": 343,
+      "extFundName": "7816-11001-ULACQ-PREBI",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "prebi",
+      "fundName": "PREBI",
+      "note1": "7816-11001-ULACQ-PREBI",
+      "extCode": 343,
+      "extFundName": "7816-11001-ULACQ-PREBI",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "presp",
+      "fundName": "presp",
+      "note1": "7816-11001-ULACQ-PRESP",
+      "extCode": 344,
+      "extFundName": "7816-11001-ULACQ-PRESP",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "presp",
+      "fundName": "presp",
+      "note1": "7816-11001-ULACQ-PRESP",
+      "extCode": 344,
+      "extFundName": "7816-11001-ULACQ-PRESP",
+      "fundType": "fbal"
+    },
+    {
+      "code": "presp",
+      "fundName": "presp",
+      "note1": "7816-11001-ULACQ-PRESP",
+      "extCode": 344,
+      "extFundName": "7816-11001-ULACQ-PRESP",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "prezz",
+      "fundName": "prezz",
+      "note1": "7816-11001-ULACQ-PREZZ",
+      "extCode": 345,
+      "extFundName": "7816-11001-ULACQ-PREZZ",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "prezz",
+      "fundName": "prezz",
+      "note1": "7816-11001-ULACQ-PREZZ",
+      "extCode": 345,
+      "extFundName": "7816-11001-ULACQ-PREZZ",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "prezz",
+      "fundName": "prezz",
+      "note1": "7816-11001-ULACQ-PREZZ",
+      "extCode": 345,
+      "extFundName": "7816-11001-ULACQ-PREZZ",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ddav",
+      "fundName": "DDAV",
+      "note1": "7850-11001-ULACQ-DDAV",
+      "extCode": 346,
+      "extFundName": "7850-11001-ULACQ-DDAV",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "ddav",
+      "fundName": "DDAV",
+      "note1": "7850-11001-ULACQ-DDAV",
+      "extCode": 346,
+      "extFundName": "7850-11001-ULACQ-DDAV",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "ddav",
+      "fundName": "DDAV",
+      "note1": "7850-11001-ULACQ-DDAV",
+      "extCode": 346,
+      "extFundName": "7850-11001-ULACQ-DDAV",
+      "fundType": "fbal"
+    },
+    {
+      "code": "illcs",
+      "fundName": "Courier service",
+      "note1": "7842-11001-ULACQ-ILLCS",
+      "extCode": 350,
+      "extFundName": "7842-11001-ULACQ-ILLCS",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "illcs",
+      "fundName": "Courier service",
+      "note1": "7842-11001-ULACQ-ILLCS",
+      "extCode": 350,
+      "extFundName": "7842-11001-ULACQ-ILLCS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "illcs",
+      "fundName": "Courier service",
+      "note1": "7842-11001-ULACQ-ILLCS",
+      "extCode": 350,
+      "extFundName": "7842-11001-ULACQ-ILLCS",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "ram",
+      "fundName": "Rice Majors",
+      "note1": "7802-11001-ULACQ-RAM",
+      "extCode": 349,
+      "extFundName": "7802-11001-ULACQ-RAM",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "ram",
+      "fundName": "Rice Majors",
+      "note1": "7802-11001-ULACQ-RAM",
+      "extCode": 349,
+      "extFundName": "7802-11001-ULACQ-RAM",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "ram",
+      "fundName": "Rice Majors",
+      "note1": "7802-11001-ULACQ-RAM",
+      "extCode": 349,
+      "extFundName": "7802-11001-ULACQ-RAM",
+      "fundType": "fbal"
+    },
+    {
+      "code": "sjn",
+      "fundName": "DO NOT USE Sophia N",
+      "note1": "7802-11001-ULACQ-SJN",
+      "extCode": 347,
+      "extFundName": "7802-11001-ULACQ-SJN",
+      "fundType": "fbal"
+    },
+    {
+      "code": "gopen",
+      "fundName": "Open Access-Genl",
+      "note1": "7862-11001-ULACQ-GOPEN",
+      "extCode": 348,
+      "extFundName": "7862-11001-ULACQ-GOPEN",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "gopen",
+      "fundName": "Open Access-Genl",
+      "note1": "7862-11001-ULACQ-GOPEN",
+      "extCode": 348,
+      "extFundName": "7862-11001-ULACQ-GOPEN",
+      "fundType": "fbal"
+    },
+    {
+      "code": "gopen",
+      "fundName": "Open Access-Genl",
+      "note1": "7862-11001-ULACQ-GOPEN",
+      "extCode": 348,
+      "extFundName": "7862-11001-ULACQ-GOPEN",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "gpkg",
+      "fundName": "ePackages",
+      "note1": "7840-11001-ULACQ-GPKG",
+      "extCode": 354,
+      "extFundName": "7840-11001-ULACQ-GPKG",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "gpkg",
+      "fundName": "ePackages",
+      "note1": "7840-11001-ULACQ-GPKG",
+      "extCode": 354,
+      "extFundName": "7840-11001-ULACQ-GPKG",
+      "fundType": "fbal"
+    },
+    {
+      "code": "gpkg",
+      "fundName": "ePackages",
+      "note1": "7840-11001-ULACQ-GPKG",
+      "extCode": 354,
+      "extFundName": "7840-11001-ULACQ-GPKG",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "shn",
+      "fundName": "Sophia Neuhaus",
+      "note1": "7802-11001-ULACQ-SHN",
+      "extCode": 353,
+      "extFundName": "7802-11001-ULACQ-SHN",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "shn",
+      "fundName": "Sophia Neuhaus",
+      "note1": "7802-11001-ULACQ-SHN",
+      "extCode": 353,
+      "extFundName": "7802-11001-ULACQ-SHN",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "shn",
+      "fundName": "Sophia Neuhaus",
+      "note1": "7802-11001-ULACQ-SHN",
+      "extCode": 353,
+      "extFundName": "7802-11001-ULACQ-SHN",
+      "fundType": "fbal"
+    },
+    {
+      "code": "stane",
+      "fundName": "Standing Ord E",
+      "note1": "7824-11001-ULACQ-STANE",
+      "extCode": 351,
+      "extFundName": "7824-11001-ULACQ-STANE",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "stane",
+      "fundName": "Standing Ord E",
+      "note1": "7824-11001-ULACQ-STANE",
+      "extCode": 351,
+      "extFundName": "7824-11001-ULACQ-STANE",
+      "fundType": "fbal"
+    },
+    {
+      "code": "stane",
+      "fundName": "Standing Ord E",
+      "note1": "7824-11001-ULACQ-STANE",
+      "extCode": 351,
+      "extFundName": "7824-11001-ULACQ-STANE",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "stanp",
+      "fundName": "Standing Ord P",
+      "note1": "7802-11001-ULACQ-STANP",
+      "extCode": 352,
+      "extFundName": "7802-11001-ULACQ-STANP",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "stanp",
+      "fundName": "Standing Ord P",
+      "note1": "7802-11001-ULACQ-STANP",
+      "extCode": 352,
+      "extFundName": "7802-11001-ULACQ-STANP",
+      "fundType": "fbal"
+    },
+    {
+      "code": "stanp",
+      "fundName": "Standing Ord P",
+      "note1": "7802-11001-ULACQ-STANP",
+      "extCode": 352,
+      "extFundName": "7802-11001-ULACQ-STANP",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "mjs",
+      "fundName": "Melanie Sellar",
+      "note1": "7802-11001-ULACQ-MJS",
+      "extCode": 355,
+      "extFundName": "7802-11001-ULACQ-MJS",
+      "fundType": "fbal"
+    },
+    {
+      "code": "mjs",
+      "fundName": "Melanie Sellar",
+      "note1": "7802-11001-ULACQ-MJS",
+      "extCode": 355,
+      "extFundName": "7802-11001-ULACQ-MJS",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "mjs",
+      "fundName": "Melanie Sellar",
+      "note1": "7802-11001-ULACQ-MJS",
+      "extCode": 355,
+      "extFundName": "7802-11001-ULACQ-MJS",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "disc",
+      "fundName": "Discretionary/Contigency",
+      "note1": "7802-11001-ULACQ-DISC",
+      "extCode": 0,
+      "extFundName": "",
+      "fundType": "fbal"
+    },
+    {
+      "code": "disc",
+      "fundName": "Discretionary/Contigency",
+      "note1": "7802-11001-ULACQ-DISC",
+      "extCode": 0,
+      "extFundName": "",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "disc",
+      "fundName": "Discretionary/Contigency",
+      "note1": "7802-11001-ULACQ-DISC",
+      "extCode": 0,
+      "extFundName": "",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "facpub",
+      "fundName": "Faculty Publications [Special Collection]",
+      "note1": "ULACQ...",
+      "extCode": 0,
+      "extFundName": "",
+      "fundType": "fbal"
+    },
+    {
+      "code": "facpb",
+      "fundName": "Faculty Publications",
+      "note1": "7802-11001-ULACQ-FACPB",
+      "extCode": 356,
+      "extFundName": "7802-11001-ULACQ-FACPB",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "facpb",
+      "fundName": "Faculty Publications",
+      "note1": "7802-11001-ULACQ-FACPB",
+      "extCode": 356,
+      "extFundName": "7802-11001-ULACQ-FACPB",
+      "fundType": "fbal"
+    },
+    {
+      "code": "facpb",
+      "fundName": "Faculty Publications",
+      "note1": "7802-11001-ULACQ-FACPB",
+      "extCode": 356,
+      "extFundName": "7802-11001-ULACQ-FACPB",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "repla",
+      "fundName": "Replacement",
+      "note1": "7802-11001-ULACQ-REPLA",
+      "extCode": 357,
+      "extFundName": "7802-11001-ULACQ-REPLA",
+      "fundType": "fbal"
+    },
+    {
+      "code": "repla",
+      "fundName": "Replacement",
+      "note1": "7802-11001-ULACQ-REPLA",
+      "extCode": 357,
+      "extFundName": "7802-11001-ULACQ-REPLA",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "repla",
+      "fundName": "Replacement",
+      "note1": "7802-11001-ULACQ-REPLA",
+      "extCode": 357,
+      "extFundName": "7802-11001-ULACQ-REPLA",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "ayv",
+      "fundName": "Anna Yang",
+      "note1": "7824-11001-ULACQ-AYV",
+      "extCode": 358,
+      "extFundName": "7824-11001-ULACQ-AYV",
+      "fundType": "fbal"
+    },
+    {
+      "code": "ayv",
+      "fundName": "Anna Yang",
+      "note1": "7824-11001-ULACQ-AYV",
+      "extCode": 358,
+      "extFundName": "7824-11001-ULACQ-AYV",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "ayv",
+      "fundName": "Anna Yang",
+      "note1": "7824-11001-ULACQ-AYV",
+      "extCode": 358,
+      "extFundName": "7824-11001-ULACQ-AYV",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "arc",
+      "fundName": "Andrew Carlos",
+      "note1": "7824-11001-ULACQ-ARC",
+      "extCode": 359,
+      "extFundName": "7824-11001-ULACQ-ARC",
+      "fundType": "fbal"
+    },
+    {
+      "code": "arc",
+      "fundName": "Andrew Carlos",
+      "note1": "7824-11001-ULACQ-ARC",
+      "extCode": 359,
+      "extFundName": "7824-11001-ULACQ-ARC",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "arc",
+      "fundName": "Andrew Carlos",
+      "note1": "7824-11001-ULACQ-ARC",
+      "extCode": 359,
+      "extFundName": "7824-11001-ULACQ-ARC",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "deisj",
+      "fundName": "Diversity Equity Inclusion Social Justice",
+      "note1": "",
+      "extCode": 360,
+      "extFundName": "7824-11001-ULACQ-DEISJ",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "deisj",
+      "fundName": "Diversity Equity Inclusion Social Justice",
+      "note1": "",
+      "extCode": 360,
+      "extFundName": "7824-11001-ULACQ-DEISJ",
+      "fundType": "fbal"
+    },
+    {
+      "code": "deisj",
+      "fundName": "Diversity Equity Inclusion Social Justice",
+      "note1": "",
+      "extCode": 360,
+      "extFundName": "7824-11001-ULACQ-DEISJ",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "kbm",
+      "fundName": "Kelci Baughman McDowell",
+      "note1": "7802-11001-ULACQ-KBM",
+      "extCode": 361,
+      "extFundName": "7802-11001-ULACQ-KBM",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "kbm",
+      "fundName": "Kelci Baughman McDowell",
+      "note1": "7802-11001-ULACQ-KBM",
+      "extCode": 361,
+      "extFundName": "7802-11001-ULACQ-KBM",
+      "fundType": "fbal"
+    },
+    {
+      "code": "kbm",
+      "fundName": "Kelci Baughman McDowell",
+      "note1": "7802-11001-ULACQ-KBM",
+      "extCode": 361,
+      "extFundName": "7802-11001-ULACQ-KBM",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "bwh",
+      "fundName": "Benjamin Hall",
+      "note1": "7824-11001-ULACQ-BWH",
+      "extCode": 362,
+      "extFundName": "7824-11001-ULACQ-BWH",
+      "fundType": "fbal"
+    },
+    {
+      "code": "bwh",
+      "fundName": "Benjamin Hall",
+      "note1": "7824-11001-ULACQ-BWH",
+      "extCode": 362,
+      "extFundName": "7824-11001-ULACQ-BWH",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "bwh",
+      "fundName": "Benjamin Hall",
+      "note1": "7824-11001-ULACQ-BWH",
+      "extCode": 362,
+      "extFundName": "7824-11001-ULACQ-BWH",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "dad",
+      "fundName": "Dominique Dozier",
+      "note1": "7802-11001-ULACQ-DAD",
+      "extCode": 363,
+      "extFundName": "7802-11001-ULACQ-DAD",
+      "fundType": "fbal"
+    },
+    {
+      "code": "dad",
+      "fundName": "Dominique Dozier",
+      "note1": "7802-11001-ULACQ-DAD",
+      "extCode": 363,
+      "extFundName": "7802-11001-ULACQ-DAD",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "dad",
+      "fundName": "Dominique Dozier",
+      "note1": "7802-11001-ULACQ-DAD",
+      "extCode": 363,
+      "extFundName": "7802-11001-ULACQ-DAD",
+      "fundType": "oldfbal"
+    },
+    {
+      "code": "cres",
+      "fundName": "Course Reserves",
+      "note1": "7802-11001-ULACQ-CRES",
+      "extCode": 364,
+      "extFundName": "7802-11001-ULACQ-CRES",
+      "fundType": "fprevbal"
+    },
+    {
+      "code": "cres",
+      "fundName": "Course Reserves",
+      "note1": "7802-11001-ULACQ-CRES",
+      "extCode": 364,
+      "extFundName": "7802-11001-ULACQ-CRES",
+      "fundType": "fbal"
+    }
+  ]
+}
