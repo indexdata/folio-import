@@ -188,7 +188,8 @@ try {
           org: {
             orgsUuid: org.id,
             name: org.name
-          }
+          },
+          primaryOrg: true
         }
         l.orgs.push(o);
         stats.orgs++;

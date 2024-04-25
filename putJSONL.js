@@ -5,6 +5,7 @@ const readline = require('readline');
 const path = require('path');
 
 const { getAuthToken } = require('./lib/login');
+const { ok } = require('assert');
 let inFile = process.argv[3];
 let ep = process.argv[2];
 let ver = process.env.version;
@@ -94,6 +95,21 @@ const wait = (ms) => {
           rec._version = res.body._version;
         } catch (e) {
           logger.error(`${e}`); 
+        }
+      } else if (recUrl.match(/\/licenses\/licenses/)) {
+        try {
+          let rname = encodeURIComponent(rec.name);
+          let getUrl = `${actionUrl}?match=name&term=${rname}`;
+          logger.info(`  GET ${getUrl}`);
+            let res = await superagent
+              .get(getUrl)
+              .set('x-okapi-token', config.token);
+            if (res.body.length === 1) {
+              recUrl = `${actionUrl}/${res.body[0].id}`;
+              rec.id = res.body[0].id;
+            };
+        } catch (e) {
+          logger.error(`${e}`);
         }
       }
       try {
