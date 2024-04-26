@@ -1,6 +1,6 @@
 /*
-  It is impossible to delete an agreement record if it has a linked license.
-  This script will take a JSONL file of agreements, and delete the linked license,
+  It is impossible to delete an agreement record if it has a linked agreements.
+  This script will take a JSONL file of agreements, and delete the linked agreements,
   then PUT the changes to erm/sas.
 */
 
@@ -15,11 +15,10 @@ const objFile = process.argv[2];
   try {
     let inData;
     if (!objFile) {
-      throw new Error('Usage: node unlinkLicenses <agreements_file>');
+      throw new Error('Usage: node unlinkRelatedAgreements <agreements_file>');
     }
 
-    let config = await getAuthToken(superagent);
-    let authToken = config.token;
+    let config  = await getAuthToken(superagent);
 
     let fileStream = fs.createReadStream(objFile);
     let rl = readline.createInterface({
@@ -35,18 +34,18 @@ const objFile = process.argv[2];
       try {
         let res = await superagent
           .get(url)
-          .set('x-okapi-token', authToken);
+          .set('x-okapi-token', config.token);
         let j = res.body;
-        if (j.linkedLicenses && j.linkedLicenses[0]) {
-          for (let x = 0; x < j.linkedLicenses.length; x++ ) {
-            j.linkedLicenses[x]._delete = true;
+        if (j.outwardRelationships && j.outwardRelationships[0]) {
+          for (let x = 0; x < j.outwardRelationships.length; x++ ) {
+            j.outwardRelationships[x]._delete = true;
           }
           console.log('PUT', url);
           let pres = await superagent
             .put(url)
             .send(j)
-            .set('x-okapi-token', authToken);
-          console.log('Licenses unlinked:', res.body.linkedLicenses.length);
+            .set('x-okapi-token', config.token);
+          console.log('Agreements unlinked:', res.body.outwardRelationships.length);
         }
       } catch (e) {
         console.log(e.message);
