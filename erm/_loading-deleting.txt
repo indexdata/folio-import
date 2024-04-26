@@ -1,0 +1,18 @@
+Creating licenses and agreements...
+
+1) make licenses
+2) run node postJSONL.js licenses/licenses licenses.jsonl (returns licensesOut.jsonl file)
+3) make agreements 
+4) run node postJSONL.js erm/sas agreements.jsonl (returns agreementsOut.jsonl file)
+5) run node makeRelatedAgreements <erm_directory>
+6) run node postJSONL.js erm/sas agreements-reload.jsonl
+7) run node makeErmNotes agreementsOut.jsonl notes.jsonl
+8) run node postJSONL.js notes notes-load.jsonl
+
+
+Deleting agreements and licenses...
+
+1) run node unlinkAgreementThings.js agreementsOut.jsonl
+2) run node deleteByEndpoint licenses/licenses
+3) run node deleteByEndpoint erm/srs agreementsOut.jsonl
+4) run node deleteByEndpoint 'notes?query=domain==agreements'

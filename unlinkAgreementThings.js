@@ -13,7 +13,6 @@ const objFile = process.argv[2];
 
 (async () => {
   try {
-    let inData;
     if (!objFile) {
       throw new Error('Usage: node unlinkRelatedAgreements <agreements_file>');
     }
@@ -36,16 +35,27 @@ const objFile = process.argv[2];
           .get(url)
           .set('x-okapi-token', config.token);
         let j = res.body;
+        let runPut = false;
         if (j.outwardRelationships && j.outwardRelationships[0]) {
           for (let x = 0; x < j.outwardRelationships.length; x++ ) {
             j.outwardRelationships[x]._delete = true;
           }
+          runPut = true;
+        }
+        if (j.linkedLicenses && j.linkedLicenses[0]) {
+          for (let x = 0; x < j.linkedLicenses.length; x++ ) {
+            j.linkedLicenses[x]._delete = true;
+          }
+          runPut = true;
+        }
+        if (runPut) {
           console.log('PUT', url);
           let pres = await superagent
             .put(url)
             .send(j)
             .set('x-okapi-token', config.token);
-          console.log('Agreements unlinked:', res.body.outwardRelationships.length);
+          if (pres.outwardRelationships) console.log('Outward relationships deleted:', pres.outwardRelationships.length);
+          if (pres.linkedLicenses) console.log('Linked Licenses deleted:', pres.linkedLicenses.length);
         }
       } catch (e) {
         console.log(e.message);
