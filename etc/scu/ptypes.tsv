@@ -1,0 +1,42 @@
+Legacy Patron type code	Legacy Patron label	FOLIO patron group code	FOLIO patron group label
+0	Students, Undergraduate	UL Undergrad Students	
+1	Students, Graduate	UL Graduate Students	
+2	University Library Staff	UL Library Staff	
+3	Faculty, Full time & Part time	UL Faculty	
+4	Faculty, Adjunct	UL Adjunct Faculty	
+5	Staff	UL Staff	
+6	UL Courtesy Card	UL Courtesy Cards	
+7	Law Students	Law Students	
+8	Law MLS Online Compliance	Law MLS Students	
+9	LL.M. (Master of Laws)	Law LLM Students	
+13	Non-Matriculating Students	UL Non Matriculating Students	
+15	Law Visiting Scholar	Law Visiting Scholar	
+16	Law Faculty	Law Faculty	
+17	Law Faculty, Adjunct	Law Adjunct Faculty	
+18	Law Library Staff	Law Library Staff	
+19	Law School Staff	Law Staff	
+20	Law - Affiliate, No WD/HR	Law Affiliate No WD	
+22	Law Courtesy Cards	Law Courtesy Cards	
+23	Law Access-Only Courtesy Cards	Law Access Only Courtesy Cards	
+24	Bar Review	Law Bar Review	
+25	UL - ILL	UL ILL	
+26	Law - ILL	Law ILL	
+30	UL - ILL - AJCU	UL ILL AJCU	
+36	UL - ILL - GTU ONLY	UL ILL GTU Only	
+40	UL - Leave/Term-Enrolled Student	UL Leave Students	
+41	UL - Affiliate, No SCU Login/WD	UL Affiliate No WD	
+50	Emeritus, Faculty (Non-Law)	UL Faculty Emeriti	
+51	Emeritus, Faculty (Law)	Law Faculty Emeriti	
+52	Retired Faculty (Non-Law)	UL Faculty Retired	
+53	Retired Faculty (Law)	Law Faculty Retired	
+60	JST Students	UL JST Students	
+61	JST Faculty	UL JST Faculty	
+62	JST Staff	UL JST Staff	
+70	Retired Staff	UL Retired Staff	
+100	AJCU Passport Visiting Faculty	UL VP AJCU Passport	
+101	SCELC Reciprocal Faculty	UL VP SCELC RFB	
+102	UL Staff - OU/Project	UL Library Staff Project	
+116	LL ILL - Law Faculty	Law ILL Faculty	
+117	LL ILL - Law Faculty, Adjunct	Law ILL Adjunct Faculty	
+118	LL Staff - OU/Project	Law Library Staff Project	
+119	LL ILL - Law School Staff	Law ILL Staff	
