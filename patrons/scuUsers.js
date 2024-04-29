@@ -205,7 +205,7 @@ try {
       },
       customFields: {}
     }
-    if (!user.patronGroup) patRec.errMessage = `No group ID found for PTYPE '${ptype}'`;
+    if (!user.patronGroup && pcode2 !== 'z') patRec.errMessage = `No group ID found for PTYPE '${ptype}'`;
     if (un) user.username = un;
     if (exId) user.externalSystemId = exId;
     if (un) useen[un] = 1;
