@@ -9,8 +9,10 @@ wd=$(home)/folio-import
 tsvdir=$(wd)/etc/$(lib)
 iref=$(data)/ref/inv
 aref=$(data)/ref/acq
+uref=$(data)/ref/usr
 rules=$(wd)/etc/scu/mapping-rules.json
 odir=$(data)/orders
+udir=$(data)/users
 
 instances:
 	cd $(invdir); cat marc0*.mrc > bibs.mrc
@@ -37,28 +39,35 @@ order:
 	cd $(odir); cat orders0* > all_orders.jsonl
 	cd $(wd)/acquisitions; node scuOrders.js $(aref) $(invdir)/bibs_instances.jsonl $(odir)/all_orders.jsonl
 
+user: $(udir)/users00000000.jsonl
+	cd $(udir); ln -s users00000000.jsonl users.jsonl
+	cd $(wd)/patrons; node scuUsers.js $(uref) $(udir)/users.jsonl
+
 clean-inventory: $(iinfo)
 	cd $(invdir); rm bibs.mrc; mv raw.marc raw.mrc
 
+clean-users: $(udir)/users.jsonl
+	rm $(udir)/users.jsonl
+
 setup:
 	cd $(wd); git pull	
+	mkdir -p $(iref)
+	mkdir -p $(aref)
+	mkdir -p $(uref)
+	mkdir -p $(log)
 	cp $(tsvdir)/*.tsv $(iref)
 	cp $(tsvdir)/locations.tsv $(aref)
 	cp $(tsvdir)/fund-codes.json $(aref)
 	cp $(wd)/configs/bash/$(lscript) .
-	cp $(wd)/bash/reference_inventory.sh .
-	cp $(wd)/bash/reference_acq.sh .
-	cp $(wd)/bash/reference_finance.sh .
+	cp $(wd)/bash/reference_*.sh .
 	cp $(wd)/inventory/marc2inst-$(lib).pl .
 	cp $(wd)/inventory/holdings-$(lib).pl .
 	cp $(wd)/inventory/items-$(lib).pl .
-	mkdir -p $(iref)
-	mkdir -p $(aref)
-	mkdir -p $(log)
 	./$(lscript)
 	./reference_inventory.sh $(iref)
 	./reference_acq.sh $(aref)
 	./reference_finance.sh $(aref)
+	./reference_users.sh $(uref)
 
 clean:
 	rm -rf $(iref)
