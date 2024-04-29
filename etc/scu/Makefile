@@ -13,6 +13,7 @@ uref=$(data)/ref/usr
 rules=$(wd)/etc/scu/mapping-rules.json
 odir=$(data)/orders
 udir=$(data)/users
+email=oscarmail@scu.edu
 
 instances:
 	cd $(invdir); cat marc0*.mrc > bibs.mrc
@@ -41,7 +42,16 @@ order:
 
 user: $(udir)/users00000000.jsonl
 	cd $(udir); ln -s users00000000.jsonl users.jsonl
-	cd $(wd)/patrons; node scuUsers.js $(uref) $(udir)/users.jsonl
+	cd $(wd)/patrons; node scuUsers.js $(uref) $(udir)/users.jsonl $(email) > $(log)/make-users.log &
+
+split-users: $(udir)/users-users.jsonl
+	cd $(udir); split -l 6000 users-users.jsonl usru
+	cd $(udir); split -l 6000 users-perms-users.jsonl usrp
+	cd $(udir); split -l 6000 users-request-prefs.jsonl usrr
+	cd $(udir); split -l 10000 users-notes.jsonl usrn
+
+view-log-users: $(log)/make-users.log
+	cat $(log)/make-users.log
 
 clean-inventory: $(iinfo)
 	cd $(invdir); rm bibs.mrc; mv raw.marc raw.mrc
@@ -57,6 +67,7 @@ setup:
 	mkdir -p $(log)
 	cp $(tsvdir)/*.tsv $(iref)
 	cp $(tsvdir)/locations.tsv $(aref)
+	cp $(tsvdir)/ptypes.tsv $(uref)
 	cp $(tsvdir)/fund-codes.json $(aref)
 	cp $(wd)/configs/bash/$(lscript) .
 	cp $(wd)/bash/reference_*.sh .
