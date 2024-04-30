@@ -4,6 +4,7 @@ home=/home/charles
 data=$(home)/$(lib)
 invdir=$(data)/inv
 mfile=$(invdir)/bibs.mrc
+odir=$(data)/orgs
 log=$(data)/log
 wd=$(home)/folio-import
 tsvdir=$(wd)/etc/$(lib)
@@ -26,11 +27,19 @@ split-inventory: $(invdir)/*.jsonl
 clean-inventory: $(iinfo)
 	cd $(invdir); rm bibs.mrc; mv raw.marc raw.mrc
 
+organizations: $(odir)/*_orgs*csv
+	cd $(odir); mv *_orgs*csv orgs.csv
+	cd $(wd)/acquisitions; node $(lib)Orgs.js $(aref) $(odir)/orgs.csv > $(log)/make-orgs.log
+	cat $(log)/make-orgs.log
+
+clean-organizations: $(odir)/orgs.csv
+	cd $(odir); mv orgs.csv $(lib)_orgs_load.csv
+	cd $(odir); rm *.jsonl
+
 setup:
 	cd $(wd); git pull	
 	cp $(wd)/configs/bash/$(lscript) .
-	cp $(wd)/bash/reference_inventory.sh .
-	cp $(wd)/bash/reference_acq.sh .
+	cp $(wd)/bash/reference_*.sh .
 	cp $(wd)/inventory/marc2inst-$(lib).pl .
 	mkdir -p $(iref)
 	mkdir -p $(aref)

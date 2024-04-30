@@ -4,6 +4,7 @@ home=/home/charles
 data=$(home)/$(lib)
 invdir=$(data)/inv
 mfile=$(invdir)/bibs.mrc
+odir=$(data)/orgs
 ermdir=$(data)/erm
 log=$(data)/log
 wd=$(home)/folio-import
@@ -26,6 +27,17 @@ split-inventory: $(invdir)/*.jsonl
 
 clean-inventory: $(iinfo)
 	cd $(invdir); rm bibs.mrc; mv raw.marc raw.mrc
+
+organizations: $(odir)/*_orgs*csv
+	cd $(odir); mv *_notes*csv notes.csv
+	cd $(odir); mv *_orgs*csv orgs.csv
+	cd $(wd)/acquisitions; node $(lib)Orgs.js $(aref) $(odir)/orgs.csv > $(log)/make-orgs.log
+	cat $(log)/make-orgs.log
+
+clean-organizations: $(odir)/orgs.csv
+	cd $(odir); mv orgs.csv $(lib)_orgs_load.csv
+	cd $(odir); mv notes.csv $(lib)_notes_load.csv
+	cd $(odir); rm *.jsonl
 
 licenses: $(ermdir)/*licenses*csv
 	mv $(ermdir)/*licenses*csv $(ermdir)/lic.csv
