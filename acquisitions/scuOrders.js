@@ -15,13 +15,16 @@ const inFile = process.argv[4];
 const refFiles = {
   organizations: 'organizations.json',
   funds: 'funds.json',
-  entries: 'fund-codes.json',
   locations: 'locations.json',
   acquisitionMethods: 'acquisition-methods.json',
   acquisitionsUnits: 'units.json',
   mtypes: 'material-types.json',
   expenseClasses: 'expense-classes.json'
 };
+
+const mapFiles = {
+  codes: 'fund-codes.tsv'
+}
 
 const idSkip = {
   'c858e4f2-2b6b-4385-842b-60732ee14abb': 1,
@@ -168,6 +171,20 @@ const otypeMap = {
     });
     // console.log(locMap); return;
 
+    const fundMap = {};
+    for (let k in mapFiles) {
+      let fn = refDir + '/' + mapFiles[k];
+      let mdata = fs.readFileSync(fn, { encoding: 'utf8' });
+      mdata.split(/\n/).forEach(l => {
+        let cols = l.split(/\t/);
+        let p = cols[0] + ':' + cols[1];
+        let v = (cols[3]) ? cols[3].trim() : '';
+        let vid = refData.funds[v];
+        if (vid) fundMap[p] = { code: v, id: vid };
+      });
+    }
+    // console.log(fundMap); return;
+
 
     let fileStream = fs.createReadStream(instMapFile);
 
@@ -178,7 +195,9 @@ const otypeMap = {
 
     const instMap = {};
     console.log('Reading instances (this could take awhile)...');
+    let ic = 0;
     for await (const line of rl) {
+      ic++;
       let j = JSON.parse(line);
       let k = j.hrid;
       let v = {
@@ -204,7 +223,9 @@ const otypeMap = {
         });
       }
       instMap[k] = v;
+      if (ic % 100000 === 0) console.log('Instance records read:', ic);
     }
+    console.log('Total instance records read:', ic);
     // console.log(JSON.stringify(instMap, null, 2)); return;
 
     fileStream = fs.createReadStream(inFile);
@@ -222,6 +243,8 @@ const otypeMap = {
       try {
         let so = JSON.parse(line);
         let ff = so.fixedFields;
+        let cf = so.chargedFunds;
+        let fundUrl = (cf) ? cf[0].fund : '';
         let vfs = so.varFields || [];
         let vf = {};
         vfs.forEach(v => {
@@ -319,9 +342,16 @@ const otypeMap = {
             pol.details.receivingNote = catNotes.join('; ');
           }
 
-          let fundNum = ff['12'].value || '';
-          let fundId = (refData.entries[fundNum]) ? refData.entries[fundNum].id : '';
-          let fundCode = (refData.entries[fundNum]) ? refData.entries[fundNum].code : '';
+          let uparts = fundUrl.split(/\//).reverse();
+          let fundNum = uparts[0];
+          let sunit = uparts[1];
+          let fkey = sunit + ':' + fundNum;
+          let fundCode = '';
+          let fundId = '';
+          if (fundMap[fkey]) {
+            fundCode = fundMap[fkey].code;
+            fundId = fundMap[fkey].id;
+          }
           let format;
           if (lib === 'UL') {
             format = formatMap[fundCode] || 'Other';
@@ -390,7 +420,9 @@ const otypeMap = {
           if (!loc.locationId) throw(`ERROR no locationId found for "${location}"`)
           pol.locations.push(loc);
 
-          let bibId = so.bibs[0].id;
+          let bibId = (so.bibs) ? so.bibs[0] : '';
+          bibId = bibId.replace(/.+\//, '');
+          console.log(bibId);
           bibId = 'b' + bibId;
           let inst = instMap[bibId];
           if (inst) {
@@ -419,8 +451,8 @@ const otypeMap = {
             if (inst.p) pol.publisher = inst.p;
             if (inst.d) pol.publicationDate = inst.d;
           } else if (so.bibs && so.bibs[0]) {
-            pol.titleOrPackage = so.bibs[0].title
-            pol.description = bibId;
+            pol.titleOrPackage = `[Unknown - ${bibId}]`;
+            // pol.titleOrPackage = so.bibs[0].title
           }
 
 

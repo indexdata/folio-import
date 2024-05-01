@@ -1,0 +1,436 @@
+Sierra Accounting Unit	Sierra code (numeric)	Sierra code (text)	FOLIO fund code	
+1	00001	lcbal		Instructions : For each row (Sierra numeric / text code combo), please enter the text code that should be used in FOLIO into column C. If the code is already in FOLIO as of 4/11/2024, it is has been input into Column C.  If the fund code isn't being migrated, please enter 'N/A' in Column C.
+1	00002	bbk		
+1	00003	ebk		
+1	00004	cbk		
+1	00005	rbk		
+1	00006	gbk		
+1	00007	ogaal		
+1	00008	lcbbk		
+1	00009	ogbhu		
+1	00010	bindl		
+1	00011	pbk		
+1	00012	ogbsc		
+1	00013	ogbss		
+1	00014	ogvhu		
+1	00015	ogvsc		
+1	00016	ogvss		
+1	00017	aal		
+1	00018	bal		
+1	00019	bse		
+1	00020	bav		
+1	00021	bon		
+1	00022	bmi		
+1	00023	eal		
+1	00024	cal		
+1	00025	ral		
+1	00026	gal		
+1	00027	boaal		
+1	00028	bral		
+1	00029	cbp		
+1	00030	ogbal		
+1	00031	gifts		
+1	00032	ese		
+1	00033	eav		
+1	00034	eon		
+1	00035	emi		
+1	00036	cse		
+1	00037	cav		
+1	00038	con		
+1	00039	cmi		
+1	00040	rse		
+1	00041	rav		
+1	00042	ron		
+1	00043	rmi		
+1	00044	gse		
+1	00045	gav		
+1	00046	gon		
+1	00047	gmi	gmi	
+1	00048	pse		
+1	00049	ppr		
+1	00050	ogbbk		
+1	00051	abkhu		
+1	00052	abksc		
+1	00053	abkss		
+1	00054	amihu		
+1	00055	amisc		
+1	00056	amiss		
+1	00057	asehu		
+1	00058	asesc		
+1	00059	asess		
+1	00060	addhu		
+1	00061	addsc		
+1	00062	addss		
+1	00063	aavhu		
+1	00064	aavsc		
+1	00065	aavss		
+1	00066	aonhu		
+1	00067	aonsc		
+1	00068	aonss		
+1	00069	bobhu		
+1	00070	bobsc		
+1	00071	bobss		
+1	00072	bomhu		
+1	00073	bomsc		
+1	00074	ogbav		
+1	00075	ogeal		
+1	00076	ogebk		
+1	00077	borbk		
+1	00078	borse		
+1	00079	bogbk		
+1	00080	brcbk		
+1	00081	brcav		
+1	00082	mal		
+1	00083	cbabk		
+1	00084	sal		
+1	00085	otphp		
+1	00086	otpmp		
+1	00087	otpsp		
+1	00088	otpbp		
+1	00089	otpep		
+1	00090	otprp		
+1	00093	cbgbk		
+1	00094	caaal		
+1	00095	cagal		
+1	00096	ogeav		
+1	00097	cagbk		
+1	00098	ogcal		
+1	00099	bogal		
+1	00100	boral		
+1	00101	ogcbk		
+1	00102	ogcav		
+1	00103	ogral		
+1	00104	lcabk		
+1	00105	ogrbk		
+1	00106	ograv		
+1	00107	oggal		
+1	00108	oggbk		
+1	00109	lcbon		
+1	00110	oggav		
+1	00111	ogshu		
+1	00112	ogssc		
+1	00113	ogbse		
+1	00114	ogese		
+1	00115	ogcse		
+1	00116	ogrse		
+1	00117	oraal		
+1	00118	orase		
+1	00119	oggse		
+1	00120	oraon		
+1	00121	orami		
+1	00122	cagse		
+1	00123	ogsss		
+1	00124	bdd		
+1	00125	edd		
+1	00126	cdd		
+1	00127	rdd		
+1	00128	gdd		
+1	00129	bomss		
+1	00130	boshu		
+1	00131	bossc		
+1	00132	boass		
+1	00133	boahu		
+1	00134	bosss		
+1	00135	boasc		
+1	00136	orbhu		
+1	00137	orbsc		
+1	00138	orbss		
+1	00139	ormhu		
+1	00140	ormsc		
+1	00141	ormss		
+1	00142	orshu		
+1	00143	orssc		
+1	00144	orsss		
+1	00145	orahu		
+1	00146	orasc		
+1	00147	orass		
+1	00148	orohu		
+1	00149	orosc		
+1	00150	oross		
+1	00151	cbbhu		
+1	00153	cbbss		
+1	00157	cabhu		
+1	00158	cabsc		
+1	00159	cabss		
+1	00160	lcbhu		
+1	00161	cashu		
+1	00162	camis		
+1	00163	casse		
+1	00164	casvd		
+1	00165	cassc		
+1	00166	cassm		
+1	00167	cases		
+1	00168	cascv		
+1	00169	cgvsc		
+1	00170	cgvss		
+1	00171	cgbal		
+1	00172	bogse		
+1	00173	casss		
+1	00174	casos		
+1	00175	caser		
+1	00176	cgeal		
+1	00177	cssvd		
+1	00178	cpsep		
+1	00179	cpmis		
+1	00180	cpser		
+1	00181	cpmiv		
+1	00182	bbke		
+1	00183	bmie		
+1	00184	cgral		
+1	00185	cgrbk		
+1	00186	cgrse		
+1	00187	cgrav		
+1	00188	bsee		
+1	00189	cmise		
+1	00190	csere		
+1	00191	csese		
+1	00192	lcaal		
+1	00193	lcgal		
+1	00194	lcbsc		
+1	00195	lcgbk		
+1	00196	cshue		
+1	00197	csose		
+1	00198	cssce		
+1	00199	cssee		
+1	00200	cssme		
+1	00201	cssse		
+1	00202	ebke		
+1	00203	emie		
+1	00204	esee		
+1	00205	gbke		
+1	00206	gdde		
+1	00207	gmie		
+1	00208	gsee		
+1	00209	pmise		
+1	00210	ppre		
+1	00211	psepe		
+1	00212	psere		
+1	00213	rbke		
+1	00214	rmie		
+1	00215	rsee		
+1	00216	chret		
+1	00217	chrte		
+1	00218	chcor		
+1	00219	chcre		
+1	00220	chprg		
+1	00221	chpre		
+1	00222	chdbs		
+1	00223	chdvd		
+1	00224	cmret		
+1	00225	cmrte		
+1	00226	cmcor		
+1	00227	cmcre		
+1	00228	cmprg		
+1	00229	cmpre		
+1	00230	cmdbs		
+1	00231	cmdvd		
+1	00232	csret		
+1	00233	csrte		
+1	00234	cscor		
+1	00235	cscre		
+1	00236	csprg		
+1	00237	cspre		
+1	00238	csdbs		
+1	00239	csdvd		
+1	00240	cbret		
+1	00241	cbrte		
+1	00242	cbcor		
+1	00243	cbcre		
+1	00244	cbprg		
+1	00245	cbpre		
+1	00246	cbdbs		
+1	00247	cbdvd		
+1	00248	ceret		
+1	00249	certe		
+1	00250	cecor		
+1	00251	cecre		
+1	00252	ceprg		
+1	00253	cepre		
+1	00254	cedbs		
+1	00255	cedvd		
+1	00256	cpret		
+1	00257	cprte		
+1	00258	cpcor		
+1	00259	cpnce		
+1	00260	cpprg		
+1	00261	cppre		
+1	00262	cpcur		
+1	00263	cpcre		
+1	00264	cpdbs		
+1	00265	cpdvd		
+1	00266	crret		
+1	00267	crrte		
+1	00268	crcor		
+1	00269	crcre		
+1	00270	crprg		
+1	00271	crpre		
+1	00272	crdbs		
+1	00273	crdvd		
+1	00288	arcbk		
+1	00289	arcbi		
+1	00290	auto	auto	
+1	00291	crp	crp	
+1	00292	cre	cre	
+1	00293	dda	dda	
+1	00294	aar	N/A	
+1	00295	gag	N/A	
+1	00296	emc	N/A	
+1	00297	hel	N/A	
+1	00298	lkg	lkg	
+1	00299	mss	N/A	
+1	00300	pjn	N/A	
+1	00301	skb	N/A	
+1	00302	rice	N/A	
+1	00303	pop	pop	
+1	00304	rare	rare	
+1	00305	auth	auth	
+1	00306	sbk	N/A	
+1	00307	nab	nab	
+1	00308	illmo	N/A	
+1	00309	illdd	illdd	
+1	00310	illcc	illdd	
+1	00311	illtr	illtr	
+1	00312	prebi	prebi	
+1	00313	presp	presp	
+1	00314	prezz	prezz	
+1	00315	ddav	ddav	
+1	00316	illcs	illcs	
+1	00317	ram	N/A	
+1	00318	sjn	N/A	
+1	00319	gopen	gopen	
+1	00320	gpkg	gpkg	
+1	00321	shn	N/A	
+1	00322	stane	stane	
+1	00323	stanp	stanp	
+1	00324	mjs	mjs	
+1	00325	disc		
+1	00326	facpub		
+1	00327	facpb	facpb	
+1	00328	repla	repla	
+1	00329	ayv	ayv	
+1	00330	arc	arc	
+1	00331	deisj	deisj	
+1	00332	kbm	N/A	
+1	00333	bwh	N/A	
+1	00334	dad	dad	
+1	00335	cres	cres	
+2	00001	hnewt		
+2	00002	hntmp	hntmp	
+2	00003	hntmm		
+2	00004	hntpp		
+2	00005	hntpm		
+2	00006	hntnp		
+2	00007	hntnm		
+2	00008	hntcp		
+2	00009	hntcm		
+2	00010	hntca	hntca	
+2	00011	hcdnt		
+2	00012	hcdlc		
+2	00013	hcdcp		
+2	00014	hcdcm		
+2	00015	hcons		
+2	00016	hcop	hcop	
+2	00017	hcoav		
+2	00018	hcom		
+2	00019	hperp	hperp	
+2	00020	hperm		
+2	00021	hpebc		
+2	00022	hpebi		
+2	00023	hnewp	hnewp	
+2	00024	hnewm		
+2	00025	hmonp		
+2	00026	hmonm		
+2	00027	hmemb	hmemb	
+2	00028	hrefl		
+2	00029	hrefw		
+2	00030	hgfts		
+2	00031	hgon		
+2	00032	hcd		
+2	00033	hcont		
+2	00034	hper		
+2	00035	hnews		
+2	00036	hmono		
+2	00037	hmem		
+2	00038	hnt		
+2	00039	hstuf		
+2	00040	hrefd		
+2	00041	hqrll		
+2	00042	hcdav		
+2	00043	hsfnt		
+2	00044	hsfcd		
+2	00045	hsfco		
+2	00046	hntco		
+2	00047	hcdco		
+2	00048	hrepl		
+2	00049	hrplp		
+2	00050	hrplm		
+2	00051	hsnmp		
+2	00052	hsnmm		
+2	00053	hsnpp		
+2	00054	hsnpm		
+2	00055	hsnnp		
+2	00056	hsnnm		
+2	00057	hsncp		
+2	00058	hsncm		
+2	00059	hsnca		
+2	00060	hsnco		
+2	00061	hscnt		
+2	00062	hsccp		
+2	00063	hsccm		
+2	00064	hscav		
+2	00065	hscco		
+2	00066	hscop		
+2	00067	hscom		
+2	00068	hscca		
+2	00069	hscon		
+2	00070	hsfpe		
+2	00071	hsfpp		
+2	00072	hsfpm		
+2	00073	hsfbc		
+2	00074	hsfbi		
+2	00075	hsfne		
+2	00076	hsfnp		
+2	00077	hsfnm		
+2	00078	hsfre		
+2	00079	hsfrp		
+2	00080	hsfrm		
+2	00081	hsfme		
+2	00082	hsfms		
+2	00083	hcdpp		
+2	00084	hcdpm		
+2	00085	hcdnp		
+2	00086	hcdnm		
+2	00087	hscpp		
+2	00088	hscpm		
+2	00089	hscnp		
+2	00090	hscnm		
+2	00091	hcat		
+2	00092	hrpms		
+2	00093	hdrm	hdrm	
+2	00094	hiii		
+2	00095	hrefr		
+2	00096	hillr		
+2	00097	hrefa		
+2	00098	hilla	hilla	
+2	00099	hcata		
+2	00100	hqrnm		
+2	00101	hqrnp		
+2	00102	hqrno		
+2	00103	hhom		
+2	00104	hamp		
+2	00105	hple		
+2	00106	hbls		
+2	00107	hdet		
+2	00108	halw		
+2	00109	hlaut	hlaut	
+2	00110	hwra		
+2	00111	hfcil		
+2	00112	hjuj		
+2	00113	hillo	hillo	
+2	00114	hsprt		
+2	00115	hhod		
+2	00116	hlob		
+2	00117	hconl	hconl	
+2	00118	honlc	honlc	
+2	00119	hpres		
+2	00120	hdrep		
