@@ -9,9 +9,6 @@ const uuid = require('uuid/v5');
 const argv = require('minimist')(process.argv.slice(2));
 
 const ns = '2f3468f1-8435-4c0b-bf60-4d01dc46a904';
-const fiscalYear = 'ULIBFY2025';
-const ledger = 'TULIB';
-const unit = 'University Library';
 
 let files = {
   funds: 'funds.jsonl',
@@ -56,12 +53,11 @@ let inFiles = {
     let ttl = 0;
 
     const units = require(`${refDir}/units.json`);
-    let unitId = '';
+    let unitsMap = {};
     units.acquisitionsUnits.forEach(d => {
-      if (d.name === unit) { 
-        unitId = d.id;
-      }
+      unitsMap[d.name] = d.id 
     });
+    // console.log(unitsMap); return;
 
     const ftypes = require(`${refDir}/fund-types.json`);
     const typesMap = {};
@@ -71,22 +67,18 @@ let inFiles = {
     // console.log(typesMap); return;
 
     const fys = require(`${refDir}/fiscal-years.json`);
-    let fyId = '';
+    let fyMap = {};
     fys.fiscalYears.forEach(d => {
-      if (d.code === fiscalYear) {
-        fyId = d.id;
-      }
+      fyMap[d.code] = d.id;
     });
-    // console.log(fyId); return;
+    // console.log(fyMap); return;
 
     const ledgers = require(`${refDir}/ledgers.json`);
-    let ledgerId = '';
+    let ledgerMap = {};
     ledgers.ledgers.forEach(d => {
-      if (d.code === ledger) {
-        ledgerId = d.id;
-      }
+      ledgerMap[d.code] = d.id;
     });
-    // console.log(ledgerId); return;
+    // console.log(ledgerMap); return;
 
     let csv = fs.readFileSync(inFiles.budgets, 'utf8');
     let inRecs = parse(csv, {
@@ -96,8 +88,8 @@ let inFiles = {
     const budMap = {};
     inRecs.forEach(r => {
       let k = r['Fund*'].toLowerCase(); ;
-      let v = r['Allocation*'].replace(/[$,]/g, '');
-      budMap[k] = v;
+      r['Allocation*'] = r['Allocation*'].replace(/[$,]/g, '');
+      budMap[k] = r;
     });
     // console.log(budMap); return;
 
@@ -110,11 +102,14 @@ let inFiles = {
     // Create funds and budgets objects;
     let seen = {};
     inRecs.forEach(r => {
-      console.log(r);
       ttl++;
       let code = r['Code*'];
       let ft = r['Fund type'];
       let extAcc = r['External account*'];
+      let unit = r['Acquisitions unit'];
+      let lcode = (unit === 'Law Library') ? 'LL' : 'ULIB';
+      let ledgerId = ledgerMap[lcode];
+      let unitId = unitsMap[unit];
       let id = uuid(code, ns);
       if (code && !seen[code]) {
         let fr = {
@@ -134,8 +129,10 @@ let inFiles = {
         // make budget
         let a = budMap[code];
         if (a) {
-          let budgetName = `${code}-${fiscalYear}`;
+          let budgetName = a['Name*'];
+          let fy = a['Fiscal year*'];
           let budgetId = uuid(budgetName, ns);
+          let fyId = fyMap[fy];
           let bd = {
             id: budgetId,
             name: budgetName,
@@ -145,11 +142,10 @@ let inFiles = {
             acqUnitIds: [ unitId ],
             initialAllocation: 0
           };
-          bd.allocated = parseFloat(a);
+          bd.allocated = parseFloat(a['Allocation*']);
         
           writeObj(files.budgets, bd);
           bdCount++;
-
         }
       } else {
         console.log(`WARN Duplicate fund code "${code}"`);
