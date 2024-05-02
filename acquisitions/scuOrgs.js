@@ -23,6 +23,36 @@ const rfiles = {
   categories: 'categories.json'
 };
 
+const makePhone = (number, type, isPrimary) => {
+  if (!type.match(/Office|Mobile|Fax|Other/)) type = 'Other';
+  const out = {
+    id: uuid(number + type, ns),
+    phoneNumber: number,
+    isPrimary: isPrimary || false
+  }
+  if (type) out.type = type;
+  return out;
+}
+
+const makeContact = (oid, lastName, firstName, email, phoneNumber, note) => {
+  const out = {
+    id: uuid(oid + lastName + firstName, ns),
+    lastName: lastName,
+    firstName: firstName,
+  }
+  if (email) out.emails = [ { id: uuid(email, ns), value: email, isPrimary: true } ];
+  if (note) out.notes = note;
+  if (phoneNumber) {
+    out.phoneNumbers = [];
+    phoneNumber.split(/; */).forEach(p => {
+      let ip = (out.phoneNumbers[0]) ? false : true;
+      let o = makePhone(p, '', ip);
+      out.phoneNumbers.push(o);
+    });
+  }
+  return out;
+}
+
 try {
   if (!inFile) throw(`Usage: node scuOrgs.js <ref_dir> <organizations_csv_file>`);
 
@@ -78,7 +108,6 @@ try {
       let unit = r['Acquisition Unit'];
       let unitId = ref.acquisitionsUnits[unit];
       let erpCode = r['Accounting Code (erpCode)'];
-      let pnum = r['phoneNumbers'];
       let email = r.emails;
       let add1 = r['Address 1'];
       let add2 = r['Address 2'];
@@ -89,6 +118,30 @@ try {
       let aname = r['Accounts-Name'];
       let anum = r['Accounts-Account Number'];
       let astat = r['Accounts-Account Status'];
+      let phones = [];
+      for (let x = 1; x < 4; x++) {
+        let p = 'phoneNumber ' + x;
+        let t = 'phoneNumber - Type ' + x;
+        if (r[p]) {
+          let ip = (phones[0]) ? false : true;
+          let o = makePhone(r[p], r[t], ip);
+          phones.push(o);
+        }
+      }
+      let contacts = [];
+      for (let x = 1; x < 3; x++) {
+        let ln = `Contact ${x} - Last Name`;
+        let fn = `Contact ${x} - First Name`;
+        let nt = `Contact ${x} - Note`;
+        let em = `Contact ${x} - Email`;
+        let ph = `Contact ${x} - Phone number`;
+        if (r[ln] && r[fn]) {
+          let o = makeContact(oid, r[ln], r[fn], r[em], r[ph], r[nt]);
+          writeTo(files.cont, o);
+          contacts.push(o.id);
+          cc++
+        }
+      }
       
       let org = {
         id: uuid(oid, ns),
@@ -98,22 +151,10 @@ try {
         acqUnitIds: [unitId],
         isVendor: isVendor,
       }
+      if (phones[0]) org.phoneNumbers = phones;
+      if (contacts[0]) org.contacts = contacts;
 
       if (erpCode) org.erpCode = erpCode;
-
-      if (pnum) {
-        org.phoneNumbers = [];
-        let pnums = pnum.split(/; */);
-        let primary = true;
-        pnums.forEach(p => {
-          let o = {
-            phoneNumber: p,
-            isPrimary: primary
-          }
-          org.phoneNumbers.push(o);
-          primary = false;
-        });
-      }
 
       if (email) {
         org.emails = [];
