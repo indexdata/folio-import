@@ -422,7 +422,6 @@ const otypeMap = {
 
           let bibId = (so.bibs) ? so.bibs[0] : '';
           bibId = bibId.replace(/.+\//, '');
-          console.log(bibId);
           bibId = 'b' + bibId;
           let inst = instMap[bibId];
           if (inst) {
