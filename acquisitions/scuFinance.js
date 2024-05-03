@@ -12,12 +12,19 @@ const ns = '2f3468f1-8435-4c0b-bf60-4d01dc46a904';
 
 let files = {
   funds: 'funds.jsonl',
-  budgets: 'budgets.jsonl'
+  budgets: 'budgets.jsonl',
+  exc: 'expense-classes.jsonl'
 };
 
 let inFiles = {
   funds: 'funds.csv',
   budgets: 'budgets.csv'
+};
+
+const exClasses = {
+  Periodical: 1,
+  Online: 1,
+  Video: 1
 };
 
 (async () => {
@@ -50,6 +57,7 @@ let inFiles = {
 
     let fnCount = 0;
     let bdCount = 0;
+    let ecc = 0;
     let ttl = 0;
 
     const units = require(`${refDir}/units.json`);
@@ -79,6 +87,13 @@ let inFiles = {
       ledgerMap[d.code] = d.id;
     });
     // console.log(ledgerMap); return;
+
+    const exc = require(`${refDir}/expense-classes.json`);
+    let excMap = {};
+    exc.expenseClasses.forEach(d => {
+      if (exClasses[d.name]) excMap[d.name] = d.id;
+    });
+    // console.log(excMap); return;
 
     let csv = fs.readFileSync(inFiles.budgets, 'utf8');
     let inRecs = parse(csv, {
@@ -143,9 +158,23 @@ let inFiles = {
             initialAllocation: 0
           };
           bd.allocated = parseFloat(a['Allocation*']);
-        
           writeObj(files.budgets, bd);
           bdCount++;
+
+          // create expense classes
+          for (let k in excMap) {
+            let eid = excMap[k];
+            let o = {
+              _version: 1,
+              id: uuid(eid + budgetId, ns),
+              budgetId: budgetId,
+              expenseClassId: eid,
+              status: 'Active'
+            }
+            console.log(files.exc);
+            writeObj(files.exc, o);
+            ecc++;
+          }
         }
       } else {
         console.log(`WARN Duplicate fund code "${code}"`);
@@ -156,7 +185,8 @@ let inFiles = {
     console.log('---------------------');
     console.log('Lines Proc:', ttl);
     console.log('Funds     :', fnCount);
-    console.log('Budgets   :', bdCount); 
+    console.log('Budgets   :', bdCount);
+    console.log('Ex classes:', ecc);
   } catch (e) {
     console.log(e);
   }
