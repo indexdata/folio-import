@@ -222,6 +222,7 @@ const otypeMap = {
           }
         });
       }
+      v.f = j.instanceFormatIds[0];
       instMap[k] = v;
       if (ic % 100000 === 0) console.log('Instance records read:', ic);
     }
@@ -342,6 +343,11 @@ const otypeMap = {
             pol.details.receivingNote = catNotes.join('; ');
           }
 
+          let bibId = (so.bibs) ? so.bibs[0] : '';
+          bibId = bibId.replace(/.+\//, '');
+          bibId = 'b' + bibId;
+          let inst = instMap[bibId];
+
           let uparts = fundUrl.split(/\//).reverse();
           let fundNum = uparts[0];
           let sunit = uparts[1];
@@ -352,35 +358,16 @@ const otypeMap = {
             fundCode = fundMap[fkey].code;
             fundId = fundMap[fkey].id;
           }
-          let format;
+          let format = 'Other';
           if (lib === 'UL') {
-            format = formatMap[fundCode] || 'Other';
-          } else {
-            if (so.bibs && so.bibs[0] && so.bibs[0].materialType) {
-              let code = so.bibs[0].materialType.code;
-              if (code === 'a' || code === '1') {
-                format = 'Physical Resource';
-              } else if (code === 'n' ) {
-                format = 'Electronic Resource';
-              } else {
-                format = 'Other';
-              }
+            if (formatMap[fundCode]) format = formatMap[fundCode];
+          } else if (inst) {
+            if (inst.f === 'f5e8210f-7640-459b-a71f-552567f92369') {
+              format = 'Electronic Resource';
+            } else {
+              format = 'Physical Resource';
             }
           }
-          // if (format === 'Other') console.log(`INFO no orderFormat found for fundCode "${fundCode}"`);
-
-          /*
-          if (form.match(/[erxy4]/)) {
-            format = 'Electronic Resource';
-          } else if (form.match(/[ajuz]/)) {
-            format = 'Other';
-          } else if (form === '2') {
-            format = 'P/E Mix';
-          } else {
-            format = 'Physical Resource';
-          }
-          */
-
           pol.orderFormat = format;
 
           let copies = ff['5'].value;
@@ -420,10 +407,7 @@ const otypeMap = {
           if (!loc.locationId) throw(`ERROR no locationId found for "${location}"`)
           pol.locations.push(loc);
 
-          let bibId = (so.bibs) ? so.bibs[0] : '';
-          bibId = bibId.replace(/.+\//, '');
-          bibId = 'b' + bibId;
-          let inst = instMap[bibId];
+          
           if (inst) {
             pol.instanceId = inst.id;
             pol.titleOrPackage = inst.t;
