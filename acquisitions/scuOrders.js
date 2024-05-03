@@ -424,6 +424,7 @@ const otypeMap = {
             if (inst.i) {
               pol.details.productIds = [];
               inst.i.forEach(x => {
+                if (x.t === '8261054f-be78-422d-bd51-4ed9f33c3422') x.v = x.v.replace(/ .+/, '');
                 let o = {
                   productId: x.v,
                   productIdType: x.t
