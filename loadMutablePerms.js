@@ -54,13 +54,37 @@ const wait = (ms) => {
     let success = 0;
     let updated = 0;
     let fail = 0;
+    let pc = 0;
+    let pnames = {};
     let failedRecs = { permissions: [] };
+    try {
+      let res = await superagent
+        .get(actionUrl + '?limit=10000')
+        .set('x-okapi-token', config.token)
+        .set('accept', 'application/json');
+      res.body.permissions.forEach(p => {
+        pnames[p.permissionName] = 1;
+        pc++;
+      });
+      console.log('Permissions found:', pc);
+    } catch (e) {
+      throw new Error(e);
+    }
     for (let x = 0; x < limit; x++) {
       delete inData[x].childOf;
       delete inData[x].grantedTo;
       delete inData[x].dummy;
       delete inData[x].metadata;
       delete inData[x].deprecated;
+      let goodSubs = [];
+      let subs = inData[x].subPermissions;
+      console.log('Before subPermissions', subs.length);
+      for (let y = 0; y < subs.length; y++) {
+        let val = subs[y];
+        if (pnames[val]) goodSubs.push(val);
+      }
+      console.log('After subPermissions', goodSubs.length);
+      inData[x].subPermissions = goodSubs;
       try {
         await superagent
           .post(actionUrl)
