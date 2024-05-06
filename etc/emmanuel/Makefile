@@ -4,20 +4,36 @@ home=/home/charles
 data=$(home)/$(lib)
 invdir=$(data)/inv
 mfile=$(invdir)/bibs.mrc
+odir=$(data)/orgs
 log=$(data)/log
 wd=$(home)/folio-import
 tsvdir=$(wd)/etc/$(lib)
 iref=$(data)/ref/inv
 aref=$(data)/ref/acq
 rules=$(wd)/mapping_rules/default.json
+split=-l 13000
 
 inventory:
 	cd $(invdir); mv *.mrc raw.marc
 	yaz-marcdump -f marc8 -t utf8 -l 9=97 -o marc $(invdir)/raw.marc > $(mfile)
 	./marc2inst-$(lib).pl $(rules) $(iref) $(mfile) > $(log)/make-marc.log 2>$(log)/make-marc-err.log &
 
+split-inventory: $(invdir)/*.jsonl
+	split $(split) $(invdir)/*instances.jsonl $(invdir)/in
+	split $(split) $(invdir)/*holdings.jsonl $(invdir)/ho
+	split $(split) $(invdir)/*items.jsonl $(invdir)/it
+	split $(split) $(invdir)/*srs.jsonl $(invdir)/sr
+
 clean-inventory: $(iinfo)
 	cd $(invdir); rm bibs.mrc; mv raw.marc raw.mrc
+
+organizations: $(odir)/*_orgs*csv
+	cd $(odir); mv *_orgs*csv orgs.csv
+	cd $(wd)/acquisitions; node $(lib)Orgs.js $(aref) $(odir)/orgs.csv > $(log)/make-orgs.log
+	cat $(log)/make-orgs.log
+
+clean-organizations: $(odir)/orgs.csv
+	cd $(odir); mv orgs.csv $(lib)_orgs_load.csv
 
 setup:
 	cd $(wd); git pull	

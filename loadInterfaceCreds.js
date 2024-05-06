@@ -15,7 +15,6 @@ let inFile = process.argv[2];
     } else if (!fs.existsSync(inFile)) {
       throw new Error('Can\'t find input file');
     } 
-    const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
 
     let limit = (process.argv[3]) ? parseInt(process.argv[4], 10) : 10000000;
     if (isNaN(limit)) {
@@ -29,6 +28,8 @@ let inFile = process.argv[2];
       fs.unlinkSync(errPath);
     }
     
+    let config = await getAuthToken(superagent);
+
     var logger;
 
     if (config.logpath) {
@@ -50,7 +51,6 @@ let inFile = process.argv[2];
       logger = console;
     }
 
-    const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
 
     let updated = 0;
     let success = 0;
@@ -75,7 +75,7 @@ let inFile = process.argv[2];
         await superagent
           .post(actionUrl)
           .send(rec)
-          .set('x-okapi-token', authToken)
+          .set('x-okapi-token', config.token)
           .set('content-type', 'application/json')
           .set('accept', 'application/json');
         logger.info(`  Successfully added record id ${rec.id}`);
@@ -88,7 +88,7 @@ let inFile = process.argv[2];
           await superagent
             .put(recUrl)
             .send(rec)
-            .set('x-okapi-token', authToken)
+            .set('x-okapi-token', config.token)
             .set('content-type', 'application/json')
             .set('accept', 'text/plain');
           logger.info(`    Successfully updated record id ${rec.id}`);
