@@ -22,13 +22,14 @@ const wait = (ms) => {
         inData = inData.permissions;
       }
     }
-    const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
 
     let limit = (process.argv[3]) ? parseInt(process.argv[3], 10) : inData.length;
 
     if (isNaN(limit)) {
       throw new Error('Limit must be a number.');
     }
+    
+    let config = await getAuthToken(superagent);
 
     var logger;
     const lpath = config.logpath;
@@ -47,7 +48,6 @@ const wait = (ms) => {
       logger = console;
     }
 
-    const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
 
     const actionUrl = config.okapi + '/perms/permissions';
     
@@ -65,7 +65,7 @@ const wait = (ms) => {
         await superagent
           .post(actionUrl)
           .send(inData[x])
-          .set('x-okapi-token', authToken)
+          .set('x-okapi-token', config.token)
           .set('content-type', 'application/json')
           .set('accept', 'application/json');
         logger.info(`Successfully added mutable permission ${inData[x].displayName}`);

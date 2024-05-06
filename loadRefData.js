@@ -57,7 +57,7 @@ const fileNames = process.argv.slice(2);
             .send(data[d]);
           added++;
         } catch (e) {
-          console.log(`  ${e}`);
+          console.log(e);
           try {
             console.log(`  Trying PUT...`);
             let purl = url;
