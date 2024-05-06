@@ -71,38 +71,40 @@ const wait = (ms) => {
       throw new Error(e);
     }
     for (let x = 0; x < limit; x++) {
-      delete inData[x].childOf;
-      delete inData[x].grantedTo;
-      delete inData[x].dummy;
-      delete inData[x].metadata;
-      delete inData[x].deprecated;
-      let goodSubs = [];
-      let subs = inData[x].subPermissions;
-      console.log('Before subPermissions', subs.length);
-      for (let y = 0; y < subs.length; y++) {
-        let val = subs[y];
-        if (pnames[val]) goodSubs.push(val);
+      if (inData[x].mutable === true) {
+        delete inData[x].childOf;
+        delete inData[x].grantedTo;
+        delete inData[x].dummy;
+        delete inData[x].metadata;
+        delete inData[x].deprecated;
+        let goodSubs = [];
+        let subs = inData[x].subPermissions;
+        console.log('Before subPermissions', subs.length);
+        for (let y = 0; y < subs.length; y++) {
+          let val = subs[y];
+          if (pnames[val]) goodSubs.push(val);
+        }
+        console.log('After subPermissions', goodSubs.length);
+        inData[x].subPermissions = goodSubs;
+        try {
+          await superagent
+            .post(actionUrl)
+            .send(inData[x])
+            .set('x-okapi-token', config.token)
+            .set('content-type', 'application/json')
+            .set('accept', 'application/json');
+          logger.info(`Successfully added mutable permission ${inData[x].displayName}`);
+          success++
+        } catch (e) {
+          logger.error(e.response.error.text);
+          fail++;
+        }
+        await wait(config.delay);
+      } 
+      if (config.logpath && failedRecs.permissions[0]) {
+        let rfname = lname.replace(/\.json$/, '');
+        fs.writeFileSync(`${lpath}/${rfname}_err.json`, JSON.stringify(failedRecs, null, 2));
       }
-      console.log('After subPermissions', goodSubs.length);
-      inData[x].subPermissions = goodSubs;
-      try {
-        await superagent
-          .post(actionUrl)
-          .send(inData[x])
-          .set('x-okapi-token', config.token)
-          .set('content-type', 'application/json')
-          .set('accept', 'application/json');
-        logger.info(`Successfully added mutable permission ${inData[x].displayName}`);
-        success++
-      } catch (e) {
-        logger.error(e.response.error.text);
-        fail++;
-      }
-      await wait(config.delay);
-    } 
-    if (config.logpath && failedRecs.permissions[0]) {
-      let rfname = lname.replace(/\.json$/, '');
-      fs.writeFileSync(`${lpath}/${rfname}_err.json`, JSON.stringify(failedRecs, null, 2));
     }
     const end = new Date().valueOf();
     const ms = end - start;
