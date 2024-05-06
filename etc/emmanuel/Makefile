@@ -5,6 +5,7 @@ data=$(home)/$(lib)
 invdir=$(data)/inv
 mfile=$(invdir)/bibs.mrc
 odir=$(data)/orgs
+ermdir=$(data)/erm
 log=$(data)/log
 wd=$(home)/folio-import
 tsvdir=$(wd)/etc/$(lib)
@@ -34,6 +35,13 @@ organizations: $(odir)/*_orgs*csv
 
 clean-organizations: $(odir)/orgs.csv
 	cd $(odir); mv orgs.csv $(lib)_orgs_load.csv
+
+agreements: $(ermdir)/licensesOut.jsonl
+	mv $(ermdir)/*notes*csv $(ermdir)/nts.csv
+	mv $(ermdir)/*resources*csv $(ermdir)/agr.csv
+	cd $(wd)/erm; node $(lib)Agreements.js $(aref) $(ermdir)/nts.csv $(ermdir)/agr.csv > $(log)/make-agreements.log
+	cat $(log)/make-agreements.log
+
 
 setup:
 	cd $(wd); git pull	

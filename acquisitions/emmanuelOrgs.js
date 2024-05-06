@@ -188,7 +188,7 @@ try {
       let amail = r['Accounts Local Account Email'];
       let auser = r['Accounts Username'];
       let apass = r['Accounts Password'] || '[noPassword]';
-      let anote = r['Accounts Notes'];
+      let anote = r['Accounts Note'];
       let users = [];
       if (amail) users.push(amail);
       if (auser) users.push(auser)
