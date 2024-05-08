@@ -5,6 +5,7 @@ data=$(home)/$(lib)
 invdir=$(data)/inv
 mfile=$(invdir)/bibs.mrc
 odir=$(data)/orgs
+ermdir=$(data)/erm
 log=$(data)/log
 wd=$(home)/folio-import
 tsvdir=$(wd)/etc/$(lib)
@@ -36,6 +37,20 @@ clean-organizations: $(odir)/orgs.csv
 	cd $(odir); mv orgs.csv $(lib)_orgs_load.csv
 	cd $(odir); rm *.jsonl
 
+agreements: $(ermdir)/*.csv
+	mv $(ermdir)/*notes*csv $(ermdir)/nts.csv
+	mv $(ermdir)/*resources*csv $(ermdir)/agr.csv
+	cd $(wd)/erm; node $(lib)Agreements.js $(aref) $(ermdir)/nts.csv $(ermdir)/agr.csv > $(log)/make-agreements.log
+	cat $(log)/make-agreements.log
+
+clean-agreements:
+	mv $(ermdir)/nts.csv $(ermdir)/$(lib)_notes.csv
+	mv $(ermdir)/agr.csv $(ermdir)/$(lib)_resources.csv
+
+erm-notes: $(ermdir)/notes.jsonl
+	cd $(wd)/erm; node makeErmNotes.js $(ermdir)/agreementsOut.jsonl $(ermdir)/notes.jsonl > $(log)/make-erm-notes.log
+	cat $(log)/make-erm-notes.log
+
 setup:
 	cd $(wd); git pull	
 	cp $(wd)/configs/bash/$(lscript) .
@@ -47,6 +62,7 @@ setup:
 	./$(lscript)
 	./reference_inventory.sh $(iref)
 	./reference_acq.sh $(aref)
+	./reference_erm.sh $(aref)
 	cp $(tsvdir)/*.tsv $(iref)
 
 clean:
