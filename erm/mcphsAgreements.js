@@ -299,7 +299,7 @@ const scriptName = process.argv[1].replace(/^.+\//, '');
     }
     // cprops = {};
     let agr = {
-      id: uuid(al, ns),
+      id: al,
       name: name,
       customProperties: cprops,
       orgs: [],
