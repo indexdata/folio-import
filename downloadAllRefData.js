@@ -38,6 +38,7 @@ let modName = process.argv[3];
       'https://raw.githubusercontent.com/folio-org/mod-template-engine/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-login-saml/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-data-import/master/descriptors/ModuleDescriptor-template.json',
+      'https://raw.githubusercontent.com/folio-org/mod-data-export/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-source-record-storage/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-courses/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-data-import-converter-storage/master/descriptors/ModuleDescriptor-template.json',
@@ -76,6 +77,10 @@ let modName = process.argv[3];
       '/coursereserves/courselistings': true,
       '/coursereserves/courses': true,
       '/coursereserves/reserves': true,
+      '/data-export/transformation-fields',
+      '/data-export/job-executions',
+      '/data-export/logs',
+      '/data-export/related-users'
       '/feefineactions': true,
       '/finance-storage/transactions': true,
       '/finance-storage/ledger-rollovers-budgets': true,
@@ -130,8 +135,7 @@ let modName = process.argv[3];
       '/tlr-feature-toggle-job-storage/tlr-feature-toggle-jobs': true,
       '/users': true,
       '/voucher-storage/vouchers': true,
-      '/voucher-storage/voucher-lines': true,
-
+      '/voucher-storage/voucher-lines': true
     }
 
     const priority = [
