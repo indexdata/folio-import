@@ -624,30 +624,30 @@ while (<RAW>) {
     
     # Let's determine if a subfield is repeatable, if so create append separate marc fields for each subfield;
     foreach (@{ $repeat_subs->{$tag} }) {
-          my $main_code = $_;
-          my $all_codes = join '', @{ $repeat_subs->{$tag} };
-          my @sf = $field->subfield($main_code);
-          my $occurence = @sf;
-          if ($occurence > 0 && !$field->{_seen}) {
-            my $new_field = {};
-            my $i = 0;
-            my @subs = $field->subfields();
-            foreach (@subs) {
-              my ($code, $sdata) = @$_;
-              $new_field = MARC::Field->new($tag, $field->{_ind1}, $field->{_ind2}, $code => $sdata);
-              $new_field->{_seen} = 1;
-              $i++;
-              my @ncode = ('');
-              if ($subs[$i]) {
-                @ncode = @{ $subs[$i] };
-              }
-              if ((index($all_codes, $ncode[0]) != -1 && $new_field->{_tag}) || !$ncode[0]) {
-                push @marc_fields, $new_field;
-              }
-            }
-            next MARC_FIELD;
-          } 
+      my $main_code = $_;
+      my $all_codes = join '', @{ $repeat_subs->{$tag} };
+      my @sf = $field->subfield($main_code);
+      my $occurence = @sf;
+      if ($occurence > 0 && !$field->{_seen}) {
+        my $new_field = {};
+        my $i = 0;
+        my @subs = $field->subfields();
+        foreach (@subs) {
+          my ($code, $sdata) = @$_;
+          $new_field = MARC::Field->new($tag, $field->{_ind1}, $field->{_ind2}, $code => $sdata);
+          $new_field->{_seen} = 1;
+          $i++;
+          my @ncode = ('');
+          if ($subs[$i]) {
+            @ncode = @{ $subs[$i] };
+          }
+          if ((index($all_codes, $ncode[0]) != -1 && $new_field->{_tag}) || !$ncode[0]) {
+            push @marc_fields, $new_field;
+          }
         }
+        next MARC_FIELD;
+      } 
+    }
     my $fld_conf = $mapping_rules->{$tag};
     my @entities;
     if ($fld_conf) {
