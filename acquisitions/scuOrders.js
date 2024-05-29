@@ -3,10 +3,7 @@ const readline = require('readline');
 const uuid = require('uuid/v5');
 const path = require('path');
 
-let startDate = '1980-01-01';
 const ns = '72132a0f-e27c-4462-8b30-4f9dafe1f710';
-const nullns = '00000000-0000-0000-0000-000000000000';
-const ver = '1';
 
 let refDir = process.argv[2];
 let instMapFile = process.argv[3];
@@ -121,6 +118,9 @@ const otypeMap = {
 
     const errFile = `${dir}/f${fn}-errs.jsonl`;
     if (fs.existsSync(errFile)) fs.unlinkSync(errFile);
+
+    const pmapFile = `${dir}/piece-map.jsonl`;
+    if (fs.existsSync(pmapFile)) fs.unlinkSync(pmapFile);
 
     const refData = {};
     for (let prop in refFiles) {
