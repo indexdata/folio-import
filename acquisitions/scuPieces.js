@@ -21,7 +21,8 @@ const titlesFile = process.argv[2];
     if (!fs.existsSync(inFile)) throw new Error(`Can't find ${inFile}!`);
     
     const dir = path.dirname(inFile);
-    const outFile = `${dir}/pieces.jsonl`;
+    const fn = path.basename(inFile, '.csv');
+    const outFile = `${dir}/pieces-${fn}.jsonl`;
     if (fs.existsSync(outFile)) fs.unlinkSync(outFile);
 
     /*
@@ -69,18 +70,20 @@ const titlesFile = process.argv[2];
       bom: true
     });
     inRecs.forEach(p => {
-      console.log(p);
+      // console.log(p);
       let polNum = p['POL*'];
       if (polNum) {
         let poLineId = uuid(polNum, ns);
         let format = p['Format*'];
-        let rd = p.RECEIPT_DATE;
-        let ed = p.EXPECTED_DATE;
+        let rd = p['Received Date'];
+        let ed = p['Expected Receipt Date'];
         let rdate = (rd) ? new Date(rd).toISOString() : '';
         let edate = (ed) ? new Date(ed).toISOString() : '';
         let en = p.Enumeration || ''; 
         let cr = p.Chronology || '';
         let titleId = titleMap[poLineId];
+        let doh = p['Display on holding'];
+        let cap = p.Caption;
         if (!poLineId) console.log(`WARN No title found for (${polNum})`);
         if (!titleId) console.log(`WARN No title found for ${poLineId} (${polNum})`);
         if (poLineId && titleId) {
@@ -102,6 +105,12 @@ const titlesFile = process.argv[2];
           }
           if (cr) {
             piece.chronology = cr.trim();
+          }
+          if (doh && doh.match(/true/i)) {
+            piece.displayOnHolding = true;
+          }
+          if (cap) {
+            piece.caption = cap;
           }
           fs.writeFileSync(outFile, JSON.stringify(piece) + '\n', { flag: 'a' });
           c++;
