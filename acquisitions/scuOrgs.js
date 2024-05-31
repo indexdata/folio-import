@@ -5,7 +5,8 @@ const path = require('path');
 const { ADDRCONFIG } = require('dns');
 
 let refDir = process.argv[2];
-const inFile = process.argv[3];
+const conFile = process.argv[3];
+const inFile = process.argv[4];
 const ns = '5a48a9be-708a-4906-b434-4ebf66a13408';
 let unit = 'Univeristy Library';
 
@@ -54,7 +55,7 @@ const makeContact = (oid, lastName, firstName, email, phoneNumber, note) => {
 }
 
 try {
-  if (!inFile) throw(`Usage: node scuOrgs.js <ref_dir> <organizations_csv_file>`);
+  if (!inFile) throw(`Usage: node scuOrgs.js <ref_dir> <contancts_csv> <organizations_csv>`);
 
   const dir = path.dirname(inFile);
 
@@ -66,8 +67,21 @@ try {
     files[f] = fn;
   }
 
-  const csv = fs.readFileSync(`${inFile}`, 'utf8');
-  const inRecs = parse(csv, {
+  let csv = fs.readFileSync(`${conFile}`, 'utf8');
+  let inRecs = parse(csv, {
+    columns: true,
+    skip_empty_lines: true,
+  });
+
+  const conMap = {};
+  inRecs.forEach(r => {
+    let k = r['Org Code'];
+    conMap[k] = r;
+  });
+  // console.log(conMap); return;
+
+  csv = fs.readFileSync(`${inFile}`, 'utf8');
+  inRecs = parse(csv, {
     columns: true,
     skip_empty_lines: true,
   });
@@ -129,17 +143,20 @@ try {
         }
       }
       let contacts = [];
-      for (let x = 1; x < 3; x++) {
-        let ln = `Contact ${x} - Last Name`;
-        let fn = `Contact ${x} - First Name`;
-        let nt = `Contact ${x} - Note`;
-        let em = `Contact ${x} - Email`;
-        let ph = `Contact ${x} - Phone number`;
-        if (r[ln] && r[fn]) {
-          let o = makeContact(oid, r[ln], r[fn], r[em], r[ph], r[nt]);
-          writeTo(files.cont, o);
-          contacts.push(o.id);
-          cc++
+      let y = conMap[oid];
+      if (y) {
+        for (let x = 1; x < 5; x++) {
+          let ln = `Contact ${x} - Last Name`;
+          let fn = `Contact ${x} - First Name`;
+          let nt = `Contact ${x} - Note`;
+          let em = `Contact ${x} - Email`;
+          let ph = `Contact ${x} - Phone number`;
+          if (y[ln] && y[fn]) {
+            let o = makeContact(oid, y[ln], y[fn], y[em], y[ph], y[nt]);
+            writeTo(files.cont, o);
+            contacts.push(o.id);
+            cc++
+          }
         }
       }
       
