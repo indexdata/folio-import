@@ -55,28 +55,30 @@ const formatMap = {
   ddav: 'Electronic Resource'
 };
 
+const matMap = {
+  cre: 'electronic resource',
+  stane: 'electronic resource',
+  crp: 'text',
+  stanp: 'book',
+  ddav: 'video recording'
+};
+
 const exClassMap = {
   cre: 'Online',
   crp: 'Periodical',
-  ddav: 'Video'
-};
-
-const formMap = {
-  b: "book",
-  f: "film reel",
-  k: "map",
-  j: "membership acq",
-  g: "compact disk",
-  i: "lp",
-  l: "microfilm",
-  m: "microfiche",
-  n: "newspaper",
-  o: "document",
-  p: "photograph acq",
-  s: "journal",
-  u: "bibliographic utility acq",
-  w: "dvd: prospector",
-  3: "score",
+  auth: 'Automation',
+  ddav: 'Video',
+  gmi: 'Online',
+  gopen: 'Online',
+  gpkg: 'Online',
+  illcs: 'Resource Sharing',
+  illdd: 'Resource Sharing',
+  prebi: 'Binding / Preservation',
+  presp: 'Binding / Preservation',
+  prezz: 'Binding / Preservation',
+  rare: 'Print Book (T)',
+  stane: 'eBook',
+  stanp: 'Print Book (T)'
 };
 
 const eFormMap = {
@@ -87,12 +89,6 @@ const eFormMap = {
   x: "database acq",
   y: "eresource collection",
   '4': "streaming video acq"
-};
-
-const otypeMap = {
-  r: "annual access fee",
-  z: "open access article processing charge (apc)",
-  x: "accounting acq"
 };
 
 (async () => {
@@ -244,223 +240,223 @@ const otypeMap = {
       try {
         let so = JSON.parse(line);
         let ff = so.fixedFields;
-        let cf = so.chargedFunds;
-        let fundUrl = (cf) ? cf[0].fund : '';
-        let vfs = so.varFields || [];
-        let vf = {};
-        vfs.forEach(v => {
-          let t = v.fieldTag;
-          if (!vf[t]) vf[t] = [];
-          vf[t].push(v.content);
-        });
-        
-        let created = (ff['83']) ? ff['83'].value.substring(0, 10) : '';
-        let oType = (ff['15']) ? ff['15'].value : '';
-        let status = 'Pending';
-        let orderType = 'Ongoing';
-        let location = ff['2'].value || '';
-        location = location.trim();
-        let unitId;
-        let lib;
-        if (location.match(/^h/)) { 
-          unitId = refData.acquisitionsUnits['Law Library']
-          unitName = 'LL';
-        } else { 
-          unitId = refData.acquisitionsUnits['University Library'];
-          lib = 'UL'
-        }
-        if (status !== 'Closed') {
-          let poNum = so.id.toString();
-          let poId = uuid(poNum, ns);
-          let vcode = ff['22'].value || '';
-          vcode = vcode.trim();
-          let orgId = refData.organizations[vcode];
-          if (!orgId) {
-            fs.writeFileSync(errFile, line + '\n', { flag: 'a' });
-            throw(`ERROR no organizationId found for "${vcode}" (${poNum})`);
-          }
-          let co = {
-            id: poId,
-            poNumber: poNum,
-            vendor: orgId,
-            dateOrdered: created,
-            notes: [],
-            acqUnitIds: [ unitId ],
-            reEncumber: false,
-            workflowStatus: status,
-          }
-          let acqType = (ff['1']) ? ff['1'].value : '';
-          let form = (ff['11']) ? ff['11'].value : '';
-          let raction = (ff['16']) ? ff['16'].value : '';
-          let rdate = (ff['17']) ? ff['17'].value : '';
-
-          co.orderType = orderType;
-          co.ongoing = {};
-          /*
-          if (co.orderType === 'Ongoing') {
-            co.ongoing = {
-              interval: 365,
-              isSubscription: false,
-              renewalDate: co.dateOrdered
-            };
-          }
-          */
-
-          let catNotes = [];
-          if (vf.n) {
-            vf.n.forEach(n => {
-              if (n.match(/^CAT:/)) {
-                catNotes.push(n);
-              } else {
-                co.notes.push(n);
-              }
-            });
-          }
-
-          let coString = JSON.stringify(co) + '\n';
-          fs.writeFileSync(poFile, coString, { flag: 'a' });
-
-          // PO lines start here
-
-          co.compositePoLines = [];
-
-          let pol = {
-            purchaseOrderId: poId,
-            poLineNumber: poNum + '-1',
-            source: 'MARC',
-            checkinItems: false,
-            locations: [],
-            details: {}
-          };
-          pol.id = uuid(pol.poLineNumber, ns);
-
-          pol.paymentStatus = 'Pending';
-          pol.acquisitionMethod = methodMap[oType];
-          if (!pol.acquisitionMethod) {
-            throw new Error(`No acquisitionMethod found for "${oType}"`);
-          }
-          if (catNotes[0]) {
-            pol.details.receivingNote = catNotes.join('; ');
-          }
-
-          let bibId = (so.bibs) ? so.bibs[0] : '';
-          bibId = bibId.replace(/.+\//, '');
-          bibId = 'b' + bibId;
-          let inst = instMap[bibId];
-
-          let uparts = fundUrl.split(/\//).reverse();
-          let fundNum = uparts[0];
-          let sunit = uparts[1];
-          let fkey = sunit + ':' + fundNum;
-          let fundCode = '';
-          let fundId = '';
-          if (fundMap[fkey]) {
-            fundCode = fundMap[fkey].code;
-            fundId = fundMap[fkey].id;
-          }
-          let format = 'Other';
-          if (lib === 'UL') {
-            if (formatMap[fundCode]) format = formatMap[fundCode];
-          } else if (inst) {
-            if (inst.f === 'f5e8210f-7640-459b-a71f-552567f92369') {
-              format = 'Electronic Resource';
-            } else {
-              format = 'Physical Resource';
-            }
-          }
-          pol.orderFormat = format;
-
-          let copies = ff['5'].value;
-          copies = parseInt(copies);
-          let price = ff['10'].value;
-          price = price.replace(/(\d\d)\.0+/, '.$1');
-          price = parseFloat(price);
-          co.totalEstimatedPrice = price;
-
-          let loc = {};
-          pol.cost = {};
-          pol.cost.currency = 'USD';
-          if (format === 'Electronic Resource') {
-            pol.cost.listUnitPriceElectronic = 0;
-            pol.cost.poLineEstimatedPrice = 0;
-            pol.cost.quantityElectronic = 1;
-            loc.quantityElectronic = 1;
-            let mtypeName = eFormMap[form] || otypeMap[oType];
-            pol.eresource = {
-              createInventory: 'None',
-              materialType: refData.mtypes[mtypeName] || refData.mtypes.unspecified,
-            }
-          } else {
-            pol.cost.listUnitPrice = 0;
-            pol.cost.poLineEstimatedPrice = 0;
-            pol.cost.quantityPhysical = 1;
-            loc.quantityPhysical = 1;
-            let mtypeName = formMap[form] || otypeMap[oType];
-            pol.physical = {
-              createInventory: 'None',
-              materialType: refData.mtypes[mtypeName] || refData.mtypes.unspecified
-            };
-          }
-
-          loc.quantity = copies;
-          loc.locationId = locMap[location] || locMap['unmapped'];
-          if (!loc.locationId) throw(`ERROR no locationId found for "${location}"`)
-          pol.locations.push(loc);
-
+        let ostatus = (ff['20']) ? ff['20'].value : '';
+          if (ostatus === 'f') {
+          let cf = so.chargedFunds;
+          let fundUrl = (cf) ? cf[0].fund : '';
+          let vfs = so.varFields || [];
+          let vf = {};
+          vfs.forEach(v => {
+            let t = v.fieldTag;
+            if (!vf[t]) vf[t] = [];
+            vf[t].push(v.content);
+          });
           
-          if (inst) {
-            pol.instanceId = inst.id;
-            pol.titleOrPackage = inst.t;
-            if (inst.c) {
-              pol.contributors = [];
-              inst.c.forEach(c => {
-                let au = {
-                  contributor: c.n,
-                  contributorNameTypeId: c.t
+          let created = (ff['83']) ? ff['83'].value.substring(0, 10) : '';
+          let oType = (ff['15']) ? ff['15'].value : '';
+          let status = 'Pending';
+          let orderType = 'Ongoing';
+          let location = ff['2'].value || '';
+          location = location.trim();
+          let unitId;
+          let lib;
+          if (location.match(/^h/)) { 
+            unitId = refData.acquisitionsUnits['Law Library']
+            lib = 'LL';
+          } else { 
+            unitId = refData.acquisitionsUnits['University Library'];
+            lib = 'UL'
+          }
+          if (status !== 'Closed') {
+            let poNum = so.id.toString();
+            let poId = uuid(poNum, ns);
+            let vcode = ff['22'].value || '';
+            vcode = vcode.trim();
+            let orgId = refData.organizations[vcode];
+            if (!orgId) {
+              fs.writeFileSync(errFile, line + '\n', { flag: 'a' });
+              throw(`ERROR no organizationId found for "${vcode}" (${poNum})`);
+            }
+            let co = {
+              id: poId,
+              poNumber: poNum,
+              vendor: orgId,
+              dateOrdered: created,
+              notes: [],
+              acqUnitIds: [ unitId ],
+              reEncumber: false,
+              workflowStatus: status,
+            }
+            let form = (ff['11']) ? ff['11'].value : '';
+
+            co.orderType = orderType;
+            co.ongoing = {};
+            /*
+            if (co.orderType === 'Ongoing') {
+              co.ongoing = {
+                interval: 365,
+                isSubscription: false,
+                renewalDate: co.dateOrdered
+              };
+            }
+            */
+
+            let catNotes = [];
+            if (vf.n) {
+              vf.n.forEach(n => {
+                if (n.match(/^CAT:/)) {
+                  catNotes.push(n);
+                } else {
+                  co.notes.push(n);
                 }
-                pol.contributors.push(au);
               });
             }
-            if (inst.i) {
-              pol.details.productIds = [];
-              inst.i.forEach(x => {
-                if (x.t === '8261054f-be78-422d-bd51-4ed9f33c3422') x.v = x.v.replace(/ .+/, '');
-                let o = {
-                  productId: x.v,
-                  productIdType: x.t
-                };
-                pol.details.productIds.push(o);
-              });
-            }
-            if (inst.p) pol.publisher = inst.p;
-            if (inst.d) pol.publicationDate = inst.d;
-          } else if (so.bibs && so.bibs[0]) {
-            pol.titleOrPackage = `[Unknown - ${bibId}]`;
-            // pol.titleOrPackage = so.bibs[0].title
-          }
 
+            let coString = JSON.stringify(co) + '\n';
+            fs.writeFileSync(poFile, coString, { flag: 'a' });
 
-          if (fundId) {
-            let fd = {
-              fundId: fundId,
-              distributionType: 'percentage',
-              value: 100,
-              code: fundCode,
+            // PO lines start here
+
+            co.compositePoLines = [];
+
+            let pol = {
+              purchaseOrderId: poId,
+              poLineNumber: poNum + '-1',
+              source: 'MARC',
+              checkinItems: false,
+              locations: [],
+              details: {}
             };
-            if (exClassMap[fundCode]) { fd.expenseClassId = exClassMap[fundCode] };
-            pol.fundDistribution = [ fd ];
-          }
-          else {
-            console.log(`WARN no fundId found for Sierra fund code ${fundNum} (${fundCode})`);
-          }
+            pol.id = uuid(pol.poLineNumber, ns);
 
-          co.compositePoLines.push(pol);
-          let coStr = JSON.stringify(co) + '\n';
-          fs.writeFileSync(outFile, coStr, { flag: 'a' });
+            pol.paymentStatus = 'Pending';
+            pol.acquisitionMethod = methodMap[oType];
+            if (!pol.acquisitionMethod) {
+              throw new Error(`No acquisitionMethod found for "${oType}"`);
+            }
+            if (catNotes[0]) {
+              pol.details.receivingNote = catNotes.join('; ');
+            }
 
-          let polStr = JSON.stringify(pol) + '\n';
-          fs.writeFileSync(polFile, polStr, { flag: 'a' });
-          c++;
+            let bibId = (so.bibs) ? so.bibs[0] : '';
+            bibId = bibId.replace(/.+\//, '');
+            bibId = 'b' + bibId;
+            let inst = instMap[bibId];
+
+            let uparts = fundUrl.split(/\//).reverse();
+            let fundNum = uparts[0];
+            let sunit = uparts[1];
+            let fkey = sunit + ':' + fundNum;
+            let fundCode = '';
+            let fundId = '';
+            if (fundMap[fkey]) {
+              fundCode = fundMap[fkey].code;
+              fundId = fundMap[fkey].id;
+            }
+            let format = 'Other';
+            if (lib === 'UL') {
+              if (formatMap[fundCode]) format = formatMap[fundCode];
+            } else if (inst) {
+              if (inst.f === 'f5e8210f-7640-459b-a71f-552567f92369') {
+                format = 'Electronic Resource';
+              } else {
+                format = 'Physical Resource';
+              }
+            }
+            pol.orderFormat = format;
+
+            let copies = ff['5'].value;
+            copies = parseInt(copies);
+            let price = ff['10'].value;
+            price = price.replace(/(\d\d)\.0+/, '.$1');
+            price = parseFloat(price);
+            co.totalEstimatedPrice = price;
+
+            let loc = {};
+            pol.cost = {};
+            pol.cost.currency = 'USD';
+            if (format === 'Electronic Resource') {
+              pol.cost.listUnitPriceElectronic = 0;
+              pol.cost.poLineEstimatedPrice = 0;
+              pol.cost.quantityElectronic = 1;
+              loc.quantityElectronic = 1;
+              let mtypeName = matMap[fundCode] || eFormMap[form];
+              pol.eresource = {
+                createInventory: 'None',
+                materialType: refData.mtypes[mtypeName] || refData.mtypes.unspecified,
+              }
+            } else {
+              pol.cost.listUnitPrice = 0;
+              pol.cost.poLineEstimatedPrice = 0;
+              pol.cost.quantityPhysical = 1;
+              loc.quantityPhysical = 1;
+              let mtypeName = matMap[fundCode] | '';
+              pol.physical = {
+                createInventory: 'None',
+                materialType: refData.mtypes[mtypeName] || refData.mtypes.unspecified
+              };
+            }
+
+            loc.quantity = copies;
+            loc.locationId = locMap[location] || locMap['unmapped'];
+            if (!loc.locationId) throw(`ERROR no locationId found for "${location}"`)
+            pol.locations.push(loc);
+
+            
+            if (inst) {
+              pol.instanceId = inst.id;
+              pol.titleOrPackage = inst.t;
+              if (inst.c) {
+                pol.contributors = [];
+                inst.c.forEach(c => {
+                  let au = {
+                    contributor: c.n,
+                    contributorNameTypeId: c.t
+                  }
+                  pol.contributors.push(au);
+                });
+              }
+              if (inst.i) {
+                pol.details.productIds = [];
+                inst.i.forEach(x => {
+                  if (x.t === '8261054f-be78-422d-bd51-4ed9f33c3422') x.v = x.v.replace(/ .+/, '');
+                  let o = {
+                    productId: x.v,
+                    productIdType: x.t
+                  };
+                  pol.details.productIds.push(o);
+                });
+              }
+              if (inst.p) pol.publisher = inst.p;
+              if (inst.d) pol.publicationDate = inst.d;
+            } else if (so.bibs && so.bibs[0]) {
+              pol.titleOrPackage = `[Unknown - ${bibId}]`;
+              // pol.titleOrPackage = so.bibs[0].title
+            }
+
+
+            if (fundId) {
+              let fd = {
+                fundId: fundId,
+                distributionType: 'percentage',
+                value: 100,
+                code: fundCode,
+              };
+              fd.expenseClassId = exClassMap[fundCode] || exClassMap.cre;
+              pol.fundDistribution = [ fd ];
+            }
+            else {
+              console.log(`WARN no fundId found for Sierra fund code ${fundNum} (${fundCode})`);
+            }
+
+            co.compositePoLines.push(pol);
+            let coStr = JSON.stringify(co) + '\n';
+            fs.writeFileSync(outFile, coStr, { flag: 'a' });
+
+            let polStr = JSON.stringify(pol) + '\n';
+            fs.writeFileSync(polFile, polStr, { flag: 'a' });
+            c++;
+          }
         }
       } catch (e) {
         console.log(`[${lnum}] ${e}`);

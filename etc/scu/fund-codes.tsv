@@ -272,34 +272,34 @@ Sierra Accounting Unit	Sierra code (numeric)	Sierra code (text)	FOLIO fund code
 1	00291	crp	crp	
 1	00292	cre	cre	
 1	00293	dda	dda	
-1	00294	aar	N/A	
-1	00295	gag	N/A	
-1	00296	emc	N/A	
-1	00297	hel	N/A	
+1	00294	aar		
+1	00295	gag		
+1	00296	emc		
+1	00297	hel		
 1	00298	lkg	lkg	
-1	00299	mss	N/A	
-1	00300	pjn	N/A	
-1	00301	skb	N/A	
-1	00302	rice	N/A	
+1	00299	mss		
+1	00300	pjn		
+1	00301	skb		
+1	00302	rice		
 1	00303	pop	pop	
 1	00304	rare	rare	
 1	00305	auth	auth	
-1	00306	sbk	N/A	
+1	00306	sbk		
 1	00307	nab	nab	
-1	00308	illmo	N/A	
+1	00308	illmo		
 1	00309	illdd	illdd	
-1	00310	illcc	illdd	
+1	00310	illcc	illcc	
 1	00311	illtr	illtr	
 1	00312	prebi	prebi	
 1	00313	presp	presp	
 1	00314	prezz	prezz	
 1	00315	ddav	ddav	
 1	00316	illcs	illcs	
-1	00317	ram	N/A	
-1	00318	sjn	N/A	
+1	00317	ram		
+1	00318	sjn		
 1	00319	gopen	gopen	
 1	00320	gpkg	gpkg	
-1	00321	shn	N/A	
+1	00321	shn		
 1	00322	stane	stane	
 1	00323	stanp	stanp	
 1	00324	mjs	mjs	
@@ -310,127 +310,127 @@ Sierra Accounting Unit	Sierra code (numeric)	Sierra code (text)	FOLIO fund code
 1	00329	ayv	ayv	
 1	00330	arc	arc	
 1	00331	deisj	deisj	
-1	00332	kbm	N/A	
-1	00333	bwh	N/A	
+1	00332	kbm		
+1	00333	bwh		
 1	00334	dad	dad	
 1	00335	cres	cres	
-2	00001	hnewt		
+2	00001	hnewt	N/A	
 2	00002	hntmp	hntmp	
-2	00003	hntmm		
-2	00004	hntpp		
-2	00005	hntpm		
-2	00006	hntnp		
-2	00007	hntnm		
-2	00008	hntcp		
-2	00009	hntcm		
+2	00003	hntmm	N/A	
+2	00004	hntpp	N/A	
+2	00005	hntpm	N/A	
+2	00006	hntnp	N/A	
+2	00007	hntnm	N/A	
+2	00008	hntcp	N/A	
+2	00009	hntcm	N/A	
 2	00010	hntca	hntca	
-2	00011	hcdnt		
-2	00012	hcdlc		
-2	00013	hcdcp		
-2	00014	hcdcm		
-2	00015	hcons		
+2	00011	hcdnt	N/A	
+2	00012	hcdlc	N/A	
+2	00013	hcdcp	N/A	
+2	00014	hcdcm	N/A	
+2	00015	hcons	N/A	
 2	00016	hcop	hcop	
-2	00017	hcoav		
-2	00018	hcom		
+2	00017	hcoav	N/A	
+2	00018	hcom	N/A	
 2	00019	hperp	hperp	
-2	00020	hperm		
-2	00021	hpebc		
-2	00022	hpebi		
+2	00020	hperm	N/A	
+2	00021	hpebc	N/A	
+2	00022	hpebi	N/A	
 2	00023	hnewp	hnewp	
-2	00024	hnewm		
-2	00025	hmonp		
-2	00026	hmonm		
+2	00024	hnewm	N/A	
+2	00025	hmonp	N/A	
+2	00026	hmonm	N/A	
 2	00027	hmemb	hmemb	
-2	00028	hrefl		
-2	00029	hrefw		
-2	00030	hgfts		
-2	00031	hgon		
-2	00032	hcd		
-2	00033	hcont		
-2	00034	hper		
-2	00035	hnews		
-2	00036	hmono		
-2	00037	hmem		
-2	00038	hnt		
-2	00039	hstuf		
-2	00040	hrefd		
-2	00041	hqrll		
-2	00042	hcdav		
-2	00043	hsfnt		
-2	00044	hsfcd		
-2	00045	hsfco		
-2	00046	hntco		
-2	00047	hcdco		
-2	00048	hrepl		
-2	00049	hrplp		
-2	00050	hrplm		
-2	00051	hsnmp		
-2	00052	hsnmm		
-2	00053	hsnpp		
-2	00054	hsnpm		
-2	00055	hsnnp		
-2	00056	hsnnm		
-2	00057	hsncp		
-2	00058	hsncm		
-2	00059	hsnca		
-2	00060	hsnco		
-2	00061	hscnt		
-2	00062	hsccp		
-2	00063	hsccm		
-2	00064	hscav		
-2	00065	hscco		
-2	00066	hscop		
-2	00067	hscom		
-2	00068	hscca		
-2	00069	hscon		
-2	00070	hsfpe		
-2	00071	hsfpp		
-2	00072	hsfpm		
-2	00073	hsfbc		
-2	00074	hsfbi		
-2	00075	hsfne		
-2	00076	hsfnp		
-2	00077	hsfnm		
-2	00078	hsfre		
-2	00079	hsfrp		
-2	00080	hsfrm		
-2	00081	hsfme		
-2	00082	hsfms		
-2	00083	hcdpp		
-2	00084	hcdpm		
-2	00085	hcdnp		
-2	00086	hcdnm		
-2	00087	hscpp		
-2	00088	hscpm		
-2	00089	hscnp		
-2	00090	hscnm		
-2	00091	hcat		
-2	00092	hrpms		
+2	00028	hrefl	N/A	
+2	00029	hrefw	N/A	
+2	00030	hgfts	N/A	
+2	00031	hgon	N/A	
+2	00032	hcd	N/A	
+2	00033	hcont	N/A	
+2	00034	hper	N/A	
+2	00035	hnews	N/A	
+2	00036	hmono	N/A	
+2	00037	hmem	N/A	
+2	00038	hnt	N/A	
+2	00039	hstuf	N/A	
+2	00040	hrefd	N/A	
+2	00041	hqrll	N/A	
+2	00042	hcdav	N/A	
+2	00043	hsfnt	N/A	
+2	00044	hsfcd	N/A	
+2	00045	hsfco	N/A	
+2	00046	hntco	N/A	
+2	00047	hcdco	N/A	
+2	00048	hrepl	N/A	
+2	00049	hrplp	N/A	
+2	00050	hrplm	N/A	
+2	00051	hsnmp	N/A	
+2	00052	hsnmm	N/A	
+2	00053	hsnpp	N/A	
+2	00054	hsnpm	N/A	
+2	00055	hsnnp	N/A	
+2	00056	hsnnm	N/A	
+2	00057	hsncp	N/A	
+2	00058	hsncm	N/A	
+2	00059	hsnca	N/A	
+2	00060	hsnco	N/A	
+2	00061	hscnt	N/A	
+2	00062	hsccp	N/A	
+2	00063	hsccm	N/A	
+2	00064	hscav	N/A	
+2	00065	hscco	N/A	
+2	00066	hscop	N/A	
+2	00067	hscom	N/A	
+2	00068	hscca	N/A	
+2	00069	hscon	N/A	
+2	00070	hsfpe	N/A	
+2	00071	hsfpp	N/A	
+2	00072	hsfpm	N/A	
+2	00073	hsfbc	N/A	
+2	00074	hsfbi	N/A	
+2	00075	hsfne	N/A	
+2	00076	hsfnp	N/A	
+2	00077	hsfnm	N/A	
+2	00078	hsfre	N/A	
+2	00079	hsfrp	N/A	
+2	00080	hsfrm	N/A	
+2	00081	hsfme	N/A	
+2	00082	hsfms	N/A	
+2	00083	hcdpp	N/A	
+2	00084	hcdpm	N/A	
+2	00085	hcdnp	N/A	
+2	00086	hcdnm	N/A	
+2	00087	hscpp	N/A	
+2	00088	hscpm	N/A	
+2	00089	hscnp	N/A	
+2	00090	hscnm	N/A	
+2	00091	hcat	N/A	
+2	00092	hrpms	N/A	
 2	00093	hdrm	hdrm	
-2	00094	hiii		
-2	00095	hrefr		
-2	00096	hillr		
-2	00097	hrefa		
+2	00094	hiii	N/A	
+2	00095	hrefr	N/A	
+2	00096	hillr	N/A	
+2	00097	hrefa	N/A	
 2	00098	hilla	hilla	
-2	00099	hcata		
-2	00100	hqrnm		
-2	00101	hqrnp		
-2	00102	hqrno		
-2	00103	hhom		
-2	00104	hamp		
-2	00105	hple		
-2	00106	hbls		
-2	00107	hdet		
-2	00108	halw		
+2	00099	hcata	N/A	
+2	00100	hqrnm	N/A	
+2	00101	hqrnp	N/A	
+2	00102	hqrno	N/A	
+2	00103	hhom	N/A	
+2	00104	hamp	N/A	
+2	00105	hple	N/A	
+2	00106	hbls	N/A	
+2	00107	hdet	N/A	
+2	00108	halw	N/A	
 2	00109	hlaut	hlaut	
-2	00110	hwra		
-2	00111	hfcil		
-2	00112	hjuj		
+2	00110	hwra	N/A	
+2	00111	hfcil	N/A	
+2	00112	hjuj	N/A	
 2	00113	hillo	hillo	
-2	00114	hsprt		
-2	00115	hhod		
-2	00116	hlob		
+2	00114	hsprt	N/A	
+2	00115	hhod	N/A	
+2	00116	hlob	N/A	
 2	00117	hconl	hconl	
-2	00118	honlc	honlc	
-2	00119	hpres		
-2	00120	hdrep		
+2	00118	honlc	N/A	
+2	00119	hpres	N/A	
+2	00120	hdrep	N/A	
