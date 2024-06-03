@@ -47,7 +47,7 @@ const permsFile = process.argv[3];
       c++;
       let j = JSON.parse(line);
       let pu = permsMap[j.id];
-      if (j.username && !j.username.match(/admin|system|pubsub|^mod-|^canary/) && pu && pu.permissions[0]) {
+      if (j.username && !j.username.match(/admin|pubsub|^mod-|^data-export|^system-user/) && pu && pu.permissions[0]) {
         fs.writeFileSync(outFile, JSON.stringify(j) + '\n', { flag: 'a' });
         fs.writeFileSync(outPerms, JSON.stringify(pu) + '\n', { flag: 'a' })
         f++
