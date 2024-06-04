@@ -172,9 +172,32 @@ const wait = (ms) => {
               if (!json.contributors[i].name || !json.contributors[i].contributorNameTypeId) {
                 json.contributors.splice(i, 1);
                 i--;
-              }
-            };
+              } else if (json.contributors[i].authorityId) {
+		      delete json.contributors[i].authorityId;
+	      }
+            }
           }
+	  if (json.subjects) {
+            for (let i = 0; i < json.subjects.length; i++) {
+              if (json.subjects[i].authorityId) {
+		      delete json.subjects[i].authorityId;
+	      }
+            }
+	  }
+	  if (json.alternativeTitles) {
+            for (let i = 0; i < json.alternativeTitles.length; i++) {
+              if (json.alternativeTitles[i].authorityId) {
+		      delete json.alternativeTitles[i].authorityId;
+	      }
+            }
+	  }
+	  if (json.series) {
+            for (let i = 0; i < json.series.length; i++) {
+              if (json.series[i].authorityId) {
+		      delete json.series[i].authorityId;
+	      }
+            }
+	  }
 
           if (json.classifications) {
             for (let i = 0; i < json.classifications.length; i++) {

@@ -529,6 +529,9 @@ while (<RAW>) {
   if ($bcode3 eq 'z' || $bcode3 eq 'x') {
     print PPATH $raw;
     $purgecount++;
+    if (eof RAW) {
+	    goto WRITE_DATA;
+    }	    
     next;
   } elsif ($bcode3 eq 'y') {
     $rec->{discoverySuppress} = JSON::true
@@ -812,7 +815,7 @@ while (<RAW>) {
     close ERROUT;
     $errcount++;
   }
-  if (eof RAW || $success % 10000 == 0) {
+  WRITE_DATA: if (eof RAW || $success % 10000 == 0) {
     my $tt = time() - $start;
     print "Processed #$count (" . $rec->{hrid} . ") [ instances: $success, holdings: $hcount, items: $icount, time: $tt secs ]\n";
     write_objects($OUT, $inst_recs);
