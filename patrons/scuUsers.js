@@ -221,7 +221,7 @@ try {
       varFields.b.unshift(barcode);
     }
 
-    user.customFields.sierraRecordNumber = 'p' + pid;
+    user.customFields.sierraPatronRecordNumber = 'p' + pid;
 
     let addEmails = [];
     if (varFields.z) {
