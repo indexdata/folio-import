@@ -98,7 +98,7 @@ const exClasses = {
     exc.expenseClasses.forEach(d => {
       if (exClasses[d.name]) excMap[d.name] = d.id;
     });
-    console.log(excMap); return;
+    // console.log(excMap); return;
 
     let csv = fs.readFileSync(inFiles.budgets, 'utf8');
     let inRecs = parse(csv, {
@@ -176,7 +176,6 @@ const exClasses = {
               expenseClassId: eid,
               status: 'Active'
             }
-            console.log(files.exc);
             writeObj(files.exc, o);
             ecc++;
           }
