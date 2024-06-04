@@ -24,7 +24,12 @@ let inFiles = {
 const exClasses = {
   Periodical: 1,
   Online: 1,
-  Video: 1
+  Video: 1,
+  eBook: 1,
+  Automation: 1,
+  'Resource Sharing': 1,
+  'Binding / Preservation': 1,
+  'Print Book (T)': 1
 };
 
 (async () => {
@@ -93,7 +98,7 @@ const exClasses = {
     exc.expenseClasses.forEach(d => {
       if (exClasses[d.name]) excMap[d.name] = d.id;
     });
-    // console.log(excMap); return;
+    console.log(excMap); return;
 
     let csv = fs.readFileSync(inFiles.budgets, 'utf8');
     let inRecs = parse(csv, {
