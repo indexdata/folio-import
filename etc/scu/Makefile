@@ -38,7 +38,8 @@ split-inventory: $(invdir)/bibs_instances.jsonl
 
 order:
 	cd $(odir); cat orders0* > all_orders.jsonl
-	cd $(wd)/acquisitions; node scuOrders.js $(aref) $(invdir)/bibs_instances.jsonl $(odir)/all_orders.jsonl
+	cd $(wd)/acquisitions; node scuOrders.js $(aref) $(invdir)/bibs_instances.jsonl $(odir)/all_orders.jsonl > $(log)/make-orders.log
+	cat $(log)/make-orders.log
 
 user: $(udir)/users00000000.jsonl
 	cd $(udir); ln -s users00000000.jsonl users.jsonl
@@ -68,7 +69,7 @@ setup:
 	cp $(tsvdir)/*.tsv $(iref)
 	cp $(tsvdir)/locations.tsv $(aref)
 	cp $(tsvdir)/ptypes.tsv $(uref)
-	cp $(tsvdir)/fund-codes.json $(aref)
+	cp $(tsvdir)/fund-codes.tsv $(aref)
 	cp $(wd)/configs/bash/$(lscript) .
 	cp $(wd)/bash/reference_*.sh .
 	cp $(wd)/inventory/marc2inst-$(lib).pl .
