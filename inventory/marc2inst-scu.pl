@@ -71,6 +71,8 @@ sub getRules {
   my $j60 = decode_json($s60);
   my $s82 = '[{"entity":[{"rules":[{"conditions":[{"type":"set_classification_type_id","parameter":{"name":"Dewey"}}]}],"target":"classifications.classificationTypeId","subfield":["a","b"],"description":"Type for Dewey classification","applyRulesOnConcatenatedData":true},{"rules":[{"conditions":[{"type":"remove_substring","parameter":{"substring":"/"}}]}],"target":"classifications.classificationNumber","subfield":["a","b"],"description":"Dewey classification","applyRulesOnConcatenatedData":true}]}]';
   my $j82 = decode_json($s82);
+  my $s90 = '[{"entity":[{"rules":[{"conditions":[{"type":"set_classification_type_id","parameter":{"name":"LC"}}]}],"target":"classifications.classificationTypeId","subfield":["a","b"],"description":"Type for LC classification","applyRulesOnConcatenatedData":true},{"target":"classifications.classificationNumber","subfield":["a","b"],"description":"LC classification","applyRulesOnConcatenatedData":true}]}]';
+  my $j90 = decode_json($j90);
 
   local $/ = '';
   open my $rules, $rfile or die "Can't open $rfile";
@@ -81,6 +83,7 @@ sub getRules {
   $json->{'050'} = $j50;
   $json->{'060'} = $j60;
   $json->{'082'} = $j82;
+  $json->{'090'} = $j90;
   return $json;
 }
 
