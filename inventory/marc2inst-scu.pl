@@ -65,6 +65,12 @@ sub getRules {
   my $j20 = decode_json($s20);
   my $s24 = '[{"entity":[{"rules":[{"conditions":[{"type":"set_identifier_type_id_by_name","parameter":{"name":"Other standard identifier"}}]}],"target":"identifiers.identifierTypeId","subfield":["a","c","d","q","z","2"],"description":"Type for Other Standard Identifier","applyRulesOnConcatenatedData":true},{"rules":[{"conditions":[{"type":"trim"}]}],"target":"identifiers.value","subfield":["a","c","d","q","z","2"],"description":"Other Standard Identifier","applyRulesOnConcatenatedData":true}]},{"entity":[{"rules":[{"conditions":[{"type":"set_identifier_type_id_by_name","parameter":{"name":"ISMN"}}]}],"target":"identifiers.identifierTypeId","subfield":["a"],"description":"Type for Resource identifier types"},{"rules":[{"conditions":[{"type":"concat_subfields_by_name, trim","parameter":{"subfieldsToConcat":["q"]}}]}],"target":"identifiers.value","subfield":["a"],"description":"ISMN"}],"indicators":{"ind1":"2","ind2":"*"}},{"entity":[{"rules":[{"conditions":[{"type":"set_identifier_type_id_by_name","parameter":{"name":"Invalid ISMN"}}]}],"target":"identifiers.identifierTypeId","subfield":["z"],"description":"Type for Resource identifier types"},{"rules":[{"conditions":[{"type":"concat_subfields_by_name, trim","parameter":{"subfieldsToConcat":["q"]}}]}],"target":"identifiers.value","subfield":["z"],"description":"Invalid ISMN"}],"indicators":{"ind1":"2","ind2":"*"},"entityPerRepeatedSubfield":true},{"entity":[{"rules":[{"conditions":[{"type":"set_identifier_type_id_by_name","parameter":{"name":"UPC"}}]}],"target":"identifiers.identifierTypeId","subfield":["a"],"description":"Type for Resource identifier types"},{"rules":[{"conditions":[{"type":"concat_subfields_by_name, trim","parameter":{"subfieldsToConcat":["q"]}}]}],"target":"identifiers.value","subfield":["a"],"description":"UPC"}],"indicators":{"ind1":"1","ind2":"*"}},{"entity":[{"rules":[{"conditions":[{"type":"set_identifier_type_id_by_name","parameter":{"name":"Invalid UPC"}}]}],"target":"identifiers.identifierTypeId","subfield":["z"],"description":"Type for Resource identifier types"},{"rules":[{"conditions":[{"type":"concat_subfields_by_name, trim","parameter":{"subfieldsToConcat":["q"]}}]}],"target":"identifiers.value","subfield":["z"],"description":"Invalid UPC"}],"indicators":{"ind1":"1","ind2":"*"},"entityPerRepeatedSubfield":true}]';
   my $j24 = decode_json($s24);
+  my $s50 = '[{"entity":[{"rules":[{"conditions":[{"type":"set_classification_type_id","parameter":{"name":"LC"}}]}],"target":"classifications.classificationTypeId","subfield":["a","b"],"description":"Type for LC classification","applyRulesOnConcatenatedData":true},{"target":"classifications.classificationNumber","subfield":["a","b"],"description":"LC classification","applyRulesOnConcatenatedData":true}]}]';
+  my $j50 = decode_json($s50);
+  my $s60 = '[{"entity":[{"rules":[{"conditions":[{"type":"set_classification_type_id","parameter":{"name":"NLM"}}]}],"target":"classifications.classificationTypeId","subfield":["a","b"],"description":"Type for NLM classification","applyRulesOnConcatenatedData":true},{"target":"classifications.classificationNumber","subfield":["a","b"],"description":"NLM classification","applyRulesOnConcatenatedData":true}]}]';
+  my $j60 = decode_json($s60);
+  my $s82 = '[{"entity":[{"rules":[{"conditions":[{"type":"set_classification_type_id","parameter":{"name":"Dewey"}}]}],"target":"classifications.classificationTypeId","subfield":["a","b"],"description":"Type for Dewey classification","applyRulesOnConcatenatedData":true},{"rules":[{"conditions":[{"type":"remove_substring","parameter":{"substring":"/"}}]}],"target":"classifications.classificationNumber","subfield":["a","b"],"description":"Dewey classification","applyRulesOnConcatenatedData":true}]}]';
+  my $j82 = decode_json($s82);
 
   local $/ = '';
   open my $rules, $rfile or die "Can't open $rfile";
@@ -72,6 +78,9 @@ sub getRules {
   my $json = decode_json($jsonstr);
   $json->{'020'} = $j20;
   $json->{'024'} = $j24;
+  $json->{'050'} = $j50;
+  $json->{'060'} = $j60;
+  $json->{'082'} = $j82;
   return $json;
 }
 
