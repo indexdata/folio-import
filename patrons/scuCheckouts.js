@@ -2,24 +2,30 @@ const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
 
-const spFile = process.argv[2];
+let refDir = process.argv[2];
 const usersFile = process.argv[3];
 const itemFile = process.argv[4];
+
+const refFiles = {
+  servicepoints: 'service-points.json',
+  locmap: 'locations.tsv'
+};
 
 (async () => {
   try {
     if (itemFile === undefined) {
-      throw('Usage: node scuCheckouts.js <service_points_file> <folio_users_file> <sierra_items_file>');
+      throw('Usage: node scuCheckouts.js <inventory_ref_dir> <folio_users_file> <sierra_items_file>');
     }
     if (!fs.existsSync(itemFile)) {
       throw new Error('Can\'t find loans file');
     }
-    if (!fs.existsSync(spFile)) {
+    if (!fs.existsSync(refDir)) {
       throw new Error('Can\'t find service points file');
     }
     if (!fs.existsSync(usersFile)) {
       throw new Error('Can\'t find users file');
     }
+    refDir = refDir.replace(/\/$/, '');
 
     let dateOffset = (dt) => {
       let dzo = new Date(dt).getTimezoneOffset();
@@ -47,18 +53,22 @@ const itemFile = process.argv[4];
     }
 
     const start = new Date().valueOf();
+    const spFile = refDir + '/' + refFiles.servicepoints;
     const sp = require(spFile);
     spMap = {};
     sp.servicepoints.forEach(s => {
-      spMap[s.name] = s.id;
+      spMap[s.code] = s.id;
     });
     // console.log(spMap); return;
 
+    const locs = fs.readFileSync(refDir + '/' + refFiles.locmap, { encoding: 'utf8'} );
+
     const loc2sp = {};
-    const lospData = fs.readFileSync(workDir + '/spoints.tsv', { encoding: 'utf8' });
-    lospData.split(/\r?\n/).forEach(l => {
-      let [k, x, v] = l.split(/\t/);
-      loc2sp[k] = spMap[v] || v;
+    locs.split(/\r?\n/).forEach(l => {
+      let cols = l.split(/\t/);
+      let k = cols[0];
+      let spk = cols[5];
+      loc2sp[k] = spMap[spk];
     });
     // console.log(loc2sp); return;
 
@@ -90,7 +100,8 @@ const itemFile = process.argv[4];
             let ubcode = user.barcode;
             let odate = (ff['63']) ? ff['63'].value : '';
             let due = (ff['65']) ? ff['65'].value : '';
-            let loc = (ff['64']) ? ff['64'].value : '';
+            // let loc = (ff['64']) ? ff['64'].value : '';
+            let loc = (ff['79']) ? ff['79'].value : '';
             let rnum = (ff['71']) ? ff['71'].value : '';
             let vf = i.varFields || [];
             let ibcode = '';
@@ -154,7 +165,7 @@ const itemFile = process.argv[4];
     let ucount = 0;
     url.on('line', l => {
       let u = JSON.parse(l);
-      let pid = u.customFields.sierraPatronRecordNumber;
+      let pid = (u.customFields) ? u.customFields.sierraPatronRecordNumber : '';
       pid = pid.replace(/^p/, '');
       // let exDate = (u.fixedFields['43']) ? u.fixedFields['43'].value : '';
       let exDate = u.expirationDate;
@@ -173,7 +184,6 @@ const itemFile = process.argv[4];
       ucount++;
     });
     url.on('close', l=> {
-      console.log(active);
       console.log(`(${ucount} users loaded...)`);
       main();
     });

@@ -98,9 +98,7 @@ const post_put = async (authToken, url, checkout, r) => {
       fs.unlinkSync(errPath);
     }
 
-    const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
-
-    const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
+    let config = await getAuthToken(superagent);
 
     let url = `${config.okapi}/circulation/check-out-by-barcode`;
     let today;
@@ -151,7 +149,7 @@ const post_put = async (authToken, url, checkout, r) => {
 	      let postData = Object.assign({}, data);
 
         console.log(`[${d}] POST ${url} (${data.itemBarcode}${uc})`);
-        let loanObj = await post_put(authToken, url, postData);
+        let loanObj = await post_put(config.token, url, postData);
         if (checkIn === 'checkin') added++;
         if (loanObj && checkIn !== 'checkin') {
           let loanStr = JSON.stringify(loanObj) + '\n';
@@ -165,7 +163,7 @@ const post_put = async (authToken, url, checkout, r) => {
             if (process.env.DEBUG) console.log(loanObj);
             let lurl = `${config.okapi}/circulation/loans/${loanObj.id}`;
             console.log(`[${d}] PUT ${lurl} (${data.itemBarcode})`);
-            await post_put(authToken, lurl, loanObj);
+            await post_put(config.token, lurl, loanObj);
             added++
 
             if (claimedReturnedDate) {
@@ -175,7 +173,7 @@ const post_put = async (authToken, url, checkout, r) => {
                 claimedObj.comment = "Migrated action";
                 let lurl = `${config.okapi}/circulation/loans/${loanObj.id}/claim-item-returned`;
                 console.log(`[${d}] POST ${lurl} (${data.itemBarcode})`);
-                await post_put(authToken, lurl, claimedObj);
+                await post_put(config.token, lurl, claimedObj);
                 claimed++;
               } catch (e) {
                 console.log(e);
