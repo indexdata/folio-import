@@ -13,6 +13,7 @@ uref=$(data)/ref/usr
 rules=$(wd)/etc/scu/mapping-rules.json
 odir=$(data)/orders
 udir=$(data)/users
+cdir=$(data)/circ
 email=oscarmail@scu.edu
 
 instances:
@@ -54,6 +55,14 @@ split-users: $(udir)/users-users.jsonl
 view-log-users: $(log)/make-users.log
 	cat $(log)/make-users.log
 
+checkouts: $(cdir)
+	rm -f $(cdir)/items.jsonl
+	rm -f $(cdir)/users.jsonl
+	cd $(cdir); ln -s $(invdir)/items.jsonl items.jsonl
+	cd $(cdir); ln -s $(udir)/users-users.jsonl users.jsonl
+	cd $(wd)/patrons; node scuCheckouts.js $(iref) $(cdir)/users.jsonl $(cdir)/items.jsonl > $(log)/make-checkouts.log & 
+	tail -f $(log)/make-checkouts.log
+
 clean-inventory: $(iinfo)
 	cd $(invdir); rm bibs.mrc; mv raw.marc raw.mrc
 
@@ -66,6 +75,7 @@ setup:
 	mkdir -p $(aref)
 	mkdir -p $(uref)
 	mkdir -p $(log)
+	mkdir -p $(cdir)
 	cp $(tsvdir)/*.tsv $(iref)
 	cp $(tsvdir)/locations.tsv $(aref)
 	cp $(tsvdir)/ptypes.tsv $(uref)

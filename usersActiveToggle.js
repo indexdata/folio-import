@@ -15,9 +15,8 @@ const tf = process.argv[3];
     if (!fn) {
       throw new Error(`Usage: node usersActiveToggle.js <inactive_users_jsonl> [true|false]`);
     }
-    const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
 
-    const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
+    let config = await getAuthToken(superagent);
 
     let seen = {};
 
@@ -41,7 +40,7 @@ const tf = process.argv[3];
             .get(url)
             .timeout({ response: 5000 })
             .set('accept', 'application/json')
-            .set('x-okapi-token', authToken)
+            .set('x-okapi-token', config.token)
           let userRecs = res.body;
           if (userRecs.resultInfo.totalRecords !== 1) throw new Error(`Did not fetch a single record for barcode ${bc}`);
           let user = userRecs.users[0];
@@ -66,7 +65,7 @@ const tf = process.argv[3];
               .put(purl)
               .timeout({ response: 5000 })
               .set('accept', 'text/plain')
-              .set('x-okapi-token', authToken)
+              .set('x-okapi-token', config.token)
               .set('content-type', 'application/json')
               .send(user);
           } catch (e) {
