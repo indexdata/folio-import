@@ -93,6 +93,7 @@ let modName = process.argv[3];
       '/inventory-hierarchy/updated-instance-ids': true,
       '/inventory-storage/bound-with-parts': true,
       '/inventory-storage/migrations/jobs': true,
+      '/inventory-storage/migrations': true,
       '/inventory-view/instance-set': true,
       '/inventory-view/instances': true,
       '/invoice-storage/invoice-lines': true,
