@@ -83,13 +83,12 @@ try {
   // console.log(ref.ref); return;
 
   let csv = fs.readFileSync(`${inFile}`, 'utf8');
+
   const inRecs = parse(csv, {
     columns: true,
     skip_empty_lines: true,
-    relax_quotes: true,
     delimiter: '|',
     bom: true,
-    trim: true,
     escape: '\\'
   });
 

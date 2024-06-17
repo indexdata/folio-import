@@ -38,7 +38,8 @@ const typeMap = {
   'Departmental Resource': 'internal_resources',
   Journal: 'journals',
   Newspaper: 'online_newspaper',
-  Website: 'website'						
+  Website: 'website',
+  Any: 'any'
 };
 
 const supProps = {
