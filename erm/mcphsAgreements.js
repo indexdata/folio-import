@@ -272,7 +272,6 @@ const scriptName = process.argv[1].replace(/^.+\//, '');
     let simulUsers = a['Access Simultaneous User Limit'];
     let isbnOrIssn = a['ISBN'];
     let purchaseSite = a['Purchase Site'];
-    console.log(purchaseSite);
     let systemNumber = a['System Number'];
     if (a['Order Sub Start']) ed.push(a['Order Sub Start']);
     if (a['Order Current Sub End']) ed.push(a['Order Current Sub End']);
