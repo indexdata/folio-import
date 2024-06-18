@@ -13,6 +13,7 @@ if (isNaN(offset)) throw new Error(`Limit must be a number!`);
 let errs = { checkouts: [] };
 
 const wait = (ms) => {
+  console.log(`(Waiting ${ms}ms...)`);
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
@@ -117,6 +118,10 @@ const post_put = async (authToken, url, checkout, r) => {
     let d = 0;
     for await (let line of rl) {
       d++;
+      let lDate = new Date();
+      if (config.expiry && config.expiry <= lDate.valueOf()) {
+        config = await getAuthToken(superagent);
+      }
       let data = JSON.parse(line);
       delete data.errorMessage;
       let errData = JSON.parse(line);
@@ -204,6 +209,7 @@ const post_put = async (authToken, url, checkout, r) => {
         errors++;
         if (!checkIn) fs.writeFileSync(errPath, JSON.stringify(errData) + '\n', { flag: 'a' });
       }
+      if (config.delay) await wait(config.delay);
     } 
     console.log('Added:', added);
     console.log('Claimed:', claimed);

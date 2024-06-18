@@ -78,7 +78,6 @@ const wait = (ms) => {
 
     let success = 0;
     let fail = 0;
-    let failedRecs = [];
 
     const runRequest = (data, count, end) => {
       return new Promise(async (resolve, reject) => {
