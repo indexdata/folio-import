@@ -41,7 +41,8 @@ const refFiles = {
     const files = {
       co: 'checkouts.jsonl',
       ia: 'inactive_users.jsonl',
-      nf: 'notfound_checkouts.jsonl'
+      nf: 'notfound_checkouts.jsonl',
+      nb: 'no_user_barcode.jsonl'
     };
 
     let workDir = path.dirname(itemFile);
@@ -83,7 +84,8 @@ const refFiles = {
         co: 0,
         ia: 0,
         nf: 0,
-        pr: 0
+        pr: 0,
+        nb: 0
       }
       let c = 0;
 
@@ -107,11 +109,7 @@ const refFiles = {
             let ibcode = '';
             vf.forEach(v => {
               if (v.fieldTag === 'b') {
-                if (v.content.match(/^P/)) {
-                  ibcode = v.content;
-                } else if (!ibcode) {
-                  ibcode = v.content
-                }
+                ibcode = v.content
               }
             });
             let loan = {};
@@ -123,12 +121,18 @@ const refFiles = {
             loan.servicePointId = loc2sp[loc] || spMap['Norlin East Desk'];
             if (process.env.DEBUG) console.log(loan);
             if (user) {
-              write(files.co, loan);
-              ttl.co++;
-              if (!user.active) {
-                user.barcode = loan.userBarcode;
-                write(files.ia, user);
-                ttl.ia++;
+              if (loan.userBarcode) {
+                write(files.co, loan);
+                if (!user.active) {
+                  user.barcode = loan.userBarcode;
+                  write(files.ia, user);
+                  ttl.ia++;
+                }
+                ttl.co++;
+              } else {
+                loan.pnumber = 'p' + pnum;
+                write(files.nb, loan);
+                ttl.nb++;
               }
             } else {
               write(files.nf, loan);
@@ -149,6 +153,7 @@ const refFiles = {
         console.log('Inactives:', ttl.ia);
         console.log('Proxy COs:', ttl.pr);
         console.log('Not found:', ttl.nf);
+        console.log('No userBc:', ttl.nb);
         console.log('Time (sec):', time);
       });
     } 
