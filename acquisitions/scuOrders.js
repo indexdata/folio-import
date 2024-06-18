@@ -257,6 +257,8 @@ const eFormMap = {
           let status = 'Pending';
           let orderType = 'Ongoing';
           let location = ff['2'].value || '';
+          let reqs = vf.r;
+          let sels = vf.s;
           location = location.trim();
           let unitId;
           let lib;
@@ -328,6 +330,12 @@ const eFormMap = {
               details: {}
             };
             pol.id = uuid(pol.poLineNumber, ns);
+            if (reqs) {
+              pol.requester = reqs.join(', ');
+            }
+            if (sels) {
+              pol.selector = sels.join(', ');
+            }
 
             pol.paymentStatus = 'Pending';
             pol.acquisitionMethod = methodMap[oType];
