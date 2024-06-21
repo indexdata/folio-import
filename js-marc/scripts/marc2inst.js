@@ -58,16 +58,18 @@ const funcs = {
     return refData.classificationTypes[param.name] || 'ERROR';
   },
   set_identifier_type_id_by_value: function (data, param) {
-    let type = 'System control number';
+    let type = '';
     if (data.match(param.oclc_regex)) {
-      type = 'OCLC';
+      type = refData.identifierTypes.OCLC;
     }
-    // return refData.identifierTypes[type];
-    return 'hey';
+    return type;
+  },
+  set_identifier_type_id_by_name: function (data, param) {
+    return refData.identifierTypes[param.name];
   }
 }
 
-const applyRules = function (ent, field) {
+const applyRules = function (ent, field, erps) {
   let data;
   if (ent.subfield && ent.subfield[0]) {
     let subcodes = ent.subfield.join('');
@@ -76,7 +78,7 @@ const applyRules = function (ent, field) {
     data = field;
   }
   let rule = (ent.rules) ? ent.rules[0] : ''; 
-  if (rule && rule.conditions[0]) {
+  if (data && rule && rule.conditions[0]) {
     let con = rule.conditions[0];
     let ctype = con.type;
     let param = con.parameter || '';
@@ -97,17 +99,45 @@ const applyRules = function (ent, field) {
 const makeInst = function (map, field) {
   let ff = {};
   let data;
+  let fsubs = field.subfields;
+  let subs = {};
+  if (fsubs) {
+    fsubs.forEach(s => {
+      subs[Object.keys(s)[0]] = 1;
+    });
+  }
+  let ents = [];
+  let erps = false;
   map.forEach(m => {
+    if (m.entityPerRepeatedSubfield) erps = true;
     if (m.entity) {
       m.entity.forEach(e => {
-        data = applyRules(e, field);
-        ff[data.prop] = data;
-      })
+        ents.push(e)
+      });
     } else {
-      data = applyRules(m, field);
+      ents.push(m);
+    }
+  });
+  ents.forEach(e => {
+    let ar = false;
+    console.log(field);
+    if (e.subfield && e.subfield[0]) {
+      for (let x = 0; x < e.subfield.length; x++) {
+        let s = e.subfield[x];
+        if (subs[s]) {
+          ar = true;
+          break;
+        }
+      }
+    } else {
+      ar = true;
+    }
+    if (ar) {
+      data = applyRules(e, field);
       ff[data.prop] = data;
     }
   });
+  console.log(ff);
   return ff;
 }
 
@@ -140,20 +170,16 @@ try {
       let prop = props[0];
       robj[prop].forEach(p => {
         if (!refData[prop]) refData[prop] = {};
-        if (prop === 'contributorTypes') {
-          let code = p.code.toLowerCase();
-          let name = p.name.toLowerCase();
-          refData[prop][code] = p.id; 
-          refData[prop][name] = p.id;
-        } else if (p.code) {
+        if (p.code) {
           refData[prop][p.code] = p.id;
-        } else {
+        } 
+        if (p.name) {
           refData[prop][p.name] = p.id;
         }
       });
     } catch {}
   });
-  // console.log(refData.contributorTypes);
+  // console.log(refData.identifierTypes);
 
   let start = new Date().valueOf();
 
@@ -176,14 +202,16 @@ try {
       let inst = {};
       let marc = parseMarc(r);
       ldr = marc.fields.leader;
-      for (let t in mappingRules) {
-        if (t.match(limitTag) && marc.fields[t]) {
+      for (let t in marc.fields) {
+        if (t.match(limitTag)) {
           let fields = marc.fields[t];
-          if (fields) {
+          let mr = mappingRules[t];
+          if (mr) {
             fields.forEach(f => {
-              let ff = makeInst(mappingRules[t], f);
+              let ff = makeInst(mr, f);
               let obj = {};
               let root = '';
+              // console.log(JSON.stringify(mr, null, 2));
               for (let prop in ff) {
                 let [rt, pr] = prop.split('.');
                 if (propMap[prop] === 'string' || propMap[prop] === 'boolean') {
@@ -205,7 +233,7 @@ try {
           }
         }
       }
-      console.log(inst);
+      // console.log(inst);
 
       if (count % 10000 === 0) {
         let now = new Date().valueOf();
