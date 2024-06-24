@@ -55,7 +55,7 @@ const makeContact = (oid, lastName, firstName, email, phoneNumber, note) => {
 }
 
 try {
-  if (!inFile) throw(`Usage: node scuOrgs.js <ref_dir> <contancts_csv> <organizations_csv>`);
+  if (!inFile) throw(`Usage: node scuOrgs.js <ref_dir> <contacts_csv> <organizations_csv>`);
 
   const dir = path.dirname(inFile);
 
@@ -145,12 +145,15 @@ try {
       let contacts = [];
       let y = conMap[oid];
       if (y) {
-        for (let x = 1; x < 5; x++) {
+        for (let x = 1; x <= 5; x++) {
           let ln = `Contact ${x} - Last Name`;
           let fn = `Contact ${x} - First Name`;
           let nt = `Contact ${x} - Note`;
           let em = `Contact ${x} - Email`;
           let ph = `Contact ${x} - Phone number`;
+          if (!y[ln]) ln = `Contact ${x}- Last Name` 
+          if (!y[nt]) nt = `Contact ${x}- Note`;
+          console.log(ln);
           if (y[ln] && y[fn]) {
             let o = makeContact(oid, y[ln], y[fn], y[em], y[ph], y[nt]);
             writeTo(files.cont, o);
