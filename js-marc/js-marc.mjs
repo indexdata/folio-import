@@ -1,3 +1,5 @@
+import { Buffer } from 'node:buffer';
+
 export function parseMarc(raw) {
   let record = {};
   let leader = raw.substring(0, 24);
@@ -13,6 +15,7 @@ export function parseMarc(raw) {
   let fields = {
     leader: leader,
   };
+  let buf = Buffer.from(raw);
   dirParts.forEach(d => {
     let p = d.match(/^(.{3})(.{4})(.{5})/);
     let tag = p[1];
@@ -20,7 +23,7 @@ export function parseMarc(raw) {
     let start = parseInt(p[3], 10) + dirEnd;
     let end = start + len;
     let obj = {};
-    let data = raw.substring(start, end);
+    let data = buf.subarray(start, end).toString();
     if (!fields[tag]) fields[tag] = [];
     if (tag > '009') {
       obj.ind1 = data.substring(0, 1);
@@ -56,4 +59,40 @@ export function getSubs(field, codes, delim) {
     }
   });
   return out.join(dl);
+}
+
+export function makeMarc(data) {
+  let line = data.split(/\n/);
+  let ldr = '';
+  let dir = '';
+  let pos = 0;
+  let varFields = '';
+  line.forEach(l => {
+    if (l.match(/^\d{3} /)) {
+      let tag = l.substring(0, 3);
+      let data = l.substring(4);
+      if (tag > '009') {
+        data = data.replace(/ \$(.) */g, '\x1F$1');
+      }
+      data += '\x1E';
+      varFields += data;
+      let len = Buffer.byteLength(data, 'utf8');
+      let lenStr = len.toString().padStart(4, '0');
+      let posStr = pos.toString().padStart(5, '0');
+      let dirPart = tag + lenStr + posStr;
+      dir += dirPart;
+      pos += len;
+    } else if (l.match(/^\d{5}/)) {
+      ldr = l.substring(5);
+    }
+  });
+  dir += '\x1E';
+  let base = dir.length + 24;
+  let baseStr = base.toString().padStart(5, '0');
+  ldr = ldr.replace(/^(.{7}).{5}/, '$1' + baseStr);
+  let rec = ldr + dir + varFields + '\x1D';
+  let rlen = rec.length + 5;
+  let rlinStr = rlen.toString().padStart(5, '0');
+  rec = rlinStr + rec;
+  return rec;
 }
