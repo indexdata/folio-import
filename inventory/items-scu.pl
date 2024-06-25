@@ -23,10 +23,19 @@ my $isil = 'CStclU';
 my $ver = $ENV{_VERSION} || '1';
 my $ref_dir = shift;
 my $map_file = shift;
-if (! $ARGV[0]) {
+my $infile = shift;
+my $id_admin = '23787404-089b-5efe-a8da-b207cbab9514';
+
+if (! $infile) {
   die "Usage: ./items-scu.pl <ref_data_dir> <instance_map_file> <item_jsonl_file>\n";
 }
-my $id_admin = '23787404-089b-5efe-a8da-b207cbab9514';
+if (! -e $infile) {
+  die "Can't find Sierra items file!";
+} 
+my $dir = dirname($infile);
+my $fn = basename($infile, '.jsonl', '.json');
+my $rawfn = basename($infile);
+my $ars_file = "$dir/ars.tsv";
 
 my $files = {
   h => 'holdings.jsonl',
@@ -162,6 +171,16 @@ while (<MAP>) {
 }
 close MAP;
 
+my $ars_map = {};
+print "Opening ars map file...\n";
+open ARS, $ars_file or die "Can't find ars.tsv file at $dir";
+while (<ARS>) {
+  chomp;
+  my ($hrid, $temp, $perm) = split(/\t/);
+  $ars_map->{$hrid} = [ $temp, $perm ];
+}
+# print Dumper($ars_map); exit;
+
 $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
 # print Dumper($refdata->{loantypes}); exit;
@@ -210,84 +229,77 @@ my $hseen = {};
 my $cnmap = {};
 my $hhrid = '';
 
-foreach (@ARGV) {
-  my $infile = $_;
-  if (! -e $infile) {
-    die "Can't find Sierra items file!";
-  } 
-  my $dir = dirname($infile);
-  my $fn = basename($infile, '.jsonl', '.json');
-  my $rawfn = basename($infile);
 
-  my $paths = {};
-  for (keys %{ $files }) {
-    my $n = $files->{$_};
-    my $path = "$dir/$fn-$n";
-    $paths->{$_} = $path;
-    unlink $path;
+
+my $paths = {};
+for (keys %{ $files }) {
+  my $n = $files->{$_};
+  my $path = "$dir/$fn-$n";
+  $paths->{$_} = $path;
+  unlink $path;
+}
+
+open HOUT, '>>:encoding(UTF-8)', $paths->{h} or die "Can't open $paths->{h} for writing\n";
+open IOUT, '>>:encoding(UTF-8)', $paths->{i} or die "Can't open $paths->{i} for writing\n";
+open BOUT, '>>:encoding(UTF-8)', $paths->{b} or die "Can't open $paths->{b} for writing\n";
+open ROUT, '>>:encoding(UTF-8)', $paths->{r} or die "Can't open $paths->{r} for writing\n";
+open MOUT, '>>:encoding(UTF-8)', $paths->{m} or die "Can't open $paths->{m} for writing\n";
+open IPURGE, '>>:encoding(UTF-8)', $paths->{ip} or die "Can't open $paths->{ip} for writing\n";
+
+open IN, $infile;
+
+while (<IN>) {
+  chomp;
+  my $obj = $json->decode($_);
+  my $opacmsg = $obj->{fixedFields}->{108}->{value};
+  if ($opacmsg eq 'z') {
+    print IPURGE $_ . "\n";
+    $pcount++;
+    next;
   }
-
-  open HOUT, '>>:encoding(UTF-8)', $paths->{h} or die "Can't open $paths->{h} for writing\n";
-  open IOUT, '>>:encoding(UTF-8)', $paths->{i} or die "Can't open $paths->{i} for writing\n";
-  open BOUT, '>>:encoding(UTF-8)', $paths->{b} or die "Can't open $paths->{b} for writing\n";
-  open ROUT, '>>:encoding(UTF-8)', $paths->{r} or die "Can't open $paths->{r} for writing\n";
-  open MOUT, '>>:encoding(UTF-8)', $paths->{m} or die "Can't open $paths->{m} for writing\n";
-  open IPURGE, '>>:encoding(UTF-8)', $paths->{ip} or die "Can't open $paths->{ip} for writing\n";
-  
-  open IN, $infile;
-
-  while (<IN>) {
-    chomp;
-    my $obj = $json->decode($_);
-    my $opacmsg = $obj->{fixedFields}->{108}->{value};
-    if ($opacmsg eq 'z') {
-      print IPURGE $_ . "\n";
-      $pcount++;
+  my $bwc = 0;
+  my $main_bib = 'b' . $obj->{bibIds}->[0];
+  foreach my $it_bid (@{ $obj->{bibIds} }) {
+    my $bid = "b$it_bid";
+    if (!$inc->{$bid}) {
+      $inc->{$bid} = 0;
+    }
+    my $psv = $inst_map->{$bid} || '';
+    if (!$psv) {
+      print "ERROR No map entry found for $bid (item: $obj->{id})\n";
+      $errcount++;
       next;
     }
-    my $bwc = 0;
-    my $main_bib = 'b' . $obj->{bibIds}->[0];
-    foreach my $it_bid (@{ $obj->{bibIds} }) {
-      my $bid = "b$it_bid";
-      if (!$inc->{$bid}) {
-        $inc->{$bid} = 0;
-      }
-      my $psv = $inst_map->{$bid} || '';
-      if (!$psv) {
-        print "ERROR No map entry found for $bid (item: $obj->{id})\n";
-        $errcount++;
-        next;
-      }
-      my @b = split(/\|/, $psv);
-      
-      my $out = make_hi($obj, $b[0], $bid, $b[1], $b[2], $bwc, $b[3]);
-      print HOUT $out->{holdings};
-      print IOUT $out->{items};
-      print BOUT $out->{bws};
-      
-      if ($bwc > 0) {
-        my $superline = $inst_map->{$main_bib} || '';
-        my $subline = $inst_map->{$bid} || '';
-        if ($superline && $subline) {
-          my @super = split(/\|/, $superline);
-          my @sub = split(/\|/, $subline);
-          my $robj = { superInstanceId=>$super[0], subInstanceId=>$sub[0], instanceRelationshipTypeId=>'758f13db-ffb4-440e-bb10-8a364aa6cb4a' };
-          print ROUT $json->encode($robj) . "\n";
-          $rcount++;
-        }
-      }
-      $bwc++;
-      $hcount += $out->{hcount};
-      $icount += $out->{icount};
-      $bcount += $out->{bcount};
-      $count++;
-      if ($count % 10000 == 0) {
-        print "$count items processed [ holdings: $hcount, items: $icount, bound-withs: $bcount, file: $rawfn]\n"
+    my @b = split(/\|/, $psv);
+    
+    my $out = make_hi($obj, $b[0], $bid, $b[1], $b[2], $bwc, $b[3]);
+    print HOUT $out->{holdings};
+    print IOUT $out->{items};
+    print BOUT $out->{bws};
+    
+    if ($bwc > 0) {
+      my $superline = $inst_map->{$main_bib} || '';
+      my $subline = $inst_map->{$bid} || '';
+      if ($superline && $subline) {
+        my @super = split(/\|/, $superline);
+        my @sub = split(/\|/, $subline);
+        my $robj = { superInstanceId=>$super[0], subInstanceId=>$sub[0], instanceRelationshipTypeId=>'758f13db-ffb4-440e-bb10-8a364aa6cb4a' };
+        print ROUT $json->encode($robj) . "\n";
+        $rcount++;
       }
     }
-  } 
-  close IN;
-}
+    $bwc++;
+    $hcount += $out->{hcount};
+    $icount += $out->{icount};
+    $bcount += $out->{bcount};
+    $count++;
+    if ($count % 10000 == 0) {
+      print "$count items processed [ holdings: $hcount, items: $icount, bound-withs: $bcount, file: $rawfn]\n"
+    }
+  }
+} 
+close IN;
+
 my $end = time() - $start;
 print "---------------------------\n";
 print "$count items processed in $end secs\n";
@@ -320,8 +332,13 @@ sub make_hi {
   my $repcn = { a=>0, b=>0 };
   my $url = '';
   my $urlnote = '';
+  my $iid = 'i' . $item->{id};
 
-  my $loc = $item->{fixedFields}->{79}->{value} || '';
+  my $locs = $ars_map->{$iid};
+  my $loc = ($locs) ? $locs->[1] : $item->{fixedFields}->{79}->{value};
+  my $tloc = ($locs) ? $locs->[0] : '';
+  print $loc . "\n";
+  print $tloc . "\n";
   my $cdate = $item->{fixedFields}->{83}->{value} || '';
   my $udate = $item->{fixedFields}->{84}->{value} || '';
   my $metadata = make_meta($id_admin, $cdate, $udate);
@@ -380,7 +397,6 @@ sub make_hi {
     $inc->{$bhrid}++;
     my $incstr = sprintf("%03d", $inc->{$bhrid});
     my $hrid = "$bhrid-$incstr";
-    my $iid = 'i' . $item->{id};
     my $bc = $vf->{b}[0] || '[No barcode]';
     $hrec->{id} = $hid;
     $hrec->{_version} = $ver;

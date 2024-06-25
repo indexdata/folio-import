@@ -1,5 +1,5 @@
-import { parseMarc } from '../new-js-marc.mjs';
-import { getSubs } from '../new-js-marc.mjs';
+import { parseMarc } from '../js-marc.mjs';
+import { getSubs } from '../js-marc.mjs';
 import fs from 'fs';
 
 let refDir = process.argv[2];
@@ -69,7 +69,7 @@ const funcs = {
   }
 }
 
-const applyRules = function (ent, field, erps) {
+const applyRules = function (ent, field) {
   let data;
   if (ent.subfield && ent.subfield[0]) {
     let subcodes = ent.subfield.join('');
@@ -101,26 +101,15 @@ const makeInst = function (map, field) {
   let data;
   let fsubs = field.subfields;
   let subs = {};
+  let ents = map.entities;
   if (fsubs) {
     fsubs.forEach(s => {
       subs[Object.keys(s)[0]] = 1;
     });
   }
-  let ents = [];
-  let erps = false;
-  map.forEach(m => {
-    if (m.entityPerRepeatedSubfield) erps = true;
-    if (m.entity) {
-      m.entity.forEach(e => {
-        ents.push(e)
-      });
-    } else {
-      ents.push(m);
-    }
-  });
+  let erps = map.erps;
   ents.forEach(e => {
     let ar = false;
-    console.log(field);
     if (e.subfield && e.subfield[0]) {
       for (let x = 0; x < e.subfield.length; x++) {
         let s = e.subfield[x];
@@ -133,18 +122,37 @@ const makeInst = function (map, field) {
       ar = true;
     }
     if (ar) {
-      data = applyRules(e, field);
+      data = applyRules(e, field, erps);
       ff[data.prop] = data;
     }
   });
-  console.log(ff);
   return ff;
 }
 
 try {
   if (!rawFile) { throw "Usage: node marc2inst.js <ref_dir> <mapping_rules> <raw_marc_file>" }
   let rulesStr = fs.readFileSync(rulesFile, { encoding: 'utf8' });
-  const mappingRules = JSON.parse(rulesStr);
+  const allMappingRules = JSON.parse(rulesStr);
+  const mappingRules = {};
+  for (let tag in allMappingRules) {
+    let map = allMappingRules[tag];
+    const ents = [];
+    let erps = false;
+    map.forEach(m => {
+      if (m.entityPerRepeatedSubfield) erps = true;
+      if (m.entity) {
+        m.entity.forEach(e => {
+          ents.push(e)
+        });
+      } else {
+        ents.push(m);
+      }
+    });
+    mappingRules[tag] = {};
+    mappingRules[tag].erps = erps;
+    mappingRules[tag].entities = ents;
+  }
+  // console.log(mr);
   rulesStr = '';
 
   // get instance schema
@@ -211,7 +219,6 @@ try {
               let ff = makeInst(mr, f);
               let obj = {};
               let root = '';
-              // console.log(JSON.stringify(mr, null, 2));
               for (let prop in ff) {
                 let [rt, pr] = prop.split('.');
                 if (propMap[prop] === 'string' || propMap[prop] === 'boolean') {
@@ -233,7 +240,7 @@ try {
           }
         }
       }
-      // console.log(inst);
+      console.log(inst);
 
       if (count % 10000 === 0) {
         let now = new Date().valueOf();

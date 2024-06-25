@@ -1,4 +1,4 @@
-import { makeMarc } from '../new-js-marc.mjs';
+import { makeMarc } from '../js-marc.mjs';
 import fs from 'fs';
 import path from 'path';
 import readline from 'readline';
