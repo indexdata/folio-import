@@ -74,9 +74,9 @@ let modName = process.argv[3];
       '/authority-storage/authorities': true,
       '/change-manager/parsedRecords': true,
       '/check-in-storage/check-ins': true,
-      '/coursereserves/courselistings': true,
-      '/coursereserves/courses': true,
-      '/coursereserves/reserves': true,
+      // '/coursereserves/courselistings': true,
+      // '/coursereserves/courses': true,
+      // '/coursereserves/reserves': true,
       '/data-export/transformation-fields': true,
       '/data-export/job-executions': true,
       '/data-export/logs': true,
@@ -234,7 +234,7 @@ let modName = process.argv[3];
       } else if (url.match(/\/licenses\//)) {
         url += '?perPage=5000';
       } else if (!url.match(/\?/)) {
-        url += '?limit=2000';
+        url += '?limit=2500';
       } 
       if (url.match(/data-import-profiles/ && !url.match(/jobProfiles/))) {
         url += '&withRelations=true';
@@ -268,21 +268,28 @@ let modName = process.argv[3];
         } else {
           res = await superagent
             .get(url)
-            .timeout({response: 5000})
+            .timeout({response: 9000})
             .set('accept', 'application/json')
             .set('x-okapi-token', authToken)
         }
-        let jsonStr = JSON.stringify(res.body, null, 2);
-        let fullSaveDir = refDir + '/' + saveDir;
-        if (!fs.existsSync(fullSaveDir)) {
-          console.log(`(Creating directory: ${saveDir})`);
-          fs.mkdirSync(fullSaveDir);
+        let save = true;
+        if (res.body.totalRecords !== undefined && res.body.totalRecords === 0) { 
+          save = false;
+          console.log('  No records found')
         }
-        let p = priority.indexOf(fileName);
-        if (p > -1) {
-          fileName = `${p}-${fileName}`;
+        if (save) {
+          let jsonStr = JSON.stringify(res.body, null, 2);
+          let fullSaveDir = refDir + '/' + saveDir;
+          if (!fs.existsSync(fullSaveDir)) {
+            console.log(`(Creating directory: ${saveDir})`);
+            fs.mkdirSync(fullSaveDir);
+          }
+          let p = priority.indexOf(fileName);
+          if (p > -1) {
+            fileName = `${p}-${fileName}`;
+          }
+          fs.writeFileSync(`${fullSaveDir}/${fileName}.json`, jsonStr);
         }
-        fs.writeFileSync(`${fullSaveDir}/${fileName}.json`, jsonStr);
         if (paths[x].path == 'service-pointsXXX') {
           res.body.servicepoints.forEach(sp => {
             paths.push({ path: `calendar/dates/${sp.id}/surrounding-openings`, mod: paths[x].mod });
