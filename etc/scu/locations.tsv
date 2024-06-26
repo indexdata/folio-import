@@ -21,6 +21,7 @@ arsgt	ul	ul/ars/gtu	UL ARS Graduate Theological Union	University Library ARS Gra
 arslw	ll	ll/ars/law	LL ARS	Law Library ARS	ulars
 arsmc	ul	ul/ars/micro	UL ARS Microforms	University Library ARS Microforms	ulars
 arsms	ul	ul/ars/mns	UL ARS Main Stacks	University Library ARS Main Stacks	ulars
+arsmv	ul	ul/ars/video	UL ARS Video Collection	University Library ARS Video Collection	ulars
 arspr	ul	ul/ars/per	UL ARS Bound Periodicals	University Library ARS Bound Periodicals	ulars
 arsrb	ul	ul/ars/ascrareb	UL ARS A&SC Rare Books	University Library Archives & Special Collections - Rare Books, 3rd Floor	ulars
 arsrf	ul	ul/ars/ref	UL ARS Reference Collection	University Library ARS Reference Collection	ulars
@@ -42,13 +43,13 @@ haudi	ll	ll/audio	LL Audio Collection	Law Library Audio Collection	llcircdesk
 hcal	ll	ll/main/calif	LL California Collection	Law Library California Collection	llcircdesk
 hchar	ll	ll/main/stacks	LL Main Stacks	Law Library Main Stacks, 2nd Floor	llcircdesk
 hcirc	ll	ll/circ	LL Circulation Desk	Law Library Circulation Desk	llcircdesk
-hcirf	ll	ll/circ/offic	LL Circulation Department Office	Law Library Circulation Department Office	llcircdesk
+hcirf	ll	ll/circ/office	LL Circulation Department Office	Law Library Circulation Department Office	llcircdesk
 hcomp	ll	ll/main/comp	LL Compact Shelving	Law Library Compact Shelving	llcircdesk
 heafe	ll	ll/coll	LL Collection	Law Library Collection	llcircdesk
 hfol	ll	ll/main/folio	LL Folio	Law Library Folio Section, 2nd Floor	llcircdesk
 hlcs	ll	ll/main/lcs	LL Law Career Services Collection	Law Library Law Career Services Collection	llcircdesk
 hloff	ll	ll/main/techs	LL Technical Services Department Office	Law Library Technical Services Department Office	llcircdesk
-hloy	ll	ll/main/remot	LL Non-ARS Remote	Law Library Non-ARS Remote	llcircdesk
+hloy	ll	ll/main/remote	LL Non-ARS Remote	Law Library Non-ARS Remote	llcircdesk
 hmicr	ll	ll/micro	LL Microform	Law Library Microform Collection	llcircdesk
 hper	ll	ll/main/per	LL Periodicals Collection	Law Library Periodicals Collection	llcircdesk
 href	ll	ll/main/ref	LL Reference Collection	Law Library Reference Collection, 2nd Floor	llcircdesk

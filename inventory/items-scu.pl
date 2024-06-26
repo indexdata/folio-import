@@ -337,14 +337,12 @@ sub make_hi {
   my $locs = $ars_map->{$iid};
   my $loc = ($locs) ? $locs->[1] : $item->{fixedFields}->{79}->{value};
   my $tloc = ($locs) ? $locs->[0] : '';
-  print $loc . "\n";
-  print $tloc . "\n";
   my $cdate = $item->{fixedFields}->{83}->{value} || '';
   my $udate = $item->{fixedFields}->{84}->{value} || '';
   my $metadata = make_meta($id_admin, $cdate, $udate);
   next if !$loc;
   $loc =~ s/(\s*$)//;
-  my $locid = $sierra2folio->{locations}->{$loc} || '761db5ed-d29d-4e2e-83d1-c6dfd1426cfd'; # defaults to Unmapped location.
+  my $locid = $sierra2folio->{locations}->{$loc} || print "ERROR FOLIO location not found for \"$loc\"!\n";
   my $vf = {};
   my $local_callno = 0;
   foreach my $f (@{ $item->{varFields} }) {
@@ -421,12 +419,12 @@ sub make_hi {
       };
       push @{ $hrec->{notes} }, $hnote;
     }
-    my $lnote = {
-      note => "Legacy location code: $loc",
-      holdingsNoteTypeId => $refdata->{holdingsNoteTypes}->{provenance},
-      staffOnly => JSON::true 
-    };
-    push @{ $hrec->{notes} }, $lnote;
+    # my $lnote = {
+    #  note => "Legacy location code: $loc",
+    #  holdingsNoteTypeId => $refdata->{holdingsNoteTypes}->{provenance},
+    #  staffOnly => JSON::true 
+    # };
+    # push @{ $hrec->{notes} }, $lnote;
     $hrec->{metadata} = $metadata;
     my $hout = $json->encode($hrec);
     $holdings .= $hout . "\n";
@@ -437,7 +435,6 @@ sub make_hi {
 
   # make item record;
   my $irec = {};
-  my $iid = $item->{id};
   my $itype = $item->{fixedFields}->{61}->{value};
   my $status = $item->{fixedFields}->{88}->{value} || '';
   my $icode1 = $item->{fixedFields}->{59}->{value} || '';
@@ -454,17 +451,23 @@ sub make_hi {
   push @rnotes, @{ $vf->{r} } if $vf->{r};
   $status =~ s/\s+$//;
   if ($iid) {
-    $iid =~ s/^\.//;
     $irec->{_version} = $ver;
     $irec->{holdingsRecordId} = $hid;
     $irec->{barcode} = $bc if $bc && !$bseen->{$bc};
     $bseen->{$bc} = 1;
-    $irec->{hrid} = "i$iid";
+    $irec->{hrid} = $iid;
+    $iid =~ s/^i//;
     $irec->{id} = uuid($iid);
     $irec->{volume} = $vf->{v}[0] if $vf->{v};
     $irec->{copyNumber} = $item->{fixedFields}->{58}->{value} || '';
     if ($irec->{copyNumber}) {
       $irec->{copyNumber} = 'c.' . $irec->{copyNumber};
+    }
+    if ($tloc && $sierra2folio->{locations}->{$tloc}) {
+      $irec->{temporaryLocationId} = $sierra2folio->{locations}->{$tloc};
+      $loc = $tloc;
+    } elsif ($tloc) {
+      print "WARN no temporary location found for \"$tloc\".\n"
     }
     my $mtkey = "$itype:$loc";
     $irec->{permanentLoanTypeId} = $sierra2folio->{loantypes}->{$mtkey} || $refdata->{loantypes}->{'can circulate'};
