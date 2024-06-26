@@ -166,7 +166,14 @@ let modName = process.argv[3];
       'circulation-rules-storage',
       'organizations-storage__organization-types',
       'organizations-storage__categories',
-      'organizations-storage__organizations'
+      'coursereserves__terms',
+      'coursereserves__coursetypes',
+      'coursereserves__copyrightstatuses',
+      'coursereserves__processingstatuses',
+      'coursereserves__departments',
+      'coursereserves__courselistings',
+      'coursereserves__courses',
+      'coursereserves__reserves'
     ]
 
     let userMod = '';
