@@ -3,7 +3,6 @@ const superagent = require('superagent');
 const { getAuthToken } = require('./lib/login');
 
 let ep = process.argv[2];
-let delay = 3000;
 
 const wait = (ms) => {
   return new Promise((resolve) => {
@@ -22,9 +21,6 @@ const wait = (ms) => {
     }
     let url = `${config.okapi}/${ep}`;
     console.warn('DELETE', url);
-    console.warn(`Waiting ${delay} ms...`);
-    await wait(delay);
-    console.log('Resuming...');
     try {
       const res = await superagent
         .delete(url)
