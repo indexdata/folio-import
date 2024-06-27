@@ -1,6 +1,8 @@
 import { parseMarc } from '../js-marc.mjs';
 import { getSubs } from '../js-marc.mjs';
-import fs from 'fs';
+import fs, { write } from 'fs';
+import path from 'path';
+import { v5 as uuid } from 'uuid';
 
 let refDir = process.argv[2];
 let rulesFile = process.argv[3];
@@ -8,6 +10,7 @@ let rawFile = process.argv[4];
 let limitTag = process.argv[5] || '';
 const schemaDir = './schemas';
 let ldr = '';
+const ns = '32a34762-7098-4e19-b1f5-710ce76bd41f';
 const refData = {};
 
 const modeMap = {
@@ -15,6 +18,25 @@ const modeMap = {
  m: 'multipart monograph',
  s: 'serial',
  i: 'integrating resource'
+};
+
+const elRelMap = {
+  '0':'Resource',
+  '1':'Version of resource',
+  '2':'Related resource',
+  '3':'No information provided',
+  '8':'No display constant generated'
+}
+
+const files = {
+  instances: 1,
+  srs: 1,
+  presuc: 1
+};
+
+const writeOut = (fileName, data) => {
+  let dataStr = JSON.stringify(data) + '\n';
+  fs.writeFileSync(fileName, dataStr, { flag: 'a' })
 };
 
 const funcs = {
@@ -66,6 +88,16 @@ const funcs = {
   },
   set_identifier_type_id_by_name: function (data, param) {
     return refData.identifierTypes[param.name];
+  },
+  set_alternative_title_type_id: function (data, param) {
+    return refData.alternativeTitleTypes[param.name];
+  },
+  set_note_type_id: function (data, param) {
+    return refData.instanceNoteTypes[param.name];
+  },
+  set_electronic_access_relations_id: function (data, param, ind1, ind2) {
+    let relStr = elRelMap[ind2] || 'Resource';
+    return refData.electronicAccessRelationships[relStr];
   }
 }
 
@@ -131,6 +163,14 @@ const makeInst = function (map, field) {
 
 try {
   if (!rawFile) { throw "Usage: node marc2inst.js <ref_dir> <mapping_rules> <raw_marc_file>" }
+  let wdir = path.dirname(rawFile);
+  let fn = path.basename(rawFile, '.mrc');
+  let outBase = wdir + '/' + fn;
+  for (let f in files) {
+    let p = outBase + '-' + f + '.jsonl';
+    files[f] = p;
+    if (fs.existsSync(p)) fs.unlinkSync(p);
+  };
   let rulesStr = fs.readFileSync(rulesFile, { encoding: 'utf8' });
   const allMappingRules = JSON.parse(rulesStr);
   const mappingRules = {};
@@ -216,31 +256,46 @@ try {
           let mr = mappingRules[t];
           if (mr) {
             fields.forEach(f => {
-              let ff = makeInst(mr, f);
-              let obj = {};
-              let root = '';
-              for (let prop in ff) {
-                let [rt, pr] = prop.split('.');
-                if (propMap[prop] === 'string' || propMap[prop] === 'boolean') {
-                  inst[prop] = ff[prop].data;
-                } else if (propMap[prop] === 'array.string') {
-                  if (!inst[prop]) inst[prop] = [];
-                  inst[prop].push(ff[prop].data);
-                } else if (propMap[rt] === 'array.object') {
-                  if (!inst[rt]) inst[rt] = [];
-                  obj[pr] = ff[prop].data;
-                  root = rt;
-                } 
+              let actFields = [];
+              if (mr.erps) {
+                f.subfields.forEach(a => {
+                  actFields.push({ ind1: f.ind1, ind2: f.ind2, subfields: [ a ]});
+                });
+              } else {
+                actFields.push(f);
               }
-              if (root) {
-                if (!inst[root]) inst[root] = [];
-                inst[root].push(obj); 
-              }
+              actFields.forEach(af => {
+                let ff = makeInst(mr, af);
+                let obj = {};
+                let root = '';
+                for (let prop in ff) {
+                  let [rt, pr] = prop.split('.');
+                  if (propMap[prop] === 'string' || propMap[prop] === 'boolean') {
+                    inst[prop] = ff[prop].data;
+                  } else if (propMap[prop] === 'array.string') {
+                    if (!inst[prop]) inst[prop] = [];
+                    inst[prop].push(ff[prop].data);
+                  } else if (propMap[rt] === 'array.object') {
+                    if (!inst[rt]) inst[rt] = [];
+                    obj[pr] = ff[prop].data;
+                    root = rt;
+                  } 
+                }
+                if (root) {
+                  if (!inst[root]) inst[root] = [];
+                  inst[root].push(obj); 
+                }
+              });
             });
           }
         }
       }
-      console.log(inst);
+      inst.source = 'MARC';
+      if (inst.hrid) {
+        inst.id = uuid(inst.hrid, ns);
+        // console.log(inst);
+        writeOut(files.instances, inst);
+      }
 
       if (count % 10000 === 0) {
         let now = new Date().valueOf();
