@@ -138,7 +138,7 @@ sub makeMapFromTsv {
       chomp;
       s/\s+$//;
       my @col = split(/\t/);
-      my $code = ($col[0] =~ /\w/) ? $col[0] : '';
+      my $code = ($col[0] =~ /\w|\$/) ? $col[0] : '';
       $code =~ s/^ +| +$//g;
       my $name = $col[2] || '';
       if ($prop =~ /mtypes|loantypes/) {
@@ -186,7 +186,7 @@ my $refdata = getRefData($ref_dir);
 # print Dumper($refdata->{loantypes}); exit;
 my $sierra2folio = makeMapFromTsv($ref_dir, $refdata);
 $sierra2folio->{locations}->{multi} = $refdata->{locations}->{multi};
-# print Dumper($sierra2folio->{loantypes}); exit;
+# print Dumper($sierra2folio->{statuses}); exit;
 
 my $relations = {
   '0' => 'Resource',
