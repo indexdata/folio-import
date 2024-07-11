@@ -623,7 +623,7 @@ foreach (@ARGV) {
       my $exists = '';
       if ($marc->field('001')) {
         my $in_ctrl = $marc->field('001')->data();
-        $in_ctrl =~ s/^oc.//;
+        $in_ctrl =~ s/^[A-z]+//;
         $in_ctrl =~ s/ +$//;
         $exists = $idmap->{$in_ctrl};
         $hrid = $prefix . $in_ctrl;
