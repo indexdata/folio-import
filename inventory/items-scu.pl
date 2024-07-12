@@ -107,7 +107,7 @@ sub getRefData {
           $refobj->{$refroot} = {};
           foreach (@{ $json->{$_} }) {
             my $name;
-            if ($refroot =~ /^(instanceTypes|contributorTypes|instanceFormats|locations)$/) {
+            if ($refroot =~ /^(instanceTypes|contributorTypes|instanceFormats|locations|statisticalCodes)$/) {
               $name = $_->{code};
             } else {
               $name = $_->{name};
@@ -138,7 +138,8 @@ sub makeMapFromTsv {
       chomp;
       s/\s+$//;
       my @col = split(/\t/);
-      my $code = ($col[0] =~ /\w|\$/) ? $col[0] : '';
+      my $l = @col;
+      my $code = ($l && $col[0] =~ /\w|\$/) ? $col[0] : '';
       $code =~ s/^ +| +$//g;
       my $name = $col[2] || '';
       if ($prop =~ /mtypes|loantypes/) {
@@ -183,10 +184,10 @@ while (<ARS>) {
 
 $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
-# print Dumper($refdata->{loantypes}); exit;
+# print Dumper($refdata->{statisticalCodes}); exit;
 my $sierra2folio = makeMapFromTsv($ref_dir, $refdata);
-$sierra2folio->{locations}->{multi} = $refdata->{locations}->{multi};
-# print Dumper($sierra2folio->{statuses}); exit;
+# $sierra2folio->{locations}->{multi} = $refdata->{locations}->{multi};
+# print Dumper($sierra2folio->{statisticalCodes}); exit;
 
 my $relations = {
   '0' => 'Resource',
@@ -339,6 +340,8 @@ sub make_hi {
   my $tloc = ($locs) ? $locs->[0] : '';
   my $cdate = $item->{fixedFields}->{83}->{value} || '';
   my $udate = $item->{fixedFields}->{84}->{value} || '';
+  my $icode1 = $item->{fixedFields}->{59}->{value} || '0';
+  my $scode = $sierra2folio->{statisticalCodes}->{$icode1} || '';
   my $metadata = make_meta($id_admin, $cdate, $udate);
   next if !$loc;
   $loc =~ s/(\s*$)//;
@@ -403,6 +406,7 @@ sub make_hi {
     $hrec->{instanceId} = $bid;
     $hrec->{permanentLocationId} = $locid;
     $hrec->{sourceId} = $refdata->{holdingsRecordsSources}->{folio} || '';
+    $hrec->{statisticalCodeIds} = [ $scode ] if $scode;
     my $htype = $htype_map->{$blevel} || '';
     $htype = lc($htype);
     $hrec->{holdingsTypeId} = $refdata->{holdingsTypes}->{$htype} || 'dc35d0ae-e877-488b-8e97-6e41444e6d0a'; #monograph
@@ -437,7 +441,6 @@ sub make_hi {
   my $irec = {};
   my $itype = $item->{fixedFields}->{61}->{value};
   my $status = $item->{fixedFields}->{88}->{value} || '';
-  my $icode1 = $item->{fixedFields}->{59}->{value} || '';
   my $bc = '';
   foreach (@{$vf->{b}}) {
     $bc = $_;
@@ -458,6 +461,7 @@ sub make_hi {
     $irec->{hrid} = $iid;
     $iid =~ s/^i//;
     $irec->{id} = uuid($iid);
+    $irec->{statisticalCodeIds} = [ $scode ] if $scode;
     $irec->{volume} = $vf->{v}[0] if $vf->{v};
     $irec->{copyNumber} = $item->{fixedFields}->{58}->{value} || '';
     if ($irec->{copyNumber}) {

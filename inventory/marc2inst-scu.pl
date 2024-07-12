@@ -829,7 +829,8 @@ while (<RAW>) {
   }
   WRITE_DATA: if (eof RAW || $success % 10000 == 0) {
     my $tt = time() - $start;
-    print "Processed #$count (" . $rec->{hrid} . ") [ instances: $success, holdings: $hcount, items: $icount, time: $tt secs ]\n";
+    my $log_hrid = $rec->{hrid} || '';
+    print "Processed #$count (" . $log_hrid . ") [ instances: $success, holdings: $hcount, items: $icount, time: $tt secs ]\n";
     write_objects($OUT, $inst_recs);
     $inst_recs = '';
 
