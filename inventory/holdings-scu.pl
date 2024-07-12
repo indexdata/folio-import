@@ -68,6 +68,12 @@ my $cntypes = {
   '099' => '6caca63e-5651-4db6-9247-3205156e9699',
 };
 
+my $statmap = {
+  'a' => 'aa3a346a-e16b-47e2-b875-c071b1439ed9',
+  'i' => '76003988-97a0-443c-afd2-0691983a6a19',
+  'j' => '17d469b3-1f27-4563-83a2-9c3026ceecec'
+};
+
 my $json = JSON->new;
 $json->canonical();
 
@@ -284,6 +290,8 @@ foreach (@ARGV) {
     my $scode2 = $ff->{37}->{value} || '-';
     my $scode1 = $ff->{36}->{value} || '-';
     my $scode3 = $ff->{118}->{value} || '';
+    my $scode4 = $ff->{119}->{value} || '-';
+    my $statcode = $statmap->{$scode4} || '';
     $loc_code =~ s/\s*$//;
     my $hid = "c" . $obj->{id};
     next if $seen->{$hid};
@@ -295,6 +303,7 @@ foreach (@ARGV) {
     $h->{formerIds} = [ $obj->{id} ];
     $h->{hrid} = $hid;
     $h->{instanceId} = $b[0];
+    $h->{statcodeIds} = [ $statcode ] if $statcode;
     my $loc_id = $tofolio->{locations}->{$loc_code};
     if (!$loc_id) {
       print "ERROR: LocationId not found for $loc_code\n";
