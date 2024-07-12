@@ -6870,6 +6870,78 @@
       }
     }
   ],
+  "730": [
+    {
+      "entity": [
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_alternative_title_type_id",
+                  "parameter": {
+                    "name": "Uniform title"
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "alternativeTitles.alternativeTitleTypeId",
+          "subfield": [
+            "a",
+            "n",
+            "p",
+            "d",
+            "f",
+            "g",
+            "h",
+            "i",
+            "k",
+            "l",
+            "m",
+            "n",
+            "o",
+            "r",
+            "s",
+            "t",
+            "x"
+          ],
+          "description": "Alternative Title id",
+          "applyRulesOnConcatenatedData": true
+        },
+        {
+          "target": "alternativeTitles.alternativeTitle",
+          "subfield": [
+            "a",
+            "n",
+            "p",
+            "d",
+            "f",
+            "g",
+            "h",
+            "i",
+            "k",
+            "l",
+            "m",
+            "n",
+            "o",
+            "r",
+            "s",
+            "t",
+            "x"
+          ],
+          "description": "Alternative Title"
+        },
+        {
+          "target": "alternativeTitles.authorityId",
+          "subfield": [
+            "9"
+          ],
+          "description": "Authority ID that controlling the alternative title"
+        }
+      ]
+    }
+  ],
   "740": [
     {
       "entity": [
