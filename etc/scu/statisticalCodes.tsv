@@ -1,0 +1,36 @@
+		Statistical Codes for Item Records		
+ICODE1	Collection	Statistical codes	Statistical code names	Statistical code types
+0	not coded (pre-2014)	pre2014	Pre-2014	UL-ACQ
+1	firm order	firmo	Firm orders	UL-ACQ
+2	autoshipped materials [sent by GOBI based on our autoship profile]	auto	Autoshipped materials	UL-ACQ
+3	standing orders	stando	Standing orders	UL-ACQ
+4	government publications (federal) received from the GPO program	gdfed	Federal government publications (FDLP)	UL-ACQ
+5	government publications (state & local) received similarly	gdsl	State & local government publications	UL-ACQ
+6	gifts in-kind [circulating copies of theses & dissertations go here]	giftcirc	Gifts in-kind	UL-ACQ
+7	bound volumes of periodicals	perb	Bound volumes of periodicals	UL-SER
+8	unbound issues of periodicals	perunb	Unbound issues of periodicals	UL-SER
+				
+Archives & Special Collections				
+				
+9	contemporary gift for SpC	giftcontemp	Contemporary gift for Special Collection	UL-ASC
+10	contemporary firm order for SpC [pub. year >= 1800]	firmocontemp	Contemporary firm order for Special Collection [pub. year >= 1800]	UL-ASC
+11	rare gift for SpC	giftrare	Rare gift for Special Collection	UL-ASC
+12	rare firm order for SpC	firmorare	Rare firm order for Special Collection	UL-ASC
+13	rare - unknown source	rareunknown	Rare books of unknown source, e.g., Mission Collection	UL-ASC
+14	box of University records (SCU)	univrecscu	Box of University records (SCU)	UL-ASC
+15	box of University records (JST)	univrecjst	Box of University records (JST)	UL-ASC
+16	collection level record for archival material (SCU)	archscu	University archival material on collection level record	UL-ASC
+17	collection level record for archival material (JST)	archjst	JST archival material on collection level record	UL-ASC
+18	collection level record for archival material (other)	archother	Other archival material on collection level record	UL-ASC
+19	University Publications	univpub	University publications	UL-ASC
+20	theses & dissertations	theses	Theses & dissertations	UL-ASC
+21	Jesuit California Province materials	province	Jesuit California Province materials	UL-ASC
+				
+Ongoing Projects				
+123	Retained per faculty request during weeding program assessment [Including note: Retained per yyyy weeding program per faculty] 	keepfac	Retained per faculty request during weeding assessment	UL-COLL
+321	Potential candidates to transfer to A&SC per assessment of the Head of A&SC	keepasc	Potential candidates for A&SC per assessment of the Head of A&SC	UL-COLL
+444	Retained for SCELC Shared Print Program - Initial List 2021-12-01 to 2032-07-31	keepscelc	Assigned retention for SCELC Shared Print Program through 2032-07-31	UL-COLL
+555	Retained for SCELC Shared Print Program -  Voluntary Retention 2021-12-01 to 2032-07-31	keepscelcscu	Voluntary retention for SCELC Shared Print Program through 2032-07-31	UL-COLL
+a	Active	sera	Active serial	SCU-SER
+i	Inactive	seri	Inactive serial	SCU-SER
+j	JSTOR Annual Review	jstorw	JSTOR bound volume weeding annual review	UL-SER
