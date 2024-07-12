@@ -783,7 +783,7 @@ while (<RAW>) {
     $inst_recs .= $json->encode($rec) . "\n";
     my $electronic = ($rec->{electronicAccess}) ? $json->encode($rec->{electronicAccess}) : '';
     my $sraw = $marc->as_usmarc();
-    $srs_recs .= $json->encode(make_srs($srsmarc, $sraw, $rec->{id}, $rec->{hrid}, $snapshot_id, $srs_file)) . "\n";
+    $srs_recs .= $json->encode(make_srs($srsmarc, $sraw, $rec->{id}, $rec->{hrid}, $snapshot_id, $srs_file, $rec->{discoverySuppress})) . "\n";
     my $ctype = $cntypes->{$cntag} || '';
     $idmap_lines .= "$rec->{hrid}|$rec->{id}|$cn|$ctype|$blevel|$electronic\n";
     $hrids->{$hrid} = 1;
@@ -901,6 +901,7 @@ sub make_srs {
     my $hrid = shift;
     my $snap_id = shift;
     my $srs_file = shift;
+    my $dsup = shift;
     my $srs = {};
 
     my $mij = MARC::Record::MiJ->to_mij($marc);
@@ -919,5 +920,6 @@ sub make_srs {
     $srs->{rawRecord} = { id=>$srs->{id}, content=>$raw };
     $srs->{parsedRecord} = { id=>$srs->{id}, content=>$parsed };
     $srs->{externalIdsHolder} = { instanceId=>$iid, instanceHrid=>$hrid };
+    $srs->{additionalInfo}->{suppressDiscovery} = $dsup;
     return $srs;
 }
