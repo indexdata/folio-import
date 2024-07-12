@@ -76,6 +76,10 @@ setup:
 	mkdir -p $(uref)
 	mkdir -p $(log)
 	mkdir -p $(cdir)
+	mkdir -p $(invdir)
+	mkdir -p $(odir)
+	mkdir -p $(udir)
+	mkdir -p $(data)/save
 	cp $(tsvdir)/*.tsv $(iref)
 	cp $(tsvdir)/locations.tsv $(aref)
 	cp $(tsvdir)/ptypes.tsv $(uref)
@@ -94,6 +98,8 @@ setup:
 clean:
 	rm -rf $(iref)
 	rm -rf $(aref)
-	rm marc2inst-$(lib).pl
-	rm reference_*.sh
-	rm $(lscript)
+	rm -f marc2inst-$(lib).pl
+	rm -f holdings-$(lib).pl
+	rm -f items-$(lib).pl
+	rm -f reference_*.sh
+	rm -f $(lscript)
