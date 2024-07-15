@@ -406,7 +406,6 @@ sub make_hi {
     $hrec->{instanceId} = $bid;
     $hrec->{permanentLocationId} = $locid;
     $hrec->{sourceId} = $refdata->{holdingsRecordsSources}->{folio} || '';
-    $hrec->{statisticalCodeIds} = [ $scode ] if $scode;
     my $htype = $htype_map->{$blevel} || '';
     $htype = lc($htype);
     $hrec->{holdingsTypeId} = $refdata->{holdingsTypes}->{$htype} || 'dc35d0ae-e877-488b-8e97-6e41444e6d0a'; #monograph

@@ -303,7 +303,7 @@ foreach (@ARGV) {
     $h->{formerIds} = [ $obj->{id} ];
     $h->{hrid} = $hid;
     $h->{instanceId} = $b[0];
-    $h->{statcodeIds} = [ $statcode ] if $statcode;
+    $h->{statisticalCodeIds} = [ $statcode ] if $statcode;
     my $loc_id = $tofolio->{locations}->{$loc_code};
     if (!$loc_id) {
       print "ERROR: LocationId not found for $loc_code\n";

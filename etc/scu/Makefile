@@ -1,5 +1,5 @@
 lib=scu
-lscript=login-$(lib)-test.sh
+lscript=login-$(lib)-migrate.sh
 home=/home/charles
 data=$(home)/$(lib)
 invdir=$(data)/inv
