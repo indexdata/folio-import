@@ -170,6 +170,7 @@ try {
         status: orgStat, 
         acqUnitIds: [unitId],
         isVendor: isVendor,
+        exportToAccounting: true
       }
       if (phones[0]) org.phoneNumbers = phones;
       if (contacts[0]) org.contacts = contacts;
