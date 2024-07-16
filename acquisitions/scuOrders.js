@@ -52,7 +52,13 @@ const formatMap = {
   stane: 'Electronic Resource',
   crp: 'Physical Resource',
   stanp: 'Physical Resource',
-  ddav: 'Electronic Resource'
+  ddav: 'Electronic Resource',
+  hconl: 'Electronic Resource',
+  hntmp: 'Physical Resource',
+  hper: 'Physical Resource',
+  hnewp: 'Physical Resource',
+  hcop: 'Physical Resource',
+  hntca: 'Physical Resource'
 };
 
 const matMap = {
@@ -67,6 +73,7 @@ const exClassMap = {
   cre: 'Online',
   crp: 'Periodical',
   auth: 'Automation',
+  dda: 'eBook',
   ddav: 'Video',
   gmi: 'Online',
   gopen: 'Online',
