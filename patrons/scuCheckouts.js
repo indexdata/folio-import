@@ -8,7 +8,8 @@ const itemFile = process.argv[4];
 
 const refFiles = {
   servicepoints: 'service-points.json',
-  locmap: 'locations.tsv'
+  locmap: 'locations.tsv',
+  outmap: 'outlocs.tsv',
 };
 
 (async () => {
@@ -30,7 +31,7 @@ const refFiles = {
     let dateOffset = (dt) => {
       let dzo = new Date(dt).getTimezoneOffset();
       let pto = ((dzo + 120) / 60);  // change this value according to the local machine that runs the script.
-      out = `-0${pto}:00`;
+      let out = `-0${pto}:00`;
       return out;
     }
 
@@ -63,7 +64,6 @@ const refFiles = {
     // console.log(spMap); return;
 
     const locs = fs.readFileSync(refDir + '/' + refFiles.locmap, { encoding: 'utf8'} );
-
     const loc2sp = {};
     locs.split(/\r?\n/).forEach(l => {
       let cols = l.split(/\t/);
@@ -72,6 +72,16 @@ const refFiles = {
       loc2sp[k] = spMap[spk];
     });
     // console.log(loc2sp); return;
+
+    const outs = fs.readFileSync(refDir + '/' + refFiles.outmap, { encoding: 'utf8'} );
+    const out2sp = {};
+    outs.split(/\r?\n/).forEach(l => {
+      let cols = l.split(/\t/);
+      let k = cols[0];
+      spk = cols[1];
+      if (k.match(/^\d+$/)) out2sp[k] = spMap[spk];
+    });
+    // console.log(out2sp); return;
 
     const main = () => {
       const fileStream = fs.createReadStream(itemFile);
@@ -102,7 +112,7 @@ const refFiles = {
             let ubcode = user.barcode;
             let odate = (ff['63']) ? ff['63'].value : '';
             let due = (ff['65']) ? ff['65'].value : '';
-            // let loc = (ff['64']) ? ff['64'].value : '';
+            let outloc = (ff['64']) ? ff['64'].value : '';
             let loc = (ff['79']) ? ff['79'].value : '';
             let rnum = (ff['71']) ? ff['71'].value : '';
             let vf = i.varFields || [];
@@ -118,7 +128,7 @@ const refFiles = {
             loan.loanDate = odate;
             loan.dueDate = due;
             if (rnum) loan.renewalCount = parseInt(rnum, 10);
-            loan.servicePointId = loc2sp[loc] || spMap['Norlin East Desk'];
+            loan.servicePointId = out2sp[outloc] || loc2sp[loc] || spMap.ulhelpdesk;
             if (process.env.DEBUG) console.log(loan);
             if (user) {
               if (loan.userBarcode) {

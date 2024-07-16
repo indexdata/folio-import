@@ -1,0 +1,20 @@
+Sierra OUT LOC	FOLIO Service Point
+0	ulhelpdesk*
+100	ulhelpdesk
+122	llcircdesk
+126	ulhelpdesk
+130	llcircdesk
+131	llcircdesk
+135	ulhelpdesk
+136	ulhelpdesk
+137	selfcheck
+145	ulhelpdesk
+165	ulhelpdesk
+800	Online*
+824	Online*
+850	Online*
+890	Online*
+891	Online*
+896	Online*
+	
+* It would be better to map these values from the Shelving Location	
