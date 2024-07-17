@@ -71,11 +71,12 @@ try {
   let inRecs = parse(csv, {
     columns: true,
     skip_empty_lines: true,
+    bom: true
   });
 
   const conMap = {};
   inRecs.forEach(r => {
-    let k = r['Org Code'];
+    let k = r['Org Code'] || r['Code'];
     conMap[k] = r;
   });
   // console.log(conMap); return;
