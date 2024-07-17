@@ -1116,14 +1116,6 @@
     {
       "entity": [
         {
-          "target": "contributors.authorityId",
-          "subfield": [
-            "9"
-          ],
-          "description": "Authority ID that controlling the contributor",
-          "applyRulesOnConcatenatedData": true
-        },
-        {
           "rules": [
             {
               "conditions": [
@@ -1219,14 +1211,6 @@
     {
       "entity": [
         {
-          "target": "contributors.authorityId",
-          "subfield": [
-            "9"
-          ],
-          "description": "Authority ID that controlling the contributor",
-          "applyRulesOnConcatenatedData": true
-        },
-        {
           "rules": [
             {
               "conditions": [
@@ -1319,14 +1303,6 @@
   "111": [
     {
       "entity": [
-        {
-          "target": "contributors.authorityId",
-          "subfield": [
-            "9"
-          ],
-          "description": "Authority ID that controlling the contributor",
-          "applyRulesOnConcatenatedData": true
-        },
         {
           "rules": [
             {
@@ -1482,13 +1458,6 @@
           ],
           "description": "Alternative Title",
           "applyRulesOnConcatenatedData": true
-        },
-        {
-          "target": "alternativeTitles.authorityId",
-          "subfield": [
-            "9"
-          ],
-          "description": "Authority ID that controlling the alternative title"
         }
       ]
     }
@@ -1556,13 +1525,6 @@
           ],
           "description": "Alternative Title",
           "applyRulesOnConcatenatedData": true
-        },
-        {
-          "target": "alternativeTitles.authorityId",
-          "subfield": [
-            "9"
-          ],
-          "description": "Authority ID that controlling the alternative title"
         }
       ]
     }
@@ -1659,13 +1621,6 @@
           ],
           "description": "Alternative Title",
           "applyRulesOnConcatenatedData": true
-        },
-        {
-          "target": "alternativeTitles.authorityId",
-          "subfield": [
-            "9"
-          ],
-          "description": "Authority ID that controlling the alternative title"
         }
       ]
     }
@@ -1723,13 +1678,6 @@
           ],
           "description": "Former title",
           "applyRulesOnConcatenatedData": true
-        },
-        {
-          "target": "alternativeTitles.authorityId",
-          "subfield": [
-            "9"
-          ],
-          "description": "Authority ID that controlling the alternative title"
         }
       ]
     }
@@ -5789,13 +5737,6 @@
             }
           ],
           "applyRulesOnConcatenatedData": true
-        },
-        {
-          "target": "subjects.authorityId",
-          "subfield": [
-            "9"
-          ],
-          "description": "Authority ID that controlling the subject"
         }
       ]
     }
@@ -5874,13 +5815,6 @@
             }
           ],
           "applyRulesOnConcatenatedData": true
-        },
-        {
-          "target": "subjects.authorityId",
-          "subfield": [
-            "9"
-          ],
-          "description": "Authority ID that controlling the subject"
         }
       ]
     }
@@ -5959,13 +5893,6 @@
             }
           ],
           "applyRulesOnConcatenatedData": true
-        },
-        {
-          "target": "subjects.authorityId",
-          "subfield": [
-            "9"
-          ],
-          "description": "Authority ID that controlling the subject"
         }
       ]
     }
@@ -6039,13 +5966,6 @@
             }
           ],
           "applyRulesOnConcatenatedData": true
-        },
-        {
-          "target": "subjects.authorityId",
-          "subfield": [
-            "9"
-          ],
-          "description": "Authority ID that controlling the subject"
         }
       ]
     }
@@ -6095,13 +6015,6 @@
             }
           ],
           "applyRulesOnConcatenatedData": true
-        },
-        {
-          "target": "subjects.authorityId",
-          "subfield": [
-            "9"
-          ],
-          "description": "Authority ID that controlling the subject"
         }
       ]
     }
@@ -6141,13 +6054,6 @@
             }
           ],
           "applyRulesOnConcatenatedData": true
-        },
-        {
-          "target": "subjects.authorityId",
-          "subfield": [
-            "9"
-          ],
-          "description": "Authority ID that controlling the subject"
         }
       ]
     }
@@ -6197,13 +6103,6 @@
             }
           ],
           "applyRulesOnConcatenatedData": true
-        },
-        {
-          "target": "subjects.authorityId",
-          "subfield": [
-            "9"
-          ],
-          "description": "Authority ID that controlling the subject"
         }
       ]
     }
@@ -6247,13 +6146,6 @@
             }
           ],
           "applyRulesOnConcatenatedData": true
-        },
-        {
-          "target": "subjects.authorityId",
-          "subfield": [
-            "9"
-          ],
-          "description": "Authority ID that controlling the subject"
         }
       ]
     }
@@ -6297,13 +6189,6 @@
             }
           ],
           "applyRulesOnConcatenatedData": true
-        },
-        {
-          "target": "subjects.authorityId",
-          "subfield": [
-            "9"
-          ],
-          "description": "Authority ID that controlling the subject"
         }
       ]
     }
@@ -6311,14 +6196,6 @@
   "700": [
     {
       "entity": [
-        {
-          "target": "contributors.authorityId",
-          "subfield": [
-            "9"
-          ],
-          "description": "Authority ID that controlling the contributor",
-          "applyRulesOnConcatenatedData": true
-        },
         {
           "rules": [
             {
@@ -6415,14 +6292,6 @@
     {
       "entity": [
         {
-          "target": "contributors.authorityId",
-          "subfield": [
-            "9"
-          ],
-          "description": "Authority ID that controlling the contributor",
-          "applyRulesOnConcatenatedData": true
-        },
-        {
           "rules": [
             {
               "conditions": [
@@ -6515,14 +6384,6 @@
   "711": [
     {
       "entity": [
-        {
-          "target": "contributors.authorityId",
-          "subfield": [
-            "9"
-          ],
-          "description": "Authority ID that controlling the contributor",
-          "applyRulesOnConcatenatedData": true
-        },
         {
           "rules": [
             {
@@ -6931,13 +6792,6 @@
             "x"
           ],
           "description": "Alternative Title"
-        },
-        {
-          "target": "alternativeTitles.authorityId",
-          "subfield": [
-            "9"
-          ],
-          "description": "Authority ID that controlling the alternative title"
         }
       ]
     }
@@ -6978,13 +6832,6 @@
           ],
           "description": "Alternative Title",
           "applyRulesOnConcatenatedData": true
-        },
-        {
-          "target": "alternativeTitles.authorityId",
-          "subfield": [
-            "9"
-          ],
-          "description": "Authority ID that controlling the alternative title"
         }
       ]
     }
@@ -7226,13 +7073,6 @@
           ],
           "description": "Series Statement",
           "applyRulesOnConcatenatedData": true
-        },
-        {
-          "target": "series.authorityId",
-          "subfield": [
-            "9"
-          ],
-          "description": "Authority ID that controlling the series"
         }
       ]
     }
@@ -7278,13 +7118,6 @@
           ],
           "description": "Series Statement",
           "applyRulesOnConcatenatedData": true
-        },
-        {
-          "target": "series.authorityId",
-          "subfield": [
-            "9"
-          ],
-          "description": "Authority ID that controlling the series"
         }
       ]
     }
@@ -7328,13 +7161,6 @@
           ],
           "description": "Series Statement",
           "applyRulesOnConcatenatedData": true
-        },
-        {
-          "target": "series.authorityId",
-          "subfield": [
-            "9"
-          ],
-          "description": "Authority ID that controlling the series"
         }
       ]
     }
@@ -7376,13 +7202,6 @@
           ],
           "description": "Series Statement",
           "applyRulesOnConcatenatedData": true
-        },
-        {
-          "target": "series.authorityId",
-          "subfield": [
-            "9"
-          ],
-          "description": "Authority ID that controlling the series"
         }
       ]
     }
