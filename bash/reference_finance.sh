@@ -21,5 +21,5 @@ EPS='expense-classes funds fund-types fiscal-years ledgers budget-expense-classe
 for EP in $EPS
 do
     echo "Fetching ${EP}"
-    curl --http1.1 -o "${REFDIR}/${EP}.json" -w "\n" "${OKAPI}/finance/${EP}?limit=1000" -H "x-okapi-token: ${TOKEN}"
+    curl --http1.1 -o "${REFDIR}/${EP}.json" -w "\n" "${OKAPI}/finance-storage/${EP}?limit=1000" -H "x-okapi-token: ${TOKEN}"
 done
