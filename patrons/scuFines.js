@@ -33,7 +33,14 @@ const stypes = {
     name: 'Lost item billing fee',
     id: '96cfc7a1-3cfd-4b4e-b436-c75c2d0825f1'
   }
-}
+};
+
+const ctypes = {
+  '1': 1,
+  '2': 1,
+  '4': 1,
+  '6': 1,
+};
 
 const usersFile = process.argv[2];
 const inFile = process.argv[3];
@@ -100,13 +107,14 @@ const inFile = process.argv[3];
     });
     for await (const l of rl) {
       let f = JSON.parse(l);
+      let ctype = f.chargeType.code;
       let pid = f.patron.replace(/^.+\//, '');
       let userId = userMap[pid];
       let invNum = (f.invoiceNumber) ? f.invoiceNumber.toString() : '';
       let comm = 'Invoice number: ' + invNum;
       let rdate = f.returnDate;
 
-      if (userId) {
+      if (userId && ctypes[ctype]) {
         let acc = {};
         let hrid = '';
         let item = {};
@@ -216,7 +224,11 @@ const inFile = process.argv[3];
           }
         }
       } else {
-        console.log(`WARN userId not found for ${pid}`);
+        if (ctypes[ctype]) {
+          console.log(`WARN userId not found for ${pid}`);
+        } else {
+          console.log(`INFO skipping fineId ${f.id}. Reason: chargeType is ${ctype}`);
+        }
       }
       count++;
     }
