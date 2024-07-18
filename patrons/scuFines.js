@@ -68,6 +68,8 @@ const inFile = process.argv[3];
     let accCount = 0;
     let ffaCount = 0;
     let payCount = 0;
+    let errCount = 0;
+    let skipCount = 0;
 
     // map users
     console.log('Loading users...');
@@ -226,8 +228,10 @@ const inFile = process.argv[3];
       } else {
         if (ctypes[ctype]) {
           console.log(`WARN userId not found for ${pid}`);
+          errCount++;
         } else {
           console.log(`INFO skipping fineId ${f.id}. Reason: chargeType is ${ctype}`);
+          skipCount++;
         }
       }
       count++;
@@ -238,6 +242,8 @@ const inFile = process.argv[3];
     console.log('Accounts', accCount);
     console.log('Actions', ffaCount);
     console.log('Payments', payCount);
+    console.log('Skips', skipCount);
+    console.log('Errors', errCount);
     console.log('Seconds', tt);
 
 
