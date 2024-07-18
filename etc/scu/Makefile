@@ -14,6 +14,7 @@ rules=$(wd)/etc/scu/mapping-rules.json
 odir=$(data)/orders
 udir=$(data)/users
 cdir=$(data)/circ
+fdir=$(data)/fines
 email=oscarmail@scu.edu
 
 instances:
@@ -70,6 +71,14 @@ checkouts: $(cdir)
 	cd $(wd)/patrons; node scuCheckouts.js $(iref) $(cdir)/users.jsonl $(cdir)/items.jsonl > $(log)/make-checkouts.log & 
 	tail -f $(log)/make-checkouts.log
 
+split-checkouts: $(cdir)/checkouts.jsonl
+	cd $(cdir); split -l 600 checkouts.jsonl co
+
+fine: $(fdir)/fines0*.jsonl
+	cd $(fdir); cat fines0*.jsonl > fines.jsonl
+	cd $(wd)/patrons; node scuFines.js $(udir)/users-users.jsonl $(fdir)/fines.jsonl > $(log)/make-fines.log &
+	tail -f $(log)/make-fines.log
+
 clean-inventory: $(iinfo)
 	cd $(invdir); rm bibs.mrc; mv raw.marc raw.mrc
 
@@ -86,6 +95,7 @@ setup:
 	mkdir -p $(invdir)
 	mkdir -p $(odir)
 	mkdir -p $(udir)
+	mkdir -p $(fdir)
 	mkdir -p $(data)/save
 	cp $(tsvdir)/*.tsv $(iref)
 	cp $(tsvdir)/locations.tsv $(aref)
