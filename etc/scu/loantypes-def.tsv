@@ -1,0 +1,43 @@
+Legacy loan type code (from item record)	Folio loan type name or ID	Legacy material type label
+Itype (61)		ITYPE Label (61)
+0	circulating	Circulating
+1	library use only	Non-Circulating
+2	library use only	In-Library Use
+3	circulating	DVD
+4	locally circulating	Computer Data Storage Media
+5	library use only	Sheet Maps
+6	2 hour	SCU Exams
+7	3 hour	ASP Keys & Other Special Stuff
+8	3 hour	S.C.Law Review Keys, etc.
+10	3 hour	Conference Room/Classroom
+11	3 hour	Bar review
+12	3 hour	Moot Court
+13	2 hour	2-Hour Reserve Heafey
+14	1 hour	1-Hour Reserve Heafey
+15	24 hour	24-Hour Reserve Heafey
+16	3 day	3-Day Reserve Heafey
+17	7 day	7-Day Reserve Heafey
+18	2 hour	Stauf 2hr non-reserve
+20	library use only	Heafey Laptops
+22	library use only	Web Resources
+23	24 hour	Heafey 24-Hour Non-Reserve
+24	3 week	Heafey 3-Weeks
+25	locally circulating	UL Bound Periodicals
+26	4 hour	UL 4-Hour Reserve
+27	24 hour	UL 24-Hour Reserve
+28	4 hour NR	UL 4-Hour Reserve, No Renewal
+29	24 hour	UL 24-Hour Reserve, No Renewal
+30	locally circulating	VHS - No LINK+
+31	library use only	VHS - Non-Circulating
+32	locally circulating	DVD - No LINK+
+33	library use only	DVD - Non-Circulating
+34	locally circulating	Blu-Ray - No LINK+
+36	library use only	UL 4-Hour Rsrv, Office Supplies
+38	library use only	UL 4-HR Rsrv, Electronic, NoRnwl
+40	library use only	iPad2 UL
+41	library use only	iPad 3rd Gen UL
+42	library use only	Kindle Fire UL
+43	library use only	NOOK Tablet UL
+44	library use only	UL Laptops - UL Staff Use Only
+50	locally circulating	Circulating - No LINK+
+60	locally circulating	Audio Recordings

@@ -1,0 +1,43 @@
+Legacy material type code (from item record)	Folio material type name or ID	Legacy material type label
+Itype (61)		ITYPE Label (61)
+0	book	Circulating
+1	book	Non-Circulating
+2	book	In-Library Use
+3	dvd	DVD
+4	computer media	Computer Data Storage Media
+5	cartographic material	Sheet Maps
+6	book	SCU Exams
+7	room equipment	ASP Keys & Other Special Stuff
+8	room equipment	S.C.Law Review Keys, etc.
+10	room equipment	Conference Room/Classroom
+11	room equipment	Bar review
+12	room equipment	Moot Court
+13	book	2-Hour Reserve Heafey
+14	room equipment	1-Hour Reserve Heafey
+15	book	24-Hour Reserve Heafey
+16	book	3-Day Reserve Heafey
+17	audio recording	7-Day Reserve Heafey
+18	book	Stauf 2hr non-reserve
+20	electronic supplies	Heafey Laptops
+22	computer media	Web Resources
+23	book	Heafey 24-Hour Non-Reserve
+24	book	Heafey 3-Weeks
+25	bound periodical	UL Bound Periodicals
+26	book	UL 4-Hour Reserve
+27	book	UL 24-Hour Reserve
+28	book	UL 4-Hour Reserve, No Renewal
+29	book	UL 24-Hour Reserve, No Renewal
+30	vhs	VHS - No LINK+
+31	vhs	VHS - Non-Circulating
+32	dvd	DVD - No LINK+
+33	dvd	DVD - Non-Circulating
+34	blu-ray	Blu-Ray - No LINK+
+36	office supplies	UL 4-Hour Rsrv, Office Supplies
+38	electronic supplies	UL 4-HR Rsrv, Electronic, NoRnwl
+40	electronic supplies	iPad2 UL
+41	electronic supplies	iPad 3rd Gen UL
+42	electronic supplies	Kindle Fire UL
+43	electronic supplies	NOOK Tablet UL
+44	electronic supplies	UL Laptops - UL Staff Use Only
+50	book	Circulating - No LINK+
+60	audio recording	Audio Recordings

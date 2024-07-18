@@ -142,12 +142,17 @@ sub makeMapFromTsv {
       my $code = ($l && $col[0] =~ /\w|\$/) ? $col[0] : '';
       $code =~ s/^ +| +$//g;
       my $name = $col[2] || '';
-      if ($prop =~ /mtypes|loantypes/) {
+      if ($prop =~ /^(mtypes|loantypes)^/) {
         $code .= ':' . $col[1];
       }
       $name =~ s/^ +| +$//g;
       if ($prop eq 'statuses') {
         $tsvmap->{$prop}->{$code} = $col[3] || 'Available';
+      } elsif ($prop eq 'mtypes-def') {
+        $tsvmap->{mtypes_def}->{$code} = $refdata->{mtypes}->{$col[1]} if $code =~ /^\d*$/;
+      } elsif ($prop eq 'loantypes-def') {
+        $col[1] = lc $col[1];
+        $tsvmap->{loantypes_def}->{$code} = $refdata->{loantypes}->{$col[1]} if $code =~ /^\d*$/;
       } else {
         $name = lc($name);
         if ($refdata->{$prop}->{$name}) {
@@ -184,10 +189,10 @@ while (<ARS>) {
 
 $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
-# print Dumper($refdata->{statisticalCodes}); exit;
+# print Dumper($refdata->{loantypes}); exit;
 my $sierra2folio = makeMapFromTsv($ref_dir, $refdata);
-# $sierra2folio->{locations}->{multi} = $refdata->{locations}->{multi};
-# print Dumper($sierra2folio->{statisticalCodes}); exit;
+$sierra2folio->{locations}->{multi} = $refdata->{locations}->{multi};
+# print Dumper($sierra2folio->{loantypes_def}); exit;
 
 my $relations = {
   '0' => 'Resource',
@@ -473,13 +478,13 @@ sub make_hi {
       print "WARN no temporary location found for \"$tloc\".\n"
     }
     my $mtkey = "$itype:$loc";
-    $irec->{permanentLoanTypeId} = $sierra2folio->{loantypes}->{$mtkey} || $refdata->{loantypes}->{'can circulate'};
-    $irec->{materialTypeId} = $sierra2folio->{mtypes}->{$mtkey} || $refdata->{mtypes}->{unspecified};
+    $irec->{permanentLoanTypeId} = $sierra2folio->{loantypes}->{$mtkey} || $sierra2folio->{loantypes_def}->{$itype} || $refdata->{loantypes}->{'can circulate'};
+    $irec->{materialTypeId} = $sierra2folio->{mtypes}->{$mtkey} || $sierra2folio->{mtypes_def}->{$itype} || $refdata->{mtypes}->{unspecified};
     if ($irec->{materialTypeId} eq '71fbd940-1027-40a6-8a48-49b44d795e46') {
-      print "WARN FOLIO material type not found for $mtkey\n";
+      print "WARN FOLIO material type not found for $mtkey ($iid)\n";
     }
     if ($irec->{permanentLoanTypeId} eq '2b94c631-fca9-4892-a730-03ee529ffe27') {
-      print "WARN FOLIO loan type not found for $mtkey\n";
+      print "WARN FOLIO loan type not found for $mtkey ($iid)\n";
     }
     $irec->{status}->{name} = $sierra2folio->{statuses}->{$status} || 'Available'; # defaulting to available;
     my $msg = $item->{fixedFields}->{97}->{value} || '';
