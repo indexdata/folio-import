@@ -42,6 +42,13 @@ order:
 	cd $(wd)/acquisitions; node scuOrders.js $(aref) $(invdir)/bibs_instances.jsonl $(odir)/all_orders.jsonl > $(log)/make-orders.log
 	cat $(log)/make-orders.log
 
+pieces:
+	grep $(lib) $(wd)/config.js
+	cd $(wd); node downloadJSONL.js orders-storage/titles $(odir)/titles.jsonl
+	cd $(wd)/acquisitions; node scuPieces.js $(odir)/titles.jsonl $(odir)/expected.csv > $(log)/make-pieces.log
+	cd $(wd)/acquisitions; node scuPieces.js $(odir)/titles.jsonl $(odir)/received.csv >> $(log)/make-pieces.log
+	cat $(log)/make-pieces.log
+
 user: $(udir)/users00000000.jsonl
 	cd $(udir); ln -s users00000000.jsonl users.jsonl
 	cd $(wd)/patrons; node scuUsers.js $(uref) $(udir)/users.jsonl $(email) > $(log)/make-users.log &
