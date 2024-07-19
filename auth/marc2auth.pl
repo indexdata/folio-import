@@ -399,135 +399,134 @@ foreach (@ARGV) {
   my $rec;
   while (<RAW>) {
     my $raw = $_;
-      $rec = {
-        source => 'MARC'
-      };
-      $count++;
-      my $marc = eval {
-        MARC::Record->new_from_usmarc($raw);
-      };
-      next unless $marc;
-      my $hrid = $marc->field('001')->data();
-      my $nid = $hrid;
-      if ($hrids->{$hrid}) {
-        print "WARN duplicate 001 found: $hrid\n";
-        $errors++;
+    $rec = {
+      source => 'MARC'
+    };
+    $count++;
+    my $marc = eval {
+      MARC::Record->new_from_usmarc($raw);
+    };
+    next unless $marc;
+    my $hrid = $marc->field('001')->data();
+    my $nid = $hrid;
+    if ($hrids->{$hrid}) {
+      print "WARN duplicate 001 found: $hrid\n";
+      $errors++;
+      next;
+    }
+    $nid =~ s/ //g;
+    # $marc->field('001')->data($hrid);
+    my $f008 = $marc->field('008')->data();
+    $f008 .= " " x 40;
+    $f008 = substr($f008, 0, 40);
+    $marc->field('008')->data($f008);
+    my $atype = $hrid;
+    $atype =~ s/^([A-z]+).+/$1/;
+    # print $atype . "\n";
+
+    my $srsmarc = $marc;
+    my $ldr = $marc->leader();
+    my @marc_fields = $marc->fields();
+    MARC_FIELD: foreach my $field (@marc_fields) {
+      my $tag = $field->tag();
+      my $fr = $field_replace->{$tag} || '';
+      if ($fr) {
+        my $sf = $fr->{subfield}[0];
+        my $sdata = $field->subfield($sf) || next;
+        $sdata =~ s/^(\d{3}).*/$1/;
+        my $rtag = $fr->{frules}->{$sdata} || $sdata;
+        if ($rtag =~ /^\d\d\d$/) {
+          $field->set_tag($rtag);
+          push @marc_fields, $field;
+        }
         next;
       }
-      $nid =~ s/ //g;
-      # $marc->field('001')->data($hrid);
-      my $f008 = $marc->field('008')->data();
-      $f008 .= " " x 40;
-      $f008 = substr($f008, 0, 40);
-      $marc->field('008')->data($f008);
-      my $atype = $hrid;
-      $atype =~ s/^([A-z]+).+/$1/;
-      # print $atype . "\n";
-
-      my $srsmarc = $marc;
-      my $ldr = $marc->leader();
-      my @marc_fields = $marc->fields();
-      MARC_FIELD: foreach my $field (@marc_fields) {
-        my $tag = $field->tag();
-        my $fr = $field_replace->{$tag} || '';
-        if ($fr) {
-          my $sf = $fr->{subfield}[0];
-          my $sdata = $field->subfield($sf) || next;
-          $sdata =~ s/^(\d{3}).*/$1/;
-          my $rtag = $fr->{frules}->{$sdata} || $sdata;
-          if ($rtag =~ /^\d\d\d$/) {
-            $field->set_tag($rtag);
-            push @marc_fields, $field;
+      
+      # Let's determine if a subfield is repeatable, if so create append separate marc fields for each subfield;
+      foreach (@{ $repeat_subs->{$tag} }) {
+        my $main_code = $_;
+        my $all_codes = join '', @{ $repeat_subs->{$tag} };
+        my @sf = $field->subfield($main_code);
+        my $occurence = @sf;
+        if ($occurence > 1) {
+          my $new_field = {};
+          my $i = 0;
+          my @subs = $field->subfields();
+          foreach (@subs) {
+            my ($code, $sdata) = @$_;
+            if ($code eq $main_code) {
+              $new_field = MARC::Field->new($tag, $field->{_ind1}, $field->{_ind2}, $code => $sdata);
+            } elsif ($new_field->{_tag}) {
+              $new_field->add_subfields($code => $sdata );
+            }
+            $i++;
+            my @ncode = [''];
+            if ($subs[$i]) {
+              @ncode = @{ $subs[$i] };
+            }
+            push @marc_fields, $new_field if (index($all_codes, $ncode[0]) != -1 && $new_field->{_tag}) || !$ncode[0];
           }
-          next;
+          next MARC_FIELD;
         }
-        
-        # Let's determine if a subfield is repeatable, if so create append separate marc fields for each subfield;
-        foreach (@{ $repeat_subs->{$tag} }) {
-          my $main_code = $_;
-          my $all_codes = join '', @{ $repeat_subs->{$tag} };
-          my @sf = $field->subfield($main_code);
-          my $occurence = @sf;
-          if ($occurence > 1) {
-            my $new_field = {};
-            my $i = 0;
-            my @subs = $field->subfields();
-            foreach (@subs) {
-              my ($code, $sdata) = @$_;
-              if ($code eq $main_code) {
-                $new_field = MARC::Field->new($tag, $field->{_ind1}, $field->{_ind2}, $code => $sdata);
-              } elsif ($new_field->{_tag}) {
-                $new_field->add_subfields($code => $sdata );
-              }
-              $i++;
-              my @ncode = [''];
-              if ($subs[$i]) {
-                @ncode = @{ $subs[$i] };
-              }
-              push @marc_fields, $new_field if (index($all_codes, $ncode[0]) != -1 && $new_field->{_tag}) || !$ncode[0];
+      }
+      my $fld_conf = $mapping_rules->{$tag};
+      my @entities;
+      if ($fld_conf) {
+        if ($fld_conf->[0]->{entity}) {
+          foreach (@{ $fld_conf }) {
+            if ($_->{entity}) {
+              push @entities, $_->{entity};
             }
-            next MARC_FIELD;
           }
+        } else {
+          @entities = $fld_conf;
         }
-        my $fld_conf = $mapping_rules->{$tag};
-        my @entities;
-        if ($fld_conf) {
-          if ($fld_conf->[0]->{entity}) {
-            foreach (@{ $fld_conf }) {
-              if ($_->{entity}) {
-                push @entities, $_->{entity};
-              }
+        foreach (@entities) {
+          my @entity = @$_;
+          my $data_obj = {};
+          foreach (@entity) {
+            my @required;
+            if ( $_->{requiredSubfield} ) {
+              @required = @{ $_->{requiredSubfield} };
             }
-          } else {
-            @entities = $fld_conf;
+            if ($required[0] && !$field->subfield($required[0])) {
+              next;
+            }
+            my @targ;
+            my $flavor;
+            if ($_->{target}) {
+              @targ = split /\./, $_->{target};
+              $flavor = $ftypes->{$targ[0]}; # || print $targ[0] . "\n";
+            }
+            my $data = process_entity($field, $_);
+            next unless $data;
+            if ($flavor eq 'array') {
+              push @{ $rec->{$targ[0]} }, $data;
+            } elsif ($flavor eq 'array.object') {
+              $data_obj->{$targ[0]}->{$targ[1]} = $data;
+            } elsif ($flavor eq 'object') {
+            } elsif ($flavor eq 'boolean') {
+            } else {
+              $rec->{$targ[0]} = $data;
+            }
           }
-          foreach (@entities) {
-            my @entity = @$_;
-            my $data_obj = {};
-            foreach (@entity) {
-              my @required;
-              if ( $_->{requiredSubfield} ) {
-                @required = @{ $_->{requiredSubfield} };
-              }
-              if ($required[0] && !$field->subfield($required[0])) {
-                next;
-              }
-              my @targ;
-              my $flavor;
-              if ($_->{target}) {
-                @targ = split /\./, $_->{target};
-                $flavor = $ftypes->{$targ[0]}; # || print $targ[0] . "\n";
-              }
-              my $data = process_entity($field, $_);
-              next unless $data;
-              if ($flavor eq 'array') {
-                push @{ $rec->{$targ[0]} }, $data;
-              } elsif ($flavor eq 'array.object') {
-                $data_obj->{$targ[0]}->{$targ[1]} = $data;
-              } elsif ($flavor eq 'object') {
-              } elsif ($flavor eq 'boolean') {
-              } else {
-                $rec->{$targ[0]} = $data;
-              }
-            }
-            foreach (keys %$data_obj) {
-              if ($ftypes->{$_} eq 'array.object') {
-                push @{ $rec->{$_} }, $data_obj->{$_};
-              }
+          foreach (keys %$data_obj) {
+            if ($ftypes->{$_} eq 'array.object') {
+              push @{ $rec->{$_} }, $data_obj->{$_};
             }
           }
         }
       }
-      
-      $rec->{id} = uuid($hrid);
-      $rec->{_version} = $ver;
-      $rec->{naturalId} = $nid;
-      $rec->{sourceFileId} = $refdata->{authoritySourceFiles}->{$atype} || '';
-      $inst_recs .= $json->encode($rec) . "\n";
-      $srs_recs .= $json->encode(make_srs($srsmarc, $raw, $rec->{id}, $nid, $snapshot_id)) . "\n";
-      $hrids->{$hrid} = 1;
-      $success++;
     }
+    
+    $rec->{id} = uuid($hrid);
+    $rec->{_version} = $ver;
+    $rec->{naturalId} = $nid;
+    $rec->{sourceFileId} = $refdata->{authoritySourceFiles}->{$atype} || '';
+    $inst_recs .= $json->encode($rec) . "\n";
+    $srs_recs .= $json->encode(make_srs($srsmarc, $raw, $rec->{id}, $nid, $snapshot_id)) . "\n";
+    $hrids->{$hrid} = 1;
+    $success++;
     if (eof RAW || $success % 10000 == 0) {
       my $tt = time() - $start;
       print "Processed #$count (" . $rec->{hrid} . ") [ recs: $success, time: $tt secs ]\n" if $rec->{hrid};
@@ -536,7 +535,9 @@ foreach (@ARGV) {
 
       write_objects($SRSOUT, $srs_recs);
       $srs_recs = '';
+    }
   }
+
   my $tt = time() - $start;
   print "\nDone!\n$count Marc records processed in $tt seconds";
   print "\nAuthority records:   $success ($paths->{auth})";
