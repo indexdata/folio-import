@@ -74,9 +74,6 @@ let modName = process.argv[3];
       '/authority-storage/authorities': true,
       '/change-manager/parsedRecords': true,
       '/check-in-storage/check-ins': true,
-      // '/coursereserves/courselistings': true,
-      // '/coursereserves/courses': true,
-      // '/coursereserves/reserves': true,
       '/data-export/transformation-fields': true,
       '/data-export/job-executions': true,
       '/data-export/logs': true,
@@ -173,7 +170,9 @@ let modName = process.argv[3];
       'coursereserves__departments',
       'coursereserves__courselistings',
       'coursereserves__courses',
-      'coursereserves__reserves'
+      'coursereserves__reserves',
+      'data-export__mapping-profiles',
+      'data-export__job-profiles'
     ]
 
     let userMod = '';
