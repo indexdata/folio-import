@@ -529,7 +529,7 @@ foreach (@ARGV) {
     $success++;
     if (eof RAW || $success % 10000 == 0) {
       my $tt = time() - $start;
-      print "Processed #$count (" . $rec->{hrid} . ") [ recs: $success, time: $tt secs ]\n" if $rec->{hrid};
+      print "Processed #$count (" . $hrid . ") [ recs: $success, time: $tt secs ]\n";
       write_objects($OUT, $inst_recs);
       $inst_recs = '';
 
