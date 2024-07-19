@@ -83,7 +83,11 @@ fine: $(fdir)/fines0*.jsonl
 authorities: $(audir)/*.mrc
 	rm -f $(audir)/auth.mrc
 	cd $(audir); cat *.mrc > auth.mrc
-	cd $(wd)/auth; ./marc2auth.pl ../mapping_rules/marc_authority_rules.json $(iref) $(audir)/auth.mrc
+	cd $(wd)/auth; ./marc2auth.pl ../mapping_rules/marc_authority_rules.json $(iref) $(audir)/auth.mrc > $(log)/make-authories.log &
+
+split-authorities: $(audir)/auth*jsonl
+	cd $(audir); split -l 200000 auth-authorities.jsonl auth
+	cd $(audir); split -l 200000 auth-srs.jsonl authsrs
 
 clean-inventory: $(iinfo)
 	cd $(invdir); rm bibs.mrc; mv raw.marc raw.mrc
