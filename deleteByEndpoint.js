@@ -84,7 +84,7 @@ const wait = (ms) => {
       try {
       	await superagent
           .delete(`${deleteUrl}/${id}`)
-          .set('accept', 'text/plain')
+          .set('accept', '*/*')
           .set('x-okapi-tenant', config.tenant)
           .set('x-okapi-token', config.token);
       } catch (e) {

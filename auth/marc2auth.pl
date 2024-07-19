@@ -34,7 +34,7 @@ binmode STDOUT, ":utf8";
 $| = 1;
 
 my $version = '1';
-my $isil = 'xxx';
+my $isil = 'xxz';
 my $prefix = '';
 my $srstype = 'MARC';
 my $source_id = 'f32d531e-df79-46b3-8932-cdd35f7a2264'; # Folio 
