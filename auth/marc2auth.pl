@@ -304,7 +304,7 @@ my $ftypes = {
   personalName => 'string',
   personalNameTitle => 'string',
   corporateName => 'string',
-  coporateNameTitle => 'string',
+  corporateNameTitle => 'string',
   meetingName => 'string',
   meetingNameTitle => 'string',
   topicalTerm => 'string',
@@ -493,10 +493,10 @@ foreach (@ARGV) {
                 next;
               }
               my @targ;
-              my $flavor = '';
+              my $flavor;
               if ($_->{target}) {
                 @targ = split /\./, $_->{target};
-                $flavor = $ftypes->{$targ[0]};
+                $flavor = $ftypes->{$targ[0]}; # || print $targ[0] . "\n";
               }
               my $data = process_entity($field, $_);
               next unless $data;

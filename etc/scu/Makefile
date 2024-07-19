@@ -15,6 +15,7 @@ odir=$(data)/orders
 udir=$(data)/users
 cdir=$(data)/circ
 fdir=$(data)/fines
+audir=$(data)/auth
 email=oscarmail@scu.edu
 
 instances:
@@ -79,6 +80,11 @@ fine: $(fdir)/fines0*.jsonl
 	cd $(wd)/patrons; node scuFines.js $(udir)/users-users.jsonl $(fdir)/fines.jsonl > $(log)/make-fines.log &
 	tail -f $(log)/make-fines.log
 
+authorities: $(audir)/*.mrc
+	rm -f $(audir)/auth.mrc
+	cd $(audir); cat *.mrc > auth.mrc
+	cd $(wd)/auth; ./marc2auth.pl ../mapping_rules/marc_authority_rules.json $(iref) $(audir)/auth.mrc
+
 clean-inventory: $(iinfo)
 	cd $(invdir); rm bibs.mrc; mv raw.marc raw.mrc
 
@@ -96,6 +102,7 @@ setup:
 	mkdir -p $(odir)
 	mkdir -p $(udir)
 	mkdir -p $(fdir)
+	mkdir -p $(audir)
 	mkdir -p $(data)/save
 	cp $(tsvdir)/*.tsv $(iref)
 	cp $(tsvdir)/locations.tsv $(aref)
