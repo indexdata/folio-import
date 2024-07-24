@@ -80,7 +80,7 @@ try {
       });
     }
   }
-  // console.log(ref.organizations); return;
+  // console.log(JSON.stringify(custProps, null, 2)); return;
 
   let csv = fs.readFileSync(`${inFile}`, 'utf8');
 
@@ -163,11 +163,20 @@ try {
     if (!seen.ex[exKey]) {
       let exTypeValue = ref.cprops[exType];
       if (exTypeValue) {
+        let isMulti = (exTypeValue.match(/AuthenticationMethod|AuthorizedUsers|PerpetualAccess/)) ? true : false;
         if (l.customProperties[exTypeValue]) {
-          l.customProperties[exTypeValue][0] = {
-            _delete: false,
-            value: exText || 'No Text',
-            note: exNote
+          if (isMulti) {
+            l.customProperties[exTypeValue][0] = {
+              _delete: false,
+              value: [ { value: exText || 'No Text' } ],
+              note: exNote
+            };
+          } else {
+            l.customProperties[exTypeValue][0] = {
+              _delete: false,
+              value: exText || 'No Text',
+              note: exNote
+            };
           }
         }
       }
