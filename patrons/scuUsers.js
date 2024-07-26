@@ -259,7 +259,7 @@ try {
     }
 
     if (varFields.a) {
-      user.personal.addresses = user.personal.addresses.concat(parseAddress(varFields.a, atypeMap['Mailing'], true));
+      user.personal.addresses = user.personal.addresses.concat(parseAddress(varFields.a, atypeMap['Home'], true));
     }
     if (varFields.h) {
       let atype = (varFields.a) ? false : true;
