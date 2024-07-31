@@ -27,15 +27,31 @@ const parseAddress = (saddr, type, primary) => {
   for (let x = 0; x < saddr.length; x++) {
     let parts = saddr[x].split(/\$/);
     let addr = {};
-    addr.addressLine1 = parts[0]
-    let country = parts[2];
-    if (parts[1]) {
-      addr.city = parts[1].replace(/,? ?[A-Z]{2} .*$/, '');
-      addr.region = parts[1].replace(/.+([A-Z]{2}) \d{5}.*/, '$1');
-      addr.postalCode = parts[1].replace(/.*(\d{5}(-\d{4})?)/, '$1');
+    addr.addressLine1 = parts[0];
+    let partTwo = parts[1];
+    if (parts.length > 2) {
+      let lastPart = parts.pop();
+      if (lastPart.match(/\d{5}/)) {
+        partTwo = lastPart;
+        if (parts[1]) addr.addressLine2 = parts[1];
+      } else {
+        addr.countryId = lastPart;
+        lastPart = parts.pop();
+        if (lastPart.match(/\d{5}/)) {
+          partTwo = lastPart;
+          if (parts[1]) addr.addressLine2 = parts[1];
+        }
+      }
+    } 
+    if (partTwo) {
+      addr.city = partTwo.replace(/,? ?[A-Z]{2} ?.*$/, '');
+      addr.region = partTwo.replace(/.+([A-Z]{2}) \d{5}.*/, '$1');
+      addr.postalCode = partTwo.replace(/\D*(\d+(-\d{4})?)/, '$1');
     }
     addr.addressTypeId = type;
     addr.primaryAddress = primary;
+    if (addr.city) addr.city = addr.city.replace(/, +\d+$/, '');
+    if (addr.region) addr.region = addr.region.replace(/, +\d+$/, '');
     addresses.push(addr);
     break;
   }
@@ -259,11 +275,11 @@ try {
     }
 
     if (varFields.a) {
-      user.personal.addresses = user.personal.addresses.concat(parseAddress(varFields.a, atypeMap['Home'], true));
+      user.personal.addresses.push(...parseAddress(varFields.a, atypeMap['Home'], true));
     }
     if (varFields.h) {
       let atype = (varFields.a) ? false : true;
-      user.personal.addresses = parseAddress(varFields.h, atypeMap['Additional'], atype);
+      user.personal.addresses.push(...parseAddress(varFields.h, atypeMap['Additional'], atype));
     }
 
     if (varFields.x) {
