@@ -22,40 +22,42 @@ const ctagMap = {
   'xxx':'opt_7'
 };
 
+let ptypeStr = '2,3,4,5,16,17,18,19,61,62,102,116,117,118,119';
+const apt = {}
+ptypeStr.split(/,/).forEach(k => {
+  apt[k] = 1;
+});
+// console.log(apt); return;
+
 const parseAddress = (saddr, type, primary) => {
-  let addresses = [];
-  for (let x = 0; x < saddr.length; x++) {
-    let parts = saddr[x].split(/\$/);
-    let addr = {};
-    addr.addressLine1 = parts[0];
-    let partTwo = parts[1];
-    if (parts.length > 2) {
-      let lastPart = parts.pop();
+  let addr = {};
+  let parts = saddr.split(/\$/);
+  addr.addressLine1 = parts[0];
+  let partTwo = parts[1];
+  if (parts.length > 2) {
+    let lastPart = parts.pop();
+    if (lastPart.match(/\d{5}/)) {
+      partTwo = lastPart;
+      if (parts[1]) addr.addressLine2 = parts[1];
+    } else {
+      addr.countryId = lastPart;
+      lastPart = parts.pop();
       if (lastPart.match(/\d{5}/)) {
         partTwo = lastPart;
         if (parts[1]) addr.addressLine2 = parts[1];
-      } else {
-        addr.countryId = lastPart;
-        lastPart = parts.pop();
-        if (lastPart.match(/\d{5}/)) {
-          partTwo = lastPart;
-          if (parts[1]) addr.addressLine2 = parts[1];
-        }
       }
-    } 
-    if (partTwo) {
-      addr.city = partTwo.replace(/,? ?[A-Z]{2} ?.*$/, '');
-      addr.region = partTwo.replace(/.+([A-Z]{2}) \d{5}.*/, '$1');
-      addr.postalCode = partTwo.replace(/\D*(\d+(-\d{4})?)/, '$1');
     }
-    addr.addressTypeId = type;
-    addr.primaryAddress = primary;
-    if (addr.city) addr.city = addr.city.replace(/, +\d+$/, '');
-    if (addr.region) addr.region = addr.region.replace(/, +\d+$/, '');
-    addresses.push(addr);
-    break;
+  } 
+  if (partTwo) {
+    addr.city = partTwo.replace(/,? ?[A-Z]{2} ?.*$/, '');
+    addr.region = partTwo.replace(/.+([A-Z]{2}) \d{5}.*/, '$1');
+    addr.postalCode = partTwo.replace(/\D*(\d+(-\d{4})?)/, '$1');
   }
-  return addresses;
+  addr.addressTypeId = type;
+  addr.primaryAddress = primary;
+  if (addr.city) addr.city = addr.city.replace(/, +\d+$/, '');
+  if (addr.region) addr.region = addr.region.replace(/, +\d+$/, '');
+  return addr;
 }
 
 const makeNote = (mesg, userId, noteTypeId) => {
@@ -274,12 +276,28 @@ try {
       user.customFields.specialPatronGroup = ctagMap[v] || ctagMap.xxx;
     }
 
-    if (varFields.a) {
-      user.personal.addresses.push(...parseAddress(varFields.a, atypeMap['Home'], true));
-    }
-    if (varFields.h) {
-      let atype = (varFields.a) ? false : true;
-      user.personal.addresses.push(...parseAddress(varFields.h, atypeMap['Additional'], atype));
+    if (apt[ptype]) {
+      if (varFields.a) {
+        user.personal.addresses.push(parseAddress(varFields.a[0], atypeMap['Work'], true));
+      } 
+      if (varFields.h) {
+        let atype = (varFields.a) ? false : true;
+        user.personal.addresses.push(parseAddress(varFields.h[0], atypeMap['Home'], atype));
+        if (varFields.h[1]) {
+          user.personal.addresses.push(parseAddress(varFields.h[1], atypeMap['Additional'], false));
+        }
+      }
+    } else {
+      if (varFields.a) {
+        user.personal.addresses.push(parseAddress(varFields.a[0], atypeMap['Mailing'], true));
+      } 
+      if (varFields.h) {
+        let atype = (varFields.a) ? false : true;
+        user.personal.addresses.push(parseAddress(varFields.h[0], atypeMap['Home'], atype));
+        if (varFields.h[1]) {
+          user.personal.addresses.push(parseAddress(varFields.h[1], atypeMap['Additional'], false));
+        }
+      }
     }
 
     if (varFields.x) {
