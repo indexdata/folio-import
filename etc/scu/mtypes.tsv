@@ -27,7 +27,7 @@ Itype (61)	Shelving Location (79)		ITYPE Label (61)	Shelving Location Label (79)
 1	ars24	archival material	Non-Circulating	University Library Archives & Special Collections - University Records, 3rd Floor	Reports, personal papers, etc.	1138
 1	ars26	book	Non-Circulating	University Library Archives & Special Collections - History Reference		18
 1	ars27	book	Non-Circulating	University Library Archives & Special Collections - Faculty Publications, 3rd Floor		244
-1	ars31	manuscript	Non-Circulating	University Library Archives & Special Collections - Manuscripts & Personal Papers, 3rd Floor		325
+1	ars31	archival material	Non-Circulating	University Library Archives & Special Collections - Manuscripts & Personal Papers, 3rd Floor		325
 1	ars32	book	Non-Circulating	University Library Archives & Special Collections - Local History, 3rd Floor		31
 1	ars33	archival material	Non-Circulating	University Library Archives & Special Collections - University Publications, 3rd Floor	Some monographs, but mostly serials	21
 1	arsca	book	Non-Circulating	University Library Archives & Special Collections - California Collection, 3rd Floor		108
@@ -73,8 +73,8 @@ Itype (61)	Shelving Location (79)		ITYPE Label (61)	Shelving Location Label (79)
 1	uscff	graphical material	Non-Circulating	University Library Archives & Special Collections - Flat Files, 3rd Floor		4
 1	uscfp	book	Non-Circulating	University Library Archives & Special Collections - Faculty Publications, 3rd Floor		1641
 1	uscjr	book	Non-Circulating	University Library Archives & Special Collections - Jesuit Rare Books, 3rd Floor		684
-1	usclv	archival material	Non-Circulating	University Library Archives & Special Collections - Leaves, 3rd Floor		4
-1	uscma	manuscript	Non-Circulating	University Library Archives & Special Collections - Manuscripts & Personal Papers, 3rd Floor		1161
+1	usclv	book	Non-Circulating	University Library Archives & Special Collections - Leaves, 3rd Floor		4
+1	uscma	archival material	Non-Circulating	University Library Archives & Special Collections - Manuscripts & Personal Papers, 3rd Floor		1161
 1	uscmd	multimedia	Non-Circulating	University Library Archives & Special Collections - Multimedia, 3rd Floor		484
 1	uscml	book	Non-Circulating	University Library Archives & Special Collections - Mission Library, 3rd Floor		63
 1	uscol	book	Non-Circulating	University Library Archives & Special Collections, 3rd Floor		11679
@@ -174,6 +174,7 @@ Itype (61)	Shelving Location (79)		ITYPE Label (61)	Shelving Location Label (79)
 33	arslw	dvd	DVD - Non-Circulating	Law Remote Storage (ARS)		203
 33	arsvd	dvd	DVD - Non-Circulating	University Library ARS Video Collection		4
 33	hres	dvd	DVD - Non-Circulating	Law Closed Reserve Room		2
+33	hstau	dvd	DVD - Non-Circulating	Law Reserve Room		2
 33	ucrst	dvd	DVD - Non-Circulating	University Library Curriculum Collection, 2nd Floor		1
 33	uscrr	dvd	DVD - Non-Circulating	University Library Archives & Special Collections - Reading Room, 3rd Floor		2
 34	arsvd	blu-ray	Blu-Ray - No LINK+	University Library ARS Video Collection		11
