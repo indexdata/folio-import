@@ -45,6 +45,9 @@ try {
   }
 
   const writeTo = (fileName, data) => {
+    for (let k in data.customProperties) {
+      if (data.customProperties[k][0].value === undefined) delete data.customProperties[k];
+    }
     let outStr = JSON.stringify(data) + '\n';
     fs.writeFileSync(fileName, outStr, { flag: 'a' });
   }
@@ -52,6 +55,7 @@ try {
   refDir = refDir.replace(/\/$/, '');
   const ref = {};
   const custProps = {};
+  const legalValues = {};
   for (let f in rfiles) {
     let rfile = refDir + '/' + rfiles[f];
     let rdata = require(rfile);
@@ -62,6 +66,12 @@ try {
         let v = r.name;
         ref[f][k] = v;
         custProps[v] = [{ _delete: true }];
+        if (r.category && r.category.values) {
+          legalValues[v] = {};
+          r.category.values.forEach(c => {
+            legalValues[v][c.value] = 1;
+          });
+        }
       });
     } else if (f === 'ref') {
       rdata.forEach(r => {
@@ -80,7 +90,7 @@ try {
       });
     }
   }
-  // console.log(JSON.stringify(custProps, null, 2)); return;
+  // console.log(JSON.stringify(legalValues, null, 2)); return;
 
   let csv = fs.readFileSync(`${inFile}`, 'utf8');
 
@@ -134,7 +144,17 @@ try {
     let exType = r['Expression Type'];
     let exText = r['Expression Document Text'];
     let exNote = r['Expression Note'];
-    let exKey = id + ':' + exType + ':' + exText;
+    let exQual = r['Expression Qualifier'];
+    let exQuals;
+    if (exQual) {
+      exQuals = exQual.split(/; */);
+      for (let x = 0; x < exQuals.length; x++) {
+        exQuals[x] = exQuals[x].toLowerCase();
+        exQuals[x] = exQuals[x].replace(/[, ]/g, '_');
+      };
+    }
+
+    let exKey = id + ':' + exType + ':' + exText + ':' + exQual;
 
     if (l && prevId !== id) {
       writeTo(files.lic, l);
@@ -168,19 +188,26 @@ try {
           if (isMulti) {
             l.customProperties[exTypeValue][0] = {
               _delete: false,
-              value: [ { value: exText || 'No Text' } ],
-              note: exNote
+              note: exNote,
+              value: []
+              // value: [ { value: exText || 'No Text' } ]
             };
-          } else {
+            if (exQuals) {
+              exQuals.forEach(q => {
+                l.customProperties[exTypeValue][0].value.push({ value: q });
+              });
+            }
+          } else if (exText) {
             l.customProperties[exTypeValue][0] = {
               _delete: false,
-              value: exText || 'No Text',
+              value: exText,
               note: exNote
             };
           }
         }
       }
       seen.ex[exKey] = 1;
+      
       stats.terms++;
     }
 
