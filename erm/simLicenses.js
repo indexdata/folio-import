@@ -27,6 +27,22 @@ const statusMap = {
   'Archived': 'expired'
 };
 
+const picks = {
+  "DTM": 1,
+  "ArchivingProvisions": 1,
+  "AutoRenew": 1,
+  "CancellationNotification": 1,
+  "ConfidentialityClause": 1,
+  "Coursepacks": 1,
+  "DisabilityCompliance": 1,
+  "eReserves": 1,
+  "Indemnification": 1,
+  "InterlibraryLoan": 1,
+  "NetPay": 1,
+  "UserConfidentiality": 1,
+  "Warranty": 1
+};
+
 docNoteFields = [ 'Signature', 'Document Effective Date' ];
 
 const scriptName = process.argv[1].replace(/^.+\//, '');
@@ -192,15 +208,26 @@ try {
             };
             if (exQuals) {
               exQuals.forEach(q => {
-              l.customProperties[exTypeValue][0].value.push({ value: q });
+                if (legalValues[exTypeValue][q]) { 
+                  l.customProperties[exTypeValue][0].value.push({ value: q });
+                } else {
+                  console.log(`WARN [${l.name} (${exTypeValue})] "${q}" is not a legal picklist value!`);
+                }
               });
             }
-          } else if (exQuals) {
-            l.customProperties[exTypeValue][0] = {
-              _delete: false,
-              value: exQuals[0]
-            };
-          } else {
+          } else if (picks[exTypeValue]) {
+            if (exQuals) {
+              let q = exQuals[0];
+              if (!legalValues[exTypeValue][q]) {
+                console.log(`WARN [${l.name}] "${q}" is not a legal picklist value!`);
+              } else {
+                l.customProperties[exTypeValue][0] = {
+                  _delete: false,
+                  value: exQuals[0]
+                };
+              }
+            }
+          } else if (exText) {
             l.customProperties[exTypeValue][0] = {
               _delete: false,
               value: exText,
@@ -277,7 +304,6 @@ try {
       let atTypeValue = ref.ref['DocumentAttachment.AtType'][docType];
       let dfile = r['Document File'] || '';
       let url = r['Document URL'] || r['Document URL '];
-      console.log(url);
       let o = {
         _delete: false,
         name: docName,
