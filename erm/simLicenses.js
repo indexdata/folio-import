@@ -20,11 +20,11 @@ const rfiles = {
 };
 
 const statusMap = {
-  'Awaiting Document': 'in_negotiation',
-  'Complete': 'active',
-  'Document Only': 'active',
-  'Editing Expressions': 'active',
-  'NLR': 'active'
+  'Document Only': 'in_negotiation',
+  'Active': 'active',
+  'In Review': 'not_yet_active',
+  'Rejected': 'rejected',
+  'Archived': 'expired'
 };
 
 docNoteFields = [ 'Signature', 'Document Effective Date' ];
@@ -188,21 +188,29 @@ try {
           if (isMulti) {
             l.customProperties[exTypeValue][0] = {
               _delete: false,
-              note: exNote,
               value: []
-              // value: [ { value: exText || 'No Text' } ]
             };
             if (exQuals) {
               exQuals.forEach(q => {
-                l.customProperties[exTypeValue][0].value.push({ value: q });
+              l.customProperties[exTypeValue][0].value.push({ value: q });
               });
             }
-          } else if (exText) {
+          } else if (exQuals) {
+            l.customProperties[exTypeValue][0] = {
+              _delete: false,
+              value: exQuals[0]
+            };
+          } else {
             l.customProperties[exTypeValue][0] = {
               _delete: false,
               value: exText,
-              note: exNote
             };
+          }
+          if (exText) {
+            l.customProperties[exTypeValue][0].publicNote = exText;
+          }
+          if (exNote) {
+            l.customProperties[exTypeValue][0].note = exNote;
           }
         }
       }
@@ -268,7 +276,8 @@ try {
     if (!seen.doc[docKey]) {
       let atTypeValue = ref.ref['DocumentAttachment.AtType'][docType];
       let dfile = r['Document File'] || '';
-      let url = r['Document URL'] || '';
+      let url = r['Document URL'] || r['Document URL '];
+      console.log(url);
       let o = {
         _delete: false,
         name: docName,
