@@ -188,7 +188,7 @@ try {
         openEnded: false,
         customProperties: newCust,
         orgs: [],
-        supplementaryDocs: [],
+        docs: [],
       };
       seen.main[id] = 1;
       stats.licenses++;
@@ -312,7 +312,7 @@ try {
       };
       if (dfile) o.location = dfile;
       if (url) o.url = url;
-      l.supplementaryDocs.push(o);
+      l.docs.push(o);
       stats.docs++;
       seen.doc[docKey] = 1;
     }
