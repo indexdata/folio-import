@@ -2,7 +2,7 @@
 
 TMP='./.okapi'
 OKAPI=`cat ${TMP}/url`
-TOKEN=`cat ${TMP}/token | sed 's/.$//'`
+TOKEN=`cat ${TMP}/token`
 
 EPS='erm/sas?stats=true erm/entitlements?stats=true notes?query=domain==agreements'
 

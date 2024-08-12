@@ -2,7 +2,7 @@
 
 TMP='./.okapi'
 OKAPI=`cat ${TMP}/url`
-TOKEN=`cat ${TMP}/token | sed 's/.$//'`
+TOKEN=`cat ${TMP}/token`
 
 EP=$1
 

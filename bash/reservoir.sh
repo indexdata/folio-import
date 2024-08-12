@@ -2,7 +2,7 @@
 
 TMP='./.okapi'
 OKAPI=`cat ${TMP}/url`
-TOKEN=`cat ${TMP}/token | sed 's/.$//'`
+TOKEN=`cat ${TMP}/token`
 
 PS3="Choose one: "
 EPS="reservoir/clusters reservoir/clusters?matchkeyid=goldrush reservoir/records reservoir/oai?verb=ListRecords reservoir/oai?verb=GetRecords reservoir/config/modules"
