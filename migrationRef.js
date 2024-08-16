@@ -23,7 +23,7 @@ let paths = {
 
 (async () => {
   try {
-    if (!refDir) throw(`Usage node migrationRef.js <refDir> [ <inv|acq|fin|usr|fee|erm> ]`);
+    if (!refDir) throw(`Usage node migrationRef.js <refDir> [ <inv|acq|fin|usr|fee|erm|lic> ]`);
 
     const config = await getAuthToken(superagent);
 
@@ -45,6 +45,7 @@ let paths = {
     
     if (mtype) {
       let val = paths[mtype];
+      if (!val) throw(`No module found for ${mtype}!  Valid choices: inv, acq, fin, usr, fee, erm, lic.`);
       paths = {};
       paths[mtype] = val;
     }
