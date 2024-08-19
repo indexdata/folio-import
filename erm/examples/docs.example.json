@@ -1,0 +1,54 @@
+{
+  "periods": [
+    {
+      "startDate": "2024-08-19",
+      "endDate": "2024-08-20",
+      "note": "Period nnote"
+    }
+  ],
+  "customProperties": {
+    "AuthorIdentification": [
+      {
+        "_delete": true
+      }
+    ],
+    "SupportPublishing": [
+      {
+        "_delete": true
+      }
+    ],
+    "ResourceFormat": [
+      {
+        "_delete": false,
+        "internal": "true",
+        "value": "print___electronic"
+      }
+    ],
+    "ResourceURL": [
+      {
+        "_delete": false,
+        "value": "https://indexdata.com"
+      }
+    ]
+  },
+  "name": "Charles test",
+  "description": "Test description",
+  "agreementStatus": "active",
+  "alternateNames": [
+    {
+      "_delete": false,
+      "name": "Chas test"
+    }
+  ],
+  "supplementaryDocs": [
+    {
+      "_delete": false,
+      "name": "Test cod",
+      "atType": "invoice",
+      "note": "doc note",
+      "url": "https://chopac.org"
+    }
+  ],
+  "outwardRelationships": [],
+  "inwardRelationships": []
+}

@@ -17,8 +17,8 @@ let paths = {
   fin: `expense-classes funds fund-types fiscal-years ledgers budget-expense-classes groups group-fund-fiscal-years`,
   usr: `groups addresstypes departments custom-fields note-types service-points`,
   fee: `owners feefines`,
-  erm: `erm/custprops erm/refdata`, 
-  lic: `licenses/custprops licenses/refdata`
+  erm: `erm/custprops erm/refdata organizations-storage/organizations acquisitions-units/units note-types`, 
+  lic: `licenses/custprops licenses/refdata organizations-storage/organizations acquisitions-units/units`
 };
 
 (async () => {
