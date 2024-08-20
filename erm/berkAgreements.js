@@ -143,22 +143,23 @@ try {
     let dname = r['Attachment Name'];
     let ddesc = r['Attachment Description'];
     let durl = r['Attachment URL'];
-    let dtype = r['Attachment Type'];
-    let dkey = (dname) ? oid + ':' + dname : '';
-    console.log(dkey);
+    let dtype = r['Attachment Type'].toLowerCase();
+    let dkey = (dname) ? `${oid}~~${dname}~~${dtype}~~${ddesc}~~${durl}` : '';
+    
     if (!ag[oid]) { 
       ag[oid] = r;
       ag[oid].xorgs = {};
       ag[oid].xper = {};
       ag[oid].xalt = [];
-      ag[oid].xdocs = [];
+      ag[oid].xdoc = [];
     }
     if (!ag[oid].xorgs[org]) ag[oid].xorgs[org] = [];
     if (!ag[oid].xper[per]) ag[oid].xper[per] = pnoteStr;
     if (role && ag[oid].xorgs[org].indexOf(role) === -1) ag[oid].xorgs[org].push(role);
     if (alt && ag[oid].xalt.indexOf(alt) === -1) ag[oid].xalt.push(alt);
+    if (dkey && ag[oid].xdoc.indexOf(dkey) === -1) ag[oid].xdoc.push(dkey);
   });
-  console.log(JSON.stringify(ag, null, 2)); return;
+  // console.log(JSON.stringify(ag, null, 2)); return;
 
   csv = fs.readFileSync(notesFile, 'utf8');
   const notes = parse(csv, {
@@ -175,7 +176,7 @@ try {
     if (ag[id]) {
       let agrName = ag[id]['Product Name'];
       let title = n['Resource Note Tab Name'];
-      let note = n['Resource Note'];
+      let note = n['Resource Note'] || n['Resource Note '];
       let type = n['Resource Note Type'];
       let nkey = id + note + type;
       let nobj = {
@@ -194,8 +195,8 @@ try {
     }
   });
 
-
   let c = 0;
+  let dc = 0;
   for (let al in ag) {
     let a = ag[al];
     let cprops = {};
@@ -218,6 +219,8 @@ try {
     let relId = a['Product Related Products ID'] || '';
     let relType = a['Product Related Products Relationship Type'] ||'';
 
+
+
     for (let p in cprops) {
       cprops[p].forEach(o => {
         if (o.value) {
@@ -232,8 +235,22 @@ try {
       customProperties: cprops,
       orgs: [],
       alternateNames: [],
-      periods: []
+      periods: [],
+      supplementaryDocs: []
     };
+
+    a.xdoc.forEach(dkey => {
+      let d = dkey.split(/~~/);
+      let o = {
+        _delete: false,
+        name: d[1],
+        atType: d[2],
+        note: d[3],
+        url: d[4]
+      }
+      agr.supplementaryDocs.push(o);
+      dc++;
+    });
 
     let i = 0;
     for (let orgId in a.xorgs) {
@@ -270,6 +287,7 @@ try {
         }
       ];
     }
+  
 
     a.xalt.forEach(t => {
       agr.alternateNames.push({ name: t });
@@ -300,7 +318,6 @@ try {
       };
       writeTo(files.rel, rel);
     }
-
     if (dbug) if (c === 5) break;
   }
 
@@ -326,6 +343,7 @@ try {
   console.log('Finished!');
   console.log('Agreements:', c);
   console.log('Custom Props:', cpc);
+  console.log('Sup Docs:', dc);
   console.log('Notes:', nc);
   if (nc > 0) console.log('*** Make sure to run makeErmNotes.js after loading agreements! ***');
 } catch (e) {
