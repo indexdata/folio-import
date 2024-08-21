@@ -153,9 +153,9 @@ try {
       ag[oid].xalt = [];
       ag[oid].xdoc = [];
     }
-    if (!ag[oid].xorgs[org]) ag[oid].xorgs[org] = [];
+    if (org && !ag[oid].xorgs[org]) ag[oid].xorgs[org] = [];
     if (!ag[oid].xper[per]) ag[oid].xper[per] = pnoteStr;
-    if (role && ag[oid].xorgs[org].indexOf(role) === -1) ag[oid].xorgs[org].push(role);
+    if (org && role && ag[oid].xorgs[org].indexOf(role) === -1) ag[oid].xorgs[org].push(role);
     if (alt && ag[oid].xalt.indexOf(alt) === -1) ag[oid].xalt.push(alt);
     if (dkey && ag[oid].xdoc.indexOf(dkey) === -1) ag[oid].xdoc.push(dkey);
   });
