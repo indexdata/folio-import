@@ -43,8 +43,12 @@ const fileNames = process.argv.slice(2);
         data.push(coll);
       }
       for (d = 0; d < data.length; d++) {
-        if (path.match(/data-import-profiles.+Profiles/)) {
+        if (path.match(/data-import-profiles.+Profiles$/)) {
           data[d] = { profile: data[d] };
+        } else if (path.match(/data-import-profiles\/profileAssociations/)) {
+          if (data[d].masterWrapperId) delete data[d].masterWrapperId;
+          if (data[d].detailWrapperId) delete data[d].detailWrapperId;
+          if (data[d].jobProfileId !== undefined) delete data[d].jobProfileId;
         }
         try {
           console.log(`POST ${url}...`);
@@ -57,7 +61,7 @@ const fileNames = process.argv.slice(2);
             .send(data[d]);
           added++;
         } catch (e) {
-          console.log(e);
+          console.log(`${e}`);
           try {
             console.log(`  Trying PUT...`);
             let purl = url;
