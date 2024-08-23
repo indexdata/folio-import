@@ -244,7 +244,7 @@ let modName = process.argv[3];
       } else if (!url.match(/\?/)) {
         url += '?limit=2500';
       } 
-      if (url.match(/data-import-profiles/ && !url.match(/jobProfiles/))) {
+      if (url.match(/data-import-profiles\/\w+ProfilesXXX/)) {
         url += '&withRelations=true';
       }
       if (paths[x].path === 'data-import-profiles/profileAssociations') {

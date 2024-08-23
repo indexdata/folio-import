@@ -45,6 +45,10 @@ const fileNames = process.argv.slice(2);
       for (d = 0; d < data.length; d++) {
         if (path.match(/data-import-profiles.+Profiles$/)) {
           data[d] = { profile: data[d] };
+          data[d].id = data[d].profile.id;
+          data[d].addedRelations = data[d].profile.addedRelations;
+          delete data[d].profile.addedRelations;
+          console.log(data[d]);
         } else if (path.match(/data-import-profiles\/profileAssociations/)) {
           if (data[d].masterWrapperId) delete data[d].masterWrapperId;
           if (data[d].detailWrapperId) delete data[d].detailWrapperId;
@@ -65,6 +69,7 @@ const fileNames = process.argv.slice(2);
           try {
             console.log(`  Trying PUT...`);
             let purl = url;
+            console.log(data[d]);
             if (!purl.match(/circulation-rules-storage|mapping-rules/)) {
               purl += '/' + data[d].id;
             }
