@@ -261,6 +261,7 @@ let modName = process.argv[3];
           let t = p.split(/_TO_/);
           paths.push({ path: `${paths[x].path}?master=${t[0]}&detail=${t[1]}`, mod: paths[x].mod });
         });
+        continue;
       }
       
       try {
