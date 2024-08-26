@@ -16,6 +16,7 @@ const fileNames = process.argv.slice(2);
 
     for (let x = 0; x < fileNames.length; x++) {
       
+      
       let path = fileNames[x].replace(/^.+\//, '');
 
       path = path.replace(/__/g, '/');
@@ -38,23 +39,49 @@ const fileNames = process.argv.slice(2);
       if (Array.isArray(coll[collKeys[0]])) {
         data = coll[collKeys[0]];
       } else if (Array.isArray(coll)) {
-	data = coll;
+	      data = coll;
       } else {
         data.push(coll);
       }
       for (d = 0; d < data.length; d++) {
-        if (path.match(/data-import-profiles.+Profiles$/)) {
-          data[d] = { profile: data[d] };
+        if (path.match(/data-import-profiles.+Profiles$/ && !path.match(/_UPDATE/))) {
+          let upPath = fileNames[x] + '_UPDATE';
+          if (fs.existsSync(upPath)) fs.unlinkSync(upPath);
+          if (!data[d].profile) data[d] = { profile: data[d] };
           data[d].id = data[d].profile.id;
-          data[d].addedRelations = data[d].profile.addedRelations;
-          delete data[d].profile.addedRelations;
-          console.log(data[d]);
+          upProf = JSON.parse(JSON.stringify(data[d]));
+          data[d].profile.parentProfiles = [];
+          data[d].profile.childProfiles = [];
+          if (data[d].addedRelations) {
+            data[d].addedRelations = data[d].profile.addedRelations;
+            delete data[d].profile.addedRelations;
+          }
+          if (path.match(/actionProfiles/)) {
+            if (upProf.profile.childProfiles) {
+              upProf.addedRelations = [];
+              upProf.profile.childProfiles.forEach(c => {
+                let o = {
+                  masterProfileId: upProf.profile.id,
+                  masterProfileType: 'ACTION_PROFILE',
+                  detailProfileId: c.id,
+                  detailProfileType: c.contentType
+                };
+                upProf.profile.parentProfiles = [];
+                upProf.profile.childProfiles = [];
+                upProf.addedRelations.push(o);
+              });
+            }
+            let upOut = JSON.stringify(upProf, null, 2);
+            fs.writeFileSync(upPath, upOut, { flag: 'a' });
+
+          }
         } else if (path.match(/data-import-profiles\/profileAssociations/)) {
           if (data[d].masterWrapperId) delete data[d].masterWrapperId;
           if (data[d].detailWrapperId) delete data[d].detailWrapperId;
           if (data[d].jobProfileId !== undefined) delete data[d].jobProfileId;
         }
         try {
+          url = url.replace(/\.json_UPDATE/, '');
           console.log(`POST ${url}...`);
           let res = await superagent
             .post(url)
@@ -69,7 +96,6 @@ const fileNames = process.argv.slice(2);
           try {
             console.log(`  Trying PUT...`);
             let purl = url;
-            console.log(data[d]);
             if (!purl.match(/circulation-rules-storage|mapping-rules/)) {
               purl += '/' + data[d].id;
             }

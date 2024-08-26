@@ -78,6 +78,7 @@ let modName = process.argv[3];
       '/data-export/job-executions': true,
       '/data-export/logs': true,
       '/data-export/related-users': true,
+      'data-import-profiles/profileAssociations': true,
       '/feefineactions': true,
       '/finance-storage/transactions': true,
       '/finance-storage/ledger-rollovers-budgets': true,
@@ -244,10 +245,11 @@ let modName = process.argv[3];
       } else if (!url.match(/\?/)) {
         url += '?limit=2500';
       } 
-      if (url.match(/data-import-profiles\/\w+ProfilesXXX/)) {
+      if (url.match(/data-import-profiles\/\w+Profiles/)) {
         url += '&withRelations=true';
       }
       if (paths[x].path === 'data-import-profiles/profileAssociations') {
+        continue;
         let profTypes = [
           'ACTION_PROFILE_TO_ACTION_PROFILE',
           'ACTION_PROFILE_TO_MAPPING_PROFILE',
@@ -261,7 +263,6 @@ let modName = process.argv[3];
           let t = p.split(/_TO_/);
           paths.push({ path: `${paths[x].path}?master=${t[0]}&detail=${t[1]}`, mod: paths[x].mod });
         });
-        continue;
       }
       
       try {
