@@ -5,9 +5,8 @@ let profId = process.argv[2];
 
 (async () => {
   try {
-    const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
 
-    const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
+    const config = await getAuthToken(superagent);;
 
     let jids = [];
 
@@ -17,7 +16,7 @@ let profId = process.argv[2];
       try {
         let res = await superagent
           .get(url)
-          .set('x-okapi-token', authToken);
+          .set('x-okapi-token', config.token);
         let ostr = JSON.stringify(res.body);
         return res.body;
       } catch (e) {
@@ -40,8 +39,6 @@ let profId = process.argv[2];
           addRelation(c.profileId, c.contentType, c.childSnapshotWrappers);
         }
       });
-      
-      return out
     }
 
     if (profId) {
@@ -51,7 +48,7 @@ let profId = process.argv[2];
         console.log('Getting job profiles...');
         let res = await superagent
           .get(`${config.okapi}/data-import-profiles/jobProfiles?limit=1000`)
-          .set('x-okapi-token', authToken);
+          .set('x-okapi-token', config.token);
 
         res.body.jobProfiles.forEach(j => {
           jids.push(j.id);
