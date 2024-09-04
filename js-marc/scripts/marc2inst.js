@@ -1,5 +1,4 @@
-import { parseMarc } from '../js-marc.mjs';
-import { getSubs } from '../js-marc.mjs';
+import { parseMarc, getSubs, mij2raw } from '../js-marc.mjs';
 import fs, { write } from 'fs';
 import path from 'path';
 import { v5 as uuid } from 'uuid';
@@ -31,7 +30,8 @@ const elRelMap = {
 const files = {
   instances: 1,
   srs: 1,
-  presuc: 1
+  presuc: 1,
+  raw: 1
 };
 
 const writeOut = (fileName, data) => {
@@ -167,7 +167,7 @@ try {
   let fn = path.basename(rawFile, '.mrc');
   let outBase = wdir + '/' + fn;
   for (let f in files) {
-    let p = outBase + '-' + f + '.jsonl';
+    let p = (f === 'raw') ? outBase + '-' + f + '.raw' : outBase + '-' + f + '.jsonl';
     files[f] = p;
     if (fs.existsSync(p)) fs.unlinkSync(p);
   };
@@ -249,6 +249,11 @@ try {
       count++
       let inst = {};
       let marc = parseMarc(r);
+      // console.log(JSON.stringify(marc, null, 2));
+      marc.mij.fields.push({ 599: { ind1: ' ', ind2: ' ', subfields: [{a: 'Test note'}]} })
+      let raw = mij2raw(marc.mij, true);
+      // console.log(raw);
+      // fs.writeFileSync(files.raw, raw.rec, { flag: 'a' });
       ldr = marc.fields.leader;
       for (let t in marc.fields) {
         if (t.match(limitTag)) {

@@ -10,7 +10,7 @@ export function parseMarc(raw) {
   let tags = {};
   let mij = {
     leader: leader,
-    fields: []
+    fields: [],
   };
   let fields = {
     leader: leader,
@@ -61,7 +61,47 @@ export function getSubs(field, codes, delim) {
   return out.join(dl);
 }
 
-export function makeMarc(data) {
+export function mij2raw(mij, sortFieldsByTag) {
+  let dir = '';
+  let pos = 0;
+  let varFields = '';
+  if (sortFieldsByTag) mij.fields.sort((a, b) => Object.keys(a)[0] - Object.keys(b)[0]);
+  mij.fields.forEach(f => {
+    let tag = Object.keys(f)[0];
+    let data = '';
+    if (tag > '009') {
+      let d = f[tag];
+      data = d.ind1 + d.ind2;
+      d.subfields.forEach(s => {
+        let code = Object.keys(s)[0];
+        let sd = s[code];
+        data += '\x1F' + code + sd;
+      });
+    } else {
+      data = f[tag];
+    }
+    data += '\x1E';
+    varFields += data;
+    let len = Buffer.byteLength(data, 'utf8');
+    let lenStr = len.toString().padStart(4, '0');
+    let posStr = pos.toString().padStart(5, '0');
+    let dirPart = tag + lenStr + posStr;
+    dir += dirPart;
+    pos += len;
+  });
+  let ldr = mij.leader;
+  dir += '\x1E';
+  let base = dir.length + 24;
+  let baseStr = base.toString().padStart(5, '0');
+  ldr = ldr.replace(/^\d{5}(.{7})\d{5}(.+)/, '$1' + baseStr + '$2');
+  let rec = ldr + dir + varFields + '\x1D';
+  let rlen = rec.length + 5;
+  let rlinStr = rlen.toString().padStart(5, '0');
+  rec = rlinStr + rec;
+  return { rec: rec, mij: mij };
+}
+
+export function txt2raw(data) {
   let line = data.split(/\n/);
   let ldr = '';
   let dir = '';
