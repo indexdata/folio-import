@@ -30,6 +30,7 @@ const elRelMap = {
 const files = {
   instances: 1,
   srs: 1,
+  snapshot: 1,
   presuc: 1,
   raw: 1
 };
@@ -161,6 +162,38 @@ const makeInst = function (map, field) {
   return ff;
 }
 
+const makeSrs = function (raw, jobId, bid, hrid) {
+  const id = uuid(bid, ns);
+  raw.mij.fields.push({'999': {ind1: 'f', ind2: 'f', subfields: [{i: bid}, {s: id}] } })
+  const srs = {
+    id: id,
+    snapshotId: jobId,
+    matchedId: id,
+    generation: 0,
+    recordType: 'MARC_BIB',
+    rawRecord: {
+      id: id,
+      content: raw.rec
+    },
+    parsedRecord: {
+      id: id,
+      content: raw.mij
+    }
+  }
+  return(srs);
+}
+
+const makeSnap = function () {
+  const now = new Date().toISOString();
+  const id = uuid(now, ns);
+  const so = {
+    jobExecutionId: id,
+    status: 'COMMITTED',
+    processingStartedDate: now
+  }
+  return (so);
+}
+
 try {
   if (!rawFile) { throw "Usage: node marc2inst.js <ref_dir> <mapping_rules> <raw_marc_file>" }
   let wdir = path.dirname(rawFile);
@@ -230,6 +263,9 @@ try {
   // console.log(refData.identifierTypes);
 
   let start = new Date().valueOf();
+  let snap = makeSnap();
+  writeOut(files.snapshot, snap);
+  let jobId = snap.jobExecutionId;
 
   const fileStream = fs.createReadStream(rawFile, { encoding: 'utf8' });
   let count = 0;
@@ -300,6 +336,9 @@ try {
         inst.id = uuid(inst.hrid, ns);
         // console.log(inst);
         writeOut(files.instances, inst);
+        let srsObj = makeSrs(raw, jobId, inst.id, inst.hrid);
+        writeOut(files.srs, srsObj);
+        // console.log(srsObj)
       }
 
       if (count % 10000 === 0) {

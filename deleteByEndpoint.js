@@ -75,7 +75,7 @@ const wait = (ms) => {
     if (endpoint.match(/^(erm|licenses)\//) && !objFile) root = 'results';
     console.log(`Deleting ${refData.totalRecords} ${root}...`);
     for (let x = 0; x < refData[root].length; x++) {
-      let id = refData[root][x].id;
+      let id = refData[root][x].id || refData[root][x].jobExecutionId;
       let lDate = new Date();
       if (config.expiry && config.expiry <= lDate.valueOf()) {
         config = await getAuthToken(superagent);
