@@ -26,9 +26,9 @@ const rfiles = {
 
 const statusMap = {
   'In Progress': 'Active',
-  'Completed': 'Active',
+  'Completed': 'Closed',
   'Saved': 'Active',
-  'Archived': 'closed'
+  'Archived': 'Closed'
 };
 
 const typeMap = {
@@ -48,7 +48,6 @@ const supProps = {
 };
 
 periodNotes = [
-  'Order Acquisition Type',
   'Invoice Number',
   'Fund',
   'Payment Amount',
@@ -205,8 +204,9 @@ try {
     }
     let name = a['Product Name'];
     let desc = a['Product Description'];
-    let type = a['Product Resource Type'];
     let status = a['Product Status'];
+    let atype = a['Order Acquisition Type'];
+    atype = atype.toLowerCase().replace(/ /g, '_');
 
     // map custom props below
     let ResourceFormat = a['Resource Format'].trim();
@@ -279,11 +279,22 @@ try {
     agr.agreementStatus = statusMap[status];
     if (desc) agr.description = desc;
 
+    /*
     if (type) {
       agr.agreementContentTypes = [ 
         { 
           _delete: false,
           contentType: { value: typeMap[type] }
+        }
+      ];
+    }
+    */
+
+    if (atype) {
+      agr.agreementContentTypes = [ 
+        {
+          contentType: { value: atype },
+          _delete: false
         }
       ];
     }
