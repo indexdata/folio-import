@@ -3,14 +3,17 @@ import fs, { write } from 'fs';
 import path from 'path';
 import { v5 as uuid } from 'uuid';
 
-let refDir = process.argv[2];
-let rulesFile = process.argv[3];
-let rawFile = process.argv[4];
-let limitTag = process.argv[5] || '';
+let confFile = process.argv[2];
+let confDir = path.dirname(confFile);
+
+let refDir;
+let rulesFile;
+let rawFile = process.argv[3];
+let limitTag = process.argv[4] || '';
 const schemaDir = './schemas';
 let ldr = '';
-const ns = '32a34762-7098-4e19-b1f5-710ce76bd41f';
-const refData = {};
+let ns;
+let refData = {};
 
 const modeMap = {
  a: 'single unit',
@@ -162,7 +165,10 @@ const makeInst = function (map, field) {
   return ff;
 }
 
-const makeSrs = function (raw, jobId, bid, hrid) {
+const makeSrs = function (raw, jobId, bid, hrid, suppress) {
+  let ldr = raw.mij.leader;
+  let lstat = ldr.substring(5, 6);
+  if (!lstat.match(/[a|c|d|n|p|o|s|x]/)) lstat = 'c';
   const id = uuid(bid, ns);
   raw.mij.fields.push({'999': {ind1: 'f', ind2: 'f', subfields: [{i: bid}, {s: id}] } })
   const srs = {
@@ -178,7 +184,16 @@ const makeSrs = function (raw, jobId, bid, hrid) {
     parsedRecord: {
       id: id,
       content: raw.mij
-    }
+    },
+    externalIdsHolder: {
+      instanceId: bid,
+      instanceHrid: hrid
+    },
+    additionalInfo: {
+      suppressDiscovery: suppress || false
+    },
+    state: 'ACTUAL',
+    leaderRecordStatus: lstat
   }
   return(srs);
 }
@@ -195,7 +210,12 @@ const makeSnap = function () {
 }
 
 try {
-  if (!rawFile) { throw "Usage: node marc2inst.js <ref_dir> <mapping_rules> <raw_marc_file>" }
+  if (!rawFile) { throw "Usage: node marc2inst.js <conf_file> <raw_marc_file>" }
+  let confData = fs.readFileSync(confFile, { encoding: 'utf8' });
+  let conf = JSON.parse(confData);
+  ns = conf.nameSpace;
+  refDir = conf.refDir.replace(/^\./, confDir);
+  rulesFile = conf.mapFile.replace(/^\./, confDir);
   let wdir = path.dirname(rawFile);
   let fn = path.basename(rawFile, '.mrc');
   let outBase = wdir + '/' + fn;
