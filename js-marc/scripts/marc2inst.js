@@ -4,14 +4,13 @@ import path from 'path';
 import { v5 as uuid } from 'uuid';
 
 let confFile = process.argv[2];
-let confDir = path.dirname(confFile);
 
 let refDir;
 let rulesFile;
 let rawFile = process.argv[3];
 let limitTag = process.argv[4] || '';
 const schemaDir = './schemas';
-let ldr = '';
+let ldr;
 let ns;
 let refData = {};
 
@@ -211,6 +210,7 @@ const makeSnap = function () {
 
 try {
   if (!rawFile) { throw "Usage: node marc2inst.js <conf_file> <raw_marc_file>" }
+  let confDir = path.dirname(confFile);
   let confData = fs.readFileSync(confFile, { encoding: 'utf8' });
   let conf = JSON.parse(confData);
   ns = conf.nameSpace;
