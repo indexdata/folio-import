@@ -1,5 +1,5 @@
 import { parseMarc, getSubs, mij2raw } from '../js-marc.mjs';
-import fs, { write } from 'fs';
+import fs from 'fs';
 import path from 'path';
 import { v5 as uuid } from 'uuid';
 
@@ -13,6 +13,7 @@ const schemaDir = './schemas';
 let ldr;
 let ns;
 let refData = {};
+const outs = {};
 
 const modeMap = {
  a: 'single unit',
@@ -33,13 +34,12 @@ const files = {
   instances: 1,
   srs: 1,
   snapshot: 1,
-  presuc: 1,
-  raw: 1
+  presuc: 1
 };
 
-const writeOut = (fileName, data) => {
+const writeOut = (outStream, data) => {
   let dataStr = JSON.stringify(data) + '\n';
-  fs.writeFileSync(fileName, dataStr, { flag: 'a' })
+  outStream.write(dataStr, 'utf8');
 };
 
 const funcs = {
@@ -194,7 +194,7 @@ const makeSrs = function (raw, jobId, bid, hrid, suppress) {
     state: 'ACTUAL',
     leaderRecordStatus: lstat
   }
-  return(srs);
+  return srs;
 }
 
 const makeSnap = function () {
@@ -205,7 +205,7 @@ const makeSnap = function () {
     status: 'COMMITTED',
     processingStartedDate: now
   }
-  return (so);
+  return so;
 }
 
 try {
@@ -223,6 +223,7 @@ try {
     let p = (f === 'raw') ? outBase + '-' + f + '.raw' : outBase + '-' + f + '.jsonl';
     files[f] = p;
     if (fs.existsSync(p)) fs.unlinkSync(p);
+    outs[f] = fs.createWriteStream(p)
   };
   let rulesStr = fs.readFileSync(rulesFile, { encoding: 'utf8' });
   const allMappingRules = JSON.parse(rulesStr);
@@ -284,7 +285,7 @@ try {
 
   let start = new Date().valueOf();
   let snap = makeSnap();
-  writeOut(files.snapshot, snap);
+  writeOut(outs.snapshot, snap);
   let jobId = snap.jobExecutionId;
 
   const fileStream = fs.createReadStream(rawFile, { encoding: 'utf8' });
@@ -306,7 +307,29 @@ try {
       let inst = {};
       let marc = parseMarc(r);
       // console.log(JSON.stringify(marc, null, 2));
-      marc.mij.fields.push({ 599: { ind1: ' ', ind2: ' ', subfields: [{a: 'Test note'}]} })
+      // marc.mij.fields.push({ 599: { ind1: ' ', ind2: ' ', subfields: [{a: 'Test note'}]} })
+      if (conf.controlNum) {
+        let tag = conf.controlNum.substring(0, 3);
+        let sub = conf.controlNum.substring(3, 4);
+        let cf = marc.fields[tag][0];
+        let cnum = getSubs(cf, sub);
+        if (conf.controlNum === '907a' && cnum) {
+          cnum = cnum.replace(/^\.(.+)\w$/, '$1');
+        }
+        if (cnum) {
+          let f001 = (marc.fields['001']) ? marc.fields['001'][0] : '';
+          if (marc.fields['003'] && f001) {
+            let f003 = marc.fields['003'][0];
+            marc.deleteField('003', 0);
+            let oldNum = `(${f003})${f001}`;
+            marc.addField('035', { ind1: ' ', ind2: ' ', subfields: [{a: oldNum}] });
+          }
+          if (f001) {
+            marc.deleteField('001', 0);
+          }
+          marc.addField('001', cnum);
+        }
+      }
       let raw = mij2raw(marc.mij, true);
       // console.log(raw);
       // fs.writeFileSync(files.raw, raw.rec, { flag: 'a' });
@@ -355,9 +378,9 @@ try {
       if (inst.hrid) {
         inst.id = uuid(inst.hrid, ns);
         // console.log(inst);
-        writeOut(files.instances, inst);
+        writeOut(outs.instances, inst);
         let srsObj = makeSrs(raw, jobId, inst.id, inst.hrid);
-        writeOut(files.srs, srsObj);
+        writeOut(outs.srs, srsObj);
         // console.log(srsObj)
       }
 

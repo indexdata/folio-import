@@ -45,7 +45,28 @@ export function parseMarc(raw) {
     }
 
   });
-  record = { mij: mij, fields: fields };
+  record = {
+    mij: mij,
+    fields: fields,
+    deleteField: (tag, occurance) => {
+      if (fields[tag]) {
+        fields[tag].splice(occurance, 1);
+      } 
+      mij.fields.forEach((f, i) => {
+        let o = 0;
+        if (f[tag] && o === occurance) {
+          mij.fields.splice(i, 1);
+          o++;
+        }
+      });
+    },
+    addField: (tag, data) => {
+      mij.fields.push({[tag]: data});
+      if (!fields[tag]) fields[tag] = [];
+      fields[tag].push(data);
+      // mij.fields.sort((a, b) => Object.keys(a)[0] - Object.keys(b)[0]);
+    }
+  };
   return record;
 }
 
