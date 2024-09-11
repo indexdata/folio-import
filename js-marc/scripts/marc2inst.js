@@ -306,23 +306,33 @@ try {
       count++
       let inst = {};
       let marc = parseMarc(r);
-      // console.log(JSON.stringify(marc, null, 2));
-      // marc.mij.fields.push({ 599: { ind1: ' ', ind2: ' ', subfields: [{a: 'Test note'}]} })
       if (conf.controlNum) {
         let tag = conf.controlNum.substring(0, 3);
         let sub = conf.controlNum.substring(3, 4);
         let cf = marc.fields[tag][0];
         let cnum = getSubs(cf, sub);
-        if (conf.controlNum === '907a' && cnum) {
-          cnum = cnum.replace(/^\.(.+)\w$/, '$1');
-        }
+        
         if (cnum) {
+          if (conf.controlNum === '907a') {
+            cnum = cnum.replace(/^\.(.+)\w$/, '$1'); // strip leading . and check digit from Sierra bib numbers
+          }
           let f001 = (marc.fields['001']) ? marc.fields['001'][0] : '';
-          if (marc.fields['003'] && f001) {
+          if (f001) {
             let f003 = marc.fields['003'][0];
-            marc.deleteField('003', 0);
-            let oldNum = `(${f003})${f001}`;
-            marc.addField('035', { ind1: ' ', ind2: ' ', subfields: [{a: oldNum}] });
+            let oldNum = f001;
+            if (f003) {
+              marc.deleteField('003', 0);
+              oldNum = `(${f003})${f001}`;
+            }
+            let doAdd = true;
+            if (marc.fields['035']) {
+              marc.fields['035'].forEach(f => {
+                f.subfields.forEach(s => {
+                  if (s.a && s.a === oldNum) doAdd = false;
+                });
+              });
+            };
+            if (doAdd) marc.addField('035', { ind1: ' ', ind2: ' ', subfields: [{a: oldNum}] });
           }
           if (f001) {
             marc.deleteField('001', 0);
@@ -331,8 +341,7 @@ try {
         }
       }
       let raw = mij2raw(marc.mij, true);
-      // console.log(raw);
-      // fs.writeFileSync(files.raw, raw.rec, { flag: 'a' });
+
       ldr = marc.fields.leader;
       for (let t in marc.fields) {
         if (t.match(limitTag)) {

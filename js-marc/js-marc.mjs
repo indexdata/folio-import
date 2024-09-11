@@ -64,7 +64,6 @@ export function parseMarc(raw) {
       mij.fields.push({[tag]: data});
       if (!fields[tag]) fields[tag] = [];
       fields[tag].push(data);
-      // mij.fields.sort((a, b) => Object.keys(a)[0] - Object.keys(b)[0]);
     }
   };
   return record;
@@ -92,11 +91,10 @@ export function mij2raw(mij, sortFieldsByTag) {
     let data = '';
     if (tag > '009') {
       let d = f[tag];
-      data = d.ind1 + d.ind2;
       d.subfields.forEach(s => {
         let code = Object.keys(s)[0];
         let sd = s[code];
-        data += '\x1F' + code + sd;
+        data += d.ind1 + d.ind2 + '\x1F' + code + sd;
       });
     } else {
       data = f[tag];
