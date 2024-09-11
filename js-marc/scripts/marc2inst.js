@@ -8,7 +8,6 @@ let confFile = process.argv[2];
 let refDir;
 let rulesFile;
 let rawFile = process.argv[3];
-let limitTag = process.argv[4] || '';
 const schemaDir = './schemas';
 let ldr;
 let ns;
@@ -340,52 +339,65 @@ try {
           marc.addField('001', cnum);
         }
       }
+      let hrid = (marc.fields['001']) ? marc.fields['001'][0] : '';
+      let instId = (hrid) ? uuid(hrid, ns) : '';
       let raw = mij2raw(marc.mij, true);
 
       ldr = marc.fields.leader;
       for (let t in marc.fields) {
-        if (t.match(limitTag)) {
-          let fields = marc.fields[t];
-          let mr = mappingRules[t];
-          if (mr) {
-            fields.forEach(f => {
-              let actFields = [];
-              if (mr.erps) {
-                f.subfields.forEach(a => {
-                  actFields.push({ ind1: f.ind1, ind2: f.ind2, subfields: [ a ]});
-                });
-              } else {
-                actFields.push(f);
-              }
-              actFields.forEach(af => {
-                let ff = makeInst(mr, af);
-                let obj = {};
-                let root = '';
-                for (let prop in ff) {
-                  let [rt, pr] = prop.split('.');
-                  if (propMap[prop] === 'string' || propMap[prop] === 'boolean') {
-                    inst[prop] = ff[prop].data;
-                  } else if (propMap[prop] === 'array.string') {
-                    if (!inst[prop]) inst[prop] = [];
-                    inst[prop].push(ff[prop].data);
-                  } else if (propMap[rt] === 'array.object') {
-                    if (!inst[rt]) inst[rt] = [];
-                    obj[pr] = ff[prop].data;
-                    root = rt;
-                  } 
-                }
-                if (root) {
-                  if (!inst[root]) inst[root] = [];
-                  inst[root].push(obj); 
-                }
+        let fields = marc.fields[t];
+        if (t.match(/^78[05]/)) {
+          fields.forEach(f => {
+            let ps = {};
+            ps.title = getSubs(f, 'ast');
+            if (t === '785') {
+              ps.precedingInstanceId = instId;
+            } else {
+              ps.succeedingInstanceId = instId;
+            }
+            
+            console.log(ps);
+          }); 
+        }
+        let mr = mappingRules[t];
+        if (mr) {
+          fields.forEach(f => {
+            let actFields = [];
+            if (mr.erps) {
+              f.subfields.forEach(a => {
+                actFields.push({ ind1: f.ind1, ind2: f.ind2, subfields: [ a ]});
               });
+            } else {
+              actFields.push(f);
+            }
+            actFields.forEach(af => {
+              let ff = makeInst(mr, af);
+              let obj = {};
+              let root = '';
+              for (let prop in ff) {
+                let [rt, pr] = prop.split('.');
+                if (propMap[prop] === 'string' || propMap[prop] === 'boolean') {
+                  inst[prop] = ff[prop].data;
+                } else if (propMap[prop] === 'array.string') {
+                  if (!inst[prop]) inst[prop] = [];
+                  inst[prop].push(ff[prop].data);
+                } else if (propMap[rt] === 'array.object') {
+                  if (!inst[rt]) inst[rt] = [];
+                  obj[pr] = ff[prop].data;
+                  root = rt;
+                } 
+              }
+              if (root) {
+                if (!inst[root]) inst[root] = [];
+                inst[root].push(obj); 
+              }
             });
-          }
+          });
         }
       }
       inst.source = 'MARC';
       if (inst.hrid) {
-        inst.id = uuid(inst.hrid, ns);
+        inst.id = instId;
         // console.log(inst);
         writeOut(outs.instances, inst);
         let srsObj = makeSrs(raw, jobId, inst.id, inst.hrid);
