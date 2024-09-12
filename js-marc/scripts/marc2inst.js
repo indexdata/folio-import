@@ -52,6 +52,9 @@ const funcs = {
     data = data.replace(/^./, upfl);
     return(data);
   },
+  concat_subfields_by_name: function (data, param) {
+    // console.log(param);
+  },
   char_select: function (data, param) {
     let out = data.substring(param.from, param.to);
     return out;
@@ -165,7 +168,7 @@ const makeInst = function (map, field) {
       ar = true;
     }
     if (ar) {
-      data = applyRules(e, field, erps);
+      data = applyRules(e, field);
       ff[data.prop] = data;
     }
   });
@@ -254,7 +257,6 @@ try {
     mappingRules[tag].erps = erps;
     mappingRules[tag].entities = ents;
   }
-  // console.log(mr);
   rulesStr = '';
 
   // get instance schema
