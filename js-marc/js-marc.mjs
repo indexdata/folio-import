@@ -78,7 +78,11 @@ export function getSubs(field, codes, delim) {
       out.push(s[code]);
     }
   });
-  return out.join(dl);
+  if (dl === -1) {
+    return out;
+  } else {
+    return out.join(dl);
+  }
 }
 
 export function mij2raw(mij, sortFieldsByTag) {

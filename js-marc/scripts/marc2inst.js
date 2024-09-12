@@ -85,6 +85,8 @@ const funcs = {
     let type = '';
     if (data.match(param.oclc_regex)) {
       type = refData.identifierTypes.OCLC;
+    } else {
+      type = refData.identifierTypes['System control number'];
     }
     return type;
   },
@@ -96,6 +98,13 @@ const funcs = {
   },
   set_note_type_id: function (data, param) {
     return refData.instanceNoteTypes[param.name];
+  },
+  set_note_staff_only_via_indicator: function (data, param, ind1) {
+    if (ind1 === ' ' || ind1 === '0') {
+      return true
+    } else {
+      return false
+    }
   },
   set_electronic_access_relations_id: function (data, param, ind1, ind2) {
     let relStr = elRelMap[ind2] || 'Resource';
@@ -282,14 +291,24 @@ try {
   });
   // console.log(refData.identifierTypes);
 
+  let t;
+  let ttl = {
+    count: 0,
+    instances: 0,
+    snapshots: 0,
+    srs: 0,
+    presuc: 0,
+    errors: 0
+  }
+
   let start = new Date().valueOf();
   let snap = makeSnap();
   writeOut(outs.snapshot, snap);
+  ttl.snapshots++;
   let jobId = snap.jobExecutionId;
 
   const fileStream = fs.createReadStream(rawFile, { encoding: 'utf8' });
-  let count = 0;
-  let t;
+  
   let leftOvers = '';
   fileStream.on('data', (chunk) => {
     let recs = chunk.match(/.+?\x1D|.+$/g);
@@ -301,15 +320,17 @@ try {
     } else {
       leftOvers = '';
     }
-    recs.forEach(r => {
-      count++
+    const seen = {};
+    for (let k = 0; k < recs.length; k++) {
+      let r = recs[k];
+      ttl.count++
       let inst = {};
       let marc = parseMarc(r);
       if (conf.controlNum) {
         let tag = conf.controlNum.substring(0, 3);
         let sub = conf.controlNum.substring(3, 4);
-        let cf = marc.fields[tag][0];
-        let cnum = getSubs(cf, sub);
+        let cf = (marc.fields[tag]) ? marc.fields[tag][0] : '';
+        let cnum = (cf) ? getSubs(cf, sub) : '';
         
         if (cnum) {
           if (conf.controlNum === '907a') {
@@ -317,7 +338,7 @@ try {
           }
           let f001 = (marc.fields['001']) ? marc.fields['001'][0] : '';
           if (f001) {
-            let f003 = marc.fields['003'][0];
+            let f003 = (marc.fields['003']) ? marc.fields['003'][0] : '';
             let oldNum = f001;
             if (f003) {
               marc.deleteField('003', 0);
@@ -340,6 +361,17 @@ try {
         }
       }
       let hrid = (marc.fields['001']) ? marc.fields['001'][0] : '';
+      if (!hrid) {
+        ttl.errors++;
+        console.log(`ERROR HRID not found at ${ttl.count}!`);
+        continue;
+      }
+      if (seen[hrid]) {
+        ttl.errors++;
+        console.log(`ERROR Duplicate HRID (${hrid}) found at ${ttl.count}`);
+        continue;
+      }
+      seen[hrid] = 1;
       let instId = (hrid) ? uuid(hrid, ns) : '';
       let raw = mij2raw(marc.mij, true);
 
@@ -347,16 +379,42 @@ try {
       for (let t in marc.fields) {
         let fields = marc.fields[t];
         if (t.match(/^78[05]/)) {
+          let occ = 0;
           fields.forEach(f => {
+            occ++;
+            let inums = getSubs(f, 'xw', -1);
             let ps = {};
             ps.title = getSubs(f, 'ast');
+            ps.identifiers = [];
+            let pidKey = instId + ps.title + t + occ;
+            ps.id = uuid(pidKey, ns);
             if (t === '785') {
               ps.precedingInstanceId = instId;
             } else {
               ps.succeedingInstanceId = instId;
             }
-            
-            console.log(ps);
+            inums.forEach(i => {
+              let ty; 
+              if (i.match(/OCoLC|ocm|ocn/)) {
+                ty = 'OCLC';
+              } else if (i.match(/^\d{4}-\w{4}$/)) {
+                ty = 'ISSN';
+              } else if (i.match(/[0-9xX]{10,13}/)) {
+                ty = 'ISBN';
+              } else if (i.match(/\(DLC\)/)) {
+                ty = 'LCCN';
+              } else {
+                ty = 'Other standard identifier'; 
+              }
+              let itype = refData.identifierTypes[ty];
+              let o = {
+                value: i,
+                identifierTypeId: itype
+              }
+              ps.identifiers.push(o);
+            });
+            writeOut(outs.presuc, ps); 
+            ttl.presuc++;
           }); 
         }
         let mr = mappingRules[t];
@@ -400,23 +458,29 @@ try {
         inst.id = instId;
         // console.log(inst);
         writeOut(outs.instances, inst);
+        ttl.instances++;
         let srsObj = makeSrs(raw, jobId, inst.id, inst.hrid);
         writeOut(outs.srs, srsObj);
+        ttl.srs++;
         // console.log(srsObj)
       }
 
-      if (count % 10000 === 0) {
+      if (ttl.count % 10000 === 0) {
         let now = new Date().valueOf();
         t = (now - start) / 1000;
-        console.log('Records processed', count, `${t} secs.`);
+        console.log('Records processed', ttl.count, `${t} secs.`);
       } 
-    });
+    };
   });
   fileStream.on('close', () => {
     let now = new Date().valueOf();
     let t = (now - start) / 1000;
     console.log('--------------------');
-    console.log('Records processed', count, `${t} secs.`);
+    for (let x in ttl) {
+      console.log(x, ':', ttl[x]);
+    }
+    console.log('time (secs)', t);
+    if (t > 60) console.log('time (mins)', t / 60);
   });
 } catch (e) {
   console.log(e);
