@@ -36,6 +36,13 @@ const files = {
   presuc: 1
 };
 
+const repMap = {
+  '100': '700',
+  '110': '710',
+  '111': '711',
+  '245': '246'
+}
+
 const writeOut = (outStream, data) => {
   let dataStr = JSON.stringify(data) + '\n';
   outStream.write(dataStr, 'utf8');
@@ -378,8 +385,19 @@ try {
       seen[hrid] = 1;
       let instId = (hrid) ? uuid(hrid, ns) : '';
       let raw = mij2raw(marc.mij, true);
-
       ldr = marc.fields.leader;
+
+      if (marc.fields['880']) {
+        marc.fields['880'].forEach(f => {
+          let ntag = getSubs(f, '6');
+          ntag = ntag.substring(0, 3);
+          let tag = repMap[ntag] || ntag;
+          if (!marc.fields[tag]) marc.fields[tag] = [];
+          marc.fields[tag].push(f);
+        });
+        delete marc.fields['880'];
+      }
+      
       for (let t in marc.fields) {
         let fields = marc.fields[t];
         if (t.match(/^78[05]/)) {
@@ -420,7 +438,7 @@ try {
             writeOut(outs.presuc, ps); 
             ttl.presuc++;
           }); 
-        } else {
+        }  else {
           let mr = mappingRules[t];
           if (mr) {
             fields.forEach(f => {
