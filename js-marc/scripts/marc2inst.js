@@ -41,7 +41,15 @@ const repMap = {
   '110': '710',
   '111': '711',
   '245': '246'
-}
+};
+
+const pubRoleMap = {
+  '0': 'Production',
+  '1': 'Publication',
+  '2': 'Distribution',
+  '3': 'Manufacture',
+  '4': 'Copyright notice date'
+};
 
 const writeOut = (outStream, data) => {
   let dataStr = JSON.stringify(data) + '\n';
@@ -49,9 +57,18 @@ const writeOut = (outStream, data) => {
 };
 
 const funcs = {
-  remove_prefix_by_indicator: function(data, params, ind1, ind2) {
+  remove_ending_punc: function (data) {
+    data = data.replace(/[;:,/+= ]$/g, '');
+    return data;
+  },
+  remove_prefix_by_indicator: function(data, param, ind1, ind2) {
     let n = parseInt(ind2, 10);
     return data.substring(n);
+  },
+  remove_substring: function(data, param) {
+    let re = new RegExp(param.substring, 'g');
+    data = data.replace(re, '');
+    return data;
   },
   capitalize: function (data) {
     let fl = data.charAt(0);
@@ -122,6 +139,22 @@ const funcs = {
   set_electronic_access_relations_id: function (data, param, ind1, ind2) {
     let relStr = elRelMap[ind2] || 'Resource';
     return refData.electronicAccessRelationships[relStr];
+  },
+  set_publisher_role: function (data, param, ind1, ind2) {
+    let r = pubRoleMap[ind2];
+    return r;
+  },
+  set_subject_source_id: function (data, param) {
+  },
+  set_subject_type_id: function (data, param) {
+  },
+  trim: function (data) {
+    data = data.trim();
+    return data;
+  },
+  trim_period: function (data) {
+    data = data.replace(/\.$/, '');
+    return data;
   }
 }
 
@@ -397,7 +430,7 @@ try {
         });
         delete marc.fields['880'];
       }
-      
+
       for (let t in marc.fields) {
         let fields = marc.fields[t];
         if (t.match(/^78[05]/)) {
@@ -438,7 +471,7 @@ try {
             writeOut(outs.presuc, ps); 
             ttl.presuc++;
           }); 
-        }  else {
+        } else {
           let mr = mappingRules[t];
           if (mr) {
             fields.forEach(f => {

@@ -22,7 +22,7 @@
     },
     "source": {
       "type": "string",
-      "description": "The metadata source and its format of the underlying record to the instance record. (e.g. FOLIO if it's a record created in Inventory;  MARC if it's a MARC record created in MARCcat or EPKB if it's a record coming from eHoldings)"
+      "description": "The metadata source and its format of the underlying record to the instance record. (e.g. FOLIO if it's a record created in Inventory; MARC if it's a MARC record created in MARCcat or EPKB if it's a record coming from eHoldings; CONSORTIUM-MARC or CONSORTIUM-FOLIO for sharing Instances)."
     },
     "title": {
       "type": "string",
@@ -46,6 +46,11 @@
           "alternativeTitle": {
             "type": "string",
             "description": "An alternative title for the resource"
+          },
+          "authorityId": {
+            "type": "string",
+            "description": "UUID of authority record that controls an alternative title",
+            "$ref": "uuid.json"
           }
         }
       },
@@ -63,7 +68,22 @@
       "type": "array",
       "description": "List of series titles associated with the resource (e.g. Harry Potter)",
       "items": {
-        "type": "string"
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": "Series title value"
+          },
+          "authorityId": {
+            "type": "string",
+            "description": "UUID of authority record that controls an series title",
+            "$ref": "uuid.json"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "value"
+        ]
       },
       "uniqueItems": true
     },
@@ -127,11 +147,15 @@
             "description": "UUID of contributor name type term defined by the MARC code list for relators",
             "$ref": "uuid.json"
           },
+          "authorityId": {
+            "type": "string",
+            "description": "UUID of authority record that controls the contributor",
+            "$ref": "uuid.json"
+          },
           "contributorNameType": {
             "type": "object",
             "description": "Dereferenced contributor-name type",
             "javaType": "org.folio.rest.jaxrs.model.contributorNameTypeVirtual",
-            "readonly": true,
             "folio:$ref": "contributornametype.json",
             "readonly": true,
             "folio:isVirtual": true,
@@ -156,7 +180,32 @@
       "type": "array",
       "description": "List of subject headings",
       "items": {
-        "type": "string"
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": "Subject heading value"
+          },
+          "authorityId": {
+            "type": "string",
+            "description": "UUID of authority record that controls a subject heading",
+            "$ref": "uuid.json"
+          },
+          "sourceId": {
+            "type": "string",
+            "description": "UUID of subject source",
+            "$ref": "uuid.json"
+          },
+          "typeId": {
+            "type": "string",
+            "description": "UUID of subject type",
+            "$ref": "uuid.json"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "value"
+        ]
       },
       "uniqueItems": true
     },
@@ -180,7 +229,6 @@
             "type": "object",
             "description": "Dereferenced classification schema",
             "javaType": "org.folio.rest.jaxrs.model.classificationTypeVirtual",
-            "readonly": true,
             "folio:$ref": "classificationtype.json",
             "readonly": true,
             "folio:isVirtual": true,
@@ -287,6 +335,28 @@
         ]
       }
     },
+    "dates": {
+      "type": "object",
+      "description": "Instance Dates",
+      "properties": {
+        "dateTypeId": {
+          "type": "string",
+          "description": "Date type ID",
+          "$ref": "uuid.json"
+        },
+        "date1": {
+          "type": "string",
+          "description": "Date 1",
+          "maxLength": 4
+        },
+        "date2": {
+          "type": "string",
+          "description": "Date 2",
+          "maxLength": 4
+        }
+      },
+      "additionalProperties": false
+    },
     "instanceTypeId": {
       "type": "string",
       "description": "UUID of the unique term for the resource type whether it's from the RDA content term list of locally defined",
@@ -334,6 +404,8 @@
       "description": "Bibliographic notes (e.g. general notes, specialized notes)",
       "items": {
         "type": "object",
+        "javaType": "org.folio.rest.jaxrs.model.InstanceNote",
+        "additionalProperties": false,
         "properties": {
           "instanceNoteTypeId": {
             "description": "ID of the type of note",
@@ -421,7 +493,7 @@
       "description": "List of holdings records",
       "items": {
         "type": "object",
-        "$ref": "holdingsrecord.json"
+        "$ref": "holdings-storage/holdingsRecord.json"
       },
       "readonly": true,
       "folio:isVirtual": true,
