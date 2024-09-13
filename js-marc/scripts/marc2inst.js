@@ -50,10 +50,13 @@ const funcs = {
     let fl = data.charAt(0);
     let upfl = fl.toUpperCase();
     data = data.replace(/^./, upfl);
-    return(data);
+    return data;
   },
-  concat_subfields_by_name: function (data, param) {
-    // console.log(param);
+  concat_subfields_by_name: function (data, param, ind1, ind2, allFields) {
+    let stc = param.subfieldsToConcat.join('');
+    let cdata = getSubs(allFields, stc);
+    data += (cdata) ? ' ' + cdata : '';
+    return data;
   },
   char_select: function (data, param) {
     let out = data.substring(param.from, param.to);
@@ -115,7 +118,7 @@ const funcs = {
   }
 }
 
-const applyRules = function (ent, field) {
+const applyRules = function (ent, field, allFields) {
   let data;
   if (ent.subfield && ent.subfield[0]) {
     let subcodes = ent.subfield.join('');
@@ -130,7 +133,7 @@ const applyRules = function (ent, field) {
     let param = con.parameter || '';
     ctype.split(/, */).forEach(c => {
       if (funcs[c]) {
-        data = funcs[c](data, param, field.ind1, field.ind2);
+        data = funcs[c](data, param, field.ind1, field.ind2, allFields);
       }
     });
   }
@@ -142,7 +145,7 @@ const applyRules = function (ent, field) {
   return out;
 }
 
-const makeInst = function (map, field) {
+const makeInst = function (map, field, allFields) {
   let ff = {};
   let data;
   let fsubs = field.subfields;
@@ -153,7 +156,6 @@ const makeInst = function (map, field) {
       subs[Object.keys(s)[0]] = 1;
     });
   }
-  let erps = map.erps;
   ents.forEach(e => {
     let ar = false;
     if (e.subfield && e.subfield[0]) {
@@ -168,7 +170,7 @@ const makeInst = function (map, field) {
       ar = true;
     }
     if (ar) {
-      data = applyRules(e, field);
+      data = applyRules(e, field, allFields);
       ff[data.prop] = data;
     }
   });
@@ -418,41 +420,42 @@ try {
             writeOut(outs.presuc, ps); 
             ttl.presuc++;
           }); 
-        }
-        let mr = mappingRules[t];
-        if (mr) {
-          fields.forEach(f => {
-            let actFields = [];
-            if (mr.erps) {
-              f.subfields.forEach(a => {
-                actFields.push({ ind1: f.ind1, ind2: f.ind2, subfields: [ a ]});
+        } else {
+          let mr = mappingRules[t];
+          if (mr) {
+            fields.forEach(f => {
+              let actFields = [];
+              if (mr.erps) {
+                f.subfields.forEach(a => {
+                  actFields.push({ ind1: f.ind1, ind2: f.ind2, subfields: [ a ]});
+                });
+              } else {
+                actFields.push(f);
+              }
+              actFields.forEach(af => {
+                let ff = makeInst(mr, af, f);
+                let obj = {};
+                let root = '';
+                for (let prop in ff) {
+                  let [rt, pr] = prop.split('.');
+                  if (propMap[prop] === 'string' || propMap[prop] === 'boolean') {
+                    inst[prop] = ff[prop].data;
+                  } else if (propMap[prop] === 'array.string') {
+                    if (!inst[prop]) inst[prop] = [];
+                    inst[prop].push(ff[prop].data);
+                  } else if (propMap[rt] === 'array.object') {
+                    if (!inst[rt]) inst[rt] = [];
+                    obj[pr] = ff[prop].data;
+                    root = rt;
+                  } 
+                }
+                if (root) {
+                  if (!inst[root]) inst[root] = [];
+                  inst[root].push(obj); 
+                }
               });
-            } else {
-              actFields.push(f);
-            }
-            actFields.forEach(af => {
-              let ff = makeInst(mr, af);
-              let obj = {};
-              let root = '';
-              for (let prop in ff) {
-                let [rt, pr] = prop.split('.');
-                if (propMap[prop] === 'string' || propMap[prop] === 'boolean') {
-                  inst[prop] = ff[prop].data;
-                } else if (propMap[prop] === 'array.string') {
-                  if (!inst[prop]) inst[prop] = [];
-                  inst[prop].push(ff[prop].data);
-                } else if (propMap[rt] === 'array.object') {
-                  if (!inst[rt]) inst[rt] = [];
-                  obj[pr] = ff[prop].data;
-                  root = rt;
-                } 
-              }
-              if (root) {
-                if (!inst[root]) inst[root] = [];
-                inst[root].push(obj); 
-              }
             });
-          });
+          }
         }
       }
       inst.source = 'MARC';
