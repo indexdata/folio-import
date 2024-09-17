@@ -1,5 +1,10 @@
 import { Buffer } from 'node:buffer';
 
+/**
+ * Parse raw a MARC record into JSON
+ * @param {binary} raw
+ * @returns {Object} a record object with "mij" and "fields" properties
+ */
 export function parseMarc(raw) {
   let record = {};
   let leader = raw.substring(0, 24);
@@ -69,6 +74,13 @@ export function parseMarc(raw) {
   return record;
 }
 
+/**
+ * Get a string or array representation from a field object
+ * @param {Object} field - A field object as returned by parseMarc
+ * @param {string} codes - Subfield codes to return
+ * @param {string|number} [ delim= ] - An optional join character (default: " "), set to -1 to return an array
+ * @returns {string|array}
+ */
 export function getSubs(field, codes, delim) {
   let dl = (delim) ? delim : ' ';
   let out = [];
