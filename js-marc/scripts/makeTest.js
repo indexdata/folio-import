@@ -1,4 +1,4 @@
-import { makeMarc } from '../js-marc.mjs';
+import { txt2raw } from '../js-marc.mjs';
 import fs from 'fs';
 import path from 'path';
 import readline from 'readline';
@@ -27,7 +27,7 @@ try {
       if (r.match(/^\d{3}/)) {
         trec += r + "\n";
       } else {
-        let raw = makeMarc(trec);
+        let raw = txt2raw(trec);
         fs.writeFileSync(outFile, raw, {flag: 'a'});
         trec = '';
         total++;

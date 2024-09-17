@@ -33,7 +33,8 @@ const files = {
   instances: 1,
   srs: 1,
   snapshot: 1,
-  presuc: 1
+  presuc: 1,
+  err: 1
 };
 
 const repMap = {
@@ -51,8 +52,8 @@ const pubRoleMap = {
   '4': 'Copyright notice date'
 };
 
-const writeOut = (outStream, data) => {
-  let dataStr = JSON.stringify(data) + '\n';
+const writeOut = (outStream, data, notJson) => {
+  let dataStr = (notJson !== undefined && notJson) ? data : JSON.stringify(data) + '\n';
   outStream.write(dataStr, 'utf8');
 };
 
@@ -261,6 +262,24 @@ const makeSnap = function () {
   return so;
 }
 
+const dedupe = function (arr, props) {
+  let seen = {};
+  let newArr = [];
+  arr.forEach(a => {
+    let k = '';
+    if (props) {
+      props.forEach(p => {
+        k += '::' + a[p];
+      });
+    } else {
+      k = a;
+    }
+    if (!seen[k]) newArr.push(a);
+    seen[k] = 1;
+  });
+  return newArr;
+}
+
 try {
   if (!rawFile) { throw "Usage: node marc2inst.js <conf_file> <raw_marc_file>" }
   let confDir = path.dirname(confFile);
@@ -273,7 +292,7 @@ try {
   let fn = path.basename(rawFile, '.mrc');
   let outBase = wdir + '/' + fn;
   for (let f in files) {
-    let p = (f === 'raw') ? outBase + '-' + f + '.raw' : outBase + '-' + f + '.jsonl';
+    let p = (f === 'err') ? outBase + '-' + f + '.mrc' : outBase + '-' + f + '.jsonl';
     files[f] = p;
     if (fs.existsSync(p)) fs.unlinkSync(p);
     outs[f] = fs.createWriteStream(p)
@@ -370,6 +389,14 @@ try {
       ttl.count++
       let inst = {};
       let marc = parseMarc(r);
+      let f245 = (marc.fields['245']) ? marc.fields['245'][0] : '';
+      let title = getSubs(f245, 'a');
+      if (!title) {
+        ttl.errors++;
+        console.log(`ERROR no title found at ${ttl.count}!`);
+        writeOut(outs.err, r, true);
+        continue;
+      } 
       if (conf.controlNum) {
         let tag = conf.controlNum.substring(0, 3);
         let sub = conf.controlNum.substring(3, 4);
@@ -388,6 +415,7 @@ try {
               marc.deleteField('003', 0);
               oldNum = `(${f003})${f001}`;
             }
+            /*
             let doAdd = true;
             if (marc.fields['035']) {
               marc.fields['035'].forEach(f => {
@@ -397,6 +425,8 @@ try {
               });
             };
             if (doAdd) marc.addField('035', { ind1: ' ', ind2: ' ', subfields: [{a: oldNum}] });
+            */
+            marc.addField('035', { ind1: ' ', ind2: ' ', subfields: [{a: oldNum}] });
           }
           if (f001) {
             marc.deleteField('001', 0);
@@ -408,11 +438,13 @@ try {
       if (!hrid) {
         ttl.errors++;
         console.log(`ERROR HRID not found at ${ttl.count}!`);
+        writeOut(outs.err, r, true);
         continue;
       }
       if (seen[hrid]) {
         ttl.errors++;
         console.log(`ERROR Duplicate HRID (${hrid}) found at ${ttl.count}`);
+        writeOut(outs.err, r, true);
         continue;
       }
       seen[hrid] = 1;
@@ -512,6 +544,9 @@ try {
       inst.source = 'MARC';
       if (inst.hrid) {
         inst.id = instId;
+        if (inst.subjects) inst.subjects = dedupe(inst.subjects, [ 'value' ]);
+        if (inst.identifiers) inst.identifiers = dedupe(inst.identifiers, [ 'value', 'identifierTypeId' ]);
+        if (inst.languages) inst.languages = dedupe(inst.languages);
         // console.log(inst);
         writeOut(outs.instances, inst);
         ttl.instances++;

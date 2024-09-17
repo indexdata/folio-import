@@ -1,5 +1,4 @@
 02548nam a2200577 i 4500
-001 ebc7206109
 003 OCoLC
 005 20230824200118.2
 006 m     o  d        
@@ -17,7 +16,7 @@
 050  4 $a HC110.P6 $b D47 2023
 082 00 $a 362.50973 $2 23/eng/20230118
 100 1  $a Desmond, Matthew, $e author.
-245 10 $a Poverty, by America / $c Matthew Desmond.
+245 10 $x Poverty, by America / $c Matthew Desmond.
 250    $a First edition.
 263    $a 2303.
 264  1 $a New York : $b Crown, $c [2023]
