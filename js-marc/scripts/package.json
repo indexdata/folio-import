@@ -2,7 +2,8 @@
   "name": "scripts",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT",
+  "author": "Charles Ledvina <charles@indexdata.com>",
+  "license": "Apache-2.0",
   "dependencies": {
     "uuid": "^10.0.0"
   },
