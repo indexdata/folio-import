@@ -1,0 +1,94 @@
+{
+  "mtypes" : [ {
+    "id" : "30b3e36a-d3b2-415e-98c2-47fbdf878862",
+    "name" : "video recording",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:48.747+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:48.612+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "71fbd940-1027-40a6-8a48-49b44d795e46",
+    "name" : "unspecified",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:48.764+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:48.665+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "1a54b431-2e4f-452d-9cae-9cee66c9a892",
+    "name" : "book",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:48.772+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:48.677+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "d9acad2f-2aac-4b48-9097-e6ab85906b25",
+    "name" : "text",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:48.797+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:48.687+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "dd0bf600-dbd9-44ab-9ff2-e2a61a6539f1",
+    "name" : "sound recording",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:48.805+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:48.697+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "fd6c6515-d470-4561-9c32-3e3290d4ca98",
+    "name" : "microform",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:48.813+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:48.707+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "615b8413-82d5-4203-aa6e-e37984cb5ac3",
+    "name" : "electronic resource",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:48.820+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:48.716+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "5ee11d91-f7e8-481d-b079-65d708582ccc",
+    "name" : "dvd",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:48.826+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:48.726+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "3715e811-0fd5-423f-8822-49d109620f2f",
+    "name" : "serial",
+    "source" : "local",
+    "metadata" : {
+      "createdDate" : "2021-02-05T21:49:08.557+00:00",
+      "createdByUserId" : "7a16958e-af23-5002-8191-d7a96f5f8070",
+      "updatedDate" : "2021-02-05T21:49:08.557+00:00",
+      "updatedByUserId" : "7a16958e-af23-5002-8191-d7a96f5f8070"
+    }
+  } ],
+  "totalRecords" : 9
+}

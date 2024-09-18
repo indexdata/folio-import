@@ -1,0 +1,73 @@
+{
+  "shelflocations" : [ {
+    "id" : "53cf956f-c1df-410b-8bea-27f712cca7c0",
+    "name" : "Annex"
+  }, {
+    "id" : "625cda00-a6cb-4234-af25-466566b30973",
+    "name" : "HL Reference "
+  }, {
+    "id" : "758258bc-ecc1-41b8-abca-f7b610822ffd",
+    "name" : "ORWIG ETHNO CD"
+  }, {
+    "id" : "b241764c-1466-4e1d-a028-1a3684a5da87",
+    "name" : "Popular Reading Collection"
+  }, {
+    "id" : "184aae84-a5bf-4c6a-85ba-4a7c73026cd5",
+    "name" : "Online"
+  }, {
+    "id" : "1c59c110-71c5-4f5a-bfeb-2539cbf28504",
+    "name" : "Faculty Library Reading Room"
+  }, {
+    "id" : "f34d27c6-a8eb-461b-acd6-5dea81771e70",
+    "name" : "SECOND FLOOR"
+  }, {
+    "id" : "bca3016f-3fcd-450a-932f-ac1fbf593bde",
+    "name" : "MDG's Location"
+  }, {
+    "id" : "6522611c-8b89-4d2f-bad8-fdba702e8067",
+    "name" : "Self service"
+  }, {
+    "id" : "7c4488e0-2922-493e-913c-5f145e468fbe",
+    "name" : "Campus"
+  }, {
+    "id" : "1a0e4dd9-b646-4f2e-861b-7e99b91b5f90",
+    "name" : "Växjo annex"
+  }, {
+    "id" : "fcd64ce1-6995-48f0-840e-89ffa2288371",
+    "name" : "Main Library"
+  }, {
+    "id" : "8cd669c5-beab-4be2-96c9-c79f1da77a28",
+    "name" : "HL 1st Floor General Stacks"
+  }, {
+    "id" : "04325281-a45d-4e30-95f7-192e524ad2a3",
+    "name" : "HL 2nd Floor General Stacks"
+  }, {
+    "id" : "799869ed-6cc8-4fdb-b0fc-02d42b938ac3",
+    "name" : "HL DVDs"
+  }, {
+    "id" : "53612ef4-51e4-4583-a8ad-a703f70a109b",
+    "name" : "Online Library"
+  }, {
+    "id" : "4e39467f-7172-45d5-8585-4a3850054a1c",
+    "name" : "HL Periodicals"
+  }, {
+    "id" : "b3b870ea-47f7-4833-8347-91a99c9a064a",
+    "name" : "HL Reading Room"
+  }, {
+    "id" : "f20fb842-0db6-42ef-a588-3214106a9e20",
+    "name" : "Front Hall Display"
+  }, {
+    "id" : "615df9af-960b-42d5-b51b-8ddc974ba296",
+    "name" : "Law Library Reading Room"
+  }, {
+    "id" : "1c6ac9fe-ca5e-4d53-abe9-84eda7e14546",
+    "name" : "Law Library Ground Floor Stacks"
+  }, {
+    "id" : "ff8bbc1d-d1e7-46b5-ae0d-6ca781b3ec12",
+    "name" : "Reserves"
+  }, {
+    "id" : "b328c551-01db-413a-ae6a-ecb376076a20",
+    "name" : "Main Stacks"
+  } ],
+  "totalRecords" : 23
+}

@@ -1,0 +1,434 @@
+{
+  "locations" : [ {
+    "id" : "53cf956f-c1df-410b-8bea-27f712cca7c0",
+    "name" : "Annex",
+    "code" : "KU/CC/DI/A",
+    "isActive" : true,
+    "institutionId" : "40ee00ca-a518-4b49-be01-0638d0a4ac57",
+    "campusId" : "62cf76b7-cca5-4d33-9217-edf42ce1a848",
+    "libraryId" : "5d78803e-ca04-4b4a-aeae-2c63b924518b",
+    "primaryServicePoint" : "3a40852d-49fd-4df2-a1f9-6e2641a6e91f",
+    "servicePointIds" : [ "3a40852d-49fd-4df2-a1f9-6e2641a6e91f" ],
+    "servicePoints" : [ ],
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:48.933+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:48.925+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "625cda00-a6cb-4234-af25-466566b30973",
+    "name" : "HL Reference ",
+    "code" : "HLREF",
+    "discoveryDisplayName" : "Hutchinson Library Reference ",
+    "isActive" : true,
+    "institutionId" : "a1f4ec1b-eaa5-41f5-95c0-84f0cfaa8caf",
+    "campusId" : "660f81f1-f32a-482b-82bf-e978b59ac7d7",
+    "libraryId" : "9f77b485-5fb9-4ec9-bdba-36dedbbd1798",
+    "details" : { },
+    "primaryServicePoint" : "451d6703-33e6-4456-a238-c713c922c460",
+    "servicePointIds" : [ "451d6703-33e6-4456-a238-c713c922c460" ],
+    "servicePoints" : [ ],
+    "metadata" : {
+      "createdDate" : "2023-08-28T20:51:24.279+00:00",
+      "createdByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67",
+      "updatedDate" : "2023-08-28T20:51:24.279+00:00",
+      "updatedByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67"
+    }
+  }, {
+    "id" : "758258bc-ecc1-41b8-abca-f7b610822ffd",
+    "name" : "ORWIG ETHNO CD",
+    "code" : "KU/CC/DI/O",
+    "isActive" : true,
+    "institutionId" : "40ee00ca-a518-4b49-be01-0638d0a4ac57",
+    "campusId" : "62cf76b7-cca5-4d33-9217-edf42ce1a848",
+    "libraryId" : "5d78803e-ca04-4b4a-aeae-2c63b924518b",
+    "primaryServicePoint" : "3a40852d-49fd-4df2-a1f9-6e2641a6e91f",
+    "servicePointIds" : [ "3a40852d-49fd-4df2-a1f9-6e2641a6e91f" ],
+    "servicePoints" : [ ],
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:48.948+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:48.954+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "b241764c-1466-4e1d-a028-1a3684a5da87",
+    "name" : "Popular Reading Collection",
+    "code" : "KU/CC/DI/P",
+    "isActive" : true,
+    "institutionId" : "40ee00ca-a518-4b49-be01-0638d0a4ac57",
+    "campusId" : "62cf76b7-cca5-4d33-9217-edf42ce1a848",
+    "libraryId" : "5d78803e-ca04-4b4a-aeae-2c63b924518b",
+    "primaryServicePoint" : "3a40852d-49fd-4df2-a1f9-6e2641a6e91f",
+    "servicePointIds" : [ "3a40852d-49fd-4df2-a1f9-6e2641a6e91f" ],
+    "servicePoints" : [ ],
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:48.956+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:48.964+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "184aae84-a5bf-4c6a-85ba-4a7c73026cd5",
+    "name" : "Online",
+    "code" : "E",
+    "description" : "Use for online resources",
+    "discoveryDisplayName" : "Online",
+    "isActive" : true,
+    "institutionId" : "40ee00ca-a518-4b49-be01-0638d0a4ac57",
+    "campusId" : "470ff1dd-937a-4195-bf9e-06bcfcd135df",
+    "libraryId" : "c2549bb4-19c7-4fcc-8b52-39e612fb7dbe",
+    "primaryServicePoint" : "bba36e5d-d567-45fa-81cd-b25874472e30",
+    "servicePointIds" : [ "bba36e5d-d567-45fa-81cd-b25874472e30" ],
+    "servicePoints" : [ ],
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:48.962+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:48.969+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "1c59c110-71c5-4f5a-bfeb-2539cbf28504",
+    "name" : "Faculty Library Reading Room",
+    "code" : "FLRR",
+    "discoveryDisplayName" : "Faculty Library Reading Room",
+    "isActive" : true,
+    "institutionId" : "40ee00ca-a518-4b49-be01-0638d0a4ac57",
+    "campusId" : "62cf76b7-cca5-4d33-9217-edf42ce1a848",
+    "libraryId" : "5d78803e-ca04-4b4a-aeae-2c63b924518b",
+    "details" : { },
+    "primaryServicePoint" : "3a40852d-49fd-4df2-a1f9-6e2641a6e91f",
+    "servicePointIds" : [ "3a40852d-49fd-4df2-a1f9-6e2641a6e91f" ],
+    "servicePoints" : [ ],
+    "metadata" : {
+      "createdDate" : "2021-02-05T21:48:44.104+00:00",
+      "createdByUserId" : "7a16958e-af23-5002-8191-d7a96f5f8070",
+      "updatedDate" : "2021-02-05T21:48:44.104+00:00",
+      "updatedByUserId" : "7a16958e-af23-5002-8191-d7a96f5f8070"
+    }
+  }, {
+    "id" : "f34d27c6-a8eb-461b-acd6-5dea81771e70",
+    "name" : "SECOND FLOOR",
+    "code" : "KU/CC/DI/2",
+    "isActive" : true,
+    "institutionId" : "40ee00ca-a518-4b49-be01-0638d0a4ac57",
+    "campusId" : "62cf76b7-cca5-4d33-9217-edf42ce1a848",
+    "libraryId" : "5d78803e-ca04-4b4a-aeae-2c63b924518b",
+    "primaryServicePoint" : "3a40852d-49fd-4df2-a1f9-6e2641a6e91f",
+    "servicePointIds" : [ "3a40852d-49fd-4df2-a1f9-6e2641a6e91f" ],
+    "servicePoints" : [ ],
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:48.968+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:48.977+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "bca3016f-3fcd-450a-932f-ac1fbf593bde",
+    "name" : "MDG's Location",
+    "code" : "mdg-loc",
+    "discoveryDisplayName" : "MDG's Location",
+    "isActive" : true,
+    "institutionId" : "40ee00ca-a518-4b49-be01-0638d0a4ac57",
+    "campusId" : "62cf76b7-cca5-4d33-9217-edf42ce1a848",
+    "libraryId" : "5d78803e-ca04-4b4a-aeae-2c63b924518b",
+    "details" : { },
+    "primaryServicePoint" : "030c3106-f6d5-42d5-9a34-9a8e47c5e2bf",
+    "servicePointIds" : [ "030c3106-f6d5-42d5-9a34-9a8e47c5e2bf" ],
+    "servicePoints" : [ ],
+    "metadata" : {
+      "createdDate" : "2022-01-26T20:47:00.359+00:00",
+      "createdByUserId" : "7a16958e-af23-5002-8191-d7a96f5f8070",
+      "updatedDate" : "2022-01-26T20:47:00.359+00:00",
+      "updatedByUserId" : "7a16958e-af23-5002-8191-d7a96f5f8070"
+    }
+  }, {
+    "id" : "6522611c-8b89-4d2f-bad8-fdba702e8067",
+    "name" : "Self service",
+    "code" : "SS",
+    "discoveryDisplayName" : "Self service",
+    "isActive" : true,
+    "institutionId" : "74ad50fe-fb29-47e0-bafc-4c86550c6a8c",
+    "campusId" : "3d11275c-3ecc-477e-a1ea-904dab9035d2",
+    "libraryId" : "48b64905-b0bf-406c-b437-c8970a819e15",
+    "details" : { },
+    "primaryServicePoint" : "3a40852d-49fd-4df2-a1f9-6e2641a6e91f",
+    "servicePointIds" : [ "3a40852d-49fd-4df2-a1f9-6e2641a6e91f" ],
+    "servicePoints" : [ ],
+    "metadata" : {
+      "createdDate" : "2022-11-03T08:36:00.553+00:00",
+      "createdByUserId" : "7a16958e-af23-5002-8191-d7a96f5f8070",
+      "updatedDate" : "2022-11-03T08:36:00.553+00:00",
+      "updatedByUserId" : "7a16958e-af23-5002-8191-d7a96f5f8070"
+    }
+  }, {
+    "id" : "7c4488e0-2922-493e-913c-5f145e468fbe",
+    "name" : "Campus",
+    "code" : "C",
+    "discoveryDisplayName" : "Campus",
+    "isActive" : true,
+    "institutionId" : "74ad50fe-fb29-47e0-bafc-4c86550c6a8c",
+    "campusId" : "3d11275c-3ecc-477e-a1ea-904dab9035d2",
+    "libraryId" : "48b64905-b0bf-406c-b437-c8970a819e15",
+    "details" : { },
+    "primaryServicePoint" : "c4c90014-c8c9-4ade-8f24-b5e313319f4b",
+    "servicePointIds" : [ "c4c90014-c8c9-4ade-8f24-b5e313319f4b" ],
+    "servicePoints" : [ ],
+    "metadata" : {
+      "createdDate" : "2022-11-03T08:36:47.792+00:00",
+      "createdByUserId" : "7a16958e-af23-5002-8191-d7a96f5f8070",
+      "updatedDate" : "2022-11-03T08:36:47.792+00:00",
+      "updatedByUserId" : "7a16958e-af23-5002-8191-d7a96f5f8070"
+    }
+  }, {
+    "id" : "1a0e4dd9-b646-4f2e-861b-7e99b91b5f90",
+    "name" : "Växjo annex",
+    "code" : "VA",
+    "discoveryDisplayName" : "Växjo annex",
+    "isActive" : true,
+    "institutionId" : "74ad50fe-fb29-47e0-bafc-4c86550c6a8c",
+    "campusId" : "ef399918-6387-4644-ad2c-90372c095128",
+    "libraryId" : "d4f589aa-b3a8-41f7-a165-0f021e7509ed",
+    "details" : { },
+    "primaryServicePoint" : "7c5abc9f-f3d7-4856-b8d7-6712462ca007",
+    "servicePointIds" : [ "7c5abc9f-f3d7-4856-b8d7-6712462ca007" ],
+    "servicePoints" : [ ],
+    "metadata" : {
+      "createdDate" : "2022-11-03T08:38:21.252+00:00",
+      "createdByUserId" : "7a16958e-af23-5002-8191-d7a96f5f8070",
+      "updatedDate" : "2022-11-03T08:38:21.252+00:00",
+      "updatedByUserId" : "7a16958e-af23-5002-8191-d7a96f5f8070"
+    }
+  }, {
+    "id" : "fcd64ce1-6995-48f0-840e-89ffa2288371",
+    "name" : "Main Library",
+    "code" : "KU/CC/DI/M",
+    "discoveryDisplayName" : "Main Library",
+    "isActive" : true,
+    "institutionId" : "40ee00ca-a518-4b49-be01-0638d0a4ac57",
+    "campusId" : "62cf76b7-cca5-4d33-9217-edf42ce1a848",
+    "libraryId" : "5d78803e-ca04-4b4a-aeae-2c63b924518b",
+    "details" : { },
+    "primaryServicePoint" : "3a40852d-49fd-4df2-a1f9-6e2641a6e91f",
+    "servicePointIds" : [ "3a40852d-49fd-4df2-a1f9-6e2641a6e91f", "22004623-5d49-4a73-b05f-79ee640f1ad6" ],
+    "servicePoints" : [ ],
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:48.942+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2023-01-03T22:38:07.010+00:00",
+      "updatedByUserId" : "7a16958e-af23-5002-8191-d7a96f5f8070"
+    }
+  }, {
+    "id" : "8cd669c5-beab-4be2-96c9-c79f1da77a28",
+    "name" : "HL 1st Floor General Stacks",
+    "code" : "HL1GEN",
+    "discoveryDisplayName" : "Hutchinson Library 1st Floor General Stacks",
+    "isActive" : true,
+    "institutionId" : "a1f4ec1b-eaa5-41f5-95c0-84f0cfaa8caf",
+    "campusId" : "660f81f1-f32a-482b-82bf-e978b59ac7d7",
+    "libraryId" : "9f77b485-5fb9-4ec9-bdba-36dedbbd1798",
+    "details" : { },
+    "primaryServicePoint" : "451d6703-33e6-4456-a238-c713c922c460",
+    "servicePointIds" : [ "451d6703-33e6-4456-a238-c713c922c460" ],
+    "servicePoints" : [ ],
+    "metadata" : {
+      "createdDate" : "2023-08-28T20:52:13.659+00:00",
+      "createdByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67",
+      "updatedDate" : "2023-08-28T20:52:13.659+00:00",
+      "updatedByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67"
+    }
+  }, {
+    "id" : "04325281-a45d-4e30-95f7-192e524ad2a3",
+    "name" : "HL 2nd Floor General Stacks",
+    "code" : "HL2GEN",
+    "discoveryDisplayName" : "Hutchinson Library 2nd Floor General Stacks",
+    "isActive" : true,
+    "institutionId" : "a1f4ec1b-eaa5-41f5-95c0-84f0cfaa8caf",
+    "campusId" : "660f81f1-f32a-482b-82bf-e978b59ac7d7",
+    "libraryId" : "9f77b485-5fb9-4ec9-bdba-36dedbbd1798",
+    "details" : { },
+    "primaryServicePoint" : "451d6703-33e6-4456-a238-c713c922c460",
+    "servicePointIds" : [ "451d6703-33e6-4456-a238-c713c922c460" ],
+    "servicePoints" : [ ],
+    "metadata" : {
+      "createdDate" : "2023-08-28T20:54:29.504+00:00",
+      "createdByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67",
+      "updatedDate" : "2023-08-28T20:54:29.504+00:00",
+      "updatedByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67"
+    }
+  }, {
+    "id" : "799869ed-6cc8-4fdb-b0fc-02d42b938ac3",
+    "name" : "HL DVDs",
+    "code" : "HLDVD",
+    "discoveryDisplayName" : "Hutchinson Library DVDs",
+    "isActive" : true,
+    "institutionId" : "a1f4ec1b-eaa5-41f5-95c0-84f0cfaa8caf",
+    "campusId" : "660f81f1-f32a-482b-82bf-e978b59ac7d7",
+    "libraryId" : "9f77b485-5fb9-4ec9-bdba-36dedbbd1798",
+    "details" : { },
+    "primaryServicePoint" : "451d6703-33e6-4456-a238-c713c922c460",
+    "servicePointIds" : [ "451d6703-33e6-4456-a238-c713c922c460" ],
+    "servicePoints" : [ ],
+    "metadata" : {
+      "createdDate" : "2023-08-28T20:54:57.481+00:00",
+      "createdByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67",
+      "updatedDate" : "2023-08-28T20:54:57.481+00:00",
+      "updatedByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67"
+    }
+  }, {
+    "id" : "53612ef4-51e4-4583-a8ad-a703f70a109b",
+    "name" : "Online Library",
+    "code" : "OLIB",
+    "discoveryDisplayName" : "Online Library",
+    "isActive" : true,
+    "institutionId" : "a1f4ec1b-eaa5-41f5-95c0-84f0cfaa8caf",
+    "campusId" : "660f81f1-f32a-482b-82bf-e978b59ac7d7",
+    "libraryId" : "f982601a-bc9e-4c08-baff-1ea8542b1d1d",
+    "details" : { },
+    "primaryServicePoint" : "451d6703-33e6-4456-a238-c713c922c460",
+    "servicePointIds" : [ "451d6703-33e6-4456-a238-c713c922c460" ],
+    "servicePoints" : [ ],
+    "metadata" : {
+      "createdDate" : "2023-08-28T21:22:31.350+00:00",
+      "createdByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67",
+      "updatedDate" : "2023-08-28T21:22:31.350+00:00",
+      "updatedByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67"
+    }
+  }, {
+    "id" : "4e39467f-7172-45d5-8585-4a3850054a1c",
+    "name" : "HL Periodicals",
+    "code" : "HLPER",
+    "description" : "Print serials (newspapers, magazines, and journals)",
+    "discoveryDisplayName" : "HL Periodicals",
+    "isActive" : true,
+    "institutionId" : "a1f4ec1b-eaa5-41f5-95c0-84f0cfaa8caf",
+    "campusId" : "660f81f1-f32a-482b-82bf-e978b59ac7d7",
+    "libraryId" : "9f77b485-5fb9-4ec9-bdba-36dedbbd1798",
+    "details" : { },
+    "primaryServicePoint" : "451d6703-33e6-4456-a238-c713c922c460",
+    "servicePointIds" : [ "451d6703-33e6-4456-a238-c713c922c460" ],
+    "servicePoints" : [ ],
+    "metadata" : {
+      "createdDate" : "2023-11-08T21:20:43.772+00:00",
+      "createdByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67",
+      "updatedDate" : "2023-11-08T21:20:43.772+00:00",
+      "updatedByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67"
+    }
+  }, {
+    "id" : "b3b870ea-47f7-4833-8347-91a99c9a064a",
+    "name" : "HL Reading Room",
+    "code" : "HLREAD",
+    "discoveryDisplayName" : "HL Reading Room",
+    "isActive" : true,
+    "institutionId" : "a1f4ec1b-eaa5-41f5-95c0-84f0cfaa8caf",
+    "campusId" : "660f81f1-f32a-482b-82bf-e978b59ac7d7",
+    "libraryId" : "9f77b485-5fb9-4ec9-bdba-36dedbbd1798",
+    "details" : { },
+    "primaryServicePoint" : "451d6703-33e6-4456-a238-c713c922c460",
+    "servicePointIds" : [ "451d6703-33e6-4456-a238-c713c922c460" ],
+    "servicePoints" : [ ],
+    "metadata" : {
+      "createdDate" : "2023-11-08T22:00:16.383+00:00",
+      "createdByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67",
+      "updatedDate" : "2023-11-08T22:00:16.383+00:00",
+      "updatedByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67"
+    }
+  }, {
+    "id" : "f20fb842-0db6-42ef-a588-3214106a9e20",
+    "name" : "Front Hall Display",
+    "code" : "fronthalldisplay",
+    "discoveryDisplayName" : "Front Hall Display",
+    "isActive" : true,
+    "institutionId" : "a1f4ec1b-eaa5-41f5-95c0-84f0cfaa8caf",
+    "campusId" : "32a5096d-9e94-463f-b4f5-a62c478ddf59",
+    "libraryId" : "dbc225ae-c918-4e3d-87f9-8d340314b384",
+    "details" : { },
+    "primaryServicePoint" : "3a40852d-49fd-4df2-a1f9-6e2641a6e91f",
+    "servicePointIds" : [ "3a40852d-49fd-4df2-a1f9-6e2641a6e91f" ],
+    "servicePoints" : [ ],
+    "metadata" : {
+      "createdDate" : "2024-01-25T02:24:41.040+00:00",
+      "createdByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67",
+      "updatedDate" : "2024-01-25T02:24:41.040+00:00",
+      "updatedByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67"
+    }
+  }, {
+    "id" : "615df9af-960b-42d5-b51b-8ddc974ba296",
+    "name" : "Law Library Reading Room",
+    "code" : "LLREAD",
+    "discoveryDisplayName" : "Law Library Reading Room",
+    "isActive" : true,
+    "institutionId" : "a1f4ec1b-eaa5-41f5-95c0-84f0cfaa8caf",
+    "campusId" : "660f81f1-f32a-482b-82bf-e978b59ac7d7",
+    "libraryId" : "2fd3eb54-3cfe-4a4c-989c-6d5417d4aa17",
+    "details" : { },
+    "primaryServicePoint" : "3be085ef-97b6-46c6-bf3a-1cdabf765e72",
+    "servicePointIds" : [ "3be085ef-97b6-46c6-bf3a-1cdabf765e72" ],
+    "servicePoints" : [ ],
+    "metadata" : {
+      "createdDate" : "2023-11-08T22:34:03.064+00:00",
+      "createdByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67",
+      "updatedDate" : "2023-11-08T22:35:39.254+00:00",
+      "updatedByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67"
+    }
+  }, {
+    "id" : "1c6ac9fe-ca5e-4d53-abe9-84eda7e14546",
+    "name" : "Law Library Ground Floor Stacks",
+    "code" : "LLGROUND",
+    "discoveryDisplayName" : "Law Library Ground Floor Stacks",
+    "isActive" : true,
+    "institutionId" : "a1f4ec1b-eaa5-41f5-95c0-84f0cfaa8caf",
+    "campusId" : "660f81f1-f32a-482b-82bf-e978b59ac7d7",
+    "libraryId" : "2fd3eb54-3cfe-4a4c-989c-6d5417d4aa17",
+    "details" : { },
+    "primaryServicePoint" : "3be085ef-97b6-46c6-bf3a-1cdabf765e72",
+    "servicePointIds" : [ "3be085ef-97b6-46c6-bf3a-1cdabf765e72" ],
+    "servicePoints" : [ ],
+    "metadata" : {
+      "createdDate" : "2023-11-08T22:38:22.218+00:00",
+      "createdByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67",
+      "updatedDate" : "2023-11-08T22:38:22.218+00:00",
+      "updatedByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67"
+    }
+  }, {
+    "id" : "ff8bbc1d-d1e7-46b5-ae0d-6ca781b3ec12",
+    "name" : "Reserves",
+    "code" : "reserves",
+    "discoveryDisplayName" : "Reserves",
+    "isActive" : true,
+    "institutionId" : "a1f4ec1b-eaa5-41f5-95c0-84f0cfaa8caf",
+    "campusId" : "32a5096d-9e94-463f-b4f5-a62c478ddf59",
+    "libraryId" : "dbc225ae-c918-4e3d-87f9-8d340314b384",
+    "details" : { },
+    "primaryServicePoint" : "75e1cce1-206e-4604-a15c-4a0ef9b6a005",
+    "servicePointIds" : [ "75e1cce1-206e-4604-a15c-4a0ef9b6a005" ],
+    "servicePoints" : [ ],
+    "metadata" : {
+      "createdDate" : "2024-05-14T22:50:52.829+00:00",
+      "createdByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67",
+      "updatedDate" : "2024-05-14T22:53:59.361+00:00",
+      "updatedByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67"
+    }
+  }, {
+    "id" : "b328c551-01db-413a-ae6a-ecb376076a20",
+    "name" : "Main Stacks",
+    "code" : "mainstacks",
+    "discoveryDisplayName" : "Main Stacks",
+    "isActive" : true,
+    "institutionId" : "a1f4ec1b-eaa5-41f5-95c0-84f0cfaa8caf",
+    "campusId" : "32a5096d-9e94-463f-b4f5-a62c478ddf59",
+    "libraryId" : "dbc225ae-c918-4e3d-87f9-8d340314b384",
+    "details" : { },
+    "primaryServicePoint" : "451d6703-33e6-4456-a238-c713c922c460",
+    "servicePointIds" : [ "6fa4f087-4b2a-47fd-9fa4-5e77efb9f19a", "451d6703-33e6-4456-a238-c713c922c460" ],
+    "servicePoints" : [ ],
+    "metadata" : {
+      "createdDate" : "2024-01-25T11:27:28.873+00:00",
+      "createdByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67",
+      "updatedDate" : "2024-01-25T11:37:40.369+00:00",
+      "updatedByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67"
+    }
+  } ],
+  "totalRecords" : 23
+}

@@ -1,0 +1,92 @@
+{
+  "instanceStatuses" : [ {
+    "id" : "2a340d34-6b70-443a-bb1b-1b8d1c65d862",
+    "code" : "other",
+    "name" : "Other",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.343+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.553+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "9634a5ab-9228-4703-baf2-4d12ebc77d56",
+    "code" : "cat",
+    "name" : "Cataloged",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.350+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.558+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "26f5208e-110a-4394-be29-1569a8c84a65",
+    "code" : "uncat",
+    "name" : "Uncataloged",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.355+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.561+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "daf2681c-25af-4202-a3fa-e58fdf806183",
+    "code" : "temp",
+    "name" : "Temporary",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.360+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.563+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "f5cc2ab6-bb92-4cab-b83f-5a3d09261a41",
+    "code" : "none",
+    "name" : "Not yet assigned",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.365+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.565+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "52a2ff34-2a12-420d-8539-21aa8d3cf5d8",
+    "code" : "batch",
+    "name" : "Batch Loaded",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.370+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.567+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "cd11495d-d821-4ff8-95c1-24c9f921579d",
+    "code" : "oclccm",
+    "name" : "OCLC collection manager",
+    "source" : "local",
+    "metadata" : {
+      "createdDate" : "2023-04-10T18:08:16.342+00:00",
+      "createdByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67",
+      "updatedDate" : "2023-04-10T18:08:16.342+00:00",
+      "updatedByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67"
+    }
+  }, {
+    "id" : "2e3c545f-68a4-438a-9b64-13bf0c804f49",
+    "code" : "eresource",
+    "name" : "Electronic resource",
+    "source" : "local",
+    "metadata" : {
+      "createdDate" : "2024-02-07T21:09:11.526+00:00",
+      "createdByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67",
+      "updatedDate" : "2024-02-07T21:09:11.526+00:00",
+      "updatedByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67"
+    }
+  } ],
+  "totalRecords" : 8
+}

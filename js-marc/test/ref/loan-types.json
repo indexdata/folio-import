@@ -1,0 +1,58 @@
+{
+  "loantypes" : [ {
+    "id" : "2e48e713-17f3-4c13-a9f8-23845bb210a4",
+    "name" : "Reading room",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:48.843+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:48.741+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "a1dc1ce3-d56f-4d8a-b498-d5d674ccc845",
+    "name" : "Selected",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:48.851+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:48.762+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "e8b311a6-3b21-43f2-a269-dd9310cb2d0e",
+    "name" : "Course reserves",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:48.856+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:48.772+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "2b94c631-fca9-4892-a730-03ee529ffe27",
+    "name" : "Can circulate",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:48.862+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:48.782+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "1a33e0a3-154d-455c-88e8-628d45e02b57",
+    "name" : "New Book",
+    "metadata" : {
+      "createdDate" : "2024-01-25T04:01:11.360+00:00",
+      "createdByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67",
+      "updatedDate" : "2024-01-25T04:01:11.360+00:00",
+      "updatedByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67"
+    }
+  }, {
+    "id" : "f6b452d8-12a2-4c9d-a151-180ce96267a3",
+    "name" : "Does not circulate",
+    "metadata" : {
+      "createdDate" : "2024-04-09T15:29:24.536+00:00",
+      "createdByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67",
+      "updatedDate" : "2024-04-09T15:29:24.536+00:00",
+      "updatedByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67"
+    }
+  } ],
+  "totalRecords" : 6
+}

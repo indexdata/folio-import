@@ -1,0 +1,84 @@
+{
+  "itemNoteTypes" : [ {
+    "id" : "f3ae3823-d096-4c65-8734-0c1efd2ffea8",
+    "name" : "Electronic bookplate",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:52.204+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:51.015+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "1dde7141-ec8a-4dae-9825-49ce14c728e7",
+    "name" : "Copy note",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:52.210+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:51.020+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "0e40884c-3523-4c6d-8187-d578e3d2794e",
+    "name" : "Action note",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:52.214+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:51.022+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "87c450be-2033-41fb-80ba-dd2409883681",
+    "name" : "Binding",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:52.219+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:51.025+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "c3a539b9-9576-4e3a-b6de-d910200b2919",
+    "name" : "Provenance",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:52.224+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:51.027+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "acb3a58f-1d72-461d-97c3-0e7119e8d544",
+    "name" : "Reproduction",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:52.229+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:51.029+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "8d0a5eca-25de-4391-81a9-236eeefdd20b",
+    "name" : "Note",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:52.233+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:51.032+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "ea4a2dd1-290b-467b-9acf-892fb324f7f4",
+    "name" : "Price",
+    "source" : "local",
+    "metadata" : {
+      "createdDate" : "2022-11-07T10:25:38.680+00:00",
+      "createdByUserId" : "7a16958e-af23-5002-8191-d7a96f5f8070",
+      "updatedDate" : "2022-11-07T10:25:38.680+00:00",
+      "updatedByUserId" : "7a16958e-af23-5002-8191-d7a96f5f8070"
+    }
+  } ],
+  "totalRecords" : 8
+}

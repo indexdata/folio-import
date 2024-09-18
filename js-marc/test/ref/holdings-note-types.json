@@ -1,0 +1,74 @@
+{
+  "holdingsNoteTypes" : [ {
+    "id" : "88914775-f677-4759-b57b-1a33b90b24e0",
+    "name" : "Electronic bookplate",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:52.162+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.991+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "c4407cc7-d79f-4609-95bd-1cefb2e2b5c5",
+    "name" : "Copy note",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:52.168+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.995+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "d6510242-5ec3-42ed-b593-3585d2e48fd6",
+    "name" : "Action note",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:52.173+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.998+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "e19eabab-a85c-4aef-a7b2-33bd9acef24e",
+    "name" : "Binding",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:52.179+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:51.000+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "db9b4787-95f0-4e78-becf-26748ce6bdeb",
+    "name" : "Provenance",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:52.184+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:51.002+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "6a41b714-8574-4084-8d64-a9373c3fbb59",
+    "name" : "Reproduction",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:52.189+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:51.004+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "b160f13a-ddba-4053-b9c4-60ec5ea45d56",
+    "name" : "Note",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:52.194+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:51.007+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  } ],
+  "totalRecords" : 7
+}

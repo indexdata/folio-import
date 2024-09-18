@@ -1,0 +1,84 @@
+{
+  "illPolicies" : [ {
+    "id" : "c51f7aa9-9997-45e6-94d6-b502445aae9d",
+    "name" : "Unknown reproduction policy",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.702+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.764+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "37fc2702-7ec9-482a-a4e3-5ed9a122ece1",
+    "name" : "Unknown lending policy",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.708+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.769+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "46970b40-918e-47a4-a45d-b1677a2d3d46",
+    "name" : "Will lend",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.716+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.771+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "6bc6a71f-d6e2-4693-87f1-f495afddff00",
+    "name" : "Will not reproduce",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.721+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.773+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "9e49924b-f649-4b36-ab57-e66e639a9b0e",
+    "name" : "Limited lending policy",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.726+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.775+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "b0f97013-87f5-4bab-87f2-ac4a5191b489",
+    "name" : "Will not lend",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.731+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.778+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "2a572e7b-dfe5-4dee-8a62-b98d26a802e6",
+    "name" : "Will reproduce",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.737+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.780+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "2b870182-a23d-48e8-917d-9421e5c3ce13",
+    "name" : "Will lend hard copy only",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.742+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.783+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  } ],
+  "totalRecords" : 8
+}

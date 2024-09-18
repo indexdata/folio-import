@@ -1,0 +1,54 @@
+{
+  "issuanceModes" : [ {
+    "id" : "9d18a02f-5897-4c31-9106-c9abb5c7ae8b",
+    "name" : "single unit",
+    "source" : "rdamodeissue",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.567+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.680+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "612bbd3d-c16b-4bfb-8517-2afafc60204a",
+    "name" : "unspecified",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.573+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.685+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "f5cc2ab6-bb92-4cab-b83f-5a3d09261a41",
+    "name" : "multipart monograph",
+    "source" : "rdamodeissue",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.577+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.688+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "068b5344-e2a6-40df-9186-1829e13cd344",
+    "name" : "serial",
+    "source" : "rdamodeissue",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.582+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.691+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "4fc0f4fe-06fd-490a-a078-c4da1754e03a",
+    "name" : "integrating resource",
+    "source" : "rdamodeissue",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.587+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.694+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  } ],
+  "totalRecords" : 5
+}

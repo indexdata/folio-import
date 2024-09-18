@@ -1,0 +1,305 @@
+{
+  "servicepoints" : [ {
+    "id" : "c4c90014-c8c9-4ade-8f24-b5e313319f4b",
+    "name" : "Circ Desk 2",
+    "code" : "cd2",
+    "discoveryDisplayName" : "Circulation Desk -- Back Entrance",
+    "pickupLocation" : true,
+    "holdShelfExpiryPeriod" : {
+      "duration" : 5,
+      "intervalId" : "Days"
+    },
+    "holdShelfClosedLibraryDateManagement" : "Keep_the_current_due_date",
+    "staffSlips" : [ ],
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:50.617+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.066+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "7c5abc9f-f3d7-4856-b8d7-6712462ca007",
+    "name" : "Online",
+    "code" : "Online",
+    "discoveryDisplayName" : "Online",
+    "shelvingLagTime" : 0,
+    "pickupLocation" : false,
+    "holdShelfClosedLibraryDateManagement" : "Keep_the_current_due_date",
+    "staffSlips" : [ ],
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:50.623+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.074+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "3a40852d-49fd-4df2-a1f9-6e2641a6e91f",
+    "name" : "Circ Desk 1",
+    "code" : "cd1",
+    "discoveryDisplayName" : "Circulation Desk -- Hallway",
+    "pickupLocation" : true,
+    "holdShelfExpiryPeriod" : {
+      "duration" : 3,
+      "intervalId" : "Weeks"
+    },
+    "holdShelfClosedLibraryDateManagement" : "Keep_the_current_due_date",
+    "staffSlips" : [ ],
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:50.628+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.077+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "030c3106-f6d5-42d5-9a34-9a8e47c5e2bf",
+    "name" : "Mike's Service Point",
+    "code" : "mdg-svc",
+    "discoveryDisplayName" : "Mike's Service Point",
+    "description" : "MDG test service point",
+    "holdShelfClosedLibraryDateManagement" : "Keep_the_current_due_date",
+    "staffSlips" : [ {
+      "id" : "6a6e72f0-69da-4b4c-8254-7154679e9d88",
+      "printByDefault" : true
+    }, {
+      "id" : "8812bae1-2738-442c-bc20-fe4bb38a11f8",
+      "printByDefault" : true
+    }, {
+      "id" : "1ed55c5c-64d9-40eb-8b80-7438a262288b",
+      "printByDefault" : true
+    }, {
+      "id" : "f838cdaf-555a-473f-abf1-f35ef6ab8ae1",
+      "printByDefault" : true
+    } ],
+    "metadata" : {
+      "createdDate" : "2022-01-26T20:43:26.123+00:00",
+      "createdByUserId" : "7a16958e-af23-5002-8191-d7a96f5f8070",
+      "updatedDate" : "2022-01-26T20:43:26.123+00:00",
+      "updatedByUserId" : "7a16958e-af23-5002-8191-d7a96f5f8070"
+    }
+  }, {
+    "id" : "6d7504e8-3162-4731-a2e8-470b179f44a3",
+    "name" : "Hebis",
+    "code" : "HEBIS",
+    "discoveryDisplayName" : "Hebis",
+    "shelvingLagTime" : 2,
+    "pickupLocation" : true,
+    "holdShelfExpiryPeriod" : {
+      "duration" : 1,
+      "intervalId" : "Minutes"
+    },
+    "holdShelfClosedLibraryDateManagement" : "Keep_the_current_due_date",
+    "staffSlips" : [ {
+      "id" : "6a6e72f0-69da-4b4c-8254-7154679e9d88",
+      "printByDefault" : true
+    }, {
+      "id" : "8812bae1-2738-442c-bc20-fe4bb38a11f8",
+      "printByDefault" : true
+    }, {
+      "id" : "1ed55c5c-64d9-40eb-8b80-7438a262288b",
+      "printByDefault" : true
+    }, {
+      "id" : "f838cdaf-555a-473f-abf1-f35ef6ab8ae1",
+      "printByDefault" : true
+    } ],
+    "metadata" : {
+      "createdDate" : "2022-01-27T13:07:50.275+00:00",
+      "createdByUserId" : "7a16958e-af23-5002-8191-d7a96f5f8070",
+      "updatedDate" : "2022-01-27T13:07:50.275+00:00",
+      "updatedByUserId" : "7a16958e-af23-5002-8191-d7a96f5f8070"
+    }
+  }, {
+    "id" : "75e1cce1-206e-4604-a15c-4a0ef9b6a005",
+    "name" : "Reserves Processing",
+    "code" : "Reserves",
+    "discoveryDisplayName" : "Reserves Processing",
+    "holdShelfClosedLibraryDateManagement" : "Keep_the_current_due_date",
+    "staffSlips" : [ {
+      "id" : "6a6e72f0-69da-4b4c-8254-7154679e9d88",
+      "printByDefault" : true
+    }, {
+      "id" : "8812bae1-2738-442c-bc20-fe4bb38a11f8",
+      "printByDefault" : true
+    }, {
+      "id" : "1ed55c5c-64d9-40eb-8b80-7438a262288b",
+      "printByDefault" : true
+    }, {
+      "id" : "f838cdaf-555a-473f-abf1-f35ef6ab8ae1",
+      "printByDefault" : true
+    } ],
+    "metadata" : {
+      "createdDate" : "2024-05-14T22:53:34.241+00:00",
+      "createdByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67",
+      "updatedDate" : "2024-05-14T22:53:34.241+00:00",
+      "updatedByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67"
+    }
+  }, {
+    "id" : "22004623-5d49-4a73-b05f-79ee640f1ad6",
+    "name" : "Self Checkout",
+    "code" : "selfcheck",
+    "discoveryDisplayName" : "Self-checkout station",
+    "pickupLocation" : false,
+    "holdShelfClosedLibraryDateManagement" : "Keep_the_current_due_date",
+    "staffSlips" : [ {
+      "id" : "6a6e72f0-69da-4b4c-8254-7154679e9d88",
+      "printByDefault" : false
+    }, {
+      "id" : "8812bae1-2738-442c-bc20-fe4bb38a11f8",
+      "printByDefault" : false
+    }, {
+      "id" : "1ed55c5c-64d9-40eb-8b80-7438a262288b",
+      "printByDefault" : false
+    }, {
+      "id" : "f838cdaf-555a-473f-abf1-f35ef6ab8ae1",
+      "printByDefault" : false
+    } ],
+    "metadata" : {
+      "createdDate" : "2023-01-03T22:36:09.620+00:00",
+      "createdByUserId" : "7a16958e-af23-5002-8191-d7a96f5f8070",
+      "updatedDate" : "2023-01-03T22:36:44.292+00:00",
+      "updatedByUserId" : "7a16958e-af23-5002-8191-d7a96f5f8070"
+    }
+  }, {
+    "id" : "eb6e4b18-13b0-4d99-997f-9b1fbd8776d7",
+    "name" : "Dinand Library",
+    "code" : "Dinand",
+    "discoveryDisplayName" : "Dinand",
+    "pickupLocation" : true,
+    "holdShelfExpiryPeriod" : {
+      "duration" : 6,
+      "intervalId" : "Days"
+    },
+    "holdShelfClosedLibraryDateManagement" : "Keep_the_current_due_date",
+    "staffSlips" : [ {
+      "id" : "6a6e72f0-69da-4b4c-8254-7154679e9d88",
+      "printByDefault" : true
+    }, {
+      "id" : "8812bae1-2738-442c-bc20-fe4bb38a11f8",
+      "printByDefault" : true
+    }, {
+      "id" : "1ed55c5c-64d9-40eb-8b80-7438a262288b",
+      "printByDefault" : true
+    }, {
+      "id" : "f838cdaf-555a-473f-abf1-f35ef6ab8ae1",
+      "printByDefault" : true
+    } ],
+    "metadata" : {
+      "createdDate" : "2023-09-08T13:55:01.914+00:00",
+      "createdByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67",
+      "updatedDate" : "2023-09-08T13:55:01.914+00:00",
+      "updatedByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67"
+    }
+  }, {
+    "id" : "6fa4f087-4b2a-47fd-9fa4-5e77efb9f19a",
+    "name" : "Tara's Service Point",
+    "code" : "Tara",
+    "discoveryDisplayName" : "Tara",
+    "holdShelfClosedLibraryDateManagement" : "Keep_the_current_due_date",
+    "staffSlips" : [ {
+      "id" : "6a6e72f0-69da-4b4c-8254-7154679e9d88",
+      "printByDefault" : true
+    }, {
+      "id" : "8812bae1-2738-442c-bc20-fe4bb38a11f8",
+      "printByDefault" : true
+    }, {
+      "id" : "1ed55c5c-64d9-40eb-8b80-7438a262288b",
+      "printByDefault" : true
+    }, {
+      "id" : "f838cdaf-555a-473f-abf1-f35ef6ab8ae1",
+      "printByDefault" : true
+    } ],
+    "metadata" : {
+      "createdDate" : "2023-10-24T17:34:47.270+00:00",
+      "createdByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67",
+      "updatedDate" : "2023-10-24T17:34:47.270+00:00",
+      "updatedByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67"
+    }
+  }, {
+    "id" : "e012d633-3e58-41d7-a276-da4f9b4d52b8",
+    "name" : "MW : HL Self Checkout ",
+    "code" : "HLSELF",
+    "discoveryDisplayName" : "Hutchinson Library Self Checkout",
+    "pickupLocation" : false,
+    "holdShelfClosedLibraryDateManagement" : "Keep_the_current_due_date",
+    "staffSlips" : [ {
+      "id" : "6a6e72f0-69da-4b4c-8254-7154679e9d88",
+      "printByDefault" : false
+    }, {
+      "id" : "8812bae1-2738-442c-bc20-fe4bb38a11f8",
+      "printByDefault" : false
+    }, {
+      "id" : "1ed55c5c-64d9-40eb-8b80-7438a262288b",
+      "printByDefault" : false
+    }, {
+      "id" : "f838cdaf-555a-473f-abf1-f35ef6ab8ae1",
+      "printByDefault" : false
+    } ],
+    "metadata" : {
+      "createdDate" : "2023-08-28T20:58:56.912+00:00",
+      "createdByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67",
+      "updatedDate" : "2023-11-08T22:36:36.559+00:00",
+      "updatedByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67"
+    }
+  }, {
+    "id" : "451d6703-33e6-4456-a238-c713c922c460",
+    "name" : "MW : HL Circulation Desk",
+    "code" : "HLCD",
+    "discoveryDisplayName" : "Hutchinson Library Circulation Desk",
+    "pickupLocation" : true,
+    "holdShelfExpiryPeriod" : {
+      "duration" : 14,
+      "intervalId" : "Days"
+    },
+    "holdShelfClosedLibraryDateManagement" : "Keep_the_current_due_date",
+    "staffSlips" : [ {
+      "id" : "6a6e72f0-69da-4b4c-8254-7154679e9d88",
+      "printByDefault" : true
+    }, {
+      "id" : "8812bae1-2738-442c-bc20-fe4bb38a11f8",
+      "printByDefault" : true
+    }, {
+      "id" : "1ed55c5c-64d9-40eb-8b80-7438a262288b",
+      "printByDefault" : true
+    }, {
+      "id" : "f838cdaf-555a-473f-abf1-f35ef6ab8ae1",
+      "printByDefault" : true
+    } ],
+    "metadata" : {
+      "createdDate" : "2023-08-28T20:50:13.980+00:00",
+      "createdByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67",
+      "updatedDate" : "2023-11-08T22:36:15.614+00:00",
+      "updatedByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67"
+    }
+  }, {
+    "id" : "3be085ef-97b6-46c6-bf3a-1cdabf765e72",
+    "name" : "MW : Law Library Circulation Desk",
+    "code" : "LAWLIBCIRC",
+    "discoveryDisplayName" : "Law Library",
+    "description" : "Law Library at Midwest Campus of the North American University ",
+    "pickupLocation" : true,
+    "holdShelfExpiryPeriod" : {
+      "duration" : 5,
+      "intervalId" : "Days"
+    },
+    "holdShelfClosedLibraryDateManagement" : "Keep_the_current_due_date",
+    "staffSlips" : [ {
+      "id" : "6a6e72f0-69da-4b4c-8254-7154679e9d88",
+      "printByDefault" : true
+    }, {
+      "id" : "8812bae1-2738-442c-bc20-fe4bb38a11f8",
+      "printByDefault" : true
+    }, {
+      "id" : "1ed55c5c-64d9-40eb-8b80-7438a262288b",
+      "printByDefault" : true
+    }, {
+      "id" : "f838cdaf-555a-473f-abf1-f35ef6ab8ae1",
+      "printByDefault" : true
+    } ],
+    "metadata" : {
+      "createdDate" : "2023-11-08T22:35:14.843+00:00",
+      "createdByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67",
+      "updatedDate" : "2023-11-08T22:36:25.796+00:00",
+      "updatedByUserId" : "7e0558c1-8cae-5e19-920e-46feadb81b67"
+    }
+  } ],
+  "totalRecords" : 12
+}

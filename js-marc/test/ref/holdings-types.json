@@ -1,0 +1,54 @@
+{
+  "holdingsTypes" : [ {
+    "id" : "996f93e2-5b5e-4cf2-9168-33ced1f95eed",
+    "name" : "Electronic",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.757+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.791+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "03c9c400-b9e3-4a07-ac0e-05ab470233ed",
+    "name" : "Monograph",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.764+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.796+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "e6da6c98-6dd0-41bc-8b4b-cfd4bbd9c3ae",
+    "name" : "Serial",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.769+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.798+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "dc35d0ae-e877-488b-8e97-6e41444e6d0a",
+    "name" : "Multi-part monograph",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.774+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.800+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "0c422f92-0f4d-4d32-8cbe-390ebc33a3e5",
+    "name" : "Physical",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.779+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.803+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  } ],
+  "totalRecords" : 5
+}

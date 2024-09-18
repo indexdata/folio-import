@@ -1,0 +1,24 @@
+{
+  "holdingsRecordsSources" : [ {
+    "id" : "036ee84a-6afd-4c3c-9ad3-4a12ab875f59",
+    "name" : "MARC",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:52.271+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:51.053+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "f32d531e-df79-46b3-8932-cdd35f7a2264",
+    "name" : "FOLIO",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:52.277+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:51.057+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  } ],
+  "totalRecords" : 2
+}

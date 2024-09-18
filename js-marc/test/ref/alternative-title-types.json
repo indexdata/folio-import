@@ -1,0 +1,134 @@
+{
+  "alternativeTitleTypes" : [ {
+    "id" : "4bb300a4-04c9-414b-bfbc-9c032f74b7b2",
+    "name" : "Parallel title",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.603+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.702+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "30512027-cdc9-4c79-af75-1565b3bd888d",
+    "name" : "Uniform title",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.610+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.715+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "0fe58901-183e-4678-a3aa-0b4751174ba8",
+    "name" : "No type specified",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.615+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.718+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "a8b45056-2223-43ca-8514-4dd88ece984b",
+    "name" : "Portion of title",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.620+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.720+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "781c04a4-f41e-4ab0-9118-6836e93de3c8",
+    "name" : "Distinctive title",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.628+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.723+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "5c364ce4-c8fd-4891-a28d-bb91c9bcdbfb",
+    "name" : "Cover title",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.633+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.725+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "dae08d04-8c4e-4ab2-b6bb-99edbf252231",
+    "name" : "Spine title",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.638+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.727+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "09964ad1-7aed-49b8-8223-a4c105e3ef87",
+    "name" : "Running title",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.642+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.730+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "2ca8538d-a2fd-4e60-b967-1cb220101e22",
+    "name" : "Added title page title",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.647+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.732+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "2584943f-36ad-4037-a7fa-3bdebb09f452",
+    "name" : "Other title",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.653+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.735+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "432ca81a-fe4d-4249-bfd3-53388725647d",
+    "name" : "Caption title",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.657+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.737+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "bf3ad965-b30f-4364-8140-336fad0363e6",
+    "name" : "Variant title",
+    "source" : "local",
+    "metadata" : {
+      "createdDate" : "2022-02-22T22:08:46.915+00:00",
+      "createdByUserId" : "7a16958e-af23-5002-8191-d7a96f5f8070",
+      "updatedDate" : "2022-02-22T22:08:46.915+00:00",
+      "updatedByUserId" : "7a16958e-af23-5002-8191-d7a96f5f8070"
+    }
+  }, {
+    "id" : "d5ff1684-c818-4e05-9e03-d937af3c1424",
+    "name" : "Former title",
+    "source" : "local",
+    "metadata" : {
+      "createdDate" : "2022-02-22T22:13:02.999+00:00",
+      "createdByUserId" : "7a16958e-af23-5002-8191-d7a96f5f8070",
+      "updatedDate" : "2022-02-22T22:13:02.999+00:00",
+      "updatedByUserId" : "7a16958e-af23-5002-8191-d7a96f5f8070"
+    }
+  } ],
+  "totalRecords" : 13
+}

@@ -1,0 +1,144 @@
+{
+  "callNumberTypes" : [ {
+    "id" : "d6fa7acb-cfa1-48fa-9bd8-285c05379821",
+    "name" : "SuDoc",
+    "source" : "local",
+    "metadata" : {
+      "createdDate" : "2024-03-28T11:50:50.557+00:00",
+      "createdByUserId" : "e0d7ba7c-98fa-49c0-b0cb-3bcc1a32e3a2",
+      "updatedDate" : "2024-03-28T11:50:50.557+00:00",
+      "updatedByUserId" : "e0d7ba7c-98fa-49c0-b0cb-3bcc1a32e3a2"
+    }
+  }, {
+    "id" : "d644be8f-deb5-4c4d-8c9e-2291b7c0f46f",
+    "name" : "UDC",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.798+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.821+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "827a2b64-cbf5-4296-8545-130876e4dfc0",
+    "name" : "Source specified in subfield $2",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.814+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.831+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "5ba6b62e-6858-490a-8102-5b1369873835",
+    "name" : "Title",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.819+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.833+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "28927d76-e097-4f63-8510-e56f2b7a3ad0",
+    "name" : "Shelving control number",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.826+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.836+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "cd70562c-dd0b-42f6-aa80-ce803d24d4a1",
+    "name" : "Shelved separately",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.832+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.838+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "828ae637-dfa3-4265-a1af-5279c436edff",
+    "name" : "MOYS",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.837+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.841+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "512173a7-bd09-490e-b773-17d83f2b63fe",
+    "name" : "LC Modified",
+    "source" : "folio",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.854+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.848+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "49fb20b2-75a3-4ecb-83dc-df9e1b478544",
+    "name" : "RVK",
+    "source" : "local",
+    "metadata" : {
+      "createdDate" : "2022-01-27T14:08:33.612+00:00",
+      "createdByUserId" : "7a16958e-af23-5002-8191-d7a96f5f8070",
+      "updatedDate" : "2022-01-27T14:08:33.612+00:00",
+      "updatedByUserId" : "7a16958e-af23-5002-8191-d7a96f5f8070"
+    }
+  }, {
+    "id" : "95467209-6d7b-468b-94df-0f5d7ad2747d",
+    "name" : "Library of Congress classification",
+    "source" : "system",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.791+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.810+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "054d460d-d6b9-4469-9e37-7a78a2266655",
+    "name" : "National Library of Medicine classification",
+    "source" : "system",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.803+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.826+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "03dd64d0-5626-4ecd-8ece-4531e0069f35",
+    "name" : "Dewey Decimal classification",
+    "source" : "system",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.808+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.828+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "6caca63e-5651-4db6-9247-3205156e9699",
+    "name" : "Other scheme",
+    "source" : "system",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.843+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.843+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "fc388041-6cd0-4806-8a74-ebe3b9ab4c6e",
+    "name" : "Superintendent of Documents classification",
+    "source" : "system",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:51.849+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:50.845+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  } ],
+  "totalRecords" : 14
+}

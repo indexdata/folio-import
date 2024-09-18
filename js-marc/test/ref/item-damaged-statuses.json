@@ -1,0 +1,24 @@
+{
+  "itemDamageStatuses" : [ {
+    "id" : "516b82eb-1f19-4a63-8c48-8f1a3e9ff311",
+    "name" : "Not Damaged",
+    "source" : "local",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:52.249+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:51.040+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  }, {
+    "id" : "54d1dd76-ea33-4bcb-955b-6b29df4f7930",
+    "name" : "Damaged",
+    "source" : "local",
+    "metadata" : {
+      "createdDate" : "2021-02-04T17:10:52.255+00:00",
+      "createdByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89",
+      "updatedDate" : "2022-01-12T17:31:51.044+00:00",
+      "updatedByUserId" : "15a65190-1f3e-5dd7-bbd7-a203d6e85a89"
+    }
+  } ],
+  "totalRecords" : 2
+}
