@@ -288,6 +288,7 @@ try {
   ns = conf.nameSpace;
   refDir = conf.refDir.replace(/^\./, confDir);
   rulesFile = conf.mapFile.replace(/^\./, confDir);
+  let prefix = conf.hridPrefix;
   let wdir = path.dirname(rawFile);
   let fn = path.basename(rawFile, '.mrc');
   let outBase = wdir + '/' + fn;
@@ -422,6 +423,8 @@ try {
           }
           marc.addField('001', cnum);
         }
+      } if (prefix && marc.fields['001']) {
+        marc.updateField('001', prefix + marc.fields['001']);
       }
       let hrid = (marc.fields['001']) ? marc.fields['001'][0] : '';
       if (!hrid) {

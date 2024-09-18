@@ -69,6 +69,20 @@ export function parseMarc(raw) {
       mij.fields.push({[tag]: data});
       if (!fields[tag]) fields[tag] = [];
       fields[tag].push(data);
+    },
+    updateField: (tag, data, occurance) => {
+      let o = (occurance === undefined) ? 0 : occurance;
+      if (fields[tag]) {
+        if (fields[tag][o]) {
+          fields[tag][o] = data;
+        }
+        mij.fields.forEach((f) => {
+          let ctag = Object.keys(f)[0];
+          if (ctag === tag) {
+            f[tag] = data;
+          }
+        });
+      }
     }
   };
   return record;
