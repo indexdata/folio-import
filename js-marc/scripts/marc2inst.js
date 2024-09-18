@@ -415,17 +415,6 @@ try {
               marc.deleteField('003', 0);
               oldNum = `(${f003})${f001}`;
             }
-            /*
-            let doAdd = true;
-            if (marc.fields['035']) {
-              marc.fields['035'].forEach(f => {
-                f.subfields.forEach(s => {
-                  if (s.a && s.a === oldNum) doAdd = false;
-                });
-              });
-            };
-            if (doAdd) marc.addField('035', { ind1: ' ', ind2: ' ', subfields: [{a: oldNum}] });
-            */
             marc.addField('035', { ind1: ' ', ind2: ' ', subfields: [{a: oldNum}] });
           }
           if (f001) {
@@ -547,13 +536,11 @@ try {
         if (inst.subjects) inst.subjects = dedupe(inst.subjects, [ 'value' ]);
         if (inst.identifiers) inst.identifiers = dedupe(inst.identifiers, [ 'value', 'identifierTypeId' ]);
         if (inst.languages) inst.languages = dedupe(inst.languages);
-        // console.log(inst);
         writeOut(outs.instances, inst);
         ttl.instances++;
         let srsObj = makeSrs(raw, jobId, inst.id, inst.hrid);
         writeOut(outs.srs, srsObj);
         ttl.srs++;
-        // console.log(srsObj)
       }
 
       if (ttl.count % 10000 === 0) {
@@ -567,11 +554,14 @@ try {
     let now = new Date().valueOf();
     let t = (now - start) / 1000;
     console.log('--------------------');
+    ttl['time (secs)'] = parseInt(`${t}`, 10);
+    if (t > 60) ttl['time (mins)'] = t / 60;
     for (let x in ttl) {
-      console.log(x, ':', ttl[x]);
+      let l = x.substring(0,1).toUpperCase() + x.substring(1);
+      l = l.padEnd(12);
+      let n = ttl[x].toString().padStart(8);
+      console.log(l, ':', n);
     }
-    console.log('time (secs)', t);
-    if (t > 60) console.log('time (mins)', t / 60);
   });
 } catch (e) {
   console.log(e);
