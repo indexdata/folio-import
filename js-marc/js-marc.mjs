@@ -98,6 +98,12 @@ export function getSubs(field, codes, delim) {
   }
 }
 
+/**
+ * Create a raw MARC record from MIJ
+ * @param {Object} mij - MARC in JSON record
+ * @param {Boolean} sortFieldsByTag - Sort fields by tag name
+ * @returns {binary}
+ */
 export function mij2raw(mij, sortFieldsByTag) {
   let dir = '';
   let pos = 0;
@@ -137,6 +143,11 @@ export function mij2raw(mij, sortFieldsByTag) {
   return { rec: rec, mij: mij };
 }
 
+/**
+ * Create a raw MARC record from text
+ * @param {string} mij - Yaz style text record
+ * @returns {binary}
+ */
 export function txt2raw(data) {
   let line = data.split(/\n/);
   let ldr = '';
