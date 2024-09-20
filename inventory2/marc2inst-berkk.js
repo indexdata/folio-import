@@ -16,6 +16,7 @@ const refData = {};
 const tsvMap = {};
 const outs = {};
 const bcseen = {};
+const iseen = {};
 
 const modeMap = {
  a: 'single unit',
@@ -294,13 +295,14 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
   fields.forEach(f => {
     let ir = {};
     // console.log(f);
+    let iid = getSubs(f, '9');
     let loc = getSubs(f, 'c');
     let locId = tsvMap.locations[loc];
     let cn = getSubs(f, 'o');
     let cntype = getSubs(f, '2');
     let cnTypeId = (cntype === 'lcc') ? refData.callNumberTypes['Library of Congress classification'] : refData.callNumberTypes['Other scheme'] 
     let hkey = `${loc}::${cn}`;
-    if (!hseen[hkey]) {
+    if (!hseen[hkey] && !iseen[iid]) {
       let occ = hc.toString().padStart(3, '0');
       let hr = {
         hrid: bhrid + '-' + occ,
@@ -317,14 +319,12 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
       hseen[hkey] = 1;
       hc++;
     }
-    let iid = getSubs(f, '9');
     let lt = getSubs(f, '3');
     let s7 = getSubs(f, '7');
     let s1 = getSubs(f, '1');
     let mt = getSubs(f, 'y');
     let bc = getSubs(f, 'p');
     
-
     let st = 'Available';
     if (s7 === '3') {
       st = 'In process';
@@ -336,32 +336,35 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
       st = 'On order';
     }
 
-    ir.hrid = iprefix + iid;
-    ir.id = uuid(ir.hrid, ns);
-    ir.holdingsRecordId = hid;
-    ir.permanentLoanTypeId = refData.loantypes[lt] || refData.loantypes['Can circulate'];
-    ir.status = { name: st };
-    ir.materialTypeId = tsvMap.mtypes[mt];
-    if (bc && !bcseen[bc]) {
-      ir.barcode = bc;
-      bcseen[bc] = 1;
-    } else if (bc) {
-      console.log(`WARN [${iid}] barcode ${bc} already used!`);
-    }
+    if (!iseen[iid]) {
+      ir.hrid = iprefix + iid;
+      ir.id = uuid(ir.hrid, ns);
+      ir.holdingsRecordId = hid;
+      ir.permanentLoanTypeId = refData.loantypes[lt] || refData.loantypes['Can circulate'];
+      ir.status = { name: st };
+      ir.materialTypeId = tsvMap.mtypes[mt];
+      if (bc && !bcseen[bc]) {
+        ir.barcode = bc;
+        bcseen[bc] = 1;
+      } else if (bc) {
+        console.log(`WARN [${iid}] barcode ${bc} already used!`);
+      }
 
-    ir.notes = [];
-    inotes.forEach(c => {
-      let nt = getSubs(f, c);
-      if (nt) {
-       let o = {
-        note: nt,
-        itemNoteTypeId: refData.itemNoteTypes.Note,
-        staffOnly: (c === 'x') ? true : false
-       };
-       ir.notes.push(o);
+      ir.notes = [];
+      inotes.forEach(c => {
+        let nt = getSubs(f, c);
+        if (nt) {
+        let o = {
+          note: nt,
+          itemNoteTypeId: refData.itemNoteTypes.Note,
+          staffOnly: (c === 'x') ? true : false
+        };
+        ir.notes.push(o);
       }
     });
     irs.push(ir);
+    iseen[iid] = 1;
+  }
   });
   return { h: hrs, i:irs };
 }
