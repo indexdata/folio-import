@@ -15,6 +15,7 @@ let iprefix;
 const refData = {};
 const tsvMap = {};
 const outs = {};
+const bcseen = {};
 
 const modeMap = {
  a: 'single unit',
@@ -53,6 +54,8 @@ const pubRoleMap = {
   '3': 'Manufacture',
   '4': 'Copyright notice date'
 };
+
+const inotes = [ 'z', 'd', '8', 'x' ];
 
 const writeOut = (outStream, data, notJson) => {
   let dataStr = (notJson !== undefined && notJson) ? data : JSON.stringify(data) + '\n';
@@ -315,10 +318,52 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
       hc++;
     }
     let iid = getSubs(f, '9');
+    let lt = getSubs(f, '3');
+    let s7 = getSubs(f, '7');
+    let s1 = getSubs(f, '1');
+    let mt = getSubs(f, 'y');
+    let bc = getSubs(f, 'p');
+    
+
+    let st = 'Available';
+    if (s7 === '3') {
+      st = 'In process';
+    } else if (s1 === 'lost') {
+      st = 'Declared lost';
+    } else if (s1 === 'missing') {
+      st = 'Missing';
+    } else if (s7 === '-1') {
+      st = 'On order';
+    }
+
     ir.hrid = iprefix + iid;
+    ir.id = uuid(ir.hrid, ns);
+    ir.holdingsRecordId = hid;
+    ir.permanentLoanTypeId = refData.loantypes[lt] || refData.loantypes['Can circulate'];
+    ir.status = { name: st };
+    ir.materialTypeId = tsvMap.mtypes[mt];
+    if (bc && !bcseen[bc]) {
+      ir.barcode = bc;
+      bcseen[bc] = 1;
+    } else if (bc) {
+      console.log(`WARN [${iid}] barcode ${bc} already used!`);
+    }
+
+    ir.notes = [];
+    inotes.forEach(c => {
+      let nt = getSubs(f, c);
+      if (nt) {
+       let o = {
+        note: nt,
+        itemNoteTypeId: refData.itemNoteTypes.Note,
+        staffOnly: (c === 'x') ? true : false
+       };
+       ir.notes.push(o);
+      }
+    });
     irs.push(ir);
   });
-  console.log(irs);
+  return { h: hrs, i:irs };
 }
 
 try {
@@ -431,6 +476,10 @@ try {
     srs: 0,
     presuc: 0,
     errors: 0
+  }
+  if (iconf) {
+    ttl.holdings = 0;
+    ttl.items = 0;
   }
 
   let start = new Date().valueOf();
@@ -618,6 +667,14 @@ try {
           let sfield = (marc.fields['942']) ? marc.fields['942'][0] : '';
           let suppress = (sfield && getSubs(sfield, 'n') === '1') ? true : false;
           let hi = makeHoldingsItems(ifields, instId, inst.hrid, suppress, inst.electronicAccess);
+          hi.h.forEach(r => {
+            writeOut(outs.holdings, r);
+            ttl.holdings++;
+          });
+          hi.i.forEach(r => {
+            writeOut(outs.items, r);
+            ttl.items++;
+          });
         }
         
       }
