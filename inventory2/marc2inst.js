@@ -1,4 +1,4 @@
-import { parseMarc, getSubs, mij2raw } from '../js-marc/js-marc.mjs';
+import { parseMarc, getSubs, mij2raw } from '../js-marc.mjs';
 import fs from 'fs';
 import path from 'path';
 import { v5 as uuid } from 'uuid';
@@ -160,10 +160,29 @@ const funcs = {
 }
 
 const applyRules = function (ent, field, allFields) {
-  let data;
+  let data = '';
+  if (field.subfieldsx && field.subfields[0].a && field.subfields[0].a.match(/Shakespeare/)) {
+    // console.log(ent);
+    console.log(field);
+  }
+  
   if (ent.subfield && ent.subfield[0]) {
-    let subcodes = ent.subfield.join('');
-    data = getSubs(field, subcodes);
+    if (ent.subFieldDelimiter) {
+      let dparts = [];
+      ent.subFieldDelimiter.forEach(d => {
+        let dl = d.value;
+        let subcodes = d.subfields.join('');
+        let part = getSubs(field, subcodes, dl);
+        if (part) {
+          if (dparts[0]) part = dl + part;
+          dparts.push(part);
+        }
+        data = dparts.join('');
+      });
+    } else {
+      let subcodes = ent.subfield.join('');
+      data = getSubs(field, subcodes);
+    }
   } else {
     data = field;
   }
@@ -197,8 +216,13 @@ const makeInst = function (map, field, allFields) {
       subs[Object.keys(s)[0]] = 1;
     });
   }
-  ents.forEach(e => {
+  for (let w = 0; w < ents.length; w++) {
+    let e = ents[w];
     let ar = false;
+    if (e.inds) {
+      let mstr = field.ind1 + field.ind2;
+      if (!mstr.match(e.inds)) continue;
+    }
     if (e.subfield && e.subfield[0]) {
       for (let x = 0; x < e.subfield.length; x++) {
         let s = e.subfield[x];
@@ -214,7 +238,7 @@ const makeInst = function (map, field, allFields) {
       data = applyRules(e, field, allFields);
       ff[data.prop] = data;
     }
-  });
+  }
   return ff;
 }
 
@@ -280,38 +304,6 @@ const dedupe = function (arr, props) {
   return newArr;
 }
 
-const makeHoldingsItems = function (imap, fields, bid, bhrid) {
-  let hrs = [];
-  let irs = [];
-  let hseen = {};
-  let hc = 0;
-  let hid;
-  fields.forEach(f => {
-    let d = {};
-    let ir = {};
-    for (let prop in imap) {
-      let c = imap[prop];
-      let data = getSubs(f, c);
-      d[prop] = (data) ? data : '';
-    }
-    let hkey = `${d.location}::${d.callNumber}`;
-    if (!hseen[hkey]) {
-      let occ = hc.toString().padStart(3, '0');
-      let hr = {
-        hrid: bhrid + '-' + occ,
-        instanceId: bid,
-        permanentLocationId: d.location
-      };
-      hid = uuid(hr.hrid, ns);
-      hr.id = hid;
-      hrs.push(hr);
-      hseen[hkey] = 1;
-      hc++;
-    }
-  });
-  console.log(hrs);
-}
-
 try {
   if (!rawFile) { throw "Usage: node marc2inst.js <conf_file> <raw_marc_file>" }
   let confDir = path.dirname(confFile);
@@ -319,20 +311,11 @@ try {
   let conf = JSON.parse(confData);
   ns = conf.nameSpace;
   refDir = conf.refDir.replace(/^\./, confDir);
-  if (conf.mapFile) {
-    rulesFile = conf.mapFile.replace(/^\./, confDir);
-  } else {
-    rulesFile = refDir + '/marc-bib.json';
-  }
-  const iconf = conf.items;
+  rulesFile = conf.mapFile.replace(/^\./, confDir);
   let prefix = conf.hridPrefix;
   let wdir = path.dirname(rawFile);
   let fn = path.basename(rawFile, '.mrc');
   let outBase = wdir + '/' + fn;
-  if (conf.items) {
-    files.holdings = 'holdings',
-    files.items = 'items'
-  }
   for (let f in files) {
     let p = (f === 'err') ? outBase + '-' + f + '.mrc' : outBase + '-' + f + '.jsonl';
     files[f] = p;
@@ -344,12 +327,19 @@ try {
   const mappingRules = {};
   for (let tag in allMappingRules) {
     let map = allMappingRules[tag];
+    // if (tag === '600') console.log(map);
     const ents = [];
     let erps = false;
     map.forEach(m => {
+      let indStr = '';
+      if (m.indicators) {
+        indStr = '^' + m.indicators.ind1 + m.indicators.ind2 + '$';
+        indStr = indStr.replace(/\*/g, '.');
+      }
       if (m.entityPerRepeatedSubfield) erps = true;
       if (m.entity) {
         m.entity.forEach(e => {
+          if (indStr) e.inds = indStr;
           ents.push(e)
         });
       } else {
@@ -585,12 +575,6 @@ try {
         let srsObj = makeSrs(raw, jobId, inst.id, inst.hrid);
         writeOut(outs.srs, srsObj);
         ttl.srs++;
-        if (iconf) {
-          let itag = iconf.tag;
-          let ifields = marc.fields[itag];
-          let hi = makeHoldingsItems(iconf.map, ifields, instId, inst.hrid);
-        }
-        
       }
 
       if (ttl.count % 10000 === 0) {

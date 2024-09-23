@@ -161,11 +161,6 @@ const funcs = {
 
 const applyRules = function (ent, field, allFields) {
   let data = '';
-  if (field.subfieldsx && field.subfields[0].a && field.subfields[0].a.match(/Shakespeare/)) {
-    // console.log(ent);
-    console.log(field);
-  }
-  
   if (ent.subfield && ent.subfield[0]) {
     if (ent.subFieldDelimiter) {
       let dparts = [];
