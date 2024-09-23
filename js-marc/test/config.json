@@ -1,7 +1,7 @@
 {
     "nameSpace": "1de12247-89f9-4d32-aaf5-8306d16f43d6",
     "refDir": "./ref",
-    "mapFile": "./marc_bib_rules.json",
+    "mapFile": "./marc-bib.json",
     "controlNum": "907a",
     "hridPrefix": "x"
 }
