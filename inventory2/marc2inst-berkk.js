@@ -17,6 +17,7 @@ const tsvMap = {};
 const outs = {};
 const bcseen = {};
 const iseen = {};
+const seen = {};
 
 const modeMap = {
  a: 'single unit',
@@ -334,9 +335,13 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
       hid = uuid(hr.hrid, ns);
       hr.id = hid;
       if (ea) hr.electronicAccess = ea;
-      hrs.push(hr);
-      hseen[hkey] = 1;
-      hc++;
+      if (hr.permanentLocationId) {
+        hrs.push(hr);
+        hseen[hkey] = 1;
+        hc++;
+      } else {
+        console.log(`ERROR Holdings [${hr.hrid}] permanentLocationId not found for "${loc}"`);
+      }
     }
     let lt = getSubs(f, '3');
     let s7 = getSubs(f, '7');
@@ -355,7 +360,7 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
       st = 'On order';
     }
 
-    if (!iseen[iid]) {
+    if (!iseen[iid] && hseen[hkey]) {
       ir.hrid = iprefix + iid;
       ir.id = uuid(ir.hrid, ns);
       ir.holdingsRecordId = hid;
@@ -381,7 +386,11 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
         ir.notes.push(o);
       }
     });
-    irs.push(ir);
+    if (ir.materialTypeId) { 
+      irs.push(ir)
+    } else {
+      console.log(`ERROR Item [${iid}] Material type not found for ${mt}`)
+    }
     iseen[iid] = 1;
   }
   });
@@ -529,7 +538,6 @@ try {
     } else {
       leftOvers = '';
     }
-    const seen = {};
     for (let k = 0; k < recs.length; k++) {
       let r = recs[k];
       ttl.count++
@@ -580,7 +588,7 @@ try {
       }
       if (seen[hrid]) {
         ttl.errors++;
-        console.log(`ERROR Duplicate HRID (${hrid}) found at ${ttl.count}`);
+        console.log(`ERROR Instance HRID (${hrid}) already found at ${ttl.count}`);
         writeOut(outs.err, r, true);
         continue;
       }
