@@ -166,10 +166,24 @@ const funcs = {
 }
 
 const applyRules = function (ent, field, allFields) {
-  let data;
+  let data = '';
   if (ent.subfield && ent.subfield[0]) {
-    let subcodes = ent.subfield.join('');
-    data = getSubs(field, subcodes);
+    if (ent.subFieldDelimiter) {
+      let dparts = [];
+      ent.subFieldDelimiter.forEach(d => {
+        let dl = d.value;
+        let subcodes = d.subfields.join('');
+        let part = getSubs(field, subcodes, dl);
+        if (part) {
+          if (dparts[0]) part = dl + part;
+          dparts.push(part);
+        }
+        data = dparts.join('');
+      });
+    } else {
+      let subcodes = ent.subfield.join('');
+      data = getSubs(field, subcodes);
+    }
   } else {
     data = field;
   }
@@ -203,8 +217,13 @@ const makeInst = function (map, field, allFields) {
       subs[Object.keys(s)[0]] = 1;
     });
   }
-  ents.forEach(e => {
+  for (let w = 0; w < ents.length; w++) {
+    let e = ents[w];
     let ar = false;
+    if (e.inds) {
+      let mstr = field.ind1 + field.ind2;
+      if (!mstr.match(e.inds)) continue;
+    }
     if (e.subfield && e.subfield[0]) {
       for (let x = 0; x < e.subfield.length; x++) {
         let s = e.subfield[x];
@@ -220,7 +239,7 @@ const makeInst = function (map, field, allFields) {
       data = applyRules(e, field, allFields);
       ff[data.prop] = data;
     }
-  });
+  }
   return ff;
 }
 
@@ -405,9 +424,15 @@ try {
     const ents = [];
     let erps = false;
     map.forEach(m => {
+      let indStr = '';
+      if (m.indicators) {
+        indStr = '^' + m.indicators.ind1 + m.indicators.ind2 + '$';
+        indStr = indStr.replace(/\*/g, '.');
+      }
       if (m.entityPerRepeatedSubfield) erps = true;
       if (m.entity) {
         m.entity.forEach(e => {
+          if (indStr) e.inds = indStr;
           ents.push(e)
         });
       } else {
