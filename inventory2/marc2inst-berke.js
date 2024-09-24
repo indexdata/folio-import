@@ -113,9 +113,9 @@ const funcs = {
     return out;
   },
   set_instance_type_id: function (data, param) {
-    let c = data;
+    let [ n, c ] = data.split(/~/);
     let u = param.unspecifiedInstanceTypeCode;
-    let out = refData.instanceTypes[c] || refData.instanceTypes[u]; 
+    let out = refData.instanceTypes[c] || refData.instanceTypes[u];
     return out
   },
   set_instance_format_id: function (data) {
@@ -332,6 +332,7 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
     let ipr = bhrid.replace(/^be/, iprefix);
     let iid = ipr + '-' + icStr;
     let loc = getSubs(f, 'c');
+    loc = loc.trim();
     let locId = tsvMap.locations[loc];
     let cn = getSubs(f, 'j');
     let cnTypeId = cnTypeMap[f.ind1] || refData.callNumberTypes['Other scheme'] 
@@ -417,7 +418,6 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
         }
       });
       if (cnote) {
-        console.log(cnote);
         ir.circulationNotes = [];
         let ntypes = [ 'Check in', 'Check out' ];
         ntypes.forEach(t => {
@@ -714,7 +714,7 @@ try {
                 for (let prop in ff) {
                   let [rt, pr] = prop.split('.');
                   if (propMap[prop] === 'string' || propMap[prop] === 'boolean') {
-                    inst[prop] = ff[prop].data;
+                    if (!inst[prop]) inst[prop] = ff[prop].data;
                   } else if (propMap[prop] === 'array.string') {
                     if (!inst[prop]) inst[prop] = [];
                     inst[prop].push(ff[prop].data);
