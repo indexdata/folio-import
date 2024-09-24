@@ -387,11 +387,12 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
       ir.hrid = iid;
       ir.id = uuid(ir.hrid, ns);
       ir.holdingsRecordId = hid;
-      ir.permanentLoanTypeId = refData.loantypes[lt] || refData.loantypes['Can circulate'];
+      ir.permanentLoanTypeId = refData.loantypes['In-Lib Use Only'] || refData.loantypes['Can circulate'];
       ir.status = { name: st };
       ir.discoverySuppress = (su.match(/\bhidden\b/)) ? true : false;
       if (cp) ir.copyNumber = cp;
       if (vo) ir.volume = vo;
+      if (s1 === 'Damaged') ir.itemDamagedStatusId = refData.itemDamageStatuses.Damaged;
 
       ir.materialTypeId = tsvMap.mtypes[mt] || refData.mtypes.Unspecified;
       if (ir.materialTypeId === refData.mtypes.Unspecified) {
