@@ -366,7 +366,7 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
       ir.holdingsRecordId = hid;
       ir.permanentLoanTypeId = refData.loantypes[lt] || refData.loantypes['Can circulate'];
       ir.status = { name: st };
-      ir.materialTypeId = tsvMap.mtypes[mt];
+      ir.materialTypeId = tsvMap.mtypes[mt] || refData.mtypes.Unspecified;
       if (bc && !bcseen[bc]) {
         ir.barcode = bc;
         bcseen[bc] = 1;
@@ -486,6 +486,7 @@ try {
       });
     } catch {}
   });
+  // console.log(refData.mtypes);
 
   // create tsv map
   let tsvFiles = fs.readdirSync(conf.tsvDir);
