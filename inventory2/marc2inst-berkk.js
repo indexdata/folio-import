@@ -348,6 +348,7 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
     let s1 = getSubs(f, '1');
     let mt = getSubs(f, 'y');
     let bc = getSubs(f, 'p');
+    let ds = getSubs(f, '4');
     
     let st = 'Available';
     if (s7 === '3') {
@@ -385,6 +386,8 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
         };
         ir.notes.push(o);
       }
+
+      if (ds === '1') ir.itemDamagedStatusId = refData.itemDamageStatuses.Damaged;
     });
     if (ir.materialTypeId) { 
       irs.push(ir)
