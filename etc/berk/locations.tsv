@@ -1,0 +1,71 @@
+Legacy Code	Legacy Name	Count  (Perm Unsup)	Count  (Perm Supp)	Action  (Perm Unsup)	Action  (Perm Supp)	FOLIO Code	FOLIO Label	FOLIO service point	Notes
+Evergreen									
+108	Africana Studies Collection	92		Keep	Keep	GAS	Africana Studies Collection	SGL/Stan Getz Library	
+2	Annex	39,728	251	Keep	Keep	GAN	Annex	SGL/Stan Getz Library	
+91	Annex - Supplements	885	2	Keep	Keep	GANS	Annex - Supplements	SGL/Stan Getz Library	
+54	Archives - By Appointment	3,606	211	Keep	Keep	BABA	Archives - By Appointment	ARC/Berklee Archives	
+76	Berklee Press Collection	449	16	Keep	Keep	GBP	Berklee Press Collection	SGL/Stan Getz Library	
+71	Career Collection	168		Keep	Keep	GCC	Career Collection	SGL/Stan Getz Library	
+100	Equipment	88	179	Keep	Keep	GEQ	Equipment	SGL/Stan Getz Library	
+88	Getz Berklee Faculty Collection	110		Keep	Keep	GBF	Getz Berklee Faculty Collection	SGL/Stan Getz Library	
+13	Getz Display - Living Room	25		Keep	Keep	GDL	Getz Display - Living Room	SGL/Stan Getz Library	
+22	Getz Display - New Acquisitions	37		Keep	Keep	GDN	Getz Display - New Acquisitions	SGL/Stan Getz Library	
+107	Getz Display - Reading Room			Keep	Keep	GDR	Getz Display - Reading Room	SGL/Stan Getz Library	
+97	Getz Display - Special	8		Keep	Keep	GDP	Getz Display - Special	SGL/Stan Getz Library	
+96	Getz Display - Stacks	8		Keep	Keep	GDS	Getz Display - Stacks	SGL/Stan Getz Library	
+98	Getz Diversity, Equity, and Inclusion Collection	64	1	Keep	Keep	GDEI	Getz Diversity, Equity, and Inclusion Collection	SGL/Stan Getz Library	
+11	Getz Reading Room	2,165	5	Keep	Keep	GRR	Getz Reading Room	SGL/Stan Getz Library	
+87	Getz Reading Room - Miniscores	414	19	Keep	Keep	GRRM	Getz Reading Room - Miniscores	SGL/Stan Getz Library	
+6	Getz Reserve	1,163	59	Keep	Keep	GRD	Getz Reserve	SGL/Stan Getz Library	
+16	Getz Reserve - Oversize	21		Keep	Keep	GRO	Getz Reserve - Oversize	SGL/Stan Getz Library	
+74	Getz Reserve Closet	952	4	Keep	Keep	GRC	Getz Reserve Closet	SGL/Stan Getz Library	
+7	Getz Stacks	21,415	1030	Keep	Keep	GST	Getz Stacks	SGL/Stan Getz Library	
+10	Getz Stacks - Oversize	212	1	Keep	Keep	GSO	Getz Stacks - Oversize	SGL/Stan Getz Library	
+109	Global Jazz Institute Collection	21		Keep	Keep	GGJ	Global Jazz Institute Collection	SGL/Stan Getz Library	
+93	Jazz and Gender Justice Collection	41		Keep	Keep	GJG	Jazz and Gender Justice Collection	SGL/Stan Getz Library	
+21	Leisure Reading Collection	180	6	Keep	Keep	GLR	Leisure Reading Collection	SGL/Stan Getz Library	
+110	Limited Access	1,242	5	Keep	Keep	GLA	Limited Access	SGL/Stan Getz Library	
+79	Music Tech Collection	214	1	Keep	Keep	GMT	Music Tech Collection	SGL/Stan Getz Library	
+56	Ralph's Corner	1,258	19	Keep	Keep	GRA	Ralph’s Corner	SGL/Stan Getz Library	
+111	Special Collections	1,189	8	Keep	Keep	GSC	Special Collections	SGL/Stan Getz Library	
+106	Valencia Berklee Faculty Collection	94		Keep	Keep	VBF	Valencia Berklee Faculty Collection	VLC/Valencia Library	
+105	Valencia Diversity, Equity, and Inclusion Collection	2		Keep	Keep	VDEI	Valencia Diversity, Equity, and Inclusion Collection	VLC/Valencia Library	
+14	Valencia Library Reserve Desk	282		Keep	Keep	VRD	Valencia Library Reserve Desk	VLC/Valencia Library	
+20	Valencia Reference	143		Keep	Keep	VRF	Valencia Reference	VLC/Valencia Library	
+15	Valencia Stacks	5,823		Keep	Keep	VST	Valencia Stacks	VLC/Valencia Library	
+112	Valencia Health and Wellness Collection			Keep	Keep	VHW	Valencia Health and Wellness Collection	VLC/Valencia Library	
+73	Alphin MusicEd Collection	1,039	10	Merge	Merge	AMR	Alphin Main Room	AAL/Albert Alphin Library	
+69	Alphin Quiet Room	5,059	4	Merge	Merge	AQR	Alphin Quiet Room	AAL/Albert Alphin Library	
+9	Off-Site Storage	14,053	12	Merge	Merge	OSS	Off-Site Storage	AAL/Albert Alphin Library and SGL/Stan Getz Library	
+1	Stacks	189		Purge	Purge		N/A		
+	Totals	102,250	1843						
+									
+Koha									
+CIRC	Alphin Circulation Desk	3,557	96	Keep	Keep	ACD	Alphin Circulation Desk	AAL/Albert Alphin Library	
+CAT	Alphin Cataloging Office	8,835	2435	Keep	Keep	ACO	Alphin Cataloging Office	AAL/Albert Alphin Library	
+AAL DIS	Alphin Display - Main	30		Keep	Keep	ADM	Alphin Display - Main	AAL/Albert Alphin Library	
+DIR	Director's Office	648	2	Keep	Keep	ADO	Director’s Office	PRF/Performance Library	
+STOR-ON	Alphin Storage	3,264	3	Keep	Keep	AST	Alphin Storage	AAL/Albert Alphin Library	
+STOR-OFF	Storage (off-site)	2,166	2	Keep	Keep	OSS	Off-Site Storage	PRF/Performance Library	
+PERF	132 Ipswich - Performance Library	2,225	1	Keep	Keep	PLB	132 Ipswich - Performance Library	AAL/Albert Alphin Library	
+PERFSTOR	Performance Library Storage	496	1	Keep	Keep	PLS	Performance Library Storage	AAL/Albert Alphin Library	
+QR DIS	Alphin Display - Quiet Room	13		Merge	Merge	ADQ	Alphin Display - Quiet Room	AAL/Albert Alphin Library	
+MAIN	Alphin Main Room	25,000	265	Merge	Merge	AMR	Alphin Main Room	AAL/Albert Alphin Library	
+QUIET	Alphin Quiet Room	6,775	37	Merge	Merge	AQR	Alphin Quiet Room	AAL/Albert Alphin Library	
+AAL DEI	 Alphin DEI Collection			New	New	ADEI	Alphin Diversity, Equity, and Inclusion Collection	AAL/Albert Alphin Library	
+ONLINE	Online	1,310	7	Purge	Purge				
+ 	Music	14		Purge	Purge				
+MUS	Books - Music (ML,MT)	14		Purge	Purge				
+MSC	Scores - Study (MSc)	12	2	Purge	Purge				
+CORES		10		Purge	Purge				
+SCO	Scores - Classical	9		Purge	Purge				
+SCO	Score	9		Purge	Purge				
+DIS AAL		9		Purge	Purge				
+ILL		5		Purge	Purge				
+		4		Purge	Purge				
+REFM3		2		Purge	Purge				
+OVRSZ		2		Purge	Purge				
+SETPT	Scores - Chamber sets & parts (M177-M1489)	1		Purge	Purge			AAL/Albert Alphin Library and SGL/Stan Getz Library	
+DMTBK	Books - Theater	1		Purge	Purge				
+MTMUS		1		Purge	Purge			AAL/Albert Alphin Library	
+	Totals	54,412	2,851						

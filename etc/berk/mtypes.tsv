@@ -1,0 +1,61 @@
+Legacy iType Code	Legacy iType Name	Perm Count (Unsuppressed)	Perm Count (Suppressed)	Action  (Unsuppressed)	Action  (Suppressed)	FOLIO Name	Notes
+Evergreen							
+special	special	15		Keep	Keep	Accessibility Material	
+noncirc	noncirc	313		Keep	Keep	Archival Collection	
+equip_24	equip_24	194		Keep	Keep	Equipment	
+periodicals	periodicals	349	106	Keep	Keep	Periodical	
+rvideo_games	rvideo_games	39	29	Keep	Keep	Video Game	
+equip_4	equip_4	65	52	Merge	Merge	Accessory	
+audio	audio	43499		Merge	Merge	Audio	
+raudio	raudio	1623	1	Merge	Merge	Audio	
+books	books	19512	522	Merge	Merge	Book	
+rbooks	rbooks	731	10	Merge	Merge	Book	
+vlc_3	vlc_3	21		Merge	Merge	Book or Score	
+scores	scores	25653	588	Merge	Merge	Score	
+rscores	rscores	527	21	Merge	Merge	Score	
+video	video	8325	90	Merge	Merge	Video	
+rvideo	rvideo	1272	148	Merge	Merge	Video	
+equip_4_in_facility	equip_4_in_facility	88	11	Purge	Purge		
+equip_48	equip_48	7	51	Purge	Purge		
+acc	acc	6		Purge	Purge		
+acc_fined	acc_fined	3	13	Purge	Purge		
+cdrom	cdrom	1		Purge	Purge		
+workstations	workstations		35	Purge	Purge		
+acc_lc	acc_lc		9	Purge	Purge		
+equip_48_faculty	equip_48_faculty		6	Purge	Purge		
+	Totals	102243	1692				
+							
+Koha							
+CHRES	Chamber Reserve	96	2460	Keep	Keep	Chamber Reserve	
+CD	CD	7125	1	Merge	Merge	Audio	
+TBCCD	TBC CD	2319	1	Merge	Merge	Audio	
+TBCTAP	TBC reel tape	949		Merge	Merge	Audio	
+TBCDAT	TBC digital audio tape	537		Merge	Merge	Audio	
+CDROM	CD-ROM	1		Merge	Merge	Audio	
+BK	Book	10021	52	Merge	Merge	Book	
+REF	Reference book	992	1	Merge	Merge	Book	
+RARE	Rare book/score	206		Merge	Merge	Book or Score	
+SCO	Score	7745	26	Merge	Merge	Score	
+SETPT	Chamber set / parts	5031	38	Merge	Merge	Score	
+MSC	Study score	4120	92	Merge	Merge	Score	
+REFM3	Collected works score	2855	1	Merge	Merge	Score	
+PERF	Performance library	2716	2	Merge	Merge	Score	
+REFM2	Reference score	1207	1	Merge	Merge	Score	
+OVRSZ	Oversized	367	5	Merge	Merge	Score	
+TBCDVD	TBC DVD	1869	1	Merge	Merge	Video	
+TBCVR	TBC VHS tape	1194	2	Merge	Merge	Video	
+DMTSCO	Drama score	1245	9	Merge	Merge	Score	
+DVD	DVD	815	3	Merge	Merge	Video	
+DIV/INC	Diversity and Inclusion Collection	72		Merge	Merge	Book	
+EQP	Equipment	21	1	Merge	Merge	Accessory	
+ONLINE	Online resource	1310	7	Purge	Purge		
+CORES	Course Reserve	770	60	Purge	Purge		
+DUPE	Duplicate copy	573	2	Purge	Purge		
+ILL	Borrowed ILL	63		Purge	Purge		
+CORESTH	Course Reserve -- Theater Reserve	33		Purge	Purge		
+CORESO	Course Reserve - Overnight	7		Purge	Purge		
+STAFF	Staff use	2		Purge	Purge		
+LP	LP record	1		Purge	Purge		
+OVRSZB	Oversized Berklee score (Temporary)		2	Purge	Purge		
+MSCB	Study Berklee score (Temporary)		54	Purge	Purge		
+	Totals	54262	2821				

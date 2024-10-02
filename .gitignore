@@ -3,7 +3,8 @@ configs/
 node_modules
 data
 .okapi
-bash/login-*
+.vscode
+login-*.sh
 test/Batch*
 pica/test/m?
 log
