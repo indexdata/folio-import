@@ -21,6 +21,23 @@ const seen = {};
 
 const cleanTags = [ '245', '591', '598' ];
 
+const typeMap = {
+  'a': 'text',
+  'c': 'notated music',
+  'd': 'notated music',
+  'e': 'cartographic image',
+  'f': 'cartographic image',
+  'g': 'two-dimensional moving image',
+  'i': 'spoken word',
+  'j': 'performed music',
+  'k': 'still image',
+  'm': 'computer program',
+  'o': 'other',
+  'p': 'other',
+  'r': 'three-dimensional form"',
+  't': 'text',
+}
+
 const modeMap = {
  a: 'single unit',
  m: 'multipart monograph',
@@ -580,7 +597,7 @@ try {
   
   let leftOvers = '';
   fileStream.on('data', (chunk) => {
-    let recs = chunk.match(/.+?\x1D|.+$/g);
+    let recs = chunk.match(/.+?\x1D|.+$/sg);
     recs[0] = leftOvers + recs[0];
     let lastRec = recs[recs.length - 1];
     if (!lastRec.match(/\x1D/)) {
@@ -602,14 +619,7 @@ try {
         writeOut(outs.err, r, true);
         continue;
       }
-      let f245 = (marc.fields['245']) ? marc.fields['245'][0] : '';
-      let title = getSubs(f245, 'a');
-      if (!title) {
-        ttl.errors++;
-        console.log(`ERROR no title found at ${ttl.count}!`);
-        writeOut(outs.err, r, true);
-        continue;
-      } 
+      
       if (conf.controlNum) {
         let tag = conf.controlNum.substring(0, 3);
         let sub = conf.controlNum.substring(3, 4);
@@ -642,6 +652,7 @@ try {
       if (!hrid) {
         ttl.errors++;
         console.log(`ERROR HRID not found at ${ttl.count}!`);
+        if (process.env.DEBUG) console.log(r);
         writeOut(outs.err, r, true);
         continue;
       }
@@ -651,6 +662,14 @@ try {
         writeOut(outs.err, r, true);
         continue;
       }
+      let f245 = (marc.fields['245']) ? marc.fields['245'][0] : '';
+      let title = getSubs(f245, 'a');
+      if (!title) {
+        ttl.errors++;
+        console.log(`ERROR no title found (HRID ${hrid})!`);
+        writeOut(outs.err, r, true);
+        continue;
+      } 
       // strip HTML tags
       cleanTags.forEach(t => {
         if (marc.fields[t]) {
@@ -661,13 +680,23 @@ try {
             });
           });
         }
-      })
+      });
+      // add "cam" to leaders with blank btyes 5-4
+      if (marc.fields.leader) {
+        marc.fields.leader = marc.fields.leader.replace(/^(.....)   /, '$1cam');
+        marc.fields.leader = marc.fields.leader.replace(/....$/, '4500');
+      }
+      // replace null chars with space in 008
+      if (marc.fields['008']) {
+        marc.fields['008'][0] = marc.fields['008'][0].replace(/\x00/g, ' ');
+      }
+
       seen[hrid] = 1;
       let instId = (hrid) ? uuid(hrid, ns) : '';
       marc.mij = fields2mij(marc.fields);
-      let raw = mij2raw(marc.mij, true);
-      ldr = marc.fields.leader;
-
+      let raw = mij2raw(marc.mij);
+      ldr = marc.fields.leader || '';
+      let itypeCode = ldr.substring(6, 7);
       if (marc.fields['880']) {
         marc.fields['880'].forEach(f => {
           let ntag = getSubs(f, '6');
@@ -763,6 +792,10 @@ try {
         if (inst.subjects) inst.subjects = dedupe(inst.subjects, [ 'value' ]);
         if (inst.identifiers) inst.identifiers = dedupe(inst.identifiers, [ 'value', 'identifierTypeId' ]);
         if (inst.languages) inst.languages = dedupe(inst.languages);
+        if (inst.instanceTypeId === refData.instanceTypes.unspecified) {
+          let itype = typeMap[itypeCode];
+          inst.instanceTypeId = refData.instanceTypes[itype] || refData.instanceTypes.uspecified;
+        }
         writeOut(outs.instances, inst);
         ttl.instances++;
         let srsObj = makeSrs(raw, jobId, inst.id, inst.hrid);
