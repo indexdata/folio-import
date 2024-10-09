@@ -57,7 +57,12 @@ const pubRoleMap = {
   '4': 'Copyright notice date'
 };
 
-const inotes = [ 'z', 'd', '8', 'x' ];
+const inotes = {
+  z: 'Note',
+  d: 'Accession Date',
+  '8': 'Collection Code',
+  x: 'Note'
+};
 
 const writeOut = (outStream, data, notJson) => {
   let dataStr = (notJson !== undefined && notJson) ? data : JSON.stringify(data) + '\n';
@@ -376,26 +381,27 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
       }
 
       ir.notes = [];
-      inotes.forEach(c => {
+      for (let c in inotes) {
         let nt = getSubs(f, c);
         if (nt) {
-        let o = {
-          note: nt,
-          itemNoteTypeId: refData.itemNoteTypes.Note,
-          staffOnly: (c === 'x') ? true : false
-        };
-        ir.notes.push(o);
+          let ntype = inotes[c];
+          let o = {
+            note: nt,
+            itemNoteTypeId: refData.itemNoteTypes[ntype],
+            staffOnly: (c === 'x') ? true : false
+          };
+          ir.notes.push(o);
+        }
       }
 
       if (ds === '1') ir.itemDamagedStatusId = refData.itemDamageStatuses.Damaged;
-    });
+    }
     if (ir.materialTypeId) { 
       irs.push(ir)
     } else {
       console.log(`ERROR Item [${iid}] Material type not found for ${mt}`)
     }
     iseen[iid] = 1;
-  }
   });
   return { h: hrs, i:irs };
 }
