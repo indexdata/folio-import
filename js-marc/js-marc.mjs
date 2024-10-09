@@ -113,6 +113,22 @@ export function getSubs(field, codes, delim) {
   }
 }
 
+export function getSubsHash(field, returnString) {
+  const out = {};
+  field.subfields.forEach(s => {
+    let code = Object.keys(s)[0];
+    if (code.match(/\w/)) {
+      if (returnString) {
+        if (!out[code]) out[code] = s[code];
+      } else {
+        if (!out[code]) out[code] = [];
+        out[code].push(s[code]);
+      }
+    }
+  });
+  return out;
+}
+
 export function fields2mij(fields) {
   let tags = Object.keys(fields).sort();
   tags.pop();
