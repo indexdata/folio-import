@@ -388,7 +388,7 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
       ir.hrid = iid;
       ir.id = uuid(ir.hrid, ns);
       ir.holdingsRecordId = hid;
-      ir.permanentLoanTypeId = refData.loantypes['In-Lib Use Only'] || refData.loantypes['Can circulate'];
+      ir.permanentLoanTypeId = (lt === 'In Lib Use Only') ? refData.loantypes['In-Lib Use Only'] : refData.loantypes['Can circulate'];
       ir.status = { name: st };
       ir.discoverySuppress = (su.match(/\bhidden\b/)) ? true : false;
       if (cp) ir.copyNumber = cp;
