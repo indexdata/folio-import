@@ -1,4 +1,4 @@
-import { parseMarc, getSubs, mij2raw } from '../js-marc.mjs';
+import { parseMarc, getSubs, mij2raw, fields2mij } from '../js-marc/js-marc.mjs';
 import fs from 'fs';
 import path from 'path';
 import { v5 as uuid } from 'uuid';
@@ -11,8 +11,30 @@ let rawFile = process.argv[3];
 const schemaDir = './schemas';
 let ldr;
 let ns;
-let refData = {};
+let iprefix;
+const refData = {};
+const tsvMap = {};
 const outs = {};
+const bcseen = {};
+const iseen = {};
+const seen = {};
+
+const typeMap = {
+  'a': 'text',
+  'c': 'notated music',
+  'd': 'notated music',
+  'e': 'cartographic image',
+  'f': 'cartographic image',
+  'g': 'two-dimensional moving image',
+  'i': 'spoken word',
+  'j': 'performed music',
+  'k': 'still image',
+  'm': 'computer program',
+  'o': 'other',
+  'p': 'other',
+  'r': 'three-dimensional form"',
+  't': 'text',
+}
 
 const modeMap = {
  a: 'single unit',
@@ -51,6 +73,20 @@ const pubRoleMap = {
   '3': 'Manufacture',
   '4': 'Copyright notice date'
 };
+
+const cnTypeMap = {
+  '0': '95467209-6d7b-468b-94df-0f5d7ad2747d',
+  '1': '03dd64d0-5626-4ecd-8ece-4531e0069f35',
+  '2': '054d460d-d6b9-4469-9e37-7a78a2266655',
+  '3': 'fc388041-6cd0-4806-8a74-ebe3b9ab4c6e',
+  '4': '28927d76-e097-4f63-8510-e56f2b7a3ad0',
+  '5': '5ba6b62e-6858-490a-8102-5b1369873835',
+  '6': 'cd70562c-dd0b-42f6-aa80-ce803d24d4a1',
+  '7': '827a2b64-cbf5-4296-8545-130876e4dfc0',
+  '8': '6caca63e-5651-4db6-9247-3205156e9699'
+}
+
+const inotes = [];
 
 const writeOut = (outStream, data, notJson) => {
   let dataStr = (notJson !== undefined && notJson) ? data : JSON.stringify(data) + '\n';
@@ -94,9 +130,9 @@ const funcs = {
     return out;
   },
   set_instance_type_id: function (data, param) {
-    let c = data;
+    let [ n, c ] = data.split(/~/);
     let u = param.unspecifiedInstanceTypeCode;
-    let out = refData.instanceTypes[c] || refData.instanceTypes[u]; 
+    let out = refData.instanceTypes[c] || refData.instanceTypes[u];
     return out
   },
   set_instance_format_id: function (data) {
@@ -299,6 +335,9 @@ const dedupe = function (arr, props) {
   return newArr;
 }
 
+const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
+}
+
 try {
   if (!rawFile) { throw "Usage: node marc2inst.js <conf_file> <raw_marc_file>" }
   let confDir = path.dirname(confFile);
@@ -306,17 +345,33 @@ try {
   let conf = JSON.parse(confData);
   ns = conf.nameSpace;
   refDir = conf.refDir.replace(/^\./, confDir);
-  rulesFile = conf.mapFile.replace(/^\./, confDir);
+  if (conf.mapFile) {
+    rulesFile = conf.mapFile.replace(/^\./, confDir);
+  } else {
+    rulesFile = refDir + '/marc-bib.json';
+  }
+  const iconf = conf.items;
+  const idmap = conf.makeInstMap;
+  const mapcn = conf.callNumbers;
   let prefix = conf.hridPrefix;
+  iprefix = (iconf) ? iconf.hridPrefix : '';
   let wdir = path.dirname(rawFile);
   let fn = path.basename(rawFile, '.mrc');
   let outBase = wdir + '/' + fn;
+  if (conf.items) {
+    files.holdings = 'holdings',
+    files.items = 'items'
+  }
+  if (conf.makeInstMap) {
+    files.idmap = 'map'
+  }
   for (let f in files) {
-    let p = (f === 'err') ? outBase + '-' + f + '.mrc' : outBase + '-' + f + '.jsonl';
+    let p = (f === 'err') ? outBase + '-' + f + '.mrc' : (f === 'idmap') ? outBase + '.map' : outBase + '-' + f + '.jsonl';
     files[f] = p;
     if (fs.existsSync(p)) fs.unlinkSync(p);
     outs[f] = fs.createWriteStream(p)
   };
+  console.log(outs);
   let rulesStr = fs.readFileSync(rulesFile, { encoding: 'utf8' });
   const allMappingRules = JSON.parse(rulesStr);
   const mappingRules = {};
@@ -378,7 +433,30 @@ try {
       });
     } catch {}
   });
-  // console.log(refData.identifierTypes);
+  // console.log(refData.mtypes);
+
+  // create tsv map
+  if (conf.tsvDir) {
+    let tsvFiles = fs.readdirSync(conf.tsvDir);
+    tsvFiles.forEach(f => {
+      if (f.match(/\.tsv$/)) {
+        let prop = f.replace(/\.tsv/, '');
+        tsvMap[prop] = {}
+        let tpath = conf.tsvDir + '/' + f;
+        let dat = fs.readFileSync(tpath, { encoding: 'utf8' });
+        dat.split(/\n/).forEach(l => {
+          let c = l.split(/\t/);
+          let k = c[0];
+          let v = c[6];
+          if (prop === 'locations') { 
+            k = c[1];
+          } 
+          if (k && v) tsvMap[prop][k] = refData[prop][v];
+        });
+      }
+    });
+    // console.log(tsvMap);
+  }
 
   let t;
   let ttl = {
@@ -388,6 +466,10 @@ try {
     srs: 0,
     presuc: 0,
     errors: 0
+  }
+  if (iconf) {
+    ttl.holdings = 0;
+    ttl.items = 0;
   }
 
   let start = new Date().valueOf();
@@ -400,7 +482,7 @@ try {
   
   let leftOvers = '';
   fileStream.on('data', (chunk) => {
-    let recs = chunk.match(/.+?\x1D|.+$/g);
+    let recs = chunk.match(/.+?\x1D|.+$/sg);
     recs[0] = leftOvers + recs[0];
     let lastRec = recs[recs.length - 1];
     if (!lastRec.match(/\x1D/)) {
@@ -409,20 +491,20 @@ try {
     } else {
       leftOvers = '';
     }
-    const seen = {};
     for (let k = 0; k < recs.length; k++) {
       let r = recs[k];
       ttl.count++
       let inst = {};
-      let marc = parseMarc(r);
-      let f245 = (marc.fields['245']) ? marc.fields['245'][0] : '';
-      let title = getSubs(f245, 'a');
-      if (!title) {
+      let marc = '';
+      try { 
+        marc = parseMarc(r)
+      } catch(e) {
+        console.log(e);
         ttl.errors++;
-        console.log(`ERROR no title found at ${ttl.count}!`);
         writeOut(outs.err, r, true);
         continue;
-      } 
+      }
+      
       if (conf.controlNum) {
         let tag = conf.controlNum.substring(0, 3);
         let sub = conf.controlNum.substring(3, 4);
@@ -455,20 +537,37 @@ try {
       if (!hrid) {
         ttl.errors++;
         console.log(`ERROR HRID not found at ${ttl.count}!`);
+        if (process.env.DEBUG) console.log(r);
         writeOut(outs.err, r, true);
         continue;
       }
       if (seen[hrid]) {
         ttl.errors++;
-        console.log(`ERROR Duplicate HRID (${hrid}) found at ${ttl.count}`);
+        console.log(`ERROR Instance HRID (${hrid}) already found at ${ttl.count}`);
         writeOut(outs.err, r, true);
         continue;
       }
+      let f245 = (marc.fields['245']) ? marc.fields['245'][0] : '';
+      let title = getSubs(f245, 'a');
+      if (!title) {
+        ttl.errors++;
+        console.log(`ERROR no title found (HRID ${hrid})!`);
+        writeOut(outs.err, r, true);
+        continue;
+      } 
+
+      // add "cam" to leaders with blank btyes 5-4
+      if (marc.fields.leader) {
+        marc.fields.leader = marc.fields.leader.replace(/^(.....)   /, '$1cam');
+        marc.fields.leader = marc.fields.leader.replace(/....$/, '4500');
+      }
+
       seen[hrid] = 1;
       let instId = (hrid) ? uuid(hrid, ns) : '';
-      let raw = mij2raw(marc.mij, true);
-      ldr = marc.fields.leader;
-
+      marc.mij = fields2mij(marc.fields);
+      let raw = mij2raw(marc.mij);
+      ldr = marc.fields.leader || '';
+      let itypeCode = ldr.substring(6, 7);
       if (marc.fields['880']) {
         marc.fields['880'].forEach(f => {
           let ntag = getSubs(f, '6');
@@ -539,7 +638,7 @@ try {
                 for (let prop in ff) {
                   let [rt, pr] = prop.split('.');
                   if (propMap[prop] === 'string' || propMap[prop] === 'boolean') {
-                    inst[prop] = ff[prop].data;
+                    if (!inst[prop]) inst[prop] = ff[prop].data;
                   } else if (propMap[prop] === 'array.string') {
                     if (!inst[prop]) inst[prop] = [];
                     inst[prop].push(ff[prop].data);
@@ -564,11 +663,31 @@ try {
         if (inst.subjects) inst.subjects = dedupe(inst.subjects, [ 'value' ]);
         if (inst.identifiers) inst.identifiers = dedupe(inst.identifiers, [ 'value', 'identifierTypeId' ]);
         if (inst.languages) inst.languages = dedupe(inst.languages);
+        if (inst.instanceTypeId === refData.instanceTypes.unspecified) {
+          let itype = typeMap[itypeCode];
+          inst.instanceTypeId = refData.instanceTypes[itype] || refData.instanceTypes.uspecified;
+        }
         writeOut(outs.instances, inst);
         ttl.instances++;
         let srsObj = makeSrs(raw, jobId, inst.id, inst.hrid);
         writeOut(outs.srs, srsObj);
         ttl.srs++;
+        if (iconf) {
+          let itag = iconf.tag;
+          let ifields = marc.fields[itag];
+          let suppress = false;
+          if (ifields) {
+            let hi = makeHoldingsItems(ifields, instId, inst.hrid, suppress, inst.electronicAccess);
+            hi.h.forEach(r => {
+              writeOut(outs.holdings, r);
+              ttl.holdings++;
+            });
+            hi.i.forEach(r => {
+              writeOut(outs.items, r);
+              ttl.items++;
+            });
+          }
+        }
       }
 
       if (ttl.count % 10000 === 0) {
