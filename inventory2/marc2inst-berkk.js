@@ -143,7 +143,7 @@ const funcs = {
     return refData.instanceNoteTypes[param.name];
   },
   set_note_staff_only_via_indicator: function (data, param, ind1) {
-    if (ind1 === ' ' || ind1 === '0') {
+    if (ind1 === '0') {
       return true
     } else {
       return false

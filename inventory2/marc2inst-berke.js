@@ -150,7 +150,7 @@ const funcs = {
     return refData.instanceNoteTypes[param.name];
   },
   set_note_staff_only_via_indicator: function (data, param, ind1) {
-    if (ind1 === ' ' || ind1 === '0') {
+    if (ind1 === '0') {
       return true
     } else {
       return false
@@ -415,8 +415,6 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
     let st = 'Available';
     if (s1 === 'In process') {
       st = 'In process';
-    } else if (s1 === 'Lost') {
-      st = 'Declared lost';
     } else if (s1 === 'Missing') {
       st = 'Missing';
     } else if (s1 === 'On order') {
