@@ -1,4 +1,4 @@
-import { parseMarc, getSubs, mij2raw } from '../js-marc/js-marc.mjs';
+import { parseMarc, getSubs, mij2raw, getSubsHash } from '../js-marc/js-marc.mjs';
 import fs from 'fs';
 import path from 'path';
 import { v5 as uuid } from 'uuid';
@@ -180,32 +180,77 @@ const funcs = {
 
 const applyRules = function (ent, field, allFields) {
   let data = '';
+  let aoc = ent.applyRulesOnConcatenatedData || false;
+  let dls = ent.subFieldDelimiter || '';
+  let rule = (ent.rules) ? ent.rules[0] : ''; 
+  let funcNames = [];
+  let param = '';
+  if (rule && rule.conditions[0]) {
+    let con = rule.conditions[0];
+    let ctype = con.type;
+    param = con.parameter;
+    funcNames = ctype.split(/, */);
+  }
   if (ent.subfield && ent.subfield[0]) {
-    if (ent.subFieldDelimiter) {
-      let dparts = [];
-      ent.subFieldDelimiter.forEach(d => {
-        let dl = d.value;
-        let subcodes = d.subfields.join('');
-        let part = getSubs(field, subcodes, dl);
-        if (part) {
-          if (dparts[0]) part = dl + part;
-          dparts.push(part);
+    let subcodes = ent.subfield.join('');
+    if (aoc) {
+      if (dls) {
+        let dparts = [];
+        dls.forEach(d => {
+          let dl = d.value;
+          let subcodes = d.subfields.join('');
+          let part = getSubs(field, subcodes, dl);
+          if (part) {
+            if (dparts[0]) part = dl + part;
+            dparts.push(part);
+          }
+          data = dparts.join('');
+        });
+      } else {
+        let subcodes = ent.subfield.join('');
+        data = getSubs(field, subcodes);
+      }
+      funcNames.forEach(c => {
+        if (funcs[c]) {
+          data = funcs[c](data, param, field.ind1, field.ind2, allFields);
         }
-        data = dparts.join('');
       });
     } else {
-      let subcodes = ent.subfield.join('');
-      data = getSubs(field, subcodes);
+      if (dls) {
+        let dparts = [];
+        let parts = getSubsHash(field);
+        dls.forEach(d => {
+          let dl = d.value;
+          d.subfields.forEach(s => {
+            if (parts[s]) {
+              parts[s].forEach(p => {
+                funcNames.forEach(c => {
+                  if (funcs[c]) {
+                    p = funcs[c](p, param, field.ind1, field.ind2, allFields);
+                  }
+                });
+                if (dparts[0]) p = dl + p;
+                dparts.push(p);
+              })
+            }
+          });
+        });
+        data = dparts.join('');
+      } else {
+        let parts = getSubs(field, subcodes, -1);
+        parts.forEach(p => {
+          funcNames.forEach((c, i) => {
+            if (funcs[c]) {
+              parts[i] = funcs[c](p, param, field.ind1, field.ind2, allFields);
+            }
+          });
+        });
+        data = parts.join(' ');
+      }
     }
   } else {
     data = field;
-  }
-  let rule = (ent.rules) ? ent.rules[0] : ''; 
-  if (data && rule && rule.conditions[0]) {
-    let con = rule.conditions[0];
-    let ctype = con.type;
-    let param = con.parameter || '';
-    ctype.split(/, */).forEach(c => {
+    funcNames.forEach(c => {
       if (funcs[c]) {
         data = funcs[c](data, param, field.ind1, field.ind2, allFields);
       }
