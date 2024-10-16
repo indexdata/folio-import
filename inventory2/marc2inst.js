@@ -88,8 +88,9 @@ const cnTypeMap = {
 
 const inotes = [];
 
-const writeOut = (outStream, data, notJson) => {
-  let dataStr = (notJson !== undefined && notJson) ? data : JSON.stringify(data) + '\n';
+const writeOut = (outStream, data, notJson, newLineChar) => {
+  let nl = newLineChar || '';
+  let dataStr = (notJson !== undefined && notJson) ? data + nl: JSON.stringify(data) + '\n';
   outStream.write(dataStr, 'utf8');
 };
 
@@ -733,7 +734,7 @@ try {
         ttl.srs++;
         let ea = (inst.electronicAccess) ? JSON.stringify(inst.electronicAccess) : '';
         let instMap = `${inst.hrid}|${inst.id}|${bibCallNum.value}|${bibCallNum.type}|${blvl}|${ea}`;
-        writeOut(outs.idmap, instMap);
+        writeOut(outs.idmap, instMap, true, '\n');
         if (iconf) {
           let itag = iconf.tag;
           let ifields = marc.fields[itag];

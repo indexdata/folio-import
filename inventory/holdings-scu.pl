@@ -171,6 +171,7 @@ while (<MAP>) {
 }
 print "  $mi map lines read\n";
 close MAP;
+# print Dumper($inst_map);
 
 $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
