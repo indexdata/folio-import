@@ -1,4 +1,4 @@
-import { parseMarc, getSubs, mij2raw, fields2mij } from '../js-marc/js-marc.mjs';
+import { parseMarc, getSubs, mij2raw, fields2mij, getSubsHash } from '../js-marc/js-marc.mjs';
 import fs from 'fs';
 import path from 'path';
 import { v5 as uuid } from 'uuid';
@@ -197,32 +197,77 @@ const funcs = {
 
 const applyRules = function (ent, field, allFields) {
   let data = '';
+  let aoc = ent.applyRulesOnConcatenatedData || false;
+  let dls = ent.subFieldDelimiter || '';
+  let rule = (ent.rules) ? ent.rules[0] : ''; 
+  let funcNames = [];
+  let param = '';
+  if (rule && rule.conditions[0]) {
+    let con = rule.conditions[0];
+    let ctype = con.type;
+    param = con.parameter;
+    funcNames = ctype.split(/, */);
+  }
   if (ent.subfield && ent.subfield[0]) {
-    if (ent.subFieldDelimiter) {
-      let dparts = [];
-      ent.subFieldDelimiter.forEach(d => {
-        let dl = d.value;
-        let subcodes = d.subfields.join('');
-        let part = getSubs(field, subcodes, dl);
-        if (part) {
-          if (dparts[0]) part = dl + part;
-          dparts.push(part);
+    let subcodes = ent.subfield.join('');
+    if (aoc) {
+      if (dls) {
+        let dparts = [];
+        dls.forEach(d => {
+          let dl = d.value;
+          let subcodes = d.subfields.join('');
+          let part = getSubs(field, subcodes, dl);
+          if (part) {
+            if (dparts[0]) part = dl + part;
+            dparts.push(part);
+          }
+          data = dparts.join('');
+        });
+      } else {
+        let subcodes = ent.subfield.join('');
+        data = getSubs(field, subcodes);
+      }
+      funcNames.forEach(c => {
+        if (funcs[c]) {
+          data = funcs[c](data, param, field.ind1, field.ind2, allFields);
         }
-        data = dparts.join('');
       });
     } else {
-      let subcodes = ent.subfield.join('');
-      data = getSubs(field, subcodes);
+      if (dls) {
+        let dparts = [];
+        let parts = getSubsHash(field);
+        dls.forEach(d => {
+          let dl = d.value;
+          d.subfields.forEach(s => {
+            if (parts[s]) {
+              parts[s].forEach(p => {
+                funcNames.forEach(c => {
+                  if (funcs[c]) {
+                    p = funcs[c](p, param, field.ind1, field.ind2, allFields);
+                  }
+                });
+                if (dparts[0]) p = dl + p;
+                dparts.push(p);
+              })
+            }
+          });
+        });
+        data = dparts.join('');
+      } else {
+        let parts = getSubs(field, subcodes, -1);
+        parts.forEach(p => {
+          funcNames.forEach((c, i) => {
+            if (funcs[c]) {
+              parts[i] = funcs[c](p, param, field.ind1, field.ind2, allFields);
+            }
+          });
+        });
+        data = parts.join(' ');
+      }
     }
   } else {
     data = field;
-  }
-  let rule = (ent.rules) ? ent.rules[0] : ''; 
-  if (data && rule && rule.conditions[0]) {
-    let con = rule.conditions[0];
-    let ctype = con.type;
-    let param = con.parameter || '';
-    ctype.split(/, */).forEach(c => {
+    funcNames.forEach(c => {
       if (funcs[c]) {
         data = funcs[c](data, param, field.ind1, field.ind2, allFields);
       }
@@ -371,7 +416,6 @@ try {
     if (fs.existsSync(p)) fs.unlinkSync(p);
     outs[f] = fs.createWriteStream(p)
   };
-  console.log(outs);
   let rulesStr = fs.readFileSync(rulesFile, { encoding: 'utf8' });
   const allMappingRules = JSON.parse(rulesStr);
   const mappingRules = {};
@@ -496,6 +540,7 @@ try {
       ttl.count++
       let inst = {};
       let marc = '';
+      let bibCallNum = {};
       try { 
         marc = parseMarc(r)
       } catch(e) {
@@ -530,7 +575,20 @@ try {
           }
           marc.addField('001', cnum);
         }
-      } if (prefix && marc.fields['001']) {
+      }
+      if (conf.callNumbers) {
+        for (let t in conf.callNumbers) {
+          if (marc.fields[t]) {
+            let cn = getSubs(marc.fields[t][0], 'ab');
+            let pre = getSubs(marc.fields[t][0], 'f');
+            bibCallNum.value = `${pre}^^${cn}`;
+            bibCallNum.type = conf.callNumbers[t];
+            break;
+          }
+        }
+      }
+      
+      if (prefix && marc.fields['001']) {
         marc.updateField('001', prefix + marc.fields['001']);
       }
       let hrid = (marc.fields['001']) ? marc.fields['001'][0] : '';
@@ -568,6 +626,7 @@ try {
       let raw = mij2raw(marc.mij);
       ldr = marc.fields.leader || '';
       let itypeCode = ldr.substring(6, 7);
+      let blvl = ldr.substring(7,8);
       if (marc.fields['880']) {
         marc.fields['880'].forEach(f => {
           let ntag = getSubs(f, '6');
@@ -672,6 +731,9 @@ try {
         let srsObj = makeSrs(raw, jobId, inst.id, inst.hrid);
         writeOut(outs.srs, srsObj);
         ttl.srs++;
+        let ea = (inst.electronicAccess) ? JSON.stringify(inst.electronicAccess) : '';
+        let instMap = `${inst.hrid}|${inst.id}|${bibCallNum.value}|${bibCallNum.type}|${blvl}|${ea}`;
+        writeOut(outs.idmap, instMap);
         if (iconf) {
           let itag = iconf.tag;
           let ifields = marc.fields[itag];
