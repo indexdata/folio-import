@@ -380,7 +380,8 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
     let loc = (sh.c) ? sh.c[0] : '';
     loc = loc.trim();
     let locId = tsvMap.locations[loc];
-    let cn = getSubs(f, 'j');
+    // let cn = getSubs(f, 'j');
+    let cn = (sh.j) ? sh.j[0] : ''
     let cnTypeId = cnTypeMap[f.ind1] || refData.callNumberTypes['Other scheme'] 
     let hkey = `${loc}::${cn}`;
     if (!hseen[hkey] && !iseen[iid]) {

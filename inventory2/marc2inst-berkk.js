@@ -360,16 +360,22 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
   let hrs = [];
   let irs = [];
   let hseen = {};
+  let supMap = {};
   let hc = 0;
   let hid;
   fields.forEach(f => {
     let ir = {};
     // console.log(f);
-    let iid = getSubs(f, '9');
-    let loc = getSubs(f, 'c');
+    let sh = getSubsHash(f, true);
+    // let iid = getSubs(f, '9');
+    let iid = sh['9'];
+    // let loc = getSubs(f, 'c');
+    let loc = sh.c;
     let locId = tsvMap.locations[loc];
-    let cn = getSubs(f, 'o');
-    let cntype = getSubs(f, '2');
+    // let cn = getSubs(f, 'o');
+    let cn = sh.o;
+    // let cntype = getSubs(f, '2');
+    let cntype = sh['2'];
     let cnTypeId = (cntype === 'lcc') ? refData.callNumberTypes['Library of Congress classification'] : refData.callNumberTypes['Other scheme'] 
     let hkey = `${loc}::${cn}`;
     if (!hseen[hkey] && !iseen[iid]) {
@@ -389,16 +395,24 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
         hrs.push(hr);
         hseen[hkey] = 1;
         hc++;
+        supMap[hid] = { t: 0, s: 0};
       } else {
         console.log(`ERROR Holdings [${hr.hrid}] permanentLocationId not found for "${loc}"`);
       }
     }
-    let lt = getSubs(f, '3');
-    let s7 = getSubs(f, '7');
-    let s1 = getSubs(f, '1');
-    let mt = getSubs(f, 'y');
-    let bc = getSubs(f, 'p');
-    let ds = getSubs(f, '4');
+    // let lt = getSubs(f, '3');
+    let lt = sh['3'];
+    // let s7 = getSubs(f, '7');
+    let s7 = sh['7'];
+    // let s1 = getSubs(f, '1');
+    let s1 = sh['1'];
+    // let mt = getSubs(f, 'y');
+    let mt = sh.y;
+    //let bc = getSubs(f, 'p');
+    let bc = sh.p;
+    // let ds = getSubs(f, '4');
+    let ds = sh['4'];
+    let isup = (sh.f === '1') ? true : false;
     
     let st = 'Available';
     if (s7 === '3') {
@@ -424,10 +438,13 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
       } else if (bc) {
         console.log(`WARN [${iid}] barcode ${bc} already used!`);
       }
-
+      ir.discoverySuppress = isup;
+      supMap[hid].t++;
+      if (isup) supMap[hid].s++;
       ir.notes = [];
       for (let c in inotes) {
-        let nt = getSubs(f, c);
+        // let nt = getSubs(f, c);
+        let nt = sh.c;
         if (nt) {
           let ntype = inotes[c];
           let o = {
@@ -438,7 +455,6 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
           ir.notes.push(o);
         }
       }
-
       if (ds === '1') ir.itemDamagedStatusId = refData.itemDamageStatuses.Damaged;
     }
     if (ir.materialTypeId) { 
@@ -447,6 +463,11 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
       console.log(`ERROR Item [${iid}] Material type not found for ${mt}`)
     }
     iseen[iid] = 1;
+  });
+  hrs.forEach(hr => {
+    if (supMap[hr.id].t === supMap[hr.id].s) {
+      hr.discoverySuppress = true;
+    }
   });
   return { h: hrs, i:irs };
 }
