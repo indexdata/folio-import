@@ -444,7 +444,7 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
       ir.notes = [];
       for (let c in inotes) {
         // let nt = getSubs(f, c);
-        let nt = sh.c;
+        let nt = sh[c];
         if (nt) {
           let ntype = inotes[c];
           let o = {
