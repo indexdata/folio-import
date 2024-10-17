@@ -415,7 +415,7 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
       ir.hrid = iprefix + iid;
       ir.id = uuid(ir.hrid, ns);
       ir.holdingsRecordId = hid;
-      ir.permanentLoanTypeId = refData.loantypes[lt] || refData.loantypes['Can circulate'];
+      ir.permanentLoanTypeId = (lt === 'In Lib Use Only') ? refData.loantypes['In-Lib Use Only'] : refData.loantypes[lt] || refData.loantypes['Can circulate'];
       ir.status = { name: st };
       ir.materialTypeId = tsvMap.mtypes[mt] || refData.mtypes.Unspecified;
       if (bc && !bcseen[bc]) {
@@ -747,16 +747,21 @@ try {
         if (inst.subjects) inst.subjects = dedupe(inst.subjects, [ 'value' ]);
         if (inst.identifiers) inst.identifiers = dedupe(inst.identifiers, [ 'value', 'identifierTypeId' ]);
         if (inst.languages) inst.languages = dedupe(inst.languages);
+        let sfield = (marc.fields['942']) ? marc.fields['942'][0] : '';
+        let sval = false;
+        if (sfield && getSubs(sfield, 'n') === '1') {
+          sval = true
+        }
+        inst.discoverySuppress = sval;
         writeOut(outs.instances, inst);
         ttl.instances++;
-        let srsObj = makeSrs(raw, jobId, inst.id, inst.hrid);
+        let srsObj = makeSrs(raw, jobId, inst.id, inst.hrid, sval);
         writeOut(outs.srs, srsObj);
         ttl.srs++;
         if (iconf) {
           let itag = iconf.tag;
           let ifields = marc.fields[itag];
-          let sfield = (marc.fields['942']) ? marc.fields['942'][0] : '';
-          let suppress = (sfield && getSubs(sfield, 'n') === '1') ? true : false;
+          let suppress = false;
           let hi = makeHoldingsItems(ifields, instId, inst.hrid, suppress, inst.electronicAccess);
           hi.h.forEach(r => {
             writeOut(outs.holdings, r);
