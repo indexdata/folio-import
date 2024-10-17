@@ -371,12 +371,13 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
   let ic = 0;
   let hid;
   fields.forEach(f => {
-    let ir = {};
     ic++;
+    let ir = {};
     let icStr = ic.toString().padStart(4, '0');
     let ipr = bhrid.replace(/^be/, iprefix);
     let iid = ipr + '-' + icStr;
-    let loc = getSubs(f, 'c');
+    let sh = getSubsHash(f);
+    let loc = (sh.c) ? sh.c[0] : '';
     loc = loc.trim();
     let locId = tsvMap.locations[loc];
     let cn = getSubs(f, 'j');
@@ -403,14 +404,22 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
         console.log(`ERROR Holdings [${hr.hrid}] permanentLocationId not found for "${loc}"`);
       }
     }
-    let lt = getSubs(f, '3');
-    let s1 = getSubs(f, 's');
-    let mt = getSubs(f, 'g');
-    let bc = getSubs(f, 'p');
-    let su = getSubs(f, 'x');
-    let cp = getSubs(f, 't');
-    let vo = getSubs(f, 'i');
-    let cnote = getSubs(f, 'n');
+    // let lt = getSubs(f, '3');
+    let lt = (sh.f) ? sh.f[0] : '';
+    // let s1 = getSubs(f, 's');
+    let s1 = (sh.s) ? sh.s[0] : '';
+    // let mt = getSubs(f, 'g');
+    let mt = (sh.g) ? sh.g[0] : '';
+    // let bc = getSubs(f, 'p');
+    let bc = (sh.p) ? sh.p[0] : '';
+    // let su = getSubs(f, 'x');
+    let su = (sh.x) ? sh.x[0] : '';
+    // let cp = getSubs(f, 't');
+    let cp = (sh.t) ? sh.t[0] : '';
+    // let vo = getSubs(f, 'i');
+    let vo = (sh.i) ? sh.i[0] : '';
+    let cin = sh.r || [];
+    let con = sh.u || [];
     
     let st = 'Available';
     if (s1 === 'In process') {
@@ -460,18 +469,28 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
           ir.notes.push(o);
         }
       });
-      if (cnote) {
-        ir.circulationNotes = [];
-        let ntypes = [ 'Check in', 'Check out' ];
-        ntypes.forEach(t => {
-          let o = {
-            id: uuid(ir.id + t, ns),
-            note: cnote,
-            noteType: t
-          }
-          ir.circulationNotes.push(o);
-        });
-      }
+      ir.circulationNotes = [];
+      let cnc = 0;
+      cin.forEach (n => {
+        cnc++;
+        let ntype = 'Check in';
+        let o = {
+          id: uuid(`${ir.id}::${cnc}`, ns),
+          note: n,
+          noteType: ntype
+        }
+        ir.circulationNotes.push(o);
+      });
+      con.forEach (n => {
+        cnc++;
+        let ntype = 'Check out';
+        let o = {
+          id: uuid(`${ir.id}::${cnc}`, ns),
+          note: n,
+          noteType: ntype
+        }
+        ir.circulationNotes.push(o);
+      });
       if (ir.materialTypeId) { 
         irs.push(ir)
       } else {
