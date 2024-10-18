@@ -207,7 +207,6 @@ const applyRules = function (ent, field, allFields) {
           data = dparts.join('');
         });
       } else {
-        let subcodes = ent.subfield.join('');
         data = getSubs(field, subcodes);
       }
       funcNames.forEach(c => {
@@ -238,13 +237,13 @@ const applyRules = function (ent, field, allFields) {
         data = dparts.join('');
       } else {
         let parts = getSubs(field, subcodes, -1);
-        parts.forEach(p => {
+        for (let x = 0; x < parts.length; x++) {
           funcNames.forEach((c, i) => {
             if (funcs[c]) {
-              parts[i] = funcs[c](p, param, field.ind1, field.ind2, allFields);
+              parts[x] = funcs[c](parts[x], param, field.ind1, field.ind2, allFields);
             }
           });
-        });
+        };
         data = parts.join(' ');
       }
     }
@@ -802,9 +801,15 @@ try {
         if (inst.subjects) inst.subjects = dedupe(inst.subjects, [ 'value' ]);
         if (inst.identifiers) inst.identifiers = dedupe(inst.identifiers, [ 'value', 'identifierTypeId' ]);
         if (inst.languages) inst.languages = dedupe(inst.languages);
+        let sfield = (marc.fields['908']) ? marc.fields['908'][0] : '';
+        let sval = false;
+        if (sfield && getSubs(sfield, 'x') === 'Y') {
+          sval = true
+        }
+        inst.discoverySuppress = sval;
         writeOut(outs.instances, inst);
         ttl.instances++;
-        let srsObj = makeSrs(raw, jobId, inst.id, inst.hrid);
+        let srsObj = makeSrs(raw, jobId, inst.id, inst.hrid, sval);
         writeOut(outs.srs, srsObj);
         ttl.srs++;
         if (iconf) {
