@@ -1,1120 +1,48 @@
 {
-  "001": [
-    {
-      "rules": [],
-      "target": "hrid",
-      "subfield": [],
-      "description": "The human readable ID"
-    },
-    {
-      "rules": [
-        {
-          "conditions": [
-            {
-              "LDR": true,
-              "type": "set_issuance_mode_id"
-            }
-          ],
-          "description": "Issuance mode based on 7 leader`s byte"
-        }
-      ],
-      "target": "modeOfIssuanceId",
-      "subfield": [],
-      "description": ""
-    }
-  ],
-  "008": [
-    {
-      "rules": [
-        {
-          "conditions": [
-            {
-              "type": "set_instance_type_id",
-              "parameter": {
-                "unspecifiedInstanceTypeCode": "zzz"
-              }
-            }
-          ]
-        }
-      ],
-      "target": "instanceTypeId",
-      "subfield": [],
-      "description": "Default Unspecified Instance type in case when no 336 field present"
-    },
-    {
-      "rules": [
-        {
-          "value": "MARC21",
-          "conditions": []
-        }
-      ],
-      "target": "source",
-      "subfield": [],
-      "description": "Source of instance record"
-    },
-    {
-      "rules": [
-        {
-          "conditions": [
-            {
-              "type": "char_select",
-              "parameter": {
-                "to": 38,
-                "from": 35
-              }
-            }
-          ]
-        }
-      ],
-      "target": "languages",
-      "subfield": [],
-      "description": "Language code"
-    }
-  ],
-  "010": [
-    {
-      "entity": [
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "set_identifier_type_id_by_name",
-                  "parameter": {
-                    "name": "LCCN"
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.identifierTypeId",
-          "subfield": [
-            "a"
-          ],
-          "description": "Type for LCCN"
-        },
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "trim"
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.value",
-          "subfield": [
-            "a"
-          ],
-          "description": "LCCN"
-        }
-      ],
-      "entityPerRepeatedSubfield": true
-    }
-  ],
-  "019": [
-    {
-      "entity": [
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "set_identifier_type_id_by_name",
-                  "parameter": {
-                    "name": "Cancelled system control number"
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.identifierTypeId",
-          "subfield": [
-            "a"
-          ],
-          "description": "Type for Cancelled system control number"
-        },
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "trim"
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.value",
-          "subfield": [
-            "a"
-          ],
-          "description": "Cancelled system control number"
-        }
-      ],
-      "entityPerRepeatedSubfield": true
-    }
-  ],
-  "020": [
-    {
-      "entity": [
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "set_identifier_type_id_by_name",
-                  "parameter": {
-                    "name": "ISBN"
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.identifierTypeId",
-          "subfield": [
-            "a"
-          ],
-          "description": "Type for Valid ISBN"
-        },
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "concat_subfields_by_name, remove_ending_punc,trim",
-                  "parameter": {
-                    "subfieldsToConcat": [
-                      "c",
-                      "q"
-                    ],
-                    "subfieldsToStopConcat": [
-                      "z"
-                    ]
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.value",
-          "subfield": [
-            "a"
-          ],
-          "description": "Valid ISBN"
-        }
-      ],
-      "entityPerRepeatedSubfield": true
-    },
-    {
-      "entity": [
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "set_identifier_type_id_by_name",
-                  "parameter": {
-                    "name": "Invalid ISBN"
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.identifierTypeId",
-          "subfield": [
-            "z"
-          ],
-          "description": "Type for Invalid ISBN"
-        },
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "concat_subfields_by_name, remove_ending_punc,trim",
-                  "parameter": {
-                    "subfieldsToConcat": [
-                      "q",
-                      "c"
-                    ],
-                    "subfieldsToStopConcat": [
-                      "a"
-                    ]
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.value",
-          "subfield": [
-            "z"
-          ],
-          "description": "Invalid ISBN"
-        }
-      ],
-      "entityPerRepeatedSubfield": true
-    }
-  ],
-  "022": [
-    {
-      "entity": [
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "set_identifier_type_id_by_name",
-                  "parameter": {
-                    "name": "ISSN"
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.identifierTypeId",
-          "subfield": [
-            "a"
-          ],
-          "description": "Type for ISSN"
-        },
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "trim"
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.value",
-          "subfield": [
-            "a"
-          ],
-          "description": "ISSN"
-        }
-      ],
-      "entityPerRepeatedSubfield": true
-    },
-    {
-      "entity": [
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "set_identifier_type_id_by_name",
-                  "parameter": {
-                    "name": "Invalid ISSN"
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.identifierTypeId",
-          "subfield": [
-            "y",
-            "z",
-            "m"
-          ],
-          "description": "Type for Invalid ISSN"
-        },
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "trim"
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.value",
-          "subfield": [
-            "y",
-            "z",
-            "m"
-          ],
-          "description": "Invalid ISSN"
-        }
-      ],
-      "entityPerRepeatedSubfield": true
-    },
-    {
-      "entity": [
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "set_identifier_type_id_by_name",
-                  "parameter": {
-                    "name": "Linking ISSN"
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.identifierTypeId",
-          "subfield": [
-            "l"
-          ],
-          "description": "Type for Linking ISSN"
-        },
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "trim"
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.value",
-          "subfield": [
-            "l"
-          ],
-          "description": "Linking ISSN"
-        }
-      ],
-      "entityPerRepeatedSubfield": true
-    }
-  ],
-  "024": [
-    {
-      "entity": [
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "set_identifier_type_id_by_name",
-                  "parameter": {
-                    "name": "Other standard identifier"
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.identifierTypeId",
-          "subfield": [
-            "a",
-            "c",
-            "d",
-            "q",
-            "z",
-            "2"
-          ],
-          "description": "Type for Other Standard Identifier",
-          "applyRulesOnConcatenatedData": true
-        },
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "trim"
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.value",
-          "subfield": [
-            "a",
-            "c",
-            "d",
-            "q",
-            "z",
-            "2"
-          ],
-          "description": "Other Standard Identifier",
-          "applyRulesOnConcatenatedData": true
-        }
-      ]
-    },
-    {
-      "entity": [
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "set_identifier_type_id_by_name",
-                  "parameter": {
-                    "name": "ISMN"
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.identifierTypeId",
-          "subfield": [
-            "a"
-          ],
-          "description": "Type for Resource identifier types"
-        },
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "concat_subfields_by_name, trim",
-                  "parameter": {
-                    "subfieldsToConcat": [
-                      "q"
-                    ]
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.value",
-          "subfield": [
-            "a"
-          ],
-          "description": "ISMN"
-        }
-      ],
-      "indicators": {
-        "ind1": "2",
-        "ind2": "*"
-      }
-    },
-    {
-      "entity": [
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "set_identifier_type_id_by_name",
-                  "parameter": {
-                    "name": "Invalid ISMN"
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.identifierTypeId",
-          "subfield": [
-            "z"
-          ],
-          "description": "Type for Resource identifier types"
-        },
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "concat_subfields_by_name, trim",
-                  "parameter": {
-                    "subfieldsToConcat": [
-                      "q"
-                    ]
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.value",
-          "subfield": [
-            "z"
-          ],
-          "description": "Invalid ISMN"
-        }
-      ],
-      "indicators": {
-        "ind1": "2",
-        "ind2": "*"
-      },
-      "entityPerRepeatedSubfield": true
-    },
-    {
-      "entity": [
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "set_identifier_type_id_by_name",
-                  "parameter": {
-                    "name": "UPC"
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.identifierTypeId",
-          "subfield": [
-            "a"
-          ],
-          "description": "Type for Resource identifier types"
-        },
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "concat_subfields_by_name, trim",
-                  "parameter": {
-                    "subfieldsToConcat": [
-                      "q"
-                    ]
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.value",
-          "subfield": [
-            "a"
-          ],
-          "description": "UPC"
-        }
-      ],
-      "indicators": {
-        "ind1": "1",
-        "ind2": "*"
-      }
-    },
-    {
-      "entity": [
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "set_identifier_type_id_by_name",
-                  "parameter": {
-                    "name": "Invalid UPC"
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.identifierTypeId",
-          "subfield": [
-            "z"
-          ],
-          "description": "Type for Resource identifier types"
-        },
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "concat_subfields_by_name, trim",
-                  "parameter": {
-                    "subfieldsToConcat": [
-                      "q"
-                    ]
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.value",
-          "subfield": [
-            "z"
-          ],
-          "description": "Invalid UPC"
-        }
-      ],
-      "indicators": {
-        "ind1": "1",
-        "ind2": "*"
-      },
-      "entityPerRepeatedSubfield": true
-    }
-  ],
-  "028": [
-    {
-      "entity": [
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "set_identifier_type_id_by_name",
-                  "parameter": {
-                    "name": "Publisher or distributor number"
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.identifierTypeId",
-          "subfield": [
-            "a",
-            "b",
-            "q"
-          ],
-          "description": "Type for Publisher Number",
-          "applyRulesOnConcatenatedData": true
-        },
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "trim"
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.value",
-          "subfield": [
-            "a",
-            "b",
-            "q"
-          ],
-          "description": "Publisher Number",
-          "applyRulesOnConcatenatedData": true
-        }
-      ]
-    }
-  ],
-  "035": [
-    {
-      "entity": [
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "set_identifier_type_id_by_value",
-                  "parameter": {
-                    "names": [
-                      "System control number",
-                      "OCLC"
-                    ],
-                    "oclc_regex": "(\\(OCoLC\\)|ocm|ocn|on).*"
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.identifierTypeId",
-          "subfield": [
-            "a"
-          ],
-          "description": "Type for System Control Number"
-        },
-        {
-          "target": "identifiers.value",
-          "subfield": [
-            "a"
-          ],
-          "description": "System Control Number"
-        }
-      ],
-      "entityPerRepeatedSubfield": true
-    },
-    {
-      "entity": [
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "set_identifier_type_id_by_name",
-                  "parameter": {
-                    "name": "Cancelled system control number"
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.identifierTypeId",
-          "subfield": [
-            "z"
-          ],
-          "description": "Type for Cancelled system control number"
-        },
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "trim"
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.value",
-          "subfield": [
-            "z"
-          ],
-          "description": "Cancelled system control number"
-        }
-      ],
-      "entityPerRepeatedSubfield": true
-    }
-  ],
-  "041": [
-    {
-      "entity": [
-        {
-          "target": "languages",
-          "subfield": [
-            "a"
-          ],
-          "description": "Language code",
-          "subFieldSplit": {
-            "type": "split_every",
-            "value": "3"
-          }
-        }
-      ],
-      "entityPerRepeatedSubfield": true
-    }
-  ],
-  "050": [
-    {
-      "entity": [
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "set_classification_type_id",
-                  "parameter": {
-                    "name": "LC"
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "classifications.classificationTypeId",
-          "subfield": [
-            "a"
-          ],
-          "description": "Type for LC classification"
-        },
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "concat_subfields_by_name",
-                  "parameter": {
-                    "subfieldsToConcat": [
-                      "b"
-                    ]
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "classifications.classificationNumber",
-          "subfield": [
-            "a"
-          ],
-          "description": "LC classification"
-        }
-      ],
-      "entityPerRepeatedSubfield": true
-    }
-  ],
-  "060": [
-    {
-      "entity": [
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "set_classification_type_id",
-                  "parameter": {
-                    "name": "NLM"
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "classifications.classificationTypeId",
-          "subfield": [
-            "a"
-          ],
-          "description": "Type for NLM classification"
-        },
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "concat_subfields_by_name",
-                  "parameter": {
-                    "subfieldsToConcat": [
-                      "b"
-                    ]
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "classifications.classificationNumber",
-          "subfield": [
-            "a"
-          ],
-          "description": "NLM classification"
-        }
-      ],
-      "entityPerRepeatedSubfield": true
-    }
-  ],
-  "074": [
-    {
-      "entity": [
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "set_identifier_type_id_by_name",
-                  "parameter": {
-                    "name": "GPO item number"
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.identifierTypeId",
-          "subfield": [
-            "a"
-          ],
-          "description": "Type for GPO Item Number"
-        },
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "remove_ending_punc, trim"
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.value",
-          "subfield": [
-            "a"
-          ],
-          "description": "GPO Item Number"
-        }
-      ],
-      "entityPerRepeatedSubfield": true
-    },
-    {
-      "entity": [
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "set_identifier_type_id_by_name",
-                  "parameter": {
-                    "name": "Cancelled GPO item number"
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.identifierTypeId",
-          "subfield": [
-            "z"
-          ],
-          "description": "Type for Cancelled GPO Item Number"
-        },
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "remove_ending_punc, trim"
-                }
-              ]
-            }
-          ],
-          "target": "identifiers.value",
-          "subfield": [
-            "z"
-          ],
-          "description": "Cancelled GPO Item Number"
-        }
-      ],
-      "entityPerRepeatedSubfield": true
-    }
-  ],
-  "080": [
-    {
-      "entity": [
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "set_classification_type_id",
-                  "parameter": {
-                    "name": "UDC"
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "classifications.classificationTypeId",
-          "subfield": [
-            "a",
-            "b"
-          ],
-          "description": "Type for UDC classification",
-          "applyRulesOnConcatenatedData": true
-        },
-        {
-          "target": "classifications.classificationNumber",
-          "subfield": [
-            "a",
-            "b"
-          ],
-          "description": "UDC classification",
-          "applyRulesOnConcatenatedData": true
-        }
-      ]
-    }
-  ],
-  "082": [
-    {
-      "entity": [
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "set_classification_type_id",
-                  "parameter": {
-                    "name": "Dewey"
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "classifications.classificationTypeId",
-          "subfield": [
-            "a"
-          ],
-          "description": "Type for Dewey classification"
-        },
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "concat_subfields_by_name, remove_substring",
-                  "parameter": {
-                    "substring": "/",
-                    "subfieldsToConcat": [
-                      "b"
-                    ]
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "classifications.classificationNumber",
-          "subfield": [
-            "a"
-          ],
-          "description": "Dewey classification"
-        }
-      ],
-      "entityPerRepeatedSubfield": true
-    }
-  ],
-  "086": [
-    {
-      "entity": [
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "set_classification_type_id",
-                  "parameter": {
-                    "name": "GDC"
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "classifications.classificationTypeId",
-          "subfield": [
-            "a",
-            "z"
-          ],
-          "description": "Type for gov doc classification"
-        },
-        {
-          "target": "classifications.classificationNumber",
-          "subfield": [
-            "a",
-            "z"
-          ],
-          "description": "Gov doc classification"
-        }
-      ],
-      "entityPerRepeatedSubfield": true
-    }
-  ],
-  "090": [
-    {
-      "entity": [
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "set_classification_type_id",
-                  "parameter": {
-                    "name": "LC"
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "classifications.classificationTypeId",
-          "subfield": [
-            "a"
-          ],
-          "description": "Type for LC classification"
-        },
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "concat_subfields_by_name",
-                  "parameter": {
-                    "subfieldsToConcat": [
-                      "b"
-                    ]
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "classifications.classificationNumber",
-          "subfield": [
-            "a"
-          ],
-          "description": "LC classification"
-        }
-      ],
-      "entityPerRepeatedSubfield": true
-    }
-  ],
   "100": [
     {
       "entity": [
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "trim_punctuation"
+                }
+              ]
+            }
+          ],
+          "target": "contributors.name",
+          "subfield": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "f",
+            "g",
+            "j",
+            "k",
+            "l",
+            "n",
+            "p",
+            "q",
+            "t",
+            "u"
+          ],
+          "description": "Personal Name",
+          "requiredSubfield": [
+            "a"
+          ],
+          "applyRulesOnConcatenatedData": true
+        },
+        {
+          "target": "contributors.authorityId",
+          "subfield": [
+            "9"
+          ],
+          "description": "Authority ID that controlling the contributor",
+          "applyRulesOnConcatenatedData": true
+        },
         {
           "rules": [
             {
@@ -1173,7 +101,13 @@
           "subfield": [],
           "description": "Primary contributor",
           "applyRulesOnConcatenatedData": true
-        },
+        }
+      ]
+    }
+  ],
+  "110": [
+    {
+      "entity": [
         {
           "rules": [
             {
@@ -1192,24 +126,27 @@
             "d",
             "f",
             "g",
-            "j",
             "k",
             "l",
             "n",
             "p",
-            "q",
             "t",
             "u"
           ],
-          "description": "Personal Name",
+          "description": "Corporate Name",
+          "requiredSubfield": [
+            "a"
+          ],
           "applyRulesOnConcatenatedData": true
-        }
-      ]
-    }
-  ],
-  "110": [
-    {
-      "entity": [
+        },
+        {
+          "target": "contributors.authorityId",
+          "subfield": [
+            "9"
+          ],
+          "description": "Authority ID that controlling the contributor",
+          "applyRulesOnConcatenatedData": true
+        },
         {
           "rules": [
             {
@@ -1268,7 +205,13 @@
           "subfield": [],
           "description": "Primary contributor",
           "applyRulesOnConcatenatedData": true
-        },
+        }
+      ]
+    }
+  ],
+  "111": [
+    {
+      "entity": [
         {
           "rules": [
             {
@@ -1294,15 +237,20 @@
             "t",
             "u"
           ],
-          "description": "Corporate Name",
+          "description": "Meeting Name",
+          "requiredSubfield": [
+            "a"
+          ],
           "applyRulesOnConcatenatedData": true
-        }
-      ]
-    }
-  ],
-  "111": [
-    {
-      "entity": [
+        },
+        {
+          "target": "contributors.authorityId",
+          "subfield": [
+            "9"
+          ],
+          "description": "Authority ID that controlling the contributor",
+          "applyRulesOnConcatenatedData": true
+        },
         {
           "rules": [
             {
@@ -1360,34 +308,6 @@
           "target": "contributors.primary",
           "subfield": [],
           "description": "Primary contributor",
-          "applyRulesOnConcatenatedData": true
-        },
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "trim_punctuation"
-                }
-              ]
-            }
-          ],
-          "target": "contributors.name",
-          "subfield": [
-            "a",
-            "b",
-            "c",
-            "d",
-            "f",
-            "g",
-            "k",
-            "l",
-            "n",
-            "p",
-            "t",
-            "u"
-          ],
-          "description": "Meeting Name",
           "applyRulesOnConcatenatedData": true
         }
       ]
@@ -1458,6 +378,13 @@
           ],
           "description": "Alternative Title",
           "applyRulesOnConcatenatedData": true
+        },
+        {
+          "target": "alternativeTitles.authorityId",
+          "subfield": [
+            "9"
+          ],
+          "description": "Authority ID that controlling the alternative title"
         }
       ]
     }
@@ -1525,6 +452,13 @@
           ],
           "description": "Alternative Title",
           "applyRulesOnConcatenatedData": true
+        },
+        {
+          "target": "alternativeTitles.authorityId",
+          "subfield": [
+            "9"
+          ],
+          "description": "Authority ID that controlling the alternative title"
         }
       ]
     }
@@ -1621,6 +555,13 @@
           ],
           "description": "Alternative Title",
           "applyRulesOnConcatenatedData": true
+        },
+        {
+          "target": "alternativeTitles.authorityId",
+          "subfield": [
+            "9"
+          ],
+          "description": "Authority ID that controlling the alternative title"
         }
       ]
     }
@@ -1678,6 +619,13 @@
           ],
           "description": "Former title",
           "applyRulesOnConcatenatedData": true
+        },
+        {
+          "target": "alternativeTitles.authorityId",
+          "subfield": [
+            "9"
+          ],
+          "description": "Authority ID that controlling the alternative title"
         }
       ]
     }
@@ -5737,6 +4685,13 @@
             }
           ],
           "applyRulesOnConcatenatedData": true
+        },
+        {
+          "target": "subjects.authorityId",
+          "subfield": [
+            "9"
+          ],
+          "description": "Authority ID that controlling the subject"
         }
       ]
     }
@@ -5815,6 +4770,13 @@
             }
           ],
           "applyRulesOnConcatenatedData": true
+        },
+        {
+          "target": "subjects.authorityId",
+          "subfield": [
+            "9"
+          ],
+          "description": "Authority ID that controlling the subject"
         }
       ]
     }
@@ -5893,6 +4855,13 @@
             }
           ],
           "applyRulesOnConcatenatedData": true
+        },
+        {
+          "target": "subjects.authorityId",
+          "subfield": [
+            "9"
+          ],
+          "description": "Authority ID that controlling the subject"
         }
       ]
     }
@@ -5966,6 +4935,13 @@
             }
           ],
           "applyRulesOnConcatenatedData": true
+        },
+        {
+          "target": "subjects.authorityId",
+          "subfield": [
+            "9"
+          ],
+          "description": "Authority ID that controlling the subject"
         }
       ]
     }
@@ -6015,6 +4991,13 @@
             }
           ],
           "applyRulesOnConcatenatedData": true
+        },
+        {
+          "target": "subjects.authorityId",
+          "subfield": [
+            "9"
+          ],
+          "description": "Authority ID that controlling the subject"
         }
       ]
     }
@@ -6054,6 +5037,13 @@
             }
           ],
           "applyRulesOnConcatenatedData": true
+        },
+        {
+          "target": "subjects.authorityId",
+          "subfield": [
+            "9"
+          ],
+          "description": "Authority ID that controlling the subject"
         }
       ]
     }
@@ -6103,6 +5093,13 @@
             }
           ],
           "applyRulesOnConcatenatedData": true
+        },
+        {
+          "target": "subjects.authorityId",
+          "subfield": [
+            "9"
+          ],
+          "description": "Authority ID that controlling the subject"
         }
       ]
     }
@@ -6146,6 +5143,13 @@
             }
           ],
           "applyRulesOnConcatenatedData": true
+        },
+        {
+          "target": "subjects.authorityId",
+          "subfield": [
+            "9"
+          ],
+          "description": "Authority ID that controlling the subject"
         }
       ]
     }
@@ -6189,6 +5193,13 @@
             }
           ],
           "applyRulesOnConcatenatedData": true
+        },
+        {
+          "target": "subjects.authorityId",
+          "subfield": [
+            "9"
+          ],
+          "description": "Authority ID that controlling the subject"
         }
       ]
     }
@@ -6196,6 +5207,14 @@
   "700": [
     {
       "entity": [
+        {
+          "target": "contributors.authorityId",
+          "subfield": [
+            "9"
+          ],
+          "description": "Authority ID that controlling the contributor",
+          "applyRulesOnConcatenatedData": true
+        },
         {
           "rules": [
             {
@@ -6292,6 +5311,14 @@
     {
       "entity": [
         {
+          "target": "contributors.authorityId",
+          "subfield": [
+            "9"
+          ],
+          "description": "Authority ID that controlling the contributor",
+          "applyRulesOnConcatenatedData": true
+        },
+        {
           "rules": [
             {
               "conditions": [
@@ -6384,6 +5411,14 @@
   "711": [
     {
       "entity": [
+        {
+          "target": "contributors.authorityId",
+          "subfield": [
+            "9"
+          ],
+          "description": "Authority ID that controlling the contributor",
+          "applyRulesOnConcatenatedData": true
+        },
         {
           "rules": [
             {
@@ -6731,71 +5766,6 @@
       }
     }
   ],
-  "730": [
-    {
-      "entity": [
-        {
-          "rules": [
-            {
-              "conditions": [
-                {
-                  "type": "set_alternative_title_type_id",
-                  "parameter": {
-                    "name": "Uniform title"
-                  }
-                }
-              ]
-            }
-          ],
-          "target": "alternativeTitles.alternativeTitleTypeId",
-          "subfield": [
-            "a",
-            "n",
-            "p",
-            "d",
-            "f",
-            "g",
-            "h",
-            "i",
-            "k",
-            "l",
-            "m",
-            "n",
-            "o",
-            "r",
-            "s",
-            "t",
-            "x"
-          ],
-          "description": "Alternative Title id",
-          "applyRulesOnConcatenatedData": true
-        },
-        {
-          "target": "alternativeTitles.alternativeTitle",
-          "subfield": [
-            "a",
-            "n",
-            "p",
-            "d",
-            "f",
-            "g",
-            "h",
-            "i",
-            "k",
-            "l",
-            "m",
-            "n",
-            "o",
-            "r",
-            "s",
-            "t",
-            "x"
-          ],
-          "description": "Alternative Title"
-        }
-      ]
-    }
-  ],
   "740": [
     {
       "entity": [
@@ -6832,6 +5802,13 @@
           ],
           "description": "Alternative Title",
           "applyRulesOnConcatenatedData": true
+        },
+        {
+          "target": "alternativeTitles.authorityId",
+          "subfield": [
+            "9"
+          ],
+          "description": "Authority ID that controlling the alternative title"
         }
       ]
     }
@@ -7073,6 +6050,13 @@
           ],
           "description": "Series Statement",
           "applyRulesOnConcatenatedData": true
+        },
+        {
+          "target": "series.authorityId",
+          "subfield": [
+            "9"
+          ],
+          "description": "Authority ID that controlling the series"
         }
       ]
     }
@@ -7118,6 +6102,13 @@
           ],
           "description": "Series Statement",
           "applyRulesOnConcatenatedData": true
+        },
+        {
+          "target": "series.authorityId",
+          "subfield": [
+            "9"
+          ],
+          "description": "Authority ID that controlling the series"
         }
       ]
     }
@@ -7161,6 +6152,13 @@
           ],
           "description": "Series Statement",
           "applyRulesOnConcatenatedData": true
+        },
+        {
+          "target": "series.authorityId",
+          "subfield": [
+            "9"
+          ],
+          "description": "Authority ID that controlling the series"
         }
       ]
     }
@@ -7202,6 +6200,13 @@
           ],
           "description": "Series Statement",
           "applyRulesOnConcatenatedData": true
+        },
+        {
+          "target": "series.authorityId",
+          "subfield": [
+            "9"
+          ],
+          "description": "Authority ID that controlling the series"
         }
       ]
     }
@@ -7546,6 +6551,1119 @@
           "description": "If true, determines that the note should not be visible for others than staff"
         }
       ]
+    }
+  ],
+  "001": [
+    {
+      "rules": [],
+      "target": "hrid",
+      "subfield": [],
+      "description": "The human readable ID"
+    },
+    {
+      "rules": [
+        {
+          "conditions": [
+            {
+              "LDR": true,
+              "type": "set_issuance_mode_id"
+            }
+          ],
+          "description": "Issuance mode based on 7 leader`s byte"
+        }
+      ],
+      "target": "modeOfIssuanceId",
+      "subfield": [],
+      "description": ""
+    }
+  ],
+  "008": [
+    {
+      "rules": [
+        {
+          "conditions": [
+            {
+              "type": "set_instance_type_id",
+              "parameter": {
+                "unspecifiedInstanceTypeCode": "zzz"
+              }
+            }
+          ]
+        }
+      ],
+      "target": "instanceTypeId",
+      "subfield": [],
+      "description": "Default Unspecified Instance type in case when no 336 field present"
+    },
+    {
+      "rules": [
+        {
+          "value": "MARC21",
+          "conditions": []
+        }
+      ],
+      "target": "source",
+      "subfield": [],
+      "description": "Source of instance record"
+    },
+    {
+      "rules": [
+        {
+          "conditions": [
+            {
+              "type": "char_select",
+              "parameter": {
+                "to": 38,
+                "from": 35
+              }
+            }
+          ]
+        }
+      ],
+      "target": "languages",
+      "subfield": [],
+      "description": "Language code"
+    }
+  ],
+  "010": [
+    {
+      "entity": [
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_identifier_type_id_by_name",
+                  "parameter": {
+                    "name": "LCCN"
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.identifierTypeId",
+          "subfield": [
+            "a"
+          ],
+          "description": "Type for LCCN"
+        },
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "trim"
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.value",
+          "subfield": [
+            "a"
+          ],
+          "description": "LCCN"
+        }
+      ],
+      "entityPerRepeatedSubfield": true
+    }
+  ],
+  "019": [
+    {
+      "entity": [
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_identifier_type_id_by_name",
+                  "parameter": {
+                    "name": "Cancelled system control number"
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.identifierTypeId",
+          "subfield": [
+            "a"
+          ],
+          "description": "Type for Cancelled system control number"
+        },
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "trim"
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.value",
+          "subfield": [
+            "a"
+          ],
+          "description": "Cancelled system control number"
+        }
+      ],
+      "entityPerRepeatedSubfield": true
+    }
+  ],
+  "020": [
+    {
+      "entity": [
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_identifier_type_id_by_name",
+                  "parameter": {
+                    "name": "ISBN"
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.identifierTypeId",
+          "subfield": [
+            "a"
+          ],
+          "description": "Type for Valid ISBN"
+        },
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "concat_subfields_by_name, remove_ending_punc,trim",
+                  "parameter": {
+                    "subfieldsToConcat": [
+                      "c",
+                      "q"
+                    ],
+                    "subfieldsToStopConcat": [
+                      "z"
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.value",
+          "subfield": [
+            "a"
+          ],
+          "description": "Valid ISBN"
+        }
+      ],
+      "entityPerRepeatedSubfield": true
+    },
+    {
+      "entity": [
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_identifier_type_id_by_name",
+                  "parameter": {
+                    "name": "Invalid ISBN"
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.identifierTypeId",
+          "subfield": [
+            "z"
+          ],
+          "description": "Type for Invalid ISBN"
+        },
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "concat_subfields_by_name, remove_ending_punc,trim",
+                  "parameter": {
+                    "subfieldsToConcat": [
+                      "q",
+                      "c"
+                    ],
+                    "subfieldsToStopConcat": [
+                      "a"
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.value",
+          "subfield": [
+            "z"
+          ],
+          "description": "Invalid ISBN"
+        }
+      ],
+      "entityPerRepeatedSubfield": true
+    }
+  ],
+  "022": [
+    {
+      "entity": [
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_identifier_type_id_by_name",
+                  "parameter": {
+                    "name": "ISSN"
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.identifierTypeId",
+          "subfield": [
+            "a"
+          ],
+          "description": "Type for ISSN"
+        },
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "trim"
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.value",
+          "subfield": [
+            "a"
+          ],
+          "description": "ISSN"
+        }
+      ],
+      "entityPerRepeatedSubfield": true
+    },
+    {
+      "entity": [
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_identifier_type_id_by_name",
+                  "parameter": {
+                    "name": "Invalid ISSN"
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.identifierTypeId",
+          "subfield": [
+            "y",
+            "z",
+            "m"
+          ],
+          "description": "Type for Invalid ISSN"
+        },
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "trim"
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.value",
+          "subfield": [
+            "y",
+            "z",
+            "m"
+          ],
+          "description": "Invalid ISSN"
+        }
+      ],
+      "entityPerRepeatedSubfield": true
+    },
+    {
+      "entity": [
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_identifier_type_id_by_name",
+                  "parameter": {
+                    "name": "Linking ISSN"
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.identifierTypeId",
+          "subfield": [
+            "l"
+          ],
+          "description": "Type for Linking ISSN"
+        },
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "trim"
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.value",
+          "subfield": [
+            "l"
+          ],
+          "description": "Linking ISSN"
+        }
+      ],
+      "entityPerRepeatedSubfield": true
+    }
+  ],
+  "024": [
+    {
+      "entity": [
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_identifier_type_id_by_name",
+                  "parameter": {
+                    "name": "Other standard identifier"
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.identifierTypeId",
+          "subfield": [
+            "a",
+            "c",
+            "d",
+            "q",
+            "z",
+            "2"
+          ],
+          "description": "Type for Other Standard Identifier",
+          "applyRulesOnConcatenatedData": true
+        },
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "trim"
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.value",
+          "subfield": [
+            "a",
+            "c",
+            "d",
+            "q",
+            "z",
+            "2"
+          ],
+          "description": "Other Standard Identifier",
+          "applyRulesOnConcatenatedData": true
+        }
+      ]
+    },
+    {
+      "entity": [
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_identifier_type_id_by_name",
+                  "parameter": {
+                    "name": "ISMN"
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.identifierTypeId",
+          "subfield": [
+            "a"
+          ],
+          "description": "Type for Resource identifier types"
+        },
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "concat_subfields_by_name, trim",
+                  "parameter": {
+                    "subfieldsToConcat": [
+                      "q"
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.value",
+          "subfield": [
+            "a"
+          ],
+          "description": "ISMN"
+        }
+      ],
+      "indicators": {
+        "ind1": "2",
+        "ind2": "*"
+      }
+    },
+    {
+      "entity": [
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_identifier_type_id_by_name",
+                  "parameter": {
+                    "name": "Invalid ISMN"
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.identifierTypeId",
+          "subfield": [
+            "z"
+          ],
+          "description": "Type for Resource identifier types"
+        },
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "concat_subfields_by_name, trim",
+                  "parameter": {
+                    "subfieldsToConcat": [
+                      "q"
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.value",
+          "subfield": [
+            "z"
+          ],
+          "description": "Invalid ISMN"
+        }
+      ],
+      "indicators": {
+        "ind1": "2",
+        "ind2": "*"
+      },
+      "entityPerRepeatedSubfield": true
+    },
+    {
+      "entity": [
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_identifier_type_id_by_name",
+                  "parameter": {
+                    "name": "UPC"
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.identifierTypeId",
+          "subfield": [
+            "a"
+          ],
+          "description": "Type for Resource identifier types"
+        },
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "concat_subfields_by_name, trim",
+                  "parameter": {
+                    "subfieldsToConcat": [
+                      "q"
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.value",
+          "subfield": [
+            "a"
+          ],
+          "description": "UPC"
+        }
+      ],
+      "indicators": {
+        "ind1": "1",
+        "ind2": "*"
+      }
+    },
+    {
+      "entity": [
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_identifier_type_id_by_name",
+                  "parameter": {
+                    "name": "Invalid UPC"
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.identifierTypeId",
+          "subfield": [
+            "z"
+          ],
+          "description": "Type for Resource identifier types"
+        },
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "concat_subfields_by_name, trim",
+                  "parameter": {
+                    "subfieldsToConcat": [
+                      "q"
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.value",
+          "subfield": [
+            "z"
+          ],
+          "description": "Invalid UPC"
+        }
+      ],
+      "indicators": {
+        "ind1": "1",
+        "ind2": "*"
+      },
+      "entityPerRepeatedSubfield": true
+    }
+  ],
+  "028": [
+    {
+      "entity": [
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_identifier_type_id_by_name",
+                  "parameter": {
+                    "name": "Publisher or distributor number"
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.identifierTypeId",
+          "subfield": [
+            "a",
+            "b",
+            "q"
+          ],
+          "description": "Type for Publisher Number",
+          "applyRulesOnConcatenatedData": true
+        },
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "trim"
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.value",
+          "subfield": [
+            "a",
+            "b",
+            "q"
+          ],
+          "description": "Publisher Number",
+          "applyRulesOnConcatenatedData": true
+        }
+      ]
+    }
+  ],
+  "035": [
+    {
+      "entity": [
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_identifier_type_id_by_value",
+                  "parameter": {
+                    "names": [
+                      "System control number",
+                      "OCLC"
+                    ],
+                    "oclc_regex": "(\\(OCoLC\\)|ocm|ocn|on).*"
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.identifierTypeId",
+          "subfield": [
+            "a"
+          ],
+          "description": "Type for System Control Number"
+        },
+        {
+          "target": "identifiers.value",
+          "subfield": [
+            "a"
+          ],
+          "description": "System Control Number"
+        }
+      ],
+      "entityPerRepeatedSubfield": true
+    },
+    {
+      "entity": [
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_identifier_type_id_by_name",
+                  "parameter": {
+                    "name": "Cancelled system control number"
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.identifierTypeId",
+          "subfield": [
+            "z"
+          ],
+          "description": "Type for Cancelled system control number"
+        },
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "trim"
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.value",
+          "subfield": [
+            "z"
+          ],
+          "description": "Cancelled system control number"
+        }
+      ],
+      "entityPerRepeatedSubfield": true
+    }
+  ],
+  "041": [
+    {
+      "entity": [
+        {
+          "target": "languages",
+          "subfield": [
+            "a"
+          ],
+          "description": "Language code",
+          "subFieldSplit": {
+            "type": "split_every",
+            "value": "3"
+          }
+        }
+      ],
+      "entityPerRepeatedSubfield": true
+    }
+  ],
+  "050": [
+    {
+      "entity": [
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_classification_type_id",
+                  "parameter": {
+                    "name": "LC"
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "classifications.classificationTypeId",
+          "subfield": [
+            "a"
+          ],
+          "description": "Type for LC classification"
+        },
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "concat_subfields_by_name",
+                  "parameter": {
+                    "subfieldsToConcat": [
+                      "b"
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "classifications.classificationNumber",
+          "subfield": [
+            "a"
+          ],
+          "description": "LC classification"
+        }
+      ],
+      "entityPerRepeatedSubfield": true
+    }
+  ],
+  "060": [
+    {
+      "entity": [
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_classification_type_id",
+                  "parameter": {
+                    "name": "NLM"
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "classifications.classificationTypeId",
+          "subfield": [
+            "a"
+          ],
+          "description": "Type for NLM classification"
+        },
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "concat_subfields_by_name",
+                  "parameter": {
+                    "subfieldsToConcat": [
+                      "b"
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "classifications.classificationNumber",
+          "subfield": [
+            "a"
+          ],
+          "description": "NLM classification"
+        }
+      ],
+      "entityPerRepeatedSubfield": true
+    }
+  ],
+  "074": [
+    {
+      "entity": [
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_identifier_type_id_by_name",
+                  "parameter": {
+                    "name": "GPO item number"
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.identifierTypeId",
+          "subfield": [
+            "a"
+          ],
+          "description": "Type for GPO Item Number"
+        },
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "remove_ending_punc, trim"
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.value",
+          "subfield": [
+            "a"
+          ],
+          "description": "GPO Item Number"
+        }
+      ],
+      "entityPerRepeatedSubfield": true
+    },
+    {
+      "entity": [
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_identifier_type_id_by_name",
+                  "parameter": {
+                    "name": "Cancelled GPO item number"
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.identifierTypeId",
+          "subfield": [
+            "z"
+          ],
+          "description": "Type for Cancelled GPO Item Number"
+        },
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "remove_ending_punc, trim"
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.value",
+          "subfield": [
+            "z"
+          ],
+          "description": "Cancelled GPO Item Number"
+        }
+      ],
+      "entityPerRepeatedSubfield": true
+    }
+  ],
+  "080": [
+    {
+      "entity": [
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_classification_type_id",
+                  "parameter": {
+                    "name": "UDC"
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "classifications.classificationTypeId",
+          "subfield": [
+            "a",
+            "b"
+          ],
+          "description": "Type for UDC classification",
+          "applyRulesOnConcatenatedData": true
+        },
+        {
+          "target": "classifications.classificationNumber",
+          "subfield": [
+            "a",
+            "b"
+          ],
+          "description": "UDC classification",
+          "applyRulesOnConcatenatedData": true
+        }
+      ]
+    }
+  ],
+  "082": [
+    {
+      "entity": [
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_classification_type_id",
+                  "parameter": {
+                    "name": "Dewey"
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "classifications.classificationTypeId",
+          "subfield": [
+            "a"
+          ],
+          "description": "Type for Dewey classification"
+        },
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "concat_subfields_by_name, remove_substring",
+                  "parameter": {
+                    "substring": "/",
+                    "subfieldsToConcat": [
+                      "b"
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "classifications.classificationNumber",
+          "subfield": [
+            "a"
+          ],
+          "description": "Dewey classification"
+        }
+      ],
+      "entityPerRepeatedSubfield": true
+    }
+  ],
+  "086": [
+    {
+      "entity": [
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_classification_type_id",
+                  "parameter": {
+                    "name": "GDC"
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "classifications.classificationTypeId",
+          "subfield": [
+            "a",
+            "z"
+          ],
+          "description": "Type for gov doc classification"
+        },
+        {
+          "target": "classifications.classificationNumber",
+          "subfield": [
+            "a",
+            "z"
+          ],
+          "description": "Gov doc classification"
+        }
+      ],
+      "entityPerRepeatedSubfield": true
+    }
+  ],
+  "090": [
+    {
+      "entity": [
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_classification_type_id",
+                  "parameter": {
+                    "name": "LC"
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "classifications.classificationTypeId",
+          "subfield": [
+            "a"
+          ],
+          "description": "Type for LC classification"
+        },
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "concat_subfields_by_name",
+                  "parameter": {
+                    "subfieldsToConcat": [
+                      "b"
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "classifications.classificationNumber",
+          "subfield": [
+            "a"
+          ],
+          "description": "LC classification"
+        }
+      ],
+      "entityPerRepeatedSubfield": true
     }
   ]
 }
