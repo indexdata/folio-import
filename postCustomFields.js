@@ -20,30 +20,31 @@ const mod = process.argv[2];
       throw new Error('Payload object must contain a "customFields" array property!');
     }
     let coll = JSON.parse(collStr);
-    delete coll.totalRecords;
-    console.log(`PUT ${url}...`);
-    try {
-      let res = await superagent
-        .put(url)
-        .set('accept', 'text/plain')
-        .set('x-okapi-token', config.token)
-        .set('content-type', 'application/json')
-	.set('x-okapi-module-id', mod)
-        .send(coll);
-      updated++;
-    } catch (e) {
-      let msg;
-      let err1 = e;
-      try {
-        msg = e.response.res.text;
-      } catch (e) {
-        msg = err1.message;
-      }
-      console.log(`ERROR: ${msg}`);
-      errors++;
-    }
-    console.log(`Added:   ${added}`);
-    console.log(`Updated: ${updated}`);
+	  for (let x = 0; x < coll.customFields.length; x++) {
+		let rec = coll.customFields[x];
+    		console.log(`POST ${url}...`);
+    		try {
+      			let res = await superagent
+        			.post(url)
+        			.set('accept', 'text/plain')
+        			.set('x-okapi-token', config.token)
+        			.set('content-type', 'application/json')
+				.set('x-okapi-module-id', mod)
+        			.send(rec);
+      			updated++;
+    			} catch (e) {
+      				let msg;
+      				let err1 = e;
+      				try {
+        				msg = e.response.res.text;
+      				} catch (e) {
+        				msg = err1.message;
+      				}
+      				console.log(`ERROR: ${msg}`);
+      				errors++;
+    			}
+	}
+    console.log(`Added:   ${updated}`);
     console.log(`Errors:  ${errors}`);
   } catch (e) {
     console.log(e.message);
