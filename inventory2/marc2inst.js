@@ -256,13 +256,13 @@ const applyRules = function (ent, field, allFields) {
         data = dparts.join('');
       } else {
         let parts = getSubs(field, subcodes, -1);
-        parts.forEach(p => {
+        for (let x = 0; x < parts.length; x++) {
           funcNames.forEach((c, i) => {
             if (funcs[c]) {
-              parts[i] = funcs[c](p, param, field.ind1, field.ind2, allFields);
+              parts[x] = funcs[c](parts[x], param, field.ind1, field.ind2, allFields);
             }
           });
-        });
+        };
         data = parts.join(' ');
       }
     }
