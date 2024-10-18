@@ -1,16 +1,7 @@
 Sierra Item status code	Sierra Status Display	To migrate?	FOLIO status (choices) 	Notes
 !	ON HOLDSHELF	N		Sierra System Defined (Circ Transaction)
-#	LINK+ RECVD	N		Inn-Reach System Defined
 $	LOST AND PAID	Y	Lost and paid	Sierra System Defined (Circ Transaction)
-%	LINK+ RET'D	N		Inn-Reach System Defined
-&	LINK+ REQUEST	N		Inn-Reach System Defined
-(	LINK+ PAGED	N		Inn-Reach System Defined
-)	LINK+ CANCELED	N		Inn-Reach System Defined
-+	RENEW PENDING	N		Inn-Reach System Defined
 -	AVAILABLE	Y	Available	Sierra System Defined
-=	RENEW DENIED	N		Inn-Reach System Defined
-@	OFF CAMPUS	N		Inn-Reach System Defined
-_	LINK+ RE-REQ	N		Inn-Reach System Defined
 b	BINDERY	Y	In process	Locally defined.
 c	Awaiting Cataloging	Y	In process	Locally defined.
 d	Discarded	Y	Withdrawn	Locally defined.

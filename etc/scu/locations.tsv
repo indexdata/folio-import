@@ -68,12 +68,12 @@ main	ul	ul/main/stacks	UL Main Stacks	University Library Main Stacks, Lower Leve
 map	ul	ul/maps	UL Maps Collection	University Library Maps, Lower Level	ulhelpdesk
 mcard	ul	ul/micro/card	UL Microcards	University Library Microforms, Lower Level	ulhelpdesk
 media	ul	ul/video	UL Video Collection	University Library Video Collection	ulhelpdesk
-orper	ul	ul/per	UL Periodicals Collection	University Library Periodicals Collection	ulhelpdesk
+orper	ul	ul/per	UL Periodicals Collection	University Library Current Periodicals, 2nd Floor	ulhelpdesk
 orrad	ul	ul/main/stacks	UL Main Stacks	University Library Main Stacks, Lower Level	ulhelpdesk
 orrch	ul	ul/asc/rc	UL A&SC Research Collection	University Library Archives & Special Collections - Research Collection, 3rd Floor	ulasc
 orsth	ul	ul/asc/sth	UL A&SC Senior Theses	University Library Archives & Special Collections - Senior Theses, 3rd Floor	ulasc
 orthe	ul	ul/asc/the	UL A&SC SCU Theses	University Library Archives & Special Collections - SCU Theses, 3rd Floor	ulasc
-per	ul	ul/per	UL Periodicals Collection	University Library Periodicals Collection	ulhelpdesk
+per	ul	ul/per	UL Periodicals Collection	University Library Current Periodicals, 2nd Floor	ulhelpdesk
 ref	ul	ul/ref	UL Reference Collection	University Library Reference Collection, Lower Level	ulhelpdesk
 resrv	ul	ul/rsrv	UL Course Reserves	University Library Course Reserves, Library Help Desk	ulhelpdesk
 rsrch	ul	ul/asc/rc	UL A&SC Research Collection	University Library Archives & Special Collections - Research Collection, 3rd Floor	ulasc
@@ -121,11 +121,11 @@ ump	ul	ul/maps	UL Maps Collection	University Library Maps, Lower Level	ulhelpdes
 umpmp	ul	ul/maps	UL Maps Collection	University Library Maps, Lower Level	ulhelpdesk
 upp	ul	ul/pop	UL Pop Collection	University Library Popular Reading, 1st Floor	ulhelpdesk
 uppst	ul	ul/pop	UL Pop Collection	University Library Popular Reading, 1st Floor	ulhelpdesk
-upr	ul	ul/per	UL Periodicals Collection	University Library Periodicals Collection	ulhelpdesk
+upr	ul	ul/per	UL Periodicals Collection	University Library Current Periodicals, 2nd Floor	ulhelpdesk
 uprar	ul	ul/per/ars	UL Periodicals Collection (ARS)	University Library Periodicals Collection	ulhelpdesk
 uprmd	ul	ul/ads/compd	UL Computer Data Files	University Library Computer Data Files Collection	ulhelpdesk
 uprnp	ul	ul/per/news	UL Current Newspapers	University Library Current Newspapers, 2nd Floor	ulhelpdesk
-uprpr	ul	ul/per/current	UL Current Periodicals	University Library Current Periodicals, 2nd Floor	ulhelpdesk
+uprpr	ul	ul/per	UL Periodicals Collection	University Library Current Periodicals, 2nd Floor	ulhelpdesk
 urf	ul	ul/ref	UL Reference Collection	University Library Reference Collection, Lower Level	ulhelpdesk
 urfll	ul	ul/ref	UL Reference Collection	University Library Reference Collection, Lower Level	ulhelpdesk
 urfrf	ul	ul/ref	UL Reference Collection	University Library Reference Collection, Lower Level	ulhelpdesk
