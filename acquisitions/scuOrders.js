@@ -225,7 +225,7 @@ const eFormMap = {
           }
         });
       }
-      v.f = j.instanceFormatIds[0];
+      v.f = (j.instanceFormatIds) ? j.instanceFormatIds[0] : '';
       instMap[k] = v;
       if (ic % 100000 === 0) console.log('Instance records read:', ic);
     }
