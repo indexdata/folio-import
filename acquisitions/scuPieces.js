@@ -110,7 +110,7 @@ const titlesFile = process.argv[2];
             piece.displayOnHolding = true;
           }
           if (cap) {
-            piece.caption = cap;
+            piece.displaySummary = cap;
           }
           fs.writeFileSync(outFile, JSON.stringify(piece) + '\n', { flag: 'a' });
           c++;
