@@ -4297,7 +4297,8 @@
             "3",
             "5"
           ],
-          "description": "If the 1st indicator equals 0, determines that the note should not be visible for others than staff"
+          "description": "If the 1st indicator equals 0, determines that the note should not be visible for others than staff",
+          "applyRulesOnConcatenatedData": true
         }
       ]
     }

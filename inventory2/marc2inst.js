@@ -257,7 +257,7 @@ const applyRules = function (ent, field, allFields) {
       } else {
         let parts = getSubs(field, subcodes, -1);
         for (let x = 0; x < parts.length; x++) {
-          funcNames.forEach((c, i) => {
+          funcNames.forEach((c) => {
             if (funcs[c]) {
               parts[x] = funcs[c](parts[x], param, field.ind1, field.ind2, allFields);
             }
