@@ -78,6 +78,7 @@ sub getRefData {
   my $refobj = {};
   local $/ = '';
   foreach (<$refdir/*.json>) {
+    next if /marc-bib.json/;
     my $prop = $_;
     $prop =~ s/^(.+\/)?(.+?)\.json/$2/;
     open my $refdata, $_ or die "Can't open $_";
@@ -116,7 +117,7 @@ sub getRefData {
 
 $ref_dir =~ s/\/$//;
 my $refdata = getRefData($ref_dir);
-# print Dumper($refdata); exit;
+# print Dumper($refdata->{authoritySourceFiles}); exit;
 
 sub process_entity {
   my $field = shift;
