@@ -30,18 +30,18 @@ item:
 	cd $(invdir); cat items0*.jsonl > items.jsonl
 	./items-$(lib).pl $(iref) $(invdir)/bibs.map $(invdir)/items.jsonl > $(log)/make-items.log &
 
-split-inventory: $(invdir)/bibs_instances.jsonl
+split-inventory: $(invdir)/*-holdings.jsonl
 	cd $(invdir); cat *-holdings.jsonl > all_holdings.jsonl
-	split -l 325000 $(invdir)/bibs_instances.jsonl $(invdir)/in
-	split -l 3000 $(invdir)/bibs_presuc.jsonl $(invdir)/ps
+	# split -l 325000 $(invdir)/bibs_instances.jsonl $(invdir)/in
+	# split -l 3000 $(invdir)/bibs_presuc.jsonl $(invdir)/ps
 	split -l 160000 $(invdir)/all_holdings.jsonl $(invdir)/ho
 	rm $(invdir)/all_holdings.jsonl
 	split -l 240000 $(invdir)/items-items.jsonl $(invdir)/it
-	split -l 325000 $(invdir)/bibs_srs.jsonl $(invdir)/sr
+	# split -l 325000 $(invdir)/bibs_srs.jsonl $(invdir)/sr
 
 order:
 	cd $(odir); cat orders0* > all_orders.jsonl
-	cd $(wd)/acquisitions; node scuOrders.js $(aref) $(invdir)/bibs_instances.jsonl $(odir)/all_orders.jsonl > $(log)/make-orders.log
+	cd $(wd)/acquisitions; node scuOrders.js $(aref) $(invdir)/bibs-instances.jsonl $(odir)/all_orders.jsonl > $(log)/make-orders.log
 	cat $(log)/make-orders.log
 
 pieces:
