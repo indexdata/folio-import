@@ -638,7 +638,7 @@ try {
   
   let leftOvers = '';
   fileStream.on('data', (chunk) => {
-    let recs = chunk.match(/.+?\x1D|.+$/g);
+    let recs = chunk.match(/.+?\x1D|.+$/sg);
     recs[0] = leftOvers + recs[0];
     let lastRec = recs[recs.length - 1];
     if (!lastRec.match(/\x1D/)) {
