@@ -622,10 +622,14 @@ try {
       let f245 = (marc.fields['245']) ? marc.fields['245'][0] : '';
       let title = getSubs(f245, 'a');
       if (!title) {
+        marc.addField('245', { ind1: '1', ind2: '0', subfields: [{a: '[Unknown title]'}]})
+        console.log(`WARN no title found for at ${ttl.count}`);
+        /*
         ttl.errors++;
         console.log(`ERROR no title found at ${ttl.count}!`);
         writeOut(outs.err, r, true);
         continue;
+        */
       } 
       if (conf.controlNum) {
         let tag = conf.controlNum.substring(0, 3);
@@ -768,6 +772,15 @@ try {
         if (inst.subjects) inst.subjects = dedupe(inst.subjects, [ 'value' ]);
         if (inst.identifiers) inst.identifiers = dedupe(inst.identifiers, [ 'value', 'identifierTypeId' ]);
         if (inst.languages) inst.languages = dedupe(inst.languages);
+        if (!inst.instanceTypeId) inst.instanceTypeId = refData.instanceTypes.zzz;
+        if (inst.electronicAccess) {
+          for (let x = 0; x < inst.electronicAccess.length; x++) {
+            let e = inst.electronicAccess[x];
+            if (!e.uri) {
+              inst.electronicAccess[x].uri = 'http://no.uri';
+            }
+          }
+        }
         let sfield = (marc.fields['942']) ? marc.fields['942'][0] : '';
         let sval = false;
         if (sfield && getSubs(sfield, 'n') === '1') {

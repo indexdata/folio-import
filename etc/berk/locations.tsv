@@ -28,27 +28,27 @@ Evergreen
 79	Music Tech Collection	214	1	Keep	Keep	GMT	Music Tech Collection	SGL/Stan Getz Library	
 56	Ralph's Corner	1,258	19	Keep	Keep	GRA	Ralph’s Corner	SGL/Stan Getz Library	
 111	Special Collections	1,189	8	Keep	Keep	GSC	Special Collections	SGL/Stan Getz Library	
-106	Valencia Berklee Faculty Collection	94		Keep	Keep	VBF	Valencia Berklee Faculty Collection	VLC/Valencia Library	
-105	Valencia Diversity, Equity, and Inclusion Collection	2		Keep	Keep	VDEI	Valencia Diversity, Equity, and Inclusion Collection	VLC/Valencia Library	
+106	Valencia Berklee Faculty	94		Keep	Keep	VBF	Valencia Berklee Faculty Collection	VLC/Valencia Library	
+105	Valencia Diversity, Equity, and Inclusion	2		Keep	Keep	VDEI	Valencia Diversity, Equity, and Inclusion Collection	VLC/Valencia Library	
 14	Valencia Library Reserve Desk	282		Keep	Keep	VRD	Valencia Library Reserve Desk	VLC/Valencia Library	
 20	Valencia Reference	143		Keep	Keep	VRF	Valencia Reference	VLC/Valencia Library	
 15	Valencia Stacks	5,823		Keep	Keep	VST	Valencia Stacks	VLC/Valencia Library	
-112	Valencia Health and Wellness Collection			Keep	Keep	VHW	Valencia Health and Wellness Collection	VLC/Valencia Library	
+112	Valencia Health and Wellness Collection (valencia).			Keep	Keep	VHW	Valencia Health and Wellness Collection	VLC/Valencia Library	
 73	Alphin MusicEd Collection	1,039	10	Merge	Merge	AMR	Alphin Main Room	AAL/Albert Alphin Library	
 69	Alphin Quiet Room	5,059	4	Merge	Merge	AQR	Alphin Quiet Room	AAL/Albert Alphin Library	
 9	Off-Site Storage	14,053	12	Merge	Merge	OSS	Off-Site Storage	AAL/Albert Alphin Library and SGL/Stan Getz Library	
-1	Stacks	189		Purge	Purge		N/A		
+1	Stacks	189		Purge	Purge				
 	Totals	102,250	1843						
 									
 Koha									
 CIRC	Alphin Circulation Desk	3,557	96	Keep	Keep	ACD	Alphin Circulation Desk	AAL/Albert Alphin Library	
 CAT	Alphin Cataloging Office	8,835	2435	Keep	Keep	ACO	Alphin Cataloging Office	AAL/Albert Alphin Library	
 AAL DIS	Alphin Display - Main	30		Keep	Keep	ADM	Alphin Display - Main	AAL/Albert Alphin Library	
-DIR	Director's Office	648	2	Keep	Keep	ADO	Director’s Office	PRF/Performance Library	
+DIR	Director's Office	648	2	Keep	Keep	ADO	Director’s Office	AAL/Albert Alphin Library	
 STOR-ON	Alphin Storage	3,264	3	Keep	Keep	AST	Alphin Storage	AAL/Albert Alphin Library	
-STOR-OFF	Storage (off-site)	2,166	2	Keep	Keep	OSS	Off-Site Storage	PRF/Performance Library	
-PERF	132 Ipswich - Performance Library	2,225	1	Keep	Keep	PLB	132 Ipswich - Performance Library	AAL/Albert Alphin Library	
-PERFSTOR	Performance Library Storage	496	1	Keep	Keep	PLS	Performance Library Storage	AAL/Albert Alphin Library	
+STOR-OFF	Storage (off-site)	2,166	2	Keep	Keep	OSS	Off-Site Storage	AAL/Albert Alphin Library and SGL/Stan Getz Library	
+PERF	132 Ipswich - Performance Library	2,225	1	Keep	Keep	PLB	132 Ipswich - Performance Library	PRF/Performance Library	
+PERFSTOR	Performance Library Storage	496	1	Keep	Keep	PLS	Performance Library Storage	PRF/Performance Library	
 QR DIS	Alphin Display - Quiet Room	13		Merge	Merge	ADQ	Alphin Display - Quiet Room	AAL/Albert Alphin Library	
 MAIN	Alphin Main Room	25,000	265	Merge	Merge	AMR	Alphin Main Room	AAL/Albert Alphin Library	
 QUIET	Alphin Quiet Room	6,775	37	Merge	Merge	AQR	Alphin Quiet Room	AAL/Albert Alphin Library	
@@ -65,7 +65,7 @@ ILL		5		Purge	Purge
 		4		Purge	Purge				
 REFM3		2		Purge	Purge				
 OVRSZ		2		Purge	Purge				
-SETPT	Scores - Chamber sets & parts (M177-M1489)	1		Purge	Purge			AAL/Albert Alphin Library and SGL/Stan Getz Library	
+SETPT	Scores - Chamber sets & parts (M177-M1489)	1		Purge	Purge				
 DMTBK	Books - Theater	1		Purge	Purge				
-MTMUS		1		Purge	Purge			AAL/Albert Alphin Library	
+MTMUS		1		Purge	Purge				
 	Totals	54,412	2,851						
