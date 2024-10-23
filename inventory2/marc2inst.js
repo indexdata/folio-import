@@ -399,6 +399,7 @@ try {
   const iconf = conf.items;
   const idmap = conf.makeInstMap;
   const mapcn = conf.callNumbers;
+  const supp = conf.suppress;
   let prefix = conf.hridPrefix;
   iprefix = (iconf) ? iconf.hridPrefix : '';
   let wdir = path.dirname(rawFile);
@@ -727,9 +728,19 @@ try {
           let itype = typeMap[itypeCode];
           inst.instanceTypeId = refData.instanceTypes[itype] || refData.instanceTypes.uspecified;
         }
+        inst.discoverySuppress = false;
+        if (supp) {
+          let sf = (marc.fields[supp.tag]) ? marc.fields[supp.tag][0] : '';
+          if (sf) {
+            let val = getSubs(sf, supp.subfield);
+            if (val === supp.value) {
+              inst.discoverySuppress = true;
+            }
+          }
+        }
         writeOut(outs.instances, inst);
         ttl.instances++;
-        let srsObj = makeSrs(raw, jobId, inst.id, inst.hrid);
+        let srsObj = makeSrs(raw, jobId, inst.id, inst.hrid, inst.discoverySuppress);
         writeOut(outs.srs, srsObj);
         ttl.srs++;
         let ea = (inst.electronicAccess) ? JSON.stringify(inst.electronicAccess) : '';

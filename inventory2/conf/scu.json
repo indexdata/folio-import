@@ -6,6 +6,7 @@
     "controlNum": "907a",
     "hridPrefix": "",
     "makeInstMap": true,
+    "suppress": { "tag": "998", "subfield": "e", "value":"y" },
     "callNumbers": {
         "099": "6caca63e-5651-4db6-9247-3205156e9699",
         "090": "95467209-6d7b-468b-94df-0f5d7ad2747d",
