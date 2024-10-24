@@ -405,7 +405,7 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
       }
     }
     // let lt = getSubs(f, '3');
-    let lt = (sh[3]) ? sh[3][0] : '';
+    let lt = (sh['3']) ? sh['3'][0] : '';
     // let s1 = getSubs(f, 's');
     let s1 = (sh.s) ? sh.s[0] : '';
     // let mt = getSubs(f, 'g');
@@ -440,7 +440,7 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
       ir.hrid = iid;
       ir.id = uuid(ir.hrid, ns);
       ir.holdingsRecordId = hid;
-      ir.permanentLoanTypeId = (lt === 'In Lib Use Only') ? refData.loantypes['In Lib Use Only'] : refData.loantypes['Can circulate'];
+      ir.permanentLoanTypeId = (lt === 'In Lib Use Only') ? refData.loantypes['In-Lib Use Only'] : refData.loantypes['Can circulate'];
       ir.status = { name: st };
       ir.discoverySuppress = (su.match(/\bhidden\b/)) ? true : false;
       if (cp) ir.copyNumber = cp;
@@ -656,7 +656,7 @@ try {
       let title = getSubs(f245, 'a');
       if (!title) {
         marc.addField('245', { ind1: '1', ind2: '0', subfields: [{a: '[Unknown title]'}]})
-        console.log(`WARN no title found for at ${ttl.count}`);
+        console.log(`WARN no title found at ${ttl.count}`);
         /*
         ttl.errors++;
         console.log(`ERROR no title found at ${ttl.count}!`);
