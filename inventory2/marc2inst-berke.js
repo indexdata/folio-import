@@ -366,6 +366,7 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
   let hrs = [];
   let irs = [];
   let hseen = {};
+  let supMap = {};
   let hc = 0;
   let ic = 0;
   let hid;
@@ -400,6 +401,7 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
         hrs.push(hr);
         hseen[hkey] = 1;
         hc++;
+        supMap[hid] = { t: 0, s: 0};
       } else {
         console.log(`ERROR Holdings [${hr.hrid}] permanentLocationId not found for "${loc}"`);
       }
@@ -443,6 +445,8 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
       ir.permanentLoanTypeId = (lt === 'In Lib Use Only') ? refData.loantypes['In-Lib Use Only'] : refData.loantypes['Can circulate'];
       ir.status = { name: st };
       ir.discoverySuppress = (su.match(/\bhidden\b/)) ? true : false;
+      supMap[hid].t++;
+      if (ir.discoverySuppress) supMap[hid].s++;
       if (cp) ir.copyNumber = cp;
       if (vo) ir.volume = vo;
       if (s1 === 'Damaged') ir.itemDamagedStatusId = refData.itemDamageStatuses.Damaged;
@@ -497,6 +501,11 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
         console.log(`ERROR Item [${iid}] Material type not found for ${mt}`)
       }
       iseen[iid] = 1;
+    }
+  });
+  hrs.forEach(hr => {
+    if (supMap[hr.id].t === supMap[hr.id].s) {
+      hr.discoverySuppress = true;
     }
   });
   return { h: hrs, i:irs };
