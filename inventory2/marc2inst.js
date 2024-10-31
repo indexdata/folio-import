@@ -542,7 +542,7 @@ try {
       ttl.count++
       let inst = {};
       let marc = '';
-      let bibCallNum = {};
+      let bibCallNum = { value: '', type: ''};
       try { 
         marc = parseMarc(r)
       } catch(e) {
