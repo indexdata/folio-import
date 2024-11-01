@@ -399,7 +399,7 @@ try {
   const iconf = conf.items;
   const idmap = conf.makeInstMap;
   const mapcn = conf.callNumbers;
-  const supp = conf.suppress;
+  const supp = (conf.suppress.tag) ? conf.suppress : '';
   let prefix = conf.hridPrefix;
   iprefix = (iconf) ? iconf.hridPrefix : '';
   let wdir = path.dirname(rawFile);
@@ -409,7 +409,10 @@ try {
     files.holdings = 'holdings',
     files.items = 'items'
   }
-  if (conf.makeInstMap) {
+  if (conf.hasMfhd) {
+    files.mfhds = 'mfhds'
+  }
+  if (idmap) {
     files.idmap = 'map'
   }
   for (let f in files) {
@@ -517,6 +520,9 @@ try {
     ttl.holdings = 0;
     ttl.items = 0;
   }
+  if (conf.hasMfhd) {
+    ttl.mfhds = 0;
+  }
 
   let start = new Date().valueOf();
   let snap = makeSnap();
@@ -541,7 +547,7 @@ try {
       let r = recs[k];
       ttl.count++
       let inst = {};
-      let marc = '';
+      let marc = {};
       let bibCallNum = { value: '', type: ''};
       try { 
         marc = parseMarc(r)
@@ -549,6 +555,18 @@ try {
         console.log(e);
         ttl.errors++;
         writeOut(outs.err, r, true);
+        continue;
+      }
+
+      if (marc.fields['004']) {
+        if (conf.hasMfhd) {
+          writeOut(outs.mfhds, marc.fields);
+          ttl.mfhds++;
+        } else {
+          let ctrl = (marc.fields['001']) ? marc.fields['001'][0] : '(unknown)'
+          console.log(`WARN ${ctrl} is a MFHD record. Skipping...`);
+          ttl.errors++;
+        }
         continue;
       }
       
@@ -752,9 +770,11 @@ try {
         let srsObj = makeSrs(raw, jobId, inst.id, inst.hrid, inst.discoverySuppress);
         writeOut(outs.srs, srsObj);
         ttl.srs++;
-        let ea = (inst.electronicAccess) ? JSON.stringify(inst.electronicAccess) : '';
-        let instMap = `${inst.hrid}|${inst.id}|${bibCallNum.value}|${bibCallNum.type}|${blvl}|${ea}`;
-        writeOut(outs.idmap, instMap, true, '\n');
+        if (idmap) {
+          let ea = (inst.electronicAccess) ? JSON.stringify(inst.electronicAccess) : '';
+          let instMap = `${inst.hrid}|${inst.id}|${bibCallNum.value}|${bibCallNum.type}|${blvl}|${ea}`;
+          writeOut(outs.idmap, instMap, true, '\n');
+        }
         if (iconf) {
           let itag = iconf.tag;
           let ifields = marc.fields[itag];
