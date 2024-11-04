@@ -156,6 +156,22 @@ try {
     });
     // console.log(tsvMap);
   }
+  
+  const instMap = {};
+  if (conf.makeInstMap) {
+    let mfn = fn.replace(/^(.+)-.+/, wdir + '/$1.map');
+    let fileStream = fs.createReadStream(mfn);
+    let rl = readline.createInterface({
+      input: fileStream,
+      crlfDelay: Infinity
+    });
+    for await (let line of rl) {
+      let c = line.split(/\|/);
+      let k = c[0].substring(1);
+      instMap[k] = c[1];
+    }
+  }
+  // console.log(instMap);
 
   let ttl = {
     count: 0,
@@ -192,8 +208,7 @@ try {
     if (ctrl) {
       hhrid = hprefix + ctrl;
     }
-    console.log(hhrid);
-
+    // console.log(hhrid);
   }
 
 } catch (e) {
