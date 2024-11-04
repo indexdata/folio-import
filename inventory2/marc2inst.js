@@ -765,6 +765,24 @@ try {
             }
           }
         }
+        if (conf.catDate && conf.catDate.tag) {
+          let t = conf.catDate.tag;
+          let s = conf.catDate.subfield;
+          let p = conf.catDate.pattern;
+          let f = (marc.fields[t]) ? marc.fields[t][0] : '';
+          let v = getSubs(f, s) || '';
+          let d = '';
+          if (p === 'yymmdd') {
+            d = v.replace(/(..)(..)(..)/, '$1-$2-$3');
+            d = (d.match(/^[012]/)) ? '20' + d : '19' + d;
+          }
+          try {
+            let nd = new Date(d).toISOString().substring(0, 10);
+            inst.catalogedDate = nd;
+          } catch(e) {
+            console.log(`WARN ${e} (catalogedDate: "${d}")`);
+          }
+        }
         writeOut(outs.instances, inst);
         ttl.instances++;
         let srsObj = makeSrs(raw, jobId, inst.id, inst.hrid, inst.discoverySuppress);

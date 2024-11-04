@@ -6,6 +6,7 @@
     "controlNum": "907a",
     "hridPrefix": "",
     "makeInstMap": true,
+    "catDate": { "tag": "998", "subfield": "b", "pattern": "yymmdd" },
     "suppress": { "tag": "998", "subfield": "e", "value":"y" },
     "callNumbers": {
         "099": "6caca63e-5651-4db6-9247-3205156e9699",
