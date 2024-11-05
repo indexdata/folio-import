@@ -770,10 +770,15 @@ try {
           let s = conf.catDate.subfield;
           let p = conf.catDate.pattern;
           let f = (marc.fields[t]) ? marc.fields[t][0] : '';
-          let v = getSubs(f, s) || '';
+          let v = '';
+          if (t > '009') {
+            v = getSubs(f, s) || '';
+          } else {
+            v = f || '';
+          }
           let d = '';
-          if (p === 'yymmdd') {
-            d = v.replace(/(..)(..)(..)/, '$1-$2-$3');
+          if (t === '008' || p === 'yymmdd') {
+            d = v.replace(/^(..)(..)(..).*/, '$1-$2-$3');
             d = (d.match(/^[012]/)) ? '20' + d : '19' + d;
           }
           try {
