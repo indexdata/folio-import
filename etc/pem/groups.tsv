@@ -1,0 +1,21 @@
+Legacy patron group ID	Legacy patron type (code or label)	FOLIO patron group code	Folio patron group label	Count in Current System	code definition
+5	M	PEMCuratorial	PEM Curatorial	2	Maritime
+6	B	PEMCuratorial	PEM Curatorial	2	AEA
+10	NH	PEMStaff	PEM Staff	1	Natural History
+4	Con	PEMStaff	PEM Staff	2	Collections/Conservation
+14	HH	Exhibitions	Exhibitions	2	Historic Houses
+16	PemStaff	PEMStaff	PEM Staff	130	PEM Staff Patrons
+17	ExPatrons	ExternalResearchers	External Researchers	179	External Patrons
+2	L	Library	Library	10	Library
+11	Ptrn	ExternalResearchers	External Researchers	1	Patron - Phillips Library
+8	N	PEMStaff	PEM Staff	2	Native American
+3	A	PEMStaff	PEM Staff	1	Administration
+12	E	PEMStaff	PEM Staff	1	Education
+1	C	PEMCuratorial	PEM Curatorial	7	Curators
+7	D				Design
+13	NM				New Media
+9	S				Security
+	T				Testing Testing
+		Exhibitions	Exhibitions		
+		Conservation	Conservation and Digitization		
+		Fellows	Fellows		
