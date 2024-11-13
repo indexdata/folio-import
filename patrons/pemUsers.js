@@ -184,6 +184,7 @@ try {
     un = un.toLowerCase();
     let dp = p.DEPARTMENT;
     let edate = p.EXPIRE_DATE;
+    let cdate = p.CREATE_DATE;
     if (!useen[un]) {
       u = {
         id: uuid(id, ns),
@@ -199,6 +200,10 @@ try {
       if (edate) {
         let val = new Date(edate).toISOString().substring(0, 10);
         u.expirationDate = val;
+      }
+      if (cdate) {
+        let val = new Date(cdate).toISOString().substring(0, 10);
+        u.enrollmentDate = val;
       }
       let dept = depMap[dp];
       if (dept) u.departments = [ dept ];
