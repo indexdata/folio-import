@@ -29,8 +29,10 @@ const makeNote = (mesg, userId, noteTypeId) => {
     id: uuid(userId + mesg, ns),
     content: mesg,
     domain: 'users',
-    title:  mesg.substring(0, 20) + '...',
+    title:  'Migrated Voyager Note',
     typeId: noteTypeId,
+    popUpOnCheckOut: true,
+    popUpOnUser: true,
     links: [
       {
         type: 'user',
@@ -71,12 +73,12 @@ try {
 
   // map departments
   const depMap = {};
-  const spoints = require(`${refDir}/departments.json`);
-  spoints.departments.forEach(d => {
+  const deps = require(`${refDir}/departments.json`);
+  deps.departments.forEach(d => {
     depMap[d.name] = d.id;
   });
   // console.log(depMap); return;
-  
+
   // tsv file
   const legacy = {};
   let tsv = fs.readFileSync(`${refDir}/groups.tsv`, { encoding: 'utf8' });
@@ -91,7 +93,7 @@ try {
       if (vcode && groupMap[fcode]) {
         legacy.groups[vcode] = groupMap[fcode];
       } else if (vcode) {
-        console.log(`WARN patron group "${vcode}: ${fcode}" not found...`);
+        console.log(`WARN patron group "${vcode}" not found...`);
       }
     }
   });
@@ -153,13 +155,22 @@ try {
   delete data.bar;
   // console.log(barMap); return;
 
+  const notMap = {}
+  data.not.forEach(r => {
+    let k = r.PATRON_ID;
+    if (!notMap[k]) notMap[k] = [];
+    notMap[k].push(r);
+  });
+  delete data.not;
+  // console.log(notMap); return;
+
 
   const today = new Date().valueOf();
   let count = 0;
   let success = 0;
   let ncount = 0;
   let ecount = 0;
-  const bseen = {};
+  const nseen = {};
   const useen = {};
 
   for (let x = 0; x < data.pat.length; x++) {
@@ -185,6 +196,10 @@ try {
           addresses: []
         }
       };
+      if (edate) {
+        let val = new Date(edate).toISOString().substring(0, 10);
+        u.expirationDate = val;
+      }
       let dept = depMap[dp];
       if (dept) u.departments = [ dept ];
       if (dp && !dept) console.log(`WARN department not found for ${dp}`);
@@ -233,6 +248,19 @@ try {
             u.personal.preferredContactTypeId = '002'
           } else {
             u.personal.preferredContactTypeId = '001'
+          }
+        });
+      }
+      let n = notMap[id];
+      if (n) {
+        n.forEach(r => {
+          let note = makeNote(r.NOTE, u.id, noteTypeId);
+          if (! nseen[note.id]) {
+            writeOut(files.n, note);
+            nseen[note.id] = 1
+            ncount++;
+          } else {
+            console.log(`WARN duplicate note found for user ${id} "${r.NOTE}"`)
           }
         });
       }
