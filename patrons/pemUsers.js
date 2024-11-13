@@ -169,81 +169,94 @@ try {
     let ln = p.LAST_NAME;
     let fn = p.FIRST_NAME;
     let mn = p.MIDDLE_NAME;
+    let un = fn + ln;
+    un = un.toLowerCase();
+    let dp = p.DEPARTMENT;
     let edate = p.EXPIRE_DATE;
-    u = {
-      id: uuid(id, ns),
-      departments: [],
-      personal: {
-        lastName: ln,
-        firstName: fn,
-        middleName: mn,
-        addresses: []
+    if (!useen[un]) {
+      u = {
+        id: uuid(id, ns),
+        username: un,
+        active: true,
+        personal: {
+          lastName: ln,
+          firstName: fn,
+          middleName: mn,
+          addresses: []
+        }
+      };
+      let dept = depMap[dp];
+      if (dept) u.departments = [ dept ];
+      if (dp && !dept) console.log(`WARN department not found for ${dp}`);
+      let b = barMap[id];
+      if (b && b[0].PATRON_GROUP_ID) {
+        u.patronGroup = legacy.groups[b.PATRON_GROUP_ID];
       }
-    };
-    let b = barMap[id];
-    if (b && b[0].PATRON_GROUP_ID) {
-      u.patronGroup = legacy.groups[b.PATRON_GROUP_ID];
-    }
-    if (b && b[0].PATRON_BARCODE) {
-      u.barcode = b[0].PATRON_BARCODE;
-    } else {
-      u.barcode = id.padStart(8, '0');
-    }
-    let a = addMap[id];
-    if (a) {
-      a.forEach(r => {
-        let adds = [];
-        aid = r.ADDRESS_ID;
-        if (r.ADDRESS_LINE2) adds.push(r.ADDRESS_LINE2);
-        if (r.ADDRESS_LINE3) adds.push(r.ADDRESS_LINE3);
-        if (r.ADDRESS_LINE4) adds.push(r.ADDRESS_LINE4);
-        if (r.ADDRESS_TYPE === '3' && r.ADDRESS_LINE1) {
-          u.personal.email = r.ADDRESS_LINE1;
-        } else if (r.ADDRESS_LINE1) {
-          let a = {
-            id: uuid(aid, ns)
-          };
-          a.addressLine1 = r.ADDRESS_LINE1;
-          if (adds[0]) {
-            a.addressLine2 = adds.join(', ');
+      if (b && b[0].PATRON_BARCODE) {
+        u.barcode = b[0].PATRON_BARCODE;
+      } else {
+        u.barcode = id.padStart(8, '0');
+      }
+      let a = addMap[id];
+      if (a) {
+        a.forEach(r => {
+          let adds = [];
+          aid = r.ADDRESS_ID;
+          if (r.ADDRESS_LINE2) adds.push(r.ADDRESS_LINE2);
+          if (r.ADDRESS_LINE3) adds.push(r.ADDRESS_LINE3);
+          if (r.ADDRESS_LINE4) adds.push(r.ADDRESS_LINE4);
+          if (r.ADDRESS_TYPE === '3' && r.ADDRESS_LINE1) {
+            u.personal.email = r.ADDRESS_LINE1;
+          } else if (r.ADDRESS_LINE1) {
+            let a = {
+              id: uuid(aid, ns)
+            };
+            a.addressLine1 = r.ADDRESS_LINE1;
+            if (adds[0]) {
+              a.addressLine2 = adds.join(', ');
+            }
+            a.city = r.CITY;
+            a.region = r.STATE_PROVINCE;
+            a.postalCode = r.ZIP_POSTAL;
+            a.country = r.COUNTRY;
+            a.addressTypeId = '93d3d88d-499b-45d0-9bc7-ac73c3a19880'; // Home
+            u.personal.addresses.push(a);
           }
-          a.city = r.CITY;
-          a.region = r.STATE_PROVINCE;
-          a.postalCode = r.ZIP_POSTAL;
-          a.country = r.COUNTRY;
-          a.addressTypeId = '93d3d88d-499b-45d0-9bc7-ac73c3a19880'; // Home
-          u.personal.addresses.push(a);
-        }
-        let p = phoMap[aid];
-        if (p) {
-          p.forEach(r =>{
-            let pn = r.PHONE_NUMBER;
-            if (pn && r.PHONE_TYPE === '1') u.personal.phone = pn;
-          });
-        }
-        if (u.personal.email) {
-          u.personal.preferredContactTypeId = '002'
-        } else {
-          u.personal.preferredContactTypeId = '001'
-        }
-      });
+          let p = phoMap[aid];
+          if (p) {
+            p.forEach(r =>{
+              let pn = r.PHONE_NUMBER;
+              if (pn && r.PHONE_TYPE === '1') u.personal.phone = pn;
+            });
+          }
+          if (u.personal.email) {
+            u.personal.preferredContactTypeId = '002'
+          } else {
+            u.personal.preferredContactTypeId = '001'
+          }
+        });
+      }
+      writeOut(files.u, u);
+      success++
+      let perm = {
+        id: uuid(u.id, ns),
+        userId: u.id,
+        permissions: []
+      }
+      writeOut(files.p, perm);
+      let pref = {
+        id: uuid(u.id + 'pref', ns),
+        userId: u.id,
+        holdShelf: true,
+        delivery: false,
+        defaultServicePointId: '3a40852d-49fd-4df2-a1f9-6e2641a6e91f'
+      }
+      writeOut(files.r, pref);
+      useen[un] = 1;
+    } else {
+      console.log(`ERROR username ${un} already used!`)
+      ecount++;
     }
-    writeOut(files.u, u);
-    success++
-    let perm = {
-      id: uuid(u.id, ns),
-      userId: u.id,
-      permissions: []
-    }
-    writeOut(files.p, perm);
-    let pref = {
-      id: uuid(u.id + 'pref', ns),
-      userId: u.id,
-      holdShelf: true,
-      delivery: false,
-      defaultServicePointId: '3a40852d-49fd-4df2-a1f9-6e2641a6e91f'
-    }
-    writeOut(files.r, pref);
   } 
 
   const t = (new Date().valueOf() - today) / 1000;
