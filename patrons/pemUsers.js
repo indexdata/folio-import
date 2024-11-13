@@ -210,7 +210,7 @@ try {
       if (dp && !dept) console.log(`WARN department not found for ${dp}`);
       let b = barMap[id];
       if (b && b[0].PATRON_GROUP_ID) {
-        u.patronGroup = legacy.groups[b.PATRON_GROUP_ID];
+        u.patronGroup = legacy.groups[b[0].PATRON_GROUP_ID];
       }
       if (b && b[0].PATRON_BARCODE) {
         u.barcode = b[0].PATRON_BARCODE;
@@ -219,6 +219,7 @@ try {
       }
       let a = addMap[id];
       if (a) {
+        let primary = true;
         a.forEach(r => {
           let adds = [];
           aid = r.ADDRESS_ID;
@@ -238,9 +239,11 @@ try {
             a.city = r.CITY;
             a.region = r.STATE_PROVINCE;
             a.postalCode = r.ZIP_POSTAL;
-            a.country = r.COUNTRY;
+            a.countryId = r.COUNTRY;
             a.addressTypeId = '93d3d88d-499b-45d0-9bc7-ac73c3a19880'; // Home
+            a.primaryAddress = primary;
             u.personal.addresses.push(a);
+            primary = false;
           }
           let p = phoMap[aid];
           if (p) {
