@@ -10,7 +10,7 @@ audio	audio	43499		Merge	Merge	Audio
 raudio	raudio	1623	1	Merge	Merge	Audio	
 books	books	19512	522	Merge	Merge	Book	
 rbooks	rbooks	731	10	Merge	Merge	Book	
-vlc_3	vlc_3	21		Merge	Merge	Book or Score	
+vlc_3	vlc_3	21		Merge	Merge	Score	
 scores	scores	25653	588	Merge	Merge	Score	
 rscores	rscores	527	21	Merge	Merge	Score	
 video	video	8325	90	Merge	Merge	Video	
@@ -51,7 +51,7 @@ EQP	Equipment	21	1	Merge	Merge	Accessory
 ONLINE	Online resource	1310	7	Purge	Purge		
 CORES	Course Reserve	770	60	Purge	Purge		
 DUPE	Duplicate copy	573	2	Purge	Purge		
-ILL	Borrowed ILL	63		Purge	Purge		
+ILL	Borrowed ILL	63		Keep	Keep	ILL	Keep if checked out
 CORESTH	Course Reserve -- Theater Reserve	33		Purge	Purge		
 CORESO	Course Reserve - Overnight	7		Purge	Purge		
 STAFF	Staff use	2		Purge	Purge		
