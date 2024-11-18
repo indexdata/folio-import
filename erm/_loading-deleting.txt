@@ -14,5 +14,5 @@ Deleting agreements and licenses...
 
 1) run node unlinkAgreementThings.js agreementsOut.jsonl
 2) run node deleteByEndpoint licenses/licenses
-3) run node deleteByEndpoint erm/srs agreementsOut.jsonl
+3) run node deleteByEndpoint erm/sas agreementsOut.jsonl
 4) run node deleteByEndpoint 'notes?query=domain==agreements'
