@@ -79,6 +79,9 @@ const fileNames = process.argv.slice(2);
           if (data[d].masterWrapperId) delete data[d].masterWrapperId;
           if (data[d].detailWrapperId) delete data[d].detailWrapperId;
           if (data[d].jobProfileId !== undefined) delete data[d].jobProfileId;
+        } else if (path.match(/data-export\/mapping-profiles/)) {
+          if (!data[d].transformations) data[d].transformations = [];
+          console.log(data[d]);
         }
         try {
           url = url.replace(/\.json_UPDATE/, '');
