@@ -371,7 +371,7 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
     let iid = sh['9'];
     // let loc = getSubs(f, 'c');
     let loc = sh.c;
-    let locId = tsvMap.locations[loc];
+    let locId = tsvMap.locations[loc] || refData.locations.UNMA;
     // let cn = getSubs(f, 'o');
     let cn = sh.o;
     // let cntype = getSubs(f, '2');
@@ -456,13 +456,13 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
         }
       }
       if (ds === '1') ir.itemDamagedStatusId = refData.itemDamageStatuses.Damaged;
+      if (ir.materialTypeId) { 
+        irs.push(ir)
+      } else {
+        console.log(`ERROR Item [${iid}] Material type not found for ${mt}`)
+      }
+      iseen[iid] = 1;
     }
-    if (ir.materialTypeId) { 
-      irs.push(ir)
-    } else {
-      console.log(`ERROR Item [${iid}] Material type not found for ${mt}`)
-    }
-    iseen[iid] = 1;
   });
   hrs.forEach(hr => {
     if (supMap[hr.id].t === supMap[hr.id].s) {
