@@ -7,7 +7,7 @@ let modName = process.argv[3];
 (async () => {
   try {
     if (!refDir) {
-      throw new Error('Usage: node downloadAllRefData.js <reference_dir> <mod_name_regexp>');
+      throw new Error('Usage: node downloadAllRefData.js <reference_dir> [ <mod_name_regexp> ]');
     } else if (!fs.existsSync(refDir)) {
       throw new Error('Reference directory does\'t exist!');
     } else if (!fs.lstatSync(refDir).isDirectory()) {
@@ -222,6 +222,7 @@ let modName = process.argv[3];
         console.error(e.message);
       }
     }
+    paths.push({mod: 'system_users', path: 'users?query=personal.lastName==system%20OR%20username==canary-svc&limit=100'});
 
     for (let x = 0; x < paths.length; x++) {
       if (paths[x].path === 'mapping-rules') {
@@ -300,16 +301,19 @@ let modName = process.argv[3];
           }
           fs.writeFileSync(`${fullSaveDir}/${fileName}.json`, jsonStr);
         }
-        if (paths[x].path == 'service-pointsXXX') {
-          res.body.servicepoints.forEach(sp => {
-            paths.push({ path: `calendar/dates/${sp.id}/surrounding-openings`, mod: paths[x].mod });
-            paths.push({ path: `calendar/dates/${sp.id}/all-openings`, mod: paths[x].mod });
-          }) 
-        }
         if (paths[x].path == 'organizations-storage/interfaces') {
           res.body.interfaces.forEach(r => {
             paths.push({ path: `${paths[x].path}/${r.id}/credentials`, mod: paths[x].mod });
-          })
+          });
+        }
+        if (paths[x].path.match(/personal.lastName/)) {
+          let pqs = [];
+          res.body.users.forEach(r => {
+            pqs.push(r.id);
+          });
+          let pq = pqs.join('%20OR%20userId=');
+          let ep = `perms/users?query=userId=${pq}`
+          paths.push({ path: ep, mod: 'system_users' });
         }
       } catch (e) {
         try {
