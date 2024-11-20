@@ -327,9 +327,9 @@ const makeSrs = function (raw, jobId, bid, hrid, suppress) {
   return srs;
 }
 
-const makeSnap = function () {
+const makeSnap = function (snapshotId) {
   const now = new Date().toISOString();
-  const id = uuid(now, ns);
+  const id = snapshotId || uuid(now, ns);
   const so = {
     jobExecutionId: id,
     status: 'COMMITTED',
@@ -596,7 +596,7 @@ try {
   }
 
   let start = new Date().valueOf();
-  let snap = makeSnap();
+  let snap = makeSnap(conf.snapshotId);
   writeOut(outs.snapshot, snap);
   ttl.snapshots++;
   let jobId = snap.jobExecutionId;
@@ -674,6 +674,12 @@ try {
       }
       seen[hrid] = 1;
       let instId = (hrid) ? uuid(hrid, ns) : '';
+      for (let z = 0; z < marc.mij.fields.length; z++) {
+        let f = marc.mij.fields[z];
+        if (f['952']) {
+          marc.mij.fields.splice(z, 1);
+        }
+      }
       let raw = mij2raw(marc.mij, true);
       ldr = marc.fields.leader;
 
