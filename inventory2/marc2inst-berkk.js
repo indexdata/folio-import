@@ -678,6 +678,7 @@ try {
         let f = marc.mij.fields[z];
         if (f['952']) {
           marc.mij.fields.splice(z, 1);
+          z--;
         }
       }
       let raw = mij2raw(marc.mij, true);
