@@ -14,6 +14,7 @@ let modName = process.argv[3];
       throw new Error(`${refDir} is not a directory!`)
     }
     refDir = refDir.replace(/\/$/, '');
+    let suMod = 'system_users';
 
     let startTime = new Date().valueOf();
 
@@ -308,12 +309,35 @@ let modName = process.argv[3];
         }
         if (paths[x].path.match(/personal.lastName/)) {
           let pqs = [];
+          let uns = [];
           res.body.users.forEach(r => {
             pqs.push(r.id);
+            uns.push({username: r.username, userId: r.id});
           });
           let pq = pqs.join('%20OR%20userId=');
           let ep = `perms/users?query=userId=${pq}`
-          paths.push({ path: ep, mod: 'system_users' });
+          paths.push({ path: ep, mod: suMod });
+          // create credentials objects and POST to authn/credentials
+          let creds = [];
+          let noCreds = [];
+          uns.forEach(un => {
+            un.password = (config.syscreds && config.syscreds[un.username]) ? config.syscreds[un.username] : '';
+            if (un.password) {
+              creds.push(un);
+            } else {
+              noCreds.push(un);
+            }
+          });
+          if (creds[0]) {
+            let out = { creds: creds };
+            let outStr = JSON.stringify(out, null, 2);
+            fs.writeFileSync(`${refDir}/${suMod}/authn__credentials`, outStr);
+          } 
+          if (noCreds[0]) {
+            let out = { creds: noCreds };
+            let outStr = JSON.stringify(out, null, 2);
+            fs.writeFileSync(`${refDir}/${suMod}/authn__nopass`, outStr); 
+          }
         }
       } catch (e) {
         try {
