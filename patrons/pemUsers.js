@@ -31,8 +31,8 @@ const makeNote = (mesg, userId, noteTypeId) => {
     domain: 'users',
     title:  'Migrated Voyager Note',
     typeId: noteTypeId,
-    popUpOnCheckOut: true,
-    popUpOnUser: true,
+    popUpOnCheckOut: false,
+    popUpOnUser: false,
     links: [
       {
         type: 'user',
