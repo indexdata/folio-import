@@ -51,7 +51,8 @@ let modName = process.argv[3];
       'https://raw.githubusercontent.com/folio-org/mod-agreements/master/service/src/main/okapi/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-licenses/master/service/src/main/okapi/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-remote-storage/master/descriptors/ModuleDescriptor-template.json',
-      'https://raw.githubusercontent.com/folio-org/mod-copycat/master/descriptors/ModuleDescriptor-template.json'
+      'https://raw.githubusercontent.com/folio-org/mod-copycat/master/descriptors/ModuleDescriptor-template.json',
+      'https://raw.githubusercontent.com/folio-org/mod-entities-links/refs/heads/master/descriptors/ModuleDescriptor-template.json' 
     ];
 
     if (modName) {
@@ -71,7 +72,6 @@ let modName = process.argv[3];
     const skipList = {
       '/accounts': true,
       '/actual-cost-record-storage/actual-cost-records': true,
-      '/authority-source-files': true,
       '/authority-storage/authorities': true,
       '/change-manager/parsedRecords': true,
       '/check-in-storage/check-ins': true,
@@ -104,6 +104,7 @@ let modName = process.argv[3];
       '/licenses/amendments': true,
       '/licenses/files': true,
       '/licenses/licenses': true,
+      '/links/instances': true,
       '/loan-storage/loan-history': true,
       '/loan-storage/loans': true,
       '/metadata-provider/logs': true,
@@ -244,6 +245,8 @@ let modName = process.argv[3];
         url += '?length=5000';
       } else if (url.match(/\/licenses\//)) {
         url += '?perPage=5000';
+      } else if (url.match(/\/authority/)) {
+        url += '?limit=1000';
       } else if (!url.match(/\?/)) {
         url += '?limit=2500';
       } 
