@@ -85,6 +85,7 @@ try {
   const groups = require(`${refDir}/groups.json`);
   groups.usergroups.forEach(g => {
     groupMap[g.desc] = g.id;
+    groupMap[g.group] = g.id;
   });
   // console.log(groupMap); return;
 
@@ -183,7 +184,7 @@ try {
         let val = new Date(cdate).toISOString().substring(0, 10);
         u.enrollmentDate = val;
       }
-      let depName = deptNames[dp];
+      let depName = deptNames[dp] || dp;
       let dept = depMap[depName] || '';
       if (dept) u.departments = [  dept ];
       if (dp && !dept) console.log(`WARN department not found for ${dp}`);

@@ -5,9 +5,9 @@ Legacy patron group ID	Legacy patron type (code or label)	FOLIO patron group cod
 4	Con	PEMStaff	PEM Staff	2	Collections/Conservation
 14	HH	Exhibitions	Exhibitions	2	Historic Houses
 16	PemStaff	PEMStaff	PEM Staff	130	PEM Staff Patrons
-17	ExPatrons	ExternalResearchers	External Researchers	179	External Patrons
+17	ExPatrons	VisitingResearchers	Visiting Researchers	179	External Patrons
 2	L	Library	Library	10	Library
-11	Ptrn	ExternalResearchers	External Researchers	1	Patron - Phillips Library
+11	Ptrn	VisitingResearchers	Visiting Researchers	1	Patron - Phillips Library
 8	N	PEMStaff	PEM Staff	2	Native American
 3	A	PEMStaff	PEM Staff	1	Administration
 12	E	PEMStaff	PEM Staff	1	Education
@@ -17,5 +17,5 @@ Legacy patron group ID	Legacy patron type (code or label)	FOLIO patron group cod
 9	S				Security
 	T				Testing Testing
 		Exhibitions	Exhibitions		
-		Conservation	Conservation and Digitization		
+	Conservation and Digitization	Conservation	Conservation and Digitization		
 		Fellows	Fellows		
