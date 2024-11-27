@@ -716,6 +716,8 @@ try {
       // replace null chars with space in 008
       if (marc.fields['008']) {
         marc.fields['008'][0] = marc.fields['008'][0].replace(/\x00/g, ' ');
+      } else {
+        marc.fields['008'] = [ '                        a          eng d' ];
       }
 
       seen[hrid] = 1;
@@ -822,7 +824,43 @@ try {
         if (inst.instanceTypeId === refData.instanceTypes.unspecified) {
           let itype = typeMap[itypeCode];
           inst.instanceTypeId = refData.instanceTypes[itype] || refData.instanceTypes.uspecified;
+        } else if (!inst.instanceTypeId) {
+          inst.instanceTypeId = refData.instanceTypes.zzz;
         }
+        if (inst.subjects) {
+          for (let i = 0; i < inst.subjects.length; i++) {
+            let s = inst.subjects[i];
+            if (s.authorityId !== undefined && s.authorityId === '') {
+              delete s.authorityId;
+            }
+            if (!s.value) {
+              inst.subjects.splice(i, 1);
+              i--;
+            }
+          }
+        }
+        if (inst.series) {
+          for (let i = 0; i < inst.series.length; i++) {
+            let s = inst.series[i];
+            if (!s.value) {
+              inst.series.splice(i, 1);
+              i--;
+            }
+          }
+        }
+        if (inst.contributors) {
+          for (let i = 0; i < inst.contributors.length; i++) {
+            let s = inst.contributors[i];
+            if (s.contributorTypeId !== undefined && s.contributorTypeId === "") {
+              delete s.contributorTypeId
+            }
+            if (!s.name) {
+              inst.contributors.splice(i, 1);
+              i--;
+            }
+          }
+        }
+        // console.log(inst.contributors);
         writeOut(outs.instances, inst);
         ttl.instances++;
         let srsObj = makeSrs(raw, jobId, inst.id, inst.hrid);

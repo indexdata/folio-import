@@ -179,22 +179,22 @@ const wait = (ms) => {
 	  if (json.subjects) {
             for (let i = 0; i < json.subjects.length; i++) {
               if (json.subjects[i].authorityId) {
-		      delete json.subjects[i].authorityId;
-	      }
+		            delete json.subjects[i].authorityId;
+	            }
             }
 	  }
 	  if (json.alternativeTitles) {
             for (let i = 0; i < json.alternativeTitles.length; i++) {
               if (json.alternativeTitles[i].authorityId) {
-		      delete json.alternativeTitles[i].authorityId;
-	      }
+		            delete json.alternativeTitles[i].authorityId;
+	            }
             }
 	  }
 	  if (json.series) {
             for (let i = 0; i < json.series.length; i++) {
               if (json.series[i].authorityId) {
-		      delete json.series[i].authorityId;
-	      }
+		            delete json.series[i].authorityId;
+	            }
             }
 	  }
 
