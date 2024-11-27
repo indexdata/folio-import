@@ -12,6 +12,7 @@ const schemaDir = './schemas';
 let ldr;
 let ns;
 let iprefix;
+let maxSub = 150;
 const refData = {};
 const tsvMap = {};
 const outs = {};
@@ -20,6 +21,7 @@ const iseen = {};
 const seen = {};
 
 const cleanTags = [ '245', '591', '598' ];
+const cleanSplits = [ '700', '020' ];
 
 const typeMap = {
   'a': 'text',
@@ -625,6 +627,11 @@ try {
         let sub = conf.controlNum.substring(3, 4);
         let cf = (marc.fields[tag]) ? marc.fields[tag][0] : '';
         let cnum = (cf) ? getSubs(cf, sub) : '';
+        if (cnum === 'a206691') {
+          console.log(`INFO Skipping test record ${cnum}`);
+          ttl.errors++;
+          continue;  // skip test records
+        }
         
         if (cnum) {
           if (conf.controlNum === '907a') {
@@ -670,13 +677,33 @@ try {
         writeOut(outs.err, r, true);
         continue;
       } 
-      // strip HTML tags
+      // strip HTML tags and truncate too long fields
       cleanTags.forEach(t => {
         if (marc.fields[t]) {
           marc.fields[t].forEach(f => {
             f.subfields.forEach(f => {
               let k = Object.keys(f)[0];
-              f[k] = f[k].replace(/<[^>]{1,2}>/g, '')
+              f[k] = f[k].replace(/<[^>]{1,2}>/g, '');
+              if (f[k].length > maxSub) {
+                f[k] = f[k].substring(0, maxSub) + '...';
+              }
+            });
+          });
+        }
+      });
+      // split long fields into separate fields;
+      cleanSplits.forEach(t => {
+        if (marc.fields[t]) {
+          marc.fields[t].forEach((f) => {
+            f.subfields.forEach((s, i) => {
+              let k = 'a';
+              if (s[k] && s[k].length > maxSub) {
+                let data = s[k];
+                marc.fields[t].splice(i, 1);
+                data.split(/; */).forEach(d => {
+                  marc.fields[t].push({ind1: f.ind1, ind2: f.ind2, subfields: [{a: d}]});
+                });
+              }
             });
           });
         }
