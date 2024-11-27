@@ -468,9 +468,9 @@ sub make_hi {
     $irec->{statisticalCodeIds} = [ $scode ] if $scode;
     $irec->{volume} = $vf->{v}[0] if $vf->{v};
     $irec->{copyNumber} = $item->{fixedFields}->{58}->{value} || '';
-    if ($irec->{copyNumber}) {
-      $irec->{copyNumber} = 'c.' . $irec->{copyNumber};
-    }
+    # if ($irec->{copyNumber}) {
+    #  $irec->{copyNumber} = 'c.' . $irec->{copyNumber};
+    # }
     if ($tloc && $sierra2folio->{locations}->{$tloc}) {
       $irec->{temporaryLocationId} = $sierra2folio->{locations}->{$tloc};
       $loc = $tloc;
