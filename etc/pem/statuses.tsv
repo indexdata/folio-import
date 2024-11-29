@@ -1,0 +1,26 @@
+ITEM_STATUS_TYPE	ITEM_STATUS_DESC	FOLIO Status	Notes		FOLIO item statuses
+1	Not Charged	Available			Aged to lost
+2	Charged	Checked out			Available
+3	Renewed	Checked out			Awaiting delivery
+4	Overdue	Checked out			Awaiting pickup
+5	Recall Request	Paged			Checked out
+6	Hold Request	Paged			Claimed returned
+7	On Hold	Awaiting pickup			Declared lost
+8	In Transit	In transit			In process
+9	In Transit Discharged	In transit			In process (not requestable)
+10	In Transit On Hold	Awaiting pickup			In transit
+11	Discharged	Available			Intellectual item
+12	Missing	Missing			Long missing
+13	Lost--Library Applied	Declared lost			Lost and paid
+14	Lost--System Applied	Aged to lost			Missing
+15	Claims Returned	Claimed returned			On order
+16	Damaged	Restricted			Order closed
+17	Withdrawn	Withdrawn			Paged
+18	At Bindery	Unavailable			Restricted
+19	Cataloging Review	In process (not requestable)			Unavailable
+20	Circulation Review	In process (not requestable)			Unknown
+21	Scheduled		Not in use		Withdrawn
+22	In Process	In process			
+23	Call Slip Request	Paged			
+24	Short Loan Request	Paged			
+25	Remote Storage Request	Paged			

@@ -6,7 +6,6 @@ import readline from 'readline';
 let confFile = process.argv[2];
 
 let refDir;
-let rulesFile;
 let mfhdFile = process.argv[3];
 let ns;
 const refData = {};
@@ -154,8 +153,8 @@ try {
         });
       }
     });
-    // console.log(tsvMap);
   }
+  console.log(tsvMap);
   
   const instMap = {};
   if (conf.makeInstMap) {

@@ -1,0 +1,17 @@
+Legacy material type code (from item record)	Folio material type name or ID
+Book	book
+Serial	serial
+Manuscript	manuscript
+Music	book
+Map	map
+Recording	sound recording
+Graphic	graphic
+Broadsides	broadside
+Photo	graphic
+Charts	map
+Discdvd	dvd
+Microfilm	microform
+Miscellany	unspecified
+Cartoons	graphic
+Analytic	book
+Poster	graphic
