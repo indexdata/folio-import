@@ -16,28 +16,11 @@ const iseen = {};
 const seen = {};
 
 const typeMap = {
-  'a': 'text',
-  'c': 'notated music',
-  'd': 'notated music',
-  'e': 'cartographic image',
-  'f': 'cartographic image',
-  'g': 'two-dimensional moving image',
-  'i': 'spoken word',
-  'j': 'performed music',
-  'k': 'still image',
-  'm': 'computer program',
-  'o': 'other',
-  'p': 'other',
-  'r': 'three-dimensional form"',
-  't': 'text',
+  u: 'Physical',
+  v: 'Multi-part monograph',
+  x: 'Monograph',
+  y: 'Serial'
 }
-
-const modeMap = {
- a: 'single unit',
- m: 'multipart monograph',
- s: 'serial',
- i: 'integrating resource'
-};
 
 const elRelMap = {
   '0':'Resource',
@@ -131,30 +114,35 @@ try {
       });
     } catch {}
   });
-  // console.log(refData.mtypes);
+  console.log(refData.mtypes);
 
   // create tsv map
-  if (conf.tsvDir) {
-    let tsvFiles = fs.readdirSync(conf.tsvDir);
+  let tsvDir = conf.tsvDir || conf.refDir;
+  console.log(tsvDir);
+  if (tsvDir) {
+    let tsvFiles = fs.readdirSync(tsvDir);
     tsvFiles.forEach(f => {
       if (f.match(/\.tsv$/)) {
         let prop = f.replace(/\.tsv/, '');
         tsvMap[prop] = {}
-        let tpath = conf.tsvDir + '/' + f;
+        let tpath = tsvDir + '/' + f;
         let dat = fs.readFileSync(tpath, { encoding: 'utf8' });
         dat.split(/\n/).forEach(l => {
           let c = l.split(/\t/);
-          let k = c[0];
-          let v = c[6];
-          if (prop === 'locations') { 
-            k = c[1];
-          } 
-          if (k && v) tsvMap[prop][k] = refData[prop][v];
+          let k = c[0].trim();
+          if (prop === 'statuses') {
+            let v = c[2].trim();
+            if (!v || v.match(/Checked out|Paged|Aged to lost/)) v = 'Available';
+            tsvMap[prop][k] = v;
+          } else {
+            let v = c[1].trim();
+            if (refData[prop] && k && v) tsvMap[prop][k] = refData[prop][v];
+          }
         });
       }
     });
   }
-  console.log(tsvMap);
+  // console.log(tsvMap);
   
   const instMap = {};
   if (conf.makeInstMap) {
@@ -203,12 +191,52 @@ try {
   for await (let line of rl) {
     let m = JSON.parse(line);
     let ctrl = (m['001']) ? m['001'][0] : '';
+    let bhrid = (m['004']) ? m['004'][0] : '';
+    let mh = {};
+    if (m['852']) {
+      m['852'][0].subfields.forEach(s => {
+        let k = Object.keys(s)[0];
+        if (k.match(/[zx]/)) {
+          if (!mh[k]) mh[k] = [];
+          mh[k].push(s[k]);
+        } else {
+          mh[k] = s[k];
+        }
+      });
+      mh.ind1 = m['852'][0].ind1;
+      mh.ind2 = m['852'][0].ind2;
+    }
+    let loc = mh.b;
+    let cn = (mh.i) ? mh.h + ' ' + mh.i : mh.h || '';
+    if (cn.match(/No call number/)) cn = '';
+    let tcode = (m.leader) ? m.leader.substring(6, 7) : '';
+    let tcodeStr = typeMap[tcode] || 'Physical';
+    let typeId = refData.holdingsTypes[tcodeStr];
     let hhrid;
     if (ctrl) {
       hhrid = hprefix + ctrl;
     }
-    // console.log(hhrid);
+    let hid = uuid(hhrid, ns);
+    let h = {
+      _version: 1,
+      id: hid,
+      hrid: hhrid,
+      sourceId: refData.holdingsRecordsSources.FOLIO,
+      holdingsTypeId: typeId,
+      formerIds: [ ctrl ]
+    }
+    h.instanceId = instMap[bhrid];
+    h.permanentLocationId = tsvMap.locations[loc] || '';
+    if (cn) {
+      h.callNumber = cn;
+      h.callNumberTypeId = cnTypeMap[mh.ind1] || cnTypeMap['8'];
+    }
+    if (mh.x) {
+      console.log(mh.x);
+    }
+    // console.log(h);
   }
+  showStats();
 
 } catch (e) {
   console.log(e);
