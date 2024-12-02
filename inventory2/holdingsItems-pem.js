@@ -193,6 +193,8 @@ try {
     }
   }
 
+  const hseen = {};
+
   let fileStream = fs.createReadStream(mfhdFile);
   let rl = readline.createInterface({
     input: fileStream,
@@ -315,7 +317,12 @@ try {
 
     if (h.instanceId && h.permanentLocationId) {
       ttl.holdings++;
-      console.log(h);
+      writeOut(outs.holdings, h);
+      // console.log(h);
+      hseen[ctrl] = h.id;
+    } else {
+      console.log(`ERROR required holdings fields not present for ${hhrid}`);
+      ttl.errors++;
     }
   }
   showStats();
