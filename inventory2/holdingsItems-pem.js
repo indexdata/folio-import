@@ -315,7 +315,7 @@ try {
       h.holdingsStatementsForIndexes.push(o);
     });
 
-    if (h.instanceId && h.permanentLocationId) {
+    if (h.instanceId && h.permanentLocationId && !hseen[ctrl]) {
       ttl.holdings++;
       writeOut(outs.holdings, h);
       // console.log(h);
