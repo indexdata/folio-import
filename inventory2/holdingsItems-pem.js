@@ -73,6 +73,16 @@ const dedupe = function (arr, props) {
   return newArr;
 }
 
+const makeNote = function (text, type, staffOnly) {
+  if (!type) throw new Error('Note type not found');
+  const out = {
+    note: text,
+    holdingsNoteTypeId: type,
+    staffOnly: staffOnly
+  };
+  return out;
+}
+
 try {
   if (!mfhdFile) { throw "Usage: node holdingsItems-pem.js <conf_file> <mfhd_jsonl_file>" }
   let confDir = path.dirname(confFile);
@@ -114,11 +124,10 @@ try {
       });
     } catch {}
   });
-  console.log(refData.mtypes);
+  // console.log(refData.mtypes);
 
   // create tsv map
   let tsvDir = conf.tsvDir || conf.refDir;
-  console.log(tsvDir);
   if (tsvDir) {
     let tsvFiles = fs.readdirSync(tsvDir);
     tsvFiles.forEach(f => {
@@ -146,6 +155,7 @@ try {
   
   const instMap = {};
   if (conf.makeInstMap) {
+    console.log(fn);
     let mfn = fn.replace(/^(.+)-.+/, wdir + '/$1.map');
     let fileStream = fs.createReadStream(mfn);
     let rl = readline.createInterface({
@@ -231,10 +241,82 @@ try {
       h.callNumber = cn;
       h.callNumberTypeId = cnTypeMap[mh.ind1] || cnTypeMap['8'];
     }
+    h.notes = [];
+    let ntype = refData.holdingsNoteTypes.Note;
     if (mh.x) {
-      console.log(mh.x);
+      mh.x.forEach(n => {
+        let o = makeNote(n, ntype, true);
+        h.notes.push(o);
+      });
     }
-    // console.log(h);
+    if (mh.z) {
+      mh.z.forEach(n => {
+        let o = makeNote(n, ntype, false);
+        h.notes.push(o);
+      });
+    }
+
+    let eaf = m['856'];
+    if (eaf) {
+      h.electronicAccess = [];
+      eaf.forEach(f => {
+        let rstr = elRelMap[f.ind2] || 'No information provided';
+        let rid = refData.electronicAccessRelationships[rstr];
+        let o = {}
+        f.subfields.forEach(s => {
+          if (s.u) { 
+            o.uri = s.u;
+          } else if (s.y) {
+            o.linkText = s.y;
+          } else if (s.z) {
+            o.publicNote = s.z;
+          }
+          o.relationshipId = rid;
+        });
+        h.electronicAccess.push(o);
+      });
+    }
+
+    h.holdingsStatements = [];
+    let hst = m['866'] || [];
+    hst.forEach(f => {
+      let o = {};
+      f.subfields.forEach(s => {
+        if (s.a) {
+          o.statement = s.a;
+        }
+      });
+      h.holdingsStatements.push(o);
+    });
+
+    h.holdingsStatementsForSupplements = [];
+    hst = m['867'] || [];
+    hst.forEach(f => {
+      let o = {};
+      f.subfields.forEach(s => {
+        if (s.a) {
+          o.statement = s.a;
+        }
+      });
+      h.holdingsStatementsForSupplements.push(o);
+    });
+
+    h.holdingsStatementsForIndexes = [];
+    hst = m['868'] || [];
+    hst.forEach(f => {
+      let o = {};
+      f.subfields.forEach(s => {
+        if (s.a) {
+          o.statement = s.a;
+        }
+      });
+      h.holdingsStatementsForIndexes.push(o);
+    });
+
+    if (h.instanceId && h.permanentLocationId) {
+      ttl.holdings++;
+      console.log(h);
+    }
   }
   showStats();
 
