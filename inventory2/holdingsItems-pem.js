@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { v5 as uuid } from 'uuid';
 import readline from 'readline';
+import { parse } from 'csv-parse/sync';
 
 let confFile = process.argv[2];
 
@@ -33,6 +34,12 @@ const elRelMap = {
 const files = {
   holdings: 1,
   items: 1
+};
+
+const itemFiles = {
+  item: 'item.csv',
+  bc: 'item_barcode.csv',
+  mfhd: 'mfhd_item.csv'
 };
 
 const cnTypeMap = {
@@ -101,6 +108,13 @@ try {
     files[f] = p;
     if (fs.existsSync(p)) fs.unlinkSync(p);
     outs[f] = fs.createWriteStream(p)
+  }
+  for (let f in itemFiles) {
+    let path = wdir + '/' + itemFiles[f];
+    if (!fs.existsSync(path)) {
+      throw new Error(`ERROR Can't find require file ${path}`);
+    }
+    itemFiles[f] = path;
   }
 
   // map ref data
@@ -325,6 +339,54 @@ try {
       ttl.errors++;
     }
   }
+
+  /*
+    This is the item creation section
+  */
+
+  // map barcodes
+  let csv = fs.readFileSync(itemFiles.bc, { encoding: 'utf8' });
+  let vrecs = parse(csv, {
+    columns: true,
+    skip_empty_lines: true
+  });
+  csv = '';
+  const bcMap = {};
+  console.log('INFO Creating barcode map...');
+  let rc = 0;
+  for (let x in vrecs) {
+    let r = vrecs[x];
+    if (r.BARCODE_STATUS === '1') {
+      bcMap[r.ITEM_ID] = r.ITEM_BARCODE;
+      rc++;
+    }
+  }
+  console.log(`INFO ${rc} barcodes mapped.`);
+  vrecs = [];
+
+  // map mfhd ids to item ids
+  csv = fs.readFileSync(itemFiles.mfhd, { encoding: 'utf8' });
+  vrecs = parse(csv, {
+    columns: true,
+    skip_empty_lines: true
+  });
+  csv = '';
+  const mmap = {};
+  console.log('INFO Creating mfhds map...');
+  rc = 0;
+  for (let x in vrecs) {
+    let r = vrecs[x];
+    let iid = r.ITEM_ID;
+    delete r.ITEM_ID;
+    for (let p in r) {
+      if (!r[p]) delete r[p];
+    }
+    mmap[iid] = r;
+    rc++;
+  }
+  console.log(`INFO ${rc} mfhds mapped.`);
+  vrecs = [];
+
   showStats();
 
 } catch (e) {
