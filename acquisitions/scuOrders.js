@@ -97,6 +97,20 @@ const eFormMap = {
   y: "eresource collection",
   '4': "streaming video acq"
 };
+/* 
+  if fund = cre, receiptStatus=Receipt Not Required
+  if fund = crp, receiptStatus=Ongoing
+  if fund = stane, receiptStatus=Receipt Not Required
+  if fund = stanp, receiptStatus=Ongoing
+  if fund = ddav, receiptStatus=Receipt Not Required
+*/
+const rsMap = {
+  cre: 'Receipt Not Required',
+  crp: 'Ongoing',
+  stane: 'Receipt Not Required',
+  stanp: 'Ongoing',
+  ddav: 'Receipt Not Required'
+};
 
 (async () => {
   let startTime = new Date().valueOf();
@@ -379,6 +393,8 @@ const eFormMap = {
               }
             }
             pol.orderFormat = format;
+            let rstat = rsMap[fundCode];
+            pol.receiptStatus = rstat || 'Pending';
 
             let copies = ff['5'].value;
             copies = parseInt(copies);

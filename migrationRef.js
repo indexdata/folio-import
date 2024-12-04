@@ -13,7 +13,7 @@ let paths = {
         authority-note-types authority-source-files mapping-rules/marc-bib`,
   acq: `acquisitions-units/units locations material-types batch-group-storage/batch-groups orders/acquisition-methods
         finance/expense-classes organizations-storage/categories organizations-storage/contacts organizations-storage/organizations
-        organizations-storage/interfaces organizations-storage/organization-types note-types`,
+        organizations-storage/interfaces organizations-storage/organization-types note-types finance-storage/funds`,
   fin: `acquisitions-units/units finance-storage/expense-classes finance-storage/funds finance-storage/fund-types
         finance-storage/fiscal-years finance-storage/ledgers finance-storage/budget-expense-classes
         finance-storage/groups finance-storage/group-fund-fiscal-years`,
