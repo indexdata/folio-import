@@ -12,9 +12,6 @@ let ns;
 const refData = {};
 const tsvMap = {};
 const outs = {};
-const bcseen = {};
-const iseen = {};
-const seen = {};
 
 const typeMap = {
   u: 'Physical',
@@ -39,7 +36,10 @@ const files = {
 const itemFiles = {
   item: 'item.csv',
   bc: 'item_barcode.csv',
-  mfhd: 'mfhd_item.csv'
+  mfhd: 'mfhd_item.csv',
+  note: 'item_note.csv',
+  stat: 'item_status.csv',
+  loc: 'location.csv'
 };
 
 const cnTypeMap = {
@@ -158,7 +158,8 @@ try {
             if (!v || v.match(/Checked out|Paged|Aged to lost/)) v = 'Available';
             tsvMap[prop][k] = v;
           } else {
-            let v = c[1].trim();
+            let v = (prop === 'mtypes') ? c[2] : c[1];
+            v = v.trim();
             if (refData[prop] && k && v) tsvMap[prop][k] = refData[prop][v];
           }
         });
@@ -185,7 +186,6 @@ try {
   // console.log(instMap);
 
   let ttl = {
-    count: 0,
     holdings: 0,
     items: 0,
     errors: 0
@@ -351,7 +351,7 @@ try {
     skip_empty_lines: true
   });
   csv = '';
-  const bcMap = {};
+  let bcMap = {};
   console.log('INFO Creating barcode map...');
   let rc = 0;
   for (let x in vrecs) {
@@ -364,7 +364,61 @@ try {
   console.log(`INFO ${rc} barcodes mapped.`);
   vrecs = [];
 
-  // map mfhd ids to item ids
+  // map statuses
+  csv = fs.readFileSync(itemFiles.stat, { encoding: 'utf8' });
+  vrecs = parse(csv, {
+    columns: true,
+    skip_empty_lines: true
+  });
+  csv = '';
+  let stMap = {};
+  console.log('INFO Creating status map...');
+  rc = 0;
+  for (let x in vrecs) {
+    let r = vrecs[x];
+    stMap[r.ITEM_ID] = tsvMap.statuses[r.ITEM_STATUS];
+    rc++;
+  }
+  console.log(`INFO ${rc} statuses mapped.`);
+  vrecs = [];
+
+  // map item temp locations
+  csv = fs.readFileSync(itemFiles.loc, { encoding: 'utf8' });
+  vrecs = parse(csv, {
+    columns: true,
+    skip_empty_lines: true
+  });
+  csv = '';
+  let locMap = {};
+  rc = 0;
+  for (let x in vrecs) {
+    let r = vrecs[x];
+    let c = r.LOCATION_CODE
+    locMap[r.LOCATION_ID] = tsvMap.locations[c];
+    rc++;
+  }
+  vrecs = [];
+
+  // map notes
+  csv = fs.readFileSync(itemFiles.note, { encoding: 'utf8' });
+  vrecs = parse(csv, {
+    columns: true,
+    skip_empty_lines: true
+  });
+  csv = '';
+  let ntMap = {};
+  console.log('INFO Creating note map...');
+  rc = 0;
+  for (let x in vrecs) {
+    let r = vrecs[x];
+    if (!ntMap[r.ITEM_ID]) ntMap[r.ITEM_ID] = [];
+    ntMap[r.ITEM_ID].push(r.ITEM_NOTE);
+    rc++;
+  }
+  console.log(`INFO ${rc} notes mapped.`);
+  vrecs = [];
+
+  // map mfhd
   csv = fs.readFileSync(itemFiles.mfhd, { encoding: 'utf8' });
   vrecs = parse(csv, {
     columns: true,
@@ -381,11 +435,92 @@ try {
     for (let p in r) {
       if (!r[p]) delete r[p];
     }
+    let bc = bcMap[iid];
+    if (bc) {
+      r.BARCODE = bc;
+    }
+    let nts = ntMap[iid];
+    if (nts) {
+      r.NOTES = nts;
+    }
+    let sts = stMap[iid];
+    if (sts) {
+      r.STATUS = sts;
+    }
     mmap[iid] = r;
     rc++;
   }
   console.log(`INFO ${rc} mfhds mapped.`);
+  bcMap = {};
+  ntMap = {};
+  stMap = {};
   vrecs = [];
+
+  csv = fs.readFileSync(itemFiles.item, { encoding: 'utf8' });
+  let items = parse(csv, {
+    columns: true,
+    skip_empty_lines: true
+  });
+  csv = '';
+  rc = 0;
+  let bcseen = {};
+  for (let x in items) {
+    let r = items[x];
+    let iid = r.ITEM_ID;
+    let id = uuid(iid, ns);
+    let hrid = iprefix + iid;
+    let m = mmap[iid];
+    let vhid = (m) ? m.MFHD_ID : '';
+    let hid = hseen[vhid];
+    if (hid) {
+      let i = {
+        id: id,
+        hrid: hrid,
+        holdingsRecordId: hid,
+        formerIds: [ iid ],
+        status: { name: 'Available' }
+      };
+      let bc = m.BARCODE;
+      if (bc) {
+        if (!bcseen[bc]) {
+          i.barcode = bc;
+          bcseen[bc] = iid;
+        } else {
+          console.log(`WARN barcode ${bc} already used by ITEM_ID ${bcseen[bc]}`);
+        }
+      }
+      if (m.ITEM_ENUM) i.volume = m.ITEM_ENUM;
+      if (m.CHRON) i.chronology = m.CHRON;
+      if (m.YEAR) i.yearCaption = [ m.YEAR ];
+      if (r.COPY_NUMBER) i.copyNumber = r.COPY_NUMBER;
+      if (r.PIECES) i.numberOfPieces = r.PIECES;
+      let nts = m.NOTES || [];
+      i.notes = [];
+      nts.forEach(n => {
+        let o = {
+          note: n,
+          itemNoteTypeId: refData.itemNoteTypes.Note
+        };
+        i.notes.push(o);
+      });
+      if (m.STATUS) i.status.name = m.STATUS;
+      let vtype = r.ITEM_TYPE_ID;
+      i.materialTypeId = tsvMap.mtypes[vtype];
+      i.permanentLoanTypeId = refData.loantypes.Standard;
+      let tloc = locMap[r.TEMP_LOCATION];
+      if (tloc) i.temporaryLocationId = tloc;
+      if (i.materialTypeId) {
+        if (i.permanentLoanTypeId) {
+          writeOut(outs.items, i);
+        } else {
+          console.log(`ERROR loantype not found for ${iid}`);
+        }
+      } else {
+        console.log(`ERROR material type "${vcode}" not found for ${iid}`);
+      }
+      ttl.items++;
+    }
+  }
 
   showStats();
 
