@@ -5,14 +5,15 @@
 This project uses JavaScript and Perl for scripting purposes.  For JavaScript, the following are needed.
 * nodejs
 * yarn (or npm)
-** yarn will install the following
-*** JSONStream
-*** event-stream
-*** minimist
-*** pg
-*** superagent
-*** uuid
-*** winston
+  
+Yarn will install the following
+* JSONStream
+* event-stream
+* minimist
+* pg
+* superagent
+* uuid
+* winston
 
 The Perl scripts require the following (use cpanm to install)
 * MARC::Record
@@ -20,8 +21,7 @@ The Perl scripts require the following (use cpanm to install)
 * JSON
 * UUID::Tiny
 
-### 
-
+### Communication scripts
 
 All JS scripts read the server settings from the config.json file.  If config.json does not exist, the scripts will use config.default.json instead.
 
