@@ -1,4 +1,5 @@
 config.js
+config.json
 configs/
 node_modules
 data

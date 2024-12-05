@@ -1,8 +1,8 @@
 #!/bin/bash
 
-grep okapi: config.js
-grep tenant: config.js
-grep logpath: config.js || echo "  (logpath not set)"
+grep okapi.: config.json
+grep tenant.: config.json
+grep logpath.: config.json || echo "  (logpath not set)"
 
 while true; do
     read -n 1 -p "Change config? (y/n) " change
@@ -14,14 +14,14 @@ while true; do
     esac
 done
 
-options=$(ls configs/js)
+options=$(ls configs/json)
 select opt in $options
 do
-	cp configs/js/$opt config.js
+	cp configs/json/$opt config.json
 	break
 done
 
 echo "Config set to:"
-grep okapi: config.js
-grep tenant: config.js
-grep logpath: config.js || echo "  (logpath not set)"
+grep okapi.: config.json
+grep tenant.: config.json
+grep logpath.: config.json || echo "  (logpath not set)"
