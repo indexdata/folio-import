@@ -1,12 +1,29 @@
 # folio-import
 
-This is a place to save scripts for loading (migrating) user (and inventory) records.  The project at FOLIO-FSE (https://github.com/FOLIO-FSE) doesn't seem to do everything we need.  (That has some conversion scripts written in Python, but nothing that loads the converted records.)  We may find it a little easier to use JS or Perl to accomplish our goals of converting and loading data.
+## Prerequisites
 
-## Usage
+This project uses JavaScript and Perl for scripting purposes.  For JavaScript, the following are needed.
+* nodejs
+* yarn (or npm)
+  
+Yarn will install the following
+* JSONStream
+* event-stream
+* minimist
+* pg
+* superagent
+* uuid
+* winston
 
-### JavaScript
+The Perl scripts require the following (use cpanm to install)
+* MARC::Record
+* MARC::Record::MiJ
+* JSON
+* UUID::Tiny
 
-All JS scripts read the server settings from the config.js file.  If config.js does not exist, the scripts will use config.default.js instead.
+### Communication scripts
+
+All JS scripts read the server settings from the config.json file.  If config.json does not exist, the scripts will use config.default.json instead.
 
 Install:
 ```
