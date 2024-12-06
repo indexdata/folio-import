@@ -147,8 +147,26 @@ const wait = (ms) => {
     for await (const line of rl) {
       ttl++;
       let json = JSON.parse(line);
-      if (json.jobExecutionId) {
-        console.log('SRS');
+      if (json.jobExecutionId || json.snapshotId) {
+        let ep = (json.jobExecutionId) ? 'source-storage/snapshots' : 'source-storage/records';
+        let xid = (json.jobExecutionId) ? json.jobExecutionId : json.id;
+        let url = `${config.okapi}/${ep}`;
+        console.log(`POST ${url}`);
+        try {
+          await superagent
+            .post(url)
+            .send(json)
+            .set('x-okapi-token', config.token)
+            .set('content-type', 'application/json')
+            .set('accept', 'text/plain')
+            .set('connection', 'keep-alive');
+          console.log(`INFO Successfully loaded ${xid}`);
+          collSize = 1;
+          success++;
+        } catch (e) {
+          console.log(e);
+          fail++;
+        }
       } else if (ttl >= startRec) {
         endRec++;
         if (!json.metadata) {
