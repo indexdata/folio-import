@@ -113,7 +113,7 @@ const wait = (ms) => {
             .set('connection', 'keep-alive');
           logger.info(`${date} [${range}] Successfully added record ${slice}`);
           success++;
-          await wait(config.delay);
+          if (config.delay) await wait(config.delay);
           resolve();
         } catch (e) {
           logger.error(`${date} [${range}] (${slice}): ${e.response.text}`);
@@ -127,7 +127,7 @@ const wait = (ms) => {
             }
           }
           fail++;
-          await wait(config.delay);
+          if (config.delay) await wait(config.delay);
           reject(e.response.text);
         }
       });
@@ -144,15 +144,13 @@ const wait = (ms) => {
     let startNum = startRec;
     let coll = {};
     
-    await rl.on('close', async () => {
-      
-    });
-
     for await (const line of rl) {
       ttl++;
-      if (ttl >= startRec) {
+      let json = JSON.parse(line);
+      if (json.jobExecutionId) {
+        console.log('SRS');
+      } else if (ttl >= startRec) {
         endRec++;
-        let json = JSON.parse(line);
         if (!json.metadata) {
           json.metadata = metadata;
         }
@@ -172,32 +170,31 @@ const wait = (ms) => {
                 json.contributors.splice(i, 1);
                 i--;
               } else if (json.contributors[i].authorityId) {
-		      delete json.contributors[i].authorityId;
-	      }
+                delete json.contributors[i].authorityId;
+              }
             }
           }
-	  if (json.subjects) {
+          if (json.subjects) {
             for (let i = 0; i < json.subjects.length; i++) {
               if (json.subjects[i].authorityId) {
-		            delete json.subjects[i].authorityId;
-	            }
+                delete json.subjects[i].authorityId;
+              }
             }
-	  }
-	  if (json.alternativeTitles) {
+          }
+          if (json.alternativeTitles) {
             for (let i = 0; i < json.alternativeTitles.length; i++) {
               if (json.alternativeTitles[i].authorityId) {
-		            delete json.alternativeTitles[i].authorityId;
-	            }
+                delete json.alternativeTitles[i].authorityId;
+              }
             }
-	  }
-	  if (json.series) {
+          }
+          if (json.series) {
             for (let i = 0; i < json.series.length; i++) {
               if (json.series[i].authorityId) {
-		            delete json.series[i].authorityId;
-	            }
+                delete json.series[i].authorityId;
+              }
             }
-	  }
-
+          }
           if (json.classifications) {
             for (let i = 0; i < json.classifications.length; i++) {
               if (!json.classifications[i].classificationNumber || !json.classifications[i].classificationTypeId) {
@@ -206,7 +203,6 @@ const wait = (ms) => {
               }
             };
           }
-          
           if (json.identifiers) {
             for (let i = 0; i < json.identifiers.length; i++) {
               if (!json.identifiers[i].value || !json.identifiers[i].identifierTypeId) {

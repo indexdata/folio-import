@@ -329,13 +329,21 @@ try {
       h.holdingsStatementsForIndexes.push(o);
     });
 
-    if (h.instanceId && h.permanentLocationId && !hseen[ctrl]) {
-      ttl.holdings++;
-      writeOut(outs.holdings, h);
-      // console.log(h);
-      hseen[ctrl] = h.id;
+    if (h.instanceId) {
+      if (h.permanentLocationId) {
+        if (!hseen[ctrl]) {
+          ttl.holdings++;
+          writeOut(outs.holdings, h);
+          hseen[ctrl] = h.id;
+        } else {
+          console.log(`ERROR hrid ${hhrid} already used!`);
+        }
+      } else {
+        console.log(`ERROR location not found for "${loc}" (${hhrid})`);
+        ttl.errors++;
+      }
     } else {
-      console.log(`ERROR required holdings fields not present for ${hhrid}`);
+      console.log(`ERROR instance "${bhrid}" not found for ${hhrid}`);
       ttl.errors++;
     }
   }
