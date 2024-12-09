@@ -490,6 +490,7 @@ try {
   if (conf.tsvDir) {
     let tsvFiles = fs.readdirSync(conf.tsvDir);
     tsvFiles.forEach(f => {
+      console.log(f);
       if (f.match(/\.tsv$/)) {
         let prop = f.replace(/\.tsv/, '');
         tsvMap[prop] = {}
@@ -498,16 +499,13 @@ try {
         dat.split(/\n/).forEach(l => {
           let c = l.split(/\t/);
           let k = c[0];
-          let v = c[6];
-          if (prop === 'locations') { 
-            k = c[1];
-          } 
+          let v = c[2];
           if (k && v) tsvMap[prop][k] = refData[prop][v];
         });
       }
     });
-    // console.log(tsvMap);
   }
+  throw(tsvMap);
 
   let t;
   let ttl = {
