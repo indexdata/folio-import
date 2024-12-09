@@ -1,0 +1,13 @@
+{
+    "nameSpace": "4ce25485-26fa-4122-8dbc-8be1dbba4f2a",
+    "refDir": "/Users/charles/Folio/wint/ref/inv",
+    "tsvDir": "",
+    "mapFile": "",
+    "controlNum": "",
+    "hridPrefix": "",
+    "makeInstMap": true,
+    "hasMfhd": true,
+    "catDate": { "tag": "008" },
+    "suppress": { "tag": "", "subfield": "", "value":"" },
+    "callNumbers": {}
+}

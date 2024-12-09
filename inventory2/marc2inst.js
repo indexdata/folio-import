@@ -86,6 +86,8 @@ const cnTypeMap = {
   '8': '6caca63e-5651-4db6-9247-3205156e9699'
 }
 
+const tiSubs = 'anpbcfghks';
+
 const inotes = [];
 
 const writeOut = (outStream, data, notJson, newLineChar) => {
@@ -626,7 +628,7 @@ try {
         continue;
       }
       let f245 = (marc.fields['245']) ? marc.fields['245'][0] : '';
-      let title = getSubs(f245, 'a');
+      let title = getSubs(f245, tiSubs);
       if (!title) {
         ttl.errors++;
         console.log(`ERROR no title found (HRID ${hrid})!`);
