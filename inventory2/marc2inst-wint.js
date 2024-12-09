@@ -88,6 +88,38 @@ const cnTypeMap = {
 
 const tiSubs = 'anpbcfghks';
 
+const imaps = {
+  types: {
+    "a": "Book",
+    "c": "Musical score",
+    "d": "Musical score",
+    "e": "Cartographic material",
+    "f": "Cartographic material",
+    "g": "Projected image",
+    "i": "Sound recording",
+    "j": "Sound recording",
+    "k": "Image",
+    "m": "Electronic resource",
+    "o": "Game or kit",
+    "p": "Mixed materials",
+    "r": "Realia",
+    "t": "Manuscript"
+  },
+  cats: {
+    "a": "Cartographic material",
+    "c": "Electronic resource",
+    "g": "Projected image",
+    "h": "Microform",
+    "k": "Image",
+    "m": "Videorecording",
+    "o": "Game or kit",
+    "q": "Musical score",
+    "s": "Sound recording",
+    "v": "Videorecording",
+    "z": "Unspecified"
+  }
+};
+
 const inotes = [];
 
 const writeOut = (outStream, data, notJson, newLineChar) => {
@@ -490,7 +522,6 @@ try {
   if (conf.tsvDir) {
     let tsvFiles = fs.readdirSync(conf.tsvDir);
     tsvFiles.forEach(f => {
-      console.log(f);
       if (f.match(/\.tsv$/)) {
         let prop = f.replace(/\.tsv/, '');
         tsvMap[prop] = {}
@@ -505,7 +536,15 @@ try {
       }
     });
   }
-  throw(tsvMap);
+  // throw(tsvMap);
+
+  for (let p in imaps) {
+    for (let k in imaps[p]) {
+      let c = imaps[p][k];
+      imaps[p][k] = refData.mtypes[c];
+    }
+  }  
+  throw(imaps);
 
   let t;
   let ttl = {
