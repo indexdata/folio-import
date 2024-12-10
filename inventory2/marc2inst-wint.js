@@ -56,6 +56,8 @@ const files = {
   srs: 1,
   snapshot: 1,
   presuc: 1,
+  holdings: 1,
+  items: 1,
   err: 1
 };
 
@@ -418,6 +420,60 @@ const dedupe = function (arr, props) {
 const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
 }
 
+const makeHoldingsMfhds = function (fields) {
+  let bhrid = fields['004'][0];
+  let b = seen[bhrid];
+  let bid = b.id;
+  let cn = b.callNumber;
+  let cnt = b.callNumberType;
+  let hrid = (fields['001']) ? fields['001'][0] : '';
+  let hid = uuid(hrid + 'h', ns);
+  let hfs = fields['852'] || [];
+  let anotes = fields['541'];
+  let f500 = fields['500'] || '';
+  let f590 = fields['590'] || '';
+  let lnotes = [f500, ...f590];
+  console.log(lnotes);
+  if (bid && hfs[0]) {
+    let hf = getSubsHash(hfs[0]);
+    let loc = (hf.b) ? hf.b[0] : '';
+    let locId = tsvMap.locations[loc];
+    let h = {
+      id: hid,
+      hrid: hrid,
+      instanceId: bid,
+      permanentLocationId: locId
+    };
+    if (cn) {
+      h.callNumber = cn;
+      h.callNumberTypeId = cnt || '6caca63e-5651-4db6-9247-3205156e9699'; // other schema
+    }
+    if (b.ea) {
+      h.electronicAccess = [];
+      b.ea.forEach(o => {
+        h.electronicAccess.push(o);
+      });
+    }
+    if (anotes) {
+      h.administrativeNotes = [];
+      anotes.forEach(f => {
+        let subs = [];
+        f.subfields.forEach(s => {
+          for (let c in s) {
+            subs.push(s[c]);
+          } 
+        });
+        let d = subs.join(' ');
+        h.administrativeNotes.push(d);
+      });
+    } 
+    return h;
+  } else {
+    console.log(`ERROR instanceId not found for holdings ${hrid}`);
+    return '';
+  }
+}
+
 try {
   if (!rawFile) { throw "Usage: node marc2inst.js <conf_file> <raw_marc_file>" }
   let confDir = path.dirname(confFile);
@@ -432,20 +488,12 @@ try {
   }
   const iconf = conf.items;
   const idmap = conf.makeInstMap;
-  const mapcn = conf.callNumbers;
   const supp = (conf.suppress.tag) ? conf.suppress : '';
   let prefix = conf.hridPrefix;
   iprefix = (iconf) ? iconf.hridPrefix : '';
   let wdir = path.dirname(rawFile);
   let fn = path.basename(rawFile, '.mrc');
   let outBase = wdir + '/' + fn;
-  if (conf.items) {
-    files.holdings = 'holdings',
-    files.items = 'items'
-  }
-  if (conf.hasMfhd) {
-    files.mfhds = 'mfhds'
-  }
   if (idmap) {
     files.idmap = 'map'
   }
@@ -544,7 +592,7 @@ try {
       imaps[p][k] = refData.mtypes[c];
     }
   }  
-  throw(imaps);
+  // throw(imaps);
 
   let t;
   let ttl = {
@@ -597,9 +645,10 @@ try {
         continue;
       }
 
-      if (marc.fields['004']) {
+      if (marc.fields['004'] && !marc.fields['245']) {
         if (conf.hasMfhd) {
-          writeOut(outs.mfhds, marc.fields);
+          let h = makeHoldingsMfhds(marc.fields);
+          console.log(h);
           ttl.mfhds++;
         } else {
           let ctrl = (marc.fields['001']) ? marc.fields['001'][0] : '(unknown)'
@@ -639,8 +688,7 @@ try {
         for (let t in conf.callNumbers) {
           if (marc.fields[t]) {
             let cn = getSubs(marc.fields[t][0], 'ab');
-            let pre = getSubs(marc.fields[t][0], 'f');
-            bibCallNum.value = `${pre}^^${cn}`;
+            bibCallNum.value = cn;
             bibCallNum.type = conf.callNumbers[t];
             break;
           }
@@ -679,8 +727,8 @@ try {
         marc.fields.leader = marc.fields.leader.replace(/....$/, '4500');
       }
 
-      seen[hrid] = 1;
       let instId = (hrid) ? uuid(hrid, ns) : '';
+      // seen[hrid] = instId;
       marc.mij = fields2mij(marc.fields);
       let raw = mij2raw(marc.mij);
       ldr = marc.fields.leader || '';
@@ -832,8 +880,17 @@ try {
         let srsObj = makeSrs(raw, jobId, inst.id, inst.hrid, inst.discoverySuppress);
         writeOut(outs.srs, srsObj);
         ttl.srs++;
+        let ea = (inst.electronicAccess) ? JSON.stringify(inst.electronicAccess) : '';
+        seen[inst.hrid] = {
+          id: inst.id,
+          callNumber: bibCallNum.value,
+          callNumberType: bibCallNum.type,
+          blvl: blvl,
+          type: itypeCode,
+          ea: inst.electronicAccess,
+          cat: (marc.fields['007']) ? marc.fields['007'][0].substring(0, 1) : ''
+        }
         if (idmap) {
-          let ea = (inst.electronicAccess) ? JSON.stringify(inst.electronicAccess) : '';
           let instMap = `${inst.hrid}|${inst.id}|${bibCallNum.value}|${bibCallNum.type}|${blvl}|${ea}|${itypeCode}`;
           writeOut(outs.idmap, instMap, true, '\n');
         }

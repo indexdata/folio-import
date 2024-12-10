@@ -9,5 +9,8 @@
     "hasMfhd": true,
     "catDate": { "tag": "008" },
     "suppress": { "tag": "", "subfield": "", "value":"" },
-    "callNumbers": {}
+    "callNumbers": {
+        "090": "95467209-6d7b-468b-94df-0f5d7ad2747d",
+        "050": "95467209-6d7b-468b-94df-0f5d7ad2747d"
+    }
 }
