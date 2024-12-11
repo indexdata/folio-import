@@ -210,6 +210,7 @@ let modName = process.argv[3];
           for (let y = 0; y < hand.length; y++) {
             let method = hand[y].methods[0];
             let pp = hand[y].pathPattern;
+            pp = pp.replace(/{recordType}/, '');
             if (method === 'GET' && !pp.match(/\{|^\/_/)) {
               if (skipList[pp]) {
                 console.log(`Skipping ${pp}`);
@@ -227,7 +228,7 @@ let modName = process.argv[3];
     paths.push({mod: 'system_users', path: 'users?query=personal.lastName==system%20OR%20username==canary-svc&limit=100'});
 
     for (let x = 0; x < paths.length; x++) {
-      if (paths[x].path === 'mapping-rules') {
+      if (paths[x].path === 'mapping-rules/') {
         paths[x].path = 'mapping-rules/marc-bib';
         paths.push({ mod: paths[x].mod, path: 'mapping-rules/marc-holdings' });
         paths.push({ mod: paths[x].mod, path: 'mapping-rules/marc-authority' });
