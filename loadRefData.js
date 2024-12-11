@@ -36,7 +36,9 @@ const fileNames = process.argv.slice(2);
         }
       });
       let data = [];
-      if (Array.isArray(coll[collKeys[0]])) {
+      if (path.match(/mapping-rules/)) {
+        data.push(coll);
+      } else if (Array.isArray(coll[collKeys[0]])) {
         data = coll[collKeys[0]];
       } else if (Array.isArray(coll)) {
 	      data = coll;
