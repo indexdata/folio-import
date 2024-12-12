@@ -106,7 +106,7 @@ sub getRefData {
           my $refroot = $_;
           $refobj->{$refroot} = {};
           foreach (@{ $json->{$_} }) {
-            my $name;
+            my $name = '';
             if ($refroot =~ /^(instanceTypes|contributorTypes|instanceFormats|locations|statisticalCodes)$/) {
               $name = $_->{code};
             } else {
@@ -501,7 +501,8 @@ sub make_hi {
         $cnobj->{note} = $note;
         $cnobj->{noteType} = $ntype;
         $cnobj->{staffOnly} = 'true';
-        $cnobj->{date} = "" . localtime;
+        # $cnobj->{date} = "" . localtime;
+        $cnobj->{date} = '2024-12-11T23:52:23.247+0000';
         push @{ $irec->{circulationNotes} }, $cnobj;
       }
     }
