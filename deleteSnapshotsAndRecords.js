@@ -9,7 +9,7 @@ let anything = process.argv[2];
 
 try {
 if (!anything) {
-  throw new Error ('This script will delete all SRS records. You must provide the tenant');
+  throw new Error ('This script will delete all SRS records. You must provide the tenant or jobExecutionId');
 }
 
 const wait = (ms) => {
@@ -19,26 +19,32 @@ const wait = (ms) => {
 (async () => {
   try {
     let inData;
+    let single;
 
     let config = await getAuthToken(superagent);
-
-    if (config.tenant !== anything) {
+    if (anything.match(/........-....-....-....-............/)) {
+      single = anything;
+    } else if (config.tenant !== anything) {
       throw new Error(`Tenant "${anything}" does not match the current tenant "${config.tenant}!`);
     }
 
     const endpoint = 'source-storage/snapshots';
     const getUrl = config.okapi + '/' + endpoint + '?limit=1000';
-    let refData;
+    let refData = {};
 
-    try {
-      const res = await superagent
-        .get(getUrl)
-        .set('accept', 'application/json')
-        .set('x-okapi-tenant', config.tenant)
-        .set('x-okapi-token', config.token); 
-      refData = res.body;
-    } catch (e) {
-      console.log(e);
+    if (single) {
+      refData = { snapshots: [{ jobExecutionId: single }], totalRecords: 1 };
+    } else {
+      try {
+        const res = await superagent
+          .get(getUrl)
+          .set('accept', 'application/json')
+          .set('x-okapi-tenant', config.tenant)
+          .set('x-okapi-token', config.token); 
+        refData = res.body;
+      } catch (e) {
+        console.log(e);
+      }
     }
 
     console.log(`Deleting ${refData.totalRecords} snapshots...`);

@@ -524,7 +524,7 @@ try {
           console.log(`ERROR loantype not found for ${iid}`);
         }
       } else {
-        console.log(`ERROR material type "${vcode}" not found for ${iid}`);
+        console.log(`ERROR material type "${vtype}" not found for ${iid}`);
       }
       ttl.items++;
     }
