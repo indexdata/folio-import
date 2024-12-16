@@ -242,8 +242,8 @@ try {
     user.customFields.sierraPatronRecordNumber = 'p' + pid;
 
     let addEmails = [];
-    if (varFields.z) {
-      varFields.z.forEach(e => {
+    if (varFields.e) {
+      varFields.e.forEach(e => {
         if (addEmails.indexOf(e) === -1 && e !== user.personal.email) addEmails.push(e);
       });
     }
