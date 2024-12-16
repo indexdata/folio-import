@@ -7,7 +7,7 @@ ITEM_STATUS_TYPE	ITEM_STATUS_DESC	FOLIO Status	Notes		FOLIO item statuses
 6	Hold Request	Paged			Claimed returned
 7	On Hold	Awaiting pickup			Declared lost
 8	In Transit	In transit			In process
-9	In Transit Discharged	In transit			In process (not requestable)
+9	In Transit Discharged	In transit			In process (non-requestable)
 10	In Transit On Hold	Awaiting pickup			In transit
 11	Discharged	Available			Intellectual item
 12	Missing	Missing			Long missing
@@ -17,8 +17,8 @@ ITEM_STATUS_TYPE	ITEM_STATUS_DESC	FOLIO Status	Notes		FOLIO item statuses
 16	Damaged	Restricted			Order closed
 17	Withdrawn	Withdrawn			Paged
 18	At Bindery	Unavailable			Restricted
-19	Cataloging Review	In process (not requestable)			Unavailable
-20	Circulation Review	In process (not requestable)			Unknown
+19	Cataloging Review	In process (non-requestable)			Unavailable
+20	Circulation Review	In process (non-requestable)			Unknown
 21	Scheduled		Not in use		Withdrawn
 22	In Process	In process			
 23	Call Slip Request	Paged			

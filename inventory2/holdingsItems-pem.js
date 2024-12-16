@@ -166,7 +166,7 @@ try {
       }
     });
   }
-  // console.log(tsvMap);
+  // throw(tsvMap);
   
   const instMap = {};
   if (conf.makeInstMap) {
