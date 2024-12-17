@@ -122,6 +122,9 @@ const imaps = {
   }
 };
 
+const anotes = ['541','949cot','955'];
+const hnotes = [{'583': 'Note'},{'561a':'Povanance'},{'562a':'Copy note'},{'563a':'Binding'},{'590a':'Local note'},{'500a':'Local note'}];
+
 const inotes = [];
 
 const writeOut = (outStream, data, notJson, newLineChar) => {
@@ -429,11 +432,6 @@ const makeHoldingsMfhds = function (fields) {
   let hrid = (fields['001']) ? fields['001'][0] : '';
   let hid = uuid(hrid + 'h', ns);
   let hfs = fields['852'] || [];
-  let anotes = fields['541'];
-  let f500 = fields['500'] || '';
-  let f590 = fields['590'] || '';
-  let lnotes = [f500, ...f590];
-  console.log(lnotes);
   if (bid && hfs[0]) {
     let hf = getSubsHash(hfs[0]);
     let loc = (hf.b) ? hf.b[0] : '';
@@ -454,19 +452,31 @@ const makeHoldingsMfhds = function (fields) {
         h.electronicAccess.push(o);
       });
     }
-    if (anotes) {
-      h.administrativeNotes = [];
-      anotes.forEach(f => {
-        let subs = [];
-        f.subfields.forEach(s => {
-          for (let c in s) {
-            subs.push(s[c]);
-          } 
+    h.administrativeNotes = [];
+    anotes.forEach(f => {
+      let t = f.substring(0,3);
+      let c = f.substring(3);
+      if (fields[t]) {
+        fields[t].forEach(x => {
+          let data = getSubs(x, c);
+          if (data) h.administrativeNotes.push(data);
         });
-        let d = subs.join(' ');
-        h.administrativeNotes.push(d);
-      });
-    } 
+      }
+    });
+    h.notes = []
+    hnotes.forEach(o => {
+      let f = Object.keys(o)[0];
+      let t = f.substring(0,3);
+      let c = f.substring(3);
+      let type = o[f];
+      console.log(type);
+      if (fields[t]) {
+        fields[t].forEach(x => {
+          let data = getSubs(x, c);
+          if (data) h.notes.push(data);
+        });
+      }
+    });
     return h;
   } else {
     console.log(`ERROR instanceId not found for holdings ${hrid}`);

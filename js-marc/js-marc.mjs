@@ -102,7 +102,9 @@ export function getSubs(field, codes, delim) {
   if (!field) return;
   field.subfields.forEach(s => {
     let code = Object.keys(s)[0];
-    if (code.match(/\w/) && codes.match(code)) {
+    if (!codes) {
+      out.push(s[code]);
+    } else if (code.match(/\w/) && codes.match(code)) {
       out.push(s[code]);
     }
   });
