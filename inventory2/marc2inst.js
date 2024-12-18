@@ -38,8 +38,11 @@ const typeMap = {
 
 const modeMap = {
  a: 'single unit',
- m: 'multipart monograph',
+ c: 'single unit',
+ d: 'single unit',
+ m: 'single unit',
  s: 'serial',
+ b: 'serial',
  i: 'integrating resource'
 };
 
@@ -171,9 +174,9 @@ const funcs = {
   },
   set_note_staff_only_via_indicator: function (data, param, ind1) {
     if (ind1 === '0') {
-      return true
+      return "true"
     } else {
-      return false
+      return "false"
     }
   },
   set_electronic_access_relations_id: function (data, param, ind1, ind2) {
@@ -787,7 +790,7 @@ try {
             let nd = new Date(d).toISOString().substring(0, 10);
             inst.catalogedDate = nd;
           } catch(e) {
-            console.log(`WARN ${e} (catalogedDate: "${d}")`);
+            if (process.env.DEBUG) console.log(`WARN ${e} (catalogedDate: "${d}")`);
           }
         }
         writeOut(outs.instances, inst);
