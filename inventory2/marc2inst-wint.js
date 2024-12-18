@@ -164,7 +164,7 @@ const funcs = {
     return out;
   },
   set_issuance_mode_id: function () {
-    let c = ldr.substring(6,7);
+    let c = ldr.substring(7,8);
     let cstr = modeMap[c] || 'unspecified';
     let out = refData.issuanceModes[cstr];
     return out;
