@@ -252,7 +252,7 @@ open ROUT, '>>:encoding(UTF-8)', $paths->{r} or die "Can't open $paths->{r} for 
 open MOUT, '>>:encoding(UTF-8)', $paths->{m} or die "Can't open $paths->{m} for writing\n";
 open IPURGE, '>>:encoding(UTF-8)', $paths->{ip} or die "Can't open $paths->{ip} for writing\n";
 
-open IN, $infile;
+open IN, '<:encoding(UTF-8)', $infile;
 
 while (<IN>) {
   chomp;
