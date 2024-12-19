@@ -17,7 +17,7 @@ const wait = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
-const post_put = async (authToken, url, checkout, r) => {
+const post_put = async (authToken, url, checkout, r, username, config) => {
   r = (r) ? r : 0;
   try {
     if (url.match(/.{8}-.{4}-.{4}-.{4}-.{12}$/)) {
@@ -69,6 +69,23 @@ const post_put = async (authToken, url, checkout, r) => {
         console.log(`WARN we've encountered a ${name} block, retrying with override...`);
         let body = await post_put(authToken, url, checkout, 1);
         return body;
+      } else if (text.match(/USER_BARCODE_NOT_FOUND/) && username) {
+        console.log(`    WARN user barcode ${checkout.userBarcode} does not exist-- looking up by username: ${username}...`);
+        try {
+          let res = await superagent
+            .get(`${config.okapi}/users?query=username==${username}`)
+            .set('x-okapi-token', config.token);
+          let u = res.body.users[0];
+          if (u.barcode) {
+            checkout.userBarcode = u.barcode;
+            let body = await post_put(authToken, url, checkout, 1);
+            return body;
+          } else {
+            throw(`    ERROR no barcode found for username: ${username}`)
+          }
+        } catch (e) {
+          throw(e);
+        }
       } else {
         throw(text);
       }
@@ -129,6 +146,7 @@ const post_put = async (authToken, url, checkout, r) => {
       let dueDate;
       let claimedReturnedDate = '';
       let renewalCount = 0;
+      let username = '';
       if (checkIn === 'checkin') {
         delete data.loanDate;
         delete data.userBarcode;
@@ -147,6 +165,10 @@ const post_put = async (authToken, url, checkout, r) => {
           renewalCount = data.renewalCount; 
           delete data.renewalCount;
         }
+        if (data.username) {
+          username = data.username;
+          delete data.username;
+        }
       }
       try {
         let uc = '';
@@ -154,7 +176,7 @@ const post_put = async (authToken, url, checkout, r) => {
 	      let postData = Object.assign({}, data);
 
         console.log(`[${d}] POST ${url} (${data.itemBarcode}${uc})`);
-        let loanObj = await post_put(config.token, url, postData);
+        let loanObj = await post_put(config.token, url, postData, 0, username, config);
         if (checkIn === 'checkin') added++;
         if (loanObj && checkIn !== 'checkin') {
           let loanStr = JSON.stringify(loanObj) + '\n';
@@ -170,7 +192,6 @@ const post_put = async (authToken, url, checkout, r) => {
             console.log(`[${d}] PUT ${lurl} (${data.itemBarcode})`);
             await post_put(config.token, lurl, loanObj);
             added++
-
             if (claimedReturnedDate) {
               try {
                 let claimedObj = {};
