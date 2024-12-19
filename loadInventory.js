@@ -147,6 +147,7 @@ const wait = (ms) => {
     for await (const line of rl) {
       ttl++;
       let json = JSON.parse(line);
+      if (json.__) delete json.__;
       if (json.jobExecutionId || json.snapshotId) {
         let ep = (json.jobExecutionId) ? 'source-storage/snapshots' : 'source-storage/records';
         let xid = (json.jobExecutionId) ? json.jobExecutionId : json.id;

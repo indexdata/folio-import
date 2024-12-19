@@ -78,6 +78,7 @@ const wait = (ms) => {
       let rec = JSON.parse(line);
       if (ver) rec._version = ver;
       if (rec._errorMessage) delete rec._errorMessage;
+      if (rec.__) delete rec.__;
       let id = rec.id;
       if (rec.fund && rec.fund.id) id = rec.fund.id;
       let lDate = new Date();

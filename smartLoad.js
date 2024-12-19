@@ -144,6 +144,8 @@ const wait = (ms) => {
       let actionUrl = `${config.okapi}/${ep}`;
       logger.info(`[${x}] ${lDate} POST ${rec.id} to ${actionUrl}`);
       let recUrl = (actionUrl.match(/mapping-rules/)) ? actionUrl : `${actionUrl}/${rec.id}`;
+      if (rec.__) delete rec.__;
+      if (rec.errMessage) delete rec.errMessage;
       try {
 	      if (process.env.PUT_ONLY) throw 'INFO -- PUT requests only';
         await superagent

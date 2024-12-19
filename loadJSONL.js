@@ -76,6 +76,8 @@ const wait = (ms) => {
     for await (const line of rl) {
       x++;
       let rec = JSON.parse(line);
+      if (rec._errMessage) delete rec._errMessage;
+      if (rec.__) delete rec.__;
       let lDate = new Date();
       if (config.expiry && config.expiry <= lDate.valueOf()) {
         config = await getAuthToken(superagent);

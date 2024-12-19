@@ -187,6 +187,7 @@ try {
     let cdate = p.CREATE_DATE;
     if (!useen[un]) {
       u = {
+        __: id,
         id: uuid(id, ns),
         username: un,
         active: true,
