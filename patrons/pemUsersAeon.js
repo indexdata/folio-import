@@ -169,6 +169,7 @@ try {
       u = {
         id: uuid(id, ns),
         username: un,
+        barcode: un,
         active: true,
         personal: {
           lastName: ln,
