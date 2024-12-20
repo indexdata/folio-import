@@ -563,7 +563,7 @@ try {
         continue;
       }
 
-      if (marc.fields['004']) {
+      if (marc.fields['004'] && conf.hasMfhd) {
         if (conf.hasMfhd) {
           writeOut(outs.mfhds, marc.fields);
           ttl.mfhds++;

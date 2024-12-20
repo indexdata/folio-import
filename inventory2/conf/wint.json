@@ -6,7 +6,7 @@
     "controlNum": "",
     "hridPrefix": "",
     "makeInstMap": true,
-    "hasMfhd": true,
+    "hasMfhd": false,
     "catDate": { "tag": "008" },
     "suppress": { "tag": "", "subfield": "", "value":"" },
     "callNumbers": {
