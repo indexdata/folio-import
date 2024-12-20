@@ -747,7 +747,7 @@ try {
         if (inst.subjects) inst.subjects = dedupe(inst.subjects, [ 'value' ]);
         if (inst.identifiers) inst.identifiers = dedupe(inst.identifiers, [ 'value', 'identifierTypeId' ]);
         if (inst.languages) inst.languages = dedupe(inst.languages);
-        if (!inst.instanceTypeId) inst.instanceTypeId = refData.instanceTypes.zzz;
+        if (!inst.instanceTypeId) inst.instanceTypeId = '30fffe0e-e985-4144-b2e2-1e8179bdb41f';
         if (inst.electronicAccess) {
           for (let x = 0; x < inst.electronicAccess.length; x++) {
             let e = inst.electronicAccess[x];
@@ -758,7 +758,7 @@ try {
         }
         if (inst.instanceTypeId === refData.instanceTypes.unspecified) {
           let itype = typeMap[itypeCode];
-          inst.instanceTypeId = refData.instanceTypes[itype] || refData.instanceTypes.uspecified;
+          if (itype) inst.instanceTypeId = refData.instanceTypes[itype] || refData.instanceTypes.uspecified;
         }
         inst.discoverySuppress = false;
         if (supp) {

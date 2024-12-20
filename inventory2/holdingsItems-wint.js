@@ -238,7 +238,9 @@ try {
   } 
   
   const occ = {};
+  const ic = {};
   const hseen = {};
+  const bcseen = {};
   for (let r of inRecs) {
     let bid = r.BIB_ID;
     let imap = instMap[bid];
@@ -282,6 +284,84 @@ try {
       occ[bid]++;
       ttl.holdings++;
     }
+
+    // items start here
+
+    if (!ic[bid]) {
+      ic[bid] = 1;
+    } else {
+      ic[bid]++;
+    }
+    let icStr = ic[bid].toString().padStart(3, '0');
+    let ihrid = iprefix + bid + '-' + icStr;
+    let iid = uuid(ihrid, ns);
+    let i = {
+      id: iid,
+      hrid: ihrid,
+      holdingsRecordId: hseen[hkey],
+      notes: [],
+    }
+    if (r.BARCODE) {
+      if (!bcseen[r.BARCODE]) {
+        i.barcode = r.BARCODE;
+        bcseen[r.BARCODE] = 1;
+      } else {
+        console.log(`WARN barcode ${r.BARCODE} already seen.`)
+      }
+    }
+    if (r.UNITS) {
+      if (imap.blvl === 's') {
+        i.enumeration = r.UNITS;
+      } else {
+        i.volume = r.UNITS;
+      }
+    }
+    if (r.STAFF_NOTE) {
+      let o = {
+        note: r.STAFF_NOTE,
+        itemNoteTypeId: refData.itemNoteTypes.Note,
+        staffOnly: true
+      }
+      i.notes.push(o);
+    }
+    if (r.PUBLIC_NOTE) {
+      let o = {
+        note: r.PUBLIC_NOTE,
+        itemNoteTypeId: refData.itemNoteTypes.Note,
+        staffOnly: false
+      }
+      i.notes.push(o);
+    }
+    let cin = r.CHECKIN_NOTE;
+    let con = r.CHECKOUT_NOTE;
+    if (cin || con) {
+      let d = new Date().toISOString();
+      d = d.substring(0, 10);
+      i.circulationNotes = [];
+      if (cin) {
+        let o = {
+          id: uuid(cin + 'in' + ihrid, ns),
+          note: cin,
+          noteType: 'Check in',
+          date: d
+        }
+        i.circulationNotes.push(o);
+      }
+      if (con) {
+        let o = {
+          id: uuid(con + 'out' + ihrid, ns),
+          note: con,
+          noteType: 'Check out',
+          date: d
+        }
+        i.circulationNotes.push(o);
+      }
+    }
+    i.status = { name: 'Available' };
+    i.materialTypeId = refData.mtypes.Unspecified;
+    i.permanentLoanTypeId = refData.loantypes['Can circulate'];
+    writeOut(outs.items, i);
+    ttl.items++;
   }
 
   /*
