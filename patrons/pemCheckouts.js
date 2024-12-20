@@ -89,6 +89,7 @@ const outFiles = {
       unf: 0,
       inf: 0,
       ina: 0,
+      ibc: 0,
     }
 
     let csv = fs.readFileSync(inFiles.circ, {encoding: 'utf8'});
@@ -110,8 +111,11 @@ const outFiles = {
         console.log(`ERROR no item found for ITEM_ID ${iid}`);
         ttl.inf++;
       } else if (item.st !== 'Available') {
-        console.log(`ERROR item status for barcode ${item.bc} is not available`);
-        ttl.ina++
+        console.log(`ERROR item status for ITEM_ID ${iid} is not available`);
+        ttl.ina++;
+      } else if (!item.bc) {
+        console.log(`ERROR no item barcode found for ITEM_ID ${iid}`);
+        ttl.ibc++;
       } else {
         loan.itemBarcode = item.bc;
         loan.userBarcode = user.bc;
@@ -141,6 +145,7 @@ const outFiles = {
     console.log('Users not found:', ttl.unf);
     console.log('Items not found:', ttl.inf);
     console.log('Items not available:', ttl.ina);
+    console.log('Items with no barcode:', ttl.ibc);
     console.log('Time (sec):', time);
   } catch (e) {
     console.error(e);
