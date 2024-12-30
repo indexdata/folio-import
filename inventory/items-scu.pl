@@ -108,9 +108,9 @@ sub getRefData {
           foreach (@{ $json->{$_} }) {
             my $name = '';
             if ($refroot =~ /^(instanceTypes|contributorTypes|instanceFormats|locations|statisticalCodes)$/) {
-              $name = $_->{code};
+              $name = $_->{code} || '';
             } else {
-              $name = $_->{name};
+              $name = $_->{name} || '';
             }
             my $id = $_->{id};
             $name = lc($name);
@@ -142,7 +142,7 @@ sub makeMapFromTsv {
       my $code = ($l && $col[0] =~ /\w|\$/) ? $col[0] : '';
       $code =~ s/^ +| +$//g;
       my $name = $col[2] || '';
-      if ($prop =~ /^(mtypes|loantypes)^/) {
+      if ($prop =~ /^(mtypes|loantypes)$/) {
         $code .= ':' . $col[1];
       }
       $name =~ s/^ +| +$//g;
@@ -192,7 +192,7 @@ my $refdata = getRefData($ref_dir);
 # print Dumper($refdata->{loantypes}); exit;
 my $sierra2folio = makeMapFromTsv($ref_dir, $refdata);
 $sierra2folio->{locations}->{multi} = $refdata->{locations}->{multi};
-# print Dumper($sierra2folio->{loantypes_def}); exit;
+# print Dumper($sierra2folio->{loantypes}); exit;
 
 my $relations = {
   '0' => 'Resource',
