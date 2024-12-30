@@ -13,6 +13,7 @@ let ldr;
 let ns;
 let iprefix;
 let maxSub = 150;
+let snapId = 'a102a799-ec18-57ab-ac0a-1f41451aaa9a';
 const refData = {};
 const tsvMap = {};
 const outs = {};
@@ -312,7 +313,7 @@ const makeSrs = function (raw, jobId, bid, hrid, suppress) {
 
 const makeSnap = function () {
   const now = new Date().toISOString();
-  const id = uuid(now, ns);
+  const id = snapId || uuid(now, ns);
   const so = {
     jobExecutionId: id,
     status: 'COMMITTED',
@@ -716,10 +717,13 @@ try {
       // replace null chars with space in 008
       if (marc.fields['008']) {
         marc.fields['008'][0] = marc.fields['008'][0].replace(/\x00/g, ' ');
+        marc.fields['008'][0] = marc.fields['008'][0].replace(/^      /, '010101');
+        marc.fields['008'][0] = marc.fields['008'][0].replace(/      (.....)$/, '||||||$1');
       } else {
-        marc.fields['008'] = [ '                        a          eng d' ];
+        marc.fields['008'] = [ '010101s                 a    ||||||eng d' ];
       }
 
+      
       seen[hrid] = 1;
       let instId = (hrid) ? uuid(hrid, ns) : '';
       marc.mij = fields2mij(marc.fields);
