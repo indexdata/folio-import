@@ -249,7 +249,7 @@ try {
       ttl.errors++;
       continue;
     }
-    let loc = r.LOCATION;
+    let loc = r.LOCATION.trim();
     let cn = r.CALL_NUMBER || imap.cn;
     let cnt = (r.CALL_NUMBER) ? refData.callNumberTypes['Other scheme'] : imap.cnt;
     let hkey = bid+loc+cn;
@@ -263,7 +263,7 @@ try {
       let hid = uuid(hhrid, ns);
       let locId = tsvMap.locations[loc];
       if (!locId) {
-        console.log(`ERROR location ID not found for ${loc}`);
+        console.log(`ERROR location ID not found for "${loc}"`);
         ttl.errors++;
         continue;
       }
