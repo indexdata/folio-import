@@ -482,20 +482,36 @@ try {
     let hid = hseen[vhid];
     if (hid) {
       let i = {
+        _version: 1,
         id: id,
         hrid: hrid,
         holdingsRecordId: hid,
         formerIds: [ iid ],
-        status: { name: 'Available' }
+        status: { name: 'Available' },
+        notes: []
       };
-      let bc = m.BARCODE;
-      if (bc) {
-        if (!bcseen[bc]) {
-          i.barcode = bc;
-          bcseen[bc] = iid;
-        } else {
-          console.log(`WARN barcode ${bc} already used by ITEM_ID ${bcseen[bc]}`);
+      let bc = m.BARCODE || iid;
+      if (!bcseen[bc]) {
+        i.barcode = bc;
+        bcseen[bc] = iid;
+        if (!m.BARCODE) {
+          let o = {
+            note: 'Barcode added during migrations.',
+            itemNoteTypeId: refData.itemNoteTypes.Note,
+            staffOnly: true
+          }
+          i.notes.push(o);
         }
+      } else {
+        i.barcode = iid;
+        bcseen[bc] = iid;
+        let o = {
+          note: `Barcode ${bc} already used by pi${bcseen[bc]}. Using ITEM_ID instead.`,
+          itemNoteTypeId: refData.itemNoteTypes.Note,
+          staffOnly: true
+        }
+        i.notes.push(o);
+        console.log(`WARN barcode ${bc} already used by ITEM_ID ${bcseen[bc]}`);
       }
       if (m.ITEM_ENUM) i.volume = m.ITEM_ENUM;
       if (m.CHRON) i.chronology = m.CHRON;
@@ -503,7 +519,6 @@ try {
       if (r.COPY_NUMBER) i.copyNumber = r.COPY_NUMBER;
       if (r.PIECES) i.numberOfPieces = r.PIECES;
       let nts = m.NOTES || [];
-      i.notes = [];
       nts.forEach(n => {
         let o = {
           note: n,
