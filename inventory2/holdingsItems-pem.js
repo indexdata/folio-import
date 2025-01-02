@@ -30,7 +30,8 @@ const elRelMap = {
 
 const files = {
   holdings: 1,
-  items: 1
+  items: 1,
+  bwp: 1
 };
 
 const itemFiles = {
@@ -188,6 +189,7 @@ try {
   let ttl = {
     holdings: 0,
     items: 0,
+    boundwiths: 0,
     errors: 0
   }
 
@@ -207,7 +209,30 @@ try {
     }
   }
 
+  // map barcodes
+  let csv = fs.readFileSync(itemFiles.bc, { encoding: 'utf8' });
+  let vrecs = parse(csv, {
+    columns: true,
+    skip_empty_lines: true
+  });
+  csv = '';
+  let bcMap = {};
+  let bcMapRev = {};
+  console.log('INFO Creating barcode map...');
+  let rc = 0;
+  for (let x in vrecs) {
+    let r = vrecs[x];
+    if (r.BARCODE_STATUS === '1') {
+      bcMap[r.ITEM_ID] = r.ITEM_BARCODE;
+      bcMapRev[r.ITEM_BARCODE] = r.ITEM_ID;
+      rc++;
+    }
+  }
+  console.log(`INFO ${rc} barcodes mapped.`);
+  // throw(bcMapRev);
+
   const hseen = {};
+  const bwMap = {};
 
   let fileStream = fs.createReadStream(mfhdFile);
   let rl = readline.createInterface({
@@ -219,6 +244,7 @@ try {
     let ctrl = (m['001']) ? m['001'][0] : '';
     let bhrid = (m['004']) ? m['004'][0] : '';
     let mh = {};
+    let iid = '';
     if (m['852']) {
       m['852'][0].subfields.forEach(s => {
         let k = Object.keys(s)[0];
@@ -227,6 +253,12 @@ try {
           mh[k].push(s[k]);
         } else {
           mh[k] = s[k];
+        }
+        if (k === 'p') {
+          let bc = s[k];
+          if (bcMapRev[bc]) {
+            iid = bcMapRev[bc];
+          }
         }
       });
       mh.ind1 = m['852'][0].ind1;
@@ -243,6 +275,8 @@ try {
       hhrid = hprefix + ctrl;
     }
     let hid = uuid(hhrid, ns);
+    if (!bwMap[iid]) bwMap[iid] = [];
+    bwMap[iid].push(hid);
     let h = {
       _version: 1,
       id: hid,
@@ -347,29 +381,13 @@ try {
       ttl.errors++;
     }
   }
+  // throw(bwMap);
 
   /*
     This is the item creation section
   */
 
-  // map barcodes
-  let csv = fs.readFileSync(itemFiles.bc, { encoding: 'utf8' });
-  let vrecs = parse(csv, {
-    columns: true,
-    skip_empty_lines: true
-  });
-  csv = '';
-  let bcMap = {};
-  console.log('INFO Creating barcode map...');
-  let rc = 0;
-  for (let x in vrecs) {
-    let r = vrecs[x];
-    if (r.BARCODE_STATUS === '1') {
-      bcMap[r.ITEM_ID] = r.ITEM_BARCODE;
-      rc++;
-    }
-  }
-  console.log(`INFO ${rc} barcodes mapped.`);
+  
   vrecs = [];
 
   // map statuses
@@ -463,6 +481,7 @@ try {
   ntMap = {};
   stMap = {};
   vrecs = [];
+  // throw(mmap);
 
   csv = fs.readFileSync(itemFiles.item, { encoding: 'utf8' });
   let items = parse(csv, {
@@ -472,6 +491,7 @@ try {
   csv = '';
   rc = 0;
   let bcseen = {};
+  let bwseen = {};
   for (let x in items) {
     let r = items[x];
     let iid = r.ITEM_ID;
@@ -535,6 +555,31 @@ try {
       if (i.materialTypeId) {
         if (i.permanentLoanTypeId) {
           writeOut(outs.items, i);
+          if (bwMap[iid]) {
+            /*
+            if (!bwseen[iid]) {
+              let mainBwp = {
+                id: uuid(i.holdingsRecordId, i.id),
+                holdingsRecordId: i.holdingsRecordId,
+                itemId: i.id
+              }
+              writeOut(outs.bwp, mainBwp);
+              ttl.boundwiths++;
+            }
+            */
+            bwMap[iid].forEach(hid => {
+              let bwp = {
+                id: uuid(hid, i.id),
+                holdingsRecordId: hid,
+                itemId: i.id
+              }
+              writeOut(outs.bwp, bwp);
+              ttl.boundwiths++;
+              bwseen[iid] = 1;
+              // console.log(bwp);
+            })
+            
+          }
         } else {
           console.log(`ERROR loantype not found for ${iid}`);
         }
