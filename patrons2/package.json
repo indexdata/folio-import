@@ -1,0 +1,12 @@
+{
+  "name": "patrons2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Charles Ledvina <charles@indexdata.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "csv-parse": "^5.6.0",
+    "uuid": "^10.0.0"
+  },
+  "type": "module"
+}
