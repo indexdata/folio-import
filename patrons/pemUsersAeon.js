@@ -2,7 +2,7 @@ const readline = require('readline');
 const fs = require('fs');
 const path = require('path');
 const uuid = require('uuid/v5');
-const parse = require('csv-parse/lib/sync');
+const { parse } = require('csv-parse/sync');
 
 const ns = '053d693b-8474-44ff-b2e3-4c005f5d9ae1';
 let refDir = process.argv[2];
@@ -188,7 +188,7 @@ try {
       let depName = deptNames[dp] || dp;
       let dept = depMap[depName] || '';
       if (dept) u.departments = [  dept ];
-      if (dp && !dept) console.log(`WARN department not found for ${dp}`);
+      if (dp && !dept) console.log(`WARN department not found for "${dp}" (${un})`);
       let groupLabel = p['F Patron Group Label'];
       u.patronGroup = groupMap[groupLabel];
       if (p.UserName.match(/@.+\./)) u.personal.email = p.UserName;
@@ -248,7 +248,7 @@ try {
         ecount++;
       }
     } else {
-      console.log(`ERROR username ${un} already used!`)
+      console.log(`ERROR username "${un}" already used!`)
       ecount++;
     }
   } 
