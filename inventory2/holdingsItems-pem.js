@@ -510,10 +510,9 @@ try {
         status: { name: 'Available' },
         notes: []
       };
-      let bc = m.BARCODE || iid;
+      let bc = m.BARCODE || 'TEMP' + iid;
       if (!bcseen[bc]) {
         i.barcode = bc;
-        bcseen[bc] = iid;
         if (!m.BARCODE) {
           let o = {
             note: 'Barcode added during migrations.',
@@ -522,9 +521,9 @@ try {
           }
           i.notes.push(o);
         }
-      } else {
-        i.barcode = iid;
         bcseen[bc] = iid;
+      } else {
+        i.barcode = 'TEMP' + iid;
         let o = {
           note: `Barcode ${bc} already used by pi${bcseen[bc]}. Using ITEM_ID instead.`,
           itemNoteTypeId: refData.itemNoteTypes.Note,
