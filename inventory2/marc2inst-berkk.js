@@ -803,15 +803,17 @@ try {
           let itag = iconf.tag;
           let ifields = marc.fields[itag];
           let suppress = false;
-          let hi = makeHoldingsItems(ifields, instId, inst.hrid, suppress, inst.electronicAccess);
-          hi.h.forEach(r => {
-            writeOut(outs.holdings, r);
-            ttl.holdings++;
-          });
-          hi.i.forEach(r => {
-            writeOut(outs.items, r);
-            ttl.items++;
-          });
+          if (ifields) {
+            let hi = makeHoldingsItems(ifields, instId, inst.hrid, suppress, inst.electronicAccess);
+            hi.h.forEach(r => {
+              writeOut(outs.holdings, r);
+              ttl.holdings++;
+            });
+            hi.i.forEach(r => {
+              writeOut(outs.items, r);
+              ttl.items++;
+            });
+          }
         }
         
       }
