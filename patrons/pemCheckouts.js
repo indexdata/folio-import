@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const parse = require('csv-parse/lib/sync');
+const { parse } = require('csv-parse/sync');
 const readline = require('readline');
 
 let circDir = process.argv[2];
