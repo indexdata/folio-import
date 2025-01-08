@@ -65,23 +65,6 @@ const writeOut = (outStream, data, notJson, newLineChar) => {
   outStream.write(dataStr, 'utf8');
 };
 
-const dedupe = function (arr, props) {
-  let seen = {};
-  let newArr = [];
-  arr.forEach(a => {
-    let k = '';
-    if (props) {
-      props.forEach(p => {
-        k += '::' + a[p];
-      });
-    } else {
-      k = a;
-    }
-    if (!seen[k]) newArr.push(a);
-    seen[k] = 1;
-  });
-  return newArr;
-}
 
 const makeNote = function (text, type, staffOnly) {
   if (!type) throw new Error('Note type not found');
@@ -173,7 +156,6 @@ try {
   
   const instMap = {};
   if (conf.makeInstMap) {
-    console.log(fn);
     let mfn = fn.replace(/^(.+)-.+/, wdir + '/$1.map');
     let fileStream = fs.createReadStream(mfn);
     let rl = readline.createInterface({
@@ -192,6 +174,7 @@ try {
     holdings: 0,
     items: 0,
     boundwiths: 0,
+    relationships: 0,
     errors: 0
   }
 
@@ -205,7 +188,7 @@ try {
     if (t > 60) ttl['time (mins)'] = t / 60;
     for (let x in ttl) {
       let l = x.substring(0,1).toUpperCase() + x.substring(1);
-      l = l.padEnd(12);
+      l = l.padEnd(14);
       let n = ttl[x].toString().padStart(8);
       console.log(l, ':', n);
     }
@@ -271,12 +254,6 @@ try {
           mh[k].push(s[k]);
         } else {
           mh[k] = s[k];
-        }
-        if (k === 'p') {
-          let bc = s[k];
-          if (bcMapRev[bc]) {
-            iid = bcMapRev[bc];
-          }
         }
       });
       mh.ind1 = m['852'][0].ind1;
@@ -420,11 +397,11 @@ try {
                       instanceRelationshipTypeId: refData.instanceRelationshipTypes['bound-with']
                     };
                     ro.id = uuid(ro.superInstanceId + ro.subInstanceId, ns);
-                    console.log(ro);
                     writeOut(outs.bwp, o);
                     writeOut(outs.holdings, bwh);
                     writeOut(outs.rel, ro);
                     ttl.boundwiths++;
+                    ttl.relationships++;
                   }
                 }
               });
