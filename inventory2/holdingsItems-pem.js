@@ -31,7 +31,8 @@ const elRelMap = {
 const files = {
   holdings: 1,
   items: 1,
-  bwp: 1
+  bwp: 1,
+  rel: 1
 };
 
 const itemFiles = {
@@ -40,7 +41,8 @@ const itemFiles = {
   mfhd: 'mfhd_item.csv',
   note: 'item_note.csv',
   stat: 'item_status.csv',
-  loc: 'location.csv'
+  loc: 'location.csv',
+  bi: 'bib_item.csv'
 };
 
 const cnTypeMap = {
@@ -184,7 +186,7 @@ try {
       instMap[k] = c[1];
     }
   }
-  // console.log(instMap);
+  // throw(instMap);
 
   let ttl = {
     holdings: 0,
@@ -217,22 +219,38 @@ try {
   });
   csv = '';
   let bcMap = {};
-  let bcMapRev = {};
   console.log('INFO Creating barcode map...');
   let rc = 0;
   for (let x in vrecs) {
     let r = vrecs[x];
     if (r.BARCODE_STATUS === '1') {
       bcMap[r.ITEM_ID] = r.ITEM_BARCODE;
-      bcMapRev[r.ITEM_BARCODE] = r.ITEM_ID;
       rc++;
     }
   }
   console.log(`INFO ${rc} barcodes mapped.`);
-  // throw(bcMapRev);
+  // throw(bcMap);
+
+  // map bib items
+  csv = fs.readFileSync(itemFiles.bi, { encoding: 'utf8' });
+  vrecs = parse(csv, {
+    columns: true,
+    skip_empty_lines: true
+  });
+  csv = '';
+  let bibItemMap = {};
+  console.log('INFO Creating barcode map...');
+  rc = 0;
+  for (let x in vrecs) {
+    let r = vrecs[x];
+    bibItemMap[r.BIB_ID] = r.ITEM_ID;
+    rc++;
+  }
+  console.log(`INFO ${rc} bib-items mapped`);
+  // throw(bibItemMap);
 
   const hseen = {};
-  const bwMap = {};
+  const bwseen = {};
 
   let fileStream = fs.createReadStream(mfhdFile);
   let rl = readline.createInterface({
@@ -275,8 +293,6 @@ try {
       hhrid = hprefix + ctrl;
     }
     let hid = uuid(hhrid, ns);
-    if (!bwMap[iid]) bwMap[iid] = [];
-    bwMap[iid].push(hid);
     let h = {
       _version: 1,
       id: hid,
@@ -369,8 +385,55 @@ try {
           ttl.holdings++;
           writeOut(outs.holdings, h);
           hseen[ctrl] = h.id;
-        } else {
+          let lnk = m['014'];
+          if (lnk) {
+            let iid = bibItemMap[bhrid];
+            if (iid) {
+              let o = {
+                itemId: uuid(iid, ns),
+                holdingsRecordId: h.id
+              };
+              o.id = uuid(o.holdingsRecordId, o.itemId);
+              writeOut(outs.bwp, o);
+              ttl.boundwiths++
+            }
+            let occ = 0;
+            lnk.forEach(l => {
+              occ++;
+              l.subfields.forEach(s => {
+                if (s.a) {
+                  let iid = bibItemMap[s.a];
+                  if (iid) {
+                    let hstr = JSON.stringify(h);
+                    let bwh = JSON.parse(hstr);
+                    bwh.instanceId = instMap[s.a];
+                    bwh.hrid = `${bwh.hrid}.${occ}`;
+                    bwh.id = uuid(bwh.hrid, ns);
+                    let o = {
+                      itemId: uuid(iid, ns),
+                      holdingsRecordId: bwh.id,
+                    };                
+                    o.id = uuid(o.holdingsRecordId, o.itemId);
+                    let ro = {
+                      superInstanceId: h.instanceId,
+                      subInstanceId: bwh.instanceId,
+                      instanceRelationshipTypeId: refData.instanceRelationshipTypes['bound-with']
+                    };
+                    ro.id = uuid(ro.superInstanceId + ro.subInstanceId, ns);
+                    console.log(ro);
+                    writeOut(outs.bwp, o);
+                    writeOut(outs.holdings, bwh);
+                    writeOut(outs.rel, ro);
+                    ttl.boundwiths++;
+                  }
+                }
+              });
+            });
+            bwseen[h.id] = 1;
+          }
+        } else if (!bwseen[h.id]) {
           console.log(`ERROR hrid ${hhrid} already used!`);
+          ttl.errors++;
         }
       } else {
         console.log(`ERROR location not found for "${loc}" (${hhrid})`);
@@ -381,12 +444,10 @@ try {
       ttl.errors++;
     }
   }
-  // throw(bwMap);
 
   /*
     This is the item creation section
   */
-
   
   vrecs = [];
 
@@ -491,7 +552,6 @@ try {
   csv = '';
   rc = 0;
   let bcseen = {};
-  let bwseen = {};
   for (let x in items) {
     let r = items[x];
     let iid = r.ITEM_ID;
@@ -554,31 +614,6 @@ try {
       if (i.materialTypeId) {
         if (i.permanentLoanTypeId) {
           writeOut(outs.items, i);
-          if (bwMap[iid]) {
-            /*
-            if (!bwseen[iid]) {
-              let mainBwp = {
-                id: uuid(i.holdingsRecordId, i.id),
-                holdingsRecordId: i.holdingsRecordId,
-                itemId: i.id
-              }
-              writeOut(outs.bwp, mainBwp);
-              ttl.boundwiths++;
-            }
-            */
-            bwMap[iid].forEach(hid => {
-              let bwp = {
-                id: uuid(hid, i.id),
-                holdingsRecordId: hid,
-                itemId: i.id
-              }
-              writeOut(outs.bwp, bwp);
-              ttl.boundwiths++;
-              bwseen[iid] = 1;
-              // console.log(bwp);
-            })
-            
-          }
         } else {
           console.log(`ERROR loantype not found for ${iid}`);
         }
