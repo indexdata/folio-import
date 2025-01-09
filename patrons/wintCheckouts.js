@@ -110,7 +110,7 @@ const outFiles = {
         console.log(`ERROR no user found for PATRON_ID ${pid}`);
         ttl.unf++;
       } else if (!item) {
-        // console.log(`ERROR no item found for barcode ${iid}`);
+        console.log(`ERROR no item found for barcode ${iid}`);
         ttl.inf++;
       } else if (item.st !== 'Available') {
         console.log(`ERROR item status for ${iid} is not available`);
