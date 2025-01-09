@@ -30,7 +30,11 @@ const groups = {
   "RB": "staff",
   "RS": "staff",
   "SL": "staff",
-  "YU": "staff"
+  "YU": "staff",
+  "ST": "staff",
+  "VO": "volunteer",
+  "VF": "fellow",
+  "SD": "student"
 }
 
 const files = {
