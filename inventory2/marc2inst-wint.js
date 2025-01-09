@@ -603,8 +603,18 @@ try {
     }
   }  
   // throw(imaps);
+  
+  // map suppressed ids
+  
+  const supMap = {};
+  let supData = fs.readFileSync(`${wdir}/suppressed.txt`, { encoding: 'utf8' });
+  supData.split(/\n/).forEach(l => {
+    let k = l.trim();
+    k = 'vtls' + k;
+    supMap[k] = 1;
+  });
+  // throw(supMap);
 
-  let t;
   let ttl = {
     count: 0,
     instances: 0,
@@ -852,15 +862,10 @@ try {
           let itype = typeMap[itypeCode];
           inst.instanceTypeId = refData.instanceTypes[itype] || refData.instanceTypes.uspecified;
         }
-        inst.discoverySuppress = false;
-        if (supp) {
-          let sf = (marc.fields[supp.tag]) ? marc.fields[supp.tag][0] : '';
-          if (sf) {
-            let val = getSubs(sf, supp.subfield);
-            if (val === supp.value) {
-              inst.discoverySuppress = true;
-            }
-          }
+        if (supMap[inst.hrid]) {
+          inst.discoverySuppress = true;
+        } else {
+          inst.discoverySuppress = false;
         }
         if (conf.catDate && conf.catDate.tag) {
           let t = conf.catDate.tag;
