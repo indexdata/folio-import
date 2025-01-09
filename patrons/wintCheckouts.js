@@ -125,7 +125,7 @@ const outFiles = {
         let dd = r.DUE_DATE;
         let ddate = new Date(dd);
         loan.dueDate = (ddate) ? ddate.toISOString() : '';
-        loan.servicePointId = spMap.readingroom;
+        loan.servicePointId = spMap.winterthur;
         if (r.RENEWAL_COUNT) loan.renewalCount = parseInt(r.RENEWAL_COUNT, 10);
         if (user.ex) loan.expirationDate = user.ex;
         writeOut(outFiles.co, loan);
