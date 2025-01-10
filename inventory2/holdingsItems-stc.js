@@ -6,7 +6,8 @@ import { parse } from 'csv-parse/sync';
 
 let confFile = process.argv[2];
 let bibMap = process.argv[3];
-let csvFile = process.argv[4];
+let cusFile = process.argv[4];
+let csvFile = process.argv[5];
 
 let refDir;
 let ns;
@@ -44,6 +45,25 @@ const cnTypeMap = {
   '6': 'cd70562c-dd0b-42f6-aa80-ce803d24d4a1',
   '7': '827a2b64-cbf5-4296-8545-130876e4dfc0',
   '8': '6caca63e-5651-4db6-9247-3205156e9699'
+};
+
+const ntypeMap = {
+  STAFF: 'Staff Note',
+  PONUMBER: 'PO Number',
+  PUBLIC: 'Public Note',
+  I_NUMBER: 'Invoice',
+  PRICE: 'Price',
+};
+
+const statMap = {
+  HOLDS: 'Awaiting pickup',
+  'LOST, LOST-CLAIM': 'Declared lost',
+  INPROCESS: 'In process (non-requestable)',
+  INTRANSIT: 'In transit',
+  LONGOVRDUE: 'Long missing',
+  'LOST-PAID': 'Lost and paid',
+  MISSING: 'Missing',
+  'AUCTION, DISCARD': 'Withdrawn'
 }
 
 const inotes = [];
@@ -54,46 +74,28 @@ const writeOut = (outStream, data, notJson, newLineChar) => {
   outStream.write(dataStr, 'utf8');
 };
 
-const dedupe = function (arr, props) {
-  let seen = {};
-  let newArr = [];
-  arr.forEach(a => {
-    let k = '';
-    if (props) {
-      props.forEach(p => {
-        k += '::' + a[p];
-      });
-    } else {
-      k = a;
-    }
-    if (!seen[k]) newArr.push(a);
-    seen[k] = 1;
-  });
-  return newArr;
-}
-
 const makeNote = function (text, type, staffOnly) {
   if (!type) throw new Error('Note type not found');
   const out = {
     note: text,
-    holdingsNoteTypeId: type,
+    itemNoteTypeId: type,
     staffOnly: staffOnly
   };
   return out;
 }
 
 try {
-  if (!csvFile) { throw "Usage: node holdingsItems-stc.js <conf_file> <bib_map> <pipe_delimited_item_file>" }
+  if (!csvFile) { throw "Usage: node holdingsItems-stc.js <conf_file> <bib_map> <custom_file> <pipe_delimited_item_file>" }
   let confDir = path.dirname(confFile);
   let confData = fs.readFileSync(confFile, { encoding: 'utf8' });
   let conf = JSON.parse(confData);
   ns = conf.nameSpace;
   refDir = conf.refDir.replace(/^\./, confDir);
   let prefix = conf.hridPrefix || '';
-  let hprefix = conf.hridPrefix + '';
-  let iprefix = conf.hridPrefix + 'i';
+  let hprefix = conf.hridPrefix + 'u';
+  let iprefix = conf.hridPrefix + 'ui';
   let wdir = path.dirname(csvFile);
-  let fn = path.basename(csvFile, '.jsonl');
+  let fn = path.basename(csvFile, '.txt', '.csv');
   let outBase = wdir + '/' + fn;
   for (let f in files) {
     let p = (f === 'err') ? outBase + '-' + f + '.mrc' : (f === 'idmap') ? outBase + '.map' : outBase + '-' + f + '.jsonl';
@@ -149,6 +151,8 @@ try {
             });
           } else {
             tsvMap[prop][k] = refData[prop][v];
+            if (!tsvMap.loantypes) tsvMap.loantypes = {};
+            tsvMap.loantypes[k] = refData.loantypes[c[2]];
           }
         });
       }
@@ -174,6 +178,26 @@ try {
   }
   // throw(instMap);
 
+  const custMap = {};
+  let fileStream = fs.createReadStream(cusFile);
+  let rl = readline.createInterface({
+    input: fileStream,
+    crlfDelay: Infinity
+  });
+  for await (let line of rl) {
+    let c = line.split(/\|/);
+    let k = c[0].trim();
+    let v;
+    try {
+      c[1] = c[1].replace(/&#124;./g, '');
+      v = JSON.parse(c[1]);
+    } catch (e) {
+      v = c[1];
+    }
+    custMap[k] = v;
+  }
+  // throw(JSON.stringify(custMap, null, 2));
+
   let start = new Date().valueOf();
 
   const showStats = () => {
@@ -196,21 +220,24 @@ try {
     skip_empty_lines: true,
     bom: true,
     delimiter: '|',
-    relax_column_count: true
+    relax_column_count: true,
+    trim: true
   });
   csv = '';
 
   let ttl = {
+    count: 0,
     holdings: 0,
     items: 0,
-    errors: 0
+    errors: 0,
+    item_errors: 0
   } 
   
   const occ = {};
-  const ic = {};
   const hseen = {};
   const bcseen = {};
   for (let r of inRecs) {
+    ttl.count++;
     if (process.env.DEBUG) console.log(r);
     let bid = r.CATKEY;
     let imap = instMap[bid];
@@ -219,9 +246,13 @@ try {
       ttl.errors++;
       continue;
     }
-    let loc = r.LOCATION.trim();
-    let cn = r.CALL_NUMBER || imap.cn;
-    let cnt = (r.CALL_NUMBER) ? refData.callNumberTypes['Other scheme'] : imap.cnt;
+    let iid = r.ITEM_ID;
+    let loc = r.LIBRARY + ':' + r.HOME_LOC;
+    let cn = r.BASE_CALL;
+    let cnt = (r.CALL_TYPE === 'LC') ? refData.callNumberTypes['Library of Congress classification'] : refData.callNumberTypes['Other scheme'];
+    let hsupp = (r.CALL_SHADOW === '1') ? true : false;
+    let isupp = (r.ITEM_SHADOW === '1') ? true : false;
+
     let hkey = bid+loc+cn;
     if (!occ[bid]) {
       occ[bid] = 1;
@@ -233,7 +264,7 @@ try {
       let hid = uuid(hhrid, ns);
       let locId = tsvMap.locations[loc];
       if (!locId) {
-        console.log(`ERROR location ID not found for "${loc}"`);
+        console.log(`ERROR location ID not found for "${loc}" (${iid})`);
         ttl.errors++;
         continue;
       }
@@ -243,12 +274,14 @@ try {
         instanceId: imap.id,
         permanentLocationId: locId,
         sourceId: refData.holdingsRecordsSources.FOLIO,
-        holdingsTypeId: typeId
+        holdingsTypeId: typeId,
+        discoverySuppress: hsupp
       }
       if (cn) {
         h.callNumber = cn;
         h. callNumberTypeId = cnt;
       }
+      if (process.env.DEBUG) console.log(h);
       writeOut(outs.holdings, h);
       hseen[hkey] = hid;
       occ[bid]++;
@@ -257,81 +290,101 @@ try {
 
     // items start here
 
-    if (!ic[bid]) {
-      ic[bid] = 1;
-    } else {
-      ic[bid]++;
+    if (!iid) {
+      console.log(`ITEM ERROR [${ttl.count}] ITEM_ID not found!`);
+      continue;
     }
-    let icStr = ic[bid].toString().padStart(3, '0');
-    let ihrid = iprefix + bid + '-' + icStr;
-    let iid = uuid(ihrid, ns);
+    let bar = r.ITEM_ID;
+    let enu = r.VOLUME;
+    let cop = r.COPY;
+    let pie = r.PIECES;
+    let anote = r.CREATED;
+    let idate = r.INVENTORY;
+    let status = r.CURR_LOC;
+    let itype = r.ITEM_TYPE;
+    let cust = custMap[iid];
+    let ihrid = iprefix + iid;
     let i = {
-      id: iid,
+      id: uuid(ihrid, ns),
       hrid: ihrid,
       holdingsRecordId: hseen[hkey],
       notes: [],
+      discoverySuppress: isupp
     }
-    if (r.BARCODE) {
-      if (!bcseen[r.BARCODE]) {
-        i.barcode = r.BARCODE;
-        bcseen[r.BARCODE] = 1;
+    if (bar) {
+      if (!bcseen[bar]) {
+        i.barcode = bar;
+        bcseen[bar] = 1;
       } else {
-        console.log(`WARN barcode ${r.BARCODE} already seen.`)
+        console.log(`WARN barcode ${bar} already seen.`)
       }
     }
-    if (r.UNITS) {
-      if (imap.blvl === 's') {
-        i.enumeration = r.UNITS;
+    if (enu) {
+      i.enumeration = r.UNITS;
+    }
+    if (anote) {
+      i.administrativeNotes = [ 'Symphony Date Created: ' + anote ];
+    }
+    if (idate) {
+      let t = refData.itemNoteTypes['Inventory Date']
+      let n = makeNote(idate, t, true);
+      i.notes.push(n);
+    }
+    if (cust) {
+      for (let k in cust) {
+        if (k === 'CIRCNOTE') {
+          i.circulationNotes = [];
+          let nocc = 0;
+          cust['CIRCNOTE'].forEach(n => {
+            if (n.D) {
+              let d = new Date().toISOString();
+              d = d.substring(0, 10);
+              [ 'Check in', 'Check out'].forEach(t => {
+                let o = {
+                  id: uuid(n.D + ihrid + nocc, ns),
+                  note: n.D,
+                  noteType: t,
+                  date: d
+                }
+                i.circulationNotes.push(o);
+                nocc++;
+              });
+            }
+          });
+        } else {
+          let tstr = ntypeMap[k];
+          let tid = refData.itemNoteTypes[tstr];
+          cust[k].forEach(n => {
+            let note = n.D;
+            if (note) {
+              let so = (k === 'STAFF') ? true : false;
+              let o = makeNote(note, tid, so);
+              i.notes.push(o);
+            }
+          });
+        }
+        
+      }
+    }
+    let st = statMap[status] || 'Available';
+    i.status = { name: st };
+    i.materialTypeId = tsvMap.mtypes[itype];
+    i.permanentLoanTypeId = tsvMap.loantypes[itype];
+    if (cop) i.copyNumber = cop;
+    if (pie) i.numberOfPieces = pie;
+    if (process.env.DEBUG) console.log(i);
+    if (i.materialTypeId) {
+      if (i.permanentLoanTypeId) {
+        writeOut(outs.items, i);
+        ttl.items++;
       } else {
-        i.volume = r.UNITS;
+        console.log(`ERROR ITEM loan type not found for "${itype}" (${iid})`);
+        ttl.item_errors++;
       }
+    } else {
+      console.log(`ERROR ITEM material type not found for "${itype}" (${iid})`);
+      ttl.item_errors++
     }
-    if (r.STAFF_NOTE) {
-      let o = {
-        note: r.STAFF_NOTE,
-        itemNoteTypeId: refData.itemNoteTypes.Note,
-        staffOnly: true
-      }
-      i.notes.push(o);
-    }
-    if (r.PUBLIC_NOTE) {
-      let o = {
-        note: r.PUBLIC_NOTE,
-        itemNoteTypeId: refData.itemNoteTypes.Note,
-        staffOnly: false
-      }
-      i.notes.push(o);
-    }
-    let cin = r.CHECKIN_NOTE;
-    let con = r.CHECKOUT_NOTE;
-    if (cin || con) {
-      let d = new Date().toISOString();
-      d = d.substring(0, 10);
-      i.circulationNotes = [];
-      if (cin) {
-        let o = {
-          id: uuid(cin + 'in' + ihrid, ns),
-          note: cin,
-          noteType: 'Check in',
-          date: d
-        }
-        i.circulationNotes.push(o);
-      }
-      if (con) {
-        let o = {
-          id: uuid(con + 'out' + ihrid, ns),
-          note: con,
-          noteType: 'Check out',
-          date: d
-        }
-        i.circulationNotes.push(o);
-      }
-    }
-    i.status = { name: 'Available' };
-    i.materialTypeId = refData.mtypes.Unspecified;
-    i.permanentLoanTypeId = refData.loantypes['Can circulate'];
-    writeOut(outs.items, i);
-    ttl.items++;
   }
 
   /*
