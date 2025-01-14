@@ -139,10 +139,11 @@ try {
       let phone = (f270) ? getSubs(f270[0], 'k') : '';
       let u = {
         id: uuid(ctrl, ns),
-        username: ctrl,
+        username: bc,
         patronGroup: groupId,
         active: true,
-        personal: {}
+        personal: {},
+        customFields: { previousSystemId: ctrl }
       };
       if (bc) {
         u.barcode = bc;
@@ -154,6 +155,7 @@ try {
         if (n[5]) u.personal.middleName = n[5];
       }
       if (f270) {
+        let ac = 0;
         f270.forEach(f => {
           let a = getSubsHash(f, true);
           if (a.a) {
@@ -164,15 +166,21 @@ try {
             if (a.b) o.city = a.b;
             if (a.d) o.region = a.d;
             if (a.e) o.postalCode = a.e;
-            o.addressTypeId = refData.addressTypes.Home;
-            u.personal.addresses.push(o);
+            if (ac === 0) {
+              o.addressTypeId = refData.addressTypes.Home;
+            } else {
+              o.addressTypeId = refData.addressTypes.Work;
+            }
+            if (ac < 2) u.personal.addresses.push(o);
+            ac++;
           }
         });
       }
       let f301 = f['301'];
       let aff = (f301) ? getSubs(f301[0], 'ad') : '';
+      
       if (aff) {
-        u.customFields = { affiliation: aff };
+        u.customFields.affiliation = aff;
       }
       if (email) u.personal.email = email;
       if (phone) u.personal.phone = phone;
