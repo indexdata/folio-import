@@ -15,6 +15,19 @@ const tsvMap = {};
 const outs = {};
 const seen = {};
 
+const dpoMap = {
+  a: 'Will reproduce',
+  b: 'Will not reproduce',
+  u: 'Unknown'
+};
+
+const rpoMap = {
+  "1": "Other general retention policy",
+  "2": "Retained except as replaced by updates",
+  "7": "Not retained",
+  "8": "Permanently retained",
+};
+
 const typeMap = {
   'a': 'text',
   'c': 'notated music',
@@ -48,13 +61,16 @@ const elRelMap = {
 }
 
 const files = {
-  holdings: 1
+  holdings: 1,
 };
 
 const hstats = {
-  '866': 'holdingsStatements',
-  '867': 'holdingsStatementsForSupplements',
-  '868': 'holdingsStatementsForIndexes',
+  '863abijw': 'holdingsStatements',
+  '866a': 'holdingsStatements',
+  '864abijw': 'holdingsStatementsForSupplements',
+  '867a': 'holdingsStatementsForSupplements',
+  '865abijw': 'holdingsStatementsForIndexes',
+  '868a': 'holdingsStatementsForIndexes',
 }
 
 const cnTypeMap = {
@@ -182,6 +198,10 @@ try {
   
   let wdir = path.dirname(rawFile);
   let fn = path.basename(rawFile, '.mrc');
+
+  let hmapFile = `${wdir}/holdings.map`;
+  if (fs.existsSync(hmapFile)) fs.unlinkSync(hmapFile);
+
   let outBase = wdir + '/' + fn;
   for (let f in files) {
     let p = (f === 'err') ? outBase + '-' + f + '.mrc' : (f === 'idmap') ? outBase + '.map' : outBase + '-' + f + '.jsonl';
@@ -287,6 +307,7 @@ try {
       let f = m.fields
       let hrid = (f['001']) ? f['001'][0] : '';
       let bid = (f['004']) ? f['004'][0] : '';
+      let bidClean = bid.replace(/^[a-z0]+/, '');
       let inst = instMap[bid];
       if (!inst) {
         console.log(`ERROR instanceId not found for ${bid}`);
@@ -310,29 +331,66 @@ try {
       if (inst.ea && inst.ea[0]) {
         h.electronicAccess = inst.ea;
       }
-      for (let tag in hstats) {
-        let prop = hstats[tag];
+      for (let k in hstats) {
+        let tag = k.substring(0, 3);
+        let codes = k.substring(3);
+        let prop = hstats[k];
         if (f[tag]) {
           if (!h[prop]) h[prop] = [];
           f[tag].forEach(ff => {
-            let subs = getSubsHash(ff, true);
-            let text = subs.a;
+            let subs = getSubs(ff, codes);
+            let text = subs;
             let pnote = subs.z;
             let snote = subs.x
             if (text) {
               let o = {
-                statement: text
+                note: text
               }
-              if (pnote) o.note = pnote;
+              // if (pnote) o.note = pnote;
               if (snote) o.staffNote = snote;
               h[prop].push(o);
             }
           });
         }
       }
-      console.log(h);
-      writeOut(outs.holdings, h);
-      ttl.holdings++;
+      h.administrativeNotes = [];
+      anotes.forEach(f => {
+        let t = f.substring(0,3);
+        let c = f.substring(3);
+        if (f[t]) {
+          f[t].forEach(x => {
+            let data = getSubs(x, c);
+            if (data) h.administrativeNotes.push(data);
+          });
+        }
+      });
+      h.notes = []
+      hnotes.forEach(o => {
+        let f = Object.keys(o)[0];
+        let t = f.substring(0,3);
+        let c = f.substring(3);
+        let type = o[f];
+        if (f[t]) {
+          f[t].forEach(x => {
+            let data = getSubs(x, c);
+            if (data) h.notes.push(data);
+          });
+        }
+      });
+      let f008 = (f['008']) ? f['008'][0] : '';
+      let dpo = f008.substring(21, 22);
+      let rpo = f008.substring(12, 13);
+      if (dpoMap[dpo]) h.digitizationPolicy = dpoMap[dpo];
+      if (rpoMap[rpo]) h.retentionPolicy = rpoMap[rpo];
+      if (process.env.DEBUG) console.log(h);
+      if (h.permanentLocationId) {
+        writeOut(outs.holdings, h);
+        let hkey = bidClean + loc + h.callNumber;
+        fs.writeFileSync(hmapFile, `${hkey}|${h.id}\n`, { flag: 'a' });
+        ttl.holdings++;
+      } else {
+        console.log(`ERROR no FOLIO location found for "${loc}"`);
+      }
     }
   });
   fileStream.on('close', () => {
