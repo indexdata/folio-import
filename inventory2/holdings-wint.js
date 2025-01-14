@@ -385,7 +385,7 @@ try {
       if (process.env.DEBUG) console.log(h);
       if (h.permanentLocationId) {
         writeOut(outs.holdings, h);
-        let hkey = bidClean + loc + h.callNumber;
+        let hkey = bidClean + ':' + h.permanentLocationId + ':' + h.callNumber;
         fs.writeFileSync(hmapFile, `${hkey}|${h.id}\n`, { flag: 'a' });
         ttl.holdings++;
       } else {

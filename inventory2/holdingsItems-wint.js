@@ -125,7 +125,7 @@ try {
   let hprefix = conf.hridPrefix + '';
   let iprefix = conf.hridPrefix + 'i';
   let wdir = path.dirname(csvFile);
-  let fn = path.basename(csvFile, '.jsonl');
+  let fn = path.basename(csvFile, '.csv', '.jsonl');
   let outBase = wdir + '/' + fn;
   for (let f in files) {
     let p = (f === 'err') ? outBase + '-' + f + '.mrc' : (f === 'idmap') ? outBase + '.map' : outBase + '-' + f + '.jsonl';
@@ -135,6 +135,22 @@ try {
   }
   // throw(files);
 
+  // map mfhd holdings (filename will always be holdings.map)
+  const hseen = {};
+  const hmapFile = wdir + '/holdings.map';
+  let fileStream = fs.createReadStream(hmapFile);
+  let rl = readline.createInterface({
+    input: fileStream,
+    crlfDelay: Infinity
+  });
+  for await (let line of rl) {
+    let c = line.split(/\|/);
+    let k = c[0];
+    let v = c[1];
+    hseen[k] = v;
+  }
+  // throw(hseen);
+  
   // map ref data
   let refFiles = fs.readdirSync(refDir);
   refFiles.forEach(f => {
@@ -239,7 +255,7 @@ try {
   
   const occ = {};
   const ic = {};
-  const hseen = {};
+  // const hseen = {};
   const bcseen = {};
   for (let r of inRecs) {
     let bid = r.BIB_ID;
@@ -250,9 +266,11 @@ try {
       continue;
     }
     let loc = r.LOCATION.trim();
+    let locId = tsvMap.locations[loc];
     let cn = r.CALL_NUMBER || imap.cn;
     let cnt = (r.CALL_NUMBER) ? refData.callNumberTypes['Other scheme'] : imap.cnt;
-    let hkey = bid+loc+cn;
+    let hkey = bid + ':' + locId + ':' + cn;
+    console.log(hkey);
     if (!occ[bid]) {
       occ[bid] = 1;
     }
@@ -261,7 +279,6 @@ try {
       let occStr = occ[bid].toString().padStart(3, '0');
       let hhrid = hprefix + bid + '-' + occStr;
       let hid = uuid(hhrid, ns);
-      let locId = tsvMap.locations[loc];
       if (!locId) {
         console.log(`ERROR location ID not found for "${loc}"`);
         ttl.errors++;
