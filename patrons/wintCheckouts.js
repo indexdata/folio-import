@@ -53,7 +53,8 @@ const outFiles = {
     const users = {};
     for await (let line of rl) {
       let o = JSON.parse(line);
-      let k = o.username.replace(/^vtls0+/, '');
+      console.log(o);
+      let k = (o.customFields && o.customFields.previousSystemId) ? o.customFields.previousSystemId.replace(/^vtls0+/, '') : '';
       users[k] = { bc: o.barcode, active: o.active, ex: o.expirationDate || '' };
     }
     // throw(users);
