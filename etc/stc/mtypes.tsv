@@ -1,0 +1,21 @@
+Legacy material type code (from item record)	Folio material type name or ID	Loan Type	
+28DAYEQUIP	28DAY-ITEM	High Value	Item checks out for 28 days
+2DAYEQUIP	2DAY-ITEM	High Value	Item checks out for 2 days
+2HREQUIP	2HR-ITEM	Default	Item checks out for 2 hours
+2HRSPACE	2HR-ITEM	Default	Item checks out for 2 hours
+3DAYEQUIP	3DAY-ITEM	High Value	Item checks out for 3 days
+3HREQUIP	3HR-ITEM	Default	Item checks out for 3 hours
+4HREQUIP	4HR-ITEM	Default	Item checks out for 4 days
+7DAYEQUIP	7DAY-ITEM	High Value	Item checks out for 7 days
+AV-ITEM	AV-ITEM	Default	Audiovisual item
+BOOK	BOOK	Default	Book
+CLE-ITEM	CLE-ITEM	Default	CLE item
+DAYUSEEQUP	DAYUSE-ITEM	High Value	Item checks out for day
+EBOOK	EBOOK	Default	Electronic book
+ILL-ITEM	ILL-ITEM	High Value	Interlibrary loan item
+OTHER	OTHER	Default	Non-standard items
+RSV-ITEM	RSV-ITEM	Course Reserve	Reserve item owned by instructor
+SEM-ITEM	SEM-ITEM	Default	Item checks out for semester
+SEMEQUIP	SEM-ITEM	High Value	Item checks out for semester
+SEMEXTEND	SEMEXTEND-ITEM	High Value	Item checks out for semester + intersession
+SERIAL	SERIAL	Default	Journal or magazine
