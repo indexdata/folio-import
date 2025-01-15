@@ -902,11 +902,11 @@ try {
           callNumberType: bibCallNum.type,
           blvl: blvl,
           type: itypeCode,
-          ea: inst.electronicAccess,
+          ea: inst.electronicAccess || '',
           cat: (marc.fields['007']) ? marc.fields['007'][0].substring(0, 1) : ''
         }
         if (idmap) {
-          let instMap = `${inst.hrid}|${inst.id}|${bibCallNum.value}|${bibCallNum.type}|${blvl}|${ea}|${itypeCode}`;
+          let instMap = `${inst.hrid}|${inst.id}|${bibCallNum.value}|${bibCallNum.type}|${blvl}|${ea}|${itypeCode}|${seen[inst.hrid].cat}`;
           writeOut(outs.idmap, instMap, true, '\n');
         }
         if (iconf) {

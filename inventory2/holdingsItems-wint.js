@@ -115,7 +115,7 @@ const makeNote = function (text, type, staffOnly) {
 }
 
 try {
-  if (!csvFile) { throw "Usage: node holdingsItems-wint.js <conf_file> <bib_map> <mfhd_jsonl_file>" }
+  if (!csvFile) { throw "Usage: node holdingsItems-wint.js <conf_file> <bib_map> <items_csv_file>" }
   let confDir = path.dirname(confFile);
   let confData = fs.readFileSync(confFile, { encoding: 'utf8' });
   let conf = JSON.parse(confData);
@@ -270,7 +270,6 @@ try {
     let cn = r.CALL_NUMBER || imap.cn;
     let cnt = (r.CALL_NUMBER) ? refData.callNumberTypes['Other scheme'] : imap.cnt;
     let hkey = bid + ':' + locId + ':' + cn;
-    console.log(hkey);
     if (!occ[bid]) {
       occ[bid] = 1;
     }
@@ -375,9 +374,19 @@ try {
       }
     }
     i.status = { name: 'Available' };
-    i.materialTypeId = refData.mtypes.Unspecified;
-    i.permanentLoanTypeId = refData.loantypes['Can circulate'];
-    writeOut(outs.items, i);
+    let btype = imap.type;
+    let mtypeId = imaps.types[btype] || refData.mtypes.Unspecified;
+    i.materialTypeId = mtypeId;
+    i.permanentLoanTypeId = refData.loantypes['Standard'];
+    if (i.materialTypeId) {
+      if (i.permanentLoanTypeId) {
+        writeOut(outs.items, i);
+      } else {
+        console.log(`ERROR ITEM loan type not found for "Standard"`);
+      }
+    } else {
+      console.log(`ERROR ITEM material type not found for "${btype}"`);
+    }
     ttl.items++;
   }
 
