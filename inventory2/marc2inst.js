@@ -758,7 +758,7 @@ try {
         }
         if (inst.instanceTypeId === refData.instanceTypes.unspecified) {
           let itype = typeMap[itypeCode];
-          if (itype) inst.instanceTypeId = refData.instanceTypes[itype] || refData.instanceTypes.uspecified;
+          if (itype) inst.instanceTypeId = refData.instanceTypes[itype] || refData.instanceTypes.unspecified;
         }
         inst.discoverySuppress = false;
         if (supp) {

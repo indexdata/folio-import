@@ -32,7 +32,7 @@ const typeMap = {
   'm': 'computer program',
   'o': 'other',
   'p': 'other',
-  'r': 'three-dimensional form"',
+  'r': 'three-dimensional form',
   't': 'text',
 }
 
@@ -56,8 +56,6 @@ const files = {
   srs: 1,
   snapshot: 1,
   presuc: 1,
-  holdings: 1,
-  items: 1,
   err: 1
 };
 
@@ -657,11 +655,11 @@ try {
       let marc = {};
       let bibCallNum = { value: '', type: ''};
       try { 
-        marc = parseMarc(r)
+        marc = parseMarc(r);
       } catch(e) {
         console.log(e);
-        ttl.errors++;
-        writeOut(outs.err, r, true);
+        // ttl.errors++;
+        // writeOut(outs.err, r, true);
         continue;
       }
 
@@ -745,6 +743,7 @@ try {
       if (marc.fields.leader) {
         marc.fields.leader = marc.fields.leader.replace(/^(.....)   /, '$1cam');
         marc.fields.leader = marc.fields.leader.replace(/....$/, '4500');
+        marc.fields.leader = marc.fields.leader.replace(/^(......)b/, '$1k');
       }
 
       let instId = (hrid) ? uuid(hrid, ns) : '';
@@ -858,9 +857,9 @@ try {
             }
           }
         }
-        if (inst.instanceTypeId === refData.instanceTypes.unspecified) {
+        if (inst.instanceTypeId === refData.instanceTypes.unspecified || !inst.instanceTypeId) {
           let itype = typeMap[itypeCode];
-          inst.instanceTypeId = refData.instanceTypes[itype] || refData.instanceTypes.uspecified;
+          inst.instanceTypeId = refData.instanceTypes[itype] || refData.instanceTypes.unspecified;
         }
         if (supMap[inst.hrid]) {
           inst.discoverySuppress = true;
@@ -929,7 +928,7 @@ try {
 
       if (ttl.count % 10000 === 0) {
         let now = new Date().valueOf();
-        t = (now - start) / 1000;
+        let t = (now - start) / 1000;
         console.log('Records processed', ttl.count, `${t} secs.`);
       } 
     };
