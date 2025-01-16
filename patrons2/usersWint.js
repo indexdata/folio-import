@@ -132,7 +132,7 @@ try {
       let enDate = (f42) ? getSubs(f42[0], 'a') : '';
       let exDate = (f42) ? getSubs(f42[0], 'b') : '';
       let f100 = f['100'];
-      let name = (f100) ? getSubs(f100[0], 'a') : '';
+      let name = (f100) ? getSubs(f100[0], 'a') : (f['110']) ? getSubs(f['110'][0], 'a') : '';
       let f271 = f['271'];
       let email = (f271) ? getSubs(f271[0], 'a') : '';
       let f270 = f['270'];
@@ -150,7 +150,7 @@ try {
       }
       if (name) {
         let n = name.match(/^(.+?)(, (.+?)( (.+))?)?$/);
-        u.personal.lastName = n[1];
+        u.personal.lastName = n[1] || name;
         if (n[3]) u.personal.firstName = n[3];
         if (n[5]) u.personal.middleName = n[5];
       }
@@ -187,7 +187,7 @@ try {
       if (enDate) u.enrollmentDate = dform(enDate);
       if (exDate) u.expirationDate = dform(exDate);
       if (process.env.DEBUG) console.log(JSON.stringify(u, null, 2));
-      if (u.personal.lastName, u.username) {
+      if (u.personal.lastName && u.username) {
         writeOut(files.users, u);
         ttl.users++;
       

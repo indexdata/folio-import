@@ -2,7 +2,6 @@ const fs = require('fs');
 const path = require('path');
 const { parse } = require('csv-parse/sync');
 const readline = require('readline');
-const { dir } = require('console');
 
 let circFile = process.argv[2];
 
@@ -53,7 +52,6 @@ const outFiles = {
     const users = {};
     for await (let line of rl) {
       let o = JSON.parse(line);
-      console.log(o);
       let k = (o.customFields && o.customFields.previousSystemId) ? o.customFields.previousSystemId.replace(/^vtls0+/, '') : '';
       users[k] = { bc: o.barcode, active: o.active, ex: o.expirationDate || '' };
     }
