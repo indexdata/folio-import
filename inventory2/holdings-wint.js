@@ -183,7 +183,7 @@ const makeHoldingsMfhds = function (fields) {
     });
     return h;
   } else {
-    console.log(`ERROR instanceId not found for holdings ${hrid}`);
+    console.log(`ERROR instanceId not found for holdings "${hrid}"`);
     return '';
   }
 }
@@ -310,7 +310,7 @@ try {
       let bidClean = bid.replace(/^[a-z0]+/, '');
       let inst = instMap[bid];
       if (!inst) {
-        console.log(`ERROR instanceId not found for ${bid}`);
+        console.log(`ERROR instanceId not found for "${bid}"`);
         ttl.errors++;
         continue;
       }

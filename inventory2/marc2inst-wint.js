@@ -56,6 +56,7 @@ const files = {
   srs: 1,
   snapshot: 1,
   presuc: 1,
+  relationships: 1,
   err: 1
 };
 
@@ -619,6 +620,7 @@ try {
     snapshots: 0,
     srs: 0,
     presuc: 0,
+    relationships: 0,
     errors: 0
   }
   if (iconf) {
@@ -905,8 +907,21 @@ try {
           cat: (marc.fields['007']) ? marc.fields['007'][0].substring(0, 1) : ''
         }
         if (idmap) {
+          bibCallNum.value = bibCallNum.value.replace(/\|/, ' ');
           let instMap = `${inst.hrid}|${inst.id}|${bibCallNum.value}|${bibCallNum.type}|${blvl}|${ea}|${itypeCode}|${seen[inst.hrid].cat}`;
           writeOut(outs.idmap, instMap, true, '\n');
+        }
+        let f004 = marc.fields['004'];
+        if (f004) {
+          let superInst = f004[0];
+          superInst = superInst.replace(/ .+$/, '');
+          let o = {
+            superInstanceId: uuid(superInst, ns),
+            subInstanceId: inst.id,
+            instanceRelationshipTypeId: refData.instanceRelationshipTypes['bound-with']
+          }
+          writeOut(outs.relationships, o);
+          ttl.relationships++;
         }
         if (iconf) {
           let itag = iconf.tag;
@@ -941,7 +956,7 @@ try {
     if (t > 60) ttl['time (mins)'] = t / 60;
     for (let x in ttl) {
       let l = x.substring(0,1).toUpperCase() + x.substring(1);
-      l = l.padEnd(12);
+      l = l.padEnd(13);
       let n = ttl[x].toString().padStart(8);
       console.log(l, ':', n);
     }

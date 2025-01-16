@@ -187,8 +187,9 @@ try {
         dat.split(/\n/).forEach(l => {
           let c = l.split(/\t/);
           let k = (prop === 'locations') ? c[1] : c[0];
-          let v = c[2];
-          tsvMap[prop][k] = refData[prop][v];
+          k = k.trim();
+          let v = c[2].trim();
+          if (v) tsvMap[prop][k] = refData[prop][v];
         });
       }
     });
