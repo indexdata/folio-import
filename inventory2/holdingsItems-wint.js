@@ -215,13 +215,11 @@ try {
       let k = c[0].replace(/^[a-z0]+/, '');
       c[2] = c[2].replace(/^\^\^/, '');
       let ea = (c[5]) ? JSON.parse(c[5]) : [];
-      let o = { id: c[1], cn: c[2], cnt: c[3], blvl: c[4], type: c[6], ea: ea }; 
+      let o = { id: c[1], cn: c[2], cnt: c[3], blvl: c[4], type: c[6], cat: c[7], ea: ea }; 
       instMap[k] = o;
     }
   }
   // throw(instMap);
-
-  
 
   let start = new Date().valueOf();
 
@@ -375,7 +373,8 @@ try {
     }
     i.status = { name: 'Available' };
     let btype = imap.type;
-    let mtypeId = imaps.types[btype] || refData.mtypes.Unspecified;
+    let ctype = imap.cat;
+    let mtypeId = imaps.cats[ctype] || imaps.types[btype] || refData.mtypes.Unspecified;
     i.materialTypeId = mtypeId;
     i.permanentLoanTypeId = refData.loantypes['Standard'];
     if (i.materialTypeId) {
