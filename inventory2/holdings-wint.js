@@ -310,7 +310,7 @@ try {
       let bidClean = bid.replace(/^[a-z0]+/, '');
       let inst = instMap[bid];
       if (!inst) {
-        console.log(`ERROR instanceId not found for "${bid}"`);
+        console.log(`ERROR instanceId not found for "${bid}" (${hrid})`);
         ttl.errors++;
         continue;
       }
@@ -389,7 +389,8 @@ try {
         fs.writeFileSync(hmapFile, `${hkey}|${h.id}\n`, { flag: 'a' });
         ttl.holdings++;
       } else {
-        console.log(`ERROR no FOLIO location found for "${loc}"`);
+        console.log(`ERROR no FOLIO location found for "${loc}" (${hrid})`);
+        ttl.errors++;
       }
     }
   });

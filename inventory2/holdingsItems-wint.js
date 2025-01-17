@@ -247,9 +247,11 @@ try {
   csv = '';
 
   let ttl = {
+    count: 0,
     holdings: 0,
     items: 0,
-    errors: 0
+    errors: 0,
+    itemErrors: 0
   } 
   
   const occ = {};
@@ -257,6 +259,7 @@ try {
   // const hseen = {};
   const bcseen = {};
   for (let r of inRecs) {
+    ttl.count++;
     let bid = r.BIB_ID;
     let imap = instMap[bid];
     if (!imap) {
@@ -280,6 +283,7 @@ try {
       if (!locId) {
         console.log(`ERROR location ID not found for "${loc}"`);
         ttl.errors++;
+        ttl.itemErrors++;
         continue;
       }
       let h = {
@@ -381,13 +385,15 @@ try {
     if (i.materialTypeId) {
       if (i.permanentLoanTypeId) {
         writeOut(outs.items, i);
+        ttl.items++;
       } else {
         console.log(`ERROR ITEM loan type not found for "Standard"`);
+        ttl.itemErrors++;
       }
     } else {
       console.log(`ERROR ITEM material type not found for "${btype}"`);
+      ttl.itemErrors++;
     }
-    ttl.items++;
   }
 
   /*
