@@ -316,7 +316,7 @@ try {
           }
           o.relationshipId = rid;
         });
-        h.electronicAccess.push(o);
+        if (o.uri) h.electronicAccess.push(o);
       });
     }
 
@@ -364,8 +364,15 @@ try {
           hseen[ctrl] = h.id;
           let lnk = m['014'];
           if (lnk) {
+            for (let x = 0; x < lnk.length; x++) {
+              let sa = lnk[x].subfields[0].a;
+              if (!sa.match(/^\d+$/)) {
+                lnk.splice(x, 1);
+                x--;
+              }
+            }
             let iid = bibItemMap[bhrid];
-            if (iid) {
+            if (iid && lnk[0]) {
               let o = {
                 itemId: uuid(iid, ns),
                 holdingsRecordId: h.id
