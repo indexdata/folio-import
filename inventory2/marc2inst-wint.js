@@ -234,7 +234,7 @@ const funcs = {
   }
 }
 
-const applyRules = function (ent, field, allFields) {
+const applyRules = function (ent, field, allFields, t) {
   let data = '';
   let aoc = ent.applyRulesOnConcatenatedData || false;
   let dls = ent.subFieldDelimiter || '';
@@ -256,7 +256,7 @@ const applyRules = function (ent, field, allFields) {
           let dl = d.value;
           let subcodes = d.subfields.join('');
           let part = getSubs(field, subcodes, dl);
-          if (part) {
+          if (subcodes && part) {
             if (dparts[0]) part = dl + part;
             dparts.push(part);
           }
@@ -320,7 +320,7 @@ const applyRules = function (ent, field, allFields) {
   return out;
 }
 
-const makeInst = function (map, field, allFields) {
+const makeInst = function (map, field, allFields, t) {
   let ff = {};
   let data;
   let fsubs = field.subfields;
@@ -350,7 +350,7 @@ const makeInst = function (map, field, allFields) {
       ar = true;
     }
     if (ar) {
-      data = applyRules(e, field, allFields);
+      data = applyRules(e, field, allFields, t);
       ff[data.prop] = data;
     }
   }
@@ -819,7 +819,9 @@ try {
                 actFields.push(f);
               }
               actFields.forEach(af => {
-                let ff = makeInst(mr, af, f);
+                let ff = makeInst(mr, af, f, t);
+                if (t === '610') {
+                }
                 let obj = {};
                 let root = '';
                 for (let prop in ff) {

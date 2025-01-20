@@ -223,7 +223,7 @@ const applyRules = function (ent, field, allFields) {
           let dl = d.value;
           let subcodes = d.subfields.join('');
           let part = getSubs(field, subcodes, dl);
-          if (part) {
+          if (subcodes && part) {
             if (dparts[0]) part = dl + part;
             dparts.push(part);
           }
