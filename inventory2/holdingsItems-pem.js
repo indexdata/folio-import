@@ -11,6 +11,7 @@ let mfhdFile = process.argv[3];
 let ns;
 const refData = {};
 const tsvMap = {};
+const suppMap = {};
 const outs = {};
 
 const typeMap = {
@@ -153,6 +154,14 @@ try {
     });
   }
   // throw(tsvMap);
+
+  // make suppress map
+  let supFile = `${wdir}/mfhd_suppress.csv`;
+  let supData = fs.readFileSync(supFile, { encoding: 'utf8' });
+  supData.split(/\n/).forEach(l => {
+    suppMap[l] = 1;
+  });
+  // throw(suppMap);
   
   const instMap = {};
   if (conf.makeInstMap) {
@@ -276,7 +285,8 @@ try {
       hrid: hhrid,
       sourceId: refData.holdingsRecordsSources.FOLIO,
       holdingsTypeId: typeId,
-      formerIds: [ ctrl ]
+      formerIds: [ ctrl ],
+      discoverySuppress: (suppMap[ctrl]) ? true : false
     }
     h.instanceId = instMap[bhrid];
     h.permanentLocationId = tsvMap.locations[loc] || '';
