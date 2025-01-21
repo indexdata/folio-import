@@ -659,7 +659,12 @@ try {
       if (marc.fields.leader) {
         marc.fields.leader = marc.fields.leader.replace(/^(.....)   /, '$1cam');
         marc.fields.leader = marc.fields.leader.replace(/....$/, '4500');
-        marc.fields.leader = marc.fields.leader.replace(/(^......)p/, '$1t');
+        if (marc.fields.leader.match(/^......p/)) {
+          marc.fields.leader = marc.fields.leader.replace(/(^......)p/, '$1t');
+          if (marc.fields['008']) {
+            marc.fields['008'][0] = marc.fields['008'][0].replace(/^(.{29})      /, '$1||||||');
+          }
+        } 
       }
 
       seen[hrid] = 1;
