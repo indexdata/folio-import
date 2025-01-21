@@ -659,6 +659,7 @@ try {
       if (marc.fields.leader) {
         marc.fields.leader = marc.fields.leader.replace(/^(.....)   /, '$1cam');
         marc.fields.leader = marc.fields.leader.replace(/....$/, '4500');
+        marc.fields.leader = marc.fields.leader.replace(/(^......)p/, '$1t');
       }
 
       seen[hrid] = 1;
