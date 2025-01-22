@@ -326,14 +326,65 @@ try {
   let bcseen = {};
   for (let x in items) {
     let r = items[x];
-    console.log(r);
-    let iid = r.ITEM_ID;
+    if (dbug) console.log(r);
+    let iid = r.item_record_num;
     let id = uuid(iid, ns);
     let hrid = iprefix + iid;
-    let m = mmap[iid];
-    let vhid = (m) ? m.MFHD_ID : '';
-    let hid = hseen[vhid];
-    if (hid) {
+    let bid = r.bib_record_num;
+    let instId = instMap[bid];
+    let itype = r.itype_code;
+    let lcode = r.location_code;
+    let locId = tsvMap.locations[lcode];
+    let scode = r.item_status_code;
+    let copy = r.copy_num;
+    let cn = r.call_num;
+    let cnt = r.call_num_type;
+    let bc = r.barcode;
+    let supp = r.is_suppressed;
+    let hkey = `${bid}:${lcode}:${cn}`;
+    let hid = hseen[hkey];
+    if (!hid) {
+      if (occ[bid]) {
+        occ[bid]++;
+      } else {
+        occ[bid] = 1;
+      }
+      let occStr = occ[bid].toString().padStart(3, '0');
+      let hrid = hprefix + bid + '-' + occStr;
+      let h = {
+        _version: 1,
+        id: uuid(hrid, ns),
+        hrid: hrid,
+        instanceId: instId.id,
+        permanentLocationId: locId,
+        sourceId: refData.holdingsRecordsSources.FOLIO,
+      };
+      if (cn) {
+        cnt = ('Library of Congress') ? 'Library of Congress classification' : 'Other scheme';
+        let cntId = refData.callNumberTypes[cnt];
+        if (!cntId) throw new Error(`ERROR callNumberTypeId not found for "${cnt}"`);
+        h.callNumber = cn;
+        h.callNumberTypeId = cntId;
+      }
+      if (h.instanceId) {
+        if (h.permanentLocationId) {
+          if (h.sourceId) {
+            writeOut(outs.holdings, h);
+            ttl.holdings++;
+          } else {
+            console.log(`ERROR holdings sourceId not found (${hid})!`);
+          }
+        } else {
+          console.log(`ERROR holdings locationId not found for "${lcode} (${hid})"!`);
+        }
+      } else {
+        console.log(`ERROR holdings instanceId not found for "${bid} (${hid})"!`);
+      }
+      if (dbug) console.log(h);
+      hseen[hkey] = h.id;
+      console.log(h);
+    }
+    if (0) {
       let i = {
         _version: 1,
         id: id,
