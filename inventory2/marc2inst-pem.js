@@ -662,7 +662,7 @@ try {
         if (marc.fields.leader.match(/^......p/)) {
           marc.fields.leader = marc.fields.leader.replace(/(^......)p/, '$1t');
           if (marc.fields['008']) {
-            marc.fields['008'][0] = marc.fields['008'][0].replace(/^(.{29})      /, '$1||||||');
+            marc.fields['008'][0] = marc.fields['008'][0].replace(/^(.{29})      /, '$1000 0|');
           }
         } 
       }
