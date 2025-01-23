@@ -1,0 +1,23 @@
+Legacy item status code	Legacy item status name	Unsuppresed Item Count	Suppressed Item Count	FOLIO item status	Notes						
+-	AVAILABLE	204,886	1223	Available							
+o	LIB USE ONLY	46851	253	Restricted	Restricted maybe? (Change label to "library use only")	**Look into loan type 					FOLIO Statuses:
+n	BILLED	304	295	Not migrating	This is system generated for when a bill is sent						Aged to Lost
+l	LOST IN CIRC	51	6	Unavailable	Not migrating						Available
+m	MISSING	36	11	Missing	Not migrating						Awaiting delivery 
+a	IN STORAGE	36	588	Restricted	 						Awaiting pickup
+$	LOST AND PAID	17	21	Lost and paid	Not migrating						Checked out
+z	CLMS RETD	11	2	Claimed returned	Not migrating						Claimed returned
+NULL	NULL	5	5		items with no status which is error						Declared lost
+t	IN TRANSIT	3		In transit	Another system generated status that we don't really use						In process
+s	ON SEARCH	3	23	Unavailable							In process (non-requestable)
+c	IN CATALOGING	2	117	In process (non-requestable)							Intellectual item
+d	DAMAGED	2		Restricted							In transit
+											Lost and paid
+											Missing
+											On order
+											Order closed
+											Paged
+											Unavailable
+											Unknown
+											Restricted
+											Withdrawn 

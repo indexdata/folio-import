@@ -1,0 +1,38 @@
+Legacy Code	Legacy Name	Current iType (Unsuppressed)	Current itype (Suppressed)	Save itype (Unsuppressed)	Perm Type (Unsuppressed)	Perm Type (Suppressed)	FOLIO Name	Notes
+7	2 hour reserve	350	689	158	Keep	Keep	2 Hour Reserve	
+5	24 hour reserve	25	89	75	Keep	Keep	24 Hour Reserve	
+9	3 day reserve	18	22	5	Keep	Keep	3 Day Reserve	
+8	3 hour reserve	233	116	9	Keep	Keep	3 Hour Reserve	
+24	Archives	2508	19	0	Keep	Keep	Archival Materials	
+3	Videocassette/DVD	4490	677	214	Keep	Keep	DVD	Use Libcal
+17	Government Document	69629	267	0	Keep	Keep	Government Document	
+31	Library of Things	196	17	2	Keep	Keep	Library of Things	
+1	Compact Disc,Recording	4662	1	15	Keep	Keep	Music CD	
+23	Irish Government Documents	3866	33	0	Merge	Merge	Archival Materials	
+0	Main Collection	156,917	483	312	Merge	Merge	Book	
+6	Restricted	99	8	0	Merge	Merge	Book	Use location
+12	Reference	5195	1	9	Merge	Merge	Book	Use location
+15	Curriculum collection	2708	19	5	Merge	Merge	Book	
+18	Office	65	5	0	Merge	Merge	Book	Use location
+26	Popular Reading	930	13	2	Merge	Merge	Book	Use location
+10	Microfilm	238	0	0	Merge	Merge	Microform	
+11	Microfiche	4	0	0	Merge	Merge	Microform	
+13	Current Periodicals	0	0	6	Keep	Keep	Current Periodicals	
+					New Type	New Type	Print Journal	
+2	Cassette, recording	0	0	0	Purge	Purge		
+4	Media kit	0	0	0	Purge	Purge		
+14	Bound Periodicals	9	0	0	Purge	Purge		
+16	Circ. Desk Reserve	2	0	0	Purge	Purge		
+19	Jackdaw	0	1	0	Purge	Purge		
+20	ILL	0	0	0	Purge	Purge		
+21	CD-ROM	56	0	0	Purge	Purge		
+22	Room Bookings	0	0	0	Purge	Purge		
+25	Study Rooms	0	12	0	Purge	Purge		
+27	eReaders	0	17	3	Purge	Purge		
+28	eBooks	1	60	0	Purge	Purge		
+29	iPads - IT	0	0	0	Purge	Purge		
+30	IT - Standard Loan	1	0	0	Purge	Purge		
+32	Career Center Clothing	0	0	0	Purge	Purge		
+	Totals	252,202	2549	815				
+								
+KEY	itypes added after mapping meeting							

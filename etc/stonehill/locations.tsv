@@ -1,0 +1,139 @@
+Location Code	Location Name	MFHD Loc (Unsuppressed) 	Item Loc (Unsuppressed)	MFHD Loc (Suppressed)	Item Loc (Suppressed)	Item Save Loc (Unsuppressed)	Item Save Loc (Suppressed)	Unsuppressed	Suppressed	FOLIO Location Name	FOLIO Location Code	Library	FOLIO service point	Note
+arrbk	Rare Books		30		1			Keep	Keep	Archives	arc	Archives		
+mecdr	CD-ROMs		65					Keep	Keep	CD-ROMs	cd	MacPhaidin Library		
+mnrfa	Citation/Dictionary Shelf		23					Keep	Keep	Citation/Dictionary Shelf	cdic	MacPhaidin Library		
+arstk	College Archives		10		3			Keep	Keep	College Archives	ca	Archives		
+ccstk	Curriculum Coll Stacks		2739		17	5		Keep	Keep	Curriculum Collection	cc	MacPhaidin Library		
+medvd	DVDs - 1st Floor Media Collection		4435		81	202	1	Keep	Keep	DVDs	dvd	MacPhaidin Library		
+eeper	ejournal	170,559						Purge	Purge	ejournal	ej	MacPhaidin Library		
+gdstk	Government Document Stacks		37962		169			Keep	Keep	Government Documents	gdc	MacPhaidin Library		
+gdfch	Government Documents Microfiche		31237		7			Keep	Keep	Government Documents Microfiche	gdm	MacPhaidin Library		
+gdgds	Gov Docs Storage		305					Keep	Keep	Government Documents Storage	gds	MacPhaidin Library		
+arhon	Honig Collection		563					Keep	Keep	Honig Collection	hc	MacPhaidin Library		
+iastk	Intercultural Affairs		216		1			Keep	Keep	Intercultural Affairs	ia	Intercultural Affairs?		
+irfch	Irish Docs Fiche		1003		20			Keep	Keep	Irish Docs Fiche	idf	MacPhaidin Library		
+peprs	Journals - Storage	1	204					Keep	Keep	Journals Storage	js	MacPhaidin Library		
+mnpop	Leisure Reading		916		13	2		Keep	Keep	Leisure Reading	lr	MacPhaidin Library		
+ltstk	Library of Things		202		7	2		Keep	Keep	Library of Things	lot	MacPhaidin Library		
+mnstk	Main Stacks - MacPhaidin	2	151745	58	448	399	1	Keep	Keep	Main Stacks - MacPhaidin	ms	MacPhaidin Library		
+arpiu	Sr.M.Marchione Coll. on PiusXII		620					Keep	Keep	Marchione Collection	mc	Archives		
+mpstk	Martin Papers - Archives		451					Keep	Keep	Martin Papers - Archives	mrtp	Archives		
+mecad	Compact Discs		4,659					Keep	Keep	Music CDs	mcd	MacPhaidin Library		
+nvstk	Novak Papers - Archives		587		15			Keep	Keep	Novak Papers - Archives	nvkp	Archives		
+mnsto	Oversize Stacks		4,133	1	8	6		Keep	Keep	Oversize Stacks	ovs	MacPhaidin Library		
+peper	Journals - Stacks	325	10	9				Keep	Keep	Print Journals	pj	MacPhaidin Library		
+restk	Reference Stacks	2	5159	171	2	7		Keep	Keep	Reference	ref	MacPhaidin Library		
+mnspc	Special Collections		13					Keep	Keep	Special Collections	spc	MacPhaidin Library		
+tlstk	Teaching & Learning - 1st Floor		665		5			Keep	Keep	Teaching & Learning	tl	MacPhaidin Library		
+shstk	William Rossi Collection		264		1			Keep	Keep	William Rossi Collection	wrc	MacPhaidin Library		
+irdoc	Irish Documents		2,812		13			Merge	Merge	Irish Documents	ird	MacPhaidin Library		
+irrbc	Irish Rare Book		65		7			Merge	Merge	Irish Documents	ird	MacPhaidin Library		
+irref	Irish Docs Reference		62					Merge	Merge	Irish Documents	ird	MacPhaidin Library		
+gdgof	Gov Docs Office		76					Merge	Merge	Office	ofc	MacPhaidin Library		
+mnaqs	See Acquisition Librarian		27		5			Merge	Merge	Office	ofc	MacPhaidin Library		
+mnofc	Cataloging Office		117		97			Merge	Merge	Office	ofc	MacPhaidin Library		
+mnofd	Director's Office		11					Merge	Merge	Office	ofc	MacPhaidin Library		
+mnoff	Library Office		13					Merge	Merge	Office	ofc	MacPhaidin Library		
+mnofp	Periodicals Office		10					Merge	Merge	Office	ofc	MacPhaidin Library		
+mnofr	Reference Office		6					Merge	Merge	Office	ofc	MacPhaidin Library		
+mnofs	Systems Office		2					Merge	Merge	Office	ofc	MacPhaidin Library		
+mnofz	Circulation Office		3					Merge	Merge	Office	ofc	MacPhaidin Library		
+mnstc	Circulation Desk		12		3		6	Merge	Merge	Office	ofc	MacPhaidin Library		
+pepjs	See Periodicals Librarian		1					Merge	Merge	Office	ofc	MacPhaidin Library		
+rerfd	Reference Desk		44					Merge	Merge	Office	ofc	MacPhaidin Library		
+mnrs1	24 hour reserve		25		76	8	52	Merge	Merge	Reserves	rsv	MacPhaidin Library		
+mnrs3	3-day reserve		15		21		5	Merge	Merge	Reserves	rsv	MacPhaidin Library		
+mnrs4	3 hour reserve		233		69	1	6	Merge	Merge	Reserves	rsv	MacPhaidin Library		
+mnrsv	2-hour reserve		347		760	31	154	Merge	Merge	Reserves	rsv	MacPhaidin Library		
+ccdvd	DVDs - Curriculum Collection					2		Keep	Keep	DVDs - Curriculum Collection	dcc	MacPhaidin Library		
+mnprs	Periodicals Storage		1					Keep	Keep	Periodicals Storage	pst	MacPhaidin Library		
+ar	Archives & Special Collections		1					Purge	Purge					
+arams	Ames Collection							Purge	Purge					
+c	virtual							Purge	Purge					
+cc	Curriculum Collection							Purge	Purge					
+ccref	Curriculum Coll. Reference							Purge	Purge					
+ccvhs	Videos - Curriculum Collection							Purge	Purge					
+cd	Office of Career Services CM 175							Purge	Purge					
+csclo	Career Services - Clothes				10			Purge	Purge					
+csstk	Office of Career Services Main Stacks		31		4			Purge	Purge			 		
+dl	Digital Lab							Purge	Purge					
+dlstk	Digital Lab							Purge	Purge					
+ee	Electronic							Purge	Purge					
+eedat	Electronic Subscription							Purge	Purge					
+eestk	ebook				61			Purge	Purge					
+gd	Government Documents							Purge	Purge					
+gdflm	Gov Docs - Microfilm							Purge	Purge					
+gdgcd	Gov Docs CD-ROMs							Purge	Purge					
+gdgcn	Gov Docs Census							Purge	Purge					
+gdgmp	Government Documents Maps		1					Purge	Purge					
+ia	Intercultural Affairs Duffy 149		4					Purge	Purge					
+ir	Irish Gov. Documents							Purge	Purge					
+it	Information Technology							Purge	Purge					
+itstk	Information Technology							Purge	Purge					
+lt	Library of Things							Purge	Purge					
+me	Media Collection							Purge	Purge					
+mecao	Oversize Cassettes							Purge	Purge					
+mecas	Cassettes							Purge	Purge					
+mered	eReaders			35	17		3	Purge	Purge					
+mevhs	VHS Films & Videos				597			Purge	Purge					
+mn	Main Stacks							Purge	Purge					
+mncad	Compact Discs		1			14		Purge	Purge					
+mncao	Oversize Cassettes							Purge	Purge					
+mncas	Cassettes							Purge	Purge					
+mncdr	CD-ROM		2					Purge	Purge					
+mncur	Curriculum Collection		9		1			Purge	Purge					
+mncyb	Internet							Purge	Purge					
+mndoc	Government Documents		2		2			Purge	Purge					
+mnfch	Microfiche							Purge	Purge					
+mnfl1	1st floor				1			Purge	Purge					
+mnfl2	2nd floor							Purge	Purge					
+mnfl3	3rd floor		1					Purge	Purge					
+mnflm	Films & Videos							Purge	Purge					
+mngcd	GovDocs CD-ROMs							Purge	Purge					
+mngcn	Census material							Purge	Purge					
+mngds	Gov Doc Storage							Purge	Purge					
+mngmp	GovDocs Maps							Purge	Purge					
+mngof	GovDocs Office							Purge	Purge					
+mngso	Oversize GovDocs Stks							Purge	Purge					
+mnill	Inter-Library Loan							Purge	Purge					
+mnind	Indexes							Purge	Purge					
+mnmed	Media Collection		2					Purge	Purge					
+mnmfm	Microfilm							Purge	Purge					
+mnnew	New Books Shelf							Purge	Purge					
+mnofa	Acquisitions Office		4	1				Purge	Purge					
+mnofi	ILL Office							Purge	Purge					
+mnper	PERIODICALS.	5	1			6		Purge	Purge					
+mnpjs	See Periodical Librarian							Purge	Purge					
+mnref	Reference		3					Purge	Purge					
+mnrfc	Curriculum Reference							Purge	Purge					
+mnrfd	Reference Desk							Purge	Purge					
+mnrso	2-hr/overnight reserve							Purge	Purge					
+mnxxx	Restricted		3					Purge	Purge					
+mp	Martin Papers - Archives Collection							Purge	Purge					
+nv	Novak Archives - Archives							Purge	Purge					
+pe	Journals							Purge	Purge					
+pefch	Journals - Microfiche	10	1					Purge	Purge					
+peflm	Journals - Microfilm	7	35					Purge	Purge					
+peind	Indexes	1		2				Purge	Purge					
+re	Reference		2		1			Purge	Purge					
+rerfa	Reference - Atlas Case							Purge	Purge					
+sh	WIlliam Rossi Collection -Archives							Purge	Purge					
+time	Time Capsule							Purge	Purge					
+tl	Center for Teaching and Learning		3			1		Purge	Purge					
+zzzzz	Error							Purge	Purge					
+	Totals	170912	252106	277	2542	685	228							
+														
+														
+KEY	Locations added after mapping meeting													
+														
+														
+2 letters = branch code in code in bib record														
+5 letters = item location														
+														
+mn = main library														
+ar = archives														
+tl = teaching and learning collection														
+ee = electronic														
+me = media														
+cc = curriculum collection														
+gd = government documents 														
