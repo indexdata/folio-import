@@ -20,7 +20,7 @@ const typeMap = {
   v: 'Multi-part monograph',
   x: 'Monograph',
   y: 'Serial'
-}
+};
 
 const elRelMap = {
   '0':'Resource',
@@ -28,7 +28,21 @@ const elRelMap = {
   '2':'Related resource',
   '3':'No information provided',
   '8':'No display constant generated'
-}
+};
+
+const ntypes = {
+  'Sierra Checkout Total': true,
+  'Sierra Renewal Total': true,
+  'Sierra Internal Use Count': true,
+  'Sierra Copy Use Count': true,
+  'Public Note': false,
+  'Circ Note': true,
+  'Staff Note': true,
+  Donor: true,
+  Requestor: true,
+  'Input Stamp': true,
+  'Sierra Reserves Info': true
+};
 
 const files = {
   holdings: 1,
@@ -166,6 +180,15 @@ try {
   }
   // throw(instMap);
 
+  for (let k in ntypes) {
+    let o = {
+      staffOnly: ntypes[k],
+      type: refData.itemNoteTypes[k]
+    }
+    ntypes[k] = o;
+  }
+  // throw(ntypes);
+
   let ttl = {
     holdings: 0,
     items: 0,
@@ -191,7 +214,7 @@ try {
   }
 
   const hseen = {};
-  const bwseen = {};
+  const iseen = {};
 
   /*
     Holdings only section
@@ -331,7 +354,7 @@ try {
     let id = uuid(iid, ns);
     let hrid = iprefix + iid;
     let bid = r.bib_record_num;
-    let instId = instMap[bid];
+    let inst = instMap[bid] || {};
     let itype = r.itype_code;
     let lcode = r.location_code;
     let locId = tsvMap.locations[lcode];
@@ -341,6 +364,7 @@ try {
     let cnt = r.call_num_type;
     let bc = r.barcode;
     let supp = r.is_suppressed;
+    let vol = r.volume;
     let hkey = `${bid}:${lcode}:${cn}`;
     let hid = hseen[hkey];
     if (!hid) {
@@ -355,7 +379,7 @@ try {
         _version: 1,
         id: uuid(hrid, ns),
         hrid: hrid,
-        instanceId: instId.id,
+        instanceId: inst.id,
         permanentLocationId: locId,
         sourceId: refData.holdingsRecordsSources.FOLIO,
       };
@@ -371,80 +395,97 @@ try {
           if (h.sourceId) {
             writeOut(outs.holdings, h);
             ttl.holdings++;
+            hseen[hkey] = h.id;
           } else {
             console.log(`ERROR holdings sourceId not found (${hid})!`);
+            ttl.errors++;
           }
         } else {
-          console.log(`ERROR holdings locationId not found for "${lcode} (${hid})"!`);
+          console.log(`ERROR holdings locationId not found for "${lcode}" (${hid})!`);
+          ttl.errors++;
         }
       } else {
-        console.log(`ERROR holdings instanceId not found for "${bid} (${hid})"!`);
+        console.log(`ERROR holdings instanceId not found for "${bid}" (${hid})!`);
+        ttl.errors++;
       }
       if (dbug) console.log(h);
-      hseen[hkey] = h.id;
-      console.log(h);
     }
-    if (0) {
+    
+    hid = hseen[hkey];
+    if (hid) {
+      let hrid = iprefix + iid;
       let i = {
         _version: 1,
-        id: id,
+        id: uuid(hrid, ns),
         hrid: hrid,
         holdingsRecordId: hid,
         formerIds: [ iid ],
-        status: { name: 'Available' },
-        notes: []
+        notes: [],
+        discoverySuppress: false,
       };
-      let bc = m.BARCODE || 'TEMP' + iid;
-      if (!bcseen[bc]) {
+      if (scode === 'n') scode = '';
+      let st = tsvMap.statuses[scode] || 'Available';
+      i.status = { name: st };
+      if (bc && !bcseen[bc]) {
         i.barcode = bc;
-        if (!m.BARCODE) {
-          let o = {
-            note: 'Barcode added during migrations.',
-            itemNoteTypeId: refData.itemNoteTypes.Note,
-            staffOnly: true
-          }
-          i.notes.push(o);
-        }
         bcseen[bc] = iid;
-      } else {
-        i.barcode = 'TEMP' + iid;
-        let o = {
-          note: `Barcode ${bc} already used by pi${bcseen[bc]}. Using ITEM_ID instead.`,
-          itemNoteTypeId: refData.itemNoteTypes.Note,
-          staffOnly: true
-        }
-        i.notes.push(o);
-        console.log(`WARN barcode ${bc} already used by ITEM_ID ${bcseen[bc]}`);
       }
-      if (m.ITEM_ENUM) i.volume = m.ITEM_ENUM;
-      if (m.CHRON) i.chronology = m.CHRON;
-      if (m.YEAR) i.yearCaption = [ m.YEAR ];
-      if (r.COPY_NUMBER) i.copyNumber = r.COPY_NUMBER;
-      if (r.PIECES) i.numberOfPieces = r.PIECES;
-      let nts = m.NOTES || [];
-      nts.forEach(n => {
-        let o = {
-          note: n,
-          itemNoteTypeId: refData.itemNoteTypes.Note
-        };
-        i.notes.push(o);
-      });
-      if (m.STATUS) i.status.name = m.STATUS;
-      let vtype = r.ITEM_TYPE_ID;
-      i.materialTypeId = tsvMap.mtypes[vtype];
-      i.permanentLoanTypeId = refData.loantypes.Standard;
-      let tloc = locMap[r.TEMP_LOCATION];
-      if (tloc) i.temporaryLocationId = tloc;
-      if (i.materialTypeId) {
-        if (i.permanentLoanTypeId) {
-          writeOut(outs.items, i);
+      // if (supp === 'TRUE') i.discoverySuppress = true;
+      if (vol) i.volume = vol;
+      i.materialTypeId = tsvMap.mtypes[itype];
+      i.permanentLoanTypeId = refData.loantypes['Can circulate'];
+
+      // note stuff here
+      let nn = noteMap[iid];
+      if (nn) {
+        delete nn.id;
+        for (let k in nn) {
+          let v = nn[k];
+          if (v) {
+            if (k === 'Circ Note') {
+              i.circulationNotes = [];
+              let t = ['Check in', 'Check out'];
+              t.forEach(y => {
+                let o = {
+                  note: v,
+                  noteType: y,
+                  date: new Date().toISOString().replace(/T.+/, ''),
+                  id: uuid(iid + y, ns)
+                };
+                i.circulationNotes.push(o);
+              });
+            } else {
+              let t = ntypes[k].type;
+              let so = ntypes[k].staffOnly;
+              v.split(/\|/).forEach(x => {
+                let o = {
+                  note: x,
+                  itemNoteTypeId: t,
+                  staffOnly: so
+                }
+                i.notes.push(o);
+              });
+            }
+          }
+        }
+      }
+
+      if (!iseen[iid]) {
+        if (i.materialTypeId) {
+          if (i.permanentLoanTypeId) {
+            writeOut(outs.items, i);
+            iseen[iid] = i.id;
+            ttl.items++;
+          } else {
+            console.log(`ERROR loantype not found for ${iid}`);
+          }
         } else {
-          console.log(`ERROR loantype not found for ${iid}`);
+          console.log(`ERROR material type "${itype}" not found for ${iid}`);
         }
       } else {
-        console.log(`ERROR material type "${vtype}" not found for ${iid}`);
+        console.log(`ERROR item id "${iid}" already seen`);
       }
-      ttl.items++;
+      if (dbug) console.log(i);
     }
   }
 
