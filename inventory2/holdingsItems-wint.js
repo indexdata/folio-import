@@ -298,6 +298,7 @@ try {
         h.callNumber = cn;
         h. callNumberTypeId = cnt;
       }
+      
       writeOut(outs.holdings, h);
       hseen[hkey] = hid;
       occ[bid]++;
@@ -327,6 +328,9 @@ try {
       } else {
         console.log(`WARN barcode ${r.BARCODE} already seen.`)
       }
+    }
+    if (r.COPY_NUMBER) {
+      i.copyNumber = r.COPY_NUMBER;
     }
     if (r.UNITS) {
       if (imap.blvl === 's') {
