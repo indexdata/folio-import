@@ -180,11 +180,13 @@ try {
   // throw(instMap);
 
   let ttl = {
+    count: 0,
     holdings: 0,
     items: 0,
     boundwiths: 0,
     relationships: 0,
-    errors: 0
+    holdingsErr: 0,
+    itemErr: 0
   }
 
   let start = new Date().valueOf();
@@ -250,6 +252,7 @@ try {
     crlfDelay: Infinity
   });
   for await (let line of rl) {
+    ttl.count++;
     let m = JSON.parse(line);
     let ctrl = (m['001']) ? m['001'][0] : '';
     let bhrid = (m['004']) ? m['004'][0] : '';
@@ -425,17 +428,18 @@ try {
             });
             bwseen[h.id] = 1;
           }
-        } else if (!bwseen[h.id]) {
+        // } else if (!bwseen[h.id]) {
+        } else {
           console.log(`ERROR hrid ${hhrid} already used!`);
-          ttl.errors++;
+          ttl.holdingsErr++;
         }
       } else {
         console.log(`ERROR location not found for "${loc}" (${hhrid})`);
-        ttl.errors++;
+        ttl.holdingsErr++;
       }
     } else {
       console.log(`ERROR instance "${bhrid}" not found for ${hhrid}`);
-      ttl.errors++;
+      ttl.holdingsErr++;
     }
   }
 
@@ -610,9 +614,11 @@ try {
           writeOut(outs.items, i);
         } else {
           console.log(`ERROR loantype not found for ${iid}`);
+          ttl.itemErr++;
         }
       } else {
         console.log(`ERROR material type "${vtype}" not found for ${iid}`);
+        ttl.itemErr++;
       }
       ttl.items++;
     }
