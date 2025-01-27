@@ -264,7 +264,7 @@ try {
       notes: []
     };
     if (cn) {
-      cnt = ('Library of Congress') ? 'Library of Congress classification' : 'Other scheme';
+      cnt = (cnt === 'Library of Congress') ? 'Library of Congress classification' : 'Other scheme';
       let cntId = refData.callNumberTypes[cnt];
       if (!cntId) throw new Error(`ERROR callNumberTypeId not found for "${cnt}"`);
       h.callNumber = cn;
@@ -384,7 +384,7 @@ try {
         sourceId: refData.holdingsRecordsSources.FOLIO,
       };
       if (cn) {
-        cnt = ('Library of Congress') ? 'Library of Congress classification' : 'Other scheme';
+        cnt = (cnt === 'Library of Congress') ? 'Library of Congress classification' : 'Other scheme';
         let cntId = refData.callNumberTypes[cnt];
         if (!cntId) throw new Error(`ERROR callNumberTypeId not found for "${cnt}"`);
         h.callNumber = cn;
@@ -430,8 +430,12 @@ try {
         i.barcode = bc;
         bcseen[bc] = iid;
       }
+      if (scode === 'd') {
+        i.itemDamagedStatusId = refData.itemDamageStatuses.Damaged;
+      }
       // if (supp === 'TRUE') i.discoverySuppress = true;
       if (vol) i.volume = vol;
+      if (copy) i.copyNumber = copy;
       i.materialTypeId = tsvMap.mtypes[itype];
       i.permanentLoanTypeId = refData.loantypes['Can circulate'];
 
