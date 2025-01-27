@@ -264,13 +264,20 @@ try {
         if (k.match(/[zx]/)) {
           if (!mh[k]) mh[k] = [];
           mh[k].push(s[k]);
-        } else {
+        } else if (!mh[k]) {
           mh[k] = s[k];
+        } else if (k === 'b') {
+          if (s[k].match(/^36234/)) {
+            mh.p = s[k];
+          } else {
+            mh.i = s[k];
+          }
         }
       });
       mh.ind1 = m['852'][0].ind1;
       mh.ind2 = m['852'][0].ind2;
     }
+    console.log(mh);
     let loc = mh.b;
     let cn = (mh.i) ? mh.h + ' ' + mh.i : mh.h || '';
     if (cn.match(/No call number/)) cn = '';
