@@ -192,7 +192,7 @@ try {
       console.log(l, ':', n);
     }
   }
-
+  const bcseen = {};
   const occ = {};
   const makeItems = (fields, holdings, inst) => {
     fields.forEach(r => {
@@ -214,6 +214,7 @@ try {
         id: uuid(ihrid, ns),
         hrid: ihrid,
         permanentLoanTypeId: refData.loantypes['Can circulate'],
+        holdingsRecordId: holdings.id,
         status: { name: 'Available' },
         notes: []
       }
@@ -245,10 +246,13 @@ try {
           i.itemLevelCallNumberTypeId = refData.callNumberTypes['Other scheme'];
         }
       }
-      if (ih.i) i.barcode = ih.i;
+      if (ih.i && !bcseen[ih.i]) {
+        i.barcode = ih.i;
+        bcseen[ih.i] = i.id;
+      }
       if (ih.c) {
         if (inst.blvl === 's') {
-          i.enenumeration = ih.c;
+          i.enumeration = ih.c;
         } else {
           i.volume = ih.c;
         }
