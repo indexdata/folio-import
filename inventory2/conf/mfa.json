@@ -1,0 +1,13 @@
+{
+    "nameSpace": "2c6f2213-fdf7-40d6-9a13-708d62e3420d",
+    "refDir": "/Users/charles/Folio/mfa/ref/inv",
+    "tsvDir": "",
+    "mapFile": "",
+    "controlNum": "",
+    "hridPrefix": "m",
+    "makeInstMap": true,
+    "hasMfhd": true,
+    "catDate": { "tag": "008" },
+    "suppress": { "tag": "908", "subfield": "x", "value":"Y" },
+    "callNumbers": {}
+}
