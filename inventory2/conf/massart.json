@@ -1,0 +1,13 @@
+{
+    "nameSpace": "f3d44837-0da7-4804-a185-51d52b37ad26",
+    "refDir": "/Users/charles/Folio/massart/ref/inv",
+    "tsvDir": "",
+    "mapFile": "",
+    "controlNum": "",
+    "hridPrefix": "a",
+    "makeInstMap": true,
+    "hasMfhd": true,
+    "catDate": { "tag": "008" },
+    "suppress": { "tag": "908", "subfield": "x", "value":"Y" },
+    "callNumbers": {}
+}
