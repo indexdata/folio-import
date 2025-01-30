@@ -1,0 +1,23 @@
+Legacy item status	Item count	FOLIO item status	Notes							
+Cataloging Review	95	Unavailable	Can these create a pop-up when item is returned or checked out							
+Circulation Review	4	Unavailable	Can these create a pop-up when item is returned or checked out						FOLIO Statuses:	
+Damaged	206	Available	In FOLIO this is a condition, not a status						Aged to Lost	 
+Discharged	19	Available							Available	
+Hold Request	13	Paged							Awaiting delivery 	
+In Transit Discharged	7	In transit							Awaiting pickup	
+In Transit On Hold	12	In transit							Checked out	
+Lost--Library Applied	59	Declared Lost							Claimed Returned	
+Lost -- System Applied	1078	Aged to Lost							Declared lost	
+Missing	107	Missing							In process	
+Not Charged	96,091	Available							In process (not requestable)	
+Overdue	253	Checked Out							Intellectual item	
+Recall Request	1	Checked Out							In transit	
+Renewed	129	Checked Out							Lost and paid	
+Withdrawn	19	Withdrawn							Missing	
+									On order	
+									Order closed	
+									Paged	
+									Unavailable	
+									Unknown	
+									Restricted	
+									Withdrawn 	

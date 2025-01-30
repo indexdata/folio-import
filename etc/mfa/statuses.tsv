@@ -1,0 +1,23 @@
+Legacy item status	Item count	FOLIO item status	Notes						
+Not Charged	292461	Available							
+Charged	1022	Checked out							FOLIO Statuses:
+Missing	801	Missing							Aged to Lost
+Renewed	724	Checked out							Available
+Overdue	411	Checked out							Awaiting delivery 
+Withdrawn	279	Withdrawn	*HJL: are the accompanying bib records suppressed?						Awaiting pickup
+Cataloging Review	255	Unavailable							Checked out
+Lost -- System Applied	147	Aged to Lost							Claimed Returned
+Damaged	42		This is a condition in FOLIO, not an item status						Declared lost
+Lost--Library Applied	26	Declared Lost							In process
+In Transit Discharged	26	In Transit	*HJL: is this current? If this is pre-2022, can we have a report of these items?						In process (not requestable)
+Call Slip Request	11	Paged							Intellectual item
+In Transit On Hold	8	In Transit							In transit
+Circulation Review	3	Unavailable							Lost and paid
+Discharged	1	Available							Missing
+Claims Returned	1	Claimed Returned	*HJL: highlighted in yellow are the ones we can potntially review and purge. Would you run a report? 						On order
+At Bindery	1	Unavailable							Order closed
+									Paged
+									Unavailable
+									Unknown
+									Restricted
+									Withdrawn 

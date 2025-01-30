@@ -1,0 +1,41 @@
+Location Code	Location Name	MFHD Perm Loc (Unsuppressed)	Item Perm Loc (Unsuppressed)	Item Temp Loc (Unsuppressed)	MFHD Perm Loc (Suppressed)	Item Perm Loc (Suppressed)	Item Temp Loc (Suppressed)	Unsuppressed	Suppressed	FOLIO Location Name	FOLIO Location Code	FOLIO service point	Note
+MFA-02	MFA-02	8,987	11,338	3	65	17		Keep	Keep	Art of Asia, 02	02	Circulation Desk	
+MFA-02A	MFA-02A	2,292	2,513		5	6		Keep	Keep	Art of South Asia and Islamic Culture, 02A	02A	Circulation Desk	item 94850 perm loc "MCA-MAIN" and charged to MCA tech services
+MFA-02B	MFA-02B	1,238	1,249		2	1		Keep	Keep	Art of Africa and Oceania, 02B	02B	Circulation Desk	
+MFA-03	MFA-03	19,707	22,593	6	546	408		Keep	Keep	Center for Netherlandish Art, 03	03	Circulation Desk	
+MFA-03R	MFA-03R	2,084	2,618					Keep	Keep	Center for Netherlandish Art, Reading Room	03R	Circulation Desk	
+MFA-04	MFA-04	6,513	6,882		9	9		Keep	Keep	Art of the Ancient World, 04	04	Circulation Desk	
+MFA-04A	MFA-04A	1,003	1,004	1	2	2		Keep	Keep	Art of the Ancient World, 04A	04A	Circulation Desk	
+MFA-04B	MFA-04B	9,303	9,665	70	10	5		Keep	Keep	Art of the Ancient World, 04B	04B	Circulation Desk	
+MFA-05	MFA-05	1,966	1,971		6	2		Keep	Keep	Musical Instruments	05	Circulation Desk	
+MFA-06	MFA-06	7,702	8,026	1	120	20		Keep	Keep	Prints & Drawings, Photography	06	Circulation Desk	
+MFA-07	MFA-07	869	875		1			Keep	Keep	Paper Conservation	07	Circulation Desk	
+MFA-08	MFA-08	9,347	9,581		30	21		Keep	Keep	Fashion, Textiles & Jewelry 	08	Circulation Desk	
+MFA-09	MFA-09	2,071	2,212		136	5		Keep	Keep	Conservation	09	Circulation Desk	
+MFA-09A	MFA-09A	236	230					Keep	Keep	Textile Conservation 	09A	Circulation Desk	
+MFA-AB	MFA-AB	362	467		1	1		Keep	Keep	Artist's Book	AB	Circulation Desk	
+MFA-ARC	MFA-ARC	24	49		32	32		Keep	Keep	Archives	ARC	Circulation Desk	
+MFA-C	MFA-C	1,536	1,866	4	14	5		Keep	Keep	Special Collections 	C	Circulation Desk	
+MFA-Circ	MFA-Circulation Desk				1	1		Keep	Keep	Circulation	Circ	Circulation Desk	
+MFA-CNA	MFA-CNA	12,602	13,722		1,867	1,969		Keep	Keep	Center for Netherlandish Art	CNA	Circulation Desk	
+MFA-DEP	MFA-DEP	84,761	100,899	1	73	174		Keep	Keep	Depository	DEP	Circulation Desk	
+MFA-MAIN	MFA-MAIN	88,205	92,564	39	1,228	162		Keep	Keep	Main Library	MAIN	Circulation Desk	
+MFA-REF	MFA-REF	2,378	2,902		56	52		Keep	Keep	Main Reference	MAIN-REF	Circulation Desk	
+MFA-VF	MFA-VF	132	133	27	3	2		Keep	Keep	Artist Vertical Files	VF	Circulation Desk	
+MFA-Stor	MFA-Storage	4	11		1			Keep	Keep	Offsite Storage	Stor	Circulation Desk	
+MFA-ERESOU	MFA-ERESOU	25						Keep	Keep	Electronic Collections	ERESOU	Circulation Desk	
+MFA-REFM	MFA-REFM	175	230		4	4		Keep	Keep	Reference/Microform	REFM	Circulation Desk	
+MFA-Prov	MFA-Prov							New Location	New Location	Provenance	PROV	Circulation Desk	
+MFA-Bos	MFA-Bos							New Location	New Location	Boston	BOS	Circulation Desk	
+MFA-CONS	zMFA-CONS Do not use		1					Purge	Purge				
+MFA-SCH-C	MFA-SCH-C		1					Purge	Purge				
+MFA-ADA	zMFA-ADA do not use		2					Purge	Purge				
+MFA-DC	z MFA-DC do not use		13		1			Purge	Purge				
+MFA-DE	zMFA-DE do not use		4					Purge	Purge				
+MFA-DI	zMFA-DI do not use		1					Purge	Purge				
+MFA-DJ	zMFA-DJ Do not use		6					Purge	Purge				
+MFA-DMI	zMFA-DMI do not use		2					Purge	Purge				
+MFA-DP	zMFA-DP do not use		1					Purge	Purge				
+MFA-DPC	zMFA-DPC do not use		1					Purge	Purge				
+MFA-DT	zMFA-DT do not use		7			1		Purge	Purge				
+	Totals	263,522	293,632	0	4,213	2,898	0						

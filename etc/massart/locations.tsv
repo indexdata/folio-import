@@ -1,0 +1,32 @@
+Location Code	Location Name	MFHD Perm Loc (Unsuppressed)	Item Perm Loc (Unsuppressed)	Item Temp Loc (Unsuppressed)	MFHD Perm Loc (Suppressed)	Item Perm Loc (Suppressed)	Item Temp Loc (Suppressed)	Unsuppressed	Suppressed	FOLIO Location Name	FOLIO Location Code	FOLIO service point	Note
+MCA-ARCHIV	MassArt Archives	699	1185		2	2		Keep	Keep	Archives	archiv	Massart Circulation	
+MCA-ARTBKS	MassArt Artists' Books	538	556	1	2			Keep	Keep	Artists' Books	artbks	Massart Circulation	
+MCA-RECORD	MassArt Record Albums	626	647	11	8	7	8	Merge	Merge	Audio	audio	Massart Circulation	
+MCACASSETT	MassArt Main--Cassettes	30	30					Merge	Merge	Audio	audio	Massart Circulation	
+MCAMAINCD	MassArt Main -- CDs	7	9					Merge	Merge	Audio	audio	Massart Circulation	
+MCA-CIRC	MassArt Circulation Desk	12	23		2	1	1	Keep	Purge	Circulation	circ	Massart Circulation	
+MCA-ONLINE	MassArt Econtent	86						Keep	Keep	Econtent	online	Massart Circulation	main question--is this like, websites or ebooks? (note that we will add all the shared flo collections proquest ebook central etc for you)
+MCA-FOLIO	MassArt Folios	125	144					Keep	Keep	Folios	folio	Massart Circulation	
+MCA-MAIN	MassArt Main	83,519	89,069	73	248	191	34	Keep	Keep	Main Stacks	main	Massart Circulation	
+MCA-MEDIA	MassArt Media	3,062	3,557		36	23	5	Keep	Keep	Media	media	Massart Circulation	
+MCA-OVERSZ	MassArt Oversized	301	582					Keep	Keep	Oversized	oversz	Massart Circulation	
+MCA-SERIAL	MassArt Periodicals	849	11		19			Keep	Keep	Periodicals	serial	Massart Circulation	
+MCA-REF	MassArt Reference	388	599		3		1	Keep	Keep	Reference	ref	Massart Circulation	
+MCARESERVE	MassArt Reserves	448	78	367	1397	276	29	Keep	Keep	Reserves	reserve	Massart Circulation	
+MCA-SpC-OS	MassArt Spec Col Oversize	101	188	14				Keep	Keep	Spec Col Oversize	spcos	Massart Circulation	
+MCA-SpCol	MassArt Spec. Collections	1681	1954		4	2		Keep	Keep	Spec. Collections	spcol	Massart Circulation	
+MCA-TS	MassArt Tech Services	21	28	7	1		1	Keep	Keep	Tech Services	ts	Massart Circulation	
+MCA-CIRCUL	MassArt Circulation			4	2	1	5	Merge	Merge	Circulation	circ	Massart Circulation	
+MCA-MPA	MassArt Media & Perf Arts				35	40		Merge	Merge	Film/Video Vault	vault	Massart Circulation	
+MCA-VIDLAB	MassArt Video Lab				44	48		Merge	Merge	Film/Video Vault	vault	Massart Circulation	
+MCAFVVAULT	MassArt F/V Vault		117			2		Merge	Merge	Film/Video Vault	vault	Massart Circulation	
+MCA-SLIDE	MassArt Slide Library	2	2		43			Merge	Purge	Main Stacks	main	Massart Circulation	
+MCA-KANOPY	MCA-KANOPY				11			Merge	Merge	Streaming Media	kanopy	Massart Circulation	Will have MCA export the most current Kanopy holdings file upon migration so we can start fresh with these!
+MCA-STREAM	MassArt Streaming Media	10			8550			Merge	Merge	Streaming Media	kanopy	Massart Circulation	
+MCA-CAT	MassArt Cataloging Desk		1		2	3		Merge	Merge	Tech Services	ts	Massart Circulation	Alexis review what's in here
+MCA-ACQ	MassArt Acquisitions Desk			1				Purge	Purge				
+MCA-AVMS	MassArt AVMS	30	84		2	2		Purge	Purge				
+MCA-INDEX	MassArt Index Table	6	8					Purge	Purge				
+MCA-LAB	MassArt Computer Lab	3	1					Purge	Purge				
+MCA-WDN	MassArt Withdrawn	35			3	2		Purge	Purge				
+	Totals	92,579	98873	478	10414	600	84						

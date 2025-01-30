@@ -1,0 +1,80 @@
+Legacy Code	Legacy Name	Count Perm (Unsuppressed)	Count Temp (Unsuppressed)	Count Perm (Suppressed)	Count Temp (Suppressed)	Perm Type (Unsuppressed)	Perm Type (Suppressed)	FOLIO Name	Notes
+24hreserve	24 hour reserve				3	Keep	Keep	24 Hour Reserve	
+3hreserve	3 hour reserve	6	364		25	Keep	Keep	3 Hour Reserve	
+Archive	Archive	609		1		Keep	Keep	Archive	
+Artist Bk	Artist Bk	568				Keep	Keep	Artist Bk	
+Bk/CD-ROM	Bk/CD-ROM	104				Keep	Keep	Bk/CD-ROM	
+Blu-ray	Blu-ray	107				Keep	Keep	Blu-ray	
+Book	Book	89,471		269		Keep	Keep	Book	
+Book/CD	Book/CD	81				Keep	Keep	Book/CD	
+35mm Cam	35 mm Camera	2				Keep	Keep	Camera	
+Cassette	Cassette	37				Keep	Keep	Cassette	
+CD	CD	51		33		Keep	Keep	CD	
+DVD	DVD	2321		46		Keep	Keep	DVD	
+DVD Player	DVD Player	2				Keep	Keep	DVD Player	
+Film	Film	466		42		Keep	Keep	Film	
+Folio	Folio	179				Keep	Keep	Folio	
+Headphones	Headphones	6				Keep	Keep	Headphones	
+ILL	ILL			2		Keep	Keep	ILL	
+Kit	Kit	55				Keep	Keep	Kit	
+NC DVD	NC DVD	269				Keep	Keep	Non-Circ DVD	
+NC Video	NC Video	171		1		Keep	Keep	Non-Circ Video	
+on-the-fly	on-the-fly	159				Keep	Keep	On-the-fly	
+Limited	Limited		315			Keep	Keep	Popular	Call number prefix "popular", eliana@flo.org alexis@flo.org We'd like to keep this as is. Let's call it Popular
+Realia	Realia	18				Keep	Keep	Realia	
+Record	Record	662	1	32		Keep	Keep	Record	
+Rec Player	Rec Player	1				Keep	Keep	Record Player	
+Reference	Reference	615				Keep	Keep	Reference	
+Serial	Serial	195		10		Keep	Keep	Serial	
+Supplement	Supplement	20				Keep	Keep	Supplement	
+Thesis	Thesis	287				Keep	Keep	Thesis	
+Videotape	Videotape	445		67		Keep	Keep	Videotape	
+AV	AV	3				Merge	Merge	AV	
+Equipment	Equipment	15		2		Merge	Merge	AV	
+Book(NC)	Book(NC)	1				Merge	Merge	Book	
+E-BOOK	E-BOOK					Merge	Merge	Book	
+E-Book	E-Book	1		1		Merge	Merge	Book	
+NC Book	NC Book	2069		2		Merge	Merge	Book	
+NC Book/CD	NC Book/CD	3				Merge	Merge	Book	
+OVERSIZED	OVERSIZED	1				Merge	Merge	Book	
+Bk/DVD-ROM	Book/DVD-ROM	9				Merge	Merge	Book/DVD	
+Book/DVD	Book/DVD	70		1		Merge	Merge	Book/DVD	
+NC Cassett	NC Cassett	1				Merge	Merge	Cassette	
+NC CD	NC CD	4				Merge	Merge	CD	
+CD-ROM	CD-ROM	27				Merge	Merge	CD-ROM	
+CDROM	CDROM	1		1		Merge	Merge	CD-ROM	
+NC CD-ROM	NC CD-ROM	2				Merge	Merge	CD-ROM	
+NC Film	NC Film	23				Merge	Merge	Film	
+Kit(NC)	Kit(NC)	2				Merge	Merge	Kit	
+NC Kit	NC Kit	19				Merge	Merge	Kit	
+On The Fly	On The Fly			4		Merge	Merge	On-the-fly	
+On-The-Fly	On-The-Fly			1		Merge	Merge	On-the-fly	
+On-the-fly	On-the-fly	1		1		Merge	Merge	On-the-fly	
+NC Record	NC Record	12				Merge	Merge	Record	
+VCR/VHS	VCR/VHS			7		Merge	Merge	Videotape	
+AV o-t-fly	AV on-the-fly	1				Purge	Purge		
+Batteries	Batteries	17				Purge	Purge		
+Bk/Other	Bk/Other			1		Purge	Purge		
+BookCirc	BookCirc				1	Purge	Purge		
+DV Camera	DV Camera	12				Purge	Purge		
+DataPrjctr	Data Projector	5				Purge	Purge		
+DigitalCam	DigitalCam	27				Purge	Purge		
+E-READER	E-READER	1		1		Purge	Purge		
+Ext. Cord	Extension Cord	1				Purge	Purge		
+FacDatProj	Data Projector--Faculty	1				Purge	Purge		
+Index	Index	7				Purge	Purge		
+Laptop	Laptop Computer	3		1		Purge	Purge		
+Media Book	Media Book	1				Purge	Purge		
+MICROFILM	MICROFILM					Purge	Purge		
+Microfilm	Microfilm			2		Purge	Purge		
+Microphone	Microphone	5				Purge	Purge		
+MuseumPass	MuseumPass	13				Purge	Purge		
+PASS	PASS			2		Purge	Purge		
+Photocopy	Photocopy	5		59		Purge	Purge		
+SldPrjctor	SldPrjctor	1				Purge	Purge		
+Slide Tray	Slide Tray	2				Purge	Purge		
+TV	TV	4				Purge	Purge		
+TakeupReel	TakeupReel			1		Purge	Purge		
+TapeRecrdr	TapeRecrdr	4				Purge	Purge		
+Tripod	Tripod	4				Purge	Purge		
+	Totals	99285	680	590	29				
