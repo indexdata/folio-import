@@ -78,7 +78,7 @@ const makeItemNote = function (text, type, staffOnly) {
 }
 
 try {
-  if (!mfhdFile) { throw "Usage: node holdingsItems-mfa.js <conf_file> <mfhd_jsonl_file>" }
+  if (!mfhdFile) { throw "Usage: node holdingsItems-massart.js <conf_file> <mfhd_jsonl_file>" }
   let confDir = path.dirname(confFile);
   let confData = fs.readFileSync(confFile, { encoding: 'utf8' });
   let conf = JSON.parse(confData);
@@ -219,7 +219,7 @@ try {
         notes: [],
         circulationNotes: []
       }
-      let stat = tsvMap.statuses[ih.s];
+      let stat = tsvMap.statuses[ih.s] || '';
       if (stat) {
         i.status.name = stat;
         if (ih.v) {
@@ -233,6 +233,19 @@ try {
       }
       if (ih.s === 'Damaged') {
         i.itemDamagedStatusId = refData.itemDamageStatuses.Damaged;
+      }
+      if (ih.s.match(/Review/)) {
+        let note = ih.s
+        let t = ['Check in', 'Check out'];
+        t.forEach(y => {
+          let o = {
+            note: note,
+            noteType: y, 
+            date: new Date().toISOString().replace(/T.+/, ''),
+            id: uuid(iid + note + y, ns)
+          };
+          i.circulationNotes.push(o);
+        });
       }
       let mt = tsvMap.mtypes[ih.t];
       i.materialTypeId = mt;
@@ -248,11 +261,14 @@ try {
         if (cn !== holdings.callNumber) {
           i.itemLevelCallNumber = cn;
           i.itemLevelCallNumberTypeId = refData.callNumberTypes['Other scheme'];
+          if (ih.x) i.itemLevelCallNumberPrefix = ih.x;
         }
       }
       if (ih.i && !bcseen[ih.i]) {
         i.barcode = ih.i;
         bcseen[ih.i] = i.id;
+      } else if (ih.i) {
+        console.log(`WARN duplicate barcode found ${ih.i} (${i.hrid})`);
       }
       if (ih.c) {
         if (inst.blvl === 's') {
@@ -265,7 +281,7 @@ try {
       if (ih.d || ih.o) {
         i.yearCaption = [];
         if (ih.d) i.yearCaption.push(ih.d);
-        if (ih.o) i.yearCaption.push(ih.o);
+        // if (ih.o) i.yearCaption.push(ih.o);
       }
       if (ih.m) i.numberOfPieces = ih.m;
       if (ih.n) i.descriptionOfPieces = ih.n;
@@ -290,7 +306,7 @@ try {
           i.notes.push(o);
         }
       }
-
+      if (ih.r || ih.u) i.circulationNotes = [];
       if (ih.r) {
         let o = {
           note: ih.r,
@@ -309,7 +325,6 @@ try {
         };
         i.circulationNotes.push(o);
       }
-
       if (i.materialTypeId) {
         if (i.permanentLoanTypeId) {
           writeOut(outs.items, i);
@@ -319,7 +334,7 @@ try {
           ttl.itemErr++;
         }
       } else {
-        console.log(`ERROR item material type not found for "${ih.t}`);
+        console.log(`ERROR item material type not found for "${ih.t}"`);
         ttl.itemErr++;
       }
     });
