@@ -1,0 +1,13 @@
+{
+    "nameSpace": "0b1201a5-2281-4431-8f90-fa2249c224cd",
+    "refDir": "/Users/charles/Folio/lesley/ref/inv",
+    "tsvDir": "",
+    "mapFile": "",
+    "controlNum": "",
+    "hridPrefix": "l",
+    "makeInstMap": true,
+    "hasMfhd": true,
+    "catDate": { "tag": "008" },
+    "suppress": { "tag": "908", "subfield": "x", "value":"Y" },
+    "callNumbers": {}
+}
