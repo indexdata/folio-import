@@ -1,0 +1,23 @@
+Legacy item status	Item count	FOLIO item status	Notes						
+Not Charged	75,660	Available							
+Charged	14	Checked out							FOLIO Statuses:
+Renewed	12	Checked out							Aged to Lost
+Overdue	46	Checked out							Available
+In Transit Discharged	13	In transit							Awaiting delivery 
+In Transit On Hold	4	In transit							Awaiting pickup
+Missing	192	Missing							Checked out
+Lost--Library Applied	54	Declared lost							Claimed Returned
+Lost -- System Applied	460	Aged to lost							Declared lost
+Claims Returned	2	Claimed returned							In process
+Damaged	16	Available	Condition, not a status						In process (not requestable)
+Withdrawn	124	Withdrawn							Intellectual item
+Cataloging Review	62	In process	Probably "In process"						In transit
+Circulation Review	82	In process							Lost and paid
+In Process	32	In process 							Missing
+									On order
+									Order closed
+									Paged
+									Unavailable
+									Unknown
+									Restricted
+									Withdrawn 

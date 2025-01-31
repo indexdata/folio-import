@@ -1,0 +1,62 @@
+Location Code	Location Name	MFHD Perm Loc (Unsuppressed)	Item Perm Loc (Unsuppressed)	Item Temp Loc (Unsuppressed)	MFHD Perm Loc (Suppressed)	Item Perm Loc (Suppressed)	Item Temp Loc (Suppressed)	Unsuppressed	Suppressed	FOLIO Location Name	FOLIO Location Code	FOLIO service point/Library	Campus
+LES-EBOOKS	LES-EBOOKS	8,038	177		26	1		Keep	Purge	Ebooks	ebk	Online	Online
+LES-EJOURN	LES-EJOURNAL	101	78					Keep	Purge	Ejournals	ejr	Online	Online
+AIB-CMX	AIB-CMX	893	948		177	177		Keep	Purge	Moriarty Comics	mcm	Moriarty	Porter Campus
+AIB-DISPLY	AIB-DISPLAY			69			9	Keep	Purge	Moriarty Display	mds	Moriarty	Porter Campus
+AIB-DSPOFF	AIB-DISPLAY-OFFSITE			2				Keep	Purge	Moriarty Display Offsite	mdo	Moriarty	Porter Campus
+AIB-DVD	AIB-DVD	568	623	1	10	1		Keep	Purge	Moriarty DVD	mdv	Moriarty	Porter Campus
+AIB-ALUM	AIB-ALUM	115	138	1				Keep	Purge	Moriarty Lesley Authors	mla	Moriarty	Porter Campus
+AIB-OVER	AIB-OVER	231	245	1				Keep	Purge	Moriarty Oversize	mov	Moriarty	Porter Campus
+AIB-PER	AIB-PER	68	66		32	27		Keep	Purge	Moriarty Periodicals	mpr	Moriarty	Porter Campus
+AIB-RARE	AIB-RARE BOOKS	81	98		10	10		Keep	Purge	Moriarty Rare Books	mrb	Moriarty	Porter Campus
+AIB-REF	AIB-REF	20	42		7	34		Keep	Purge	Moriarty Reference	mrf	Moriarty	Porter Campus
+AIB-RESERV	AIB-RESERV	70	25	14	28	17		Keep	Purge	Moriarty Reserves	mrv	Moriarty	Porter Campus
+AIB-SPRESV	AIB-SPRESV	103	118	1	1	3		Keep	Purge	Moriarty Special Reserves	msr	Moriarty	Porter Campus
+AIB-STACKS	AIB-STACKS	10,418	10,971	2	52	16		Keep	Purge	Moriarty Stacks	msk	Moriarty	Porter Campus
+LES-ARCV	LES-ARCHIVES	227	246					Keep	Purge	Sherrill Archives	sar	Archives	South Campus
+LESDISPLAY	LESDISPLAY		5	67				Keep	Purge	Sherrill Display	sds	Sherrill	South Campus
+LESK-EARLY	LESK-EARLY	324	327		2			Keep	Keep	Sherrill Early Readers	ser	Sherrill	South Campus
+LES-FAC	LES-FACULTY		1	350				Keep	Keep	Sherrill Faculty	sfa	Sherrill	South Campus
+LESK-PORT	LESK-PORT	122	123		2	1		Keep	Keep	Sherrill Juv Big Books	sjb	Sherrill	South Campus
+LESK-FICT	LESK-FICTION	1,856	1,869		3	1		Keep	Keep	Sherrill Juv Fiction	sjf	Sherrill	South Campus
+LESKSTACKS	LESKSTACKS	4,811	4,800	1	5			Keep	Keep	Sherrill Juv Nonfiction	sjn	Sherrill	South Campus
+LESK-PICT	LESK-PICTURE	3,028	3,049	1	4	1		Keep	Keep	Sherrill Juv Picture	sjp	Sherrill	South Campus
+LES-ALUM	LES-ALUM	139	144					Keep	Keep	Sherrill Lesley Authors	sla	Sherrill	South Campus
+LES-OVER	LES-OVER	127	127					Keep	Keep	Sherrill Oversize	sov	Sherrill	South Campus
+LES-PER	LES-PER	269	265		51			Keep	Keep	Sherrill Periodicals	spr	Sherrill	South Campus
+LES-REF	LES-REF	30	108		32	1		Keep	Keep	Sherrill Reference	srf	Sherrill	South Campus
+LES-RESERV	LES-RESERV	2,170	227	32	406	7	3	Keep	Keep	Sherrill Reserves	srv	Sherrill	South Campus
+LES-STACKS	LES-STACKS	44,681	46,808	13	751	20		Keep	Keep	Sherrill Stacks	sst	Sherrill	South Campus
+LESK-TESTS	LESK-TESTS	177	181					Keep	Keep	Sherrill Tests	sts	Sherrill	South Campus
+LESK-TRC	LESK-TRC	2,363	2,665		115	19		Keep	Keep	Sherrill TRC	str	Sherrill	South Campus
+LESK-TRCTX	LESK-TRCTX	103	594					Keep	Keep	Sherrill TRC Textbooks	stt	Sherrill	South Campus
+LES-ONLINE	LES-ONLINE	10,634	46		35			Keep	Keep	Streaming	est	Online	Online
+LESK-DESK	LESK-DESK	424	539		4	2		Keep	Keep	Sherrill Info Desk	sid	Sherrill	South Campus
+LESK-GRAPH	LESK-GRAPHIC							Keep	Keep	Sherrill Juv Graphic Novels	sjg	Sherrill	South Campus
+LES-CASUAL	LES-CASUAL	520	558		7	1		Keep	Keep	Sherrill Browsing	sbr	Sherrill	South Campus
+LES-FICHE	LES-FICHE	1	1					Merge	Merge	Sherrill Archives	sar	Archives	South Campus
+LES-FILM	LES-FILM	3	3					Merge	Merge	Sherrill Archives	sar	Archives	South Campus
+LES-READY	LES-READY	6	6					Merge	Merge	Sherrill Info Desk	sid	Sherrill	South Campus
+LES-REFF	LES-REFF	13						Merge	Merge	Sherrill Reference	srf	Sherrill	South Campus
+LES-CIRC	Lesley-Sherrill Circ Desk	15	13		33	44		Merge	Merge	Sherrill Info Desk	sid	Sherrill	South Campus
+AIB-OFFICE	AIB-OFFICE	2	2					Purge	Purge	(I changed the location of these 2 already) -Micki			
+AIB-CIRC	Lesley-Moriarty Circ Desk	1	2	1	24	22	10	Purge	Purge				
+AIB-MEDCD	AIB-MEDCD	1	1		3	3		Purge	Purge				
+AIB-MEDIA	AIB-MEDIA	4	5		2	1		Purge	Purge				
+AIB-PASS	AIB-PASS	1	1					Purge	Purge				
+AIB-VIDEO	AIB-VIDEO				31	25		Purge	Purge				
+LES-CAT	LES Cataloging Desk			11	1			Purge	Purge				
+LES-FOLIO	LES-FOLIO	2	2	9				Purge	Purge				
+LES-ILL	LES-ILL				114	113		Purge	Purge				
+LES-NEW	LES-NEW	2		22				Purge	Purge				
+LES-NEWS	LES-NEWSPAPER	1	1		33			Purge	Purge				
+LES-PASS	LES-PASS	1	1		5	5		Purge	Purge				
+LESKDSPLAY	LESDISPLAY			8				Purge	Purge				
+LESK-MAG	zLESK-MAG				3			Purge	Purge				
+LESK-MEDCD	LESK-MEDCD	13	14					Purge	Purge				
+LESK-MEDIA	LESK-MEDIA	21	22					Purge	Purge				
+	Totals	92,798	76,285	606	2009	552	22						
+													
+													
+													
+LESK = TRC Stuff													

@@ -1,0 +1,44 @@
+Legacy Code	Legacy Name	Count Perm (Unsuppressed)	Count Temp (Unsuppressed)	Count Perm (Suppressed)	Count Temp (Suppressed)	Perm Type (Unsuppressed)	Perm Type (Suppressed)	FOLIO Name	Notes
+1wkReserve	1 week reserve	8	11			Keep	Keep	1 Week Reserve	
+24hreserve	24 hour reserve	9	2	12		Keep	Keep	24 Hour Reserve	
+2hrReserve	2 hour reserve	47	24	27	6	Keep	Keep	2 Hour Reserve	
+Artist Bk	Artist Bk	37				Keep	Keep	Artist Book	
+AUDIO-CASS	AUDIO-CASS	19				Keep	Keep	Audio Cassette	
+Book	Book	59476		215		Keep	Keep	Book	
+CD	CD			4		Keep	Keep	CD	
+CD-ROM	CD-ROM	3				Keep	Keep	CD-ROM	
+DVD	DVD	1155		2		Keep	Keep	DVD	
+Folio	Folio	18				Keep	Keep	Folio	
+Juv Book	Juv Book	59		1		Keep	Keep	Juv Book	
+Kit	Kit	22				Keep	Keep	Kit	
+MED. GUIDE	MED. GUIDE	68		1		Keep	Keep	Media Guide	
+MICROFICHE	MICROFICHE	1				Keep	Keep	Microfiche	
+MICROFILM	MICROFILM	3				Keep	Keep	Microfilm	
+PERIODICAL	PERIODICAL	351		16		Keep	Keep	Periodical	
+REFERENCE	REFERENCE	407		46		Keep	Keep	Reference	
+RESRV DESK	RESRV DESK					Keep	Keep	Reserve Desk	
+TESTS	TESTS	180				Keep	Keep	Tests	
+TEXTBOOK	TEXTBOOK	594				Keep	Keep	Textbook	
+TRC	TRC	2760		18		Keep	Keep	TRC	Teaching Resource Collection
+BOOK	BOOK	6	4	31		Merge	Merge	Book	
+BROWSE	BROWSE	487	2	2		Merge	Merge	Book	More of a location than an itype
+DVD7	DVD 7 day loan	163				Merge	Merge	DVD	
+JUV. BOOK	JUV. BOOK	9949		3		Merge	Merge	Juv Book	
+Juv. Book	Juv. Book	49				Merge	Merge	Juv Book	
+MEDIA	MEDIA	2				Merge	Merge	CD	
+SPECIALCOL	SPECIALCOL	86				Merge	Merge	Book	I changed some itypes, the rest can be changed to Book
+2dayReserv	2 day reserve					Purge	Purge		
+3dayReserv	3 day reserve					Purge	Purge		
+3hreserve	3 hour reserve	7		17		Purge	Purge		
+48hreserve	48 hour reserve	11	35			Purge	Purge		
+E-READER	E-READER	2		4		Purge	Purge		
+ILL	ILL			112		Purge	Purge		Used for ILLiad
+In-Lib Use	In-Library Use Only			1		Purge	Purge		
+MUSEUMPASS	MUSEUMPASS	2		5		Purge	Purge		
+ONLINE	ONLINE					Purge	Purge	Keep bib records, purge item records, we don't need an "online" material type in Folio	The itypes report we got only has 44 things listed
+Reserve	Reserve					Purge	Purge		
+SLDCAROUSL	SLIDE CAROUSEL	3				Purge	Purge		
+SLDPRJCTOR	SLIDE PROJECTOR	2				Purge	Purge		
+Stacks	Stacks					Purge	Purge		
+VIDEO TAPE	VIDEO TAPE			25		Purge	Purge		
+	Totals	75986	78	542	6				
