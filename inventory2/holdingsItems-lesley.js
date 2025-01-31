@@ -78,7 +78,7 @@ const makeItemNote = function (text, type, staffOnly) {
 }
 
 try {
-  if (!mfhdFile) { throw "Usage: node holdingsItems-massart.js <conf_file> <mfhd_jsonl_file>" }
+  if (!mfhdFile) { throw "Usage: node holdingsItems-lesley.js <conf_file> <mfhd_jsonl_file>" }
   let confDir = path.dirname(confFile);
   let confData = fs.readFileSync(confFile, { encoding: 'utf8' });
   let conf = JSON.parse(confData);

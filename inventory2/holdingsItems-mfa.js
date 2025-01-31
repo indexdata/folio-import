@@ -412,10 +412,8 @@ try {
           f.subfields.forEach(s => {
             if (s.u) { 
               o.uri = s.u;
-            } else if (s.y) {
-              o.linkText = s.y;
             } else if (s.z) {
-              o.publicNote = s.z;
+              o.linkText = s.z;
             } else if (s['3']) {
               o.materialsSpecification = s['3'];
             }
