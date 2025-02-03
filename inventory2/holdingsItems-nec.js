@@ -162,7 +162,7 @@ try {
     for await (let line of rl) {
       let c = line.split(/\|/);
       let k = c[0].substring(1);
-      instMap[k] = { id: c[1], ea: c[5], blvl: c[4], type: c[6] };
+      instMap[k] = { id: c[1], ea: c[5], blvl: c[4], type: c[6], bibId: k };
     }
   }
   // throw(instMap);
@@ -194,6 +194,8 @@ try {
   }
   const bcseen = {};
   const occ = {};
+  const instItemMap = {};
+
   const makeItems = (fields, holdings, inst) => {
     fields.forEach(r => {
       let ih = {};
@@ -334,6 +336,7 @@ try {
         if (i.permanentLoanTypeId) {
           writeOut(outs.items, i);
           ttl.items++;
+          instItemMap[inst.bibId] = i.id;
         } else {
           console.log(`ERROR item loantype not found for "Can circulate"`);
           ttl.itemErr++;
@@ -347,6 +350,7 @@ try {
 
   const hseen = {};
   const bwseen = {};
+  const relMap = {};
 
   let fileStream = fs.createReadStream(mfhdFile);
   let rl = readline.createInterface({
@@ -530,12 +534,24 @@ try {
               ttl.boundwiths++
             }
             let occ = 0;
-            lnk = [];
             lnk.forEach(l => {
               occ++;
               l.subfields.forEach(s => {
                 if (s.a) {
-                  let iid = bibItemMap[s.a];
+                  let inst = instMap[s.a];
+                  if (inst) {
+                    relMap[inst.bibId] = JSON.stringify(h);
+                    let instId = inst.id;
+                    let ro = {
+                      superInstanceId: h.instanceId,
+                      subInstanceId: instId,
+                      instanceRelationshipTypeId: refData.instanceRelationshipTypes['bound-with']
+                    };
+                    ro.id = uuid(ro.superInstanceId + ro.subInstanceId, ns);
+                    writeOut(outs.rel, ro);
+                    ttl.relationships++;
+                  }
+                  let iid;
                   if (iid) {
                     let hstr = JSON.stringify(h);
                     let bwh = JSON.parse(hstr);
@@ -557,7 +573,6 @@ try {
                     writeOut(outs.holdings, bwh);
                     writeOut(outs.rel, ro);
                     ttl.boundwiths++;
-                    ttl.relationships++;
                   }
                 }
               });
@@ -580,7 +595,30 @@ try {
       console.log(`ERROR instance "${bhrid}" not found for ${hhrid}`);
       ttl.holdingsErr++;
     }
-    
+  }
+
+  if (relMap) {
+    let occ = 0;
+    for (let bid in relMap) {
+      let iid = instItemMap[bid];
+      if (iid) {
+        let h = JSON.parse(relMap[bid]);
+        let hstr = JSON.stringify(h);
+        let bwh = JSON.parse(hstr);
+        bwh.instanceId = '';
+        bwh.hrid = `${bwh.hrid}.${occ}`;
+        bwh.id = uuid(bwh.hrid, ns);
+        let o = {
+          itemId: uuid(iid, ns),
+          holdingsRecordId: bwh.id,
+        };                
+        o.id = uuid(o.holdingsRecordId, o.itemId);
+        writeOut(outs.bwp, o);
+        writeOut(outs.holdings, bwh);
+        ttl.boundwiths++;
+      }
+    }
+    console.log(iid);
   }
 
   showStats();
