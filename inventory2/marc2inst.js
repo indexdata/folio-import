@@ -635,6 +635,7 @@ try {
       if (!title) {
         if (conf.noTitle) {
           marc.fields['245'] = [ { ind1: '1', ind2: '0', subfields: [ { a: conf.noTitle } ] } ];
+          console.log(`WARN no title found for ${hrid}, setting 245$a to "${conf.noTitle}"`);
         } else {
           ttl.errors++;
           console.log(`ERROR no title found (HRID ${hrid})!`);
