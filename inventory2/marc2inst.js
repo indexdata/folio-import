@@ -633,10 +633,14 @@ try {
       let f245 = (marc.fields['245']) ? marc.fields['245'][0] : '';
       let title = getSubs(f245, tiSubs);
       if (!title) {
-        ttl.errors++;
-        console.log(`ERROR no title found (HRID ${hrid})!`);
-        writeOut(outs.err, r, true);
-        continue;
+        if (conf.noTitle) {
+          marc.fields['245'] = [ { ind1: '1', ind2: '0', subfields: [ { a: conf.noTitle } ] } ];
+        } else {
+          ttl.errors++;
+          console.log(`ERROR no title found (HRID ${hrid})!`);
+          writeOut(outs.err, r, true);
+          continue;
+        }
       } 
 
       // add "cam" to leaders with blank btyes 5-4

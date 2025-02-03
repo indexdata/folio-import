@@ -1,0 +1,14 @@
+{
+    "nameSpace": "b6ae2974-a13b-40e3-8523-36776acdee87",
+    "refDir": "/Users/charles/Folio/nec/ref/inv",
+    "tsvDir": "",
+    "mapFile": "",
+    "controlNum": "",
+    "hridPrefix": "l",
+    "makeInstMap": true,
+    "hasMfhd": true,
+    "noTitle": "[Unknown title]",
+    "catDate": { "tag": "008" },
+    "suppress": { "tag": "908", "subfield": "x", "value":"Y" },
+    "callNumbers": {}
+}
