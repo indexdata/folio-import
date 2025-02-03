@@ -224,8 +224,9 @@ try {
         i.status.name = stat;
         if (ih.v) {
           try {
-            new Date(ih.v).toISOString();
-            i.status.date = ih.v;
+            let sd = new Date(ih.v).toISOString();
+            sd = sd.replace(/T00:/, 'T12:');
+            i.status.date = sd;
           } catch (e) {
             console.log(`WARN "${ih.v}" is not a valid status date`)
           }
@@ -560,86 +561,6 @@ try {
       ttl.holdingsErr++;
     }
     
-  }
-
-  /*
-    This is the item creation section
-  */
-  
-  
-  let items = {};
-  for (let x in items) {
-    let r = items[x];
-    let iid = r.ITEM_ID;
-    let id = uuid(iid, ns);
-    let hrid = iprefix + iid;
-    let m = mmap[iid];
-    let vhid = (m) ? m.MFHD_ID : '';
-    let hid = hseen[vhid];
-    if (hid) {
-      let i = {
-        _version: 1,
-        id: id,
-        hrid: hrid,
-        holdingsRecordId: hid,
-        formerIds: [ iid ],
-        status: { name: 'Available' },
-        notes: []
-      };
-      let bc = m.BARCODE || 'TEMP' + iid;
-      if (!bcseen[bc]) {
-        i.barcode = bc;
-        if (!m.BARCODE) {
-          let o = {
-            note: 'Barcode added during migrations.',
-            itemNoteTypeId: refData.itemNoteTypes.Note,
-            staffOnly: true
-          }
-          i.notes.push(o);
-        }
-        bcseen[bc] = iid;
-      } else {
-        i.barcode = 'TEMP' + iid;
-        let o = {
-          note: `Barcode ${bc} already used by pi${bcseen[bc]}. Using ITEM_ID instead.`,
-          itemNoteTypeId: refData.itemNoteTypes.Note,
-          staffOnly: true
-        }
-        i.notes.push(o);
-        console.log(`WARN barcode ${bc} already used by ITEM_ID ${bcseen[bc]}`);
-      }
-      if (m.ITEM_ENUM) i.volume = m.ITEM_ENUM;
-      if (m.CHRON) i.chronology = m.CHRON;
-      if (m.YEAR) i.yearCaption = [ m.YEAR ];
-      if (r.COPY_NUMBER) i.copyNumber = r.COPY_NUMBER;
-      if (r.PIECES) i.numberOfPieces = r.PIECES;
-      let nts = m.NOTES || [];
-      nts.forEach(n => {
-        let o = {
-          note: n,
-          itemNoteTypeId: refData.itemNoteTypes.Note
-        };
-        i.notes.push(o);
-      });
-      if (m.STATUS) i.status.name = m.STATUS;
-      let vtype = r.ITEM_TYPE_ID;
-      i.materialTypeId = tsvMap.mtypes[vtype];
-      i.permanentLoanTypeId = refData.loantypes.Standard;
-      let tloc = locMap[r.TEMP_LOCATION];
-      if (tloc) i.temporaryLocationId = tloc;
-      if (i.materialTypeId) {
-        if (i.permanentLoanTypeId) {
-          writeOut(outs.items, i);
-        } else {
-          console.log(`ERROR loantype not found for ${iid}`);
-          ttl.itemErr++;
-        }
-      } else {
-        console.log(`ERROR material type "${vtype}" not found for ${iid}`);
-        ttl.itemErr++;
-      }
-      ttl.items++;
-    }
   }
 
   showStats();

@@ -224,8 +224,9 @@ try {
         i.status.name = stat;
         if (ih.v) {
           try {
-            new Date(ih.v).toISOString();
-            i.status.date = ih.v;
+            let sd = new Date(ih.v).toISOString();
+            sd = sd.replace(/T00:/, 'T12:');
+            i.status.date = sd;
           } catch (e) {
             console.log(`WARN "${ih.v}" is not a valid status date`)
           }
