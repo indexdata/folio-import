@@ -78,7 +78,7 @@ const makeItemNote = function (text, type, staffOnly) {
 }
 
 try {
-  if (!mfhdFile) { throw "Usage: node holdingsItems-lesley.js <conf_file> <mfhd_jsonl_file>" }
+  if (!mfhdFile) { throw "Usage: node holdingsItems-nec.js <conf_file> <mfhd_jsonl_file>" }
   let confDir = path.dirname(confFile);
   let confData = fs.readFileSync(confFile, { encoding: 'utf8' });
   let conf = JSON.parse(confData);
@@ -282,10 +282,14 @@ try {
       if (ih.d || ih.o) {
         i.yearCaption = [];
         if (ih.d) i.yearCaption.push(ih.d);
-        // if (ih.o) i.yearCaption.push(ih.o);
       }
       if (ih.m) i.numberOfPieces = ih.m;
-      if (ih.n) i.descriptionOfPieces = ih.n;
+      let dop = [];
+      if (ih.n) dop.push(ih.n);
+      if (ih.o) dop.push(ih.o);
+      if (dop[0]) {
+        i.descriptionOfPieces = dop.join(/ ; /);
+      }
       if (ih.q) {
         let t = refData.itemNoteTypes.General;
         if (t) {
@@ -392,7 +396,6 @@ try {
         hrid: hhrid,
         sourceId: refData.holdingsRecordsSources.FOLIO,
         holdingsTypeId: typeId,
-        formerIds: [ ctrl ],
         discoverySuppress: false
       }
       h.instanceId = inst.id;
@@ -402,6 +405,14 @@ try {
         h.callNumberTypeId = cnTypeMap[mh.ind1] || cnTypeMap['8'];
         if (mh.k) h.callNumberPrefix = mh.k;
         if (mh.m) h.callNumberSuffix = mh.m;
+      }
+      if (m['035']) {
+        h.formerIds = [];
+        m['035'].forEach(f => {
+          f.subfields.forEach(s => {
+            if (s.a) h.formerIds.push(s.a);
+          });
+        });
       }
       h.notes = [];
       let ntype = refData.holdingsNoteTypes.Note;
@@ -462,6 +473,10 @@ try {
         f.subfields.forEach(s => {
           if (s.a) {
             o.statement = s.a;
+          } else if (s.x) {
+            o.staffNote = s.x;
+          } else if (s.z) {
+            o.note = s.z;
           }
         });
         h.holdingsStatementsForSupplements.push(o);
@@ -474,6 +489,10 @@ try {
         f.subfields.forEach(s => {
           if (s.a) {
             o.statement = s.a;
+          } else if (s.x) {
+            o.staffNote = s.x;
+          } else if (s.z) {
+            o.note = s.z;
           }
         });
         h.holdingsStatementsForIndexes.push(o);
@@ -511,6 +530,7 @@ try {
               ttl.boundwiths++
             }
             let occ = 0;
+            lnk = [];
             lnk.forEach(l => {
               occ++;
               l.subfields.forEach(s => {
