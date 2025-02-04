@@ -524,55 +524,22 @@ try {
                 x--;
               }
             }
-            if (iid && lnk[0]) {
-              let o = {
-                itemId: uuid(iid, ns),
-                holdingsRecordId: h.id
-              };
-              o.id = uuid(o.holdingsRecordId, o.itemId);
-              writeOut(outs.bwp, o);
-              ttl.boundwiths++
-            }
-            let occ = 0;
             lnk.forEach(l => {
-              occ++;
               l.subfields.forEach(s => {
                 if (s.a) {
                   let inst = instMap[s.a];
                   if (inst) {
-                    relMap[inst.bibId] = JSON.stringify(h);
-                    let instId = inst.id;
+                    let bwh = JSON.parse(JSON.stringify(h));
+                    bwh.instanceId = inst.id;
+                    relMap[inst.bibId] = bwh;
                     let ro = {
                       superInstanceId: h.instanceId,
-                      subInstanceId: instId,
+                      subInstanceId: inst.id,
                       instanceRelationshipTypeId: refData.instanceRelationshipTypes['bound-with']
                     };
                     ro.id = uuid(ro.superInstanceId + ro.subInstanceId, ns);
                     writeOut(outs.rel, ro);
                     ttl.relationships++;
-                  }
-                  let iid;
-                  if (iid) {
-                    let hstr = JSON.stringify(h);
-                    let bwh = JSON.parse(hstr);
-                    bwh.instanceId = instMap[s.a];
-                    bwh.hrid = `${bwh.hrid}.${occ}`;
-                    bwh.id = uuid(bwh.hrid, ns);
-                    let o = {
-                      itemId: uuid(iid, ns),
-                      holdingsRecordId: bwh.id,
-                    };                
-                    o.id = uuid(o.holdingsRecordId, o.itemId);
-                    let ro = {
-                      superInstanceId: h.instanceId,
-                      subInstanceId: bwh.instanceId,
-                      instanceRelationshipTypeId: refData.instanceRelationshipTypes['bound-with']
-                    };
-                    ro.id = uuid(ro.superInstanceId + ro.subInstanceId, ns);
-                    writeOut(outs.bwp, o);
-                    writeOut(outs.holdings, bwh);
-                    writeOut(outs.rel, ro);
-                    ttl.boundwiths++;
                   }
                 }
               });
@@ -597,15 +564,13 @@ try {
     }
   }
 
-  if (relMap) {
-    let occ = 0;
+  if (!relMap) {
     for (let bid in relMap) {
+      let occ = 0;
+      occ++;
+      let bwh = relMap[bid];
       let iid = instItemMap[bid];
       if (iid) {
-        let h = JSON.parse(relMap[bid]);
-        let hstr = JSON.stringify(h);
-        let bwh = JSON.parse(hstr);
-        bwh.instanceId = '';
         bwh.hrid = `${bwh.hrid}.${occ}`;
         bwh.id = uuid(bwh.hrid, ns);
         let o = {
@@ -616,9 +581,10 @@ try {
         writeOut(outs.bwp, o);
         writeOut(outs.holdings, bwh);
         ttl.boundwiths++;
+        ttl.holdings++;
+        // console.log(bwh);
       }
     }
-    console.log(iid);
   }
 
   showStats();
