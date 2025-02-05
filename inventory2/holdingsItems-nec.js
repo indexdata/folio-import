@@ -201,7 +201,12 @@ try {
       let ih = {};
       r.subfields.forEach(s => {
         let code = Object.keys(s)[0]
-        ih[code] = s[code];
+        if (code === 'z') {
+          if (!ih[code]) ih[code] = [];
+          ih[code].push(s[code]);
+        } else {
+          ih[code] = s[code];
+        }
       });
       let iid = holdings.hrid.replace(/^[a-z]+/, iprefix);
       if (occ[iid] === undefined) {
@@ -336,7 +341,12 @@ try {
         if (i.permanentLoanTypeId) {
           writeOut(outs.items, i);
           ttl.items++;
-          instItemMap[inst.bibId] = i.id;
+          if (ih.z) {
+            ih.z.forEach(z => {
+              if (!instItemMap[z]) instItemMap[z] = [];
+              instItemMap[z].push({ iid: i.id, hid: holdings.id });
+            });
+          }
         } else {
           console.log(`ERROR item loantype not found for "Can circulate"`);
           ttl.itemErr++;
@@ -373,7 +383,7 @@ try {
             mh[k].push(s[k]);
           }
           else {
-            mh[k] = s[k]; 
+            mh[k] = (mh[k]) ? mh[k] + ' ' + s[k] : s[k]; 
           }
         });
       });
@@ -564,27 +574,38 @@ try {
     }
   }
 
-  if (!relMap) {
-    for (let bid in relMap) {
-      let occ = 0;
-      occ++;
+  // console.log(instItemMap);
+  // console.log(relMap);
+  let occur = {};
+  for (let bid in instItemMap) {
+    instItemMap[bid].forEach(info => {
+      let iid = info.iid;
+      let hid;
       let bwh = relMap[bid];
-      let iid = instItemMap[bid];
-      if (iid) {
-        bwh.hrid = `${bwh.hrid}.${occ}`;
-        bwh.id = uuid(bwh.hrid, ns);
-        let o = {
-          itemId: uuid(iid, ns),
-          holdingsRecordId: bwh.id,
-        };                
-        o.id = uuid(o.holdingsRecordId, o.itemId);
-        writeOut(outs.bwp, o);
-        writeOut(outs.holdings, bwh);
-        ttl.boundwiths++;
-        ttl.holdings++;
-        // console.log(bwh);
+      if (bwh) {
+        if (!bwseen[bid]) {
+          occur[bwh.hrid] = (!occur[bwh.hrid]) ? 1 : occur[bwh.hrid]++;
+          let occ = occur[bwh.hrid];
+          bwh.hrid = `${bwh.hrid}.${occ}`;
+          bwh.id = uuid(bwh.hrid, ns);
+          writeOut(outs.holdings, bwh);
+          ttl.holdings++;
+          hid = bwh.id;
+          bwseen[bid] = hid;
+        } else {
+          hid = bwseen[bid];
+        }
+      } else {
+        hid = info.hid;
       }
-    }
+      let o = {
+        itemId: iid,
+        holdingsRecordId: hid,
+      };                
+      o.id = uuid(o.holdingsRecordId + o.itemId, ns);
+      writeOut(outs.bwp, o);
+      ttl.boundwiths++;
+    });
   }
 
   showStats();
