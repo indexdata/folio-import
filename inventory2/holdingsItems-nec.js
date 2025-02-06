@@ -577,34 +577,40 @@ try {
   // console.log(instItemMap);
   // console.log(relMap);
   let occur = {};
+  let bwhseen = {};
+  let bwpseen = {};
   for (let bid in instItemMap) {
     instItemMap[bid].forEach(info => {
       let iid = info.iid;
       let hid;
-      let bwh = relMap[bid];
-      if (bwh) {
-        if (!bwseen[bid]) {
-          occur[bwh.hrid] = (!occur[bwh.hrid]) ? 1 : occur[bwh.hrid]++;
-          let occ = occur[bwh.hrid];
-          bwh.hrid = `${bwh.hrid}.${occ}`;
-          bwh.id = uuid(bwh.hrid, ns);
-          writeOut(outs.holdings, bwh);
-          ttl.holdings++;
-          hid = bwh.id;
-          bwseen[bid] = hid;
+      if (relMap[bid] && !bwhseen[bid]) {
+        let bwh = JSON.parse(JSON.stringify(relMap[bid]));
+        let hrid = bwh.hrid;
+        if (occur[hrid]) {
+          occur[hrid]++;
         } else {
-          hid = bwseen[bid];
+          occur[hrid] = 1;
         }
+        let occ = occur[hrid];
+        bwh.hrid = `${bwh.hrid}.${occ}`;
+        bwh.id = uuid(bwh.hrid, ns);
+        writeOut(outs.holdings, bwh);
+        ttl.holdings++;
+        hid = bwh.id;
+        bwhseen[bid] = hid;
       } else {
-        hid = info.hid;
+        hid = bwhseen[bid];
       }
       let o = {
         itemId: iid,
-        holdingsRecordId: hid,
+        holdingsRecordId: hid || info.hid,
       };                
       o.id = uuid(o.holdingsRecordId + o.itemId, ns);
-      writeOut(outs.bwp, o);
-      ttl.boundwiths++;
+      if (1) {
+        writeOut(outs.bwp, o);
+        ttl.boundwiths++;
+        bwpseen[o.id] = 1;
+      }
     });
   }
 
