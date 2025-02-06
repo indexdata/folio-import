@@ -25,6 +25,10 @@ const wait = (ms) => {
     let config = await getAuthToken(superagent);
 
     endpoint = endpoint.replace(/^\//, '');
+    if (endpoint.match(/^\.x/)) {
+      endpoint = endpoint.replace(/^\.x\//, '');
+      endpoint = endpoint.replace(/__/g, '/');
+    }
     let getUrl = config.okapi + '/' + endpoint + '?limit=1000';
     if (endpoint.match(/\?/)) getUrl = config.okapi + '/' + endpoint;
     if (endpoint.match(/^(erm|licenses)\//)) {
