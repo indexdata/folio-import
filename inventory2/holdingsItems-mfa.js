@@ -192,11 +192,42 @@ try {
       console.log(l, ':', n);
     }
   }
+
   const bcseen = {};
+  const hseen = {};
+  const bwseen = {};
+  const bcHoldMap = {};
   const occ = {};
+
+  const makeBoundWiths = (iid, holdings, barcode) => {
+    if (iid && !bwseen[holdings.id]) {
+      let o = {
+        itemId: iid,
+        holdingsRecordId: holdings.id
+      };
+      o.id = uuid(o.holdingsRecordId, o.itemId);
+      writeOut(outs.bwp, o);
+      bwseen[holdings.id] = 1;
+      ttl.boundwiths++
+    }
+    let supId = (bcHoldMap[barcode]) ? bcHoldMap[barcode].instanceId : '';
+    let subId = holdings.instanceId;
+    if (supId && subId && supId !== subId) {
+      let ro = {
+        superInstanceId: supId,
+        subInstanceId: subId,
+        instanceRelationshipTypeId: refData.instanceRelationshipTypes['bound-with']
+      };
+      ro.id = uuid(ro.superInstanceId + ro.subInstanceId, ns);
+      writeOut(outs.rel, ro);
+      ttl.relationships++;
+    }
+  }
+
   const makeItems = (fields, holdings, inst) => {
     fields.forEach(r => {
       let ih = {};
+      let bwFlag = false;
       r.subfields.forEach(s => {
         let code = Object.keys(s)[0]
         ih[code] = s[code];
@@ -228,7 +259,8 @@ try {
             sd = sd.replace(/T00:/, 'T12:');
             i.status.date = sd;
           } catch (e) {
-            console.log(`WARN "${ih.v}" is not a valid status date`)
+            console.log(`WARN "${ih.v}" is not a valid status date`);
+            bwFlag = true;
           }
         }
       }
@@ -254,6 +286,13 @@ try {
       if (ih.i && !bcseen[ih.i]) {
         i.barcode = ih.i;
         bcseen[ih.i] = i.id;
+        bcHoldMap[ih.i] = holdings;
+      } else if (ih.i) {
+        console.log(`INFO [${holdings.hrid}] barcode "${ih.i}" hass already been used. Creating bound-with-part.`);
+        bwFlag = true;
+        makeBoundWiths(bcseen[ih.i], holdings, ih.i);
+        let mainHoldingsId = bcHoldMap[ih.i];
+        if (!bwseen[mainHoldingsId]) makeBoundWiths(bcseen[ih.i], bcHoldMap[ih.i], ih.i);
       }
       if (ih.c) {
         if (inst.blvl === 's') {
@@ -313,8 +352,10 @@ try {
 
       if (i.materialTypeId) {
         if (i.permanentLoanTypeId) {
-          writeOut(outs.items, i);
-          ttl.items++;
+          if (!bwFlag) {
+            writeOut(outs.items, i);
+            ttl.items++;
+          }
         } else {
           console.log(`ERROR item loantype not found for "Can circulate"`);
           ttl.itemErr++;
@@ -326,8 +367,7 @@ try {
     });
   }
 
-  const hseen = {};
-  const bwseen = {};
+  
 
   let fileStream = fs.createReadStream(mfhdFile);
   let rl = readline.createInterface({
@@ -477,58 +517,7 @@ try {
           ttl.holdings++;
           writeOut(outs.holdings, h);
           hseen[ctrl] = h.id;
-          let lnk = m['014'];
-          if (lnk) {
-            for (let x = 0; x < lnk.length; x++) {
-              let sa = lnk[x].subfields[0].a;
-              if (!sa.match(/^\d+$/)) {
-                lnk.splice(x, 1);
-                x--;
-              }
-            }
-            if (iid && lnk[0]) {
-              let o = {
-                itemId: uuid(iid, ns),
-                holdingsRecordId: h.id
-              };
-              o.id = uuid(o.holdingsRecordId, o.itemId);
-              writeOut(outs.bwp, o);
-              ttl.boundwiths++
-            }
-            let occ = 0;
-            lnk.forEach(l => {
-              occ++;
-              l.subfields.forEach(s => {
-                if (s.a) {
-                  let iid = bibItemMap[s.a];
-                  if (iid) {
-                    let hstr = JSON.stringify(h);
-                    let bwh = JSON.parse(hstr);
-                    bwh.instanceId = instMap[s.a];
-                    bwh.hrid = `${bwh.hrid}.${occ}`;
-                    bwh.id = uuid(bwh.hrid, ns);
-                    let o = {
-                      itemId: uuid(iid, ns),
-                      holdingsRecordId: bwh.id,
-                    };                
-                    o.id = uuid(o.holdingsRecordId, o.itemId);
-                    let ro = {
-                      superInstanceId: h.instanceId,
-                      subInstanceId: bwh.instanceId,
-                      instanceRelationshipTypeId: refData.instanceRelationshipTypes['bound-with']
-                    };
-                    ro.id = uuid(ro.superInstanceId + ro.subInstanceId, ns);
-                    writeOut(outs.bwp, o);
-                    writeOut(outs.holdings, bwh);
-                    writeOut(outs.rel, ro);
-                    ttl.boundwiths++;
-                    ttl.relationships++;
-                  }
-                }
-              });
-            });
-            bwseen[h.id] = 1;
-          }
+
           if (m['949']) {
             makeItems(m['949'], h, inst);
           }
@@ -546,86 +535,6 @@ try {
       ttl.holdingsErr++;
     }
     
-  }
-
-  /*
-    This is the item creation section
-  */
-  
-  
-  let items = {};
-  for (let x in items) {
-    let r = items[x];
-    let iid = r.ITEM_ID;
-    let id = uuid(iid, ns);
-    let hrid = iprefix + iid;
-    let m = mmap[iid];
-    let vhid = (m) ? m.MFHD_ID : '';
-    let hid = hseen[vhid];
-    if (hid) {
-      let i = {
-        _version: 1,
-        id: id,
-        hrid: hrid,
-        holdingsRecordId: hid,
-        formerIds: [ iid ],
-        status: { name: 'Available' },
-        notes: []
-      };
-      let bc = m.BARCODE || 'TEMP' + iid;
-      if (!bcseen[bc]) {
-        i.barcode = bc;
-        if (!m.BARCODE) {
-          let o = {
-            note: 'Barcode added during migrations.',
-            itemNoteTypeId: refData.itemNoteTypes.Note,
-            staffOnly: true
-          }
-          i.notes.push(o);
-        }
-        bcseen[bc] = iid;
-      } else {
-        i.barcode = 'TEMP' + iid;
-        let o = {
-          note: `Barcode ${bc} already used by pi${bcseen[bc]}. Using ITEM_ID instead.`,
-          itemNoteTypeId: refData.itemNoteTypes.Note,
-          staffOnly: true
-        }
-        i.notes.push(o);
-        console.log(`WARN barcode ${bc} already used by ITEM_ID ${bcseen[bc]}`);
-      }
-      if (m.ITEM_ENUM) i.volume = m.ITEM_ENUM;
-      if (m.CHRON) i.chronology = m.CHRON;
-      if (m.YEAR) i.yearCaption = [ m.YEAR ];
-      if (r.COPY_NUMBER) i.copyNumber = r.COPY_NUMBER;
-      if (r.PIECES) i.numberOfPieces = r.PIECES;
-      let nts = m.NOTES || [];
-      nts.forEach(n => {
-        let o = {
-          note: n,
-          itemNoteTypeId: refData.itemNoteTypes.Note
-        };
-        i.notes.push(o);
-      });
-      if (m.STATUS) i.status.name = m.STATUS;
-      let vtype = r.ITEM_TYPE_ID;
-      i.materialTypeId = tsvMap.mtypes[vtype];
-      i.permanentLoanTypeId = refData.loantypes.Standard;
-      let tloc = locMap[r.TEMP_LOCATION];
-      if (tloc) i.temporaryLocationId = tloc;
-      if (i.materialTypeId) {
-        if (i.permanentLoanTypeId) {
-          writeOut(outs.items, i);
-        } else {
-          console.log(`ERROR loantype not found for ${iid}`);
-          ttl.itemErr++;
-        }
-      } else {
-        console.log(`ERROR material type "${vtype}" not found for ${iid}`);
-        ttl.itemErr++;
-      }
-      ttl.items++;
-    }
   }
 
   showStats();
