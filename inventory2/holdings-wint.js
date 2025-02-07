@@ -339,14 +339,14 @@ try {
           if (!h[prop]) h[prop] = [];
           f[tag].forEach(ff => {
             let subs = getSubs(ff, codes);
+            let pnote = getSubs(ff, 'z');
+            let snote = getSubs(ff, 'x');
             let text = subs;
-            let pnote = subs.z;
-            let snote = subs.x
+            if (pnote) text += '; ' + pnote;
             if (text) {
               let o = {
                 note: text
               }
-              // if (pnote) o.note = pnote;
               if (snote) o.staffNote = snote;
               h[prop].push(o);
             }
