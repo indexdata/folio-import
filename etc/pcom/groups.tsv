@@ -1,0 +1,30 @@
+Legacy patron type (code or label)	 Legacy Department Name	FOLIO patron group code	Folio patron group label	FOLIO Department Name
+PHARMD	PHARMACY	Student	Student	Pharmacy
+PSYDSCHR	PSYD RESPEC SCHOOL PSY	Student	Student	Psych - School PsyD
+MSSCPSY	SCHOOL PSYCHOLOGY MS	Student	Student	Psych - School
+MSBMSCI	BIOMEDICAL SCIENCES	Student	Student	Biomedical Science
+MSPHMGT	MS PUBLIC HLTH MGMT	Student	Student	Public Health Management
+MSCHPSY	COUN & CL HEALTH PSY	Student	Student	Psych - Counseling
+MSEMMED	EMERGENCY MEDICINE MS	Student	Student	Emergency Medicine
+P-RESIDEN	RESIDENCY PROGRAM	Student	Student	Residency Program
+PSYDSCP	SCHOOL PSYCHOLOGY PSYD	Student	Student	Psych - School PhD
+PSYDCLPS	CLIN PSY PSYD	Student	Student	Psych - Clinial PhD
+MSFOMED	FORENSIC MEDICINE MS	Student	Student	Forensic Medicine
+DOOSTEO	DOOSTEO PROGRAM	Student	Student	Osteopathic Medicine
+PALCI	PALCI LIBRARIES	ILL	Interlibrary Loan Account	PALCI Libraries
+ILL	INTERLIBRARY LOAN	ILL	Interlibrary Loan Account	Interlibrary Loan
+STAFF	STAFF-EMPLOYEE	Staff	Staff Member	Staff Member
+MSHSCPA	PHYSICIAN ASSISTANT MS	Student	Student	Physician Assistant
+COURTESY	COURTESY PATRON	TEST PATRON	TEST PATRON	Courtesy Patron
+SCPSYMS5	SCH PSY MS & PSYD 5	Student	Student	Psych - School to PsyD
+SPSYMSE4	SCHPSY MS & EDS 4	Student	Student	Psych - School to EdD
+EZB	EZB LIBRARIES	ILL	Interlibrary Loan Account	EZBorrow Libraries
+MSMHLCN	MENTAL HEALTH COUNSELING	Student	Student	Psych - Mental Health Counseling MS
+MSMLS	MEDICAL LABORATORY SCI	Student	Student	Medical Laboratory Science
+MSAPP	APPLIED POSITIVE PSYCH	Student	Student	Psych - Applied Positive Psych
+MSABA	APPLIED BEHAVIOR ANALYSIS	Student	Student	Psych - AApplied Behavior Analysis
+FACULTY	FACULTY	Faculty	Faculty Member	Faculty
+ALUMNI	ALUMNI	Alum	Alumni	Alumni
+PGMINTER	INTERNSHIP PROGRAM	Student	Student	Intern
+SPSYMSE4	SCH PSY MS & EDS 4	Student	Student	Psych - School to Edd
+SCPSYMS5	SCH PSY MS & PSYD 5	Student	Student	Psych - School to PsyD
