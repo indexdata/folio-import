@@ -97,6 +97,14 @@ try {
     refData.addressTypes[a.addressType] = a.id;
   });
   // throw(refData);
+
+  // map folio service-points from file
+  const stypes = require(`${refDir}/service-points.json`);
+  refData.servicepoints = {};
+  stypes.servicepoints.forEach(a => {
+    refData.servicepoints[a.name] = a.id;
+  });
+  // throw(refData.servicepoints);
   
   const ntypes = require(`${refDir}/note-types.json`);
   refData.noteTypes = {};
@@ -157,16 +165,12 @@ try {
     }
     let ln = p.LASTNAME;
     let fn = p.FIRSTNAME;
-    let mn = '';
-    if (fn.match(/ /)) {
-      mn = fn.replace(/^.+ /, '');
-      fn = fn.replace(/^(.+) .*/, '$1');
-    }
     let un = p.USERNAME; 
     let id = un;
     let group = p.PROFILE;
     let edate = p.EXPIRATION;
     let cdate = p.CREATED;
+    let bc = p.BARCODE;
     let groupId = groupMap[group];
     let ad = addMap[un];
     let nt = noteMap[un];
@@ -176,16 +180,16 @@ try {
       u = {
         id: uuid(id, ns),
         username: un,
-        barcode: un,
+        externalSystemId: un,
         active: true,
         patronGroup: groupId,
         personal: {
           lastName: ln,
           firstName: fn,
-          middleName: mn,
           addresses: []
         }
       };
+      if (bc) u.barcode = bc;
       if (edate) {
         edate = edate.replace(/^(....)(..)(..)/, '$1-$2-$3');
         let val = new Date(edate).toISOString().substring(0, 10);
@@ -213,7 +217,7 @@ try {
           a.city = cs[0];
           a.region = cs[1];
         }
-        if (a.ZIP) a.postalCode = a.ZIP[0].D;
+        if (ad.ZIP) a.postalCode = ad.ZIP[0].D;
         a.addressTypeId = refData.addressTypes.DEFAULT;
         a.primaryAddress = primary;
         u.personal.addresses.push(a);
@@ -242,8 +246,8 @@ try {
               typeId: refData.noteTypes['Symphony Note'],
               domain: 'users',
               title: 'Symphony Note',
-              popUpOnCheckOut: true,
-              popUpOnUser: true,
+              popUpOnCheckOut: false,
+              popUpOnUser: false,
               links: [
                 { type: 'user', id: u.id }
               ]
@@ -257,7 +261,7 @@ try {
           userId: u.id,
           holdShelf: true,
           delivery: false,
-          defaultServicePointId: '3a40852d-49fd-4df2-a1f9-6e2641a6e91f'
+          defaultServicePointId: refData.servicepoints['Pecan Library']
         }
         writeOut(files.r, pref);
         useen[un] = 1;
