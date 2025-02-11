@@ -419,7 +419,7 @@ foreach (@ARGV) {
     }
     my $nid = $hrid;
     if ($hrids->{$hrid}) {
-      print "WARN duplicate 001 found: $hrid\n";
+      print "WARN duplicate 001 (010) found: $hrid\n";
       $errors++;
       next;
     }
