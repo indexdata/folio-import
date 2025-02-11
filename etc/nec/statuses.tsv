@@ -4,12 +4,12 @@ Missing	281	Missing							FOLIO Statuses:
 Lost--Library Applied	60	Declared Lost							Aged to Lost
 Lost -- System Applied	519	Aged to Lost							Available
 Damaged	13	Available	This is a condition in FOLIO, not an item status	Available (NEC judges whether the item is too damaged to be loaned)					Awaiting delivery 
-At Bindery	725	In process	In process?	Move all to NEC Bindery temp item location 					Awaiting pickup
+At Bindery	725	In process (non-requestable)	In process?	Move all to NEC Bindery temp item location 					Awaiting pickup
 Cataloging Review	3	In process	REPORT	Move to Cataloging office 					Checked out
 Charged	389	Checked out							Claimed Returned
 In Process	214	In process							Declared lost
 Renewed	199	Checked out							In process
-Overdue	1	Checked out							In process (not requestable)
+Overdue	1	Checked out							In process (non-requestable)
 Hold Request	2								Intellectual item
 									In transit
 									Lost and paid
