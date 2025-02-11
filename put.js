@@ -8,8 +8,8 @@ let ep = process.argv[2];
     if (!ep) throw(`Usage node put.js <end_point>`);
     const config = await getAuthToken(superagent);
 
-    if (ep.match(/^\.x/)) {
-      ep = ep.replace(/^\.x\//, '');
+    if (ep.match(/^_/)) {
+      ep = ep.replace(/^_\//, '');
       ep = ep.replace(/__/g, '/');
     }
     let url = `${config.okapi}/${ep}`;

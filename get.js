@@ -8,10 +8,8 @@ let ep = process.argv[2];
     if (!ep) throw(`Usage node get.js <end_point>`);
     const config = await getAuthToken(superagent);
 
-    if (ep.match(/^\.x/)) {
-      ep = ep.replace(/^\.x\//, '');
-      ep = ep.replace(/__/g, '/');
-    }
+    ep = ep.replace(/^_\//, '');
+    ep = ep.replace(/__/g, '/');
     let url = `${config.okapi}/${ep}`;
     console.warn('GET', url);
     try {

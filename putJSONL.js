@@ -29,8 +29,8 @@ const wait = (ms) => {
       throw new Error('Limit must be a number.');
     }
 
+    ep = ep.replace(/^_\//, '');
     ep = ep.replace(/__/g, '/');
-    ep = ep.replace(/^\.x\//, '');
     const workingDir = path.dirname(inFile);
     const baseName = path.basename(inFile, '.jsonl');
     const errPath = `${workingDir}/${baseName}Err.jsonl`;
