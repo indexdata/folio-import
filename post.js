@@ -7,7 +7,6 @@ let ep = process.argv[2];
   try {
     if (!ep) throw(`Usage node post.js <end_point>`);
     const config = await getAuthToken(superagent);
-console.log(ep);
     if (ep.match(/^_/)) {
       ep = ep.replace(/^../, '');
       ep = ep.replace(/__/g, '/');
