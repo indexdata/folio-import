@@ -18,6 +18,13 @@ const outs = {};
 const bcseen = {};
 const iseen = {};
 const seen = {};
+const tagMap = {
+  FMT: '996',
+  UID: '997',
+  CAT: '998',
+  UID: '',
+  SYS: ''
+};
 
 const typeMap = {
   'a': 'text',
@@ -187,9 +194,15 @@ const funcs = {
     let r = pubRoleMap[ind2];
     return r;
   },
+  set_subject_source_id_by_code: function (data, param) {
+    return refData.subjectSources[data] || refData.subjectSources['Source not specified'];
+  },
   set_subject_source_id: function (data, param) {
   },
   set_subject_type_id: function (data, param) {
+    let tstr = param.name;
+    let tid = refData.subjectTypes[tstr] || refData.subjectTypes['Type of entity unspecified'];
+    return tid;
   },
   trim: function (data) {
     data = data.trim();
@@ -579,7 +592,7 @@ try {
         let tag = conf.controlNum.substring(0, 3);
         let sub = conf.controlNum.substring(3, 4);
         let cf = (marc.fields[tag]) ? marc.fields[tag][0] : '';
-        let cnum = (cf) ? getSubs(cf, sub) : '';
+        let cnum = (typeof(cf) === 'string') ? cf.trim() : getSubs(cf, sub);
         
         if (cnum) {
           if (conf.controlNum === '907a') {
@@ -648,6 +661,20 @@ try {
       if (marc.fields.leader) {
         marc.fields.leader = marc.fields.leader.replace(/^(.....)   /, '$1cam');
         marc.fields.leader = marc.fields.leader.replace(/....$/, '4500');
+      }
+
+      for (let tag in tagMap) {
+        if (marc.fields[tag]) {
+          let newTag = tagMap[tag];
+          if (marc.fields[newTag]) {
+            marc.fields[tag].forEach(f => {
+              marc.fields[newTag].push(f);
+            });
+          } else if (newTag) {
+            marc.fields[newTag] = marc.fields[tag];
+          }
+          delete marc.fields[tag];
+        }
       }
 
       seen[hrid] = 1;
