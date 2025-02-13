@@ -70,12 +70,32 @@ export function capt2stat(pattern, enumeration) {
                     } else if (p.match(/month|season/)) {
                         let m = months[v] || v;
                         cronparts.unshift(m);
+                    } else if (p.match(/day/)) {
+                        if (cronparts[0]) {
+                            cronparts.splice(1, 0, `${v},`);
+                        } else {
+                            cronparts.unshift(`${v},`);
+                        }
                     }
                 }
             }
-            console.log(cronparts);
+            // check to see if the last cronpart contains a year, if not, add the year from the previous element
+            let lastEl = cronparts.length - 1;
+            if (cronparts[0] && !cronparts[lastEl].match(/\d{4}/)) {
+                cronparts.push(preyear);
+            }
+            let enumpart = enumparts.join(':');
+            let cronpart = (cronparts[1]) ? cronparts.join(' ') : cronparts[0];
+            if (enumpart && cronpart) {
+                parts.push(`${enumpart} (${cronpart})`);
+            } else if (cronpart) {
+                parts.push(cronpart);
+            } else if (enumpart) {
+                parts.push(enumpart)
+            }
         });
+        let statement = parts.join('-');
+        if (open) statement += '-'
+        console.log(statement);
     }
-    
-
 }
