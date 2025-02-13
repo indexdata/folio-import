@@ -1,15 +1,19 @@
 import { capt2stat } from '../lib-tools.mjs';
+let testNum = process.argv[2];
+if (!testNum) throw new Error('Usage: node capt2stat.js <test_num>');
 
-let ecapStr;
-let enumStr;
-
-ecapStr = '03$81$av.$b[no.]';
-enumStr = '40$81.1$a1-7$b1-12';
-// [Display example: v.1:[no.]1-v.7:[no.]12]
-
-ecapStr = '31$83$av.$bno.$u52$vr$i(year)$j(month)$k(day)$ww';
-enumStr = '  $83.1$a200$b18$i2006$j05$k04$wg';
-// [Display example: v.16:suppl.1 (1977: June 1)]
+const test = [
+  {
+    ecapStr: '03$81$av.$b[no.]',
+    enumStr: '40$81.1$a1-7$b1-12'
+  },
+  {
+    ecapStr: '31$83$av.$bno.$u52$vr$i(year)$j(month)$k(day)$ww',
+    enumStr:'  $83.1$a200$b18$i2006$j05$k04$wg'
+  }
+];
+let ecapStr = test[testNum].ecapStr;
+let enumStr = test[testNum].enumStr;
 
 
 const parseStr = (str) => {
