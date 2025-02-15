@@ -59,16 +59,25 @@ export function capt2stat(pattern, enumeration) {
                     continue;
                 }
                 let suf = pats[c];
-                if (c.match(/[a-h]/) && !suf.match(/\((month|season|day|year)\)/)) {
+                if (!suf) continue;
+                if (c.match(/[a-h]/) && !suf.match(/\((month|season|day|year|y)\)/)) {
                     enumparts.push(suf + splits[c][el]);
                 } else {
                     let p = suf;
                     let v = splits[c][el] || splits[c][0];
-                    if (p.match(/year/)) {
+                    if (p.match(/\(year|y\)/)) {
                         cronparts.push(v);
                         preyear = v;
                     } else if (p.match(/month|season/)) {
                         let m = months[v] || v;
+                        if (v.match(/\//)) {
+                            let mm = [];
+                            v.split(/\//).forEach(p => {
+                                let str = months[p] || p;
+                                mm.push(str);
+                            });
+                            m = mm.join('/');
+                        }
                         cronparts.unshift(m);
                     } else if (p.match(/day/)) {
                         if (cronparts[0]) {

@@ -1,4 +1,5 @@
 import { parseMarc, getSubs, mij2raw, fields2mij, getSubsHash } from '../js-marc/js-marc.mjs';
+import { capt2stat } from '../js-marc/lib-tools.mjs';
 import fs from 'fs';
 import path from 'path';
 import { v5 as uuid } from 'uuid';
@@ -338,11 +339,27 @@ try {
         if (f[tag]) {
           if (!h[prop]) h[prop] = [];
           f[tag].forEach(ff => {
+            let derivedStat = '';
+            if (tag === '863') {
+              let sf8 = getSubs(ff, '8') || '';
+              sf8 = sf8.replace(/\..*/, '');
+              let capFields = f['853'] || [];
+              capFields.forEach(cf => {
+                let mkey = getSubs(cf, '8');
+                if (sf8 === mkey) {
+                  derivedStat = capt2stat(cf, ff);
+                }
+              });
+            }
             let subs = getSubs(ff, codes);
             let pnote = getSubs(ff, 'z');
             let snote = getSubs(ff, 'x');
-            let text = subs;
-            if (pnote) text += '; ' + pnote;
+            let text = derivedStat || subs;
+            if (text && pnote) {
+              text += '; ' + pnote;
+            } else if (pnote) {
+              text = pnote;
+            }
             if (text) {
               let o = {
                 note: text
