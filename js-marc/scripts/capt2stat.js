@@ -38,6 +38,7 @@ try {
   let ec = parseStr(enumStr);
   // console.log(cap, ec);
   let stat = capt2stat(cap, ec);
+  console.log(stat);
 } catch (e) {
   console.log(e);
 }

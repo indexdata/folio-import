@@ -34,7 +34,7 @@ export function capt2stat(pattern, enumeration) {
         let k = Object.keys(s);
         enums[k] = s[k];
     });
-
+    let statement = '';
     for (let c in enums) {
         if (c === '8') {
             let ford = enums[c];
@@ -47,9 +47,9 @@ export function capt2stat(pattern, enumeration) {
             codes.push(c);
             splits[c] = enums[c].split(/-/);
         }
-        let parts = []
         let preyear;
         let bin = [0, 1];
+        let parts = []
         bin.forEach(el => {
             let enumparts = [];
             let cronparts = [];
@@ -94,8 +94,9 @@ export function capt2stat(pattern, enumeration) {
                 parts.push(enumpart)
             }
         });
-        let statement = parts.join('-');
+        statement = parts.join('-');
         if (open) statement += '-'
-        console.log(statement);
+        
     }
+    return statement;
 }
