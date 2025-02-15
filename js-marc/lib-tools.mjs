@@ -64,8 +64,8 @@ export function capt2stat(pattern, enumeration) {
                     enumparts.push(suf + splits[c][el]);
                 } else {
                     let p = suf;
-                    let v = splits[c][el] || splits[c][0];
-                    if (p.match(/\(year|y\)/)) {
+                    let v = splits[c][el] || splits[c][0]; 
+                    if (p.match(/\((year|y)\)/)) {
                         cronparts.push(v);
                         preyear = v;
                     } else if (p.match(/month|season/)) {
