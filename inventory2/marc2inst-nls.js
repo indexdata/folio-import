@@ -20,7 +20,7 @@ const iseen = {};
 const seen = {};
 const tagMap = {
   FMT: '996',
-  UID: '997',
+  UID: '',
   CAT: '998',
   SYS: '',
   SGN: '',
