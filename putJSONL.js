@@ -75,6 +75,7 @@ const wait = (ms) => {
     let x = 0;
     for await (const line of rl) {
       x++;
+      console.log(line);
       let rec = JSON.parse(line);
       if (ver) rec._version = ver;
       if (rec._errorMessage) delete rec._errorMessage;

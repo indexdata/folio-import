@@ -22,8 +22,23 @@ const tagMap = {
   FMT: '996',
   UID: '997',
   CAT: '998',
-  UID: '',
-  SYS: ''
+  SYS: '',
+  SGN: '',
+  PUB: '',
+  AAR: '',
+  ANM: '',
+  ATR: '',
+  BST: '',
+  DAT: '',
+  ENH: '',
+  LKR: '',
+  LPL: '',
+  MTI: '',
+  NMN: '',
+  STA: '',
+  TIT: '245',
+  YR1: '',
+  YR2: ''
 };
 
 const typeMap = {
@@ -663,6 +678,12 @@ try {
         marc.fields.leader = marc.fields.leader.replace(/....$/, '4500');
       }
 
+      let librisNumField = marc.fields.UID;
+      let librisNum = '';
+      if (librisNumField) {
+        librisNum = librisNumField[0].trim();
+      }
+
       for (let tag in tagMap) {
         if (marc.fields[tag]) {
           let newTag = tagMap[tag];
@@ -776,6 +797,10 @@ try {
       inst.source = 'MARC';
       if (inst.hrid) {
         inst.id = instId;
+        if (0) {
+          if (!inst.identifiers) inst.identifiers = [];
+          inst.identifiers.push({ value: librisNum, identifierTypeId: refData.identifierTypes['Libris number'] })
+        }
         if (inst.subjects) inst.subjects = dedupe(inst.subjects, [ 'value' ]);
         if (inst.identifiers) inst.identifiers = dedupe(inst.identifiers, [ 'value', 'identifierTypeId' ]);
         if (inst.languages) inst.languages = dedupe(inst.languages);
