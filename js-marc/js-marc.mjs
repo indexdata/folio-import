@@ -30,7 +30,7 @@ export function parseMarc(raw) {
       let obj = {};
       let data = buf.subarray(start, end).toString();
       if (!fields[tag]) fields[tag] = [];
-      if (tag > '009') {
+      if (data.match(/\x1F/)) {
         obj.ind1 = data.substring(0, 1).replace(/\W/, ' ');
         obj.ind2 = data.substring(1, 2).replace(/\W/, ' ');
         let subs = data.split(/\x1F/);
@@ -158,7 +158,7 @@ export function mij2raw(mij, sortFieldsByTag) {
   mij.fields.forEach(f => {
     let tag = Object.keys(f)[0];
     let data = '';
-    if (tag > '009') {
+    if (f[tag].subfields) {
       let d = f[tag];
       d.subfields.forEach(s => {
         let code = Object.keys(s)[0];
