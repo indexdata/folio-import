@@ -75,7 +75,7 @@ try {
     let type = n['Note Type'];
     let nkey = `${id}:${title}:${note}:${type}`;
     let nobj = {
-      id: nkey,
+      id: uuid(nkey, ns),
       title: title,
       content: note,
       domain: 'organizations',
@@ -171,6 +171,7 @@ try {
       let crole = r['Contact Role'];
       let rollkey = ckey + crole;
       let phone = r['Contact Phone'];
+      let fax = r['Contact Fax']
       let altPhone = r['Contact Alt Phone'];
       let email = r['Contact Email'];
       let cadd = r['Contact Address'];
@@ -188,7 +189,7 @@ try {
         obj.id = uuid(ckey, ns);
         obj.firstName = fn.trim();
         obj.lastName = (ln) ? ln.trim() : obj.firstName;
-        obj.inactive = (cstat && cstat === 'Y') ? false : true;
+        // obj.inactive = (cstat && cstat === 'Y') ? false : true;
         obj.categories = [];
         if (phone) { 
           obj.phoneNumbers = [{ phoneNumber: phone, isPrimary: true }];
@@ -204,7 +205,7 @@ try {
         }
         if (note) notes.push('Contact title: ' + note);
         if (cnote) notes.push('Contact note: ' + cnote);
-        if (clastup) notes.push('Contact last update: ' + clastup);
+        // if (clastup) notes.push('Contact last update: ' + clastup);
         if (notes[0]) obj.notes = notes.join('; ');
         cc++;
         cseen[ckey] = obj;
@@ -256,7 +257,7 @@ try {
         if (org.interfaces.indexOf(iid) === -1) org.interfaces.push(iid);
       }
       if (rc === tr) {
-        console.log(org);
+        // console.log(org);
         writeTo(files.orgs, org);
         c++;
       } else {
