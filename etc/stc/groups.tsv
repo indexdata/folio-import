@@ -1,0 +1,6 @@
+Legacy patron type (code or label)	FOLIO patron group code	Folio patron group label
+COMMUNITY	Community	Community User
+ADMIN, AGENT, CATALOG, FACULTY, STAFF	Employee	Faculty/Staff
+ILL	ILL	Interlibrary Loan Library
+STUDENT	Student	Student
+TEXSHARE	TexShare	TexShare User
