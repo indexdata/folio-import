@@ -148,8 +148,9 @@ const funcs = {
     return refData.contributorNameTypes[param.name] || refData.contributorNameTypes['Personal name'];
   },
   set_contributor_type_id_by_code_or_name: function (data, param) {
-    data = data.toLowerCase().trim().replace(/[,.]/g, '');
-    return refData.contributorTypes[data] || refData.contributorTypes['author'];
+    data = data.toLowerCase().trim().replace(/[ ,.].*/g, '');
+    let out = refData.contributorTypes[data];
+    return out;
   },
   set_classification_type_id: function (data, param) {
     return refData.classificationTypes[param.name] || 'ERROR';
@@ -482,12 +483,13 @@ try {
           refData[prop][p.code] = p.id;
         } 
         if (p.name) {
+          if (prop === 'contributorTypes') p.name = p.name.toLowerCase();
           refData[prop][p.name] = p.id;
         }
       });
     } catch {}
   });
-  // console.log(refData.mtypes);
+  // throw(refData.contributorTypes);
 
   // create tsv map
   if (conf.tsvDir) {
