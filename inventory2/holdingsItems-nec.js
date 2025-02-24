@@ -196,7 +196,8 @@ try {
   const occ = {};
   const instItemMap = {};
 
-  const makeItems = (fields, holdings, inst) => {
+  const makeItems = (fields, holdings, inst, leader) => {
+    let htype =  leader.substring(6, 7);
     fields.forEach(r => {
       let ih = {};
       r.subfields.forEach(s => {
@@ -279,7 +280,7 @@ try {
         console.log(`WARN duplicate barcode found ${ih.i} (${i.hrid})`);
       }
       if (ih.c) {
-        if (inst.blvl === 's') {
+        if (htype === 'y') {
           i.enumeration = ih.c;
         } else {
           i.volume = ih.c;
@@ -557,7 +558,7 @@ try {
             bwseen[h.id] = 1;
           }
           if (m['949']) {
-            makeItems(m['949'], h, inst);
+            makeItems(m['949'], h, inst, m.leader);
           }
         } else {
           console.log(`ERROR hrid ${hhrid} already used!`);
