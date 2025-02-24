@@ -197,6 +197,10 @@ try {
             obj.phoneNumbers.push({ phoneNumber: altPhone, isPrimary: false });
           }
         }
+        if (fax) {
+          if (!obj.phoneNumbers) obj.phoneNumbers = [];
+          obj.phoneNumbers.push({ phoneNumber: fax, isPrimary: false });
+        }
         if (email && email.match(/@/)) {
           obj.emails = [{ value: email, isPrimary: true }];
         }
