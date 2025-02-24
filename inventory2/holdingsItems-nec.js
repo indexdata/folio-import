@@ -2,6 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import { v5 as uuid } from 'uuid';
 import readline from 'readline';
+import { capt2stat } from '../js-marc/lib-tools.mjs';
+import { getSubs } from '../js-marc/js-marc.mjs';
 
 let confFile = process.argv[2];
 
@@ -74,6 +76,34 @@ const makeItemNote = function (text, type, staffOnly) {
     itemNoteTypeId: type,
     staffOnly: staffOnly
   };
+  return out;
+}
+
+const makeStatement = function (fields, patFields) {
+  let out = [];
+  if (fields && patFields) {
+    fields.forEach(ff => {
+      let derivedStat = '';
+      let sf8 = getSubs(ff, '8');
+      let pnote = getSubs(ff, 'z');
+      let snote = getSubs(ff, 'x');
+      let wsub = getSubs(ff, 'w');
+      sf8 = sf8.replace(/\..*/, '');
+      let capFields = patFields || [];
+      capFields.forEach(cf => {
+        let o = {};
+        let mkey = getSubs(cf, '8');
+        if (sf8 === mkey) {
+          derivedStat = capt2stat(cf, ff);
+          o.statement = derivedStat;
+          if (wsub) o.statement += ` [${wsub}]`;
+          if (pnote) o.note = pnote;
+          if (snote) o.staffNote = snote;
+          out.push(o);
+        }
+      });
+    });
+  }
   return out;
 }
 
@@ -481,6 +511,11 @@ try {
         h.holdingsStatements.push(o);
       });
 
+      let dfields = m['863'];
+      let pfields = m['853'];
+      let dstats = makeStatement(dfields, pfields);
+      h.holdingsStatements = [...h.holdingsStatements, ...dstats];
+
       h.holdingsStatementsForSupplements = [];
       hst = m['867'] || [];
       hst.forEach(f => {
@@ -497,6 +532,11 @@ try {
         h.holdingsStatementsForSupplements.push(o);
       });
 
+      dfields = m['864'];
+      pfields = m['854'];
+      dstats = makeStatement(dfields, pfields);
+      h.holdingsStatementsForSupplements = [...h.holdingsStatementsForSupplements, ...dstats];
+
       h.holdingsStatementsForIndexes = [];
       hst = m['868'] || [];
       hst.forEach(f => {
@@ -512,7 +552,12 @@ try {
         });
         h.holdingsStatementsForIndexes.push(o);
       });
-      
+
+      dfields = m['865'];
+      pfields = m['855'];
+      dstats = makeStatement(dfields, pfields);
+      h.holdingsStatementsForIndexes = [...h.holdingsStatementsForIndexes, ...dstats];
+
       if (m['908']) {
         m['908'][0].subfields.forEach(s => {
           if (s.x && s.x === 'Y') {
