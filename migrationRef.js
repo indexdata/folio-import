@@ -35,6 +35,7 @@ let modId = '';
     const get = async (ep) => {
       let lim = (ep.match(/authority/)) ? 1000 : limit;
       url = `${config.okapi}/${ep}?limit=${lim}`;
+      if (ep.match(/^(erm|licenses)\//)) url = `${config.okapi}/${ep}?max=100`;
       console.warn('GET', url);
       if (ep === 'custom-fields') {
         try {

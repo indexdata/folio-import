@@ -36,18 +36,23 @@ const typeMap = {
   Database: 'database',
   'Streaming Video': 'streaming_video',
   'Departmental Resource': 'internal_resources',
-  Journal: 'journals',
+  Journal: 'journal',
   Newspaper: 'online_newspaper',
   Website: 'website',
   Any: 'any'
 };
 
 const supProps = {
-  ResourceFormat: "Resource Format",
-  ResourceURL: "Resource URL",
+  SimultaneousUsers: 'Access Simultaneous User Limit',
+  ResourceURL: 'Resource URL',
+  ResourceFormat: 'Resource Format',
+  isbnOrIssn: 'ISBN',
+  PurchaseSite: 'Purchase Site'
 };
 
 periodNotes = [
+  'Order Acquisition Type',
+  'Record Set Identifier',
   'Invoice Number',
   'Fund',
   'Payment Amount',
@@ -97,7 +102,13 @@ try {
         if (r.desc === 'SubscriptionAgreementOrg.Role') {
           r.values.forEach(v => {
             ref[f][v.label] = v.id;
-          })
+          });
+        } else if (r.desc === 'SubscriptionAgreement.ContentType') {
+          ref.contentType = {};
+          r.values.forEach(v => {
+            ref.contentType[v.value] = v.label;
+            ref.contentType[v.label] = v.value;
+          });
         }
       });
     } else {
@@ -108,7 +119,7 @@ try {
       });
     }
   }
-  // console.log(ref); return;
+  // console.log(ref.contentType); return;
 
   let csv = fs.readFileSync(`${inFile}`, 'utf8');
   const inRecs = parse(csv, {
@@ -215,22 +226,31 @@ try {
     }
     let name = a['Product Name'];
     let desc = a['Product Description'];
+    let prov = a['Product Provider'];
     let status = a['Product Status'];
-    let atype = a['Order Acquisition Type'];
-    atype = atype.toLowerCase().replace(/ /g, '_');
+    let type = a['Product Resource Type']
 
     // map custom props below
+    let SimultaneousUsers = a['Access Simultaneous User Limit'].trim();
     let ResourceFormat = a['Resource Format'].trim();
-    let ResourceURL = a['Resource URL'].trim();
+    let rurls = []
+    let rurl = a['Resource URL'].trim();
+    let aurl = a['Resource Alt URL'].trim();
+    if (rurl) rurls.push(rurl);
+    if (aurl) rurls.push(aurl);
+    ResourceURL = rurls.join('; ');
+    let isbnOrIssn = a['ISBN'].trim();
+    let PurchaseSite = a['Purchase Site'].trim();
 
+    if (SimultaneousUsers) cprops.SimultaneousUsers[0].value = SimultaneousUsers;
     if (ResourceFormat) cprops.ResourceFormat[0].value = ResourceFormat.toLowerCase().replace(/\W/g, '_');
     if (ResourceURL) cprops.ResourceURL[0].value = ResourceURL;
+    if (isbnOrIssn) cprops.isbnOrIssn[0].value = isbnOrIssn;
+    if (PurchaseSite) cprops.PurchaseSite[0].value = PurchaseSite.toLowerCase().replace(/\W/g, '_');
 
     let oid = a['Product ID'];
     let relId = a['Product Related Products ID'] || '';
     let relType = a['Product Related Products Relationship Type'] ||'';
-
-
 
     for (let p in cprops) {
       cprops[p].forEach(o => {
@@ -289,27 +309,23 @@ try {
 
     agr.agreementStatus = statusMap[status];
     if (desc) agr.description = desc;
+    if (prov) {
+      agr.description = (agr.description) ? '; ' + prov : prov;
+    }
 
-    /*
     if (type) {
+      type = type.toLowerCase().trim();
+      type = type.replace(/ +/g, '_');
+      if (!ref.contentType[type]) {
+        throw new Error(`Content type not found for "${type}"`);
+      }
       agr.agreementContentTypes = [ 
         { 
           _delete: false,
-          contentType: { value: typeMap[type] }
+          contentType: { value: type }
         }
       ];
     }
-    */
-
-    if (atype) {
-      agr.agreementContentTypes = [ 
-        {
-          contentType: { value: atype },
-          _delete: false
-        }
-      ];
-    }
-  
 
     a.xalt.forEach(t => {
       agr.alternateNames.push({ name: t });
