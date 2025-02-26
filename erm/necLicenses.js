@@ -162,8 +162,9 @@ try {
         if (l.customProperties[exTypeValue]) {
           l.customProperties[exTypeValue][0] = {
             _delete: false,
-            value: exText || 'No Text',
-            note: exNote
+            value: exQual || 'No text',
+            note: exNote,
+            publicNote: exText
           }
         }
       }

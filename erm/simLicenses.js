@@ -1,4 +1,4 @@
-const parse = require('csv-parse/lib/sync');
+const { parse } = require('csv-parse/sync');
 const fs = require('fs');
 const path = require('path');
 
@@ -15,8 +15,8 @@ const files = {
 
 const rfiles = {
   organizations: 'organizations.json',
-  cprops: 'licenses-custprops.json',
-  ref: 'licenses-refdata.json'
+  cprops: 'custprops.json',
+  ref: 'refdata.json'
 };
 
 const statusMap = {
