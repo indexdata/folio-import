@@ -1,0 +1,31 @@
+{
+  "status": "active",
+  "type": "local",
+  "customProperties": {
+    "undefined": [
+      {
+        "_delete": true
+      }
+    ],
+    "eReserves": [
+      {
+        "value": [
+          {
+            "id": "2c90a89193d6c7e501948ab8a121003e",
+            "value": "permitted",
+            "label": "Permitted"
+          },
+          {
+            "id": "2c90a89193d6c7e501948ab8bba6003f",
+            "value": "prohibited",
+            "label": "Prohibited"
+          }
+        ],
+        "note": "Internal note",
+        "publicNote": "Public note"
+      }
+    ]
+  },
+  "openEnded": false,
+  "name": "Charles test"
+}

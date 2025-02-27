@@ -1,0 +1,90 @@
+{
+  "periods": [
+    {
+      "startDate": "2025-02-25",
+      "endDate": "2025-02-26",
+      "note": "This is a period note...."
+    },
+    {
+      "_delete": false,
+      "startDate": "2025-02-27",
+      "endDate": "2025-02-28",
+      "note": "This is period note 2"
+    }
+  ],
+  "customProperties": {
+    "AuthorIdentification": [
+      {
+        "_delete": false,
+        "value": "email_domain"
+      }
+    ],
+    "SupportPublishing": [
+      {
+        "_delete": false,
+        "value": "No"
+      }
+    ],
+    "undefined": [
+      {
+        "_delete": true
+      }
+    ],
+    "SimultaneousUsers": [
+      {
+        "_delete": false,
+        "value": "1",
+        "note": "inote",
+        "publicNote": "pnote"
+      }
+    ],
+    "ResourceFormat": [
+      {
+        "_delete": false,
+        "value": "print___electronic"
+      }
+    ],
+    "ResourceURL": [
+      {
+        "_delete": false,
+        "value": "http://hey.com"
+      }
+    ],
+    "PurchaseSite": [
+      {
+        "value": [
+          {
+            "id": "2c90a44693d6b48f01948a960de7001b",
+            "value": "fenway_library_organization",
+            "label": "Fenway Library Organization"
+          }
+        ]
+      }
+    ],
+    "isbnOrIssn": [
+      {
+        "_delete": false,
+        "value": "2222-222X"
+      }
+    ]
+  },
+  "name": "Charles test",
+  "description": "This is a description",
+  "agreementStatus": "active",
+  "agreementContentTypes": [
+    {
+      "_delete": false,
+      "contentType": {
+        "value": "staff_tool"
+      }
+    }
+  ],
+  "alternateNames": [
+    {
+      "_delete": false,
+      "name": "Charlie test"
+    }
+  ],
+  "outwardRelationships": [],
+  "inwardRelationships": []
+}

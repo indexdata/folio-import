@@ -1,0 +1,22 @@
+{
+  "status": "active",
+  "type": "local",
+  "customProperties": {},
+  "openEnded": false,
+  "name": "Charles test",
+  "description": "This is a desc",
+  "alternateNames": [
+    {
+      "_delete": false,
+      "name": "CT"
+    }
+  ],
+  "supplementaryDocs": [
+    {
+      "_delete": false,
+      "name": "TEST",
+      "atType": "consortium_authorization_statement",
+      "url": "http://here.there"
+    }
+  ]
+}
