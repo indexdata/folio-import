@@ -13,7 +13,6 @@ const unit = '';
 
 const files = {
   agree: 'agreements.jsonl',
-  supProps: 'custprops.jsonl',
   rel: 'relationships.jsonl',
   notes: 'notes.jsonl'
 };
@@ -22,7 +21,8 @@ const rfiles = {
   organizations: 'organizations.json',
   acquisitionsUnits: 'units.json',
   roles: 'refdata.json',
-  noteTypes: 'note-types.json'
+  noteTypes: 'note-types.json',
+  cprops: 'custprops.json'
 };
 
 const mfiles = {
@@ -46,14 +46,6 @@ const typeMap = {
   Newspaper: 'online_newspaper',
   Website: 'website',
   Any: 'any'
-};
-
-const supProps = {
-  SimultaneousUsers: 'Access Simultaneous User Limit',
-  ResourceURL: 'Resource URL',
-  ResourceFormat: 'Resource Format',
-  isbnOrIssn: 'ISBN',
-  PurchaseSite: 'Purchase Site'
 };
 
 periodNotes = [
@@ -118,6 +110,10 @@ const scriptName = process.argv[1].replace(/^.+\//, '');
             });
           }
         });
+      } else if (f === 'cprops') {
+        rdata.forEach(r => {
+          ref[f][r.name] = r;
+        }); 
       } else {
         rdata[f].forEach(r => {
           let k = (f === 'organizations') ? r.code : r.name;
@@ -126,7 +122,7 @@ const scriptName = process.argv[1].replace(/^.+\//, '');
         });
       }
     }
-    // console.log(ref.contentType); return;
+    // throw(ref.cprops);
 
     let fileStream = fs.createReadStream(dir + '/' + mfiles.out);
     let rl = readline.createInterface({
@@ -199,7 +195,8 @@ const scriptName = process.argv[1].replace(/^.+\//, '');
       let ddesc = r['Attachment Description'];
       let durl = r['Attachment URL'];
       let dtype = (r['Attachment Type']) ? r['Attachment Type'].toLowerCase() : '';
-      let dkey = (dname) ? `${oid}~~${dname}~~${dtype}~~${ddesc}~~${durl}` : '';
+      let purs = r['Purchase Site'];
+      let dkey = (dname) ? `${oid}~~${dname}~~${dtype}~~${ddesc}~~${durl}~~${purs}` : '';
       
       if (!ag[oid]) { 
         ag[oid] = r;
@@ -208,6 +205,7 @@ const scriptName = process.argv[1].replace(/^.+\//, '');
         ag[oid].xalt = [];
         ag[oid].xdoc = [];
         ag[oid].xlic = [];
+        ag[oid].xpur = [];
       }
       if (org && !ag[oid].xorgs[org]) ag[oid].xorgs[org] = [];
       if (!ag[oid].xper[per]) ag[oid].xper[per] = pnoteStr;
@@ -215,6 +213,7 @@ const scriptName = process.argv[1].replace(/^.+\//, '');
       if (alt && ag[oid].xalt.indexOf(alt) === -1) ag[oid].xalt.push(alt);
       if (lic && ag[oid].xlic.indexOf(lic) === -1) ag[oid].xlic.push(lic);
       if (dkey && ag[oid].xdoc.indexOf(dkey) === -1) ag[oid].xdoc.push(dkey);
+      if (purs && ag[oid].xpur.indexOf(purs) === -1) ag[oid].xpur.push(purs);
     });
     // console.log(JSON.stringify(ag, null, 2)); return;
 
@@ -234,14 +233,14 @@ const scriptName = process.argv[1].replace(/^.+\//, '');
         let agrName = ag[id]['Product Name'];
         let title = n['Resource Note Tab Name'];
         let note = n['Resource Note'] || n['Resource Note '];
-        let type = n['Resource Note Type'];
+        let type = n['Resource Note Type'].trim();
         let nkey = id + note + type;
         let nobj = {
           id: uuid(nkey, ns),
           title: title,
           content: `<p>${note}</p>`,
           domain: 'agreements',
-          typeId: ref.noteTypes[type],
+          typeId: ref.noteTypes[type] || ref.noteTypes['General note'],
           links: [ {
             id: agrName,
             type: 'agreement'
@@ -257,7 +256,8 @@ const scriptName = process.argv[1].replace(/^.+\//, '');
     for (let al in ag) {
       let a = ag[al];
       let cprops = {};
-      for (let p in supProps) {
+      let cdata = {};
+      for (let p in ref.cprops) {
         cprops[p] =[{ _delete: true }];
       }
       let name = a['Product Name'];
@@ -267,35 +267,52 @@ const scriptName = process.argv[1].replace(/^.+\//, '');
       let type = a['Product Resource Type']
 
       // map custom props below
-      let SimultaneousUsers = a['Access Simultaneous User Limit'].trim();
-      let ResourceFormat = a['Resource Format'].trim();
+      cdata.SimultaneousUsers = a['Access Simultaneous User Limit'].trim();
+      cdata.ResourceFormat = a['Resource Format'].trim();
       let rurls = []
       let rurl = a['Resource URL'].trim();
       let aurl = a['Resource Alt URL'].trim();
       if (rurl) rurls.push(rurl);
       if (aurl) rurls.push(aurl);
-      ResourceURL = rurls.join('; ');
-      let isbnOrIssn = a['ISBN'].trim();
-      let PurchaseSite = a['Purchase Site'].trim();
+      cdata.ResourceURL = rurls.join('; ');
+      cdata.isbnOrIssn = a['ISBN'].trim();
+      if (a.xpur[0]) cdata.PurchaseSite = a.xpur;
+ 
+      for (let p in ref.cprops) {
+        let cp = ref.cprops[p];
+        let ctype = cp.type.replace(/^.+\./, '');
+        let name = cp.name;
+        let data = cdata[name]
+        if (data) {
+          if (ctype === 'CustomPropertyRefdata') {
+            data = data.toLowerCase().replace(/\W/g, '_');
+          }
+          if (ctype === 'CustomPropertyMultiRefdata') {
+            let arr = [];
+            data.forEach(t => {
+              t = t.toLowerCase().replace(/\W/g, '_');
+              arr.push({ value: t});
+            });
+            data = arr;
+          }
+          cprops[name][0].value = data;
+          cprops[name][0]._delete = false;
+        }
+      }
+      // console.log(JSON.stringify(cprops, null, 2));
 
+      /* 
       if (SimultaneousUsers) cprops.SimultaneousUsers[0].value = SimultaneousUsers;
       if (ResourceFormat) cprops.ResourceFormat[0].value = ResourceFormat.toLowerCase().replace(/\W/g, '_');
       if (ResourceURL) cprops.ResourceURL[0].value = ResourceURL;
       if (isbnOrIssn) cprops.isbnOrIssn[0].value = isbnOrIssn;
       if (PurchaseSite) cprops.PurchaseSite[0].value = PurchaseSite.toLowerCase().replace(/\W/g, '_');
+      */
 
       let oid = a['Product ID'];
       let relId = a['Product Related Products ID'] || '';
       let relType = a['Product Related Products Relationship Type'] ||'';
 
-      for (let p in cprops) {
-        cprops[p].forEach(o => {
-          if (o.value) {
-            o._delete = false;
-          }
-        });
-      }
-      // cprops = {};
       let agr = {
         id: al,
         name: name,
@@ -346,7 +363,7 @@ const scriptName = process.argv[1].replace(/^.+\//, '');
       agr.agreementStatus = statusMap[status];
       if (desc) agr.description = desc;
       if (prov) {
-        agr.description = (agr.description) ? '; ' + prov : prov;
+        agr.description = (agr.description) ? agr.description + '; ' + prov : prov;
       }
 
       if (type) {
@@ -408,28 +425,8 @@ const scriptName = process.argv[1].replace(/^.+\//, '');
       if (dbug) if (c === 5) break;
     }
 
-    let cpc = 0;
-    for (let p in supProps) {
-      let cust = {
-        weight: 0,
-        primary: true,
-        retired: false,
-        defulatInternal: true,
-        type: 'Text',
-        label: supProps[p],
-        name: p,
-        description: supProps[p],
-        ctx: ''
-      };
-      writeTo(files.supProps, cust);
-      cpc++;
-    }
-
-    
-    
     console.log('Finished!');
     console.log('Agreements:', c);
-    console.log('Custom Props:', cpc);
     console.log('Sup Docs:', dc);
     console.log('Notes:', nc);
     if (nc > 0) console.log('*** Make sure to run makeErmNotes.js after loading agreements! ***');
