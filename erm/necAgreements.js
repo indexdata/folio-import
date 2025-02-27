@@ -2,6 +2,7 @@ const { parse } = require('csv-parse/sync');
 const fs = require('fs');
 const uuid = require('uuid/v5');
 const path = require('path');
+const readline = require('readline');
 
 let refDir = process.argv[2];
 const notesFile = process.argv[3];
@@ -138,7 +139,20 @@ const scriptName = process.argv[1].replace(/^.+\//, '');
       let j = JSON.parse(line);
       outMap[j.name] = j.id;
     }
-    console.log(outMap); return;
+    // console.log(outMap); return;
+
+    fileStream = fs.createReadStream(dir + '/' + mfiles.map);
+    rl = readline.createInterface({
+      input: fileStream,
+      crlfDelay: Infinity
+    });
+
+    const licMap = {};
+    for await (const line of rl) {
+      let j = JSON.parse(line);
+      licMap[j.id] = outMap[j.name];
+    }
+    // throw(licMap);
 
     let csv = fs.readFileSync(`${inFile}`, 'utf8');
     const inRecs = parse(csv, {
@@ -166,6 +180,7 @@ const scriptName = process.argv[1].replace(/^.+\//, '');
       let start = (ostart) ? makeDate(ostart, oid) : '';
       let oend = r['Payment Sub End'] || '';
       let end = (oend) ? makeDate(oend, oid) : '';
+      let lic = r['License ID'];
       
       if (altType) alt = `${alt} (${altType})`;
       let per = (start) ? `${start}|${end}` : '';
@@ -192,11 +207,13 @@ const scriptName = process.argv[1].replace(/^.+\//, '');
         ag[oid].xper = {};
         ag[oid].xalt = [];
         ag[oid].xdoc = [];
+        ag[oid].xlic = [];
       }
       if (org && !ag[oid].xorgs[org]) ag[oid].xorgs[org] = [];
       if (!ag[oid].xper[per]) ag[oid].xper[per] = pnoteStr;
       if (org && role && ag[oid].xorgs[org].indexOf(role) === -1) ag[oid].xorgs[org].push(role);
       if (alt && ag[oid].xalt.indexOf(alt) === -1) ag[oid].xalt.push(alt);
+      if (lic && ag[oid].xlic.indexOf(lic) === -1) ag[oid].xlic.push(lic);
       if (dkey && ag[oid].xdoc.indexOf(dkey) === -1) ag[oid].xdoc.push(dkey);
     });
     // console.log(JSON.stringify(ag, null, 2)); return;
@@ -362,6 +379,19 @@ const scriptName = process.argv[1].replace(/^.+\//, '');
         };
         agr.periods.push(o);
       };
+
+      a.xlic.forEach(l => {
+        let rid = licMap[l];
+        if (rid) {
+          if (!agr.linkedLicenses) agr.linkedLicenses = [];
+          let o = {
+            _delete: false,
+            status: 'historical',
+            remoteId: rid,
+          }
+          agr.linkedLicenses.push(o);
+        }
+      });
 
       if (dbug) console.log(JSON.stringify(agr, null, 2)); 
       writeTo(files.agree, agr);
