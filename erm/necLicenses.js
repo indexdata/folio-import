@@ -50,6 +50,7 @@ try {
   refDir = refDir.replace(/\/$/, '');
   const ref = {};
   const custProps = {};
+  const custTypes = {};
   for (let f in rfiles) {
     let rfile = refDir + '/' + rfiles[f];
     let rdata = require(rfile);
@@ -60,6 +61,7 @@ try {
         let v = r.name;
         ref[f][k] = v;
         custProps[v] = [{ _delete: true }];
+        custTypes[v] = r.type.replace(/^.+\./, '');
       });
     } else if (f === 'ref') {
       rdata.forEach(r => {
@@ -78,7 +80,7 @@ try {
       });
     }
   }
-  // console.log(ref.ref); return;
+  // console.log(custTypes); return;
 
   let csv = fs.readFileSync(`${inFile}`, 'utf8');
 
@@ -159,10 +161,15 @@ try {
     if (!seen.ex[exKey]) {
       let exTypeValue = ref.cprops[exType];
       if (exTypeValue) {
+        let ctype = custTypes[exTypeValue];
         if (l.customProperties[exTypeValue]) {
+          if (ctype && ctype === 'CustomPropertyMultiRefdata') {
+            let text = exQual.toLowerCase().replace(/ /g, '_');
+            exQual = (text) ? [ { value: text } ] : [];
+          }
           l.customProperties[exTypeValue][0] = {
             _delete: false,
-            value: exQual || 'No text',
+            value: exQual || '[No text]',
             note: exNote,
             publicNote: exText
           }
