@@ -133,12 +133,13 @@ export function getSubsHash(field, returnString) {
 
 export function fields2mij(fields) {
   let tags = Object.keys(fields).sort();
-  tags.pop();
   const mij = { fields: [] };
   tags.forEach(t => {
-    fields[t].forEach(f => {
-      mij.fields.push({ [t]: f});
-    });
+    if (t.match(/\d{3}/)) {
+      fields[t].forEach(f => {
+        mij.fields.push({ [t]: f});
+      });
+    }
   });
   mij.leader = fields.leader;
   return mij;

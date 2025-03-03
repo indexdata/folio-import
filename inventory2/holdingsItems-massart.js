@@ -134,7 +134,7 @@ try {
           let c = l.split(/\t/);
           let k = c[0].trim();
           if (prop === 'statuses') {
-            let v = c[2].trim().toLowerCase();
+            let v = c[3].trim().toLowerCase();
             let fl = v.substring(0, 1);
             fl = fl.toUpperCase();
             v = v.replace(/^./, fl);
@@ -194,7 +194,8 @@ try {
   }
   const bcseen = {};
   const occ = {};
-  const makeItems = (fields, holdings, inst) => {
+  const makeItems = (fields, holdings, inst, leader) => {
+    let htype =  leader.substring(6, 7);
     fields.forEach(r => {
       let ih = {};
       r.subfields.forEach(s => {
@@ -272,7 +273,7 @@ try {
         console.log(`WARN duplicate barcode found ${ih.i} (${i.hrid})`);
       }
       if (ih.c) {
-        if (inst.blvl === 's') {
+        if (htype === 'y') {
           i.enumeration = ih.c;
         } else {
           i.volume = ih.c;
@@ -493,6 +494,7 @@ try {
           writeOut(outs.holdings, h);
           hseen[ctrl] = h.id;
           let lnk = m['014'];
+          lnk = false;
           if (lnk) {
             for (let x = 0; x < lnk.length; x++) {
               let sa = lnk[x].subfields[0].a;
@@ -545,7 +547,7 @@ try {
             bwseen[h.id] = 1;
           }
           if (m['949']) {
-            makeItems(m['949'], h, inst);
+            makeItems(m['949'], h, inst, m.leader);
           }
         } else {
           console.log(`ERROR hrid ${hhrid} already used!`);
