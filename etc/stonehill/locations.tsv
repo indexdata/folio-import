@@ -38,7 +38,7 @@ mnofp	Periodicals Office		10					Merge	Merge	Office	ofc	MacPhaidin Library
 mnofr	Reference Office		6					Merge	Merge	Office	ofc	MacPhaidin Library		
 mnofs	Systems Office		2					Merge	Merge	Office	ofc	MacPhaidin Library		
 mnofz	Circulation Office		3					Merge	Merge	Office	ofc	MacPhaidin Library		
-mnstc	Circulation Desk		12		3		6	Merge	Merge	Office	ofc	MacPhaidin Library		
+mnstc	Circulation Desk		12		3		6	Keep	Keep	Circulation Desk	mnstc	MacPhaidin Library		
 pepjs	See Periodicals Librarian		1					Merge	Merge	Office	ofc	MacPhaidin Library		
 rerfd	Reference Desk		44					Merge	Merge	Office	ofc	MacPhaidin Library		
 mnrs1	24 hour reserve		25		76	8	52	Merge	Merge	Reserves	rsv	MacPhaidin Library		

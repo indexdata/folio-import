@@ -194,7 +194,8 @@ try {
     items: 0,
     boundwiths: 0,
     relationships: 0,
-    errors: 0
+    errors: 0,
+    itemErrors: 0
   }
 
   let start = new Date().valueOf();
@@ -302,12 +303,15 @@ try {
           ttl.holdings++;
         } else {
           console.log(`ERROR holdings sourceId not found (${hid})!`);
+          ttl.errors++;
         }
       } else {
-        console.log(`ERROR holdings locationId not found for "${lcode} (${hid})"!`);
+        console.log(`ERROR holdings locationId not found for "${lcode}" (${hid})!`);
+        ttl.errors++;
       }
     } else {
       console.log(`ERROR holdings instanceId not found for "${bid} (${hid})"!`);
+      ttl.errors++;
     }
     if (dbug) console.log(h);
     hseen[hkey] = h.id;
@@ -482,12 +486,15 @@ try {
             ttl.items++;
           } else {
             console.log(`ERROR loantype not found for ${iid}`);
+            ttl.itemErrors++;
           }
         } else {
           console.log(`ERROR material type "${itype}" not found for ${iid}`);
+          ttl.itemErrors++;
         }
       } else {
         console.log(`ERROR item id "${iid}" already seen`);
+        ttl.itemErrors++;
       }
       if (dbug) console.log(i);
     }
