@@ -151,7 +151,7 @@ try {
           let c = l.split(/\t/);
           let k = c[0].trim();
           if (prop === 'statuses') {
-            let v = c[4].trim();
+            let v = c[5].trim();
             if (!v || v.match(/Checked out|Paged|Aged to lost/)) v = 'Available';
             tsvMap[prop][k] = v;
           } else {
