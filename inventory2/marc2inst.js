@@ -489,7 +489,7 @@ try {
       });
     } catch {}
   });
-  // throw(refData.contributorTypes);
+  // throw(refData);
 
   // create tsv map
   if (conf.tsvDir) {
@@ -507,12 +507,12 @@ try {
           if (prop === 'locations') { 
             k = c[1];
           } 
-          if (k && v) tsvMap[prop][k] = refData[prop][v];
+          if (k && v && refData[prop]) tsvMap[prop][k] = refData[prop][v];
         });
       }
     });
-    // console.log(tsvMap);
   }
+  // throw(tsvMap);
 
   let t;
   let ttl = {
