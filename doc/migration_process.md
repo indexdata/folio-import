@@ -1,4 +1,4 @@
-Inventory process:
+## Inventory process:
 
 * Download data (.mrc, .csv, etc) from ftp.folio.indexdata.com.  NOTE: credentials should be in LastPass
 * LINK or rename downloaded [optional]
