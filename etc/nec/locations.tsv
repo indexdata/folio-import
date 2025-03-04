@@ -5,8 +5,9 @@ NEC-FSSGB	NEC FSSGB Collection	2,536	2,469					Keep	Keep	FSSGB Collection	fssgb
 NEC-MINI	NEC Miniature Scores	3,754	5,701		1	2		Keep	Keep	Miniature Scores	mini		
 NEC	New England Conservatory	152,784	126,232		153	17		Keep	Keep	New England Conservatory	nec		
 NEC-NONCIR	NEC Non-Circulating	6087	16124		14			Keep	Keep	Non-Circulating	noncir		
-NEC-BINDER	NEC Bindery	1		112				Keep	Keep	Off-site Bindery	binder		mfhd: 66034; I fixed this, so it should now be 0 (MFHD perm loc)--HS 10/29/24
+NEC-BINDER	NEC Bindery	1		112				Keep	Keep	Off-site Bindery	offbind		mfhd: 66034; I fixed this, so it should now be 0 (MFHD perm loc)--HS 10/29/24
 NEC-OFFICE	NEC Office	1316	887	43		1		Keep	Keep	Office	office		
+NEC-ONBIND	NEC On-Site Bindery							Keep	Keep	On-Site Bindery	onbind		
 NEC-ONLINE	NEC Online	253779						Keep	Keep	Online	online		
 NEC-OVRSIZ	NEC Oversize	844	1,000					Keep	Keep	Oversize	ovrsiz		
 NEC-REFER	NEC Reference	2,775	3,747		7			Keep	Keep	Reference	refer		
@@ -16,7 +17,6 @@ NEC-DESK	NEC Service Desk	730	1,003					Keep	Keep	Service Desk	desk
 NEC-DSKNCR	NEC Service Desk NonCirc.	346	870					Keep	Keep	Service Desk NonCirc.	dskncr		Consider renaming?
 NEC-STOR	NEC Storage	67	2,171		2			Keep	Keep	Storage	stor		
 NEC-VAULT	NEC Vault	8456	10848		3	2		Keep	Keep	Vault	vault		
-								New Location	New Location	NEC Bindery	bind		
 NEC-AVRARE	zzNEC-AVRARE DO NOT USE			1				Purge	Purge				mfhd: 1400974, no barcode; I fixed this and it should be 0 now--HS 10/29/24
 NEC-OVRNCR	zzNEC Oversize NC-DO NOT 							Purge	Purge				
 NECS-VC	NECS Virtual Catalog							Purge	Purge				

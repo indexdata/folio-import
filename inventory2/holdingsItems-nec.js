@@ -228,6 +228,7 @@ try {
 
   const makeItems = (fields, holdings, inst, leader) => {
     let htype =  leader.substring(6, 7);
+    console.log(fields);
     fields.forEach(r => {
       let ih = {};
       r.subfields.forEach(s => {
