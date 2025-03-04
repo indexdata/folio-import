@@ -224,7 +224,8 @@ try {
     }
   }
 
-  const makeItems = (fields, holdings, inst) => {
+  const makeItems = (fields, holdings, inst, leader) => {
+    let htype =  leader.substring(6, 7);
     fields.forEach(r => {
       let ih = {};
       let bwFlag = false;
@@ -295,7 +296,7 @@ try {
         if (!bwseen[mainHoldingsId]) makeBoundWiths(bcseen[ih.i], bcHoldMap[ih.i], ih.i);
       }
       if (ih.c) {
-        if (inst.blvl === 's') {
+        if (htype === 'y') {
           i.enumeration = ih.c;
         } else {
           i.volume = ih.c;
@@ -519,7 +520,7 @@ try {
           hseen[ctrl] = h.id;
 
           if (m['949']) {
-            makeItems(m['949'], h, inst);
+            makeItems(m['949'], h, inst, m.leader);
           }
         } else {
           console.log(`ERROR hrid ${hhrid} already used!`);

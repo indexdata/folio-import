@@ -1,22 +1,17 @@
 Legacy Code	Legacy Name	Count Perm (Unsuppressed)	Count Temp (Unsuppressed)	Count Perm (Suppressed)	Count Temp (Suppressed)	Perm Type (Unsuppressed)	Perm Type (Suppressed)	FOLIO Name	Notes
 Archive	Archive	1		32		Keep	Keep	Archive	
-Artist Bk	Artist Bk	451		1		Keep	Keep	Artist Book	
-AuctionCat	Auction Catalog	64,643		24		Keep	Keep	Auction Catalog	
-Book	Book	214,380	11	2,780		Keep	Keep	Book	
-CD-ROM	CD-ROM	59		19		Keep	Keep	CD-ROM	
+Artist Bk	Artist Bk	451		1		Keep	Keep	Artist's Book	
+AuctionCat	Auction Catalog	64814		24		Keep	Keep	Auction Catalog	
+Book	Book	214593	11	2744		Keep	Keep	Book	
+CD-ROM	CD-ROM	62		19		Keep	Keep	CD-ROM	
 DVD	DVD	37		13		Keep	Keep	DVD	
 Microfiche	Microfiche	5				Keep	Keep	Microfiche	
 Microfilm	Microfilm	12				Keep	Keep	Microfilm	
 Microform	Microform	220				Keep	Keep	Microform	
-Non-Circ.	Non-Circ.	1,082	4	5		Keep	Keep	Non-Circ.	
-Vert. File	Vert. File	12,713		4		Keep	Keep	Vertical File	
-Videotape	Videotape	17		21		Keep	Keep	Videotape 	
-Audio Cass	Audio Cass	2				Purge	Purge		
-Bk/Other	Bk/Other		1			Purge	Purge		
-BOOK	BOOK	3				Purge	Purge		
-CD	CD	2				Purge	Purge		
-CDROM	CDROM	1				Purge	Purge		
-Office	Office	1				Purge	Purge		
-PERIODICAL	PERIODICAL	2				Purge	Purge		
-0	0	9						The following items have no itemtypes: 1468415,1495637,1496220,1496236,1496593,1496604,1496645,1546015,439759,43976 these need to have an itemtype applied before migration 	(Lisa added itypes to all of these but 1546015)
-	Totals	293,640	16	2899	0				
+Folio	Folio	112				Keep	Keep	Folio	
+PERIODICAL	PERIODICAL	1				Purge	Purge		
+Vert. File	Vert. File	12804		4		Keep	Keep	Vertical File	
+Videotape	Videotape	17		21		Keep	Keep	Videotape	
+Book	Book	214593	11	2744		Keep	Keep	Book	
+Non-Circ.	Non-Circ.	1087	4	5		Keep	Keep	Non-Circ.	
+	Totals	508,809	26	5,607	0				
