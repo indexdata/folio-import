@@ -613,6 +613,7 @@ try {
               });
             }
             if (subz[0]) {
+              subz.push({ z: inst.bibId});
               m['949'].forEach(f => {
                 f.subfields = [...f.subfields, ...subz];
               })
@@ -666,7 +667,7 @@ try {
         holdingsRecordId: hid || info.hid,
       };                
       o.id = uuid(o.holdingsRecordId + o.itemId, ns);
-      if (1) {
+      if (!bwpseen[o.id]) {
         writeOut(outs.bwp, o);
         ttl.boundwiths++;
         bwpseen[o.id] = 1;
