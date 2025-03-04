@@ -362,7 +362,7 @@ try {
           ttl.itemErr++;
         }
       } else {
-        console.log(`ERROR item material type not found for "${ih.t}`);
+        console.log(`ERROR item material type not found for "${ih.t}"`);
         ttl.itemErr++;
       }
     });
