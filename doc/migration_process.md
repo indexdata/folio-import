@@ -1,6 +1,6 @@
 ## Inventory process:
 
-* Download data (.mrc, .csv, etc) from `ftp.folio.indexdata.com`.  NOTE: credentials should be in LastPass
+* DOWNLOAD data (.mrc, .csv, etc) from `ftp.folio.indexdata.com`.  NOTE: credentials should be in LastPass
 * LINK or rename downloaded files [optional]
 * PREPROCESS files (ie: convert MARC to UTF8, XLSX to CSV...) [optional]
 * GET reference data from FOLIO by running `node migrationRef.js`
