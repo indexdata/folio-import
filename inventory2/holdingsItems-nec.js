@@ -228,7 +228,6 @@ try {
 
   const makeItems = (fields, holdings, inst, leader) => {
     let htype =  leader.substring(6, 7);
-    console.log(fields);
     fields.forEach(r => {
       let ih = {};
       r.subfields.forEach(s => {
@@ -604,6 +603,20 @@ try {
             bwseen[h.id] = 1;
           }
           if (m['949']) {
+            let f14 = m['014'];
+            let subz = [];
+            if (f14) {
+              f14.forEach(f => {
+                f.subfields.forEach(s => {
+                  if (s.a) subz.push({ z: s.a })
+                });
+              });
+            }
+            if (subz[0]) {
+              m['949'].forEach(f => {
+                f.subfields = [...f.subfields, ...subz];
+              })
+            }
             makeItems(m['949'], h, inst, m.leader);
           }
         } else {
