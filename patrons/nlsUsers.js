@@ -50,6 +50,19 @@ const writeOut = (fileName, data) => {
   fs.writeFileSync(fileName, line, { flag: 'a' });
 }
 
+const parseDate = (text) => {
+  let out;
+  if (text) {
+    let dstr = text.replace(/(....)(..)(..)/, '$1-$2-$3');
+    try {
+      out = new Date(dstr).toISOString().replace(/T.+/, '');
+    } catch (e) {
+      console.log(`WARN "${dstr} is not proper date.`);
+    }
+  }
+  return out;
+}
+
 try {
   if (!usrDir) throw 'Usage: node nls.js <ref_dir> <users_dir>';
   refDir = refDir.replace(/\/$/, '');
@@ -161,19 +174,26 @@ try {
     let id = p.Z303_REC_KEY;
     let ads = z.add[id];
     let ids = z.id[id];
-    let locs = z.loc[id];
-    let name = p.Z303_NAME;
+    let locs = z.loc[id] || [];
+    let name = p.Z303_NAME.replace(/ \(.+$/, '');
     let ln = name.replace(/,.+/, '');
-    let fn = name.replace(/^.+?, */, '');
+    let fn = (name.match(/,/)) ? name.replace(/^.+?, */, '') : '';
     let bc = (ids['01']) ? ids['01'][0] : '';
     let pid = (ids['03']) ? ids['03'][0] : '';
     let email = '';
-    ads.forEach(r => {
-      if (!email && r.Z304_EMAIL_ADDRESS) email = r.Z304_EMAIL_ADDRESS;
-    });
+    if (ads) {
+      ads.forEach(r => {
+        if (!email && r.Z304_EMAIL_ADDRESS) email = r.Z304_EMAIL_ADDRESS;
+      });
+    }
     let un = email || bc || pid;
-    let edate = p.EXPIRATION;
-    let cdate = p.CREATED;
+
+    let edate = '';
+    locs.forEach(r => {
+      edate = r.Z305_EXPIRY_DATE;
+    });
+    edate = parseDate(edate);
+    let cdate = parseDate(p.Z303_OPEN_DATE);
 
     let bcode = p.Z303_DELINQ_1;
     let borStat = (locs[0]) ? locs[0].Z305_BOR_STATUS : '';
@@ -192,58 +212,28 @@ try {
       gnum = '1';
     }
     let groupId = refData.usergroups[gnum];
-    console.log(gnum, groupId);
-    if (!useen[un]) {
+    if (!useen[id]) {
       u = {
         id: uuid(id, ns),
         username: un,
-        externalSystemId: un,
         active: true,
         patronGroup: groupId,
         personal: {
           lastName: ln,
           firstName: fn,
-          addresses: []
-        }
+        },
+        customFields: {}
       };
       if (bc) u.barcode = bc;
-      if (edate) {
-        edate = edate.replace(/^(....)(..)(..)/, '$1-$2-$3');
-        let val = new Date(edate).toISOString().substring(0, 10);
-        u.expirationDate = val;
-      }
-      if (cdate) {
-        cdate = cdate.replace(/^(....)(..)(..)/, '$1-$2-$3');
-        let val = new Date(cdate).toISOString().substring(0, 10);
-        u.enrollmentDate = val;
-      }
-      if (ad.EMAIL) u.personal.email = ad.EMAIL[0].D;
-      if (ad.PHONE) {
-        let ph = ad.PHONE[0].D
-        if (!ph.match(/REQUIRED/)) u.personal.phone = ph;
-      }
+      if (email) u.personal.email = email
+      if (edate) u.expirationDate = edate;
+      if (cdate) u.enrollmentDate = cdate;
+      if (pid) u.customFields.personnummer = pid;
       
-      if (ad.STREET) {
-        let primary = true;
-        let a = {
-          addressLine1: ad.STREET[0].D
-        };
-        if (ad.LINE) a.addressLine2 = ad.LINE[0].D;
-        if (ad.CITY_STATE) {
-          let cs = ad.CITY_STATE[0].D.split(/, */);
-          a.city = cs[0];
-          a.region = cs[1];
-        }
-        if (ad.ZIP) a.postalCode = ad.ZIP[0].D;
-        a.addressTypeId = refData.addressTypes.DEFAULT;
-        a.primaryAddress = primary;
-        u.personal.addresses.push(a);
-        primary = false;
-      }
       if (u.personal.email) {
         u.personal.preferredContactTypeId = '002'
       } else {
-        u.personal.preferredContactTypeId = '001'
+        u.personal.preferredContactTypeId = '002'
       }
 
       if (u.patronGroup) {
@@ -256,23 +246,6 @@ try {
           permissions: []
         }
         writeOut(files.p, perm);
-        if (nt) {
-          nt.NOTE.forEach(n => {
-            let o = {
-              content: n.D,
-              typeId: refData.noteTypes['Symphony Note'],
-              domain: 'users',
-              title: 'Symphony Note',
-              popUpOnCheckOut: false,
-              popUpOnUser: false,
-              links: [
-                { type: 'user', id: u.id }
-              ]
-            };
-            writeOut(files.n, o);
-            ncount++;
-          });
-        }
         let pref = {
           id: uuid(u.id + 'pref', ns),
           userId: u.id,
