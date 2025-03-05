@@ -186,7 +186,7 @@ try {
         if (!email && r.Z304_EMAIL_ADDRESS) email = r.Z304_EMAIL_ADDRESS;
       });
     }
-    let un = email || bc || pid;
+    let un = id | email || bc || pid;
 
     let edate = '';
     locs.forEach(r => {
