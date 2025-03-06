@@ -1,18 +1,29 @@
+/*
+  NOTE: This script will require items.csv and notes.csv files for the creation of items.
+  If these files are not found in the same directory as the MFHD file, the script will immediately fail.
+*/
+
 import fs from 'fs';
 import path from 'path';
 import { v5 as uuid } from 'uuid';
 import readline from 'readline';
+import { parse } from 'csv-parse/sync';
 
 let confFile = process.argv[2];
+let mfhdFile = process.argv[3];
 
 let refDir;
-let mfhdFile = process.argv[3];
 let ns;
 const refData = {};
 const tsvMap = {};
 const suppMap = {};
 const outs = {};
 const dbug = process.env.DEBUG;
+
+const ifiles = {
+  items: 'items.csv',
+  notes: 'notes.csv'
+}
 
 const statMap = {
   'Claims Returned': 'Claimed returned',
@@ -146,6 +157,13 @@ try {
     outs[f] = fs.createWriteStream(p)
   }
 
+  for (let f in ifiles) {
+    let path = wdir + '/' + ifiles[f];
+    if (!fs.existsSync(path)) throw new Error(`Required item file "${ifiles[f]}" not found in ${wdir}!`);
+    ifiles[f] = path;
+  }
+  // throw(ifiles);
+
   // map ref data
   let refFiles = fs.readdirSync(refDir);
   refFiles.forEach(f => {
@@ -234,149 +252,95 @@ try {
     }
   }
   const bcseen = {};
-  const occ = {};
-  const makeItems = (fields, holdings, inst) => {
-    fields.forEach(r => {
-      let ih = {};
-      r.subfields.forEach(s => {
-        let code = Object.keys(s)[0]
-        ih[code] = s[code];
+  const hoc = {};
+
+  const makeItems = () => {
+    const d = {};
+    const notes = {};
+    for (let f in ifiles) {
+      let csv = fs.readFileSync(ifiles[f], { encoding: 'utf8' });
+      d[f] = parse(csv, {
+        columns: true,
+        skip_empty_lines: true,
+        bom: true
       });
-      let iid = holdings.hrid.replace(/^[a-z]+/, iprefix);
-      if (occ[iid] === undefined) {
-        occ[iid] = 0;
-      } else {
-        occ[iid]++;
-      }
-      let occStr = occ[iid].toString().padStart(3, 0);
-      let ihrid = iid + '-' + occStr;
-      let i = {
-        _version: 1,
-        id: uuid(ihrid, ns),
-        hrid: ihrid,
-        permanentLoanTypeId: refData.loantypes['Can circulate'],
-        holdingsRecordId: holdings.id,
-        status: { name: 'Available' },
-        notes: [],
-        circulationNotes: []
-      }
-      let stat = tsvMap.statuses[ih.s] || '';
-      if (stat) {
-        i.status.name = stat;
-        if (ih.v) {
-          try {
-            let sd = new Date(ih.v).toISOString();
-            sd = sd.replace(/T00:/, 'T12:');
-            i.status.date = sd;
-          } catch (e) {
-            console.log(`WARN "${ih.v}" is not a valid status date`)
+      csv = '';
+    }
+    d.notes.forEach(n =>{
+      let iid = n.ITEM_ID;
+      delete n.ITEM_ID;
+      notes[iid] = n;
+    });
+    delete d.notes;
+
+    let count = 0;
+    d.items.forEach(r => {
+      if (dbug) console.log(r);
+      count++;
+      let mid = r.MFHD_ID;
+      let hid = hseen[mid];
+      if (hid) {
+        if (!hoc[mid]) hoc[mid] = 1;
+        let occStr = hoc[mid].toString().padStart(3, '0');
+        let ihrid = mid + '-' + occStr;
+        let i = {
+          _version: 1,
+          id: uuid(ihrid, ns),
+          hrid: ihrid,
+          permanentLoanTypeId: refData.loantypes['Standard'],
+          holdingsRecordId: hid,
+          status: { name: 'Available' },
+          discoverySuppress: false,
+          notes: [],
+          circulationNotes: []
+        }
+
+        let stat = statMap[r.ITEM_STATUS_DESC] || '';
+        if (stat) i.status.name = stat;
+        if (r.ITEM_STATUS_DESC === 'Damaged') {
+          i.itemDamagedStatusId = refData.itemDamageStatuses.Damaged;
+        }
+
+        let mt = tsvMap.mtypes[r.ITEM_TYPE_ID] || '';
+        i.materialTypeId = mt;
+
+        if (r.SUPPRESS_IN_OPAC === 'Y') i.discoverySuppress === true;
+  
+        let bc = r.ITEM_BARCODE;
+        if (bc && !bcseen[bc]) {
+          i.barcode = bc;
+          bcseen[bc] = i.id;
+        } else if (bc) {
+          console.log(`WARN duplicate barcode found ${bc} (${i.hrid})`);
+        }
+
+        if (r.ITEM_ENUM) i.volume = r.ITEM_ENUM;
+        
+        if (r.CHRON) i.chronology = r.CHRON;
+        if (r.Year || r.CAPTION) {
+          i.yearCaption = [];
+          if (r.Year) i.yearCaption.push(r.Year);
+          if (r.CAPTION) i.yearCaption.push(r.CAPTION);
+        }
+        if (r.COPY_NUMBER) i.copyNumber = r.COPY_NUMBER;
+        if (r.PIECES) i.numberOfPieces = r.PIECES;
+
+        if (dbug) console.log(i);
+        if (i.materialTypeId) {
+          if (i.permanentLoanTypeId) {
+            writeOut(outs.items, i);
+            ttl.items++;
+            hoc[mid]++;
+          } else {
+            console.log(`ERROR item loantype not found for "Can circulate"`);
+            ttl.itemErr++;
           }
-        }
-      }
-      if (ih.s === 'Damaged') {
-        i.itemDamagedStatusId = refData.itemDamageStatuses.Damaged;
-      }
-      if (ih.s.match(/Review/)) {
-        let note = ih.s
-        let t = ['Check in', 'Check out'];
-        t.forEach(y => {
-          let o = {
-            note: note,
-            noteType: y, 
-            date: new Date().toISOString().replace(/T.+/, ''),
-            id: uuid(iid + note + y, ns)
-          };
-          i.circulationNotes.push(o);
-        });
-      }
-      let mt = tsvMap.mtypes[ih.t];
-      i.materialTypeId = mt;
-      if (ih.h) {
-        let tempId = tsvMap.locations[ih.h];
-        if (tempId !== holdings.permanentLocationId) {
-          i.temporaryLocationId = tempId;
-        }
-      }
-      if (ih.g) i.copyNumber = ih.g;
-      if (ih.a) {
-        let cn = (ih.b) ? ih.a + ' ' + ih.b : ih.a;
-        if (cn !== holdings.callNumber) {
-          i.itemLevelCallNumber = cn;
-          i.itemLevelCallNumberTypeId = refData.callNumberTypes['Other scheme'];
-          if (ih.x) i.itemLevelCallNumberPrefix = ih.x;
-        }
-      }
-      if (ih.i && !bcseen[ih.i]) {
-        i.barcode = ih.i;
-        bcseen[ih.i] = i.id;
-      } else if (ih.i) {
-        console.log(`WARN duplicate barcode found ${ih.i} (${i.hrid})`);
-      }
-      if (ih.c) {
-        if (inst.blvl === 's') {
-          i.enumeration = ih.c;
         } else {
-          i.volume = ih.c;
-        }
-      }
-      if (ih.k) i.chronology = ih.k;
-      if (ih.d || ih.o) {
-        i.yearCaption = [];
-        if (ih.d) i.yearCaption.push(ih.d);
-        // if (ih.o) i.yearCaption.push(ih.o);
-      }
-      if (ih.m) i.numberOfPieces = ih.m;
-      if (ih.n) i.descriptionOfPieces = ih.n;
-      if (ih.q) {
-        let t = refData.itemNoteTypes.General;
-        if (t) {
-          let o = makeItemNote(ih.q, t, true);
-          i.notes.push(o);
-        }
-      }
-      if (ih.f) {
-        let t = refData.itemNoteTypes['Voyager Historical Charges'];
-        if (t) {
-          let o = makeItemNote(ih.f, t, true);
-          i.notes.push(o);
-        }
-      }
-      if (ih.e) {
-        let t = refData.itemNoteTypes['Voyager Historical Browses'];
-        if (t) {
-          let o = makeItemNote(ih.e, t, true);
-          i.notes.push(o);
-        }
-      }
-      if (ih.r || ih.u) i.circulationNotes = [];
-      if (ih.r) {
-        let o = {
-          note: ih.r,
-          noteType: 'Check in',
-          date: new Date().toISOString().replace(/T.+/, ''),
-          id: uuid(iid + 'in', ns)
-        };
-        i.circulationNotes.push(o);
-      }
-      if (ih.u) {
-        let o = {
-          note: ih.u,
-          noteType: 'Check out',
-          date: new Date().toISOString().replace(/T.+/, ''),
-          id: uuid(iid + 'out', ns)
-        };
-        i.circulationNotes.push(o);
-      }
-      if (i.materialTypeId) {
-        if (i.permanentLoanTypeId) {
-          writeOut(outs.items, i);
-          ttl.items++;
-        } else {
-          console.log(`ERROR item loantype not found for "Can circulate"`);
+          console.log(`ERROR item material type not found for "${ih.t}"`);
           ttl.itemErr++;
         }
       } else {
-        console.log(`ERROR item material type not found for "${ih.t}"`);
+        console.log(`ERROR no MFHD found for "${mid}" (line ${count})`);
         ttl.itemErr++;
       }
     });
@@ -613,9 +577,6 @@ try {
             });
             bwseen[h.id] = 1;
           }
-          if (m['949']) {
-            makeItems(m['949'], h, inst);
-          }
         } else {
           console.log(`ERROR hrid ${hhrid} already used!`);
           ttl.holdingsErr++;
@@ -629,11 +590,12 @@ try {
       console.log(`ERROR instance "${bhrid}" not found for ${hhrid}`);
       ttl.holdingsErr++;
     }
-    
   }
 
+  makeItems();
   showStats();
 
 } catch (e) {
-  console.log(e);
+  let msg = (dbug) ? e : `${e}`;
+  console.log(msg);
 }
