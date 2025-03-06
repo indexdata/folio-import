@@ -344,7 +344,8 @@ try {
                   id: uuid(n.D + ihrid + nocc, ns),
                   note: n.D,
                   noteType: t,
-                  date: d
+                  date: d,
+                  staffOnly: true
                 }
                 i.circulationNotes.push(o);
                 nocc++;
@@ -357,7 +358,7 @@ try {
           cust[k].forEach(n => {
             let note = n.D;
             if (note) {
-              let so = (k === 'STAFF') ? true : false;
+              let so = (k.match(/STAFF|PONUMBER|I_NUMBER|PRICE|INVENTORY/)) ? true : false;
               let o = makeNote(note, tid, so);
               i.notes.push(o);
             }
