@@ -302,6 +302,7 @@ try {
     let idate = r.INVENTORY;
     let status = r.CURR_LOC;
     let itype = r.ITEM_TYPE;
+    let price = r.PRICE;
     let cust = custMap[iid];
     let ihrid = iprefix + iid;
     let i = {
@@ -330,6 +331,8 @@ try {
       let n = makeNote(idate, t, true);
       i.notes.push(n);
     }
+    if (!cust) cust = {};
+    if (price) cust.PRICE = [ { D: price } ];
     if (cust) {
       for (let k in cust) {
         if (k === 'CIRCNOTE') {
