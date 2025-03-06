@@ -320,7 +320,7 @@ try {
       }
     }
     if (enu) {
-      i.enumeration = r.UNITS;
+      i.enumeration = enu;
     }
     if (anote) {
       i.administrativeNotes = [ 'Symphony Date Created: ' + anote ];
