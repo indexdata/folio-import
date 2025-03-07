@@ -27,9 +27,11 @@ const dbug = process.env.DEBUG;
         let lc = 0;
         let rc = 0;
         let data = '';
+        let nonUtf = false;
         for await (let l of rl) {
             lc++;
             if (l.match(/^\*\*\* DOC/) && lc > 1) {
+                
                 let raw = txt2raw(data);
                 fs.writeFileSync(outPath, raw, { flag: 'a' })
                 data = '';
@@ -38,14 +40,18 @@ const dbug = process.env.DEBUG;
                     console.log('Records created:', rc)
                 }
             } else {
-                if (!l.match(/^FORM=/)) {
+                if (l.match(/^\.\d\d\d\. /)) {
                     l = l.replace(/^\.(\d{3})\./, '$1');
                     if (l.match(/^00/)) {
-                        l = l.replace(/^000 .+/, '00000nz  a2200000n  4500');
+                        l = l.replace(/^000 .+/, `00000nz  a2200000n  4500`);
                         l = l.replace(/^(00[1-9]) \|./, '$1 ');
                     } else {
                         l = l.replace(/(^...) \|/, '$1   |');
                         l = l.replace(/\|(.)/g, ' $$$1 ');
+                    }
+                    if (l.match(/\x1b/) && !nonUtf) {
+                        data = data.replace(/^00000nz  a/, '00000nz   ');
+                        nonUtf = true;
                     }
                     data += l + '\n';
                 }
