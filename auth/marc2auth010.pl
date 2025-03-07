@@ -413,7 +413,12 @@ foreach (@ARGV) {
     my $hrid = '';
     if ($lccn) {
       $hrid = $lccn;
-      $marc->field('001')->data($lccn);
+      if ($marc->field('001')) {
+        $marc->field('001')->data($lccn);
+      } else {
+        my $nf = MARC::Field->new('001', $lccn);
+        $marc->insert_fields_ordered($nf);
+      }
     } else {
       $hrid = $marc->field('001')->data();
     }
