@@ -25,6 +25,15 @@ const ifiles = {
   notes: 'notes.csv'
 }
 
+const ntypeMap = {
+  '1': 'General',
+  '2': 'Address',
+  '3': 'Barcode',
+  '4': 'Phone',
+  '5': 'Pop',
+  '6': 'Universal Borrowing'
+};
+
 const statMap = {
   'Claims Returned': 'Claimed returned',
   'Damaged': 'Available',
@@ -89,7 +98,7 @@ const elRelMap = {
   '2':'Related resource',
   '3':'No information provided',
   '8':'No display constant generated'
-}
+};
 
 const files = {
   holdings: 1,
@@ -185,7 +194,7 @@ try {
       });
     } catch {}
   });
-  // throw(refData);
+  // throw(refData.itemNoteTypes);
 
   // create tsv map
   let tsvDir = conf.tsvDir || conf.refDir;
@@ -226,6 +235,26 @@ try {
   }
   // throw(instMap);
 
+  console.log(`INFO Parsing ${ifiles.notes}...`);
+  const notes = {};
+  let csv = fs.readFileSync(ifiles.notes, { encoding: 'utf8' });
+  let rows = parse(csv, {
+    columns: true,
+    skip_empty_lines: true,
+    bom: true
+  });
+  csv = '';
+  let c = 0;
+  rows.forEach(r => {
+    let k = r.ITEM_ID;
+    if (!notes[k]) notes[k] = [];
+    notes[k].push({ n: r.ITEM_NOTE, t: r.ITEM_NOTE_TYPE });
+    c++
+  });
+  rows = [];
+  console.log('INTO Rows parsed', c);
+  // throw(notes);
+
   let ttl = {
     count: 0,
     holdings: 0,
@@ -251,38 +280,28 @@ try {
       console.log(l, ':', n);
     }
   }
-  const bcseen = {};
-  const hoc = {};
 
+  const bcseen = {};
+  const itseen = {};
   const makeItems = () => {
-    const d = {};
-    const notes = {};
-    for (let f in ifiles) {
-      let csv = fs.readFileSync(ifiles[f], { encoding: 'utf8' });
-      d[f] = parse(csv, {
-        columns: true,
-        skip_empty_lines: true,
-        bom: true
-      });
-      csv = '';
-    }
-    d.notes.forEach(n =>{
-      let iid = n.ITEM_ID;
-      delete n.ITEM_ID;
-      notes[iid] = n;
+    let items = {}
+    let csv = fs.readFileSync(ifiles.items, { encoding: 'utf8' });
+    items = parse(csv, {
+      columns: true,
+      skip_empty_lines: true,
+      bom: true
     });
-    delete d.notes;
+    csv = '';
 
     let count = 0;
-    d.items.forEach(r => {
+    items.forEach(r => {
       if (dbug) console.log(r);
       count++;
       let mid = r.MFHD_ID;
       let hid = hseen[mid];
+      let iid = r.ITEM_ID;
       if (hid) {
-        if (!hoc[mid]) hoc[mid] = 1;
-        let occStr = hoc[mid].toString().padStart(3, '0');
-        let ihrid = mid + '-' + occStr;
+        let ihrid = prefix + 'i' + iid;
         let i = {
           _version: 1,
           id: uuid(ihrid, ns),
@@ -325,18 +344,52 @@ try {
         if (r.COPY_NUMBER) i.copyNumber = r.COPY_NUMBER;
         if (r.PIECES) i.numberOfPieces = r.PIECES;
 
+        let nts = notes[iid] || [];
+        nts.forEach(n => {
+          if (n.t === '5') {
+            let ic = 0;
+            let ct = ['Check out', 'Check in'];
+            ct.forEach(c => {
+              ic++;
+              let o = {
+                id: uuid(`${ic}:${n.n}:${c}`, ns),
+                note: n.n,
+                noteType: c,
+                staffOnly: true
+              };
+              i.circulationNotes.push(o);
+            });
+          }
+          else {
+            let ntype = ntypeMap[n.t];
+            let ntypeId = refData.itemNoteTypes[ntype];
+            if (ntypeId) {
+              let o = makeItemNote(n.n, ntypeId, false);
+              i.notes.push(o);
+            } else {
+              console.log(`WARN item note type not found for ${n.t}`);
+            }
+          }
+        });
+
         if (dbug) console.log(i);
-        if (i.materialTypeId) {
-          if (i.permanentLoanTypeId) {
-            writeOut(outs.items, i);
-            ttl.items++;
-            hoc[mid]++;
+        console.log(itseen);
+        if (!itseen[i.hrid]) {
+          if (i.materialTypeId) {
+            if (i.permanentLoanTypeId) {
+              writeOut(outs.items, i);
+              ttl.items++;
+              itseen[i.hrid] = 1;
+            } else {
+              console.log(`ERROR item loantype not found for "Can circulate"`);
+              ttl.itemErr++;
+            }
           } else {
-            console.log(`ERROR item loantype not found for "Can circulate"`);
+            console.log(`ERROR item material type not found for "${ih.t}"`);
             ttl.itemErr++;
           }
         } else {
-          console.log(`ERROR item material type not found for "${ih.t}"`);
+          console.log(`ERROR item hrid "${i.hrid}" already used`);
           ttl.itemErr++;
         }
       } else {
@@ -596,6 +649,5 @@ try {
   showStats();
 
 } catch (e) {
-  let msg = (dbug) ? e : `${e}`;
-  console.log(msg);
+  console.log(e);
 }
