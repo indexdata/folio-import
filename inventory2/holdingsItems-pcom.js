@@ -282,7 +282,7 @@ try {
   }
 
   const bcseen = {};
-  const itseen = {};
+  const iocc = {};
   const makeItems = () => {
     let items = {}
     let csv = fs.readFileSync(ifiles.items, { encoding: 'utf8' });
@@ -300,8 +300,14 @@ try {
       let mid = r.MFHD_ID;
       let hid = hseen[mid];
       let iid = r.ITEM_ID;
+      if (iocc[iid]) {
+        iocc[iid]++;
+      } else {
+        iocc[iid] = 1;
+      }
       if (hid) {
-        let ihrid = prefix + 'i' + iid;
+        let ioccStr = iocc[iid].toString().padStart(2, '0');
+        let ihrid = prefix + 'i' + iid + '.' + ioccStr;
         let i = {
           _version: 1,
           id: uuid(ihrid, ns),
@@ -373,23 +379,16 @@ try {
         });
 
         if (dbug) console.log(i);
-        console.log(itseen);
-        if (!itseen[i.hrid]) {
-          if (i.materialTypeId) {
-            if (i.permanentLoanTypeId) {
-              writeOut(outs.items, i);
-              ttl.items++;
-              itseen[i.hrid] = 1;
-            } else {
-              console.log(`ERROR item loantype not found for "Can circulate"`);
-              ttl.itemErr++;
-            }
+        if (i.materialTypeId) {
+          if (i.permanentLoanTypeId) {
+            writeOut(outs.items, i);
+            ttl.items++;
           } else {
-            console.log(`ERROR item material type not found for "${ih.t}"`);
+            console.log(`ERROR item loantype not found for "Can circulate"`);
             ttl.itemErr++;
           }
         } else {
-          console.log(`ERROR item hrid "${i.hrid}" already used`);
+          console.log(`ERROR item material type not found for "${ih.t}"`);
           ttl.itemErr++;
         }
       } else {
