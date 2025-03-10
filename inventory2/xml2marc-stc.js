@@ -21,7 +21,8 @@ const dbug = process.env.DEBUG;
 
         const options = {
             ignoreAttributes: false,
-            attributeNamePrefix : "@_"
+            attributeNamePrefix: "_",
+            trimValues: false
         };
         const parser = new XMLParser(options);
         
@@ -42,44 +43,31 @@ const dbug = process.env.DEBUG;
             } else if (l.match(/^<\/entries>/)) {
                 data += l;
                 let o = parser.parse(data);
-                console.log(JSON.stringify(o, null, 2));
-                console.log('-------------------------')
+                let entries = o.entries || {};
+                let fields = entries.marcEntry || [];
+                let txt = '';
+                fields.forEach(f => {
+                    let tag = f._tag;
+                    let ind = f._ind;
+                    let d = f['#text'];
+                    if (tag === '000') {
+                        d = '00000nz  a2200000n  4500'; 
+                        txt += d + '\n';
+                    } else if (tag > '009') {
+                        d = d.replace(/\|(\w)/g, ' $$$1 ');
+                        txt += tag + ' ' + ind + d + '\n';
+                    } else {
+                        d = d.replace(/^\|./, '');
+                        txt += tag + ' ' + d + '\n';
+                    }
+                });
+                let raw = txt2raw(txt);
+                fs.writeFileSync(outPath, raw, { flag: 'a' });
+                rc++
+                if (rc % 10000 === 0) console.log('MARC records created:', rc);
             } else {
                 data += l
             }
-            /*
-            if (l.match(/^\*\*\* DOC/) && lc > 1) {
-                
-                let raw = txt2raw(data);
-                fs.writeFileSync(outPath, raw, { flag: 'a' })
-                data = '';
-                rc++;
-                if (rc % 10000 === 0) {
-                    console.log('Records created:', rc)
-                }
-            } else {
-                if (l.match(/^\.\d\d\d\. /)) {
-                    l = l.replace(/^\.(\d{3})\./, '$1');
-                    if (l.match(/^00/)) {
-                        l = l.replace(/^000 .+/, `00000nz  a2200000n  4500`);
-                        l = l.replace(/^(00[1-9]) \|./, '$1 ');
-                    } else {
-                        l = l.replace(/(^...) \|/, '$1   |');
-                        l = l.replace(/\|(.)/g, ' $$$1 ');
-                    }
-                    if (l.match(/\x1b/) && !nonUtf) {
-                        data = data.replace(/^00000nz  a/, '00000nz   ');
-                        nonUtf = true;
-                    }
-                    data += l + '\n';
-                }
-            }
-            */
-        }
-        if (data) {
-            let raw = txt2raw(data);
-            fs.writeFileSync(outPath, raw, { flag: 'a' })
-            rc++;
         }
         console.log('Done!');
         console.log('Total Records created:', rc);
