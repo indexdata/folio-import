@@ -1,7 +1,8 @@
 const { parse } = require('csv-parse/sync');
 const fs = require('fs');
-const uuid = require('uuid/v5');
 const path = require('path');
+const { v5 } = require('uuid');
+const uuid = v5;
 
 let refDir = process.argv[2];
 const inFile = process.argv[3];
