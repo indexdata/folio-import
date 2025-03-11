@@ -1,7 +1,13 @@
 const readline = require('readline');
 const fs = require('fs');
 const path = require('path');
-const uuid = require('uuid/v5');
+let uuid;
+try {
+  uuid = require('uuid/v5');
+} catch (e) {
+  const { v5 } = require('uuid');
+  uuid = v5;
+}
 const { parse } = require('csv-parse/sync');
 
 const ns = '3cbefeab-ae52-4c14-8c78-3ed70a827a18';
