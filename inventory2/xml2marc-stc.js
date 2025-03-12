@@ -38,6 +38,7 @@ const dbug = process.env.DEBUG;
         let nonUtf = false;
         for await (let l of rl) {
             lc++;
+            l = l.replace(/ *� */g, '');
             if (l.match(/^<entries>/)) {
                 data = l;
             } else if (l.match(/^<\/entries>/)) {
