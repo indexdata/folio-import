@@ -227,7 +227,6 @@ export function txt2raw(data) {
   ldr = ldr.replace(/^(.{7}).{5}/, '$1' + baseStr);
   let rec = ldr + dir + varFields + '\x1D';
   let rlen = Buffer.byteLength(rec, 'utf8') + 5;
-  // let rlen = rec.length + 5;
   let rlinStr = rlen.toString().padStart(5, '0');
   rec = rlinStr + rec;
   return rec;
