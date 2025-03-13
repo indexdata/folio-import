@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { v5 as uuid } from 'uuid';
 import readline from 'readline';
-import { parse } from 'csv-parse/sync';
+import { parse } from 'csv-parse';
 
 let confFile = process.argv[2];
 let mapFile = process.argv[3];
@@ -18,8 +18,8 @@ const outs = {};
 const typeMap = {
   u: 'Physical',
   v: 'Multi-part monograph',
-  x: 'Monograph',
-  y: 'Serial'
+  m: 'Monograph',
+  s: 'Serial'
 };
 
 const elRelMap = {
@@ -60,6 +60,11 @@ const writeOut = (outStream, data, notJson, newLineChar) => {
   outStream.write(dataStr, 'utf8');
 };
 
+const wait = (ms) => {
+  console.log(`(Waiting ${ms}ms...)`);
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
 const makeNote = function (text, type, staffOnly) {
   if (!staffOnly) staffOnly = false;
   if (!type) throw new Error('Note type not found');
@@ -90,6 +95,8 @@ try {
     if (fs.existsSync(p)) fs.unlinkSync(p);
     outs[f] = fs.createWriteStream(p)
   }
+
+  let start = new Date().valueOf();
 
   for (let f in itemFiles) {
     let path = wdir + '/' + itemFiles[f];
@@ -161,13 +168,14 @@ try {
     });
     for await (let line of rl) {
       let c = line.split(/\|/);
-      let k = c[0].substring(1);
+      let k = c[0];
       instMap[k] = { id: c[1], blvl: c[4], type: c[6], ea: c[5] };
     }
   }
   // throw(instMap);
 
   // map link files;
+  console.log(`Reading linker data from ${itemFiles.links}`);
   const linkMap = {};
   let fileStream = fs.createReadStream(itemFiles.links);
   let rl = readline.createInterface({
@@ -188,10 +196,11 @@ try {
       linkMap[k] = bid;
       mc++;
     }
-    if (lc % 100000 === 0) {
+    if (lc % 1000000 === 0) {
       console.log('Linker lines read:', lc, `(${mc})`);
     }
   }
+  console.log('Links mapped:', mc);
   // throw(linkMap);
 
   let ttl = {
@@ -203,7 +212,6 @@ try {
     itemErrors: 0
   }
 
-  let start = new Date().valueOf();
 
   const showStats = () => {
     let now = new Date().valueOf();
@@ -221,171 +229,88 @@ try {
 
   const hseen = {};
   const iseen = {};
+  const occ = {};
 
-  /*
-    This is the item creation section
-  */
-  
-  let csv = fs.readFileSync(itemFiles.items, { encoding: 'utf8' });
-  let items = parse(csv, {
-    columns: true,
-    skip_empty_lines: true,
-    delimiter: '\t',
-    relax_column_count: true
-  });
-  csv = '';
-  let rc = 0;
-  let bcseen = {};
-  for (let x in items) {
-    let r = items[x];
-    if (dbug) console.log(r);
-    let iid = r.item_record_num;
-    let id = uuid(iid, ns);
-    let hrid = iprefix + iid;
-    let bid = r.bib_record_num;
-    let inst = instMap[bid] || {};
-    let itype = r.itype_code;
-    let lcode = r.location_code;
-    let locId = tsvMap.locations[lcode];
-    let scode = r.item_status_code;
-    let copy = r.copy_num;
-    let cn = r.call_num;
-    let cnt = r.call_num_type;
-    let bc = r.barcode;
-    let supp = r.is_suppressed;
-    let vol = r.volume;
-    let hkey = `${bid}:${lcode}:${cn}`;
-    let hid = hseen[hkey];
-    if (!hid) {
-      if (occ[bid]) {
-        occ[bid]++;
-      } else {
-        occ[bid] = 1;
-      }
-      let occStr = occ[bid].toString().padStart(3, '0');
-      let hrid = hprefix + bid + '-' + occStr;
-      let h = {
-        _version: 1,
-        id: uuid(hrid, ns),
-        hrid: hrid,
-        instanceId: inst.id,
-        permanentLocationId: locId,
-        sourceId: refData.holdingsRecordsSources.FOLIO,
-      };
-      if (cn) {
-        cnt = (cnt === 'Library of Congress') ? 'Library of Congress classification' : 'Other scheme';
-        let cntId = refData.callNumberTypes[cnt];
-        if (!cntId) throw new Error(`ERROR callNumberTypeId not found for "${cnt}"`);
-        h.callNumber = cn;
-        h.callNumberTypeId = cntId;
-      }
-      if (h.instanceId) {
-        if (h.permanentLocationId) {
-          if (h.sourceId) {
-            writeOut(outs.holdings, h);
-            ttl.holdings++;
-            hseen[hkey] = h.id;
-          } else {
-            console.log(`ERROR holdings sourceId not found (${hid})!`);
-            ttl.errors++;
-          }
-        } else {
-          console.log(`ERROR holdings locationId not found for "${lcode}" (${hid})!`);
-          ttl.errors++;
-        }
-      } else {
-        console.log(`ERROR holdings instanceId not found for "${bid}" (${hid})!`);
-        ttl.errors++;
-      }
-      if (dbug) console.log(h);
+  const makeHoldingsItems = (r) => {
+    // console.log(r);
+    let aid = r.Z30_REC_KEY.substring(0, 9);
+    let iid = r.Z30_REC_KEY;
+    let bid = linkMap[aid] || '';
+    let inst = instMap[bid];
+
+    let bc = r.Z30_BARCODE;
+    let mt = r.Z30_MATERIAL;
+    let st = r.Z30_ITEM_STATUS;
+    let cn = r.Z30_CALL_NO;
+    let ct = r.Z30_CALL_NO_TYPE;
+    let col = r.Z30_COLLECTION;
+    let ips = r.Z30_ITEM_PROCESS_STATUS;
+    let loc = r.Z30_SUB_LIBRARY;
+    let locKey = loc + ':' + st;
+    let locId;
+    if (col === '400') { 
+      locId = refData.locations['loc-hs'];
+    } else if (cn.match(/Astrid Lindgrensamlingen/i)) {
+      locId = refData.locations['loc-al'];
+    } else if (loc === 'RRLEX' && st === '02' && ips === 'SN') {
+      locId = refData.locations['loc-hem'];
+    } else {
+      locId = tsvMap.locations[locKey] || refData.locations.datamigration;
     }
     
-    hid = hseen[hkey];
-    if (hid) {
-      let hrid = iprefix + iid;
-      let i = {
-        _version: 1,
-        id: uuid(hrid, ns),
-        hrid: hrid,
-        holdingsRecordId: hid,
-        formerIds: [ iid ],
-        notes: [],
-        discoverySuppress: false,
-      };
-      if (scode === 'n') scode = '';
-      let st = tsvMap.statuses[scode] || 'Available';
-      i.status = { name: st };
-      if (bc && !bcseen[bc]) {
-        i.barcode = bc;
-        bcseen[bc] = iid;
-      }
-      if (scode === 'd') {
-        i.itemDamagedStatusId = refData.itemDamageStatuses.Damaged;
-      }
-      // if (supp === 'TRUE') i.discoverySuppress = true;
-      if (vol) i.volume = vol;
-      if (copy) i.copyNumber = copy;
-      i.materialTypeId = tsvMap.mtypes[itype];
-      i.permanentLoanTypeId = refData.loantypes['Can circulate'];
-
-      // note stuff here
-      let nn = noteMap[iid];
-      if (nn) {
-        delete nn.id;
-        for (let k in nn) {
-          let v = nn[k];
-          if (v) {
-            if (k === 'Circ Note') {
-              i.circulationNotes = [];
-              let t = ['Check in', 'Check out'];
-              t.forEach(y => {
-                let o = {
-                  note: v,
-                  noteType: y,
-                  date: new Date().toISOString().replace(/T.+/, ''),
-                  id: uuid(iid + y, ns)
-                };
-                i.circulationNotes.push(o);
-              });
-            } else {
-              let t = ntypes[k].type;
-              let so = ntypes[k].staffOnly;
-              v.split(/\|/).forEach(x => {
-                let o = {
-                  note: x,
-                  itemNoteTypeId: t,
-                  staffOnly: so
-                }
-                i.notes.push(o);
-              });
-            }
-          }
+    if (inst) {
+      let hkey = bid + ':' + loc;
+      if (!hseen[hkey]) {
+        occ[bid] = (!occ[bid]) ? 1 : occ[bid] + 1;
+        let occStr = occ[bid].toString().padStart(3, '0');
+        let hhrid = bid + '-' + occStr;
+        let hid = uuid(hhrid, ns);
+        let htypeId = (inst.blvl === 's') ? refData.holdingsTypes['Serial'] : refData.holdingsTypes['Monograph'];
+        
+        let h = {
+          _version: 1,
+          id: hid,
+          hrid: hhrid,
+          instanceId: inst.id,
+          sourceId: refData.holdingsRecordsSources.FOLIO,
+          permanentLocationId: locId,
+          holdingsTypeId: htypeId
         }
-      }
+        if (cn) { 
+          h.callNumber = cn;
+          h.callNumberTypeId = refData.callNumberTypes['Other scheme'];
+        }
 
-      if (!iseen[iid]) {
-        if (i.materialTypeId) {
-          if (i.permanentLoanTypeId) {
-            writeOut(outs.items, i);
-            iseen[iid] = i.id;
-            ttl.items++;
-          } else {
-            console.log(`ERROR loantype not found for ${iid}`);
-            ttl.itemErrors++;
-          }
+        if (h.permanentLocationId) {
+          writeOut(outs.holdings, h);
+          ttl.holdings++;
         } else {
-          console.log(`ERROR material type "${itype}" not found for ${iid}`);
-          ttl.itemErrors++;
+          console.log(`ERROR permanentLocationId not found for ${loc}!`)
         }
-      } else {
-        console.log(`ERROR item id "${iid}" already seen`);
-        ttl.itemErrors++;
+        hseen[hkey] = { id: hid, cn: cn };
+        // console.log(h);
       }
-      if (dbug) console.log(i);
-    }
-  }
+    } else {
+      console.log(`ERROR instance not found for ${r.Z30_REC_KEY}!`);
 
-  showStats();
+    }
+  };
+  
+  fileStream = fs.createReadStream(itemFiles.items);
+  const parser = parse({
+    delimiter: '\t',
+    columns: true,
+    relax_column_count: true,
+    trim: true
+  });
+  fileStream.pipe(parser);
+  parser.on('data', (rec) => {
+    makeHoldingsItems(rec);
+  });
+  parser.on('end', () => {
+    showStats();
+    console.log(hseen);
+  })
 
 } catch (e) {
   console.log(e);
