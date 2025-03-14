@@ -129,6 +129,7 @@ try {
           refData[prop][p.code] = p.id;
         } 
         if (p.name) {
+          p.name = p.name.trim();
           refData[prop][p.name] = p.id;
         }
       });
@@ -324,6 +325,8 @@ try {
         if (r.Z30_NOTE_INTERNAL) nt.s.push(r.Z30_NOTE_INTERNAL);
         let cnote = r.Z30_NOTE_CIRCULATION
         let mt = r.Z30_MATERIAL;
+        let chdate = r.Z30_DATE_LAST_RETURN;
+        let chhour = r.Z30_HOUR_LAST_RETURN;
 
         if (st === '05') i.discoverySuppress = true;
         if (desc) i.displaySummary = desc;
@@ -359,6 +362,14 @@ try {
 
         if (loc === 'RRSPE' && st === '21' && ips === 'DS') {
           nt.p.push('Läses digitalt på läsplatta');
+        } else if (loc === 'RRSPE' && st === '28' && ips === 'RP') {
+          nt.p.push('Spärrad av bevarandeskäl');
+        } else if (loc === 'RESTR') {
+          if ((st === '03' || st === '22') && ips === 'RP') {
+            nt.p.push('Spärrad av bevarandeskäl');
+          } else if (st === '22') {
+            nt.p.push('Annat ex finns');
+          }
         }
 
         i.materialTypeId = tsvMap.mtypes[mt] || refData.mtypes.Unmapped;
@@ -476,14 +487,37 @@ try {
         } else if (loc === 'RESTR' && (st === '03' || st === '22')) {
           pl = 'Framtages ej/spärrat';
         }
-        // console.log(i);
+
         i.permanentLoanTypeId = refData.loantypes[pl];
+        if (tl) { 
+          i.temporaryLoanTypeId = refData.loantypes[tl];
+          if (!i.temporaryLoanTypeId) console.log(`WARN ITEM temporaryLoanType not found for "${loc}:${st}:${ips} (${tl})"`)
+        }
+
+        let statCodeId = refData.statisticalCodes[col];
+        if (statCodeId) {
+          i.statisticalCodeIds = [ statCodeId ];
+        } else if (col) {
+          console.log(`WARN ITEM no statisticalCode found for "${col}"`);
+        }
+
+        if (chdate.match(/^[12]/)) {
+          chdate = chdate.replace(/(....)(..)(..)/, '$1-$2-$3');
+          chhour = chhour.replace(/(..)(..)/, 'T$1:$2:00.000+0000');
+          let fd = chdate + chhour;
+          i.lastCheckIn = { dateTime: fd };
+        }
 
         if (i.permanentLoanTypeId) {
-          writeOut(outs.items, i);
-          ttl.items++;
+          if (i.materialTypeId) {
+            writeOut(outs.items, i);
+            ttl.items++;
+          } else {
+            console.log(`ERROR ITEM materialType not found for "${mt}"!`);
+          }
         } else {
-          console.log(`ERROR ITEM permanantLoanType not found for "${pl}" (${iid})!`);
+          console.log(`ERROR ITEM permanantLoanType not found for "${loc}:${st}:${ips} (${pl})"!`);
+          ttl.itemErrors++;
         }
       }
     } else {
