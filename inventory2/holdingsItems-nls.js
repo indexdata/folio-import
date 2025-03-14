@@ -357,8 +357,11 @@ try {
           i.status.name = 'Intellectual item';
         }
 
+        if (loc === 'RRSPE' && st === '21' && ips === 'DS') {
+          nt.p.push('Läses digitalt på läsplatta');
+        }
+
         i.materialTypeId = tsvMap.mtypes[mt] || refData.mtypes.Unmapped;
-        console.log(i.materialTypeId);
 
         for (let k in nt) {
           nt[k].forEach(n => {
@@ -376,6 +379,7 @@ try {
             }
           });
         }
+
         if (cnote) {
           i.circulationNotes = [];
           cnoteTypes.forEach(t => {
@@ -390,22 +394,102 @@ try {
           });
         }
 
-        
-
-
+        let pl = '';
+        let tl = '';
+        if (loc === 'RRLEX') {
+          if (st === '01') {
+            pl = 'Läsesalslån';
+            switch(ips) {
+              case 'DB': tl = 'Digital beställning'; break;
+              case 'LA': tl = 'Lagas före lån'; break;
+              case 'LL': tl = 'L-samling - kollas före lån'; break;
+              case 'UL': tl = 'Under leverans (ABON)'; 
+            }
+          } else if (st === '02') {
+            pl = 'Hemlån';
+            switch(ips) {
+              case 'LA': tl = 'Lagas före lån'; break;
+              case 'UL': tl = 'Under leverans (ABON)'; 
+            }
+          } else if (st === '05') {
+            pl = 'Framtages ej/spärrat'; 
+            i.discoverySuppress = true;
+          } else if (st === '06') {
+            pl = 'Läsesalslån';
+            if (ips === 'DB') tl = 'Digital beställning';
+          } else if (st === '71') {
+            pl = 'Läsesalslån';
+            switch(ips) {
+              case 'DB': tl = 'Digital beställning'; break;
+              case 'SN': pl = 'Hemlån';
+            }
+          } else if (st === '72') {
+            pl = 'Läsesalslån';
+          } else if (st === '32') {
+            pl = 'Hemlån';
+          } else if (st === '31') {
+            pl = 'Läsesalslån';
+          }
+        } else if (loc === 'RRSPE') {
+          if (st === '21') {
+            pl = 'Specialläsesalslån';
+            switch(ips) {
+              case 'DB': tl = 'Digital beställning'; break;
+              case 'LA': tl = 'Lagas före lån'; break;
+              case 'LL': tl = 'L-samling - kollas före lån';
+            }
+          } else if (st === '27') {
+            pl = 'Manuell beställning';
+          } else if (st === '71') {
+            pl = 'Specialläsesalslån';
+          } else if (st === '26') {
+            pl = 'Specialläsesalslån';
+            switch(ips) {
+              case 'DB': tl = 'Digital beställning'; break;
+              case 'LA': tl = 'Lagas före lån'; break;
+              case 'LL': tl = 'L-samling - kollas före lån';
+            }
+          } else if (st === '23') {
+            pl = 'Specialläsesalslån';
+            switch(ips) {
+              case 'LA': tl = 'Lagas före lån'; break;
+              case 'LL': tl = 'L-samling - kollas före lån';
+            }
+          } else if (st === '28') {
+            pl = 'Specialläsesalslån';
+            switch(ips) {
+              case 'DB': tl = 'Digital beställning'; break;
+              case 'LA': tl = 'Lagas före lån';
+            }
+          }
+        } else if (loc.match(/^(MFL|REF|TLKB)$/) && st === '04') {
+          pl = 'Referens';
+        } else if (loc === 'PRUMS') {
+          switch(st) {
+            case '01': pl = 'Läsesalslån'; break;
+            case '21': pl = 'Specialläsesalslån'; break;
+            case '05': pl = 'Framtages ej/spärrat'; i.discoverySuppress = true;
+          }
+        } else if (loc === 'ENHET' && st === '73') {
+          pl = 'Bokskåp';
+          i.discoverySuppress = true;
+        } else if (loc === 'RESTR' && (st === '03' || st === '22')) {
+          pl = 'Framtages ej/spärrat';
+        }
         // console.log(i);
+        i.permanentLoanTypeId = refData.loantypes[pl];
 
-        if (i) {
+        if (i.permanentLoanTypeId) {
           writeOut(outs.items, i);
           ttl.items++;
         } else {
-          console.log(`ERROR ITEM! (${iid})!`);
+          console.log(`ERROR ITEM permanantLoanType not found for "${pl}" (${iid})!`);
         }
       }
     } else {
       console.log(`ERROR instance not found for ${r.Z30_REC_KEY}!`);
     }
-  };
+  }
   
   fileStream = fs.createReadStream(itemFiles.items);
   const parser = parse({
