@@ -34,7 +34,8 @@ const files = {
   holdings: 1,
   items: 1,
   bwp: 1,
-  rel: 1
+  rel: 1,
+  suppress: 1
 };
 
 const itemFiles = {
@@ -208,6 +209,7 @@ try {
     items: 0,
     boundwiths: 0,
     relationships: 0,
+    instanceSupp: 0,
     errors: 0,
     itemErrors: 0
   }
@@ -229,6 +231,8 @@ try {
 
   const hseen = {};
   const iseen = {};
+  const bcseen = {};
+  const suppMap = {};
   const occ = {};
 
   const makeHoldingsItems = (r) => {
@@ -237,7 +241,6 @@ try {
     let iid = r.Z30_REC_KEY;
     let bid = linkMap[aid] || '';
     let inst = instMap[bid];
-
     let bc = r.Z30_BARCODE;
     let mt = r.Z30_MATERIAL;
     let st = r.Z30_ITEM_STATUS;
@@ -260,6 +263,13 @@ try {
     
     if (inst) {
       let hkey = bid + ':' + loc;
+      if ((loc === 'ENHET' && st === '73') || (loc === 'RRLEX' && (st === '31' || st === '32')) || cn === 'AVM') {
+        if (!suppMap[bid]) {
+          suppMap[bid] = 1;
+          writeOut(outs.suppress, { [bid]: 1 });
+          ttl.instanceSupp++;
+        }
+      }
       if (!hseen[hkey]) {
         occ[bid] = (!occ[bid]) ? 1 : occ[bid] + 1;
         let occStr = occ[bid].toString().padStart(3, '0');
@@ -290,9 +300,68 @@ try {
         hseen[hkey] = { id: hid, cn: cn };
         // console.log(h);
       }
+      let hr = hseen[hkey];
+      if (hr) {
+        let nt = {};
+        let i = {
+          _version: 1,
+          id: uuid(iid, ns),
+          hrid: iid,
+          holdingsRecordId: hr.id,
+          discoverySuppress: false,
+          notes: []
+        };
+        let desc = r.Z30_DESCRIPTION || '';
+        let istat = r.Z30_ITEM_STATISTIC || '';
+        let bc = r.Z30_BARCODE;
+        let en = r.Z30_ENUMERATION_A;
+        nt.p = r.Z30_NOTE_OPAC;
+        nt.s = r.Z30_NOTE_INTERNAL;
+        let cnote = r.Z30_NOTE_CIRCULATION
+
+        if (st === '05') i.discoverySuppress = true;
+        if (desc) i.displaySummary = desc;
+        if (istat === 'TG') i.accessionNumber = 'RFID';
+        if (bc && !bcseen[bc]) {
+          i.barcode = bc;
+          bcseen[bc] = 1;
+        } else if (bc) {
+          console.log(`WARN ITEM barcode "${bc}" already used!`);
+        }
+        if (cn !== hr.cn) {
+          i.itemLevelCallNumber = cn;
+          i.itemLevelCallNumberTypeId = refData.callNumberTypes['Other scheme'];
+        }
+        if (en) {
+          i.enumeration = en;
+        }
+        for (let k in nt) {
+          let t = refData.itemNoteTypes['Public note'];
+          let so = false;
+          if (k === 's') {
+            t = refData.itemNoteTypes['Internal note'];
+            so = true;
+          }
+          if (nt[k]) {
+            if (t) {
+              let o = makeNote(nt[k], t, so);
+              i.notes.push(o);
+            } else {
+              console.log(`WARN ITEM note type for "${k}" not found (${iid})`);
+            }
+          } 
+        }
+
+        // console.log(i);
+
+        if (i) {
+          writeOut(outs.items, i);
+        } else {
+          console.log(`ERROR ITEM! (${iid})!`);
+        }
+      }
     } else {
       console.log(`ERROR instance not found for ${r.Z30_REC_KEY}!`);
-
     }
   };
   
@@ -309,7 +378,6 @@ try {
   });
   parser.on('end', () => {
     showStats();
-    console.log(hseen);
   })
 
 } catch (e) {
