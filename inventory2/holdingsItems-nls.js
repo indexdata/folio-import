@@ -22,6 +22,10 @@ const typeMap = {
   s: 'Serial'
 };
 
+const cnoteTypes = [ 'Check in' ];
+
+let today = new Date().toISOString().replace(/T.+/, 'T12:00:00.000+0000');
+
 const elRelMap = {
   '0':'Resource',
   '1':'Version of resource',
@@ -71,7 +75,7 @@ const makeNote = function (text, type, staffOnly) {
   if (!type) throw new Error('Note type not found');
   const out = {
     note: text,
-    holdingsNoteTypeId: type,
+    itemNoteTypeId: type,
     staffOnly: staffOnly
   };
   return out;
@@ -302,22 +306,24 @@ try {
       }
       let hr = hseen[hkey];
       if (hr) {
-        let nt = {};
+        let nt = { p: [], s: []};
         let i = {
           _version: 1,
           id: uuid(iid, ns),
           hrid: iid,
           holdingsRecordId: hr.id,
           discoverySuppress: false,
-          notes: []
+          notes: [],
+          status: { name: 'Available' }
         };
         let desc = r.Z30_DESCRIPTION || '';
         let istat = r.Z30_ITEM_STATISTIC || '';
         let bc = r.Z30_BARCODE;
         let en = r.Z30_ENUMERATION_A;
-        nt.p = r.Z30_NOTE_OPAC;
-        nt.s = r.Z30_NOTE_INTERNAL;
+        if (r.Z30_NOTE_OPAC) nt.p.push(r.Z30_NOTE_OPAC);
+        if (r.Z30_NOTE_INTERNAL) nt.s.push(r.Z30_NOTE_INTERNAL);
         let cnote = r.Z30_NOTE_CIRCULATION
+        let mt = r.Z30_MATERIAL;
 
         if (st === '05') i.discoverySuppress = true;
         if (desc) i.displaySummary = desc;
@@ -335,27 +341,63 @@ try {
         if (en) {
           i.enumeration = en;
         }
-        for (let k in nt) {
-          let t = refData.itemNoteTypes['Public note'];
-          let so = false;
-          if (k === 's') {
-            t = refData.itemNoteTypes['Internal note'];
-            so = true;
+
+        if (ips.match(/^(FK|CL|NA)$/)) {
+          i.status.name = 'Missing';
+          if (ips === 'CL') {
+            nt.s.push('Reklamerad');
+          } else if (ips === 'NA') {
+            nt.s.push('Ej anländ');
           }
-          if (nt[k]) {
+        } else if (ips === 'UA') {
+          i.status.name = 'In process';
+        } else if (st === '71' && loc.match(/^(RRLEX|RRSPE)$/)) {
+          i.status.name = 'Long missing';
+        } else if (st === '72' && loc === 'RRLEX') {
+          i.status.name = 'Intellectual item';
+        }
+
+        i.materialTypeId = tsvMap.mtypes[mt] || refData.mtypes.Unmapped;
+        console.log(i.materialTypeId);
+
+        for (let k in nt) {
+          nt[k].forEach(n => {
+            let t = refData.itemNoteTypes['Public note'];
+            let so = false;
+            if (k === 's') {
+              t = refData.itemNoteTypes['Internal note'];
+              so = true;
+            }
             if (t) {
-              let o = makeNote(nt[k], t, so);
+              let o = makeNote(n, t, so);
               i.notes.push(o);
             } else {
               console.log(`WARN ITEM note type for "${k}" not found (${iid})`);
             }
-          } 
+          });
         }
+        if (cnote) {
+          i.circulationNotes = [];
+          cnoteTypes.forEach(t => {
+            let o = {
+              id: uuid(i.id + t, ns),
+              note: cnote,
+              noteType: t,
+              staffOnly: true,
+              date: today
+            }
+            i.circulationNotes.push(o);
+          });
+        }
+
+        
+
 
         // console.log(i);
 
         if (i) {
           writeOut(outs.items, i);
+          ttl.items++;
         } else {
           console.log(`ERROR ITEM! (${iid})!`);
         }
