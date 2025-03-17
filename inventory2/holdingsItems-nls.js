@@ -135,7 +135,7 @@ try {
       });
     } catch {}
   });
-  // throw(refData.locations);
+  // throw(refData.statisticalCodes);
 
   // create tsv map
   let tsvDir = conf.tsvDir || conf.refDir;
@@ -251,7 +251,7 @@ try {
     let st = r.Z30_ITEM_STATUS;
     let cn = r.Z30_CALL_NO;
     let ct = r.Z30_CALL_NO_TYPE;
-    let col = r.Z30_COLLECTION;
+    let col = r.Z30_COLLECTION || '';
     let ips = r.Z30_ITEM_PROCESS_STATUS;
     let loc = r.Z30_SUB_LIBRARY;
     let locKey = loc + ':' + st;
@@ -329,7 +329,7 @@ try {
         let chhour = r.Z30_HOUR_LAST_RETURN;
 
         if (st === '05') i.discoverySuppress = true;
-        if (desc) i.displaySummary = desc;
+        // if (desc) i.displaySummary = desc;
         if (istat === 'TG') i.accessionNumber = 'RFID';
         if (bc && !bcseen[bc]) {
           i.barcode = bc;
@@ -494,7 +494,8 @@ try {
           if (!i.temporaryLoanTypeId) console.log(`WARN ITEM temporaryLoanType not found for "${loc}:${st}:${ips} (${tl})"`)
         }
 
-        let statCodeId = refData.statisticalCodes[col];
+        let lcCol = col.toLowerCase();
+        let statCodeId = refData.statisticalCodes[lcCol];
         if (statCodeId) {
           i.statisticalCodeIds = [ statCodeId ];
         } else if (col) {
