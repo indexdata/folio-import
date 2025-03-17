@@ -321,10 +321,10 @@ try {
           notes: [],
           circulationNotes: []
         }
-
-        let stat = statMap[r.ITEM_STATUS_DESC] || '';
+        let st = r.LastOfITEM_STATUS_DESC || r.ITEM_STATUS_DESC; 
+        let stat = statMap[st] || '';
         if (stat) i.status.name = stat;
-        if (r.ITEM_STATUS_DESC === 'Damaged') {
+        if (st === 'Damaged') {
           i.itemDamagedStatusId = refData.itemDamageStatuses.Damaged;
         }
 
