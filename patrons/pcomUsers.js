@@ -132,6 +132,7 @@ try {
   let ncount = 0;
   let ecount = 0;
   const useen = {};
+  const bcseen = {};
 
   for (let x = 0; x < inRecs.length; x++) {
     count++;
@@ -172,7 +173,12 @@ try {
           addresses: []
         }
       };
-      if (bc) u.barcode = bc;
+      if (bc && !bcseen[bc]) {
+        u.barcode = bc;
+        bcseen[bc] = u.id;
+      } else if (bc) {
+        console.log(`WARN barcode "${bc}" already used by ${bcseen[bc]}`);
+      }
       if (edate) {
         try {
           let val = new Date(edate).toISOString().substring(0, 10);
@@ -192,7 +198,7 @@ try {
       if (bdate) {
         try {
           let val = new Date(bdate).toISOString().substring(0, 10);
-          u.dateOfBirth = val;
+          u.personal.dateOfBirth = val;
         } catch (e) {
           console.log(`WARN ${e} (username: ${un})`);
         }
