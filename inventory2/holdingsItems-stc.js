@@ -303,6 +303,9 @@ try {
     let status = r.CURR_LOC;
     let itype = r.ITEM_TYPE;
     let price = r.PRICE;
+    price = price.replace(/(..)$/, '.$1');
+    if (price === '0') price = '0.00';
+    let scode = r.ITEM_CAT2;
     let cust = custMap[iid];
     let ihrid = iprefix + iid;
     let i = {
@@ -310,7 +313,7 @@ try {
       hrid: ihrid,
       holdingsRecordId: hseen[hkey],
       notes: [],
-      discoverySuppress: isupp
+      discoverySuppress: isupp,
     }
     if (bar) {
       if (!bcseen[bar]) {
@@ -374,6 +377,15 @@ try {
     i.status = { name: st };
     i.materialTypeId = tsvMap.mtypes[itype];
     i.permanentLoanTypeId = tsvMap.loantypes[itype];
+
+    if (scode) {
+      let scodeId = refData.statisticalCodes[scode];
+      if (scodeId) i.statisticalCodeIds = [ scodeId ];
+      else {
+        console.log(`WARN statistical code not found for ${scode}`);
+      }
+    }
+
     if (cop) i.copyNumber = cop;
     if (pie) i.numberOfPieces = pie;
     if (process.env.DEBUG) console.log(i);
