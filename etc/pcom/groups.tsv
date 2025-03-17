@@ -1,30 +1,55 @@
-Legacy patron type (code or label)	 Legacy Department Name	FOLIO patron group code	Folio patron group label	FOLIO Department Name
-PHARMD	PHARMACY	Student	Student	Pharmacy
-PSYDSCHR	PSYD RESPEC SCHOOL PSY	Student	Student	Psych - School PsyD
-MSSCPSY	SCHOOL PSYCHOLOGY MS	Student	Student	Psych - School
-MSBMSCI	BIOMEDICAL SCIENCES	Student	Student	Biomedical Science
-MSPHMGT	MS PUBLIC HLTH MGMT	Student	Student	Public Health Management
-MSCHPSY	COUN & CL HEALTH PSY	Student	Student	Psych - Counseling
-MSEMMED	EMERGENCY MEDICINE MS	Student	Student	Emergency Medicine
-P-RESIDEN	RESIDENCY PROGRAM	Student	Student	Residency Program
-PSYDSCP	SCHOOL PSYCHOLOGY PSYD	Student	Student	Psych - School PhD
-PSYDCLPS	CLIN PSY PSYD	Student	Student	Psych - Clinial PhD
-MSFOMED	FORENSIC MEDICINE MS	Student	Student	Forensic Medicine
-DOOSTEO	DOOSTEO PROGRAM	Student	Student	Osteopathic Medicine
-PALCI	PALCI LIBRARIES	ILL	Interlibrary Loan Account	PALCI Libraries
-ILL	INTERLIBRARY LOAN	ILL	Interlibrary Loan Account	Interlibrary Loan
-STAFF	STAFF-EMPLOYEE	Staff	Staff Member	Staff Member
-MSHSCPA	PHYSICIAN ASSISTANT MS	Student	Student	Physician Assistant
+Legacy patron type (code or label)	 Legacy Department Display Name	FOLIO patron group code	Folio patron group label	FOLIO Department Name
+P-ALUM	ALUMNI	Alum	Alumni	Alumni
+CAGPHMGT	CER ADV GR PUB HLTH MGT and ADMIN	Student	Student	Public Health - General
+CAGSABA	CERT ADV GRAD APP BEHAV ANALYSIS	Student	Student	Psych - General
+CAGSCBTG	ADV GRAD STU CBT CERT	Student	Student	Psych - General
+CERFRMD	FORENSIC MED CERT	Student	Student	Forensic Medicine - General
+CERORDL	Cert for ORDL	Student	Student	Organizational Development and Leadership
 COURTESY	COURTESY PATRON	TEST PATRON	TEST PATRON	Courtesy Patron
-SCPSYMS5	SCH PSY MS & PSYD 5	Student	Student	Psych - School to PsyD
-SPSYMSE4	SCHPSY MS & EDS 4	Student	Student	Psych - School to EdD
+DOOSTEO	DOOSTEO PROGRAM	Student	Student	Osteopathic Medicine
+EDSSPSY	EDUCATIONAL SPECIALIST	Student	Student	Psych - General
 EZB	EZB LIBRARIES	ILL	Interlibrary Loan Account	EZBorrow Libraries
-MSMHLCN	MENTAL HEALTH COUNSELING	Student	Student	Psych - Mental Health Counseling MS
-MSMLS	MEDICAL LABORATORY SCI	Student	Student	Medical Laboratory Science
-MSAPP	APPLIED POSITIVE PSYCH	Student	Student	Psych - Applied Positive Psych
-MSABA	APPLIED BEHAVIOR ANALYSIS	Student	Student	Psych - AApplied Behavior Analysis
 FACULTY	FACULTY	Faculty	Faculty Member	Faculty
-ALUMNI	ALUMNI	Alum	Alumni	Alumni
+G-ALUM	GA ALUMNI	Alum	Alumni	Alumni
+G-BANNED	G-BANNED	Alum	Alumni	Alumni
+ILL	INTERLIBRARY LOAN	ILL	Interlibrary Loan Account	Interlibrary Loan
+MSABA	APPLIED BEHAVIORAL ANALYSIS	Student	Student	Psych - Applied Behavior Analysis
+MSALTCA	MS AGING & LONG TERM CARE ADMIN	Student	Student	Public Health - General
+MSAPP	APPLIED POSITIVE PSYCHOLOGY	Student	Student	Psych - Applied Positive Psych
+MSBMSCI	BIOMEDICAL SCIENCES	Student	Student	Biomedical Science
+MSCHPSY	Cert for ODRL	Student	Student	Psych - Counseling
+MSCLMSC	CLINICAL SCIENCE	Student	Student	Psych - General
+MSCNPSYS	MS COUNSELING PSY STUDIES	Student	Student	Psych - General
+MSEMMED	EMERGENCY MEDICINE MS	Student	Student	Emergency Medicine
+MSFOMED	FORENSIC MEDICINE MS	Student	Student	Forensic Medicine
+MSHSCPA	PHYSICIAN ASSISTANT MS	Student	Student	Physician Assistant
+MSMHLCN	P-MENTAL HEALTH COUNSELING	Student	Student	Psych - Mental Health Counseling MS
+MSMLS	MEDICAL LABORATORY SCIENCE	Student	Student	Medical Laboratory Science
+MSORLED	ORG DEV & LEADERSHIP MS	Student	Student	Organizational Development and Leadership
+MSPHMGT	MS PUBLIC HEALTH MANAGEMENT	Student	Student	Public Health Management
+MSSCPSY	SCHOOL PSYCHOLOGY MS	Student	Student	Psych - School MS
+NONCHPSY	ND-COUN & CLIN HEALTH PSY	Student	Student	Psych - General
+NONFRMD	ND-PATHYWAY  FORENSIC MED	Student	Student	Forensic Medicine - General
+NONORDL	ND-ODL	Student	Student	Organizational Development and Leadership
+P-FAC-VOL	FACULTY-VOL	Faculty	Faculty Member	Faculty
+P-RESIDEN	RESIDENCY PROGRAM	Student	Student	Residency Program
+PALCI	PALCI LIBRARIES	ILL	Interlibrary Loan Account	PALCI Libraries
 PGMINTER	INTERNSHIP PROGRAM	Student	Student	Intern
-SPSYMSE4	SCH PSY MS & EDS 4	Student	Student	Psych - School to Edd
+PHARMD	PHARMACY PROG.	Student	Student	Pharmacy
+PHYSTHERPY	DOCTOR OF PHYSICAL THERAPY	Student	Student	Physical Therapy
+POSTDOCP	POST DOCTORAL CERT PSY	Student	Student	Psych - General
+PSYDCLNR	PSYC RESPECIALIZATION CLINICAL PSYCH	Student	Student	Psych - General
+PSYDCLPS	CLIN  PSY PSYD	Student	Student	Psych - Clinial PhD
+PSYDSCHR	PSYD RESPECIALIZATION SCHOOL PSYCH	Student	Student	Psych - General
+PSYDSCP	SCHOOL PSYCHOLOGY PSYD	Student	Student	Psych - School PhD
+RE-INTMED	RE-INTERNAL MEDICINE	Student	Student	Residency Program
+RE-NEUROSU	RE-NEUROSURGERY	Student	Student	Residency Program
+RE-OPHTHAL	RE-OPHTHALMOLOGY	Student	Student	Residency Program
+RE-ORTHOPE	RE-ORTHOPEDIC	Student	Student	Residency Program
+RE-OTOLARY	RE-OTOLARYNGOLOGY	Student	Student	Residency Program
+RE-PLASSUR	RE-PLASTIC SURGERY	Student	Student	Residency Program
+RE-SURGERY	RE-SURGERY	Student	Student	Residency Program
 SCPSYMS5	SCH PSY MS & PSYD 5	Student	Student	Psych - School to PsyD
+SPSYMSE4	SCH PSY MS & EDS 4	Student	Student	Psych - School to EdD
+STAFF	STAFF-EMPLOYEE	Staff	Staff Member	Staff Member
+WITHDREW	WITHDREW	Alum	Alumni	Alumni

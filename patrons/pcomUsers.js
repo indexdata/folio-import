@@ -1,8 +1,14 @@
 const readline = require('readline');
 const fs = require('fs');
 const path = require('path');
-const uuid = require('uuid/v5');
 const { parse } = require('csv-parse/sync');
+let uuid;
+try {
+  uuid = require('uuid/v5');
+} catch (e) {
+  const { v5 } = require('uuid');
+  uuid = v5;
+}
 
 const ns = '3cbefeab-ae52-4c14-8c78-3ed70a827a18';
 let refDir = process.argv[2];
@@ -168,16 +174,28 @@ try {
       };
       if (bc) u.barcode = bc;
       if (edate) {
-        let val = new Date(edate).toISOString().substring(0, 10);
-        u.expirationDate = val;
+        try {
+          let val = new Date(edate).toISOString().substring(0, 10);
+          u.expirationDate = val;
+        } catch (e) {
+          console.log(`WARN ${e} (username: ${un})`);
+        }
       }
       if (cdate) {
-        let val = new Date(cdate).toISOString().substring(0, 10);
-        u.enrollmentDate = val;
+        try {
+          let val = new Date(cdate).toISOString().substring(0, 10);
+          u.enrollmentDate = val;
+        } catch (e) {
+          console.log(`WARN ${e} (username: ${un})`);
+        }
       }
       if (bdate) {
-        let val = new Date(bdate).toISOString().substring(0, 10);
-        u.personal.dateOfBirth = val;
+        try {
+          let val = new Date(bdate).toISOString().substring(0, 10);
+          u.dateOfBirth = val;
+        } catch (e) {
+          console.log(`WARN ${e} (username: ${un})`);
+        }
       }
       if (email) u.personal.email = email;
       if (ph) u.personal.phone = ph;
@@ -225,7 +243,7 @@ try {
         writeOut(files.r, pref);
         useen[un] = 1;
       } else {
-        console.log(`ERROR No patronGroup found for ${group}`);
+        console.log(`ERROR No patronGroup found for ${group} (username: ${un})`);
         ecount++;
       }
     } else {
