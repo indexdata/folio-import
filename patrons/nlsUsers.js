@@ -1,8 +1,9 @@
 const readline = require('readline');
 const fs = require('fs');
 const path = require('path');
-const uuid = require('uuid/v5');
+const { v5 } = require('uuid');
 const { parse } = require('csv-parse/sync');
+const uuid = v5;
 
 const ns = '9903d297-1cb6-44e4-897c-e1e45c58305f';
 let refDir = process.argv[2];
@@ -165,7 +166,7 @@ try {
   let ncount = 0;
   let ecount = 0;
   const nseen = {};
-  const useen = {};
+  const unseen = {};
 
   for (let x = 0; x < main.length; x++) {
     count++;
@@ -212,55 +213,52 @@ try {
       gnum = '1';
     }
     let groupId = refData.usergroups[gnum];
-    if (!useen[id]) {
-      u = {
-        id: uuid(id, ns),
-        username: un,
-        active: true,
-        patronGroup: groupId,
-        personal: {
-          lastName: ln,
-          firstName: fn,
-        },
-        customFields: {}
-      };
-      if (bc) u.barcode = bc;
-      if (email) u.personal.email = email
-      if (edate) u.expirationDate = edate;
-      if (cdate) u.enrollmentDate = cdate;
-      if (pid) u.customFields.personnummer = pid;
-      
-      if (u.personal.email) {
-        u.personal.preferredContactTypeId = '002'
-      } else {
-        u.personal.preferredContactTypeId = '002'
-      }
-
-      if (u.patronGroup) {
-        writeOut(files.u, u);
-        if (process.env.DEBUG) console.log(JSON.stringify(u, null, 2));
-        success++
-        let perm = {
-          id: uuid(u.id, ns),
-          userId: u.id,
-          permissions: []
-        }
-        writeOut(files.p, perm);
-        let pref = {
-          id: uuid(u.id + 'pref', ns),
-          userId: u.id,
-          holdShelf: true,
-          delivery: false,
-          defaultServicePointId: refData.servicepoints['Pecan Library']
-        }
-        writeOut(files.r, pref);
-        useen[un] = 1;
-      } else {
-        console.log(`ERROR No patronGroup found for ${groupLabel}`);
-        ecount++;
-      }
+    u = {
+      id: uuid(id, ns),
+      active: true,
+      patronGroup: groupId,
+      personal: {
+        lastName: ln,
+        firstName: fn,
+      },
+      customFields: {}
+    };
+    if (!unseen[un]) {
+      username = un;
+      unseen[un];
+    }
+    if (bc) u.barcode = bc;
+    if (email) u.personal.email = email
+    if (edate) u.expirationDate = edate;
+    if (cdate) u.enrollmentDate = cdate;
+    if (pid) u.customFields.personnummer = pid;
+    
+    if (u.personal.email) {
+      u.personal.preferredContactTypeId = '002'
     } else {
-      console.log(`ERROR username "${un}" already used!`)
+      u.personal.preferredContactTypeId = '002'
+    }
+
+    if (u.patronGroup) {
+      writeOut(files.u, u);
+      if (process.env.DEBUG) console.log(JSON.stringify(u, null, 2));
+      success++
+      let perm = {
+        id: uuid(u.id, ns),
+        userId: u.id,
+        permissions: []
+      }
+      writeOut(files.p, perm);
+      let pref = {
+        id: uuid(u.id + 'pref', ns),
+        userId: u.id,
+        holdShelf: true,
+        delivery: false,
+        defaultServicePointId: refData.servicepoints['Pecan Library']
+      }
+      writeOut(files.r, pref);
+    } else {
+      console.log(`ERROR No patronGroup found for ${groupLabel}`);
       ecount++;
     }
   } 
