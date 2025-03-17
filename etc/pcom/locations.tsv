@@ -1,46 +1,46 @@
 Legacy location code (Location ID)	Legacy Location Code	Legacy Location Name	Folio Campus	Folio Library	Folio location code (same?) _ HIDE	Folio label (optional)	Folio location code	Folio service point	Notes
 2	BOOK	BOOK	PA	PA	12	PA-Main	12-PA-Main	PA Circulation Desk	
-3		RARE BOOK CAB	PA	PA	16	PA-Rare-Book-Cabinet	16-PA-Rare-Book-Cabinet	PA Circulation Desk	
-4		ATLAS-1st FL	PA	PA	19	PA-Reference	19-PA-Reference	PA Circulation Desk	
+3	RAREBOOK	RARE BOOK CAB	PA	PA	16	PA-Rare-Book-Cabinet	16-PA-Rare-Book-Cabinet	PA Circulation Desk	
+4	ATLAS-1	ATLAS-1st FL	PA	PA	19	PA-Reference	19-PA-Reference	PA Circulation Desk	
 7	AV RESRV	PA AV RESERVE	PA	PA	20	PA-Reserves	20-PA-Reserves	PA Circulation Desk	
-8		REF OFFICE	PA	PA	19	PA-Reference	19-PA-Reference	PA Circulation Desk	
+8	REFOFF	REF OFFICE	PA	PA	19	PA-Reference	19-PA-Reference	PA Circulation Desk	
 9	REF	REFERENCE	PA	PA	19	PA-Reference	19-PA-Reference	PA Circulation Desk	
 10	RESERVE	RESERVE	PA	PA	20	PA-Reserves	20-PA-Reserves	PA Circulation Desk	
-13		AV STACKS VHS	PA	PA	14	PA-AV Collection	14-PA-AV Collection	PA Circulation Desk	
-14		RESERVE CD-ROM	PA	PA	20	PA-Reserves	20-PA-Reserves	PA Circulation Desk	
-15		JOURNAL STACKS	PA	PA	15	PA-Journals	15-PA-Journals	PA Circulation Desk	This location is empty - MM - OK TO DELETE? - HN
-16		CATALOGING DESK	PA	PA	11	PA-In-Process	11-PA-In-Process	PA Circulation Desk	
-20		ATLAS-2nd FL	PA	PA	19	PA-Reference	19-PA-Reference	PA Circulation Desk	
-21		AV STACKS CD-DVD	PA	PA	14	PA-AV Collection	14-PA-AV Collection	PA Circulation Desk	
-22		ON ORDER	PA	PA	18	PA-On-Order	18-PA-On-Order	PA Circulation Desk	
+13	AV OUTSIDE	AV STACKS VHS	PA	PA	14	PA-AV Collection	14-PA-AV Collection	PA Circulation Desk	
+14	RESERVE CD	RESERVE CD-ROM	PA	PA	20	PA-Reserves	20-PA-Reserves	PA Circulation Desk	
+15	JOURNALST	JOURNAL STACKS	PA	PA	15	PA-Journals	15-PA-Journals	PA Circulation Desk	This location is empty - MM - OK TO DELETE? - HN
+16	CAT DESK	CATALOGING DESK	PA	PA	11	PA-In-Process	11-PA-In-Process	PA Circulation Desk	
+20	ATLAS-2	ATLAS-2nd FL	PA	PA	19	PA-Reference	19-PA-Reference	PA Circulation Desk	
+21	AV INSIDE	AV STACKS CD-DVD	PA	PA	14	PA-AV Collection	14-PA-AV Collection	PA Circulation Desk	
+22	ON ORDER	ON ORDER	PA	PA	18	PA-On-Order	18-PA-On-Order	PA Circulation Desk	
 29	THESIS	THESIS	PA	PA	17	PA-Thesis	17-PA-Thesis	PA Circulation Desk	
 39	STORAGE	STORAGE	PA	PA	21	PA-Storage	21-PA-Storage	PA Circulation Desk	
-40		JOURNAL STACKS CIRC	PA	PA	20	PA-Reserves	20-PA-Reserves	PA Circulation Desk	
-41		LIB ADMIN	PA	PA	9	PA-Admin	9-PA-Admin	PA Circulation Desk	
+40	JOURNALSTC	JOURNAL STACKS CIRC	PA	PA	20	PA-Reserves	20-PA-Reserves	PA Circulation Desk	
+41	LIB ADMIN	LIB ADMIN	PA	PA	9	PA-Admin	9-PA-Admin	PA Circulation Desk	
 43	GA-BOOK	Book-GA	GA	GA	3	GA-Main	3-GA-Main	GA Circulation Desk	
 44	GA-RESERVE	Reserve-GA	GA	GA	8	GA-Reserves	8-GA-Reserves	GA Circulation Desk	
 45	GA-AVRESRV	AV Reserve-GA	GA	GA	8	GA-Reserves	8-GA-Reserves	GA Circulation Desk	
-46		Journal Stacks-GA	GA	GA	4	GA-Journal	4-GA-Journal	GA Circulation Desk	
-48		Reference-GA	GA	GA	7	GA-Reference	7-GA-Reference	GA Circulation Desk	
-50		In Process-GA	GA	GA	2	GA-In-Process	2-GA-In-Process	GA Circulation Desk	
-51		On Order GA Books	GA	GA	6	GA-On-Order	6-GA-On-Order	GA Circulation Desk	
-55		THESIS-GA	GA	GA	5	GA-Thesis	5-GA-General-Thesis	GA Circulation Desk	
+46	GA-JRNLST	Journal Stacks-GA	GA	GA	4	GA-Journals	4-GA-Journals	GA Circulation Desk	
+48	GA-REF	Reference-GA	GA	GA	7	GA-Reference	7-GA-Reference	GA Circulation Desk	
+50	GA-INPRO	In Process-GA	GA	GA	2	GA-In-Process	2-GA-In-Process	GA Circulation Desk	
+51	GA-ONORDBO	On Order GA Books	GA	GA	6	GA-On-Order	6-GA-On-Order	GA Circulation Desk	
+55	GA-THESIS	THESIS-GA	GA	GA	5	GA-Thesis	5-GA-Thesis	GA Circulation Desk	
 62	SGA-RESERV	Reserve-SGA	SGA	SGA	25	SGA-Reserves	25-SGA-Reserves	SGA Circulation Desk OR SGA Self-Check	
 64	SGA-AVRES	AV Reserve-SGA	SGA	SGA	25	SGA-Reserves	25-SGA-Reserves	SGA Circulation Desk OR SGA Self-Check	
 65	SGA-BOOK	Book-SGA	SGA	SGA	23	SGA-Main	23-SGA-Main	SGA Circulation Desk OR SGA Self-Check	
-69		Reference-SGA	SGA	SGA	28	SGA-Reference	28-SGA-Reference	GA Circulation Desk	
+69	SGA-REF	Reference-SGA	SGA	SGA	28	SGA-Reference	28-SGA-Reference	GA Circulation Desk	
 70	LEISURE	Leisure Collection	PA	PA	26	PA-Leisure	26-PA-Leisure	PA Circulation Desk	
 71	GA-LEISURE	Leisure Collection-GA	GA	GA	27	GA-Leisure	27-GA-Leisure	GA Circulation Desk	
 73	SGA-LEISUR	Lesure Collection-SGA	SGA	SGA	24	SGA-Leisure	24-SGA-Leisure	SGA Circulation Desk OR SGA Self-Check	
-74		Thesis-SGA	SGA	SGA	29	SGA-Thesis	29-SGA-Thesis	SGA Circulation Desk OR SGA Self-Check	
-75		Temporary Display - PA	PA	PA	10	PA-Display	10-PA-Display	PA Circulation Desk	
+74	SGA-THESIS	Thesis-SGA	SGA	SGA	29	SGA-Thesis	29-SGA-Thesis	SGA Circulation Desk OR SGA Self-Check	
+75	DISPLAY	Temporary Display - PA	PA	PA	10	PA-Display	10-PA-Display	PA Circulation Desk	
 76	GA-DISPLAY	Temporary Display - GA	GA	GA	1	GA-Display	1-GA-Display	GA Circulation Desk	
-77		Temporary Display - SGA	SGA	SGA	22	SGA-Display	22-SGA-Display	SGA Circulation Desk OR SGA Self-Check	
-17	circ desk						Unmapped Location		
-38	ARCHIVE						Unmapped Location		
-52	WITHDREW-G						Unmapped Location		
-53	WITHDREW-P						Unmapped Location		
-57	NCIP						Unmapped Location		
-63	WITHDREW-S						Unmapped Location		
-	RES 30DAY						Unmapped Location		
+77	SGA-DISPLA	Temporary Display - SGA	SGA	SGA	22	SGA-Display	22-SGA-Display	SGA Circulation Desk OR SGA Self-Check	
+17	circ desk	Circ desk	PA	PA		PA-Reserves	20-PA-Reserves	PA Circulation Desk	
+52	WITHDREW-G	WITHDREW-GEORGIA	GA	GA		GA-Withdrawn	36-GA-Withdrawn	GA Circulation Desk	
+53	WITHDREW-P	WITHDREW-PHILA	PA	PA		PA-Withdrawn	37-PA-Withdrawn	PA Circulation Desk	
+57	NCIP	EZBNCIP	PA	PA		PA-EZB	34-PA-EZB	ILL	
+63	WITHDREW-S	WITHDREW-SOUTH GEORGIA	SGA	SGA		SGA-Withdrawn	35-SGA-Withdrawn	SGA Circulation Desk	
+56	RES 30DAY	RES 30 DAY LOAN	PA	PA		PA-Reserves	20-PA-Reserves	PA Circulation Desk	
 	SPSY 513-01,02 & CPSY 626						Unmapped Location		
+38	ARCHIVE	ARCHIVE	PA	PA		PA-Storage	21-PA-Storage		

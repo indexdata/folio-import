@@ -47,7 +47,9 @@ const statMap = {
 const hsuppMap = {
   "WITHDREW-P": true,
   "WITHDREW-GA": true,
-  "WITHDREW-SGA": true
+  "WITHDREW-SGA": true,
+  "WITHDREW-G": true,
+  "WITHDREW-S": true,
 }
 
 const typeMap = {
