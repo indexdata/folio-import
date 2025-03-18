@@ -158,8 +158,12 @@ try {
     let add2 = p.ADDRESS_LINE2;
     let city = p.CITY;
     let state = p.STATE_PROVINCE;
-    let zip = p.ZIP_CODE;
+    let zip = p.ZIP_POSTAL;
     let groupId = groupMap[group];
+    if (!groupId) {
+      groupId = refData.usergroups.Unmapped;
+      console.log(`WARN patron group not found for "${group}", using "Unmapped" (username: ${un}).`)
+    }
     if (!useen[un]) {
       u = {
         id: uuid(id, ns),
