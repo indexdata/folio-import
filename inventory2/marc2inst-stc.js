@@ -1,8 +1,9 @@
 import { parseMarc, getSubs, mij2raw, fields2mij, getSubsHash } from '../js-marc/js-marc.mjs';
 import fs from 'fs';
 import path from 'path';
-import { v5 as uuid } from 'uuid';
 import readline from 'readline';
+import uuid from 'uuid/v5.js';
+
 
 let confFile = process.argv[2];
 let itemFile = process.argv[3];

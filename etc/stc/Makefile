@@ -2,6 +2,7 @@ lib=stc
 user=charles
 home=/home/$(user)
 wd=$(home)/folio-import
+inv2=$(wd)/inventory2
 login=$(wd)/configs/json/stc-test.json
 data=$(home)/$(lib)
 ref=$(data)/ref
@@ -10,14 +11,21 @@ uref=$(ref)/usr
 idir=$(data)/inv
 udir=$(data)/users
 adir=$(data)/auth
-mfile=$(invdir)/bibs.mrc
+in=$(data)/incoming
+mfile=$(idir)/bibs.mrc
 log=$(data)/log
 tsvdir=$(wd)/etc/$(lib)
 
-inventory:
-	cd $(invdir); mv *.mrc raw.marc
-	yaz-marcdump -f marc8 -t utf8 -l 9=97 -o marc $(invdir)/raw.marc > $(mfile)
-	./marc2inst-$(lib).pl $(rules) $(iref) $(mfile) > $(log)/make-marc.log 2>$(log)/make-marc-err.log &
+inventory: $(in)/*.mrc
+	cd $(idir); ln -s $(in)/*.mrc raw.marc
+	cd $(idir); ln -s $(in)/*Instance-Level* inst-level.txt
+	cd $(idir); ln -s $(in)/*Inv*Standard*txt items.txt
+	cd $(idir); ln -s $(in)/*Inv*Custom*txt custom.txt
+	@echo Converting $(mfile) to utf8...
+	yaz-marcdump -f marc8 -t utf8 -l 9=97 -o marc $(idir)/raw.marc > $(mfile)
+	yaz-marcdump $(mfile) | grep -P '^\d{5}' -c > $(idir)/count.bibs
+	cat $(idir)/count.bibs
+	cd $(inv2); node marc2inst-stc 
 
 split-inventory: $(invdir)/*.jsonl
 	split $(split) $(invdir)/*instances.jsonl $(invdir)/in
@@ -25,8 +33,8 @@ split-inventory: $(invdir)/*.jsonl
 	split $(split) $(invdir)/*items.jsonl $(invdir)/it
 	split $(split) $(invdir)/*srs.jsonl $(invdir)/sr
 
-clean-inventory: $(iinfo)
-	cd $(invdir); rm bibs.mrc; mv raw.marc raw.mrc
+clean-inventory:
+	cd $(idir); rm *.marc *.mrc *.txt count*
 
 setup:
 	cp $(login) $(wd)/config.json
