@@ -1,8 +1,8 @@
 import fs from 'fs';
 import path from 'path';
-import { v5 as uuid } from 'uuid';
 import readline from 'readline';
-import { parse } from 'csv-parse/sync';
+import parse from 'csv-parse/lib/sync.js';
+import uuid from 'uuid/v5.js';
 
 let confFile = process.argv[2];
 let bibMap = process.argv[3];
@@ -221,7 +221,8 @@ try {
     bom: true,
     delimiter: '|',
     relax_column_count: true,
-    trim: true
+    trim: true,
+    quote: null
   });
   csv = '';
 

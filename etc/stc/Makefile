@@ -16,7 +16,7 @@ mfile=$(idir)/bibs.mrc
 log=$(data)/log
 tsvdir=$(wd)/etc/$(lib)
 
-inventory: $(in)/*.mrc
+instances: $(in)/*.mrc
 	cd $(idir); ln -s $(in)/*.mrc raw.marc
 	cd $(idir); ln -s $(in)/*Instance-Level* inst-level.txt
 	cd $(idir); ln -s $(in)/*Inv*Standard*txt items.txt
@@ -25,15 +25,13 @@ inventory: $(in)/*.mrc
 	yaz-marcdump -f marc8 -t utf8 -l 9=97 -o marc $(idir)/raw.marc > $(mfile)
 	yaz-marcdump $(mfile) | grep -P '^\d{5}' -c > $(idir)/count.bibs
 	cat $(idir)/count.bibs
-	cd $(inv2); node marc2inst-stc 
+	cd $(inv2); node marc2inst-stc conf/stc.json $(idir)/inst-level.txt $(mfile) > $(log)/makeInst.log &
+	tail -f $(log)/makeInst.log
 
-split-inventory: $(invdir)/*.jsonl
-	split $(split) $(invdir)/*instances.jsonl $(invdir)/in
-	split $(split) $(invdir)/*holdings.jsonl $(invdir)/ho
-	split $(split) $(invdir)/*items.jsonl $(invdir)/it
-	split $(split) $(invdir)/*srs.jsonl $(invdir)/sr
+items: $(idir)/items.txt
+	cd $(inv2); node holdingsItems-stc conf/stc.json
 
-clean-inventory:
+clean-instances:
 	cd $(idir); rm *.marc *.mrc *.txt count*
 
 setup:
