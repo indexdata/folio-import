@@ -19,8 +19,6 @@ tsvdir=$(wd)/etc/$(lib)
 instances: $(in)/*.mrc
 	cd $(idir); ln -s $(in)/*.mrc raw.marc
 	cd $(idir); ln -s $(in)/*Instance-Level* inst-level.txt
-	cd $(idir); ln -s $(in)/*Inv*Standard*txt items.txt
-	cd $(idir); ln -s $(in)/*Inv*Custom*txt custom.txt
 	@echo Converting $(mfile) to utf8...
 	yaz-marcdump -f marc8 -t utf8 -l 9=97 -o marc $(idir)/raw.marc > $(mfile)
 	yaz-marcdump $(mfile) | grep -P '^\d{5}' -c > $(idir)/count.bibs
@@ -28,11 +26,23 @@ instances: $(in)/*.mrc
 	cd $(inv2); node marc2inst-stc conf/stc.json $(idir)/inst-level.txt $(mfile) > $(log)/makeInst.log &
 	tail -f $(log)/makeInst.log
 
-items: $(idir)/items.txt
-	cd $(inv2); node holdingsItems-stc conf/stc.json
+items: $(in)/Inv*Standard*txt
+	cd $(idir); ln -s $(in)/Inv*Standard*txt items.txt
+	cd $(idir); ln -s $(in)/Inv*Custom*txt custom.txt
+	cd $(inv2); node holdingsItems-stc conf/stc.json $(idir)/bibs.map $(idir)/custom.txt $(idir)/items.txt > $(log)/makeHoldingsItems.log
+	cat $(log)/makeHoldingsItems.log
 
-clean-instances:
+clean-inventory:
 	cd $(idir); rm *.marc *.mrc *.txt count*
+
+authorities: $(in)/Auth*xml
+	cd $(adir); ln -s $(in)/Auth*xml auth.xml
+	cd $(inv2); node xml2marc-stc $(adir)/auth.xml
+	cd $(wd)/auth; ./marc2auth010.pl $(wd)/mapping_rules/marc_authority_rules.json $(iref) $(adir)/auth.mrc > $(log)/makeAuth.log &
+	tail -f $(log)/makeAuth.log
+
+clean-authorities: $(adir)/auth.xml
+	rm $(adir)/*.xml
 
 setup:
 	cp $(login) $(wd)/config.json
@@ -44,6 +54,7 @@ setup:
 	mkdir -p $(idir)
 	mkdir -p $(udir)
 	mkdir -p $(adir)
+	mkdir -p $(in)
 	cd $(wd); node migrationRef.js $(ref)
 	cp $(tsvdir)/locations.tsv $(iref)
 	cp $(tsvdir)/mtypes.tsv $(iref)

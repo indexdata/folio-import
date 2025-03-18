@@ -1,8 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import readline from 'readline';
-import parse from 'csv-parse/lib/sync.js';
-import uuid from 'uuid/v5.js';
+import { parse } from 'csv-parse/sync';
+import { v5 as uuid } from 'uuid';
 
 let confFile = process.argv[2];
 let bibMap = process.argv[3];

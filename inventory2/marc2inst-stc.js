@@ -2,7 +2,7 @@ import { parseMarc, getSubs, mij2raw, fields2mij, getSubsHash } from '../js-marc
 import fs from 'fs';
 import path from 'path';
 import readline from 'readline';
-import uuid from 'uuid/v5.js';
+import { v5 as uuid } from 'uuid';
 
 
 let confFile = process.argv[2];
