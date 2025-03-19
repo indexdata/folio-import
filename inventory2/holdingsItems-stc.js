@@ -265,9 +265,14 @@ try {
       let hid = uuid(hhrid, ns);
       let locId = tsvMap.locations[loc];
       if (!locId) {
-        console.log(`ERROR location ID not found for "${loc}" (${iid})`);
-        ttl.errors++;
-        continue;
+	locId = refData.locations.Unmapped;
+	if (locId) {
+		console.log(`WARN location "${loc}" not found, using "Unmapped" (${iid})`);
+	} else {
+        	console.log(`ERROR location ID not found for "${loc}" (${iid})`);
+        	ttl.errors++;
+        	continue;
+	}
       }
       let h = {
         id: hid,
