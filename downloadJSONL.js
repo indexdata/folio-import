@@ -40,7 +40,7 @@ let writeStream;
 
     let totFetch = 0;
     let totRecs = 1000000;
-    let perPage = 1000;
+    let perPage = 5000;
     let offset = start || 0;
     while (totFetch < totRecs) {
       let prop;
