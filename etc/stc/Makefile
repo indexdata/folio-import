@@ -11,6 +11,7 @@ uref=$(ref)/usr
 idir=$(data)/inv
 udir=$(data)/users
 adir=$(data)/auth
+cdir=$(data)/circ
 in=$(data)/incoming
 mfile=$(idir)/bibs.mrc
 log=$(data)/log
@@ -42,7 +43,17 @@ authorities: $(in)/Auth*xml
 	tail -f $(log)/makeAuth.log
 
 clean-authorities: $(adir)/auth.xml
-	rm $(adir)/*.xml
+	cd $(adir); rm *.xml
+
+checkouts: $(in)/Loans*
+	cd $(cdir); ln -s $(in)/Loans* loans.txt
+	cd $(wd); [ -f $(cdir)/users.jsonl ] || node downloadJSONL users $(cdir)/users.jsonl
+	cd $(wd); [ -f $(cdir)/items.jsonl ] || node downloadJSONL item-storage/items $(cdir)/items.jsonl
+	cd $(wd)/patrons; node stcCheckouts $(cdir)/loans.txt > $(log)/makeCheckouts.log
+	cat $(log)/makeCheckouts.log
+
+clean-checkouts: 
+	cd $(cdir); rm *.txt
 
 setup:
 	cp $(login) $(wd)/config.json
@@ -54,10 +65,12 @@ setup:
 	mkdir -p $(idir)
 	mkdir -p $(udir)
 	mkdir -p $(adir)
+	mkdir -p $(cdir)
 	mkdir -p $(in)
 	cd $(wd); node migrationRef.js $(ref)
 	cp $(tsvdir)/locations.tsv $(iref)
 	cp $(tsvdir)/mtypes.tsv $(iref)
 	cp $(tsvdir)/groups.tsv $(uref)
+	cp $(iref)/service-points.json $(cdir)
 clean:
 	rm -rf $(ref)

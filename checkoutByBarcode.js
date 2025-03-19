@@ -53,6 +53,7 @@ const post_put = async (authToken, url, checkout, r, username, config) => {
       let text = e.response.text;
       if (text.match(/overridableBlock/) && !r) {
         let err = JSON.parse(text);
+	let block = {};
         err.errors.forEach(er => {
           if (er.message.match(/not loanable|blocked|maximum number/)) {
             block = er.overridableBlock;
