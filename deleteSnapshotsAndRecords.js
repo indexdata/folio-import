@@ -20,6 +20,8 @@ const wait = (ms) => {
   try {
     let inData;
     let single;
+    let ttl = 0;
+    let skipped = 0;
 
     let config = await getAuthToken(superagent);
     if (anything.match(/........-....-....-....-............/)) {
@@ -50,18 +52,43 @@ const wait = (ms) => {
     console.log(`Deleting ${refData.totalRecords} snapshots...`);
     for (let x = 0; x < refData.snapshots.length; x++) {
       let id = refData.snapshots[x].jobExecutionId;
-      console.log(`Deleting ${id}`);
+      let delFlag = false;
       try {
-        await superagent
-          .delete(`${config.okapi}/source-storage/snapshots/${id}`)
-          .set('accept', 'text/plain')
+        let turl = `${config.okapi}/source-storage/records?recordType=MARC_BIB&snapshotId=${id}&limit=0`;
+        console.log(`GET ${turl}`);
+        let res = await superagent
+          .get(turl)
+          .set('accept', 'application/json')
           .set('x-okapi-tenant', config.tenant)
           .set('x-okapi-token', config.token);
-      } catch (e) {
-        console.error(e.response || e);
+        if (res && res.body) {
+          if (res.body.totalRecords > 0) {
+            delFlag = true;
+          }
+        }
+      } catch (e) {}
+      if (delFlag) {
+        console.log(`Deleting ${id}`);
+        try {
+          await superagent
+            .delete(`${config.okapi}/source-storage/snapshots/${id}`)
+            .set('accept', 'text/plain')
+            .set('x-okapi-tenant', config.tenant)
+            .set('x-okapi-token', config.token);
+            ttl++;
+        } catch (e) {
+          let msg = (e.response) ? e.response.text : e;
+          console.error(msg);
+        }
+      } else {
+        console.log(`INFO no MARC_BIB records found with snapshotId ${id}-- skipping`);
+        skipped++;
       }
       await wait(config.delay);
-    }
+    } 
+    console.log('Done!');
+    console.log('Snapshots deleted:', ttl);
+    console.log('Skipped:', skipped);
   } catch (e) {
     console.error(e.message);
   }
