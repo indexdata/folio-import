@@ -117,6 +117,7 @@ const lib2sp = {
       inf: 0,
       ina: 0,
       ibc: 0,
+      err: 0,
     }
 
     let csv = fs.readFileSync(inFiles.circ, {encoding: 'utf8'});
@@ -136,12 +137,15 @@ const lib2sp = {
       if (!user) {
         console.log(`ERROR no user found for username ${pid}`);
         ttl.unf++;
+        ttl.err++;
       } else if (!item) {
         console.log(`ERROR no item found for barcode ${iid}`);
         ttl.inf++;
+        ttl.err++;
       } else if (item.st !== 'Available') {
         console.log(`ERROR item status for ${iid} is not available`);
         ttl.ina++;
+        ttl.err++;
       } else {
         loan.itemBarcode = iid;
         loan.userBarcode = user.bc;
@@ -156,11 +160,16 @@ const lib2sp = {
         loan.servicePointId = lib2sp[lib];
         if (r.RENEWAL_COUNT) loan.renewalCount = parseInt(r.RENEWAL_COUNT, 10);
         if (user.ex) loan.expirationDate = user.ex;
-        writeOut(outFiles.co, loan);
-        ttl.co++;
-        if (!user.active) {
-          writeOut(outFiles.ia, loan);
-          ttl.ia++;
+        if (loan.servicePointId) {
+          writeOut(outFiles.co, loan);
+          ttl.co++;
+          if (!user.active) {
+            writeOut(outFiles.ia, loan);
+            ttl.ia++;
+          }
+        } else {
+          console.log(`ERROR service point not found for ${lib} (${iid} --> ${pid})`);
+          ttl.err++;
         }
       }
     });
@@ -173,6 +182,7 @@ const lib2sp = {
     console.log('Items not found:', ttl.inf);
     console.log('Items not available:', ttl.ina);
     console.log('Items with no barcode:', ttl.ibc);
+    console.log('Total errors:', ttl.err);
     console.log('Time (sec):', time);
   } catch (e) {
     console.error(e);
