@@ -117,7 +117,7 @@ const outFiles = {
           o.additionalInfoForStaff = `This is the balance due. (Actual cost: $${item.amt})`;
         } else {
           o.amount = item.amt;
-          o.additionalInfoForStaff = iid;
+          // o.additionalInfoForStaff = iid;
         }
         o.amount = parseFloat(o.amount);
         if (o.amount > 0) {
