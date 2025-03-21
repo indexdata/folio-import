@@ -67,6 +67,7 @@ const wait = (ms) => {
           }
         }
       } catch (e) {}
+      if (single) delFlag = true;
       if (delFlag) {
         console.log(`Deleting ${id}`);
         try {
