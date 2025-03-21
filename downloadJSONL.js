@@ -16,16 +16,14 @@ let writeStream;
 
     let config = await getAuthToken(superagent);
 
-    if (endPoint.match(/^.x/)) {
-      endPoint = endPoint.replace(/^.x\//, '');
+    if (endPoint.match(/^_\//)) {
+      endPoint = endPoint.replace(/^_\//, '');
       endPoint = endPoint.replace(/__/, '/');
     }
 
     endPoint = endPoint.replace(/^\//, '');
 
     let actionUrl = config.okapi + '/' + endPoint;
-    let filename = endPoint.replace(/\//g, '__');
-    filename = filename.replace(/\?.+/, '');
 
     fn = fileName;
     if (fs.existsSync(fn)) {
