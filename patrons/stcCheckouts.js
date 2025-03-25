@@ -19,6 +19,7 @@ const outFiles = {
 const lib2sp = {
   "MIDVALLEY": "MVLIB",
   "NAH": "NAHLIB",
+  "NURSING": "NAHLIB",
   "PECAN": "PCNLIB",
   "PHARR": "RCPSELIB",
   "RIO_GRANDE": "STRLIB",
