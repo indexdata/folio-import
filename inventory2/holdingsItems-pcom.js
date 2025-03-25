@@ -23,7 +23,7 @@ const dbug = process.env.DEBUG;
 const ifiles = {
   items: 'items.csv',
   notes: 'notes.csv'
-}
+};
 
 const ntypeMap = {
   '1': 'General',
@@ -42,7 +42,7 @@ const statMap = {
   'In Transit Discharged': 'In transit',
   'Missing': 'Missing',
   'Withdrawn': 'Withdrawn'
-}
+};
 
 const hsuppMap = {
   "WITHDREW-P": true,
@@ -50,7 +50,25 @@ const hsuppMap = {
   "WITHDREW-SGA": true,
   "WITHDREW-G": true,
   "WITHDREW-S": true,
-}
+};
+
+const enumTypes = {
+  "CALCULATOR": 1,
+  "CHARGERS": 1,
+  "HEADPHONES": 1,
+  "HOTSPOT": 1,
+  "ITEM STAND": 1,
+  "KEY CARD": 1,
+  "LAPTOP": 1,
+  "ANATOMICAL MODEL": 1,
+  "MOUSE DEVICE": 1,
+  "PROJECTOR": 1,
+  "WATCH": 1,
+  "WHITEBOARD-MARKERS": 1,
+  "WHITEBOARD-PERSONAL": 1,
+  "STUDY ROOM KIT": 1,
+  "SMARTBOARD PENS KIT": 1
+};
 
 const typeMap = {
   u: 'Physical',
@@ -119,7 +137,7 @@ const cnTypeMap = {
   '6': 'cd70562c-dd0b-42f6-aa80-ce803d24d4a1',
   '7': '827a2b64-cbf5-4296-8545-130876e4dfc0',
   '8': '6caca63e-5651-4db6-9247-3205156e9699'
-}
+};
 
 const writeOut = (outStream, data, notJson, newLineChar) => {
   let nl = newLineChar || '';
@@ -341,7 +359,15 @@ try {
           console.log(`WARN duplicate barcode found ${bc} (${i.hrid})`);
         }
 
-        if (r.ITEM_ENUM) i.volume = r.ITEM_ENUM;
+        if (r.ITEM_ENUM) {
+          let itName = r.ITEM_TYPE_NAME;
+          let isEnum = enumTypes[itName];
+          if (isEnum) {
+            i.enumeration = r.ITEM_ENUM;
+          } else {
+            i.volume = r.ITEM_ENUM;
+          }
+        }
         
         if (r.CHRON) i.chronology = r.CHRON;
         if (r.Year || r.CAPTION) {
