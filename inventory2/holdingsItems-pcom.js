@@ -415,6 +415,7 @@ try {
     let bhrid = (m['004']) ? m['004'][0] : '';
     let mh = {};
     let iid = '';
+    let addNotes = [];
     if (m['852']) {
       m['852'].forEach(f => {
         f.subfields.forEach(s => {
@@ -422,8 +423,9 @@ try {
           if (k.match(/[zx]/)) {
             if (!mh[k]) mh[k] = [];
             mh[k].push(s[k]);
-          }
-          else {
+          } else if (m['852'].length > 1 && k === 'b' && !tsvMap.locations[s[k]]) {
+            addNotes.push(s[k]);
+          } else {
             mh[k] = s[k]; 
           }
         });
@@ -465,6 +467,10 @@ try {
       h.acquisitionMethod = acqMethMap[ameth];
       h.notes = [];
       let ntype = refData.holdingsNoteTypes.Note;
+      addNotes.forEach(n => {
+        let o = makeNote(n, ntype, true);
+        h.notes.push(o);
+      });
       if (mh.x) {
         mh.x.forEach(n => {
           let o = makeNote(n, ntype, true);
