@@ -716,8 +716,28 @@ try {
         delete marc.fields['880'];
       }
 
+      let addFields = {};
       for (let t in marc.fields) {
         let fields = marc.fields[t];
+        if (t.match(/852|866|520|561/)) {
+          fields.forEach(f => {
+            let d;
+            let str;
+            if (t === '852') {
+              str = getSubs(f, 'chijlmz');
+              d = getSubsHash(f, true);
+            } else if (t === '866') {
+              d = getSubsHash(f, true);
+            } else {
+              d = getSubs(f, 'a');
+            }
+            if (d) {
+              if (!addFields[t]) addFields[t] = [];
+              if (str) d.string = str;
+              addFields[t].push(d);
+            }
+          });
+        }
         if (t.match(/^78[05]/)) {
           let occ = 0;
           fields.forEach(f => {
@@ -862,7 +882,8 @@ try {
         ttl.srs++;
         if (idmap) {
           let ea = (inst.electronicAccess) ? JSON.stringify(inst.electronicAccess) : '';
-          let instMap = `${inst.hrid}|${inst.id}|${bibCallNum.value}|${bibCallNum.type}|${blvl}|${ea}|${itypeCode}`;
+          let af = JSON.stringify(addFields);
+          let instMap = `${inst.hrid}|${inst.id}|${bibCallNum.value}|${bibCallNum.type}|${blvl}|${ea}|${itypeCode}|${af}`;
           writeOut(outs.idmap, instMap, true, '\n');
         }
         if (iconf) {
