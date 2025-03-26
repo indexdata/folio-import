@@ -309,8 +309,9 @@ try {
         }
 
         let anf = af['852'] || [];
+        if (anf[0]) h.administrativeNotes = [];
         anf.forEach(f => {
-          h.administrativeNotes = f.string;
+          h.administrativeNotes.push(f.string);
         });
 
         let hsf = af['866'] || [];
@@ -320,7 +321,7 @@ try {
           if (f.a) o.statement = f.a;
           if (f.z) o.note = f.z;
           if (f.x) o.staffNote = f.x;
-          if (f.statement || f.note) h.holdingsStatements.push(o);
+          if (o.statement || o.note) h.holdingsStatements.push(o);
         });
 
         let pnf = af['561'] || [];
