@@ -81,6 +81,17 @@ const makeNote = function (text, type, staffOnly) {
   return out;
 }
 
+const makeHoldingsNote = function (text, type, staffOnly) {
+  if (!staffOnly) staffOnly = false;
+  if (!type) throw new Error('Note type not found');
+  const out = {
+    note: text,
+    holdingsNoteTypeId: type,
+    staffOnly: staffOnly
+  };
+  return out;
+}
+
 try {
   if (!mapFile) { throw "Usage: node holdingsItems-stc.js <conf_file> <instance_map_file>" }
   let confDir = path.dirname(confFile);
@@ -175,7 +186,7 @@ try {
     for await (let line of rl) {
       let c = line.split(/\|/);
       let k = c[0];
-      instMap[k] = { id: c[1], blvl: c[4], type: c[6], ea: c[5] };
+      instMap[k] = { id: c[1], blvl: c[4], type: c[6], ea: c[5], af: c[7] };
     }
   }
   // throw(instMap);
@@ -281,7 +292,7 @@ try {
         let hhrid = bid + '-' + occStr;
         let hid = uuid(hhrid, ns);
         let htypeId = (inst.blvl === 's') ? refData.holdingsTypes['Serial'] : refData.holdingsTypes['Monograph'];
-        
+        let af = (inst.af) ? JSON.parse(inst.af) : {};
         let h = {
           _version: 1,
           id: hid,
@@ -289,11 +300,46 @@ try {
           instanceId: inst.id,
           sourceId: refData.holdingsRecordsSources.FOLIO,
           permanentLocationId: locId,
-          holdingsTypeId: htypeId
+          holdingsTypeId: htypeId,
+          notes: []
         }
         if (cn) { 
           h.callNumber = cn;
           h.callNumberTypeId = refData.callNumberTypes['Other scheme'];
+        }
+
+        let anf = af['852'] || [];
+        anf.forEach(f => {
+          h.administrativeNotes = f.string;
+        });
+
+        let hsf = af['866'] || [];
+        if (hsf[0]) h.holdingsStatements = [];
+        hsf.forEach(f => {
+          let o = {};
+          if (f.a) o.statement = f.a;
+          if (f.z) o.note = f.z;
+          if (f.x) o.staffNote = f.x;
+          if (f.statement || f.note) h.holdingsStatements.push(o);
+        });
+
+        let pnf = af['561'] || [];
+        pnf.forEach(f => {
+          let t = refData.holdingsNoteTypes.Provenance;
+          let o = makeHoldingsNote(f, t);
+          if (f && t) h.notes.push(o)
+        });
+
+        let snf = af['520'] || [];
+        snf.forEach(f => {
+          let t = refData.holdingsNoteTypes.Note;
+          let o = makeHoldingsNote(f, t);
+          if (f && t) h.notes.push(o)
+        });
+
+        if (inst.ea) {
+          let ea = JSON.parse(inst.ea);
+          h.electronicAccess = ea;
         }
 
         if (h.permanentLocationId) {
@@ -302,6 +348,7 @@ try {
         } else {
           console.log(`ERROR permanentLocationId not found for ${loc}!`)
         }
+        
         hseen[hkey] = { id: hid, cn: cn };
         // console.log(h);
       }
