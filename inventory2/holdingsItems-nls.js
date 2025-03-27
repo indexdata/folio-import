@@ -346,12 +346,11 @@ try {
         if (h.permanentLocationId) {
           writeOut(outs.holdings, h);
           ttl.holdings++;
+          hseen[hkey] = { id: hid, cn: cn };
         } else {
-          console.log(`ERROR permanentLocationId not found for ${loc}!`)
+          console.log(`ERROR permanentLocationId not found for ${loc}!`);
+          ttl.errors++;
         }
-        
-        hseen[hkey] = { id: hid, cn: cn };
-        // console.log(h);
       }
       let hr = hseen[hkey];
       if (hr) {
