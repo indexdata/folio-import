@@ -17,7 +17,7 @@ MSABA	APPLIED BEHAVIORAL ANALYSIS	Student	Student	Psych - Applied Behavior Analy
 MSALTCA	MS AGING & LONG TERM CARE ADMIN	Student	Student	Public Health - General
 MSAPP	APPLIED POSITIVE PSYCHOLOGY	Student	Student	Psych - Applied Positive Psych
 MSBMSCI	BIOMEDICAL SCIENCES	Student	Student	Biomedical Science
-MSCHPSY	Cert for ODRL	Student	Student	Psych - Counseling
+CERORDL	CERT for ODRL	Student	Student	Psych - Counseling
 MSCLMSC	CLINICAL SCIENCE	Student	Student	Psych - General
 MSCNPSYS	MS COUNSELING PSY STUDIES	Student	Student	Psych - General
 MSEMMED	EMERGENCY MEDICINE MS	Student	Student	Emergency Medicine
@@ -53,3 +53,4 @@ SCPSYMS5	SCH PSY MS & PSYD 5	Student	Student	Psych - School to PsyD
 SPSYMSE4	SCH PSY MS & EDS 4	Student	Student	Psych - School to EdD
 STAFF	STAFF-EMPLOYEE	Staff	Staff Member	Staff Member
 WITHDREW	WITHDREW	Alum	Alumni	Alumni
+MSCHPSY	P-COUN & CLINICAL HEALTH PSY	Student	Student	Psych - Counseling

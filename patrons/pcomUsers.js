@@ -133,6 +133,7 @@ try {
   let ecount = 0;
   const useen = {};
   const bcseen = {};
+  const exseen = {};
 
   for (let x = 0; x < inRecs.length; x++) {
     count++;
@@ -144,8 +145,8 @@ try {
     let ln = p.LAST_NAME
     let fn = p.FIRST_NAME;
     let mn = p.MIDDLE_NAME;
-    let un = p.INSTITUTION_ID; 
-    let id = un;
+    let un = p.USERNAME; 
+    let iid = p.INSTITUTION_ID;
     let group = p.PATRON_GROUP_DISPLAY;
     let dept = p.PATRON_GROUP_DISPLAY;
     let edate = p.EXPIRE_DATE;
@@ -166,8 +167,9 @@ try {
     }
     if (!useen[un]) {
       u = {
-        id: uuid(id, ns),
+        id: uuid(un, ns),
         username: un,
+        externalSystemId: iid,
         active: true,
         patronGroup: groupId,
         personal: {
