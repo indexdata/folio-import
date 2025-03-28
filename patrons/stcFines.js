@@ -15,7 +15,8 @@ const inFiles = {
 
 const outFiles = {
   bill: 'bills.jsonl',
-  na: 'notAgedToLost.jsonl'
+  na: 'notAgedToLost.jsonl',
+  ad: 'accountDates.jsonl'
 };
 
 (async () => {
@@ -74,7 +75,16 @@ const outFiles = {
         }
         let nts = o.notes;
         items[k] = {};
-        if (fine) items[k].bal = fine.bal;
+        if (fine) { 
+          items[k].bal = fine.bal;
+          let bd = (fine.rec.BILL_DATE) ? fine.rec.BILL_DATE.replace(/(....)(..)(..)/, '$1-$2-$3') : '';
+          try {
+            let billDate = new Date(bd).toISOString();
+            items[k].date = billDate;
+          } catch (e) {
+            console.log(`{e}`);
+          }
+        }
         if (nts) {
           nts.forEach(n => {
             if (n.itemNoteTypeId === priceNote) {
@@ -92,9 +102,12 @@ const outFiles = {
     };
 
     const ttl = {
+      proc: 0,
+      skips: 0,
       bills: 0,
       notLost: 0,        
-      err: 0
+      err: 0,
+      acc: 0,
     }
 
     fileStream = fs.createReadStream(inFiles.actCost);
@@ -103,6 +116,7 @@ const outFiles = {
       crlfDelay: Infinity
     });
     for await (let line of rl) {
+      ttl.proc++;
       let r = JSON.parse(line);
       let aid = r.id;
       let iid = r.item.id;
@@ -117,16 +131,23 @@ const outFiles = {
           o.additionalInfoForStaff = `This is the balance due. (Actual cost: $${item.amt})`;
         } else {
           o.amount = item.amt;
-          // o.additionalInfoForStaff = iid;
         }
         o.amount = parseFloat(o.amount);
         if (o.amount > 0) {
           writeOut(outFiles.bill, o);
           ttl.bills++;
+          if (item.date) {
+            let a = { id: r.id, dateCreated: item.date };
+            writeOut(outFiles.ad, a);
+            ttl.acc++;
+          }
         } else {
           console.log(`WARN amount is $0 -- not billing (${iid})`);
           ttl.err++;
         }
+      } else {
+        console.log('INFO actual cost status is not "Open"');
+        ttl.skips++
       }
 
     }
@@ -141,7 +162,10 @@ const outFiles = {
 
     const end = new Date().valueOf();
     const time = (end - start)/1000;
+    console.log('AC recs processed:', ttl.proc);
+    console.log('Skipped', ttl.skips);
     console.log('Bills:', ttl.bills);
+    console.log('Account createDates:', ttl.acc);
     console.log('Not aged to lost:', ttl.notLost);
     console.log('Total errors:', ttl.err);
     console.log('Time (sec):', time);

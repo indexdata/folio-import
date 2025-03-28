@@ -96,7 +96,8 @@ const wait = (ms) => {
           .set('content-type', 'application/json')
           .set('accept', 'application/json');
         logger.info(`  Successfully added record id ${rec.id}`);
-        if (actionUrl.match(/\/(erm|licenses\/)|\/notes$/)) {
+        console.log(res.body);
+        if (actionUrl.match(/\/(erm|licenses\/)|\/notes$|\/bill$/)) {
           fs.writeFileSync(outPath, JSON.stringify(res.body) + '\n', {flag: 'a'});
         }
         success++;
