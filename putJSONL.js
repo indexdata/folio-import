@@ -77,7 +77,7 @@ const wait = (ms) => {
       x++;
       let rec = JSON.parse(line);
       if (ver) rec._version = ver;
-      if (rec._errorMessage) delete rec._errorMessage;
+      if (rec._errMessage) delete rec._errMessage;
       if (rec.__) delete rec.__;
       let id = rec.id;
       if (rec.fund && rec.fund.id) id = rec.fund.id;

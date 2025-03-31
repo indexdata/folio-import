@@ -578,7 +578,8 @@ try {
     delimiter: '\t',
     columns: true,
     relax_column_count: true,
-    trim: true
+    trim: true,
+    quote: false
   });
   fileStream.pipe(parser);
   parser.on('data', (rec) => {
