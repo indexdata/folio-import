@@ -2,6 +2,17 @@ const fs = require('fs');
 const superagent = require('superagent');
 const { getAuthToken } = require('./lib/login');
 const fileNames = process.argv.slice(2);
+const cl = console.log;
+const logSeen = {}
+
+console.log = (msg, path) => {
+  if (path) {
+    if (!logSeen[path] && fs.existsSync(path)) fs.unlinkSync(path);
+    fs.writeFileSync(path, msg + '\n', { flag: 'a'});
+    logSeen[path] = 1;
+  }
+  cl(msg);
+}
 
 (async () => {
   let added = 0;
@@ -15,7 +26,7 @@ const fileNames = process.argv.slice(2);
     const config = await getAuthToken(superagent);
 
     for (let x = 0; x < fileNames.length; x++) {
-      
+      let logPath = fileNames[x] + '.log';
       
       let path = fileNames[x].replace(/^.+\//, '');
 
@@ -98,17 +109,17 @@ const fileNames = process.argv.slice(2);
           added++;
         } catch (e) {
           if (process.env.DEBUG) {
-            console.log(e);
+            console.log(e, logPath);
           } else {
-            console.log(`${e}`);
+            console.log(`${e}`, logPath);
           }
           try {
-            console.log(`  Trying PUT...`);
+            console.log(`  Trying PUT...`, logPath);
             let purl = url;
             if (!purl.match(/circulation-rules-storage|mapping-rules/)) {
               purl += '/' + data[d].id;
             }
-            console.log(`  PUT ${purl}...`);
+            console.log(`  PUT ${purl}...`, logPath);
             let res = await superagent
               .put(purl)
               .timeout({ response: 5000 })
@@ -118,7 +129,7 @@ const fileNames = process.argv.slice(2);
               .send(data[d]);
             updated++;
           } catch (e) {
-            console.log(`  ${e}`);
+            console.log(`  ${e}`, logPath);
             errors++;
           } 
         }
