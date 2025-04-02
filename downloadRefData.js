@@ -22,36 +22,32 @@ let modName = process.argv[3];
     let authToken = config.token;
 
     let mdUrls = [
-      'https://raw.githubusercontent.com/folio-org/mod-configuration/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-inventory-storage/master/descriptors/ModuleDescriptor-template.json',
-      'https://raw.githubusercontent.com/folio-org/mod-circulation-storage/master/descriptors/ModuleDescriptor-template.json',
-      'https://raw.githubusercontent.com/folio-org/mod-patron-blocks/master/descriptors/ModuleDescriptor-template.json',
+      'https://raw.githubusercontent.com/folio-org/mod-calendar/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-users/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-permissions/master/descriptors/ModuleDescriptor-template.json',
-      'https://raw.githubusercontent.com/folio-org/mod-tags/master/descriptors/ModuleDescriptor-template.json',
+      'https://raw.githubusercontent.com/folio-org/mod-feesfines/master/descriptors/ModuleDescriptor-template.json',
+      'https://raw.githubusercontent.com/folio-org/mod-circulation-storage/master/descriptors/ModuleDescriptor-template.json',
+      'https://raw.githubusercontent.com/folio-org/mod-template-engine/master/descriptors/ModuleDescriptor-template.json',
+      'https://raw.githubusercontent.com/folio-org/mod-patron-blocks/master/descriptors/ModuleDescriptor-template.json',
+      'https://raw.githubusercontent.com/folio-org/mod-configuration/master/descriptors/ModuleDescriptor-template.json',
+      'https://raw.githubusercontent.com/folio-org/mod-email/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-notes/master/descriptors/ModuleDescriptor-template.json',
-      'https://raw.githubusercontent.com/folio-org/mod-finance-storage/master/descriptors/ModuleDescriptor-template.json',
+      'https://raw.githubusercontent.com/folio-org/mod-tags/master/descriptors/ModuleDescriptor-template.json',
+      'https://raw.githubusercontent.com/folio-org/mod-data-export/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-organizations-storage/master/descriptors/ModuleDescriptor-template.json',
+      'https://raw.githubusercontent.com/folio-org/mod-finance-storage/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-orders-storage/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-invoice-storage/master/descriptors/ModuleDescriptor-template.json',
-      'https://raw.githubusercontent.com/folio-org/mod-notify/master/descriptors/ModuleDescriptor-template.json',
-      'https://raw.githubusercontent.com/folio-org/mod-feesfines/master/descriptors/ModuleDescriptor-template.json',
-      'https://raw.githubusercontent.com/folio-org/mod-email/master/descriptors/ModuleDescriptor-template.json',
-      'https://raw.githubusercontent.com/folio-org/mod-template-engine/master/descriptors/ModuleDescriptor-template.json',
-      'https://raw.githubusercontent.com/folio-org/mod-login-saml/master/descriptors/ModuleDescriptor-template.json',
+      'https://raw.githubusercontent.com/folio-org/mod-courses/master/descriptors/ModuleDescriptor-template.json',
+      'https://raw.githubusercontent.com/folio-org/mod-copycat/master/descriptors/ModuleDescriptor-template.json',
+      'https://raw.githubusercontent.com/folio-org/mod-entities-links/refs/heads/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-data-import/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-di-converter-storage/master/descriptors/ModuleDescriptor-template.json',
-      'https://raw.githubusercontent.com/folio-org/mod-data-export/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-source-record-storage/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-source-record-manager/master/descriptors/ModuleDescriptor-template.json',
-      'https://raw.githubusercontent.com/folio-org/mod-courses/master/descriptors/ModuleDescriptor-template.json',
-      'https://raw.githubusercontent.com/folio-org/mod-custom-fields/master/descriptors/ModuleDescriptor-template.json',
-      'https://raw.githubusercontent.com/folio-org/folio-custom-fields/master/descriptors/ModuleDescriptor-template.json',
-      'https://raw.githubusercontent.com/folio-org/mod-calendar/master/descriptors/ModuleDescriptor-template.json',
       // 'https://raw.githubusercontent.com/folio-org/mod-agreements/master/service/src/main/okapi/ModuleDescriptor-template.json',
       // 'https://raw.githubusercontent.com/folio-org/mod-licenses/master/service/src/main/okapi/ModuleDescriptor-template.json',
-      'https://raw.githubusercontent.com/folio-org/mod-copycat/master/descriptors/ModuleDescriptor-template.json',
-      'https://raw.githubusercontent.com/folio-org/mod-entities-links/refs/heads/master/descriptors/ModuleDescriptor-template.json' 
     ];
 
     if (modName) {
@@ -75,15 +71,22 @@ let modName = process.argv[3];
       '/authority-storage/reindex': true,
       '/change-manager/parsedRecords': true,
       '/check-in-storage/check-ins': true,
+      '/check-out-lock-storage': true,
       '/data-export/transformation-fields': true,
       '/data-export/job-executions': true,
       '/data-export/logs': true,
       '/data-export/related-users': true,
-      'data-import-profiles/profileAssociations': true,
+      '/data-import/uploadUrl': true,
+      '/data-import/uploadUrl/subsequent': true,
+      '/data-import-profiles/profileAssociations': true,
+      '/data-import/testFileSplit': true,
       '/feefineactions': true,
       '/finance-storage/transactions': true,
       '/finance-storage/ledger-rollovers-budgets': true,
       '/finance-storage/ledger-rollovers-logs': true,
+      '/finance-storage/ledger-rollovers': true,
+      '/finance-storage/ledger-rollovers-progress': true,
+      '/finance-storage/ledger-rollovers-errors': true,
       '/finance-storage/group-budgets': true,
       '/export': true,
       '/export/*': true,
@@ -101,13 +104,16 @@ let modName = process.argv[3];
       '/instance-storage__reindex': true,
       '/invoice-storage/invoice-lines': true,
       '/invoice-storage/invoices': true,
+      '/invoice-storage/invoice-line-number': true,
       '/item-storage-dereferenced/items': true,
       '/item-storage/items': true,
       '/licenses/amendments': true,
       '/licenses/files': true,
       '/licenses/licenses': true,
+      '/linking-rules/instance-authority': true,
       '/links/instances': true,
       '/links/stats/instance': true,
+      '/links/stats/authority': true,
       '/loan-storage/loan-history': true,
       '/loan-storage/loans': true,
       '/metadata-provider/logs': true,
@@ -118,6 +124,7 @@ let modName = process.argv[3];
       '/orders-storage/order-invoice-relns': true,
       '/orders-storage/order-lines': true,
       '/orders-storage/orders': true,
+      '/orders-storage/po-line-number': true,
       '/orders-storage/po-lines': true,
       '/orders-storage/po-number': true,
       '/orders-storage/purchase-orders': true,
@@ -140,6 +147,7 @@ let modName = process.argv[3];
       '/source-storage/sourceRecords': true,
       '/source-storage/stream/records': true,
       '/source-storage/stream/source-records': true,
+      '/staging-users': true,
       '/tlr-feature-toggle-job-storage/tlr-feature-toggle-jobs': true,
       '/users': true,
       '/voucher-storage/vouchers': true,
@@ -202,6 +210,7 @@ let modName = process.argv[3];
     let paths = [];
 
     for (let z = 0; z < mdUrls.length; z++) {
+      let ordStr = z.toString().padStart(2, '0')
       let url = mdUrls[z];
       try {
         let res = await superagent.get(url);
@@ -221,7 +230,7 @@ let modName = process.argv[3];
                 console.log(`Skipping ${pp}`);
               } else {
                 pp = pp.replace(/^\//, '');
-                paths.push({ mod: name, path: pp });
+                paths.push({ mod: ordStr + '-' + name, path: pp });
               }
             }
           }
@@ -278,7 +287,6 @@ let modName = process.argv[3];
       
       try {
         let res = {};
-        // console.log(url);
         if (url.match(/custom-fields/)) {
           res = await superagent
             .get(url)
@@ -302,12 +310,13 @@ let modName = process.argv[3];
           let jsonStr = JSON.stringify(res.body, null, 2);
           let fullSaveDir = refDir + '/' + saveDir;
           if (!fs.existsSync(fullSaveDir)) {
-            console.log(`(Creating directory: ${saveDir})`);
+            console.log(`\x1b[32m(Creating directory: ${saveDir})\x1b[0m`);
             fs.mkdirSync(fullSaveDir);
           }
           let p = priority.indexOf(fileName);
           if (p > -1) {
-            fileName = `${p}-${fileName}`;
+            let pstr = p.toString().padStart(2, '0');
+            fileName = `${pstr}-${fileName}`;
           }
           fs.writeFileSync(`${fullSaveDir}/${fileName}.json`, jsonStr);
         }
@@ -350,7 +359,7 @@ let modName = process.argv[3];
         }
       } catch (e) {
         try {
-          console.log(e.response.text);
+          console.log(`\x1b[31m${e}\x1b[0m`);
         } catch {
           console.log(e.message);
         }
@@ -358,7 +367,7 @@ let modName = process.argv[3];
     }
     let endTime = new Date().valueOf();
     let ttl = (endTime - startTime) / 1000;
-    console.log(`Done in ${ttl} secs`);
+    console.log(`\x1b[33mDone in ${ttl} secs\x1b[0m`);
   } catch (e) {
     console.error(e.message);
   }

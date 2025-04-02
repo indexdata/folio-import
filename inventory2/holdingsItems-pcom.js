@@ -346,7 +346,8 @@ try {
           i.itemDamagedStatusId = refData.itemDamageStatuses.Damaged;
         }
 
-        let mt = tsvMap.mtypes[r.ITEM_TYPE_ID] || '';
+        let mt = tsvMap.mtypes[r.ITEM_TYPE_ID] || refData.mtypes.unspecified || '';
+        if (mt === refData.mtypes.unspecified) console.log(`WARN materialType not found for "${r.ITEM_TYPE_ID}" (${iid})`);
         i.materialTypeId = mt;
 
         if (r.SUPPRESS_IN_OPAC === 'Y') i.discoverySuppress === true;
@@ -416,7 +417,7 @@ try {
             ttl.itemErr++;
           }
         } else {
-          console.log(`ERROR item material type not found for "${ih.t}"`);
+          console.log(`ERROR item material type "${r.ITEM_TYPE_ID}" not found (${iid})`);
           ttl.itemErr++;
         }
       } else {
