@@ -9,8 +9,9 @@ ref=$(data)/ref
 iref=$(ref)/inv
 uref=$(ref)/usr
 idir=$(data)/inv
-udir=$(data)/users
+udir=$(data)/usr
 adir=$(data)/auth
+fdir=$(data)/fines
 cdir=$(data)/circ
 in=$(data)/incoming
 mfile=$(idir)/bibs.mrc
@@ -45,6 +46,17 @@ authorities: $(in)/Auth*xml
 clean-authorities: $(adir)/auth.xml
 	cd $(adir); rm *.xml
 
+users: $(udir)
+	cd $(udir); ln -s $(in)/*Address* addresses.txt
+	cd $(udir); ln -s $(in)/U*Notes* notes.txt
+	cd $(udir); ln -s $(in)/U*Standard* users.txt
+	cd $(udir); grep -vc USERNAME users.txt > count.txt; cat count.txt
+	cd $(wd)/patrons; node stcUsers.js $(uref) $(udir)/addresses.txt $(udir)/notes.txt $(udir)/users.txt > $(log)/makeUsers.log
+	cat $(log)/makeUsers.log
+
+clean-users: $(udir)/*.txt
+	rm $(udir)/*.txt
+
 checkouts: $(in)/Loans*
 	cd $(cdir); ln -s $(in)/Loans* loans.txt
 	cd $(wd); [ -f $(cdir)/users.jsonl ] || node downloadJSONL users $(cdir)/users.jsonl
@@ -52,9 +64,18 @@ checkouts: $(in)/Loans*
 	cd $(wd)/patrons; node stcCheckouts $(cdir)/loans.txt > $(log)/makeCheckouts.log
 	cat $(log)/makeCheckouts.log
 
-clean-checkouts: 
+clean-checkouts: $(cdir)/*.txt
 	cd $(cdir); rm *.txt
 
+feefines: $(fdir)
+	cd $(fdir); ln -s $(in)/F*Associated* fines.txt
+	cd $(fdir); grep -vc BILL_REASON fines.txt > count.txt; cat count.txt
+	cd $(wd); node downloadJSONL.js actual-cost-record-storage/actual-cost-records $(fdir)/actual-costs.jsonl
+	# cd $(wd); node downloadJSONL.js item-storage/items $(fdir)/items.jsonl
+	cd $(wd)/patrons; node stcFines.js $(fdir)/fines.txt
+
+clean-feefines: $(fdir)/*.txt
+	cd $(fdir); rm *.txt
 setup:
 	cp $(login) $(wd)/config.json
 	# sed -e 's#"logpath":.*#"logpath": "$(log)",#' $(wd)/config.json > tmp
@@ -64,6 +85,7 @@ setup:
 	mkdir -p $(log)
 	mkdir -p $(idir)
 	mkdir -p $(udir)
+	mkdir -p $(fdir)
 	mkdir -p $(adir)
 	mkdir -p $(cdir)
 	mkdir -p $(in)
