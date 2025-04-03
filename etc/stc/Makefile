@@ -70,12 +70,13 @@ clean-checkouts: $(cdir)/*.txt
 feefines: $(fdir)
 	cd $(fdir); ln -s $(in)/F*Associated* fines.txt
 	cd $(fdir); grep -vc BILL_REASON fines.txt > count.txt; cat count.txt
-	cd $(wd); node downloadJSONL.js actual-cost-record-storage/actual-cost-records $(fdir)/actual-costs.jsonl
-	# cd $(wd); node downloadJSONL.js item-storage/items $(fdir)/items.jsonl
+	cd $(wd); node downloadJSONL.js actual-cost-record-storage/actual-cost-records?query=status=Open $(fdir)/actual-costs.jsonl
+	cd $(wd); node downloadJSONL.js 'item-storage/items?query=status.name==Aged%20to%20lost' $(fdir)/items.jsonl
 	cd $(wd)/patrons; node stcFines.js $(fdir)/fines.txt
 
 clean-feefines: $(fdir)/*.txt
-	cd $(fdir); rm *.txt
+	cd $(fdir); rm *.txt; rm actual-costs.jsonl; rm items.jsonl
+
 setup:
 	cp $(login) $(wd)/config.json
 	# sed -e 's#"logpath":.*#"logpath": "$(log)",#' $(wd)/config.json > tmp
