@@ -64,7 +64,7 @@ const outFiles = {
     });
     let finesMap = {}
     inRecs.forEach(r => {
-      let k = 'ui' + r.ITEM_ID;
+      let k = (r.ITEM_ID) ? 'ui' + r.ITEM_ID : r.BILL_KEYA + ':' + r.BILL_KEYB;
       finesMap[k] = { bal: r.BALANCE.replace(/(..)$/, '.$1'), rec: r };
     });
     // throw(finesMap);
