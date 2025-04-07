@@ -2,21 +2,36 @@ const fs = require('fs');
 const path = require('path');
 const { parse } = require('csv-parse/sync');
 const readline = require('readline');
+let uuid;
+try {
+  uuid = require('uuid/v5');
+} catch (e) {
+  const { v5 } = require('uuid');
+  uuid = v5;
+}
 
 let finesFile = process.argv[2];
 
-let servicePoint = 'ef95b899-be17-450a-bbf5-801c5fb04dbb' // Pecan Library
-let priceNote = '1fceb11c-7a89-49d6-8ef0-2a42c58556a2'
+let servicePoint = 'ef95b899-be17-450a-bbf5-801c5fb04dbb'; // Pecan Library
+let priceNote = '1fceb11c-7a89-49d6-8ef0-2a42c58556a2';
+let feefineId = '0f0ce03e-dd66-4015-b553-600d5829e30f';
+let feefineName = 'Damaged / Partially Lost Item';
+let ownerId = '0931239d-6a6a-4aa1-aeb9-f0c63f4ecdba'; 
+let ownerName = 'Library';
+const ns = 'bb37432c-e13d-4d13-a151-eb4b7bc86ea6';
 
 const inFiles = { 
   actCost: 'actual-costs.jsonl',
   items: 'items.jsonl',
+  users: 'users.jsonl'
 };
 
 const outFiles = {
   bill: 'bills.jsonl',
   na: 'notAgedToLost.jsonl',
-  ad: 'accountDates.jsonl'
+  ad: 'accountDates.jsonl',
+  acc: 'accounts.jsonl',
+  ffa: 'feefineActions.jsonl'
 };
 
 (async () => {
@@ -50,16 +65,30 @@ const outFiles = {
     let finesMap = {}
     inRecs.forEach(r => {
       let k = 'ui' + r.ITEM_ID;
-      if (r.BILL_REASON === 'LOST') finesMap[k] = { bal: r.BALANCE.replace(/(..)$/, '.$1'), rec: r };
+      finesMap[k] = { bal: r.BALANCE.replace(/(..)$/, '.$1'), rec: r };
     });
     // throw(finesMap);
+
+    const users = {};
+    let fileStream = fs.createReadStream(inFiles.users);
+    let rl = readline.createInterface({
+      input: fileStream,
+      crlfDelay: Infinity
+    });
+    for await (let line of rl) {
+      let o = JSON.parse(line);
+      let k = o.username;
+      let v = o.id;
+      users[k] = v;
+    }
+    // throw(users);
 
     let fseen = {};
 
     // map items
     const items = {};
-    let fileStream = fs.createReadStream(inFiles.items);
-    let rl = readline.createInterface({
+    fileStream = fs.createReadStream(inFiles.items);
+    rl = readline.createInterface({
       input: fileStream,
       crlfDelay: Infinity
     });
@@ -67,6 +96,8 @@ const outFiles = {
       let o = JSON.parse(line);
       let k = o.id;
       let hrid = o.hrid;
+      let hkey = hrid.replace(/^ui/, '');
+      items[hkey] = o;
       if (o.status.name === 'Aged to lost') {
         let fine = finesMap[hrid];
         fseen[hrid] = fine;
@@ -80,6 +111,7 @@ const outFiles = {
           let bd = (fine.rec.BILL_DATE) ? fine.rec.BILL_DATE.replace(/(....)(..)(..)/, '$1-$2-$3') : '';
           try {
             let billDate = new Date(bd).toISOString();
+            finesMap[hrid].rec.bd = billDate;
             items[k].date = billDate;
           } catch (e) {
             console.log(`{e}`);
@@ -105,6 +137,8 @@ const outFiles = {
       proc: 0,
       skips: 0,
       bills: 0,
+      acounts: 0,
+      ffa: 0,
       notLost: 0,        
       err: 0,
       acc: 0,
@@ -146,7 +180,7 @@ const outFiles = {
           ttl.err++;
         }
       } else {
-        console.log('INFO actual cost status is not "Open"');
+        // console.log('INFO actual cost status is not "Open"');
         ttl.skips++
       }
 
@@ -154,9 +188,58 @@ const outFiles = {
 
     for (k in finesMap) {
       if (!fseen[k]) {
-        console.log(`WARN "Aged to lost" status not found for ${k}`);
+        // console.log(`WARN "Aged to lost" status not found for ${k}`);
         writeOut(outFiles.na, finesMap[k].rec);
         ttl.notLost++;
+      }
+      let fine = finesMap[k].rec;
+      let bal = finesMap[k].bal;
+      let reason = fine.BILL_REASON;
+      let bdate = fine.BILL_DATE.replace(/(....)(..)(..)/, '$1-$2-$3T12:00:00-0500');
+      if (!reason.match(/LOST|PROCESSFEE/)) {
+        let idKey = fine.BILL_KEYA + ':' + fine.BILL_KEYB;
+        let amtStr = fine.AMOUNT.replace(/(..)$/, '.$1');
+        let amt = parseFloat(amtStr);
+        let a = {
+          id: uuid(idKey, ns),
+          amount: amt,
+          remaining: parseFloat(bal),
+          dateCreated: bdate,
+          status: { name: 'Open' },
+          paymentStatus: {},
+          feeFineId: feefineId,
+          feeFineType: feefineName,
+          ownerId: ownerId,
+          feeFineOwner: ownerName
+        };
+        a.paymentStatus.name = (a.amount > a.remaining) ? 'Paid partially' : 'Outstanding';
+        a.userId = users[fine.USERNAME];
+        let item = items[fine.ITEM_ID];
+        if (item) {
+          a.itemId = item.id;
+          a.barcode = item.barcode;
+          a.materialTypeId = item.materialTypeId;
+          if (item.effectiveCallNumberComponents) a.callNumber = item.effectiveCallNumberComponents.callNumber;
+        }
+        if (a.userId) {
+          writeOut(outFiles.acc, a);
+          ttl.acounts++;
+
+          let ffa = {
+            id: uuid(a.id, ns),
+            accountId: a.id,
+            userId: a.userId,
+            dateAction: bdate,
+            typeAction: 'Manual charge',
+            amountAction: a.remaining,
+            balance: a.remaining,
+            comments: 'Migration action'
+          }
+          writeOut(outFiles.ffa, ffa);
+          ttl.ffa++;
+        } else {
+          console.log(`ERROR account missing userId!`);
+        }
       }
     }
 
@@ -165,6 +248,8 @@ const outFiles = {
     console.log('AC recs processed:', ttl.proc);
     console.log('Skipped', ttl.skips);
     console.log('Bills:', ttl.bills);
+    console.log('Accounts:', ttl.acounts);
+    console.log('FeefineActions:', ttl.ffa);
     console.log('Account createDates:', ttl.acc);
     console.log('Not aged to lost:', ttl.notLost);
     console.log('Total errors:', ttl.err);
