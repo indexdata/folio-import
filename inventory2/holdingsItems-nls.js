@@ -248,7 +248,6 @@ try {
   const hseen = {};
   const iseen = {};
   const bcseen = {};
-  const suppMap = {};
   const occ = {};
 
   const makeHoldingsItems = (r) => {
