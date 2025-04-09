@@ -28,8 +28,7 @@ const inFiles = {
 
 const outFiles = {
   bill: 'bills.jsonl',
-  na: 'notAgedToLost.jsonl',
-  ad: 'accountDates.jsonl',
+  ad: 'actionDates.jsonl',
   acc: 'accounts.jsonl',
   ffa: 'feefineActions.jsonl'
 };
@@ -170,11 +169,13 @@ const outFiles = {
         if (o.amount > 0) {
           writeOut(outFiles.bill, o);
           ttl.bills++;
+          /* 
           if (item.date) {
             let a = { id: r.id, dateCreated: item.date };
             writeOut(outFiles.ad, a);
             ttl.acc++;
           }
+          */
         } else {
           console.log(`WARN amount is $0 -- not billing (${iid})`);
           ttl.err++;
@@ -191,6 +192,9 @@ const outFiles = {
       let bal = finesMap[k].bal;
       let reason = fine.BILL_REASON;
       let bdate = fine.BILL_DATE.replace(/(....)(..)(..)/, '$1-$2-$3T12:00:00-0500');
+      let uid = users[fine.USERNAME];
+      let item = items[fine.ITEM_ID];
+      let iid = (item) ? item.id : '';
       if (!fseen[k] && reason !== 'PROCESSFEE') {
         let idKey = fine.BILL_KEYA + ':' + fine.BILL_KEYB;
         let amtStr = fine.AMOUNT.replace(/(..)$/, '.$1');
@@ -208,10 +212,9 @@ const outFiles = {
           feeFineOwner: ownerName
         };
         a.paymentStatus.name = (a.amount > a.remaining) ? 'Paid partially' : 'Outstanding';
-        a.userId = users[fine.USERNAME];
-        let item = items[fine.ITEM_ID];
+        a.userId = uid;
         if (item) {
-          a.itemId = item.id;
+          a.itemId = iid;
           a.barcode = item.barcode;
           a.materialTypeId = item.materialTypeId;
           if (item.effectiveCallNumberComponents) a.callNumber = item.effectiveCallNumberComponents.callNumber;
@@ -235,6 +238,15 @@ const outFiles = {
         } else {
           console.log(`ERROR account missing userId!`);
         }
+      } else if (uid && iid && bdate) {
+        let o = {
+          iid: iid,
+          uid: uid,
+          date: bdate
+        }
+        writeOut(outFiles.ad, o);
+        ttl.acc++;
+        console.log(o);
       }
     }
 

@@ -47,7 +47,6 @@ const getQuery = async (config, query, ep) => {
 }
 
 const putId = async (config, id, ep, payload) => {
-  console.log(payload);
   let url = `${config.okapi}/${ep}/${id}`;
   console.log(`PUT ${url}`);
   try {
@@ -64,7 +63,7 @@ const putId = async (config, id, ep, payload) => {
 (async () => {
   try {
     if (!inFile) {
-      throw ('Usage: node changeAccountDate.js <accountsDate.jsonl>');
+      throw ('Usage: node changeAccountDate.js <actionsDates.jsonl>');
     }
 
     let start = new Date().valueOf();
@@ -81,14 +80,16 @@ const putId = async (config, id, ep, payload) => {
       c++
       console.log(`-------------------- [${c}] --------------------`)
       let drec = JSON.parse(line);
-      let crec = await getId(config, drec.id, 'actual-cost-record-storage/actual-cost-records');
-      let aid = crec.feeFine.accountId;
-      let frecs = await getQuery(config, `accountId==${aid}`, 'feefineactions');
-      if (frecs && frecs.feefineactions) {
-        for (let x = 0; x < frecs.feefineactions.length; x++) {
-          let frec = frecs.feefineactions[x];
-          frec.dateAction = drec.dateCreated;
-          await putId(config, frec.id, 'feefineactions', frec);
+      let arecs = await getQuery(config, `userId==${drec.uid}%20AND%20itemId==${drec.iid}`, 'accounts');
+      if (arecs && arecs.accounts) {
+        for (let x = 0; x < arecs.accounts.length; x++) {
+          let arec = arecs.accounts[x];
+          let frecs = await getQuery(config, `accountId==${arec.id}`, 'feefineactions');
+          for (let y = 0; y < frecs.feefineactions.length; y++) {
+            let frec = frecs.feefineactions[y];
+            frec.dateAction = drec.date;
+            await putId(config, frec.id, 'feefineactions', frec);
+          }
         }
       }
     }
