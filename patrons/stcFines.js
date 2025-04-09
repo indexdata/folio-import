@@ -187,16 +187,11 @@ const outFiles = {
     }
 
     for (k in finesMap) {
-      if (!fseen[k]) {
-        // console.log(`WARN "Aged to lost" status not found for ${k}`);
-        writeOut(outFiles.na, finesMap[k].rec);
-        ttl.notLost++;
-      }
       let fine = finesMap[k].rec;
       let bal = finesMap[k].bal;
       let reason = fine.BILL_REASON;
       let bdate = fine.BILL_DATE.replace(/(....)(..)(..)/, '$1-$2-$3T12:00:00-0500');
-      if (!reason.match(/LOST|PROCESSFEE/)) {
+      if (!fseen[k] && reason !== 'PROCESSFEE') {
         let idKey = fine.BILL_KEYA + ':' + fine.BILL_KEYB;
         let amtStr = fine.AMOUNT.replace(/(..)$/, '.$1');
         let amt = parseFloat(amtStr);
@@ -233,7 +228,7 @@ const outFiles = {
             typeAction: 'Manual charge',
             amountAction: a.remaining,
             balance: a.remaining,
-            comments: 'Migration action'
+            comments: JSON.stringify(fine)
           }
           writeOut(outFiles.ffa, ffa);
           ttl.ffa++;
