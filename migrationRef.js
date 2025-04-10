@@ -20,7 +20,8 @@ let paths = {
   usr: `groups addresstypes departments custom-fields note-types service-points`,
   fee: `owners feefines`,
   erm: `erm/custprops erm/refdata organizations-storage/organizations acquisitions-units/units note-types`, 
-  lic: `licenses/custprops licenses/refdata organizations-storage/organizations acquisitions-units/units`
+  lic: `licenses/custprops licenses/refdata organizations-storage/organizations acquisitions-units/units`,
+  crs: `coursereserves/departments coursereserves/coursetypes coursereserves/terms coursereserves/processingstatuses coursereserves/copyrightstatuses`
 };
 
 let limit = 5000;
@@ -28,7 +29,7 @@ let modId = '';
 
 (async () => {
   try {
-    if (!refDir) throw(`Usage node migrationRef.js <refDir> [ <inv|acq|fin|usr|fee|erm|lic> ]`);
+    if (!refDir) throw(`Usage node migrationRef.js <refDir> [ <inv|acq|fin|usr|fee|erm|lic|crs> ]`);
 
     const config = await getAuthToken(superagent);
 
