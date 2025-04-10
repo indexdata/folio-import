@@ -21,7 +21,8 @@ let paths = {
   fee: `owners feefines`,
   erm: `erm/custprops erm/refdata organizations-storage/organizations acquisitions-units/units note-types`, 
   lic: `licenses/custprops licenses/refdata organizations-storage/organizations acquisitions-units/units`,
-  crs: `coursereserves/departments coursereserves/coursetypes coursereserves/terms coursereserves/processingstatuses coursereserves/copyrightstatuses`
+  crs: `coursereserves/departments coursereserves/coursetypes coursereserves/terms coursereserves/processingstatuses
+        coursereserves/copyrightstatuses locations service-points`
 };
 
 let limit = 5000;
