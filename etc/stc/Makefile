@@ -13,6 +13,7 @@ udir=$(data)/usr
 adir=$(data)/auth
 fdir=$(data)/fines
 cdir=$(data)/circ
+rdir=$(data)/courses
 in=$(data)/incoming
 mfile=$(idir)/bibs.mrc
 log=$(data)/log
@@ -67,15 +68,26 @@ checkouts: $(in)/Loans*
 clean-checkouts: $(cdir)/*.txt
 	cd $(cdir); rm *.txt
 
-feefines: $(fdir)
-	cd $(fdir); ln -s $(in)/F*Associated* fines.txt
+feefines: $(in)/Fee*
+	cd $(fdir); cat $(in)/Fee* > fines.txt
 	cd $(fdir); grep -vc BILL_REASON fines.txt > count.txt; cat count.txt
 	cd $(wd); node downloadJSONL.js actual-cost-record-storage/actual-cost-records?query=status=Open $(fdir)/actual-costs.jsonl
-	cd $(wd); node downloadJSONL.js 'item-storage/items?query=status.name==Aged%20to%20lost' $(fdir)/items.jsonl
-	cd $(wd)/patrons; node stcFines.js $(fdir)/fines.txt
+	cd $(wd); [ -f $(fdir)/users.jsonl ] || node downloadJSONL users $(fdir)/users.jsonl
+	cd $(wd); [ -f $(fdir)/items.jsonl ] || node downloadJSONL item-storage/items $(fdir)/items.jsonl
+	cd $(wd)/patrons; node stcFines.js $(fdir)/fines.txt > $(log)/makeFines.log
+	cat $(log)/makeFines.log
 
 clean-feefines: $(fdir)/*.txt
 	cd $(fdir); rm *.txt; rm actual-costs.jsonl; rm items.jsonl
+
+course-reserves: $(in)/Course*
+	cp $(in)/Courses* $(rdir)/courses.txt
+	cp $(in)/*Instructors* $(rdir)/instructors.txt
+	cp $(in)/*Items* $(rdir)/reserves.txt
+	cd $(wd); [ -f $(rdir)/users.jsonl ] || node downloadJSONL users $(rdir)/users.jsonl
+	cd $(wd); [ -f $(rdir)/items.jsonl ] || node downloadJSONL item-storage/items $(rdir)/items.jsonl
+	cd $(wd)/courses; node stcCourses $(ref)/crs $(rdir)/instructors.txt $(rdir)/courses.txt $(rdir)/reserves.txt > $(log)/makeCourses.log
+	cat $(log)/makeCourses.log
 
 setup:
 	cp $(login) $(wd)/config.json
@@ -89,6 +101,7 @@ setup:
 	mkdir -p $(fdir)
 	mkdir -p $(adir)
 	mkdir -p $(cdir)
+	mkdir -p $(rdir)
 	mkdir -p $(in)
 	cd $(wd); node migrationRef.js $(ref)
 	cp $(tsvdir)/locations.tsv $(iref)
@@ -97,3 +110,15 @@ setup:
 	cp $(iref)/service-points.json $(cdir)
 clean:
 	rm -rf $(ref)
+
+really-clean:
+	rm -rf $(ref)
+	rm -rf $(log)
+	rm -rf $(idir)
+	rm -rf $(udir)
+	rm -rf $(fdir)
+	rm -rf $(adir)
+	rm -rf $(cdir)
+	rm -rf $(rdir)
+	rm -rf $(in)
+

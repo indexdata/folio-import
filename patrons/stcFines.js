@@ -59,12 +59,13 @@ const outFiles = {
       columns: true,
       skip_empty_lines: true,
       delimiter: '|',
-      trim: true
+      trim: true,
+      relax_column_count: true
     });
     let finesMap = {}
     inRecs.forEach(r => {
       let k = (r.ITEM_ID) ? 'ui' + r.ITEM_ID : r.BILL_KEYA + ':' + r.BILL_KEYB;
-      finesMap[k] = { bal: r.BALANCE.replace(/(..)$/, '.$1'), rec: r };
+      if (r.USERNAME !== 'USERNAME') finesMap[k] = { bal: r.BALANCE.replace(/(..)$/, '.$1'), rec: r };
     });
     // throw(finesMap);
 
@@ -236,7 +237,8 @@ const outFiles = {
           writeOut(outFiles.ffa, ffa);
           ttl.ffa++;
         } else {
-          console.log(`ERROR account missing userId!`);
+          console.log(`ERROR no FOLIO user found for "${fine.USERNAME}"`);
+          ttl.err++;
         }
       } else if (uid && iid && bdate) {
         let o = {
@@ -246,7 +248,6 @@ const outFiles = {
         }
         writeOut(outFiles.ad, o);
         ttl.acc++;
-        console.log(o);
       }
     }
 
