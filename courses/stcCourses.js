@@ -14,6 +14,7 @@ const ns = '3c6165c4-6377-48f6-a60c-92ab31bb3649';
 let refDir = process.argv[2];
 let instFile = process.argv[3];
 let inFile = process.argv[4];
+let resFile = process.argv[5];
 
 const writeOut = (fileName, data) => {
   let jstr = JSON.stringify(data, null, 2);
@@ -22,7 +23,7 @@ const writeOut = (fileName, data) => {
 
 (async () => {
   try {
-    if (!inFile) throw 'Usage: node stcCourses.js <ref_dir> <instructors_csv_file> <courses_csv_file>';
+    if (!inFile) throw 'Usage: node stcCourses.js <ref_dir> <instructors_csv_file> <courses_csv_file> [ <reserves_csv_file ]';
     if (!fs.existsSync(inFile)) throw `Can't find user file: ${inFile}!`;
     if (!fs.existsSync(refDir)) throw `Can't find ref data directory: ${refDir}!`;
 
@@ -32,6 +33,8 @@ const writeOut = (fileName, data) => {
     let base = path.basename(inFile, '.txt', '.csv');
     let usersFile = wdir + '/users.jsonl';
     if (!fs.existsSync(usersFile)) throw `Can't find required users file at ${usersFile}!`;
+    let itemFile = wdir + '/items.jsonl';
+    if (resFile && !fs.existsSync(itemFile)) throw `Can't find required items file at ${itemFile}!`;
 
     let outFile = wdir + '/' + 'loadCourses.json'
 
@@ -98,6 +101,39 @@ const writeOut = (fileName, data) => {
     }
     // throw(inst);
 
+    const res = {};
+    let items = {};
+    if (resFile) {
+      console.log('Mapping items (this could take awhile)...');
+      let fileStream = fs.createReadStream(itemFile);
+      let rl = readline.createInterface({
+          input: fileStream,
+          crlfDelay: Infinity
+      });
+      for await (let l of rl) { 
+        let r = JSON.parse(l);
+        items[r.hrid] = r.id;
+      }
+
+      let csv = fs.readFileSync(resFile, {encoding: 'utf8'});
+      let inRecs = parse(csv, {
+        columns: true,
+        skip_empty_lines: true,
+        delimiter: '|',
+        relax_column_count: true
+      });
+      for (let x = 0; x < inRecs.length; x++) {
+        let r = inRecs[x];
+        let k = r.COURSE_CODE;
+        if (!res[k]) res[k] = []
+        let hrid = 'ui' + r.ITEM_ID;
+        let iid = items[hrid];
+        res[k].push(iid);
+      }
+    }
+    items = {};
+    // throw(res);
+
     csv = fs.readFileSync(inFile, {encoding: 'utf8'});
     inRecs = parse(csv, {
       columns: true,
@@ -108,6 +144,8 @@ const writeOut = (fileName, data) => {
     
     let lcount = 0;
     let ccount = 0;
+    let icount = 0;
+    let rcount = 0;
     let count = 0;
     let out = {
       courselistings: [],
@@ -142,6 +180,7 @@ const writeOut = (fileName, data) => {
         i.forEach(o => {
           o.courseListingId = l.id;
           out.instructors.push(o);
+          icount++;
         });
       }
       if (l.termId) {
@@ -168,6 +207,19 @@ const writeOut = (fileName, data) => {
           }
         }
       }
+
+      let itemIds = res[code];
+      if (itemIds) {
+        itemIds.forEach(id => {
+          let rr = {
+            id: uuid(id + l.id, ns),
+            itemId: id,
+            courseListingId: l.id
+          };
+          out.reserves.push(rr);
+          rcount++;
+        });
+      }
     }
 
     writeOut(outFile, out);
@@ -178,6 +230,8 @@ const writeOut = (fileName, data) => {
     console.log('Processed:', count);
     console.log('Listings:', lcount);
     console.log('Courses:', ccount);
+    console.log('Instructors:', icount);
+    console.log('Reserves', rcount);
     console.log('Time (secs):', t);
   } catch (e) {
     console.log(e);
