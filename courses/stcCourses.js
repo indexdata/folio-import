@@ -232,6 +232,7 @@ const writeOut = (fileName, data) => {
     console.log('Courses:', ccount);
     console.log('Instructors:', icount);
     console.log('Reserves', rcount);
+    console.log('Saved to:', outFile);
     console.log('Time (secs):', t);
   } catch (e) {
     console.log(e);
