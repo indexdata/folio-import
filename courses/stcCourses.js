@@ -15,19 +15,14 @@ let refDir = process.argv[2];
 let instFile = process.argv[3];
 let inFile = process.argv[4];
 
-const files = {
-  l: 'listings',
-  c: 'courses'
-};
-
 const writeOut = (fileName, data) => {
-  let line = JSON.stringify(data) + "\n";
-  fs.writeFileSync(fileName, line, { flag: 'a' });
+  let jstr = JSON.stringify(data, null, 2);
+  fs.writeFileSync(fileName, jstr);
 }
 
 (async () => {
   try {
-    if (!inFile) throw 'Usage: node stcCourses.js <ref_dir> <instructurs_csv_file> <courses_csv_file>';
+    if (!inFile) throw 'Usage: node stcCourses.js <ref_dir> <instructors_csv_file> <courses_csv_file>';
     if (!fs.existsSync(inFile)) throw `Can't find user file: ${inFile}!`;
     if (!fs.existsSync(refDir)) throw `Can't find ref data directory: ${refDir}!`;
 
@@ -38,12 +33,7 @@ const writeOut = (fileName, data) => {
     let usersFile = wdir + '/users.jsonl';
     if (!fs.existsSync(usersFile)) throw `Can't find required users file at ${usersFile}!`;
 
-    for (let f in files) {
-      let path = `${wdir}/${base}-${files[f]}.jsonl`;
-      if (fs.existsSync(path)) fs.unlinkSync(path);
-      files[f] = path;
-    }
-    // throw(files);
+    let outFile = wdir + '/' + 'loadCourses.json'
 
     const refData = {};
     let rfiles = fs.readdirSync(refDir);
@@ -119,6 +109,12 @@ const writeOut = (fileName, data) => {
     let lcount = 0;
     let ccount = 0;
     let count = 0;
+    let out = {
+      courselistings: [],
+      courses: [],
+      instructors: [],
+      reserves: []
+    }
     for (let x = 0; x < inRecs.length; x++) {
       count++;
       let r = inRecs[x];
@@ -145,11 +141,11 @@ const writeOut = (fileName, data) => {
       if (i) {
         i.forEach(o => {
           o.courseListingId = l.id;
-          l.instructorObjects.push(o);
+          out.instructors.push(o);
         });
       }
       if (l.termId) {
-        writeOut(files.l, l);
+        out.courselistings.push(l);
         lcount++;
       } else {
         console.log(`ERROR creating course listing: termId not found for ${trm}`);
@@ -167,19 +163,21 @@ const writeOut = (fileName, data) => {
       if (c.name) {
         if (c.courseListingId) {
           if (c.departmentId) {
-            writeOut(files.c, c);
+            out.courses.push(c);
             ccount++;
           }
         }
       }
-    } 
+    }
+
+    writeOut(outFile, out);
 
     const t = (new Date().valueOf() - today) / 1000;
     console.log('------------');
     console.log('Finished!');
     console.log('Processed:', count);
-    console.log('Listings:', lcount, '-->', files.l);
-    console.log('Courses:', ccount, '-->', files.c);
+    console.log('Listings:', lcount);
+    console.log('Courses:', ccount);
     console.log('Time (secs):', t);
   } catch (e) {
     console.log(e);
