@@ -4,6 +4,7 @@ const { getAuthToken } = require('./lib/login');
 const fileNames = process.argv.slice(2);
 const cl = console.log;
 const logSeen = {}
+let logPath;
 
 console.log = (msg, path) => {
   if (path) {
@@ -15,9 +16,6 @@ console.log = (msg, path) => {
 }
 
 (async () => {
-  let added = 0;
-  let updated = 0;
-  let errors = 0;
   try {
     if (fileNames.length === 0) {
       throw new Error('Usage: node loadRefData.js <files>');
@@ -26,7 +24,10 @@ console.log = (msg, path) => {
     const config = await getAuthToken(superagent);
 
     for (let x = 0; x < fileNames.length; x++) {
-      let logPath = fileNames[x] + '.log';
+      let added = 0;
+      let updated = 0;
+      let errors = 0;
+      logPath = fileNames[x] + '.log';
       
       let path = fileNames[x].replace(/^.+\//, '');
 
@@ -94,11 +95,10 @@ console.log = (msg, path) => {
           if (data[d].jobProfileId !== undefined) delete data[d].jobProfileId;
         } else if (path.match(/data-export\/mapping-profiles/)) {
           if (!data[d].transformations) data[d].transformations = [];
-          console.log(data[d]);
         }
         try {
           url = url.replace(/\.json_UPDATE/, '');
-          console.log(`POST ${url}...`);
+          console.log(`POST ${url}...`, logPath);
           let res = await superagent
             .post(url)
             .timeout({ response: 5000 })
@@ -134,11 +134,11 @@ console.log = (msg, path) => {
           } 
         }
       }
+      console.log(`Added:   ${added}`, logPath);
+      console.log(`Updated: ${updated}`, logPath);
+      console.log(`Errors:  ${errors}`, logPath);
     } 
-    console.log(`Added:   ${added}`);
-    console.log(`Updated: ${updated}`);
-    console.log(`Errors:  ${errors}`);
   } catch (e) {
-    console.log(e.message);
+    console.log(e.message, logPath);
   }
 })();
