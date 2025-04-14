@@ -119,10 +119,11 @@ try {
 
 
   let csv = fs.readFileSync(inFile, {encoding: 'utf8'});
+  csv = csv.replace(/^\W/, '');
   inRecs = parse(csv, {
     columns: true,
     skip_empty_lines: true,
-    relax_column_count: true
+    relax_column_count: true,
   })
   // throw(inRecs);
 
