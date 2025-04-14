@@ -394,7 +394,7 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
 }
 
 try {
-  if (!rawFile) { throw "Usage: node marc2inst-stc.js <conf_file> <items_csv_file> <raw_marc_file>" }
+  if (!rawFile) { throw "Usage: node marc2inst-stc.js <conf_file> <instance_level_csv_file> <raw_marc_file>" }
   let confDir = path.dirname(confFile);
   let confData = fs.readFileSync(confFile, { encoding: 'utf8' });
   let conf = JSON.parse(confData);

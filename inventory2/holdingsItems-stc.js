@@ -8,6 +8,7 @@ let confFile = process.argv[2];
 let bibMap = process.argv[3];
 let cusFile = process.argv[4];
 let csvFile = process.argv[5];
+let ownFile = process.argv[6];
 
 let refDir;
 let ns;
@@ -85,7 +86,7 @@ const makeNote = function (text, type, staffOnly) {
 }
 
 try {
-  if (!csvFile) { throw "Usage: node holdingsItems-stc.js <conf_file> <bib_map> <custom_file> <pipe_delimited_item_file>" }
+  if (!csvFile) { throw "Usage: node holdingsItems-stc.js <conf_file> <bib_map> <custom_csv_file> <item_csv_file> [ <owners_csv_file> ]" }
   let confDir = path.dirname(confFile);
   let confData = fs.readFileSync(confFile, { encoding: 'utf8' });
   let conf = JSON.parse(confData);
@@ -126,7 +127,7 @@ try {
       });
     } catch {}
   });
-  // throw(refData);
+  // throw(refData.itemNoteTypes);
 
   // create tsv map
   let tsvDir = conf.tsvDir || conf.refDir;
@@ -197,6 +198,23 @@ try {
     custMap[k] = v;
   }
   // throw(JSON.stringify(custMap, null, 2));
+
+  const ownMap = {};
+  if (ownFile) {
+    fileStream = fs.createReadStream(ownFile);
+    rl = readline.createInterface({
+      input: fileStream,
+      crlfDelay: Infinity
+    });
+    for await (let line of rl) {
+      let c = line.split(/\|/);
+      let k = c[0].trim();
+      let v = c[1];
+      if (!ownMap[k]) ownMap[k] = [];
+      ownMap[k].push(v);
+    }
+  }
+  // throw(ownMap);
 
   let start = new Date().valueOf();
 
@@ -376,8 +394,15 @@ try {
             }
           });
         }
-        
       }
+    }
+    let owner = ownMap[iid];
+    if (owner) {
+      owner.forEach(n => {
+        let tid = refData.itemNoteTypes.Ownership;
+        let o = makeNote(n, tid, true);
+        i.notes.push(o);
+      });
     }
     let st = statMap[status] || 'Available';
     i.status = { name: st };
