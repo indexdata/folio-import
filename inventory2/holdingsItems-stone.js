@@ -401,15 +401,15 @@ try {
             ttl.holdings++;
             hseen[hkey] = h.id;
           } else {
-            console.log(`ERROR holdings sourceId not found (${hid})!`);
+            console.log(`ERROR holdings sourceId not found (${iid})!`);
             ttl.errors++;
           }
         } else {
-          console.log(`ERROR holdings locationId not found for "${lcode}" (${hid})!`);
+          console.log(`ERROR holdings locationId not found for "${lcode}" (${iid})!`);
           ttl.errors++;
         }
       } else {
-        console.log(`ERROR holdings instanceId not found for "${bid}" (${hid})!`);
+        console.log(`ERROR holdings instanceId not found for "${bid}" (${iid})!`);
         ttl.errors++;
       }
       if (dbug) console.log(h);
