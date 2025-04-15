@@ -251,7 +251,7 @@ try {
     let locId = tsvMap.locations[lcode];
     let snt = r.holdings_staff_note;
     let cn = r.holdings_call_num;
-    let cnt = r.holdings_call_num_type;
+    let cnt = r.holdings_call_num_type || r.call_num_type;
     let hrid = hprefix + hid;
     let hkey = `${bid}:${lcode}:${cn}`;
 
@@ -265,7 +265,7 @@ try {
       notes: []
     };
     if (cn) {
-      cnt = (cnt === 'Library of Congress') ? 'Library of Congress classification' : 'Other scheme';
+      cnt = (cnt && cnt.match(/Congress/)) ? 'Library of Congress classification' : 'Other scheme';
       let cntId = refData.callNumberTypes[cnt];
       if (!cntId) throw new Error(`ERROR callNumberTypeId not found for "${cnt}"`);
       h.callNumber = cn;
@@ -388,7 +388,7 @@ try {
         sourceId: refData.holdingsRecordsSources.FOLIO,
       };
       if (cn) {
-        cnt = (cnt === 'Library of Congress') ? 'Library of Congress classification' : 'Other scheme';
+        cnt = (cnt && cnt.match(/Congress/)) ? 'Library of Congress classification' : 'Other scheme';
         let cntId = refData.callNumberTypes[cnt];
         if (!cntId) throw new Error(`ERROR callNumberTypeId not found for "${cnt}"`);
         h.callNumber = cn;
