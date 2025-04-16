@@ -1,0 +1,16 @@
+{
+    "nameSpace": "62ca10d7-4336-4c77-982e-0badfeb34db6",
+    "refDir": "/Users/Charles/Folio/grolier/ref/inv",
+    "tsvDir": "",
+    "mapFile": "",
+    "controlNum": "",
+    "hridPrefix": "",
+    "makeInstMap": true,
+    "hasMfhd": false,
+    "catDate": { "tag": "008" },
+    "suppress": { "tag": "", "subfield": "", "value":"" },
+    "callNumbers": {
+        "099": "6caca63e-5651-4db6-9247-3205156e9699",
+        "090": "6caca63e-5651-4db6-9247-3205156e9699"
+    }
+}
