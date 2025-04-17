@@ -143,7 +143,6 @@ try {
   let ecount = 0;
   const useen = {};
   const bcseen = {};
-  const exseen = {};
 
   for (let x = 0; x < inRecs.length; x++) {
     count++;
@@ -181,7 +180,7 @@ try {
       groupId = refData.usergroups.Unmapped;
       console.log(`WARN patron group not found for "${group}", using "Unmapped" (username: ${un}).`)
     }
-    if (!useen[un]) {
+    if (!useen[uid]) {
       u = {
         id: uuid(uid, ns),
         username: un,
@@ -270,13 +269,13 @@ try {
           defaultServicePointId: refData.servicepoints['PA - Circulation Desk']
         }
         writeOut(files.r, pref);
-        useen[un] = 1;
+        useen[uid] = 1;
       } else {
         console.log(`ERROR No patronGroup found for ${group} (username: ${un})`);
         ecount++;
       }
     } else {
-      console.log(`ERROR username "${un}" already used!`)
+      console.log(`ERROR membership id "${un}" already used!`)
       ecount++;
     }
   } 
