@@ -95,7 +95,8 @@ const wait = (ms) => {
           logger.info(`  Setting version number to ${res.body._version}`);
           rec._version = res.body._version;
         } catch (e) {
-          logger.error(`${e}`); 
+          logger.error(`${e}`);
+          continue;
         }
       } else if (recUrl.match(/\/licenses\/licenses/)) {
         try {
@@ -111,6 +112,7 @@ const wait = (ms) => {
             };
         } catch (e) {
           logger.error(`${e}`);
+          continue;
         }
       }
       try {
