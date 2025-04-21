@@ -26,44 +26,38 @@ instances: $(in)/*.mrc
 	cd $(inv2); node marc2inst conf/pcom.json $(mfile) > $(log)/makeInst.log &
 	tail -f $(log)/makeInst.log
 
-items: $(in)/Inv*Standard*txt
-	cd $(idir); ln -s $(in)/Inv*Standard*txt items.txt
-	cd $(idir); ln -s $(in)/Inv*Custom*txt custom.txt
-	cd $(inv2); node holdingsItems-stc conf/stc.json $(idir)/bibs.map $(idir)/custom.txt $(idir)/items.txt > $(log)/makeHoldingsItems.log
+items: $(in)/Item*.csv
+	cd $(idir); cp $(in)/ItemData* items.csv
+	cd $(idir); cp $(in)/ItemNote* notes.csv
+	cd $(inv2); node holdingsItems-pcom conf/pcom.json $(idir)/bibs-mfhds.jsonl > $(log)/makeHoldingsItems.log
 	cat $(log)/makeHoldingsItems.log
 
 clean-inventory:
 	cd $(idir); rm *.marc *.mrc *.csv count*
 
-authorities: $(in)/Auth*xml
-	cd $(adir); ln -s $(in)/Auth*xml auth.xml
-	cd $(inv2); node xml2marc-stc $(adir)/auth.xml
+authorities: $(in)/Auth*mrc
+	cd $(adir); ln -s $(in)/Auth*.mrc auth.mrc
 	cd $(wd)/auth; ./marc2auth010.pl $(wd)/mapping_rules/marc_authority_rules.json $(iref) $(adir)/auth.mrc > $(log)/makeAuth.log &
 	tail -f $(log)/makeAuth.log
 
-clean-authorities: $(adir)/auth.xml
-	cd $(adir); rm *.xml
+clean-authorities: $(adir)/auth.mrc
+	cd $(adir); rm *.mrc
 
-users: $(udir)
-	cd $(udir); ln -s $(in)/*Address* addresses.txt
-	cd $(udir); ln -s $(in)/U*Notes* notes.txt
-	cd $(udir); ln -s $(in)/U*Standard* users.txt
+users: $(in)/Users*csv
+	cd $(udir); ln -s $(in)/Users*csv users.csv
 	cd $(udir); grep -vc USERNAME users.txt > count.txt; cat count.txt
-	cd $(wd)/patrons; node stcUsers.js $(uref) $(udir)/addresses.txt $(udir)/notes.txt $(udir)/users.txt > $(log)/makeUsers.log
+	cd $(wd)/patrons; node pcomUsers $(uref) $(udir)/users.csv > $(log)/makeUsers.log
 	cat $(log)/makeUsers.log
 
-clean-users: $(udir)/*.txt
-	rm $(udir)/*.txt
+clean-users: $(udir)/*.csv
+	rm $(udir)/*.csv
 
-checkouts: $(in)/Loans*
-	cd $(cdir); ln -s $(in)/Loans* loans.txt
+checkouts: $(in)/Circ*csv
+	cd $(cdir); cp $(in)/Circ* loans.csv
 	cd $(wd); [ -f $(cdir)/users.jsonl ] || node downloadJSONL users $(cdir)/users.jsonl
 	cd $(wd); [ -f $(cdir)/items.jsonl ] || node downloadJSONL item-storage/items $(cdir)/items.jsonl
 	cd $(wd)/patrons; node stcCheckouts $(cdir)/loans.txt > $(log)/makeCheckouts.log
 	cat $(log)/makeCheckouts.log
-
-clean-checkouts: $(cdir)/*.txt
-	cd $(cdir); rm *.txt
 
 setup:
 	cp $(login) $(wd)/config.json
