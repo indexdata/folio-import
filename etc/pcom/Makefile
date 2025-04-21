@@ -56,7 +56,7 @@ checkouts: $(in)/Circ*csv
 	cd $(cdir); cp $(in)/Circ* loans.csv
 	cd $(wd); [ -f $(cdir)/users.jsonl ] || node downloadJSONL users $(cdir)/users.jsonl
 	cd $(wd); [ -f $(cdir)/items.jsonl ] || node downloadJSONL item-storage/items $(cdir)/items.jsonl
-	cd $(wd)/patrons; node stcCheckouts $(cdir)/loans.txt > $(log)/makeCheckouts.log
+	cd $(wd)/patrons; node pcomCheckouts $(cdir)/loans.csv > $(log)/makeCheckouts.log
 	cat $(log)/makeCheckouts.log
 
 setup:

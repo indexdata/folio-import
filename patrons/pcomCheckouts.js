@@ -92,6 +92,7 @@ const lib2sp = {
       try {
         let dto = new Date(dstr);
         let dzo = (dto.getTimezoneOffset() - 60)/60;
+	if (dzo < 0) dzo = 6 + dzo
         let pto = `-0${dzo}:00`;
         dt = dto.toISOString();
         dt = (type === 'due') ? dt.replace(/T.+/, `T23:59:59.000${pto}`) : dt.replace(/T.+/, `T12:00:00.000${pto}`);
