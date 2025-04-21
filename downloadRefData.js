@@ -105,6 +105,7 @@ let modName = process.argv[3];
       '/invoice-storage/invoice-lines': true,
       '/invoice-storage/invoices': true,
       '/invoice-storage/invoice-line-number': true,
+      '/invoice-storage/invoice-number': true,
       '/item-storage-dereferenced/items': true,
       '/item-storage/items': true,
       '/licenses/amendments': true,
@@ -151,6 +152,8 @@ let modName = process.argv[3];
       '/tlr-feature-toggle-job-storage/tlr-feature-toggle-jobs': true,
       '/users': true,
       '/voucher-storage/vouchers': true,
+      '/voucher-storage/voucher-number': true,
+      '/voucher-storage/voucher-number/start': true,
       '/voucher-storage/voucher-lines': true
     }
 
