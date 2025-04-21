@@ -349,12 +349,12 @@ let modName = process.argv[3];
           if (creds[0]) {
             let out = { creds: creds };
             let outStr = JSON.stringify(out, null, 2);
-            fs.writeFileSync(`${refDir}/${suMod}/authn__credentials`, outStr);
+            fs.writeFileSync(`${refDir}/${suMod}/authn__credentials.json`, outStr);
           } 
           if (noCreds[0]) {
             let out = { creds: noCreds };
             let outStr = JSON.stringify(out, null, 2);
-            fs.writeFileSync(`${refDir}/${suMod}/authn__nopass`, outStr); 
+            fs.writeFileSync(`${refDir}/${suMod}/authn__nopass.json`, outStr); 
           }
         }
       } catch (e) {
