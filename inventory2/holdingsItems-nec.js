@@ -587,6 +587,10 @@ try {
                   if (inst) {
                     let bwh = JSON.parse(JSON.stringify(h));
                     bwh.instanceId = inst.id;
+                    // delete bwh.notes;
+                    // delete bwh.holdingsStatements;
+                    // delete bwh.holdingsStatementsForSupplements;
+                    // delete bwh.holdingsStatementsForIndexes;
                     relMap[inst.bibId] = bwh;
                     let ro = {
                       superInstanceId: h.instanceId,
@@ -602,22 +606,31 @@ try {
             });
             bwseen[h.id] = 1;
           }
-          if (m['949']) {
-            let f14 = m['014'];
-            let subz = [];
-            if (f14) {
-              f14.forEach(f => {
-                f.subfields.forEach(s => {
-                  if (s.a) subz.push({ z: s.a })
-                });
+
+          let f14 = m['014'];
+          let subz = [];
+          if (f14) {
+            f14.forEach(f => {
+              f.subfields.forEach(s => {
+                if (s.a) subz.push({ z: s.a })
               });
+            });
+          }
+          if (subz[0]) {
+            subz.push({ z: inst.bibId});
+            if (m['949']) {
+              let dum = JSON.parse(JSON.stringify(m['949'][0]));
+              let subs = [];
+              dum.subfields.forEach(s => {
+                if (s.t || s.s) subs.push(s);
+              });
+              if (subs[0]) dum.subfields = [...subs, ...subz];
+              if (!m['949']) m['949'] = [];
+              m['949'].push(dum);
             }
-            if (subz[0]) {
-              subz.push({ z: inst.bibId});
-              m['949'].forEach(f => {
-                f.subfields = [...f.subfields, ...subz];
-              })
-            }
+          }
+          
+          if (m['949']) {
             makeItems(m['949'], h, inst, m.leader);
           }
         } else {
@@ -635,13 +648,14 @@ try {
     }
   }
 
-  // console.log(instItemMap);
-  // console.log(relMap);
+  // console.log(Object.keys(instItemMap).length);
+  // console.log(Object.keys(relMap).length);
   let occur = {};
   let bwhseen = {};
   let bwpseen = {};
   for (let bid in instItemMap) {
     instItemMap[bid].forEach(info => {
+      // console.log(info);
       let iid = info.iid;
       let hid;
       if (relMap[bid] && !bwhseen[bid]) {
