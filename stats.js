@@ -18,6 +18,10 @@ const mods = {
     'perms/users': 'perms/users',
     'request prefs': 'request-preference-storage/request-preference',
     'patron groups': 'groups'
+  },
+  auth: {
+	  authorities: 'authority-storage/authorities',
+	  srs: 'source-storage/records?recordType=MARC_AUTHORITY'
   }
 };
 
@@ -32,6 +36,7 @@ const mods = {
       let ep = mods[mod][t];
 
       let url = `${config.okapi}/${ep}?limit=0`;
+      if (mod === 'auth') url = `${config.okapi}/${ep}`;
       try {
         const res = await superagent
         .get(url)
