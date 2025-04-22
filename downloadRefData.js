@@ -80,6 +80,7 @@ let modName = process.argv[3];
       '/data-import/uploadUrl/subsequent': true,
       '/data-import-profiles/profileAssociations': true,
       '/data-import/testFileSplit': true,
+      '/email': true,
       '/feefineactions': true,
       '/finance-storage/transactions': true,
       '/finance-storage/ledger-rollovers-budgets': true,
