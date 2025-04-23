@@ -36,12 +36,23 @@ const mods = {
   }
 };
 
+const allMods = {};
+for (let m in mods) {
+  for (let n in mods[m]) {
+    let k = m + ':' + n;
+    allMods[k] = mods[m][n];
+  }
+};
+mods.all = allMods;
+
 (async () => {
   try {
     if (!mod) throw(`Usage node stats <module>`);
+    let choices = Object.keys(mods).join('|');
+    if (!mods[mod]) throw(`No module found for "${mod}". Choices: ${choices}`);
     const config = await getAuthToken(superagent);
-    console.log(`${mod} totals:`);
     let div = '-------------------------------';
+    console.log(`${mod} totals...`);
     console.log(div);
     for (let t in mods[mod]) {
       let ep = mods[mod][t];
@@ -55,9 +66,8 @@ const mods = {
         .set('accept', 'application/json');
         let ttl = res.body.totalRecords
         let ttlStr = ttl.toString().padStart(8, ' ');
-        let tstr = t.padEnd(20, ' ');
+        let tstr = t.padEnd(24, ' ');
         console.log(`${tstr}`, ttlStr);
-        
       } catch (e) {
         console.log(`${e}`);
       }
