@@ -48,6 +48,8 @@ mkdir -p ../stc/all-ref
 node downloadRefData.js ../stc/all-ref
 ```
 
+At localhost, ensure up-to-date mapping tables for locations, mtypes and statuses in TSV format. Ensure up-to-date with the customer implementation spreadsheet. Download each relevant worksheet and diff with those at `stc/etc/*.tsv` files. Commit.
+
 ## Clean the system
 
 The system is then wiped out to prepare for the next dry-run. See spreadsheet "STC Dry Run Tasks".
@@ -131,6 +133,15 @@ split -l 25000 items-items.jsonl item
 ```
 
 ### Load inventory data
+
+First, double-check that communications and credentials are appropriate:
+
+```
+cd ~/folio-import
+./show_config.sh
+```
+
+Now load the various files:
 
 ```
 cd ~/folio-import
