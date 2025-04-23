@@ -3,6 +3,23 @@
 This is a general overview of the data migration procedures.
 For example STC "test" [DEVOPS-4123](https://index-data.atlassian.net/browse/DEVOPS-4123).
 
+## Table of contents
+
+<!-- md2toc -l 2 -h 3 migration_process.md -->
+* [Preparation](#preparation)
+* [Notes](#notes)
+* [Download reference data](#download-reference-data)
+* [Clean the system](#clean-the-system)
+* [Reload reference data](#reload-reference-data)
+* [Verify reference data](#verify-reference-data)
+* [Load inventory](#load-inventory)
+    * [Obtain the inventory data](#obtain-the-inventory-data)
+    * [Setup and prepare inventory data](#setup-and-prepare-inventory-data)
+    * [Split inventory data files](#split-inventory-data-files)
+    * [Load inventory data](#load-inventory-data)
+    * [Document the inventory counts](#document-the-inventory-counts)
+    * [Visit the UI for quick inventory inspection](#visit-the-ui-for-quick-inventory-inspection)
+
 ## Preparation
 
 * Do 'git pull' for local clone of [folio-import](https://github.com/indexdata/folio-import) and on the prod-bastion host.
@@ -64,7 +81,7 @@ Some steps will utilise the `~/stc/Makefile`
 (symlink to [~/folio-import/etc/stc/Makefile](https://github.com/indexdata/folio-import/blob/master/etc/stc/Makefile))
 while other steps will run specific scripts.
 
-### Obtain the data
+### Obtain the inventory data
 
 At the FTP server `ftp.folio.indexdata.com` the customer will have moved old data to a sub-directory.
 
@@ -75,7 +92,7 @@ cd ~/stc/incoming
 ./ftp.sh  # and get the "inventory" data files
 ```
 
-### Setup and prepare data
+### Setup and prepare inventory data
 
 Do: `make setup`
 
@@ -177,7 +194,7 @@ Add the counts to the "STC dry run checklist" spreadsheet at the "Added" column.
 Also add the timing Start/End for the source records operation.
 In this case do not bother with the other operations as they were so fast.
 
-### Visit the UI for quick inspection
+### Visit the UI for quick inventory inspection
 
 Login to stc-test UI and inspect some records.
 
