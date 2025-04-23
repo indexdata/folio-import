@@ -20,8 +20,14 @@ const mods = {
     'patron groups': 'groups'
   },
   auth: {
-	  authorities: 'authority-storage/authorities',
-	  srs: 'source-storage/records?recordType=MARC_AUTHORITY'
+	  authorities: 'authority-storage/authorities?limit=1',
+	  srs: 'source-storage/records?recordType=MARC_AUTHORITY&limit=0'
+  },
+  orgs: {
+    organizations: 'organizations-storage/organizations',
+    contacts: 'organizations-storage/contacts',
+    interfaces: 'organizations-storage/interfaces',
+    notes: 'notes?query=domain==organizations&limit=1'
   }
 };
 
@@ -36,7 +42,7 @@ const mods = {
       let ep = mods[mod][t];
 
       let url = `${config.okapi}/${ep}?limit=0`;
-      if (mod === 'auth') url = `${config.okapi}/${ep}`;
+      if (ep.match(/\?/)) url = `${config.okapi}/${ep}`;
       try {
         const res = await superagent
         .get(url)
