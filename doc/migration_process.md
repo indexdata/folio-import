@@ -58,11 +58,140 @@ At the end, do the "`system_users`".
 
 The next step is for people with the knowledge to conduct a review via the UI. This takes time.
 
+## Load inventory
+
+Some steps will utilise the `~/stc/Makefile`
+(symlink to [~/folio-import/etc/stc/Makefile](https://github.com/indexdata/folio-import/blob/master/etc/stc/Makefile))
+while other steps will run specific scripts.
+
+### Obtain the data
+
+At the FTP server `ftp.folio.indexdata.com` the customer will have moved old data to a sub-directory.
+
+On the prod-bastion host, do:
+
+```
+cd ~/stc/incoming
+./ftp.sh  # and get the "inventory" data files
+```
+
+### Setup and prepare data
+
+Do: `make setup`
+
+That will get all the reference data and locations and stuff into ~/stc/ref/ directories.
+
+Do: `make instances`
+
+That will link up the data files into sensible filenames, and convert into ~/stc/ref/inv/bibs.mrc file, and count the records.
+
+It will run `inventory2/marc2inst-stc.js` to create instances, snapshot, and SRS, presuc objects from the legacy source.
+
+In this case there were no errors reported. If there were errors, then would most likely be due to duplicate records.
+
+Do: `make items`
+
+That will link up the data files into sensible filenames.
+
+It will run `/inventory2/holdingsItems-stc.js` to create items and holdings from the legacy flat text files.
+
+In this case there was only one error reported, due to a missing mapping in locations.tsv file. That will get mapped to "Unmapped" location. The customer can then followup later to search for those and fix them.
+
+Add the counts to the "STC dry run checklist" spreadsheet at the "Expected" column.
+
+### Split inventory data files
+
+We can speed up the processing with parallel ingest. There are five instances of the relevant FOLIO inventory module.
+
+Calculate the numbers for each type, to split into 5 files, e.g. 81307/5 is approximately 17000.
+
+```
+cd ~/stc/inv
+split -l 17000 bibs-instances.jsonl inst
+split -l 17000 bibs-src.jsonl srs
+split -l 25000 items-holdings.jsonl hold
+split -l 25000 items-items.jsonl item
+```
+
+### Load inventory data
+
+```
+cd ~/folio-import
+./run_inventory.sh ../stc/inv/insta?
+```
+
+Check the results for success and errors. There are two utility scripts on the PATH: succ.sh and err.sh
+
+```
+succ.sh ~/stc/log/insta*log
+err.sh ~/stc/log/insta*log
+```
+
+Similarly load the other data and check for errors:
+
+```
+./run_inventory.sh ../stc/inv/holda?
+./run_inventory.sh ../stc/inv/itema?
+```
+
+Now load the preceeding/succeeding titles:
+
+```
+./run_post_jsonl.sh _/preceding-succeeding-titles ../stc/inv/bibs-presuc.jsonl
+succ.sh ~/stc/log/bibs-presuc.jsonl.log
+err.sh ~/stc/log/bibs-presuc.jsonl.log
+```
+
+Now load the source record storage SRS data. This will take longer time:
+
+First the snapshot:
+
+```
+./run_post_jsonl.sh _/source-storage__snapshots ../stc/inv/bibs-snapshot.jsonl
+succ.sh ~/stc/log/bibs-snapshot.jsonl.log
+err.sh ~/stc/log/bibs-snapshot.jsonl.log
+```
+
+Then the SRS records:
+
+```
+./run_post_jsonl.sh _/source-storage__records ../stc/inv/srca?
+srs.sh ~/stc/log/srsa*log  # repeat occasionally until finished
+err.sh ~/stc/log/srsa*log
+```
+
+### Document the inventory counts
+
+Do the following queries and obtain the "totalRecords" count:
+
+```
+node get.js _/instance-storage__instances | jq '.totalRecords'
+node get.js _/holdings-storage__holdings | jq '.totalRecords'
+node get.js _/item-storage__items | jq '.totalRecords'
+node get.js _/preceding-succeeding-titles | jq '.totalRecords'
+node get.js _/source-storage__records | jq '.totalRecords'
+```
+
+Add the counts to the "STC dry run checklist" spreadsheet at the "Added" column.
+
+Also add the timing Start/End for the source records operation.
+In this case do not bother with the other operations as they were so fast.
+
+### Visit the UI for quick inspection
+
+Login to stc-test UI and inspect some records.
+
+Go "Inventory > Instances", select some and do "View holdings" and "Actions > View source".
+
+Go "Effecive location" and inspect the list.
+
+Go "Item > Material type" and inspect the list.
+
+---
+
 ## Old notes
 
 Note: The following sections are old notes, gradually being replaced with new sections above.
-
-----
 
 ## Inventory
 
