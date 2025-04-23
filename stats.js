@@ -28,6 +28,11 @@ const mods = {
     contacts: 'organizations-storage/contacts',
     interfaces: 'organizations-storage/interfaces',
     notes: 'notes?query=domain==organizations&limit=1'
+  },
+  erm: {
+    agreements: 'erm/sas?stats=true',
+    licenses: 'licenses/licenses?stats=true',
+    notes: 'notes?query=domain==agreements&limit=1'
   }
 };
 
