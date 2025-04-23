@@ -26,7 +26,7 @@ On the prod-bastion host, do:
 
 ```
 cd ~/folio-install
-./show_config.sh ... and ensure relevant login
+./show_config.sh   # and ensure relevant login credentials
 mkdir -p ../stc/all-ref
 node downloadRefData.js ../stc/all-ref
 ```
@@ -35,9 +35,34 @@ node downloadRefData.js ../stc/all-ref
 
 The system is then wiped out to prepare for the next dry-run. See spreadsheet "STC Dry Run Tasks".
 
-## Re-load reference data
+## Reload reference data
 
-TODO: Overview to come
+The previous task [Download reference data](#download-reference-data) will have created a list of sub-directories with names beginning with numbers to enable a specific sort order.
+
+If they are not using a certain FOLIO module then there will not be any downloaded files, although an empty all-ref/xx directory will be probably be created.
+
+The reference data can be loaded in that sorted order, or with local knowledge in some other order.
+The loading is done via `loadRefData.js` using commands of this form:\
+`node loadRefData.js ../stc/all-ref/07-patron_blocks_module/*.json`
+
+For some, with local knowledge specific files can be avoided.
+
+Review the outputs. For some (e.g. tags and patron_blocks) there will be errors because these data are already in the system, loaded via the module itself.
+
+The "nn-permissions" is different. We are only interested in "mutable" permissions, and we do not need to use the perms__users.json file. Do the load towards the end of this section via:\
+`node loadMutablePerms.js ../stc/all-ref/permissions/perms__permissions.json`
+
+At the end, do the "`system_users`".
+
+## Verify reference data
+
+The next step is for people with the knowledge to conduct a review via the UI. This takes time.
+
+## Old notes
+
+Note: The following sections are old notes, gradually being replaced with new sections above.
+
+----
 
 ## Inventory
 
