@@ -514,7 +514,7 @@ foreach (@ARGV) {
               next;
             }
             my @targ;
-            my $flavor;
+            my $flavor = '';
             if ($_->{target}) {
               @targ = split /\./, $_->{target};
               $flavor = $ftypes->{$targ[0]}; # || print $targ[0] . "\n";
