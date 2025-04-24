@@ -549,7 +549,9 @@ foreach (@ARGV) {
   my $tt = time() - $start;
   print "\nDone!\n$count Marc records processed in $tt seconds";
   print "\nAuthority records:   $success ($paths->{auth})";
-  print "\nErrors:              $errors";
+  print "\nSnapshots:           1 ($paths->{snap})";
+  print "\nSRS:                 $success ($paths->{srs})";
+  print "\nErrors:              $errors\n";
 }
 
 sub make_notes {
