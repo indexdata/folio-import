@@ -87,7 +87,7 @@ const wait = (ms) => {
       }
       logger.info(`[${x}] ${lDate} PUT ${id} to ${actionUrl}`);
       let recUrl = `${actionUrl}/${id}`;
-      if (recUrl.match(/instances|holdings|items/)) {
+      if (recUrl.match(/instances|holdings|items|authorities/)) {
         try {
           let res = await superagent
             .get(recUrl)

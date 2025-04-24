@@ -487,10 +487,17 @@ foreach (@ARGV) {
           my $data_obj = {};
           foreach (@entity) {
             my @required;
+            my @exclude;
             if ( $_->{requiredSubfield} ) {
               @required = @{ $_->{requiredSubfield} };
             }
             if ($required[0] && !$field->subfield($required[0])) {
+              next;
+            }
+            if ( $_->{exclusiveSubfield} ) {
+              @exclude = @{ $_->{exclusiveSubfield} }
+            }
+            if ($exclude[0] && $field->subfield($exclude[0])) {
               next;
             }
             my @targ;

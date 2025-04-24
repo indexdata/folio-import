@@ -506,6 +506,13 @@ foreach (@ARGV) {
             if ($required[0] && !$field->subfield($required[0])) {
               next;
             }
+            my @exclude;
+            if ( $_->{exclusiveSubfield} ) {
+              @exclude = @{ $_->{exclusiveSubfield} }
+            }
+            if ($exclude[0] && $field->subfield($exclude[0])) {
+              next;
+            }
             my @targ;
             my $flavor;
             if ($_->{target}) {
