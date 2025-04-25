@@ -12,12 +12,14 @@ try {
 
 const ns = '07003236-c744-4fad-a7a5-72aa08636791';
 let inFile = process.argv[2];
+let tenFile = process.argv[3];
 
 const groups = {
   staff: '3684a786-6671-4268-8ed0-9db82ebca60b'
 };
 
 const perm = 'reshare.user';
+const authpath = '/bl-users/login';
 
 const cmap = {
   "Belgium": "BE",
@@ -66,14 +68,14 @@ const writeOut = (fileName, data) => {
 }
 
 try {
-  if (!inFile) throw 'Usage: node troveUsers.js <users_csv_file>';
+  if (!inFile) throw 'Usage: node troveUsers.js <users_csv_file> [ tenant_csv_file ]';
   if (!fs.existsSync(inFile)) throw `Can't find user file: ${inFile}!`;
   let patronDir = path.dirname(inFile);
   let loadDir = `${patronDir}/load`;
   fs.mkdirSync(loadDir, { recursive: true });
 
   let csv = fs.readFileSync(inFile, {encoding: 'utf8'});
-  inRecs = parse(csv, {
+  let inRecs = parse(csv, {
     columns: true,
     skip_empty_lines: true,
     relax_column_count: true,
@@ -85,6 +87,7 @@ try {
   let count = 0;
   let success = 0;
   let ecount = 0;
+  let tcount = 0;
   const useen = {};
   const bcseen = {};
   let out = {};
@@ -137,22 +140,6 @@ try {
         // writeOut(files.u, u);
         if (process.env.DEBUG) console.log(JSON.stringify(u, null, 2));
         success++
-        /*
-        let perm = {
-          id: uuid(u.id, ns),
-          userId: u.id,
-          permissions: []
-        }
-        writeOut(files.p, perm);
-        let pref = {
-          id: uuid(u.id + 'pref', ns),
-          userId: u.id,
-          holdShelf: true,
-          delivery: false,
-          defaultServicePointId: refData.servicepoints['PA - Circulation Desk']
-        }
-        writeOut(files.r, pref);
-        */
         useen[ukey] = 1;
       } else {
         console.log(`ERROR No patronGroup found for ${group} (username: ${un})`);
@@ -163,6 +150,38 @@ try {
       ecount++;
     }
   } 
+
+  const tns = {};
+  if (tenFile) {
+    let csv = fs.readFileSync(tenFile, {encoding: 'utf8'});
+    let inRecs = parse(csv, {
+      columns: true,
+      skip_empty_lines: true,
+      relax_column_count: true,
+      quote: '"'
+    })
+    // throw(inRecs);
+    inRecs.forEach(r => {
+      let t = r.tenant;
+      let u = r.username;
+      let p = r.password;
+      let url = (r.url) ? r.url.replace(/\.au\.reshare/, '-okapi.au.reshare') : ''; 
+      if (url && p && u && t) {
+        let o = {
+          okapi: url,
+          authpath: authpath,
+          tenant: t,
+          username: u,
+          password: p,
+          logpath: ''
+        };
+        tns[t] = o;
+        tcount++;
+      }
+    });
+  }
+  // console.log(tns);
+
   // console.log(JSON.stringify(out, null, 2));
   for (let k in out) {
     let dirPath = `${loadDir}/${k}`;
@@ -186,6 +205,14 @@ try {
       };
       writeOut(pfn, p);
     });
+
+    if (tenFile) {
+      let t = tns[k];
+      let cfn = `${dirPath}/config.json`;
+      if (t) {
+        fs.writeFileSync(cfn, JSON.stringify(t, null, 2) + '\n');
+      }
+    }
   }
 
   const t = (new Date().valueOf() - today) / 1000;
@@ -193,6 +220,7 @@ try {
   console.log('Finished!');
   console.log('Processed:', count);
   console.log('Users created:', success);
+  console.log('Configs:', tcount);
   console.log('Errors:', ecount);
   console.log('Time (secs):', t);
 } catch (e) {
