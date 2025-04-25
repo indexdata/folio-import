@@ -333,7 +333,13 @@ my $ftypes = {
   saftGenreTerm => 'array',
   subjectHeadings => 'string',
   uniformTitle => 'string',
-  notes => 'array.object'
+  notes => 'array.object',
+  formSubdivision => 'string',
+  sftFormSubdivision => 'array',
+  saftFormSubdivision => 'array',
+  generalSubdivision => 'string',
+  sftGeneralSubdivision => 'array',
+  saftGeneralSubdivision => 'array'
 };
 
 my $field_replace = {};
@@ -504,10 +510,11 @@ foreach (@ARGV) {
             my $flavor = '';
             if ($_->{target}) {
               @targ = split /\./, $_->{target};
-              $flavor = $ftypes->{$targ[0]}; # || print $targ[0] . "\n";
+              $flavor = $ftypes->{$targ[0]};
             }
             my $data = process_entity($field, $_);
             next unless $data;
+            next unless $flavor;
             if ($flavor eq 'array') {
               push @{ $rec->{$targ[0]} }, $data;
             } elsif ($flavor eq 'array.object') {
