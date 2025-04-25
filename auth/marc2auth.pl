@@ -414,7 +414,20 @@ foreach (@ARGV) {
       MARC::Record->new_from_usmarc($raw);
     };
     next unless $marc;
-    my $hrid = $marc->field('001')->data();
+    my $hrid = ($marc->field('001')) ? $marc->field('001')->data() : '';
+    if (!$hrid || $hrid =~ /^\d/) {
+      my $lccnf = $marc->field('010');
+      my $lccn = ($lccnf) ? $lccnf->subfield('a') : '';
+      if ($lccn) {
+        $hrid = $lccn;
+        if ($marc->field('001')) {
+          $marc->field('001')->data($lccn);
+        } else {
+          my $nf = MARC::Field->new('001', $lccn);
+          $marc->insert_fields_ordered($nf);
+        }
+      }
+    }
     my $nid = $hrid;
     if ($hrids->{$hrid}) {
       print "WARN duplicate 001 found: $hrid\n";
