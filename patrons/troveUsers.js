@@ -165,7 +165,7 @@ try {
       let t = r.tenant;
       let u = r.username;
       let p = r.password;
-      let url = (r.url) ? r.url.replace(/\.au\.reshare/, '-okapi.au.reshare') : ''; 
+      let url = 'https://trove-prod-okapi.ap-southeast-2.folio.indexdata.com'; 
       if (url && p && u && t) {
         let o = {
           okapi: url,
