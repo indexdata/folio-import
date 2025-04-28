@@ -162,6 +162,7 @@ let modName = process.argv[3];
       '/staging-users': true,
       '/tlr-feature-toggle-job-storage/tlr-feature-toggle-jobs': true,
       '/users': true,
+      '/users/configurations/entry': true,
       '/voucher-storage/vouchers': true,
       '/voucher-storage/voucher-number': true,
       '/voucher-storage/voucher-number/start': true,
