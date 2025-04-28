@@ -57,6 +57,18 @@ console.log = (msg, path) => {
       } else {
         data.push(coll);
       }
+      if (collKeys[0] === 'authoritySourceFiles') {
+	     let tmp = [];
+	     data.forEach(d => {
+		     if (d.source === 'local') {
+			     let c = d.codes[0];
+			     d.code = c;
+			     delete d.codes;
+			     tmp.push(d);
+		     }
+	     });
+	     data = tmp;
+      }
       for (d = 0; d < data.length; d++) {
         if (path.match(/data-import-profiles.+Profiles$/ && !path.match(/_UPDATE/))) {
           let upPath = fileNames[x] + '_UPDATE';
