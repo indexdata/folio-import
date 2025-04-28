@@ -232,7 +232,7 @@ const outFiles = {
             typeAction: 'Manual charge',
             amountAction: a.remaining,
             balance: a.remaining,
-            comments: JSON.stringify(fine)
+            // comments: JSON.stringify(fine)
           }
           writeOut(outFiles.ffa, ffa);
           ttl.ffa++;
