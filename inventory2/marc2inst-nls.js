@@ -2,6 +2,8 @@ import { parseMarc, getSubs, mij2raw, fields2mij, getSubsHash } from '../js-marc
 import fs from 'fs';
 import path from 'path';
 import { v5 as uuid } from 'uuid';
+import readline from 'readline';
+import lib from 'pg';
 
 let confFile = process.argv[2];
 
@@ -515,7 +517,7 @@ try {
       });
     } catch {}
   });
-  // console.log(refData.mtypes);
+  // throw(refData.identifierTypes);
 
   // create tsv map
   if (conf.tsvDir) {
@@ -539,6 +541,23 @@ try {
     });
     // console.log(tsvMap);
   }
+
+  // create libris map
+  const librisMap = {};
+  let fstream = fs.createReadStream(wdir + '/libris.tsv');
+  let rl = readline.createInterface({
+      input: fstream,
+      crlfDelay: Infinity
+  });
+  for await (let l of rl) {
+    let c = l.split(/\t/);
+    let k = c[0];
+    let v = (c[1].match(/^\w{14,17}/)) ? c[1] : '';
+    if (k && v) {
+      librisMap[k] = v;
+    }
+  }
+  // throw(librisMap);
 
   let t;
   let ttl = {
@@ -590,6 +609,7 @@ try {
         writeOut(outs.err, r, true);
         continue;
       }
+      let d001 = (marc.fields['001']) ? marc.fields['001'][0] : '';
 
       if (marc.fields['004'] && conf.hasMfhd) {
         if (conf.hasMfhd) {
@@ -832,6 +852,15 @@ try {
             });
           });
           inst.languages = langs;
+        }
+        let librisNum = librisMap[d001];
+        if (librisNum) {
+          let o = {
+            identifierTypeId: refData.identifierTypes['SE-LIBR'],
+            value: librisNum
+          };
+          if (!inst.identifiers) inst.identifiers = [];
+          inst.identifiers.push(o);
         }
         if (!inst.instanceTypeId) inst.instanceTypeId = '30fffe0e-e985-4144-b2e2-1e8179bdb41f';
         if (inst.electronicAccess) {
