@@ -23,6 +23,7 @@ console.log = (msg, path) => {
 
     const config = await getAuthToken(superagent);
 
+    const ttl = { added: 0, updated: 0, errors: 0 };
     for (let x = 0; x < fileNames.length; x++) {
       let added = 0;
       let updated = 0;
@@ -146,10 +147,17 @@ console.log = (msg, path) => {
           } 
         }
       }
+      ttl.added += added;
+      ttl.updated += updated;
+      ttl.errors += errors;
       console.log(`Added:   ${added}`, logPath);
       console.log(`Updated: ${updated}`, logPath);
       console.log(`Errors:  ${errors}`, logPath);
     } 
+    console.log('----------------------------------------');
+    console.log(`Total added:    ${ttl.added}`);
+    console.log(`Total updated:  ${ttl.updated}`);
+    console.log(`Total errors:   ${ttl.errors}`);
   } catch (e) {
     console.log(e.message, logPath);
   }
