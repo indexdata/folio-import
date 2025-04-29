@@ -2,16 +2,18 @@ Legacy Code	Legacy Name	Count Perm (Unsuppressed)	Count Temp (Unsuppressed)	Coun
 Archive	Archive	1		32		Keep	Keep	Archive	
 Artist Bk	Artist Bk	451		1		Keep	Keep	Artist's Book	
 AuctionCat	Auction Catalog	64814		24		Keep	Keep	Auction Catalog	
+AV	Audio Visual					Keep	Keep	AV	
 Book	Book	214593	11	2744		Keep	Keep	Book	
-CD-ROM	CD-ROM	62		19		Keep	Keep	CD-ROM	
-DVD	DVD	37		13		Keep	Keep	DVD	
+Book	Book	214593	11	2744		Keep	Keep	Book	
+Folio	Folio	112				Keep	Keep	Folio	
 Microfiche	Microfiche	5				Keep	Keep	Microfiche	
 Microfilm	Microfilm	12				Keep	Keep	Microfilm	
 Microform	Microform	220				Keep	Keep	Microform	
-Folio	Folio	112				Keep	Keep	Folio	
-PERIODICAL	PERIODICAL	1				Purge	Purge		
-Vert. File	Vert. File	12804		4		Keep	Keep	Vertical File	
-Videotape	Videotape	17		21		Keep	Keep	Videotape	
-Book	Book	214593	11	2744		Keep	Keep	Book	
 Non-Circ.	Non-Circ.	1087	4	5		Keep	Keep	Non-Circ.	
+Vert. File	Vert. File	12804		4		Keep	Keep	Vertical File	
+CD-ROM	CD-ROM	62		19		Purge	Purge		
+DVD	DVD	37		13		Purge	Purge		
+PERIODICAL	PERIODICAL	1				Keep	Keep		
+Online	Online					New Type	New Type		
+Videotape	Videotape	17		21		Purge	Purge		
 	Totals	508,809	26	5,607	0				

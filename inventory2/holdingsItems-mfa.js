@@ -268,7 +268,7 @@ try {
       if (ih.s === 'Damaged') {
         i.itemDamagedStatusId = refData.itemDamageStatuses.Damaged;
       }
-      let mt = tsvMap.mtypes[ih.t];
+      let mt = tsvMap.mtypes[ih.t] || refData.mtypes[ih.t] || '';
       i.materialTypeId = mt;
       if (ih.h) {
         let tempId = tsvMap.locations[ih.h];

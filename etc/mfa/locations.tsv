@@ -23,8 +23,8 @@ MFA-MAIN	MFA-MAIN	MFA Main Library	88,205	92,564	39	1,228	162		Keep	Keep	MAIN	MA
 MFA-REF	MFA-REF	MFA Main Library, Reference	2,378	2,902		56	52		Keep	Keep	REF	MAIN-REF	Main Reference	Circulation Desk	
 MFA-REFM	MFA-REFM	MFA Main Library, Reference/Microform	175	230		4	4		Keep	Keep	REFM	REFM	Reference/Microform	Circulation Desk	
 MFA-VF	MFA-VF	MFA Main Library, Vertical Files	132	133	27	3	2		Keep	Keep	VF	VF	Vertical File	Circulation Desk	
-MFA-465	MFA-465	MFA 465							New Location	New Location	465	465	465	Circulation Desk	
-MFA-Prov	MFA-Prov	MFA Provenance							New Location	New Location	PROV	PROV	Provenance	Circulation Desk	
+MFA-465	MFA-465	MFA 465							Keep	Keep	465	465	465	Circulation Desk	
+MFA-PROV	MFA-PROV	MFA Provenance							Keep	Keep	PROV	PROV	Provenance	Circulation Desk	
 MFA-ADA	zMFA-ADA do not use			2					Purge	Purge					
 MFA-Circ	MFA-Circulation Desk	MFA Main Library, Reading Room				1	1		Purge	Purge				Circulation Desk	
 MFA-CONS	zMFA-CONS Do not use			1					Purge	Purge					
@@ -37,5 +37,5 @@ MFA-DP	zMFA-DP do not use			1					Purge	Purge
 MFA-DPC	zMFA-DPC do not use			1					Purge	Purge					
 MFA-DT	zMFA-DT do not use			7			1		Purge	Purge					
 MFA-SCH-C	MFA-SCH-C			1					Purge	Purge					
-MFA-Stor	MFA-Storage	MFA Offsite Storage	4	11		1			Purge	Purge				Circulation Desk	
+MFA-Stor	MFA-Storage	MFA Offsite Storage	4	11		1			Purge	Purge					
 	Totals		263,518	293,628	0	4,212	2,899	0							
