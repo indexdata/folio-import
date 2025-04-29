@@ -236,7 +236,7 @@ try {
       if (ih.s === 'Damaged') {
         i.itemDamagedStatusId = refData.itemDamageStatuses.Damaged;
       }
-      if (ih.s.match(/Review/)) {
+      if (ih.s && ih.s.match(/Review/)) {
         let note = ih.s
         let t = ['Check in', 'Check out'];
         t.forEach(y => {
@@ -249,6 +249,7 @@ try {
           i.circulationNotes.push(o);
         });
       }
+      if (ih.t === 'E-book') ih.t = 'E-Book';
       let mt = tsvMap.mtypes[ih.t];
       i.materialTypeId = mt;
       if (ih.h) {
