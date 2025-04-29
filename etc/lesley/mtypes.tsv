@@ -16,10 +16,11 @@ MICROFICHE	MICROFICHE	1				Keep	Keep	Microfiche
 MICROFILM	MICROFILM	3				Keep	Keep	Microfilm	
 PERIODICAL	PERIODICAL	351		16		Keep	Keep	Periodical	
 REFERENCE	REFERENCE	407		46		Keep	Keep	Reference	
-RESRV DESK	RESRV DESK					Keep	Keep	Reserve Desk	
+RESRV DESK	RESRV DESK					Purge	Purge		Changed 3/13/25
 TESTS	TESTS	180				Keep	Keep	Tests	
 TEXTBOOK	TEXTBOOK	594				Keep	Keep	Textbook	
 TRC	TRC	2760		18		Keep	Keep	TRC	Teaching Resource Collection
+Online	Online					Keep	Keep	Online	Needed for dummy items
 BOOK	BOOK	6	4	31		Merge	Merge	Book	
 BROWSE	BROWSE	487	2	2		Merge	Merge	Book	More of a location than an itype
 DVD7	DVD 7 day loan	163				Merge	Merge	DVD	
