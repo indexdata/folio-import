@@ -56,6 +56,7 @@ my $files = {
   auth => 'authorities.jsonl',
   srs => 'srs.jsonl',
   snap => 'snapshot.jsonl',
+  err => 'err.mrc'
 };
 
 sub uuid {
@@ -399,6 +400,7 @@ foreach (@ARGV) {
   open RAW, "<:encoding(UTF-8)", $infile;
   open my $OUT, ">>:encoding(UTF-8)", $paths->{auth};
   open my $SRSOUT, ">>:encoding(UTF-8)", $paths->{srs};
+  open my $ERR, ">>:encoding(UTF-8)", $paths->{err};
   my $inst_recs;
   my $srs_recs;
   my $success = 0;
@@ -430,7 +432,8 @@ foreach (@ARGV) {
     }
     my $nid = $hrid;
     if ($hrids->{$hrid}) {
-      print "WARN duplicate 001 found: $hrid\n";
+      print "WARN duplicate 001 found: \"$hrid\"\n";
+      print $ERR $raw;
       $errors++;
       next;
     }
