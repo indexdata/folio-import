@@ -30,11 +30,11 @@ use File::Basename;
 use Data::Dumper;
 
 my $ver = ($ENV{_VERSION}) ? $ENV{_VERSION} : '1';
+my $isil = ($ENV{ISIL}) ? $ENV{ISIL} : 'xxz';
 binmode STDOUT, ":utf8";
 $| = 1;
 
-my $version = '1';
-my $isil = 'xxz';
+my $version = $ver;
 my $prefix = '';
 my $srstype = 'MARC';
 my $source_id = 'f32d531e-df79-46b3-8932-cdd35f7a2264'; # Folio 
