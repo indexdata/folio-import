@@ -1,0 +1,12 @@
+{
+  "name": "cli",
+  "version": "1.0.0",
+  "description": "Terminal based FOLIO app",
+  "main": "index.js",
+  "author": "Charles Ledvina",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "inquirer": "^11.0.2"
+  },
+  "type": "module"
+}
