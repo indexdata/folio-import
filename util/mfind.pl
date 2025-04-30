@@ -11,9 +11,14 @@ binmode(STDOUT, ":utf8");
 
 my $bin = 0;
 my $a = 0;
+my $rev = 0;
 foreach (@ARGV) {
   if ($_ eq '-b') {
     $bin = 1;
+    splice(@ARGV, $a, 1);
+  }
+  if ($_ eq '-v') {
+    $rev = 1;
     splice(@ARGV, $a, 1);
   }
   $a++;
@@ -22,7 +27,7 @@ $| = 1 if $bin;
 
 my $field = shift;
 my $query = shift;
-my $mrc = shift or die "Usage: ./mfind.pl [-b] <field> <regexp> <raw_marc_file> [<limit>]\n";
+my $mrc = shift or die "Usage: ./mfind.pl [-b -v] <field> <regexp> <raw_marc_file> [<limit>]\n";
 open IN, "<:encoding(utf-8)", $mrc or die "Can't find raw Marc file!\n";
 my $lim = shift || 1000000;
 $/ = "\x1D";
