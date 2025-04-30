@@ -94,6 +94,7 @@ const wait = (ms) => {
             .set('x-okapi-token', config.token);
           logger.info(`  Setting version number to ${res.body._version}`);
           rec._version = res.body._version;
+          if (recUrl.match(/items-storage/)) rec.status = res.body.status; 
         } catch (e) {
           logger.error(`${e}`);
           continue;
