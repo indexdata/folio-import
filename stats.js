@@ -21,7 +21,7 @@ const mods = {
   },
   auth: {
 	  authorities: 'authority-storage/authorities?limit=1',
-	  srs: 'source-storage/records?recordType=MARC_AUTHORITY&limit=0'
+	  srs: 'source-storage/records?recordType=MARC_AUTHORITY&state=ACTUAL&limit=1'
   },
   orgs: {
     organizations: 'organizations-storage/organizations',
