@@ -252,6 +252,7 @@ try {
         circulationNotes: []
       }
       let stat = tsvMap.statuses[ih.s];
+      let statDate = '';
       if (stat) {
         i.status.name = stat;
         if (ih.v) {
@@ -259,6 +260,7 @@ try {
             let sd = new Date(ih.v).toISOString();
             sd = sd.replace(/T00:/, 'T12:');
             i.status.date = sd;
+            statDate = sd;
           } catch (e) {
             console.log(`WARN "${ih.v}" is not a valid status date`);
             bwFlag = true;
@@ -267,6 +269,7 @@ try {
       }
       if (ih.s === 'Damaged') {
         i.itemDamagedStatusId = refData.itemDamageStatuses.Damaged;
+        if (statDate) i.itemDamagedStatusDate = statDate;
       }
       let mt = tsvMap.mtypes[ih.t] || refData.mtypes[ih.t] || '';
       i.materialTypeId = mt;
