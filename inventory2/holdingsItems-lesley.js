@@ -255,9 +255,13 @@ try {
       }
       let mt = tsvMap.mtypes[ih.t];
       i.materialTypeId = mt;
+      let permLocId = tsvMap.locations[ih.l] || '';
+      if (permLocId !== holdings.permanentLocationId) {
+        i.permanentLocationId = permLocId;
+      }
       if (ih.h) {
         let tempId = tsvMap.locations[ih.h];
-        if (tempId !== holdings.permanentLocationId) {
+        if (tempId !== permLocId) {
           i.temporaryLocationId = tempId;
         }
       }
