@@ -27,7 +27,7 @@ $| = 1 if $bin;
 
 my $field = shift;
 my $query = shift;
-my $mrc = shift or die "Usage: ./mfind.pl [-b -v] <tag[subfield(s)][[occurrence]]> <regexp> <raw_marc_file> [<limit>]\n";
+my $mrc = shift or die "Usage: ./mfind.pl [-b -v] <tag[subfield[[occurrence]]]> <regexp> <raw_marc_file> [<limit>]\n";
 open IN, "<:encoding(utf-8)", $mrc or die "Can't find raw Marc file!\n";
 my $lim = shift || 1000000;
 $/ = "\x1D";
