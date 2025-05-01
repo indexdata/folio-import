@@ -297,7 +297,7 @@ try {
         bcseen[ih.i] = i.id;
         bcHoldMap[ih.i] = holdings;
       } else if (ih.i) {
-        console.log(`INFO [${holdings.hrid}] barcode "${ih.i}" hass already been used. Creating bound-with-part.`);
+        console.log(`INFO [${holdings.hrid}] barcode "${ih.i}" has already been used. Creating bound-with-part.`);
         bwFlag = true;
         makeBoundWiths(bcseen[ih.i], holdings, ih.i);
         let mainHoldingsId = bcHoldMap[ih.i];
@@ -385,6 +385,7 @@ try {
   });
   for await (let line of rl) {
     ttl.count++;
+    let upFlag = false;
     let m = JSON.parse(line);
     let ctrl = (m['001']) ? m['001'][0] : '';
     let bhrid = (m['004']) ? m['004'][0] : '';
@@ -394,11 +395,10 @@ try {
       m['852'].forEach(f => {
         f.subfields.forEach(s => {
           let k = Object.keys(s)[0];
-          if (k.match(/[zx]/)) {
+          if (k.match(/[zxi]/)) {
             if (!mh[k]) mh[k] = [];
             mh[k].push(s[k]);
-          }
-          else {
+          } else {
             mh[k] = s[k]; 
           }
         });
@@ -406,6 +406,10 @@ try {
       mh.ind1 = m['852'][0].ind1;
       mh.ind2 = m['852'][0].ind2;
     }
+    if (mh.i) { 
+      if (mh.i.length > 1) upFlag = true;
+      mh.i = mh.i.join(' ');
+    } 
     let loc = mh.b;
     let cn = (mh.i) ? mh.h + ' ' + mh.i : mh.h || '';
     if (cn.match(/No call number/)) cn = '';
@@ -429,6 +433,7 @@ try {
         formerIds: [ ctrl ],
         discoverySuppress: false
       }
+      if (upFlag) h.__ = 'updateThis';
       h.instanceId = inst.id;
       h.permanentLocationId = tsvMap.locations[loc] || '';
       if (cn) {
