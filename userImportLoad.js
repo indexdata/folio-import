@@ -3,6 +3,7 @@ const superagent = require('superagent');
 const { getAuthToken } = require('./lib/login');
 const fileName = process.argv[2];
 let delay = 5000;
+const dbug = process.env.DEBUG;
 
 const wait = (ms) => {
   console.log(`(Waiting ${ms}ms...)`);
@@ -46,13 +47,20 @@ const wait = (ms) => {
         console.log(res.body);
         fs.writeFileSync(lfile, JSON.stringify(res.body, null, 2) + '\n');
       } catch (e) {
-        console.log(`${e}`);
+        if (dbug) {
+          console.log(e);
+        } else {
+          console.log(`${e}`);
+        }
         fs.writeFileSync(lfile, `${e}` + '\n');
       }
       if (c < batches.length) await wait(delay);
-    }
-
+    } 
   } catch (e) {
-    console.log(e.message);
+    if (dbug) {
+      console.log(e);
+    } else {
+      console.log(e.message);
+    }
   }
 })();
