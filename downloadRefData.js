@@ -203,7 +203,6 @@ let modName = process.argv[3];
       'coursereserves__departments',
       'coursereserves__courselistings',
       'coursereserves__courses',
-      'coursereserves__reserves',
       'data-export__mapping-profiles',
       'data-export__job-profiles'
     ]
@@ -335,9 +334,14 @@ let modName = process.argv[3];
           }
           fs.writeFileSync(`${fullSaveDir}/${fileName}.json`, jsonStr);
         }
-        if (paths[x].path == 'organizations-storage/interfaces') {
+        if (paths[x].path === 'organizations-storage/interfaces') {
           res.body.interfaces.forEach(r => {
             paths.push({ path: `${paths[x].path}/${r.id}/credentials`, mod: paths[x].mod });
+          });
+        }
+        if (paths[x].path === 'coursereserves/courselistings') {
+          res.body.courseListings.forEach(r => {
+            paths.push({ path: `${paths[x].path}/${r.id}/instructors`, mod: paths[x].mod });
           });
         }
         if (paths[x].path.match(/personal.lastName/)) {
