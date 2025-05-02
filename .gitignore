@@ -9,3 +9,4 @@ login-*.sh
 test/Batch*
 pica/test/m?
 log
+.editorconfig
