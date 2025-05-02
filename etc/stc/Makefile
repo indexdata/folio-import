@@ -1,5 +1,5 @@
 lib=stc
-user=charles
+user := $(shell whoami)
 home=/home/$(user)
 wd=$(home)/folio-import
 inv2=$(wd)/inventory2
