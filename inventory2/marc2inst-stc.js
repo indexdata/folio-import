@@ -680,6 +680,25 @@ try {
         marc.fields.leader = marc.fields.leader.replace(/....$/, '4500');
       }
 
+      let f856 = marc.fields['856'];
+      if (f856) {
+        for (let x = 0; x < f856.length; x++ ) {
+          let delFlag = false;
+          
+          if (f856[x].ind1 === '4' && f856[x].ind2.match(/[12]/)) {
+            delFlag = true;
+          } else {
+            f856[x].subfields.forEach(s => {
+              if (s.u && s.u.match(/loc\.gov/)) delFlag = true;
+            });
+          }
+          if (delFlag) {
+            marc.fields['856'].splice(x, 1);
+            x--;
+          }
+        }
+      }
+
       seen[hrid] = 1;
       let instId = (hrid) ? uuid(hrid, ns) : '';
       marc.mij = fields2mij(marc.fields);
