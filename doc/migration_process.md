@@ -19,10 +19,20 @@ For example STC "test" [DEVOPS-4123](https://index-data.atlassian.net/browse/DEV
     * [Load inventory data](#load-inventory-data)
     * [Document the inventory counts](#document-the-inventory-counts)
     * [Visit the UI for quick inventory inspection](#visit-the-ui-for-quick-inventory-inspection)
+* [Load users](#load-users)
+    * [Obtain the users data](#obtain-the-users-data)
+    * [Setup and prepare users data](#setup-and-prepare-users-data)
+    * [Split users data files](#split-users-data-files)
+    * [Load users data](#load-users-data)
+    * [Ensure that users loaded](#ensure-that-users-loaded)
+    * [Load users notes](#load-users-notes)
+    * [Document the users counts](#document-the-users-counts)
+    * [Visit the UI for quick users inspection](#visit-the-ui-for-quick-users-inspection)
 
 ## Preparation
 
 * Do 'git pull' for local clone of [folio-import](https://github.com/indexdata/folio-import) and on the prod-bastion host.
+* Do 'cd ~/folio-import; npm install'
 * Copy the spreadsheets from a previous dry-run:
     * Store at Gdrive "STC FOLIO Migration > Project Management"
     * e.g. to be "STC dry run checklist 2025-04-28" and "STC Dry Run Tasks 2025-04-28".
@@ -217,6 +227,123 @@ Go "Inventory > Instances", select some and do "View holdings" and "Actions > Vi
 Go "Effecive location" and inspect the list.
 
 Go "Item > Material type" and inspect the list.
+
+## Load users
+
+Some steps will utilise the Makefile, while other steps will run specific scripts.
+
+### Obtain the users data
+
+On the prod-bastion host, do:
+
+```
+cd ~/stc/incoming
+./ftp.sh  # and get the "Users" data files
+```
+
+### Setup and prepare users data
+
+```
+cd ~/stc
+make setup
+make users
+```
+
+That will report the number of users and notes created in `~/stc/usr` directory.
+
+### Split users data files
+
+As before, make five batches.
+
+```
+cd ~/stc/usr
+split -l 8000 users-users.jsonl user
+split -l 8000 users-perms.jsonl perm
+split -l 8000 users-request-prefs.jsonl pref
+```
+
+The notes file is small, so no need.
+
+### Load users data
+
+First, double-check that communications and credentials are appropriate:
+
+```
+cd ~/folio-import
+./show_config.sh
+```
+
+Now load the various files:
+
+```
+cd ~/folio-import
+./run_post_jsonl.sh users ../stc/usr/usera?
+```
+
+Check the results for success and errors. (Have a separate terminal window for running these checks.)
+
+```
+succ.sh ~/stc/log/usera*log
+err.sh ~/stc/log/usera*log
+```
+
+Repeat until finished.
+
+Still doing users, but can do permissions while that is happening.
+
+```
+./run_post_jsonl.sh perms/users ../stc/usr/perma?
+```
+
+Repeat the succ/err dance.
+
+Can load request preference while that is happening.
+
+Use the beaut prompt completion facility.
+
+```
+./run_post_jsonl.sh _/request-preference-storage__request-preference ../stc/usr/prefa?
+```
+
+Repeat the succ/err dances.
+
+### Ensure that users loaded
+
+```
+cd ~/folio-import
+node get users
+```
+
+The count will be off because some users were already in there.
+
+```
+node get perms/users
+node get _/request-preference-storage__request-preference
+cat ../stc/log/makeUsers.log
+```
+
+### Load users notes
+
+```
+./run_post_jsonl.sh notes ../stc/usr/users-notes.jsonl
+tail -f ../stc/log/users-notes.jsonl.log
+```
+
+### Document the users counts
+
+Add the counts to the "STC dry run checklist" spreadsheet at the "Added" column.
+
+### Visit the UI for quick users inspection
+
+Login to stc-test UI and inspect some records.
+
+Go "Users" select Active and Inactive. Select some.
+
+Should have 0 permissions.
+
+Look at "Extended information" has Request preferences ... hold shelf:yes Delivery:no
+
+Let customer decide that all is well.
 
 ---
 
