@@ -32,6 +32,9 @@ For example STC "test" [DEVOPS-4123](https://index-data.atlassian.net/browse/DEV
 * Move old data to separate directories:
     * e.g. ~/stc/incoming-dryrun1
     * e.g. ~/stc/all-ref-dryrun1
+    * e.g. ~/stc/log-dryrun1
+* Clean prod-bastion workspace at ~/stc
+    * Do: `make really-clean`
 
 ## Notes
 
@@ -48,11 +51,11 @@ mkdir -p ../stc/all-ref
 node downloadRefData.js ../stc/all-ref
 ```
 
-At localhost, ensure up-to-date mapping tables for locations, mtypes and statuses in TSV format. Ensure up-to-date with the customer implementation spreadsheet. Download each relevant worksheet and diff with those at `stc/etc/*.tsv` files. Commit.
+At localhost, ensure up-to-date mapping tables for locations, mtypes, and groups in TSV format. Ensure up-to-date with the customer implementation spreadsheet. Download each relevant worksheet and diff with those at `stc/etc/*.tsv` files. Commit.
 
 ## Clean the system
 
-The system is then wiped out to prepare for the next dry-run. See spreadsheet "STC Dry Run Tasks".
+The FOLIO system is then wiped out to prepare for the next dry-run. See spreadsheet "STC Dry Run Tasks".
 
 ## Reload reference data
 
@@ -162,7 +165,7 @@ Similarly load the other data and check for errors:
 ./run_inventory.sh ../stc/inv/itema?
 ```
 
-Now load the preceeding/succeeding titles:
+Now load the preceding/succeeding titles:
 
 ```
 ./run_post_jsonl.sh _/preceding-succeeding-titles ../stc/inv/bibs-presuc.jsonl
