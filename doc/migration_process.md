@@ -40,6 +40,22 @@ For example STC "test" [DEVOPS-4123](https://index-data.atlassian.net/browse/DEV
     * [Deactivate the inactive checkout users](#deactivate-the-inactive-checkout-users)
     * [Count the loans](#count-the-loans)
     * [Document the checkouts counts](#document-the-checkouts-counts)
+* [Load feefines bills](#load-feefines-bills)
+* [Load course reserves](#load-course-reserves)
+    * [Obtain the course reserves data](#obtain-the-course-reserves-data)
+    * [Create the courses objects](#create-the-courses-objects)
+    * [Load the courses data](#load-the-courses-data)
+    * [Visit the UI for quick courses inspection](#visit-the-ui-for-quick-courses-inspection)
+    * [Count the courses](#count-the-courses)
+    * [Document the courses counts](#document-the-courses-counts)
+* [Load authorities](#load-authorities)
+    * [Obtain the authorities data](#obtain-the-authorities-data)
+    * [Create the authorities objects](#create-the-authorities-objects)
+    * [Split authorities data files](#split-authorities-data-files)
+    * [Load authorities](#load-authorities)
+    * [Load authorities source record storage](#load-authorities-source-record-storage)
+    * [Visit the UI for quick authorities inspection](#visit-the-ui-for-quick-authorities-inspection)
+    * [Document the authorities counts](#document-the-authorities-counts)
 
 ## Preparation
 
@@ -426,6 +442,8 @@ The FOLIO timer runs every 30 minutes to do the aged-to-lost operation.
 
 We cannot do the "feefines" until those are completed, which could take some time.
 
+Visit UI `/users/lost-items`
+
 ### Visit the UI for quick loans inspection
 
 Login to stc-test UI.
@@ -522,7 +540,86 @@ Add the counts of courses to the "STC dry run checklist" spreadsheet at the "Add
 
 ## Load authorities
 
-TODO
+Some steps will utilise the Makefile, while other steps will run specific scripts.
+
+### Obtain the authorities data
+
+On the prod-bastion host, do:
+
+```
+cd ~/stc/incoming
+./ftp.sh  # and get the "Authorities*.xml" data file
+```
+
+### Create the authorities objects
+
+The Makefile will generate the authorites MARC from the XML, and create authority objects from raw MARC, and will report the count.
+
+```
+cd ~/stc
+make authorities
+```
+
+There will likely be many warnings about duplicates, that is fine.
+
+### Split authorities data files
+
+As before, make five batches.
+
+```
+cd ~/stc/auth
+split -l 70000 auth-authories.jsonl auth
+split -l 70000 auth-srs.jsonl auth asrs
+```
+
+### Load authorities
+
+```
+cd ~/folio-import
+./show_config.sh
+./run_post_jsonl.sh _/authority-storage__authorities ../stc/auth/autha?
+```
+
+Do the succ/err dance.
+
+Sometime there will be timeouts, that will create an error file, which we can reload.
+
+```
+grep error ../stc/auth/autha*log
+... proxyClient failure
+```
+
+This will take a long time. We can do the next section while that is still running.
+
+### Load authorities source record storage
+
+First load the snapshot to prepare for SRS.
+
+```
+cd ~/folio-import
+./run_post_jsonl.sh _/source-storage__snapshots ../stc/auth/auth-snapshot.jsonl
+cat ../stc/auth/auth-snapshot.jsonl.log
+```
+
+Expect no errors.
+
+Now load the authorities SRS:
+
+```
+./run_post_jsonl.sh _/source-storage__records ../stc/auth/asrsa?
+```
+
+Do the succ/err dance.
+
+### Visit the UI for quick authorities inspection
+
+Login to stc-test UI.
+
+Visit "MARC authority" and glance at some records.
+
+### Document the authorities counts
+
+Add the counts of authorities to the "STC dry run checklist" spreadsheet at the "Added" column.
 
 ---
 
