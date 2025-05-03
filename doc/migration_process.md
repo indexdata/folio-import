@@ -41,6 +41,13 @@ For example STC "test" [DEVOPS-4123](https://index-data.atlassian.net/browse/DEV
     * [Count the loans](#count-the-loans)
     * [Document the checkouts counts](#document-the-checkouts-counts)
 * [Load feefines bills](#load-feefines-bills)
+    * [Obtain the fees data](#obtain-the-fees-data)
+    * [Create the actual-cost bills](#create-the-actual-cost-bills)
+    * [Load the bills data](#load-the-bills-data)
+    * [Visit the UI for quick feefines inspection](#visit-the-ui-for-quick-feefines-inspection)
+    * [Change the account dates](#change-the-account-dates)
+    * [Load feefines accounts and actions](#load-feefines-accounts-and-actions)
+    * [Document the feefines counts](#document-the-feefines-counts)
 * [Load course reserves](#load-course-reserves)
     * [Obtain the course reserves data](#obtain-the-course-reserves-data)
     * [Create the courses objects](#create-the-courses-objects)
@@ -482,10 +489,67 @@ Add the counts of checkouts and inactive users to the "STC dry run checklist" sp
 
 ## Load feefines bills
 
-TODO
-
 Need to wait until the "Aged to lost" process has completed (see explanation above) which might even be the next day.
 Could move on to do courses and authorities while waiting.
+
+Some steps will utilise the Makefile, while other steps will run specific scripts.
+
+### Obtain the fees data
+
+```
+cd ~/stc/incoming
+./ftp.sh  # and get the "Fees" data files
+wc -l Fees*.txt
+```
+
+### Create the actual-cost bills
+
+The Makefile will download relevant users and items from FOLIO. Then it will make the bills objects.
+Thois needs to get new users and items files because theeir status changed.
+
+```
+cd ~/stc
+make feefines
+cd ~stc/fines
+ls
+```
+
+### Load the bills data
+
+```
+cd ~/folio-import
+./show_config.sh
+./run_post_jsonl.sh _/actual-cost-fee-fine__bill ../stc/fines/bills.jsonl
+tail -f ~/stc/log/bills.jsonl.log
+```
+
+### Visit the UI for quick feefines inspection
+
+Login to stc-test UI.
+
+Visit "Users" and seelect "Status > Billed".
+
+Select a user record, and via ellipsis "Patron details" Loans.
+
+### Change the account dates
+
+```
+cd ~/folio-import
+node changeAccountDate.js ../stc/fines/accountDates.jsonl
+```
+
+### Load feefines accounts and actions
+
+```
+./run_post_jsonl.sh _/feefines ../stc/fines/accounts.jsonl
+./run_post_jsonl.sh _/feefineactions ../stc/fees/feefineActions.jsonl
+```
+
+Do the succ/err dance.
+
+### Document the feefines counts
+
+Add the counts of feefines to the "STC dry run checklist" spreadsheet at the "Added" column.
 
 ## Load course reserves
 
@@ -498,7 +562,7 @@ On the prod-bastion host, do:
 ```
 cd ~/stc/incoming
 ./ftp.sh  # and get the "Course Reserves" data files
-wc -l *.txt
+wc -l Course*.txt
 ```
 
 ### Create the courses objects
