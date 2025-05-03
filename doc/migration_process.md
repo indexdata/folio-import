@@ -398,6 +398,7 @@ Changes the relevant users to be active, and sets the expiry date to way in the 
 
 ```
 cd ~/folio-import
+./show_config.sh
 node usersActiveToggle.js ../stc/circ/inactive-checkouts.jsonl
 ```
 
@@ -460,6 +461,68 @@ node get _/loan-storage__loans
 
 Add the counts of checkouts and inactive users to the "STC dry run checklist" spreadsheet at the "Added" column.
 
+## Load feefines bills
+
+TODO
+
+Need to wait until the "Aged to lost" process has completed (see explanation above) which might even be the next day.
+Could move on to do courses and authorities while waiting.
+
+## Load course reserves
+
+Some steps will utilise the Makefile, while other steps will run specific scripts.
+
+### Obtain the course reserves data
+
+On the prod-bastion host, do:
+
+```
+cd ~/stc/incoming
+./ftp.sh  # and get the "Course Reserves" data files
+wc -l *.txt
+```
+
+### Create the courses objects
+
+The Makefile will download relevant users and items from FOLIO. Then it will make the courses.
+
+```
+cd ~/stc
+make course-reserves
+```
+
+There will not be a large number, so no need to split files.
+
+### Load the courses data
+
+```
+cd ~/folio-import
+./show_config.sh
+node loadCourses.js ../stc/courses/loadCourses.json
+```
+
+Review `~/stc/log/loadCourses.log`
+
+### Visit the UI for quick courses inspection
+
+Login to stc-test UI.
+
+Visit "Courses"
+
+### Count the courses
+
+```
+node get _/coursereserves__courses | jq '.totalRecords'
+node get _/coursereserves__reserves | jq '.totalRecords'
+```
+
+### Document the courses counts
+
+Add the counts of courses to the "STC dry run checklist" spreadsheet at the "Added" column.
+
+## Load authorities
+
+TODO
 
 ---
 
