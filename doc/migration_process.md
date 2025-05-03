@@ -5,7 +5,7 @@ For example STC "test" [DEVOPS-4123](https://index-data.atlassian.net/browse/DEV
 
 ## Table of contents
 
-<!-- md2toc -l 2 -h 3 migration_process.md -->
+<!-- md2toc -l 2 -h 3 doc/migration_process.md -->
 * [Preparation](#preparation)
 * [Notes](#notes)
 * [Download reference data](#download-reference-data)
@@ -28,6 +28,18 @@ For example STC "test" [DEVOPS-4123](https://index-data.atlassian.net/browse/DEV
     * [Load users notes](#load-users-notes)
     * [Document the users counts](#document-the-users-counts)
     * [Visit the UI for quick users inspection](#visit-the-ui-for-quick-users-inspection)
+* [Load checkouts](#load-checkouts)
+    * [Obtain the loans data](#obtain-the-loans-data)
+    * [Create the checkout-by-barcode objects](#create-the-checkout-by-barcode-objects)
+    * [Split checkouts data files](#split-checkouts-data-files)
+    * [Activate the inactive checkout users](#activate-the-inactive-checkout-users)
+    * [Do the checkouts](#do-the-checkouts)
+    * [Timer will do aged-to-lost](#timer-will-do-aged-to-lost)
+    * [Visit the UI for quick loans inspection](#visit-the-ui-for-quick-loans-inspection)
+    * [Ensure that checkouts have completed](#ensure-that-checkouts-have-completed)
+    * [Deactivate the inactive checkout users](#deactivate-the-inactive-checkout-users)
+    * [Count the loans](#count-the-loans)
+    * [Document the checkouts counts](#document-the-checkouts-counts)
 
 ## Preparation
 
@@ -35,7 +47,7 @@ For example STC "test" [DEVOPS-4123](https://index-data.atlassian.net/browse/DEV
 * Do 'cd ~/folio-import; npm install'
 * Copy the spreadsheets from a previous dry-run:
     * Store at Gdrive "STC FOLIO Migration > Project Management"
-    * e.g. to be "STC dry run checklist 2025-04-28" and "STC Dry Run Tasks 2025-04-28".
+    * e.g. to be "STC dry run checklist YYYY-MM-DD" and "STC Dry Run Tasks YYYY-MM-DD".
 * Get some separate iTerm windows and do 'ssh prod-bastion' etc.
 * Ensure tenant configuration credentials, e.g. `~/folio-import/configs/json/stc-test.json`
     * Add "syscreds" for the relevant system users
@@ -81,7 +93,7 @@ For some, with local knowledge specific files can be avoided.
 
 Review the outputs. For some (e.g. tags and patron_blocks) there will be errors because these data are already in the system, loaded via the module itself.
 
-The "nn-permissions" is different. We are only interested in "mutable" permissions, and we do not need to use the perms__users.json file. Do the load towards the end of this section via:\
+The "nn-permissions" is different. We are only interested in "mutable" permissions, and we do not need to use the perms__users.json file. Do the load via:\
 `node loadMutablePerms.js ../stc/all-ref/permissions/perms__permissions.json`
 
 At the end, do the "`system_users`".
@@ -344,6 +356,110 @@ Should have 0 permissions.
 Look at "Extended information" has Request preferences ... hold shelf:yes Delivery:no
 
 Let customer decide that all is well.
+
+## Load checkouts
+
+Some steps will utilise the Makefile, while other steps will run specific scripts.
+
+### Obtain the loans data
+
+On the prod-bastion host, do:
+
+```
+cd ~/stc/incoming
+./ftp.sh  # and get the "Loans" data file
+wc -l Loans*.txt
+```
+
+### Create the checkout-by-barcode objects
+
+The Makefile will download users and items from FOLIO. It could have changed stuff after our earlier load, and we need barcodes etc. Then it will make the checkouts.
+
+```
+cd ~/stc
+make clean-checkouts
+make checkouts
+```
+
+That will report the number of checkouts and inactive users.
+
+### Split checkouts data files
+
+As before, make five batches.
+
+```
+cd ~/stc/circ
+split -l 500 checkouts.jsonl chk
+```
+
+### Activate the inactive checkout users
+
+Changes the relevant users to be active, and sets the expiry date to way in the future.
+
+```
+cd ~/folio-import
+node usersActiveToggle.js ../stc/circ/inactive-checkouts.jsonl
+```
+
+### Do the checkouts
+
+This does not log to normal log directory, but to the ~/stc/circ directory.
+
+```
+./run_checkouts.sh ../stc/circ/chka?
+```
+
+This grabs the loan object, and changes the due date to whatever is in the checkout record.
+Sometimes it will encounter a "block", but the script knows how to override it.
+
+Inspect the results. Hopefully the `chka*.err` files will be empty.
+
+```
+cd ~/stc/circ
+tail -f chkaa.log  # Follow one for example
+```
+
+### Timer will do aged-to-lost
+
+The FOLIO timer runs every 30 minutes to do the aged-to-lost operation.
+
+We cannot do the "feefines" until those are completed, which could take some time.
+
+### Visit the UI for quick loans inspection
+
+Login to stc-test UI.
+
+Visit the "Circulation log" and select "Loan > Changed due date". Note that this is not an accurate count.
+
+Then select "Loan > Aged to lost" ... probably none yet.
+
+### Ensure that checkouts have completed
+
+```
+cd ~/stc/circ
+tail chka*.log
+```
+
+### Deactivate the inactive checkout users
+
+```
+cd ~/folio-import
+node usersActiveToggle.js ../stc/circ/inactive-checkouts.jsonl
+```
+
+### Count the loans
+
+The circulation log does not give and accurate count, so use the API.
+The result should match the count from earlier in this section.
+
+```
+node get _/loan-storage__loans
+```
+
+### Document the checkouts counts
+
+Add the counts of checkouts and inactive users to the "STC dry run checklist" spreadsheet at the "Added" column.
+
 
 ---
 
