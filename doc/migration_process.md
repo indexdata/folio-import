@@ -54,6 +54,7 @@ For example STC "test" [DEVOPS-4123](https://index-data.atlassian.net/browse/DEV
     * [Split authorities data files](#split-authorities-data-files)
     * [Load authorities](#load-authorities)
     * [Load authorities source record storage](#load-authorities-source-record-storage)
+    * [Reload any authorities errors](#reload-any-authorities-errors)
     * [Visit the UI for quick authorities inspection](#visit-the-ui-for-quick-authorities-inspection)
     * [Document the authorities counts](#document-the-authorities-counts)
 
@@ -582,7 +583,7 @@ cd ~/folio-import
 
 Do the succ/err dance.
 
-Sometime there will be timeouts, that will create an error file, which we can reload.
+Sometime there will be timeouts, that will create an error file, which we can reload (see following section).
 
 ```
 grep error ../stc/auth/autha*log
@@ -610,6 +611,26 @@ Now load the authorities SRS:
 ```
 
 Do the succ/err dance.
+
+### Reload any authorities errors
+
+As explained earlier, there could be loading errors, e.g. timeouts.
+
+```
+cd ~/stc/auth
+cat *Err.jsonl > authErrs.jsonl
+wc -l authErrs.jsonl
+
+cd ~/folio-import
+./run_post_jsonl.sh _/authority-storage__authorities ../stc/auth/authErrs.jsonl
+tail ../stc/log/authErrs.jsonl.log
+```
+
+There might be remaining errors. Go again:
+
+```
+./run_post_jsonl.sh _/authority-storage__authorities ../stc/auth/authErrsErr.jsonl
+```
 
 ### Visit the UI for quick authorities inspection
 
