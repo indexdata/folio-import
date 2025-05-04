@@ -3,6 +3,8 @@
 This is a general overview of the data migration procedures.
 For example STC "test" [DEVOPS-4123](https://index-data.atlassian.net/browse/DEVOPS-4123).
 
+Engage Index Data to assist with or carry out the migration. There are bespoke tools to suit each customer situation, and there is arcane knowledge with this process.
+
 ## Table of contents
 
 <!-- md2toc -l 2 -h 3 doc/migration_process.md -->
@@ -260,7 +262,7 @@ Login to stc-test UI and inspect some records.
 
 Go "Inventory > Instances", select some and do "View holdings" and "Actions > View source".
 
-Go "Effecive location" and inspect the list.
+Go "Effective location" and inspect the list.
 
 Go "Item > Material type" and inspect the list.
 
@@ -505,7 +507,7 @@ wc -l Fees*.txt
 ### Create the actual-cost bills
 
 The Makefile will download relevant users and items from FOLIO. Then it will make the bills objects.
-Thois needs to get new users and items files because theeir status changed.
+Thois needs to get new users and items files because their status changed.
 
 ```
 cd ~/stc
@@ -527,7 +529,7 @@ tail -f ~/stc/log/bills.jsonl.log
 
 Login to stc-test UI.
 
-Visit "Users" and seelect "Status > Billed".
+Visit "Users" and select "Status > Billed".
 
 Select a user record, and via ellipsis "Patron details" Loans.
 
@@ -618,7 +620,7 @@ cd ~/stc/incoming
 
 ### Create the authorities objects
 
-The Makefile will generate the authorites MARC from the XML, and create authority objects from raw MARC, and will report the count.
+The Makefile will generate the authorities MARC from the XML, and create authority objects from raw MARC, and will report the count.
 
 ```
 cd ~/stc
@@ -633,7 +635,7 @@ As before, make five batches.
 
 ```
 cd ~/stc/auth
-split -l 70000 auth-authories.jsonl auth
+split -l 70000 auth-authorities.jsonl auth
 split -l 70000 auth-srs.jsonl auth asrs
 ```
 
