@@ -370,11 +370,10 @@ try {
       m['852'].forEach(f => {
         f.subfields.forEach(s => {
           let k = Object.keys(s)[0];
-          if (k.match(/[zx]/)) {
+          if (k.match(/[zxi]/)) {
             if (!mh[k]) mh[k] = [];
             mh[k].push(s[k]);
-          }
-          else {
+          } else {
             mh[k] = s[k]; 
           }
         });
@@ -382,6 +381,9 @@ try {
       mh.ind1 = m['852'][0].ind1;
       mh.ind2 = m['852'][0].ind2;
     }
+    if (mh.i) { 
+      mh.i = mh.i.join(' ');
+    } 
     let loc = mh.b;
     let cn = (mh.i) ? mh.h + ' ' + mh.i : mh.h || '';
     if (cn.match(/No call number/)) cn = '';
