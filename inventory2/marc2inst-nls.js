@@ -61,6 +61,128 @@ const customRules = {
         }
       ]
     }
+  ],
+  "041": [
+    {
+      "entityPerRepeatedSubfield": true,
+      "entity": [
+        {
+          "target": "languages",
+          "description": "Language code",
+          "subfield": [
+            "a"
+          ],
+          "subFieldSplit": {
+            "type": "split_every",
+            "value": "3"
+          }
+        }
+      ]
+    },
+    {
+      "entityPerRepeatedSubfield": true,
+      "entity": [
+        {
+          "target": "notes.instanceNoteTypeId",
+          "subfield": [
+            "h"
+          ],
+          "applyRulesOnConcatenatedData": true,
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_note_type_id",
+                  "parameter": {
+                    "name": "Originalspråk"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "target": "notes.note",
+          "subfield": [
+            "h",
+          ],
+          "applyRulesOnConcatenatedData": true,
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "trim_period"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "target": "notes.staffOnly",
+          "subfield": [
+            "h",
+          ],
+          "rules": [
+            {
+              "conditions": [],
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "entityPerRepeatedSubfield": true,
+      "entity": [
+        {
+          "target": "notes.instanceNoteTypeId",
+          "subfield": [
+            "k"
+          ],
+          "applyRulesOnConcatenatedData": true,
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_note_type_id",
+                  "parameter": {
+                    "name": "Intermediärt språk"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "target": "notes.note",
+          "subfield": [
+            "k",
+          ],
+          "applyRulesOnConcatenatedData": true,
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "trim_period"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "target": "notes.staffOnly",
+          "subfield": [
+            "k",
+          ],
+          "rules": [
+            {
+              "conditions": [],
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    }
   ]
 }
 
@@ -516,7 +638,7 @@ try {
   let rulesStr = fs.readFileSync(rulesFile, { encoding: 'utf8' });
   const allMappingRules = JSON.parse(rulesStr);
   Object.assign(allMappingRules, customRules);
-  // throw(allMappingRules);
+  // throw(allMappingRules['041']);
   const mappingRules = {};
   for (let tag in allMappingRules) {
     let map = allMappingRules[tag];
