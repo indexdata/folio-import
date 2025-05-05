@@ -6,6 +6,63 @@ import readline from 'readline';
 import lib from 'pg';
 
 let confFile = process.argv[2];
+let instSource = 'FOLIO';
+const customRules = {
+  "042": [
+    {
+      "entityPerRepeatedSubfield": true,
+      "entity": [
+        {
+          "target": "notes.instanceNoteTypeId",
+          "subfield": [
+            "9"
+          ],
+          "applyRulesOnConcatenatedData": true,
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_note_type_id",
+                  "parameter": {
+                    "name": "Bibliography note"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "target": "notes.note",
+          "subfield": [
+            "9",
+          ],
+          "applyRulesOnConcatenatedData": true,
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "trim_period"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "target": "notes.staffOnly",
+          "subfield": [
+            "9",
+          ],
+          "rules": [
+            {
+              "conditions": [],
+              "value": "false"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
 
 let refDir;
 let rulesFile;
@@ -81,8 +138,8 @@ const elRelMap = {
 const files = {
   instances: 1,
   srs: 1,
-  snapshot: 1,
-  presuc: 1,
+  snapshot: 0,
+  presuc: 0,
   err: 1
 };
 
@@ -458,6 +515,8 @@ try {
   };
   let rulesStr = fs.readFileSync(rulesFile, { encoding: 'utf8' });
   const allMappingRules = JSON.parse(rulesStr);
+  Object.assign(allMappingRules, customRules);
+  // throw(allMappingRules);
   const mappingRules = {};
   for (let tag in allMappingRules) {
     let map = allMappingRules[tag];
@@ -577,10 +636,13 @@ try {
   }
 
   let start = new Date().valueOf();
-  let snap = makeSnap();
-  writeOut(outs.snapshot, snap);
-  ttl.snapshots++;
-  let jobId = snap.jobExecutionId;
+  let jobId = '';
+  if (instSource === 'MARC') {
+    let snap = makeSnap();
+    writeOut(outs.snapshot, snap);
+    ttl.snapshots++;
+    jobId = snap.jobExecutionId;
+  }
 
   const fileStream = fs.createReadStream(rawFile, { encoding: 'utf8' });
   
@@ -834,13 +896,11 @@ try {
           }
         }
       }
-      inst.source = 'MARC';
+
+      // bespoke stuff here ....
+      inst.source = instSource;
       if (inst.hrid) {
         inst.id = instId;
-        if (0) {
-          if (!inst.identifiers) inst.identifiers = [];
-          inst.identifiers.push({ value: librisNum, identifierTypeId: refData.identifierTypes['Libris number'] })
-        }
         if (inst.subjects) inst.subjects = dedupe(inst.subjects, [ 'value' ]);
         if (inst.identifiers) inst.identifiers = dedupe(inst.identifiers, [ 'value', 'identifierTypeId' ]);
         if (inst.languages) {
@@ -856,7 +916,7 @@ try {
         let librisNum = librisMap[d001];
         if (librisNum) {
           let o = {
-            identifierTypeId: refData.identifierTypes['SE-LIBR'],
+            identifierTypeId: refData.identifierTypes['Libris'],
             value: librisNum
           };
           if (!inst.identifiers) inst.identifiers = [];
@@ -915,9 +975,11 @@ try {
         }
         writeOut(outs.instances, inst);
         ttl.instances++;
-        let srsObj = makeSrs(raw, jobId, inst.id, inst.hrid, inst.discoverySuppress);
-        writeOut(outs.srs, srsObj);
-        ttl.srs++;
+        if (instSource === 'MARC') {
+          let srsObj = makeSrs(raw, jobId, inst.id, inst.hrid, inst.discoverySuppress);
+          writeOut(outs.srs, srsObj);
+          ttl.srs++;
+        }
         if (idmap) {
           let ea = (inst.electronicAccess) ? JSON.stringify(inst.electronicAccess) : '';
           let af = JSON.stringify(addFields);
