@@ -130,6 +130,8 @@ try {
       let c = line.split(/\|/);
       let k = c[0].replace(/^[a-z0]+/, '');
       c[2] = c[2].replace(/^\^\^/, '');
+      c[2] = c[2].replace(/%%/g, '|');
+      console.log(c);
       let ea = (c[5]) ? JSON.parse(c[5]) : [];
       let o = { id: c[1], cn: c[2], cnt: c[3], blvl: c[4], type: c[6], cat: c[7], ea: ea }; 
       instMap[k] = o;

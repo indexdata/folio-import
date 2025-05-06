@@ -821,6 +821,7 @@ try {
         ttl.srs++;
         if (idmap) {
           let ea = (inst.electronicAccess) ? JSON.stringify(inst.electronicAccess) : '';
+          if (bibCallNum.value) bibCallNum.value = bibCallNum.value.replace(/\|/g, '%%') 
           let instMap = `${inst.hrid}|${inst.id}|${bibCallNum.value}|${bibCallNum.type}|${blvl}|${ea}|${itypeCode}`;
           writeOut(outs.idmap, instMap, true, '\n');
         }

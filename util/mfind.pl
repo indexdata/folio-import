@@ -33,10 +33,15 @@ my $lim = shift || 1000000;
 $/ = "\x1D";
 $i = 0;
 my $occ = -1;
-if ($field =~ s/\[(.+)\]//) {
-  $occ = $1;
+my $toc = -1;
+if ($field =~ s/^(...)\[(.+?)\]/$1/) {
+  $toc = $2;
+}
+if ($field =~ s/^(....*)\[(.+?)\]$/$1/) {
+  $occ = $2;
 }
 my ($tag, $sf) = $field =~ /^(...)(.*)/;
+# print "$tag $sf\n"; exit;
 while (<IN>) {
   last if $i == $lim;
   my $found = 0;
@@ -49,7 +54,12 @@ while (<IN>) {
       $mdata = $marc->leader();
       $found = 1 if $mdata =~ /$query/i;
     } else {
+      my $tc = 0;
       foreach ($marc->field($tag)) {
+        if ($toc > -1 && $tc != $toc) {
+          $tc++;
+          next;
+        }
         if ($sf) {
           if ($occ > -1) {
             my @subs = $_->subfield($sf);
@@ -60,7 +70,7 @@ while (<IN>) {
         } else {
           $mdata = $_->as_string();
         }
-        if ($mdata =~ /$query/i) {
+        if ($mdata =~ /$query/) {
           $found = 1;
           last;
         }
