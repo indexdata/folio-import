@@ -129,15 +129,16 @@ try {
     for await (let line of rl) {
       let c = line.split(/\|/);
       let k = c[0].replace(/^[a-z0]+/, '');
-      c[2] = c[2].replace(/^\^\^/, '');
+      c[2] = c[2].replace(/\^\^/g, '');
       c[2] = c[2].replace(/%%/g, '|');
-      console.log(c);
+      if (conf.callNumbersArray && c[2]) c[2] = JSON.parse(c[2]);
       let ea = (c[5]) ? JSON.parse(c[5]) : [];
       let o = { id: c[1], cn: c[2], cnt: c[3], blvl: c[4], type: c[6], cat: c[7], ea: ea }; 
       instMap[k] = o;
     }
   }
   // throw(instMap);
+  // throw('');
 
   let start = new Date().valueOf();
 
@@ -180,13 +181,22 @@ try {
     let bid = r.BIB_ID;
     let imap = instMap[bid];
     if (!imap) {
-      console.log(`ERROR instance not found for BIB_ID ${bid}`);
+      // console.log(`ERROR instance not found for BIB_ID ${bid}`);
       ttl.errors++;
       continue;
+    } else {
+      instMap[bid].used = true;
     }
     let loc = r.LOCATION.trim();
     let locId = locMap[loc];
-    let cn = r.CALL_NUMBER || imap.cn;
+    if (r.CALL_NUMBER) imap.cn.unshift(r.CALL_NUMBER);
+    let cn = imap.cn.shift();
+    if (imap.cn[0]) {
+      let newr = JSON.parse(JSON.stringify(r));
+      newr.CALL_NUMBER = imap.cn.shift();
+      newr.NO_ITEM = true;
+      inRecs.push(newr);
+    }
     let cnt = refData.callNumberTypes['Other scheme'];
     let hkey = bid + ':' + locId + ':' + cn;
     if (!occ[bid]) {
@@ -213,7 +223,7 @@ try {
       }
       if (cn) {
         h.callNumber = cn;
-        h. callNumberTypeId = cnt;
+        h.callNumberTypeId = cnt;
       }
       writeOut(outs.holdings, h);
       hseen[hkey] = hid;
@@ -223,6 +233,7 @@ try {
 
     // items start here
 
+    if (r.NO_ITEM) continue;
     if (!ic[bid]) {
       ic[bid] = 1;
     } else {
@@ -312,6 +323,9 @@ try {
       console.log(`ERROR ITEM material type not found for "${matType}"`);
       ttl.itemErrors++;
     }
+  }
+  for (let k in instMap) {
+    if (instMap[k].used) console.log(instMap[k]);
   }
 
   showStats();
