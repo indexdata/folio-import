@@ -605,10 +605,21 @@ try {
       }
       if (conf.callNumbers) {
         for (let t in conf.callNumbers) {
-          if (marc.fields[t]) {
-            let cn = getSubs(marc.fields[t][0], 'ab');
-            let pre = getSubs(marc.fields[t][0], 'f');
-            bibCallNum.value = `${pre}^^${cn}`;
+          let cf = marc.fields[t];
+          if (cf) {
+            if (conf.callNumbersArray) {
+              let arr = [];
+              cf.forEach(f => {
+                let cn = getSubs(f, 'ab');
+                let pre = getSubs(f, 'f');
+                if (cn) arr.push(`${pre}^^${cn}`);
+              });
+              bibCallNum.value = JSON.stringify(arr);
+            } else {
+              let cn = getSubs(cf[0], 'ab');
+              let pre = getSubs(cf[0], 'f');
+              bibCallNum.value = `${pre}^^${cn}`;
+            }
             bibCallNum.type = conf.callNumbers[t];
             break;
           }

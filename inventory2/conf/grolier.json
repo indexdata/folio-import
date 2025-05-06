@@ -10,6 +10,7 @@
     "noTitle": "[Unknown title]",
     "catDate": { "tag": "008" },
     "suppress": { "tag": "", "subfield": "", "value":"" },
+    "callNumbersArray": true,
     "callNumbers": {
         "099": "6caca63e-5651-4db6-9247-3205156e9699",
         "090": "6caca63e-5651-4db6-9247-3205156e9699"
