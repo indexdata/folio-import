@@ -131,6 +131,7 @@ try {
       let k = c[0].replace(/^[a-z0]+/, '');
       c[2] = c[2].replace(/\^\^/g, '');
       c[2] = c[2].replace(/%%/g, '|');
+      if (!c[2]) c[2] = '[]';
       if (conf.callNumbersArray && c[2]) c[2] = JSON.parse(c[2]);
       let ea = (c[5]) ? JSON.parse(c[5]) : [];
       let o = { id: c[1], cn: c[2], cnt: c[3], blvl: c[4], type: c[6], cat: c[7], ea: ea }; 
@@ -189,7 +190,9 @@ try {
     }
     let loc = r.LOCATION.trim();
     let locId = locMap[loc];
-    if (r.CALL_NUMBER) imap.cn.unshift(r.CALL_NUMBER);
+    if (r.CALL_NUMBER) {
+      imap.cn.unshift(r.CALL_NUMBER);
+    }
     let cn = imap.cn.shift();
     if (imap.cn[0]) {
       let newr = JSON.parse(JSON.stringify(r));
@@ -327,14 +330,38 @@ try {
 
   const defLoc = refData.locations.GC
   for (let k in instMap) {
-    let i = instMap[k]
-    if (!i.used) {
-      i.cn.forEach(c => {
-        let hkey = i.id + ':' + defLoc + ':' + c;
-        if (!hseen[hkey]) {
-          console.log(hkey);
+    let imap = instMap[k]
+    if (!imap.used) {
+      imap.cn.forEach(c => {
+        let bid = k;
+        if (!occ[bid]) {
+          occ[bid] = 1;
         }
-
+        let typeId = (imap.blvl === 's') ? refData.holdingsTypes.Serial : refData.holdingsTypes.Monograph;
+        let occStr = occ[bid].toString().padStart(3, '0');
+        let hhrid = hprefix + bid + '-' + occStr;
+        let hid = uuid(hhrid, ns);
+        let hkey = bid + ':' + defLoc + ':' + c;
+        if (!hseen[hkey]) {
+          let h = {
+            _version: 1,
+            id: hid,
+            instanceId: imap.id,
+            hrid: hhrid,
+            holdingsTypeId: typeId,
+            sourceId: refData.holdingsRecordsSources.FOLIO,
+            permanentLocationId: defLoc,
+            callNumber: c,
+            callNumberTypeId: refData.callNumberTypes['Other scheme']
+          }
+          if (h.permanentLocationId && h.instanceId && h.sourceId && h.callNumberTypeId) {
+            writeOut(outs.holdings, h);
+            ttl.holdings++;
+          } else {
+            console.loc(`ERROR holdings record did not pass verification: ${bid}:${c}`);
+          }
+        }
+        occ[bid]++;
       });
     } 
   }
