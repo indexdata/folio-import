@@ -324,8 +324,19 @@ try {
       ttl.itemErrors++;
     }
   }
+
+  const defLoc = refData.locations.GC
   for (let k in instMap) {
-    if (instMap[k].used) console.log(instMap[k]);
+    let i = instMap[k]
+    if (!i.used) {
+      i.cn.forEach(c => {
+        let hkey = i.id + ':' + defLoc + ':' + c;
+        if (!hseen[hkey]) {
+          console.log(hkey);
+        }
+
+      });
+    } 
   }
 
   showStats();
