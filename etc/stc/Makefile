@@ -32,7 +32,8 @@ instances: $(in)/*.mrc
 items: $(in)/Inv*Standard*txt
 	cd $(idir); ln -s $(in)/Inv*Standard*txt items.txt
 	cd $(idir); ln -s $(in)/Inv*Custom*txt custom.txt
-	cd $(inv2); node holdingsItems-stc conf/stc.json $(idir)/bibs.map $(idir)/custom.txt $(idir)/items.txt > $(log)/makeHoldingsItems.log
+	cd $(idir); ln -s $(in)/Inv*Owners*txt owners.txt
+	cd $(inv2); node holdingsItems-stc conf/stc.json $(idir)/bibs.map $(idir)/custom.txt $(idir)/items.txt $(idir)/owners.txt > $(log)/makeHoldingsItems.log
 	cat $(log)/makeHoldingsItems.log
 
 clean-inventory:
