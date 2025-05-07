@@ -61,7 +61,7 @@ Engage Index Data to assist with or carry out the migration. There are bespoke t
     * [Obtain the authorities data](#obtain-the-authorities-data)
     * [Create the authorities objects](#create-the-authorities-objects)
     * [Split authorities data files](#split-authorities-data-files)
-    * [Load authorities](#load-authorities)
+    * [Load authorities data](#load-authorities-data)
     * [Load authorities source record storage](#load-authorities-source-record-storage)
     * [Reload any authorities errors](#reload-any-authorities-errors)
     * [Visit the UI for quick authorities inspection](#visit-the-ui-for-quick-authorities-inspection)
@@ -71,6 +71,7 @@ Engage Index Data to assist with or carry out the migration. There are bespoke t
 
 * Do 'git pull' for local clone of [folio-import](https://github.com/indexdata/folio-import) and on the prod-bastion host.
 * Do 'cd ~/folio-import; npm install'
+* Add a special log directory: `mkdir ~/folio-import/log`
 * Copy the spreadsheets from a previous dry-run:
     * Store at Gdrive "STC FOLIO Migration > Project Management"
     * e.g. to be "STC dry run checklist YYYY-MM-DD" and "STC Dry Run Tasks YYYY-MM-DD".
@@ -96,7 +97,7 @@ On the prod-bastion host, do:
 cd ~/folio-install
 ./show_config.sh   # and ensure relevant login credentials
 mkdir -p ../stc/all-ref
-node downloadRefData.js ../stc/all-ref
+node downloadRefData.js ../stc/all-ref > ../stc/log/downloadRefData.log 2>&1
 ```
 
 At localhost, ensure up-to-date mapping tables for locations, mtypes, and groups in TSV format. Ensure up-to-date with the customer implementation spreadsheet. Download each relevant worksheet and diff with those at `stc/etc/*.tsv` files. Commit.
@@ -123,6 +124,8 @@ The "nn-permissions" is different. We are only interested in "mutable" permissio
 `node loadMutablePerms.js ../stc/all-ref/permissions/perms__permissions.json`
 
 At the end, do the "`system_users`".
+
+Document the counts.
 
 ## Verify reference data
 
@@ -178,7 +181,7 @@ Calculate the numbers for each type, to split into 5 files, e.g. 81307/5 is appr
 ```
 cd ~/stc/inv
 split -l 17000 bibs-instances.jsonl inst
-split -l 17000 bibs-src.jsonl srs
+split -l 17000 bibs-srs.jsonl srs
 split -l 25000 items-holdings.jsonl hold
 split -l 25000 items-items.jsonl item
 ```
@@ -234,8 +237,8 @@ err.sh ~/stc/log/bibs-snapshot.jsonl.log
 Then the SRS records:
 
 ```
-./run_post_jsonl.sh _/source-storage__records ../stc/inv/srca?
-srs.sh ~/stc/log/srsa*log  # repeat occasionally until finished
+./run_post_jsonl.sh _/source-storage__records ../stc/inv/srsa?
+succ.sh ~/stc/log/srsa*log  # repeat occasionally until finished
 err.sh ~/stc/log/srsa*log
 ```
 
@@ -439,11 +442,16 @@ This does not log to normal log directory, but to the ~/stc/circ directory.
 This grabs the loan object, and changes the due date to whatever is in the checkout record.
 Sometimes it will encounter a "block", but the script knows how to override it.
 
-Inspect the results. Hopefully the `chka*.err` files will be empty.
-
 ```
 cd ~/stc/circ
 tail -f chkaa.log  # Follow one for example
+```
+
+Inspect the results. Hopefully the `chka*.err` files will be empty.
+
+```
+tail chka*.err
+tail -n 4 chka*.log
 ```
 
 ### Timer will do aged-to-lost
@@ -490,6 +498,9 @@ node get _/loan-storage__loans
 Add the counts of checkouts and inactive users to the "STC dry run checklist" spreadsheet at the "Added" column.
 
 ## Load feefines bills
+
+> [!CAUTION]
+> NOTE: Wait for aged-to-lost:
 
 Need to wait until the "Aged to lost" process has completed (see explanation above) which might even be the next day.
 Could move on to do courses and authorities while waiting.
@@ -627,7 +638,7 @@ cd ~/stc
 make authorities
 ```
 
-There will likely be many warnings about duplicates, that is fine.
+There will likely be many warnings about duplicates, that is fine, actually the same records.
 
 ### Split authorities data files
 
@@ -636,10 +647,10 @@ As before, make five batches.
 ```
 cd ~/stc/auth
 split -l 70000 auth-authorities.jsonl auth
-split -l 70000 auth-srs.jsonl auth asrs
+split -l 70000 auth-srs.jsonl asrs
 ```
 
-### Load authorities
+### Load authorities data
 
 ```
 cd ~/folio-import
@@ -649,10 +660,11 @@ cd ~/folio-import
 
 Do the succ/err dance.
 
-Sometime there will be timeouts, that will create an error file, which we can reload (see following section).
+Sometimes there will be timeouts. That will create error files, which we can reload (see following section).
 
 ```
-grep error ../stc/auth/autha*log
+grep error ~/stc/log/autha*log | wc -l
+grep error ~/stc/log/autha*log
 ... proxyClient failure
 ```
 
@@ -665,7 +677,7 @@ First load the snapshot to prepare for SRS.
 ```
 cd ~/folio-import
 ./run_post_jsonl.sh _/source-storage__snapshots ../stc/auth/auth-snapshot.jsonl
-cat ../stc/auth/auth-snapshot.jsonl.log
+cat ~/stc/log/auth-snapshot.jsonl.log
 ```
 
 Expect no errors.
