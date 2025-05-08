@@ -869,7 +869,6 @@ try {
       seen[hrid] = 1;
       let instId = (hrid) ? uuid(hrid, ns) : '';
       marc.mij = fields2mij(marc.fields);
-      console.log(marc.mij);
       let raw = mij2raw(marc.mij);
       ldr = marc.fields.leader || '';
       let itypeCode = ldr.substring(6, 7);
