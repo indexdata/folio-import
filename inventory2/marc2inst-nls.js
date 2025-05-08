@@ -199,28 +199,6 @@ const outs = {};
 const bcseen = {};
 const iseen = {};
 const seen = {};
-const tagMap = {
-  FMT: '',
-  UID: '',
-  CAT: '',
-  SYS: '',
-  SGN: '',
-  PUB: '',
-  AAR: '',
-  ANM: '',
-  ATR: '',
-  BST: '',
-  DAT: '',
-  ENH: '',
-  LKR: '',
-  LPL: '',
-  MTI: '',
-  NMN: '',
-  STA: '',
-  TIT: '',
-  YR1: '',
-  YR2: ''
-};
 
 const typeMap = {
   'a': 'text',
@@ -888,23 +866,10 @@ try {
         librisNum = librisNumField[0].trim();
       }
 
-      for (let tag in tagMap) {
-        if (marc.fields[tag]) {
-          let newTag = tagMap[tag];
-          if (marc.fields[newTag]) {
-            marc.fields[tag].forEach(f => {
-              marc.fields[newTag].push(f);
-            });
-          } else if (newTag) {
-            marc.fields[newTag] = marc.fields[tag];
-          }
-          delete marc.fields[tag];
-        }
-      }
-
       seen[hrid] = 1;
       let instId = (hrid) ? uuid(hrid, ns) : '';
       marc.mij = fields2mij(marc.fields);
+      console.log(marc.mij);
       let raw = mij2raw(marc.mij);
       ldr = marc.fields.leader || '';
       let itypeCode = ldr.substring(6, 7);
