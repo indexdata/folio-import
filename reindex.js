@@ -14,19 +14,12 @@ let ty = process.argv[2];
     
     let rn = tmap[ty];
     if (!rn) throw Error(`"${ty}" is not a proper resourceName!`);
-    // let pl = { recreateIndex: true, resourceName: rn };
-    /* let pl = {
-      "indexSettings": {
-        "numberOfShards": 2,
-        "numberOfReplicas": 4,
-        "refreshInterval": 1
-      }
-    };
-    */
-    let pl = '{ "entityTypes": ["instances"] }';
+    let pl = { recreateIndex: true, resourceName: 'linked-data-instance' };
+	  pl = {};
 
     const config = await getAuthToken(superagent);
-    let url = `${config.okapi}/search/index/${rn}-records/reindex/upload`;
+
+    let url = `${config.okapi}/search/index/instance-records/reindex/full`;
     console.log('POST', url);
     try {
       const res = await superagent

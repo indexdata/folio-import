@@ -1,0 +1,14 @@
+{
+    "nameSpace": "70a86ff4-8960-4b42-9191-4330be4c6e6c",
+    "refDir": "/home/konchaled/data/ref/inv",
+    "tsvDir": "",
+    "mapFile": "",
+    "controlNum": "SYS",
+    "hridPrefix": "",
+    "makeInstMap": true,
+    "hasMfhd": false,
+    "noTitle": "",
+    "catDate": { "tag": "008" },
+    "suppress": { "tag": "", "subfield": "", "value":"" },
+    "callNumbers": {}
+}
