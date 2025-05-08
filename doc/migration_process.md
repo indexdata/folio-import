@@ -71,13 +71,16 @@ Engage Index Data to assist with or carry out the migration. There are bespoke t
 
 * Do 'git pull' for local clone of [folio-import](https://github.com/indexdata/folio-import) and on the prod-bastion host.
 * Do 'cd ~/folio-import; npm install'
-* Add a special log directory: `mkdir ~/folio-import/log`
+* Add a special log directory: `mkdir -p ~/folio-import/log`
 * Copy the spreadsheets from a previous dry-run:
     * Store at Gdrive "STC FOLIO Migration > Project Management"
     * e.g. to be "STC dry run checklist YYYY-MM-DD" and "STC Dry Run Tasks YYYY-MM-DD".
 * Get some separate iTerm windows and do 'ssh prod-bastion' etc.
+    * One at `~/folio-import` for running the commands.
+    * Two at `~/stc` for process monitoring, e.g. succ.sh, err.sh
+* Browser window for the management spreadsheets.
 * Ensure tenant configuration credentials, e.g. `~/folio-import/configs/json/stc-test.json`
-    * Add "syscreds" for the relevant system users
+    * Add "syscreds" for the relevant system users.
 * Move old data to separate directories:
     * e.g. ~/stc/incoming-dryrun1
     * e.g. ~/stc/all-ref-dryrun1
@@ -540,25 +543,25 @@ tail -f ~/stc/log/bills.jsonl.log
 
 Login to stc-test UI.
 
-Visit "Users" and select "Status > Billed".
+Visit "Users" and "Actions > Lost items requiring actual cost" and then select "Status > Billed".
 
-Select a user record, and via ellipsis "Patron details" Loans.
+At a user record, select via ellipsis the "Patron details" Loans. Visit the "Fees/Fines" section.
 
 ### Change the account dates
 
 ```
 cd ~/folio-import
-node changeAccountDate.js ../stc/fines/accountDates.jsonl
+node changeActionDates.js ../stc/fines/actionDates.jsonl
 ```
 
 ### Load feefines accounts and actions
 
 ```
-./run_post_jsonl.sh _/feefines ../stc/fines/accounts.jsonl
-./run_post_jsonl.sh _/feefineactions ../stc/fees/feefineActions.jsonl
+./run_post_jsonl.sh _/accounts ../stc/fines/accounts.jsonl
+./run_post_jsonl.sh _/feefineactions ../stc/fines/feefineActions.jsonl
 ```
 
-Do the succ/err dance.
+Visit the corresponding logs.
 
 ### Document the feefines counts
 
