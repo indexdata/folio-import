@@ -6,7 +6,7 @@ import readline from 'readline';
 import lib from 'pg';
 
 let confFile = process.argv[2];
-let instSource = 'FOLIO';
+let instSource = 'MARC';
 const customRules = {
   "042": [
     {
@@ -200,9 +200,9 @@ const bcseen = {};
 const iseen = {};
 const seen = {};
 const tagMap = {
-  FMT: '996',
+  FMT: '',
   UID: '',
-  CAT: '998',
+  CAT: '',
   SYS: '',
   SGN: '',
   PUB: '',
@@ -217,7 +217,7 @@ const tagMap = {
   MTI: '',
   NMN: '',
   STA: '',
-  TIT: '245',
+  TIT: '',
   YR1: '',
   YR2: ''
 };
@@ -1035,7 +1035,7 @@ try {
           });
           inst.languages = langs;
         }
-        let librisNum = librisMap[d001];
+        let librisNum = (librisMap[d001]) ? librisMap[d001] : (d001 && d001.match(/^\w{14,17}/)) ? d001 : '';
         if (librisNum) {
           let o = {
             identifierTypeId: refData.identifierTypes['Libris'],

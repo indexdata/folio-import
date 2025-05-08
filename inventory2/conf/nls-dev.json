@@ -7,7 +7,7 @@
     "hridPrefix": "",
     "makeInstMap": true,
     "hasMfhd": false,
-    "noTitle": "[Unknown title]",
+    "noTitle": "",
     "catDate": { "tag": "008" },
     "suppress": { "tag": "", "subfield": "", "value":"" },
     "callNumbers": {}
