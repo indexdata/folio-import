@@ -88,6 +88,7 @@ try {
   let success = 0;
   let ecount = 0;
   let tcount = 0;
+  let skipped = 0;
   const useen = {};
   const bcseen = {};
   let out = {};
@@ -95,11 +96,17 @@ try {
   for (let x = 0; x < inRecs.length; x++) {
     count++;
     let p = inRecs[x];
+    let uat = p.UAT;
+    if (uat === 'X') {
+      skipped++;
+      continue;
+    }
     if (process.env.DEBUG) console.log(p);
     for (let k in p) {
       p[k] = p[k].trim();
     }
     let ten = p['NUC/tenant'].toLowerCase();
+    ten = ten.replace(/:/, '');
     let uid = p.Username;
     let un = uid; 
     let ln = p['Last Name'];
@@ -146,7 +153,7 @@ try {
         ecount++;
       }
     } else {
-      console.log(`ERROR membership id "${un}" already used!`)
+      console.log(`ERROR membership id "[${p['NUC/tenant']}] ${un}" already used!`)
       ecount++;
     }
   } 
@@ -160,9 +167,9 @@ try {
       relax_column_count: true,
       quote: '"'
     })
-    // throw(inRecs);
     inRecs.forEach(r => {
       let t = r.tenant;
+      t = t.replace(/_/, '');
       let u = r.username;
       let p = r.password;
       let url = 'https://trove-prod-okapi.ap-southeast-2.folio.indexdata.com'; 
@@ -221,6 +228,7 @@ try {
   console.log('Processed:', count);
   console.log('Users created:', success);
   console.log('Configs:', tcount);
+  console.log('Skipped:', skipped);
   console.log('Errors:', ecount);
   console.log('Time (secs):', t);
 } catch (e) {
