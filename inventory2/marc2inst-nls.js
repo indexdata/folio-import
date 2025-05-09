@@ -238,8 +238,9 @@ const elRelMap = {
 const files = {
   instances: 1,
   srs: 1,
-  snapshot: 0,
-  presuc: 0,
+  aholdings: 1,
+  snapshot: 1,
+  presuc: 1,
   err: 1
 };
 
@@ -576,6 +577,96 @@ const dedupe = function (arr, props) {
 const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
 }
 
+const makeAleph = (fields) => {
+  let mti = (fields.MTI) ? getSubs(fields.MTI[0], 'a') : '';
+  let hrid = (fields.SYS) ? getSubs(fields.SYS[0], 'a') : '';
+  let anotes = [];
+  if (fields.ENH) {
+    fields.ENH.forEach(f => {
+      let d = getSubs(f, 'a');
+      anotes.push(d);
+    });
+  }
+  let notes = [];
+  if (fields.ANM) {
+    fields.ANM.forEach(f => {
+      let d = getSubs(f, 'a');
+      let o = {
+        note: d,
+        instanceNoteTypeId: refData.instanceNoteTypes['General note']
+      }
+      notes.push(o);
+    });
+  }
+  let cn = (fields.SGN) ? getSubs(fields.SGN[0], 'a') : '';
+  let ed = (fields.UPL) ? getSubs(fields.UPL[0], 'a') : '';
+  let au = (fields.UPP) ? getSubs(fields.UPP[0], 'a') : '';
+  let dt = (fields.AAR) ? getSubs(fields.AAR[0], 'a') : '';
+  let desc = (fields.INN) ? getSubs(fields.INN[0], 'a') : '';
+  let cnt = refData.callNumberTypes['Other scheme'];
+  let id = uuid(hrid + 'aleph', ns);
+  let ti;
+  let statCode;
+  let cdate;  
+  let istat;
+  if (mti === 'MINIPOST') {
+    ti = (fields.TIT) ? getSubs(fields.TIT[0], 'a') : '[okänd titel]';
+    if (fields.CAT) {
+      let cdates = [];
+      fields.CAT.forEach(f => {
+        let d = getSubs(f, 'c');
+        d = d.replace(/^(....)(..)(..)/, '$1-$2-$3');
+        cdates.push(d);
+      });
+      cdates = cdates.sort().reverse();
+      cdate = cdates[0];
+    }
+    statCode = refData.statisticalCodes['999'];
+    istat = refData.instanceStatuses.Minipost;
+  } else {
+    ti = (fields.PUB) ? getSubs(fields.PUB[0], 'a') : '[okänd titel]';
+    cdate = (fields.DAT) ? getSubs(fields.DAT[0], 'a') : '';
+    statCode = refData.statisticalCodes['85B'];
+    istat = refData.instanceStatuses.mv
+  }
+  const out = {}
+  let i = {
+    _version: 1,
+    id: id,
+    hrid: hrid,
+    source: 'FOLIO',
+    instanceTypeId: refData.instanceTypes.other,
+    statusId: istat,
+    discoverySuppress: true,
+    title: ti
+  };
+  if (statCode) i.statisticalCodeIds = [ statCode ];
+  if (anotes[0]) i.administrativeNotes = anotes;
+  if (notes[0]) i.notes = notes;
+  if (cdate) {
+    i.catalogedDate = cdate;
+  }
+  if (ed) i.editions = [ ed ];
+  if (au) i.contributors = [ { name: au, contributorNameTypeId: refData.contributorNameTypes['Personal name'] } ];
+  if (dt) i.publication = [ { dateOfPublication: dt } ];
+  if (desc) i.physicalDescriptions = [ desc ];
+  out.instances = i;
+
+  if (cn) {
+    let h = {
+      id: uuid(i.id, ns),
+      hrid: i.hrid + '-000',
+      instanceId: i.id,
+      permanentLocationId: refData.locations.datamigration,
+      callNumber: cn,
+      callNumberTypeId: cnt,
+      sourceId: refData.holdingsRecordsSources.FOLIO
+    }
+    out.holdings = h;
+  }
+  return out;
+}
+
 try {
   if (!rawFile) { throw "Usage: node marc2inst.js <conf_file> <raw_marc_file>" }
   let confDir = path.dirname(confFile);
@@ -724,6 +815,7 @@ try {
     instances: 0,
     snapshots: 0,
     srs: 0,
+    aholdings: 0,
     presuc: 0,
     errors: 0
   }
@@ -769,6 +861,16 @@ try {
         console.log(e);
         ttl.errors++;
         writeOut(outs.err, r, true);
+        continue;
+      }
+      if (!marc.fields['245'] && marc.fields['MTI']) {
+        let o = makeAleph(marc.fields);
+        writeOut(outs.instances, o.instances);
+        ttl.instances++;
+        if (o.holdings) {
+          writeOut(outs.aholdings, o.holdings);
+          ttl.aholdings++;
+        }
         continue;
       }
       let d001 = (marc.fields['001']) ? marc.fields['001'][0] : '';
