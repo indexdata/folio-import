@@ -1,0 +1,477 @@
+{
+  "servicepoints": [
+    {
+      "id": "54ff2ca8-8ad5-43c5-9979-b46830455fc2",
+      "name": "Bevarande",
+      "code": "SP-BE",
+      "discoveryDisplayName": "Preservation unit servicepoint",
+      "pickupLocation": true,
+      "holdShelfExpiryPeriod": {
+        "duration": 7,
+        "intervalId": "Days"
+      },
+      "holdShelfClosedLibraryDateManagement": "Move_to_the_end_of_the_next_open_day",
+      "staffSlips": [
+        {
+          "id": "6a6e72f0-69da-4b4c-8254-7154679e9d88",
+          "printByDefault": false
+        },
+        {
+          "id": "8812bae1-2738-442c-bc20-fe4bb38a11f8",
+          "printByDefault": false
+        },
+        {
+          "id": "1ed55c5c-64d9-40eb-8b80-7438a262288b",
+          "printByDefault": false
+        },
+        {
+          "id": "f838cdaf-555a-473f-abf1-f35ef6ab8ae1",
+          "printByDefault": false
+        }
+      ],
+      "ecsRequestRouting": false,
+      "metadata": {
+        "createdDate": "2024-10-15T14:58:42.631+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-12-19T10:57:50.069+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "7880bc3a-41db-4355-ad61-eba55ca0ebe0",
+      "name": "Rogge",
+      "code": "SP-SRO",
+      "discoveryDisplayName": "Rogge library",
+      "pickupLocation": false,
+      "holdShelfClosedLibraryDateManagement": "Keep_the_current_due_date",
+      "staffSlips": [
+        {
+          "id": "6a6e72f0-69da-4b4c-8254-7154679e9d88",
+          "printByDefault": false
+        },
+        {
+          "id": "8812bae1-2738-442c-bc20-fe4bb38a11f8",
+          "printByDefault": false
+        },
+        {
+          "id": "1ed55c5c-64d9-40eb-8b80-7438a262288b",
+          "printByDefault": false
+        },
+        {
+          "id": "f838cdaf-555a-473f-abf1-f35ef6ab8ae1",
+          "printByDefault": false
+        }
+      ],
+      "ecsRequestRouting": false,
+      "metadata": {
+        "createdDate": "2024-10-14T12:31:40.459+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-12-19T11:00:46.962+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "d5b51479-02ca-436f-91e0-6f8c328c7a5f",
+      "name": "Handskrifter",
+      "code": "SP-HAND",
+      "discoveryDisplayName": "Manuscripts servicepoint",
+      "pickupLocation": false,
+      "holdShelfClosedLibraryDateManagement": "Keep_the_current_due_date",
+      "staffSlips": [
+        {
+          "id": "6a6e72f0-69da-4b4c-8254-7154679e9d88",
+          "printByDefault": false
+        },
+        {
+          "id": "8812bae1-2738-442c-bc20-fe4bb38a11f8",
+          "printByDefault": true
+        },
+        {
+          "id": "1ed55c5c-64d9-40eb-8b80-7438a262288b",
+          "printByDefault": false
+        },
+        {
+          "id": "f838cdaf-555a-473f-abf1-f35ef6ab8ae1",
+          "printByDefault": false
+        }
+      ],
+      "ecsRequestRouting": false,
+      "metadata": {
+        "createdDate": "2024-10-14T12:22:37.006+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-12-19T11:01:28.032+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "d30b93ae-38ee-461f-865f-58cfe08f507a",
+      "name": "Vardagstryck",
+      "code": "SP-VT",
+      "discoveryDisplayName": "Ephemera collection servicepoint",
+      "description": "För utskrift av vardagstrycksbeställningar",
+      "pickupLocation": false,
+      "holdShelfClosedLibraryDateManagement": "Keep_the_current_due_date",
+      "staffSlips": [
+        {
+          "id": "6a6e72f0-69da-4b4c-8254-7154679e9d88",
+          "printByDefault": false
+        },
+        {
+          "id": "8812bae1-2738-442c-bc20-fe4bb38a11f8",
+          "printByDefault": true
+        },
+        {
+          "id": "1ed55c5c-64d9-40eb-8b80-7438a262288b",
+          "printByDefault": false
+        },
+        {
+          "id": "f838cdaf-555a-473f-abf1-f35ef6ab8ae1",
+          "printByDefault": false
+        }
+      ],
+      "ecsRequestRouting": false,
+      "metadata": {
+        "createdDate": "2024-10-07T10:03:36.461+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-12-19T11:05:00.929+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "1876697c-c60a-42cf-8e6c-82776e7a7076",
+      "name": "Ej cirkulation",
+      "code": "SP-NOCIRC",
+      "discoveryDisplayName": "Ej cirkulation ",
+      "pickupLocation": false,
+      "holdShelfClosedLibraryDateManagement": "Keep_the_current_due_date",
+      "staffSlips": [
+        {
+          "id": "6a6e72f0-69da-4b4c-8254-7154679e9d88",
+          "printByDefault": false
+        },
+        {
+          "id": "8812bae1-2738-442c-bc20-fe4bb38a11f8",
+          "printByDefault": false
+        },
+        {
+          "id": "1ed55c5c-64d9-40eb-8b80-7438a262288b",
+          "printByDefault": false
+        },
+        {
+          "id": "f838cdaf-555a-473f-abf1-f35ef6ab8ae1",
+          "printByDefault": false
+        }
+      ],
+      "ecsRequestRouting": false,
+      "metadata": {
+        "createdDate": "2023-11-30T10:48:27.681+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2025-01-20T09:19:01.725+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "f5e36187-86f3-4fe0-9076-9f5daf849d3e",
+      "name": "Fjärrlån",
+      "code": "SP-ILL",
+      "discoveryDisplayName": "Interlibrary loan servicepoint",
+      "pickupLocation": true,
+      "holdShelfExpiryPeriod": {
+        "duration": 7,
+        "intervalId": "Days"
+      },
+      "holdShelfClosedLibraryDateManagement": "Move_to_the_end_of_the_next_open_day",
+      "staffSlips": [
+        {
+          "id": "6a6e72f0-69da-4b4c-8254-7154679e9d88",
+          "printByDefault": false
+        },
+        {
+          "id": "8812bae1-2738-442c-bc20-fe4bb38a11f8",
+          "printByDefault": true
+        },
+        {
+          "id": "1ed55c5c-64d9-40eb-8b80-7438a262288b",
+          "printByDefault": false
+        },
+        {
+          "id": "f838cdaf-555a-473f-abf1-f35ef6ab8ae1",
+          "printByDefault": false
+        }
+      ],
+      "ecsRequestRouting": false,
+      "metadata": {
+        "createdDate": "2024-10-08T12:28:24.731+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-12-19T11:02:33.414+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "fa60af7f-b89f-4a73-87b1-7d123900eb2f",
+      "name": "Specialläsesalen",
+      "code": "SP-SPE",
+      "discoveryDisplayName": "Special reading room loans desk",
+      "pickupLocation": true,
+      "holdShelfExpiryPeriod": {
+        "duration": 7,
+        "intervalId": "Days"
+      },
+      "holdShelfClosedLibraryDateManagement": "Move_to_the_end_of_the_next_open_day",
+      "staffSlips": [
+        {
+          "id": "6a6e72f0-69da-4b4c-8254-7154679e9d88",
+          "printByDefault": false
+        },
+        {
+          "id": "8812bae1-2738-442c-bc20-fe4bb38a11f8",
+          "printByDefault": false
+        },
+        {
+          "id": "1ed55c5c-64d9-40eb-8b80-7438a262288b",
+          "printByDefault": false
+        },
+        {
+          "id": "f838cdaf-555a-473f-abf1-f35ef6ab8ae1",
+          "printByDefault": false
+        }
+      ],
+      "ecsRequestRouting": false,
+      "metadata": {
+        "createdDate": "2023-08-07T08:03:52.447+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-12-19T10:53:42.449+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "ec9ed36f-f5dd-4a32-9b02-64ace39c2699",
+      "name": "Tryckt samling",
+      "code": "SP-MAGTS",
+      "discoveryDisplayName": "Printed collection servicepoint",
+      "description": "För utskrift av tryckta samlingens beställningar.",
+      "pickupLocation": false,
+      "holdShelfClosedLibraryDateManagement": "Keep_the_current_due_date",
+      "staffSlips": [
+        {
+          "id": "6a6e72f0-69da-4b4c-8254-7154679e9d88",
+          "printByDefault": false
+        },
+        {
+          "id": "8812bae1-2738-442c-bc20-fe4bb38a11f8",
+          "printByDefault": true
+        },
+        {
+          "id": "1ed55c5c-64d9-40eb-8b80-7438a262288b",
+          "printByDefault": false
+        },
+        {
+          "id": "f838cdaf-555a-473f-abf1-f35ef6ab8ae1",
+          "printByDefault": false
+        }
+      ],
+      "ecsRequestRouting": false,
+      "metadata": {
+        "createdDate": "2023-09-18T07:02:40.120+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-01-17T13:21:59.853+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "e3b2dcde-069b-43ab-ba22-b5500cefc2f6",
+      "name": "Periodikarum",
+      "code": "SP- PRUM ",
+      "discoveryDisplayName": "Periodikarum",
+      "description": "För utskrift av beställningar i Periodikarum",
+      "pickupLocation": false,
+      "holdShelfClosedLibraryDateManagement": "Keep_the_current_due_date",
+      "staffSlips": [
+        {
+          "id": "6a6e72f0-69da-4b4c-8254-7154679e9d88",
+          "printByDefault": false
+        },
+        {
+          "id": "8812bae1-2738-442c-bc20-fe4bb38a11f8",
+          "printByDefault": true
+        },
+        {
+          "id": "1ed55c5c-64d9-40eb-8b80-7438a262288b",
+          "printByDefault": false
+        },
+        {
+          "id": "f838cdaf-555a-473f-abf1-f35ef6ab8ae1",
+          "printByDefault": false
+        }
+      ],
+      "ecsRequestRouting": false,
+      "metadata": {
+        "createdDate": "2023-11-16T10:34:11.907+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2025-01-20T09:20:33.877+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "ce8221d5-d05a-4341-9df8-702664d0d819",
+      "name": "Repro och foto",
+      "code": "SP-REFO",
+      "discoveryDisplayName": "Repro och foto",
+      "description": "Här digitiseras material",
+      "pickupLocation": true,
+      "holdShelfExpiryPeriod": {
+        "duration": 7,
+        "intervalId": "Days"
+      },
+      "holdShelfClosedLibraryDateManagement": "Move_to_the_end_of_the_next_open_day",
+      "staffSlips": [
+        {
+          "id": "6a6e72f0-69da-4b4c-8254-7154679e9d88",
+          "printByDefault": false
+        },
+        {
+          "id": "8812bae1-2738-442c-bc20-fe4bb38a11f8",
+          "printByDefault": true
+        },
+        {
+          "id": "1ed55c5c-64d9-40eb-8b80-7438a262288b",
+          "printByDefault": false
+        },
+        {
+          "id": "f838cdaf-555a-473f-abf1-f35ef6ab8ae1",
+          "printByDefault": false
+        }
+      ],
+      "ecsRequestRouting": false,
+      "metadata": {
+        "createdDate": "2024-06-18T07:31:36.491+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-01-20T09:21:17.858+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "9d1b77e8-f02e-4b7f-b296-3f2042ddac54",
+      "name": "DCB",
+      "code": "000",
+      "discoveryDisplayName": "DCB",
+      "pickupLocation": true,
+      "holdShelfExpiryPeriod": {
+        "duration": 10,
+        "intervalId": "Days"
+      },
+      "holdShelfClosedLibraryDateManagement": "Keep_the_current_due_date",
+      "staffSlips": [],
+      "ecsRequestRouting": false,
+      "metadata": {
+        "createdDate": "2025-04-17T13:29:58.477+00:00",
+        "updatedDate": "2025-04-17T13:29:58.477+00:00"
+      }
+    },
+    {
+      "id": "996760f7-e64b-4c8e-b228-41f52fb9fade",
+      "name": "Information och lån",
+      "code": "SP-INFO",
+      "discoveryDisplayName": "Main information and loans desk",
+      "shelvingLagTime": 1,
+      "pickupLocation": true,
+      "holdShelfExpiryPeriod": {
+        "duration": 7,
+        "intervalId": "Days"
+      },
+      "holdShelfClosedLibraryDateManagement": "Move_to_the_end_of_the_next_open_day",
+      "staffSlips": [
+        {
+          "id": "6a6e72f0-69da-4b4c-8254-7154679e9d88",
+          "printByDefault": false
+        },
+        {
+          "id": "8812bae1-2738-442c-bc20-fe4bb38a11f8",
+          "printByDefault": true
+        },
+        {
+          "id": "1ed55c5c-64d9-40eb-8b80-7438a262288b",
+          "printByDefault": false
+        },
+        {
+          "id": "f838cdaf-555a-473f-abf1-f35ef6ab8ae1",
+          "printByDefault": false
+        }
+      ],
+      "ecsRequestRouting": false,
+      "metadata": {
+        "createdDate": "2023-08-07T08:02:01.030+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-12-19T10:51:52.141+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "f7ce18a5-e9b0-47b2-8f94-a7ec1b954780",
+      "name": "Bålsta",
+      "code": "SP-BAL",
+      "discoveryDisplayName": "Bålsta servicepoint",
+      "pickupLocation": false,
+      "holdShelfClosedLibraryDateManagement": "Keep_the_current_due_date",
+      "staffSlips": [
+        {
+          "id": "6a6e72f0-69da-4b4c-8254-7154679e9d88",
+          "printByDefault": false
+        },
+        {
+          "id": "8812bae1-2738-442c-bc20-fe4bb38a11f8",
+          "printByDefault": false
+        },
+        {
+          "id": "1ed55c5c-64d9-40eb-8b80-7438a262288b",
+          "printByDefault": false
+        },
+        {
+          "id": "f838cdaf-555a-473f-abf1-f35ef6ab8ae1",
+          "printByDefault": false
+        }
+      ],
+      "ecsRequestRouting": false,
+      "metadata": {
+        "createdDate": "2024-07-02T08:51:13.461+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-12-19T11:00:05.730+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "7c5abc9f-f3d7-4856-b8d7-6712462ca007",
+      "name": "Online",
+      "code": "SP-DIG",
+      "discoveryDisplayName": "Online",
+      "shelvingLagTime": 1,
+      "pickupLocation": false,
+      "holdShelfClosedLibraryDateManagement": "Keep_the_current_due_date",
+      "staffSlips": [
+        {
+          "id": "6a6e72f0-69da-4b4c-8254-7154679e9d88",
+          "printByDefault": false
+        },
+        {
+          "id": "8812bae1-2738-442c-bc20-fe4bb38a11f8",
+          "printByDefault": false
+        },
+        {
+          "id": "1ed55c5c-64d9-40eb-8b80-7438a262288b",
+          "printByDefault": false
+        },
+        {
+          "id": "f838cdaf-555a-473f-abf1-f35ef6ab8ae1",
+          "printByDefault": false
+        }
+      ],
+      "ecsRequestRouting": false,
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:44.437+00:00",
+        "updatedDate": "2025-01-20T09:19:41.968+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    }
+  ],
+  "totalRecords": 14
+}

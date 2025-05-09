@@ -1,0 +1,165 @@
+{
+  "subjectSources": [
+    {
+      "id": "e894d0dc-621d-4b1d-98f6-6f7120eb0d40",
+      "name": "Library of Congress Subject Headings",
+      "code": "lcsh",
+      "source": "folio"
+    },
+    {
+      "id": "e894d0dc-621d-4b1d-98f6-6f7120eb0d41",
+      "name": "Library of Congress Children's and Young Adults' Subject Headings",
+      "code": "cyac",
+      "source": "folio"
+    },
+    {
+      "id": "e894d0dc-621d-4b1d-98f6-6f7120eb0d42",
+      "name": "Medical Subject Headings",
+      "code": "mesh",
+      "source": "folio"
+    },
+    {
+      "id": "e894d0dc-621d-4b1d-98f6-6f7120eb0d43",
+      "name": "National Agricultural Library subject authority file",
+      "source": "folio"
+    },
+    {
+      "id": "e894d0dc-621d-4b1d-98f6-6f7120eb0d44",
+      "name": "Source not specified",
+      "source": "folio"
+    },
+    {
+      "id": "e894d0dc-621d-4b1d-98f6-6f7120eb0d45",
+      "name": "Canadian Subject Headings",
+      "code": "cash",
+      "source": "folio"
+    },
+    {
+      "id": "e894d0dc-621d-4b1d-98f6-6f7120eb0d46",
+      "name": "Répertoire de vedettes-matière",
+      "code": "rvm",
+      "source": "folio"
+    },
+    {
+      "id": "f9041766-0d1e-45c4-ae3c-cf77b0618c5b",
+      "name": "Svenska ämnesord",
+      "code": "sao",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-04-23T13:54:57.691+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-04-23T13:54:57.691+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    },
+    {
+      "id": "1f28898b-f8ce-4968-8b05-f4ac8af64c8f",
+      "name": "KVINNSAM",
+      "code": "kao",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-04-23T14:01:45.375+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-04-23T14:01:45.375+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    },
+    {
+      "id": "668c6af9-4c1f-4f26-8107-0e73f02060fd",
+      "name": "KVINNSAM English",
+      "code": "kao//eng",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-04-23T14:02:08.266+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-04-23T14:02:08.266+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    },
+    {
+      "id": "e1284fa0-22e7-4b74-99f4-67cd996782bc",
+      "name": "Svensk MeSH",
+      "code": "swemesh",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-04-23T14:02:46.518+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-04-23T14:02:46.518+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    },
+    {
+      "id": "3074dea3-1bc2-4949-add9-1f57414e1d58",
+      "name": "Barnämnesord",
+      "code": "barn",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-04-23T14:04:41.141+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-04-23T14:04:41.141+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    },
+    {
+      "id": "4cb23df5-dad4-443b-a734-14026bcc9fcd",
+      "name": "Tesaurus för grafiskt material",
+      "code": "gmgpc/swe",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-04-23T13:59:41.682+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-04-23T14:05:38.894+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    },
+    {
+      "id": "f85ee020-f405-4e9f-afde-d8ad2dd34d0b",
+      "name": "Thesaurus for graphic materials",
+      "code": "gmgpc",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-04-23T14:00:27.675+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-04-23T14:05:54.133+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    },
+    {
+      "id": "5a432fe9-afde-4282-b25a-5e033b17cb87",
+      "name": "MARC terms",
+      "code": "marc",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-04-23T14:07:49.481+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-04-23T14:07:49.481+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    },
+    {
+      "id": "2f3590aa-3fd3-416a-8ea1-96f2fcbb2fa7",
+      "name": "Barn - Genre och form",
+      "code": "barngf",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-04-23T13:49:09.655+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-04-23T14:09:23.200+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    },
+    {
+      "id": "af636034-403c-474a-96bb-0440021c20c1",
+      "name": "SAOGF Genre och form",
+      "code": "SAOGF",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-04-23T13:48:37.384+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-04-23T14:09:42.374+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    }
+  ],
+  "totalRecords": 17
+}

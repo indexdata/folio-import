@@ -1,0 +1,23 @@
+{
+  "holdingsRecordsSources": [
+    {
+      "id": "f32d531e-df79-46b3-8932-cdd35f7a2264",
+      "name": "FOLIO",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:46.055+00:00",
+        "updatedDate": "2023-03-13T12:10:46.055+00:00"
+      }
+    },
+    {
+      "id": "036ee84a-6afd-4c3c-9ad3-4a12ab875f59",
+      "name": "MARC",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:46.054+00:00",
+        "updatedDate": "2023-03-13T12:10:46.054+00:00"
+      }
+    }
+  ],
+  "totalRecords": 2
+}

@@ -1,0 +1,89 @@
+{
+  "instanceStatuses": [
+    {
+      "id": "2a340d34-6b70-443a-bb1b-1b8d1c65d862",
+      "code": "other",
+      "name": "Other",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.230+00:00",
+        "updatedDate": "2023-03-13T12:10:45.230+00:00"
+      }
+    },
+    {
+      "id": "9634a5ab-9228-4703-baf2-4d12ebc77d56",
+      "code": "cat",
+      "name": "Cataloged",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.232+00:00",
+        "updatedDate": "2023-03-13T12:10:45.232+00:00"
+      }
+    },
+    {
+      "id": "26f5208e-110a-4394-be29-1569a8c84a65",
+      "code": "uncat",
+      "name": "Uncataloged",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.237+00:00",
+        "updatedDate": "2023-03-13T12:10:45.237+00:00"
+      }
+    },
+    {
+      "id": "daf2681c-25af-4202-a3fa-e58fdf806183",
+      "code": "temp",
+      "name": "Temporary",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.237+00:00",
+        "updatedDate": "2023-03-13T12:10:45.237+00:00"
+      }
+    },
+    {
+      "id": "52a2ff34-2a12-420d-8539-21aa8d3cf5d8",
+      "code": "batch",
+      "name": "Batch Loaded",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.244+00:00",
+        "updatedDate": "2023-03-13T12:10:45.244+00:00"
+      }
+    },
+    {
+      "id": "f5cc2ab6-bb92-4cab-b83f-5a3d09261a41",
+      "code": "none",
+      "name": "Not yet assigned",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.243+00:00",
+        "updatedDate": "2023-03-13T12:10:45.243+00:00"
+      }
+    },
+    {
+      "id": "a2d084c1-b563-47bf-b1c3-7735006a3a4a",
+      "code": "mv",
+      "name": "Minipost - vardagstryck",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2024-09-10T12:18:04.942+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-04-29T07:22:26.811+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "e2e2822a-485f-4d0c-afa9-b589ebbbeb5f",
+      "code": "mp",
+      "name": "Minipost",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-04-29T07:22:39.000+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-04-29T07:22:39.000+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    }
+  ],
+  "totalRecords": 8
+}
