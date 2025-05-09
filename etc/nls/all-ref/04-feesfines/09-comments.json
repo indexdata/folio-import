@@ -1,0 +1,23 @@
+{
+  "comments": [
+    {
+      "paid": false,
+      "waived": false,
+      "refunded": false,
+      "transferredManually": false,
+      "metadata": {
+        "createdDate": "2024-06-25T12:25:04.551+00:00",
+        "createdByUserId": "633ecaff-57a7-48d4-98a9-4383e5e23702",
+        "updatedDate": "2024-06-25T12:25:04.551+00:00",
+        "updatedByUserId": "633ecaff-57a7-48d4-98a9-4383e5e23702"
+      },
+      "id": "a6834287-e670-4f71-be75-f4661e47dbf0"
+    }
+  ],
+  "totalRecords": 1,
+  "resultInfo": {
+    "totalRecords": 1,
+    "facets": [],
+    "diagnostics": []
+  }
+}

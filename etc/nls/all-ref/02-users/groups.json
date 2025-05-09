@@ -1,0 +1,76 @@
+{
+  "usergroups": [
+    {
+      "group": "1. Ordinarie",
+      "desc": "Ordinare låntagare",
+      "id": "bbb4e6d1-8c05-45c8-9a0a-14935f33decb",
+      "expirationOffsetInDays": 722,
+      "metadata": {
+        "createdDate": "2023-03-21T20:46:02.304+00:00",
+        "createdByUserId": "39a1ef78-5c0d-426c-b997-cb65c4f44ebd",
+        "updatedDate": "2025-02-14T15:31:38.471+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "group": "2. Bokskåp",
+      "desc": "Låntagare med bokskåp",
+      "id": "bc413944-f892-4d15-b550-59961e8a813d",
+      "expirationOffsetInDays": 366,
+      "metadata": {
+        "createdDate": "2023-03-21T20:47:15.482+00:00",
+        "createdByUserId": "39a1ef78-5c0d-426c-b997-cb65c4f44ebd",
+        "updatedDate": "2025-02-14T15:31:51.018+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "group": "3. Personal ",
+      "desc": "Personal på KB",
+      "id": "be0d7b03-99dd-4eb1-8dc2-9b7f883b2664",
+      "expirationOffsetInDays": 722,
+      "metadata": {
+        "createdDate": "2023-03-21T20:49:04.639+00:00",
+        "createdByUserId": "39a1ef78-5c0d-426c-b997-cb65c4f44ebd",
+        "updatedDate": "2025-02-14T15:31:58.237+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "group": "4. Funktion",
+      "desc": "Funktion på KB",
+      "id": "acf8ca33-c59b-4d2c-8615-75434f8e4ba2",
+      "metadata": {
+        "createdDate": "2023-03-21T20:48:56.070+00:00",
+        "createdByUserId": "39a1ef78-5c0d-426c-b997-cb65c4f44ebd",
+        "updatedDate": "2025-02-14T15:32:04.860+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "group": "5. Fjärrlånebibliotek",
+      "desc": "Fjärrlånebibliotek",
+      "id": "0a11b241-5356-435f-8c3a-0fe31e2f10a4",
+      "expirationOffsetInDays": 722,
+      "metadata": {
+        "createdDate": "2024-12-19T08:39:55.583+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-02-14T15:32:13.690+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "group": "6. Ny låntagare",
+      "desc": "Ny låntagare",
+      "id": "f5fb94b2-a111-4c7a-aa3c-2dcbd37fdb5f",
+      "expirationOffsetInDays": 60,
+      "metadata": {
+        "createdDate": "2024-06-24T06:43:45.935+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-12-19T08:40:51.486+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    }
+  ],
+  "totalRecords": 6
+}

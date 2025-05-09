@@ -1,0 +1,65 @@
+{
+  "staffSlips": [
+    {
+      "id": "1ed55c5c-64d9-40eb-8b80-7438a262288b",
+      "name": "Request delivery",
+      "active": true,
+      "template": "<p></p>",
+      "metadata": {
+        "createdDate": "2024-10-04T08:22:05.021+00:00",
+        "updatedDate": "2024-10-04T08:22:05.021+00:00"
+      }
+    },
+    {
+      "id": "8812bae1-2738-442c-bc20-fe4bb38a11f8",
+      "name": "Pick slip",
+      "active": true,
+      "template": "<div><span style=\"font-size: 18px;\">{{item.callNumber}}</span></div><div><br></div><div>{{item.title}}</div><div>{{item.enumeration}} {{item.yearCaption}}</div><div><br></div><div>Streckkod: {{item.barcode}}</div><div>Placering:{{item.effectiveLocationSpecific}}</div><div>Beställningsdatum: {{request.requestDate}}</div><div><br></div><div>Kommentar: {{request.patronComments}}</div><div><br></div><div><br></div><div><span style=\"font-size: 10px;\">{{requester.patronGroup}}</span></div><div><span style=\"font-size: 10px;\">{{requester.lastName}}, {{requester.firstName}} ({{requester.barcode}})</span></div><div>{{item.loanType}}<span style=\"font-size: 18px;\"> -&nbsp;</span>{{request.servicePointPickup}}</div><div><br></div><div>-----------------------------------------------------</div><div><br></div><div><span style=\"font-size: 18px;\">{{item.callNumber}}</span></div><div><br></div><div>{{item.title}}</div><div>{{item.enumeration}} {{item.yearCaption}}</div><div><br></div><div>Streckkod: {{item.barcode}}</div><div>Placering:{{item.effectiveLocationSpecific}}</div><div>Beställningsdatum: {{request.requestDate}}</div><div><br></div><div>Kommentar: {{request.patronComments}}</div><div><br></div><div>{{requester.barcodeImage}}</div><div>{{requester.patronGroup}}</div><div><span style=\"font-size: 18px;\">{{requester.lastName}}, {{requester.firstName}}</span>&nbsp;------------\t<span style=\"font-size: 18px;\">{{item.loanType}} - {{request.servicePointPickup}}</span></div>",
+      "metadata": {
+        "createdDate": "2025-01-17T14:26:31.936+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-01-17T14:26:31.936+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "e6e29ec1-1a76-4913-bbd3-65f4ffd94e03",
+      "name": "Search slip (Hold requests)",
+      "active": true,
+      "template": "<p></p>"
+    },
+    {
+      "id": "e6e29ec1-1a76-4913-bbd3-65f4ffd94e04",
+      "name": "Transit (mediated requests)",
+      "active": true,
+      "template": "<p></p>"
+    },
+    {
+      "id": "0b52bca7-db17-4e91-a740-7872ed6d7323",
+      "name": "Due date receipt",
+      "active": true,
+      "template": "<p></p>"
+    },
+    {
+      "id": "6a6e72f0-69da-4b4c-8254-7154679e9d88",
+      "name": "Hold",
+      "active": true,
+      "template": "<p></p>",
+      "metadata": {
+        "createdDate": "2024-10-04T08:22:04.999+00:00",
+        "updatedDate": "2024-10-04T08:22:04.999+00:00"
+      }
+    },
+    {
+      "id": "f838cdaf-555a-473f-abf1-f35ef6ab8ae1",
+      "name": "Transit",
+      "active": true,
+      "template": "<p></p>",
+      "metadata": {
+        "createdDate": "2024-10-04T08:22:05.015+00:00",
+        "updatedDate": "2024-10-04T08:22:05.015+00:00"
+      }
+    }
+  ],
+  "totalRecords": 7
+}

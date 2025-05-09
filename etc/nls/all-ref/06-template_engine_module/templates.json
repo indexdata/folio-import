@@ -1,0 +1,485 @@
+{
+  "templates": [
+    {
+      "id": "ce9e3e2c-669a-4491-a12f-e0fdad066191",
+      "description": "Password is successfully created email template",
+      "outputFormats": [
+        "text/plain"
+      ],
+      "templateResolver": "mustache",
+      "localizedTemplates": {
+        "en": {
+          "header": "Folio account successfully created",
+          "body": "{{user.personal.firstName}}\n\nYour Folio account has been successfully created. You should now have access to Folio. \n\nShould you have any questions or you have received this email in error, please contact your Folio Administrator. \n\nRegards, \n\n{{institution.name}} Folio Administration",
+          "attachments": []
+        }
+      }
+    },
+    {
+      "id": "d0ee371a-f3f7-407a-b6f3-714362db6240",
+      "description": "Username located email template",
+      "outputFormats": [
+        "text/plain"
+      ],
+      "templateResolver": "mustache",
+      "localizedTemplates": {
+        "en": {
+          "header": "Folio account located",
+          "body": "{{user.personal.firstName}}\n\nYour Folio username is {{user.username}}.\n\nPlease contact your Folio Administrator if you have any questions.\n\nRegards,\n\n{{institution.name}} Folio Administration",
+          "attachments": []
+        }
+      }
+    },
+    {
+      "id": "4d720121-a97e-4ad4-b35b-35f37cd5902a",
+      "outputFormats": [
+        "text/html"
+      ],
+      "templateResolver": "mustache",
+      "localizedTemplates": {
+        "en": {
+          "header": "Kvitto på återlämnat material",
+          "body": "<div>Kungliga biblioteket {{loan.checkedInDateTime}}</div><div><br></div><div>Återlämnat material:</div><div><br></div><div>{{#loans}}</div><div>{{item.title}}</div><div>Streckkod: {{item.barcode}}</div><div>Återlämnat: {{loan.checkedInDateTime}}</div><div><br></div><div>{{/loans}}</div>",
+          "attachments": []
+        }
+      },
+      "metadata": {
+        "createdDate": "2023-11-16T13:37:47.511+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2024-10-21T12:56:15.975+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "name": "Återlämningskvitto",
+      "active": true,
+      "category": "Loan"
+    },
+    {
+      "id": "263d4e33-db8d-4e07-9060-11f442320c05",
+      "description": "Account activation email",
+      "outputFormats": [
+        "text/html"
+      ],
+      "templateResolver": "mustache",
+      "localizedTemplates": {
+        "en": {
+          "header": "Activate your FOLIO account",
+          "body": "<p>{{user.personal.firstName}}</p><p>Your FOLIO account has been created.</p><p>Your username is {{user.username}}.</p><p><a href={{link}}>Set your password</a> to activate your account. This link is only valid for a short time. If it has already expired, <a href={{forgotPasswordLink}}>request a new link</a>.</p><p>Regards,</p><p>{{institution.name}} FOLIO Administration</p>",
+          "attachments": []
+        }
+      }
+    },
+    {
+      "id": "a2beed4e-0213-4c6b-bbe1-b5652994f36f",
+      "description": "Mail som skickas vid utlån av material för hemlån.",
+      "outputFormats": [
+        "text/html"
+      ],
+      "templateResolver": "mustache",
+      "localizedTemplates": {
+        "en": {
+          "header": "Utlåningskvitto",
+          "body": "<div>Du har lånat följande material:</div><div><br></div><div>{{#loans}}</div><div>{{item.title}}</div><div>Streckkod: {{item.barcode}}</div><div>Utlånad: {{loan.initialBorrowDate}}</div><div><br></div><div>---------------------------------------------------------------</div><div><br></div><div>{{/loans}}</div><div><br></div><div>Garanterad lånetid är 30 dagar. Därefter kan materialet krävas in om det reserveras av annan låntagare. Du har då 7 dagar på dig att återlämna materialet. Maximal lånetid är 365 dagar. </div>",
+          "attachments": []
+        }
+      },
+      "metadata": {
+        "createdDate": "2024-06-03T14:49:32.396+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-10-23T12:11:21.512+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "name": "Hemlån - utlåningskvitto",
+      "active": true,
+      "category": "Loan"
+    },
+    {
+      "id": "0ff6678f-53cd-4a32-9937-504c28f14077",
+      "description": "Template for password changed email",
+      "outputFormats": [
+        "text/plain"
+      ],
+      "templateResolver": "mustache",
+      "localizedTemplates": {
+        "en": {
+          "header": "Your Folio password changed",
+          "body": "Dear {{user.personal.firstName}},\n\nYour password has been changed.\nThis is a confirmation that your password was changed on {{dateTime}}.\n\nDid not change your password? Contact your Folio System Administrator to help secure your account.\n\t\nRegards,\n\nFolio Support",
+          "attachments": []
+        }
+      }
+    },
+    {
+      "id": "ed8c1c67-897b-4a23-a702-c36e280c6a93",
+      "description": "Reset password email",
+      "outputFormats": [
+        "text/html"
+      ],
+      "templateResolver": "mustache",
+      "localizedTemplates": {
+        "en": {
+          "header": "Reset your FOLIO account password",
+          "body": "<p>{{user.personal.firstName}}</p><p>Your request to reset your password has been received.</p> <p><a href={{link}}>Reset your password</a>. This link is only valid for a short time. If it has already expired, <a href={{forgotPasswordLink}}>request a new link</a>.</p><p>Regards,</p><p>{{institution.name}} FOLIO Administration</p>",
+          "attachments": []
+        }
+      }
+    },
+    {
+      "id": "ed7c41bb-9fb4-452e-bff1-acb62e573406",
+      "description": "Skickas när materialet legat sju dagar på hämthyllan.",
+      "outputFormats": [
+        "text/html"
+      ],
+      "templateResolver": "mustache",
+      "localizedTemplates": {
+        "en": {
+          "header": "Ditt beställda material",
+          "body": "<div>Hej,</div><div>Imorgon är sista dagen att hämta ut ditt beställda material:</div><div><br></div><div>{{item.title}}</div><div><br></div><div><br></div><div><br></div>",
+          "attachments": []
+        }
+      },
+      "metadata": {
+        "createdDate": "2024-04-24T12:46:13.744+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-04-24T12:51:26.282+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "name": "7 dagar på hämthylla",
+      "active": true,
+      "category": "Request"
+    },
+    {
+      "id": "609302e8-51ee-49a7-ba9a-b9ae7366321d",
+      "description": "Mail som skickas vid beställning av material som tar längre tid att ta fram, behöver åtgärd eller är under arbete. ",
+      "outputFormats": [
+        "text/html"
+      ],
+      "templateResolver": "mustache",
+      "localizedTemplates": {
+        "en": {
+          "header": "Din beställning",
+          "body": "<div>Tack för din beställning av {{item.title}}.</div><div><br></div><div>Materialet behöver åtgärdas eller är under arbete och har längre framtagningstid än vanliga beställningar. Du får ett mail när materialet finns att hämta.</div><div><br></div><div>Vänliga hälsningar</div><div><br></div><div>Kungliga biblioteket</div>",
+          "attachments": []
+        }
+      },
+      "metadata": {
+        "createdDate": "2024-06-03T14:45:08.049+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-10-15T14:50:20.165+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "name": "Längre framtagningstid - beställning",
+      "active": true,
+      "category": "Request"
+    },
+    {
+      "id": "a3eec17b-f9e4-472a-bf3b-ea6c29cddb63",
+      "description": "Mail som skickas till låntagare vid beställning av digital beställning. ",
+      "outputFormats": [
+        "text/html"
+      ],
+      "templateResolver": "mustache",
+      "localizedTemplates": {
+        "en": {
+          "header": "Digital beställning",
+          "body": "<div>Hej,</div><div>Du har gjort en beställning av:</div><div>{{item.title}}</div><div><br></div><div>Om upphovsrätten tillåter kommer materialet digitiseras utan kostnad och levereras med e-post. Om digitisering inte är möjligt kan materialet hämtas ut och läsas i läsesalen. Du får då ett meddelande att materialet kan hämtas.</div><div><br></div><div>Vänliga hälsningar</div><div><br></div><div>Kungliga biblioteket</div>",
+          "attachments": []
+        }
+      },
+      "metadata": {
+        "createdDate": "2024-04-23T06:43:21.826+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-03-07T11:52:40.164+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "name": "Digital beställning - beställning",
+      "active": true,
+      "category": "Request"
+    },
+    {
+      "id": "ee3e68fa-f68b-4fc9-8db2-0c2322eb0e9d",
+      "description": "Mail som skickas när en digital beställning avslutas = när digitiseringen är gjord. ",
+      "outputFormats": [
+        "text/html"
+      ],
+      "templateResolver": "mustache",
+      "localizedTemplates": {
+        "en": {
+          "header": "Din digitala beställning",
+          "body": "<div>Hej,</div><div><br></div><div>Din beställning av {{item.title}} är nu digitiserad.</div><div><br></div><div>Du hittar den här: <a href=\"#\" rel=\"noopener noreferrer\" target=\"_blank\">LÄNK</a> <a href=\"http://vufind-test.kb.local/vufind/Search/Results?lookfor={{item.title}}\" rel=\"noopener noreferrer\" target=\"_blank\">testlänk</a></div>",
+          "attachments": []
+        }
+      },
+      "metadata": {
+        "createdDate": "2024-04-30T10:55:35.727+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-04-30T11:46:01.324+00:00",
+        "updatedByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d"
+      },
+      "name": "Digital beställning - länk till material",
+      "active": true,
+      "category": "Request"
+    },
+    {
+      "id": "e74046d8-fd8e-43c6-ac40-72ff0e2ea08d",
+      "description": "Skickas när annan låntagare ställt sig på kö på hemlån. Om garantitid finns kvar skickas meddelandet 7 dagar innan garantitiden går ut. Om garantitiden gått ut skickas mailet samma dag/dagen efter. \n",
+      "outputFormats": [
+        "text/html"
+      ],
+      "templateResolver": "mustache",
+      "localizedTemplates": {
+        "en": {
+          "header": "Det är kö på ditt hemlån - nytt återlämningsdatum",
+          "body": "<div>Hej,</div><div>En annan låntagare står på kö till ditt hemlån och lånetiden har kortats:</div><div><br></div><div>{{item.title}}</div><div><br></div><div>Vänligen återlämna boken senast: {{loan.dueDate}}</div><div><br></div><div>Med vänlig hälsning</div><div><br></div><div>Kungliga biblioteket</div><div><br></div><div>Telefon: 010-7093030</div><div>E-post: info@kb.se</div><div><br></div><div><br></div>",
+          "attachments": []
+        }
+      },
+      "metadata": {
+        "createdDate": "2024-10-16T14:24:00.430+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-10-28T07:54:24.353+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "name": "Hemlån - recall",
+      "active": true,
+      "category": "Loan"
+    },
+    {
+      "id": "0f719c5e-972c-41ff-a723-a8478f6a5c60",
+      "description": "Skickas till låntagare när annan låntagare står på kö.",
+      "outputFormats": [
+        "text/html"
+      ],
+      "templateResolver": "mustache",
+      "localizedTemplates": {
+        "en": {
+          "header": "Det är kö på läsesalslån",
+          "body": "<div>Hej,</div><div>En annan låntagare står på kö till:</div><div><br></div><div><em>{{item.title}}</em></div><div><br></div><div>Personalen kommer därför att återlämna ditt läsesalslån: <strong>{{loan.dueDate}}</strong></div><div><br></div><div>Med vänlig hälsning</div><div>Kungliga biblioteket</div>",
+          "attachments": []
+        }
+      },
+      "metadata": {
+        "createdDate": "2024-10-22T11:33:02.093+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-10-22T11:46:30.243+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "name": "Läsesalslån - recall",
+      "active": true,
+      "category": "Loan"
+    },
+    {
+      "id": "41ec6457-c138-4786-907e-5c241d34abd5",
+      "description": "När ny låntagare som inte hämtat ut lånekort gör beställning.",
+      "outputFormats": [
+        "text/html"
+      ],
+      "templateResolver": "mustache",
+      "localizedTemplates": {
+        "en": {
+          "header": "Din beställning ",
+          "body": "<div>Du har beställt {{item.title}} för hämtning i {{request.servicePointPickup}}.</div><div><br></div><div>Du får ett meddelande när materialen är tillgängligt för hämtning.</div><div><br></div><div>För att låna materialet måste du också hämta ut ditt lånekort i expeditionen för Information och lån. Medtag legitimation.</div><div><br></div><div>Vänliga hälsningar</div><div>Kungliga biblioteket</div>",
+          "attachments": []
+        }
+      },
+      "metadata": {
+        "createdDate": "2024-06-24T12:58:14.568+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-10-28T07:47:57.551+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "name": "Ny låntagare - beställning",
+      "active": true,
+      "category": "Request"
+    },
+    {
+      "id": "157f036b-a832-4038-98ee-c0877f0a7b05",
+      "description": "Skickas dagen efter att lånettiden gått ut. ",
+      "outputFormats": [
+        "text/html"
+      ],
+      "templateResolver": "mustache",
+      "localizedTemplates": {
+        "en": {
+          "header": "Försenade lån",
+          "body": "<div>Lånetiden för följande hemlån har gått ut:</div><div><br></div><div>{{#loans}}</div><div>{{item.title}}</div><div>Återlämningsdatum: {{loan.dueDate}}</div><div>-------------------------------------------------------------------------------</div><div>{{/loans}}</div><div><br></div><div>Om materialet inte återlämnas inom 7 dagar blir ditt konto låst och du kommer inte att kunna göra nya beställningar eller hämta ut lån.</div><div><br></div><div><br></div>",
+          "attachments": []
+        }
+      },
+      "metadata": {
+        "createdDate": "2024-10-16T14:40:01.061+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-10-21T05:33:13.171+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "name": "Hemlån - påminnelse 1",
+      "active": true,
+      "category": "Loan"
+    },
+    {
+      "id": "8a9db65c-80b9-41c4-9a16-51d64ca28eeb",
+      "description": "Andra påminnelsen för hemlån. ",
+      "outputFormats": [
+        "text/html"
+      ],
+      "templateResolver": "mustache",
+      "localizedTemplates": {
+        "en": {
+          "header": "Påminnelse om försenade lån",
+          "body": "<div>Hej,</div><div><br></div><div>Vi påminner om att du har följande försenade hemlån:</div><div><br></div><div>{{#loans}}</div><div>{{item.title}}</div><div>Återlämningsdatum:{{loan.dueDate}}</div><div>-----------------------------------------------------------------------</div><div>{{/loans}}</div><div><br></div><div>Ditt konto är nu låste och du kan inte hämta ut nya beställningar eller låna förrän du har lämnat tillbaka materialet.</div><div><br></div><div>Om materialet inte återlämnas skickas en faktura på bokens värde samt administrativ avgift.</div>",
+          "attachments": []
+        }
+      },
+      "metadata": {
+        "createdDate": "2024-10-16T14:42:40.931+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-10-21T05:35:08.386+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "name": "Hemlån - påminnelse 2",
+      "active": true,
+      "category": "Loan"
+    },
+    {
+      "id": "29cd3c41-53f8-4294-8b83-22385eceac1a",
+      "description": "Förvarning att lånetiden snart går ut för hemlån. ",
+      "outputFormats": [
+        "text/html"
+      ],
+      "templateResolver": "mustache",
+      "localizedTemplates": {
+        "en": {
+          "header": "Lånetiden för ditt hemlån är snart slut",
+          "body": "<div>Hej,</div><div><br></div><div>Lånetiden för följande hemlån är snart slut:</div><div><br></div><div>{{#loans}}</div><div>{{item.title}}</div><div>Återlämningsdatum: {{loan.dueDate}}</div><div><br></div><div>{{/loans}}</div><div><br></div><div>Lånet/lånen måste lämnas tillbaka på KB och kan inte lånas om via telefon eller e-post.&nbsp;</div><div><br></div><div>Med vänlig hälsning</div><div><br></div><div>Kungliga biblioteket</div><div><br></div><div>Telefon: 010-7093030</div><div>E-post: info@kb.se</div><div><br></div>",
+          "attachments": []
+        }
+      },
+      "metadata": {
+        "createdDate": "2024-09-04T12:53:59.383+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-10-28T07:54:44.091+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "name": "Hemlån - påminnelse innan återlämningsdatum",
+      "active": true,
+      "category": "Loan"
+    },
+    {
+      "id": "a27fcf32-acab-4532-8acd-1d34b14c1bfa",
+      "description": "Skickas 7 dagar efter att lånetiden gått ut.",
+      "outputFormats": [
+        "text/html"
+      ],
+      "templateResolver": "mustache",
+      "localizedTemplates": {
+        "en": {
+          "header": "Ditt/dina läsesalslån är försenade - ditt konto är låst",
+          "body": "<div>Hej,</div><div>Vi påminner om att nedanstående titlar har varit utlånade till ditt bokskåp i ett år och behöver återlämnas i expeditionen för information och lån.</div><div><br></div><div>{{#loans}}</div><div><em>{{item.title}}</em></div><div><br></div><div>{{/loans}}</div><div><br></div><div>Ditt konto är nu låst och du kommer inte att kunna göra nya beställningar eller hämta ut lån förrän boken/materialet är återlämnat.</div><div><br></div><div>Material som är i bra skick kan lånas igen. Vi ser gärna att material som används sällan återlämnas till magasinet eftersom det är klimatanpassat för att bevara våra samlingar på bästa sätt.</div><div><br></div><div>Med vänliga hälsningar</div><div>Kungliga biblioteket</div>",
+          "attachments": []
+        }
+      },
+      "metadata": {
+        "createdDate": "2024-10-22T11:57:49.766+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-10-22T11:59:20.450+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "name": "Läsesalslån - påminnelse 2",
+      "active": true,
+      "category": "Loan"
+    },
+    {
+      "id": "daac1119-3e47-4d5b-989a-14286655ef8b",
+      "description": "Skickas samma dag som läsesalslånet går ut.",
+      "outputFormats": [
+        "text/html"
+      ],
+      "templateResolver": "mustache",
+      "localizedTemplates": {
+        "en": {
+          "header": "Lånetiden för ditt läsesalslån går ut idag",
+          "body": "<div>Hej,</div><div>Lånetiden för nedanstående titel/titlar är slut och vi ber dig därför att återlämna materialet i expeditionen för information och lån.</div><div><br></div><div>{{#loans}}</div><div><em>{{item.title}}</em></div><div>Återlämningsdatum: <strong>{{loan.dueDate}}</strong></div><div><br></div><div>{{/loans}}</div><div><br></div><div>Om boken/materialet inte lämnas tillbaka blir ditt konto låst och du kommer inte att kunna göra nya beställningar eller hämta ut lån.</div><div><br></div><div>Material som är i bra skick kan lånas igen. Vi ser gärna att material som används sällan återlämnas till magasinet eftersom det är klimatanpassat för att bevara våra samlingar på bästa sätt.</div><div><br></div><div>Med vänliga hälsningar</div><div>Kungliga biblioteket</div>",
+          "attachments": []
+        }
+      },
+      "metadata": {
+        "createdDate": "2024-10-22T11:56:24.564+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-10-22T12:00:19.383+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "name": "Läsesalslån - påminnelse 1",
+      "active": true,
+      "category": "Loan"
+    },
+    {
+      "id": "d8414e6b-672b-4a43-b9db-81850afbb672",
+      "outputFormats": [
+        "text/html"
+      ],
+      "templateResolver": "mustache",
+      "localizedTemplates": {
+        "en": {
+          "header": "Din beställning är klar - hemlån",
+          "body": "<div>Följande titel som du har beställt är nu tillgänglig i {{request.servicePointPickup}}:</div><div><br></div><div>{{item.title}}</div><div>{{item.enumeration}}</div><div><br></div><div>Detta material är ett {{item.loanType}}. Här kan du läsa mer: <a href=\"https://kb.se/hitta-och-bestall/bestall-och-lana.html\" rel=\"noopener noreferrer\" target=\"_blank\">https://kb.se/hitta-och-bestall/bestall-och-lana.html</a></div><div><br></div><div>Hämtas senast: {{request.holdShelfExpirationDate}}</div><div><br></div><div>Aktuella öppettider: <a href=\"https://www.kb.se/besok-och-anvand/oppettider.html\" rel=\"noopener noreferrer\" target=\"_blank\">https://www.kb.se/besok-och-anvand/oppettider.html</a></div><div><br></div><div><br></div><div>Med vänliga hälsningar</div><div>Kungliga biblioteket</div><div><br></div><div>Telefon: 010-709 30 30 (vardagar kl. 9-16)</div><div>E-post: <a href=\"mailto:info@kb.se\" rel=\"noopener noreferrer\" target=\"_blank\">info@kb.se</a></div><div>Webb: <a href=\"https://www.kb.se\" rel=\"noopener noreferrer\" target=\"_blank\">https://www.kb.se</a></div>",
+          "attachments": []
+        }
+      },
+      "metadata": {
+        "createdDate": "2024-03-21T16:06:00.601+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-03-28T13:17:04.888+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "name": "Avisering - hemlån",
+      "active": true,
+      "category": "Request"
+    },
+    {
+      "id": "d5ac811a-1e5a-4628-93e4-51d666b43152",
+      "description": "Skickas innan lånet går ut. ",
+      "outputFormats": [
+        "text/html"
+      ],
+      "templateResolver": "mustache",
+      "localizedTemplates": {
+        "en": {
+          "header": "Lånetiden för ditt läsesalslån går snart ut ",
+          "body": "<div>Hej,</div><div>Lånetiden för nedanstående läsesalslån går snart ut och vi ber dig därför att återlämna materialet i expeditionen för information och lån.</div><div><br></div><div>{{#loans}}</div><div>{{item.title}}</div><div>Återlämningsdatum: <strong>{{loan.dueDate}}</strong></div><div><br></div><div>{{/loans}}</div><div><br></div><div>Material som är i bra skick kan lånas igen. Vi ser gärna att material som används sällan återlämnas till magasinet eftersom det är klimatanpassat för att bevara våra samlingar på bästa sätt.</div><div><br></div><div>Med vänliga hälsningar</div><div>Kungliga biblioteket</div>",
+          "attachments": []
+        }
+      },
+      "metadata": {
+        "createdDate": "2024-10-22T11:52:43.546+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-10-22T13:14:59.938+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "name": "Läsesalslån - påminnelse innan återlämningsdatum",
+      "active": true,
+      "category": "Loan"
+    },
+    {
+      "id": "53a47d74-4f66-4626-b48d-1819773d2e16",
+      "outputFormats": [
+        "text/html"
+      ],
+      "templateResolver": "mustache",
+      "localizedTemplates": {
+        "en": {
+          "header": "Din beställning är klar - läsesalslån",
+          "body": "<div>Följande titel som du har beställt är nu tillgänglig i {{request.servicePointPickup}}:</div><div><br></div><div>{{item.title}}</div><div>{{item.enumeration}}</div><div><br></div><div>Detta material kan bara läsas på plats och får inte lånas hem. Här kan du läsa mer: <a href=\"https://kb.se/hitta-och-bestall/bestall-och-lana.html\" rel=\"noopener noreferrer\" target=\"_blank\">https://kb.se/hitta-och-bestall/bestall-och-lana.html</a></div><div><br></div><div>Hämtas senast: {{request.holdShelfExpirationDate}}</div><div><br></div><div>{{request.additionalInfo}}</div><div><br></div><div>Aktuella öppettider: <a href=\"https://www.kb.se/besok-och-anvand/oppettider.html\" rel=\"noopener noreferrer\" target=\"_blank\">https://www.kb.se/besok-och-anvand/oppettider.html</a></div><div><br></div><div><br></div><div>Med vänliga hälsningar</div><div>Kungliga biblioteket</div><div><br></div><div>Telefon: 010-709 30 30 (vardagar kl. 9-16)</div><div>E-post: <a href=\"mailto:info@kb.se\" rel=\"noopener noreferrer\" target=\"_blank\">info@kb.se</a></div><div>Webb: <a href=\"https://www.kb.se\" rel=\"noopener noreferrer\" target=\"_blank\">https://www.kb.se</a></div>",
+          "attachments": []
+        }
+      },
+      "metadata": {
+        "createdDate": "2024-04-22T13:36:59.684+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-10-24T12:36:53.166+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "name": "Avisering - läsesalslån ",
+      "active": true,
+      "category": "Request"
+    }
+  ],
+  "totalRecords": 22
+}

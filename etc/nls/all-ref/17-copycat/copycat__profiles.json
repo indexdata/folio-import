@@ -1,0 +1,63 @@
+{
+  "profiles": [
+    {
+      "id": "f26df83c-aa25-40b6-876e-96852c3d4fd4",
+      "name": "OCLC WorldCat",
+      "url": "zcat.oclc.org/OLUCWorldCat",
+      "externalIdQueryMap": "@attr 1=1211 $identifier",
+      "internalIdEmbedPath": "999ff$i",
+      "createJobProfileId": "d0ebb7b0-2f0f-11eb-adc1-0242ac120002",
+      "updateJobProfileId": "91f9b8d6-d80e-4727-9783-73fb53e3c786",
+      "allowedCreateJobProfileIds": [
+        "d0ebb7b0-2f0f-11eb-adc1-0242ac120002"
+      ],
+      "allowedUpdateJobProfileIds": [
+        "91f9b8d6-d80e-4727-9783-73fb53e3c786"
+      ],
+      "targetOptions": {
+        "charset": "utf-8"
+      },
+      "externalIdentifierType": "439bfbae-75bc-4f74-9fc7-b2a2d47ce3ef",
+      "enabled": true
+    },
+    {
+      "id": "8594713d-4525-4cc7-b138-a07db4692c37",
+      "name": "Library of Congress",
+      "url": "lx2.loc.gov:210/LCDB",
+      "externalIdQueryMap": "@attr 1=9 $identifier",
+      "internalIdEmbedPath": "999ff$i",
+      "createJobProfileId": "d0ebb7b0-2f0f-11eb-adc1-0242ac120002",
+      "updateJobProfileId": "91f9b8d6-d80e-4727-9783-73fb53e3c786",
+      "allowedCreateJobProfileIds": [
+        "d0ebb7b0-2f0f-11eb-adc1-0242ac120002"
+      ],
+      "allowedUpdateJobProfileIds": [
+        "91f9b8d6-d80e-4727-9783-73fb53e3c786"
+      ],
+      "targetOptions": {
+        "preferredRecordSyntax": "usmarc"
+      },
+      "externalIdentifierType": "c858e4f2-2b6b-4385-842b-60732ee14abb",
+      "enabled": true
+    },
+    {
+      "id": "293fab82-c2b8-4984-b180-475076cb7046",
+      "name": "Libris",
+      "url": "z3950.libris.kb.se:210/libr",
+      "externalIdQueryMap": "@attr 1=1007 $identifier",
+      "internalIdEmbedPath": "999ff$i",
+      "createJobProfileId": "d0ebb7b0-2f0f-11eb-adc1-0242ac120002",
+      "updateJobProfileId": "91f9b8d6-d80e-4727-9783-73fb53e3c786",
+      "allowedCreateJobProfileIds": [
+        "d0ebb7b0-2f0f-11eb-adc1-0242ac120002"
+      ],
+      "allowedUpdateJobProfileIds": [
+        "91f9b8d6-d80e-4727-9783-73fb53e3c786"
+      ],
+      "targetOptions": {},
+      "externalIdentifierType": "5d164f4b-0b15-4e42-ae75-cfcf85318ad9",
+      "enabled": true
+    }
+  ],
+  "totalRecords": 3
+}

@@ -1,0 +1,28 @@
+{
+  "noteTypes": [
+    {
+      "id": "35945b24-f3ee-4fae-931c-6317d0306a2a",
+      "name": "General note",
+      "usage": {
+        "isAssigned": true
+      },
+      "metadata": {
+        "createdDate": "2023-03-13T12:11:34.284963Z"
+      }
+    },
+    {
+      "id": "337b6115-67d9-4ccd-8c4a-c3f02c2a1dea",
+      "name": "Saknas på fack - fortsätter leta",
+      "usage": {
+        "isAssigned": true
+      },
+      "metadata": {
+        "createdDate": "2024-05-22T11:41:06.426019Z",
+        "createdByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08",
+        "updatedDate": "2024-05-22T11:41:26.907994Z",
+        "updatedByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08"
+      }
+    }
+  ],
+  "totalRecords": 2
+}

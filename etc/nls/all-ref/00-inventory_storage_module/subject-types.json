@@ -1,0 +1,85 @@
+{
+  "subjectTypes": [
+    {
+      "id": "d6488f88-1e74-40ce-81b5-b19a928ff5b1",
+      "name": "Personal name",
+      "source": "folio"
+    },
+    {
+      "id": "d6488f88-1e74-40ce-81b5-b19a928ff5b2",
+      "name": "Corporate name",
+      "source": "folio"
+    },
+    {
+      "id": "d6488f88-1e74-40ce-81b5-b19a928ff5b3",
+      "name": "Meeting name",
+      "source": "folio"
+    },
+    {
+      "id": "d6488f88-1e74-40ce-81b5-b19a928ff5b4",
+      "name": "Uniform title",
+      "source": "folio"
+    },
+    {
+      "id": "d6488f88-1e74-40ce-81b5-b19a928ff5b5",
+      "name": "Named event",
+      "source": "folio"
+    },
+    {
+      "id": "d6488f88-1e74-40ce-81b5-b19a928ff5b6",
+      "name": "Chronological term",
+      "source": "folio"
+    },
+    {
+      "id": "d6488f88-1e74-40ce-81b5-b19a928ff5b7",
+      "name": "Topical term",
+      "source": "folio"
+    },
+    {
+      "id": "d6488f88-1e74-40ce-81b5-b19a928ff5b8",
+      "name": "Geographic name",
+      "source": "folio"
+    },
+    {
+      "id": "d6488f88-1e74-40ce-81b5-b19a928ff5b9",
+      "name": "Uncontrolled",
+      "source": "folio"
+    },
+    {
+      "id": "d6488f88-1e74-40ce-81b5-b19a928ff510",
+      "name": "Faceted topical terms",
+      "source": "folio"
+    },
+    {
+      "id": "d6488f88-1e74-40ce-81b5-b19a928ff511",
+      "name": "Genre/form",
+      "source": "folio"
+    },
+    {
+      "id": "d6488f88-1e74-40ce-81b5-b19a928ff512",
+      "name": "Occupation",
+      "source": "folio"
+    },
+    {
+      "id": "d6488f88-1e74-40ce-81b5-b19a928ff513",
+      "name": "Function",
+      "source": "folio"
+    },
+    {
+      "id": "d6488f88-1e74-40ce-81b5-b19a928ff514",
+      "name": "Curriculum objective",
+      "source": "folio"
+    },
+    {
+      "id": "d6488f88-1e74-40ce-81b5-b19a928ff515",
+      "name": "Hierarchical place name",
+      "source": "folio"
+    },
+    {
+      "id": "d6488f88-1e74-40ce-81b5-b19a928ff516",
+      "name": "Type of entity unspecified",
+      "source": "folio"
+    }
+  ],
+  "totalRecords": 16
+}

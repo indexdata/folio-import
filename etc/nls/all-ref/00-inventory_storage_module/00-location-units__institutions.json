@@ -1,0 +1,25 @@
+{
+  "locinsts": [
+    {
+      "id": "9d1b77e5-f02e-4b7f-b296-3f2042ddac54",
+      "name": "DCB",
+      "code": "000",
+      "metadata": {
+        "createdDate": "2025-04-17T13:29:57.365+00:00",
+        "updatedDate": "2025-04-17T13:29:57.365+00:00"
+      }
+    },
+    {
+      "id": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
+      "name": "Kungliga biblioteket",
+      "code": "KB",
+      "metadata": {
+        "createdDate": "2023-03-22T11:12:41.035+00:00",
+        "createdByUserId": "39a1ef78-5c0d-426c-b997-cb65c4f44ebd",
+        "updatedDate": "2023-04-12T12:44:31.998+00:00",
+        "updatedByUserId": "39a1ef78-5c0d-426c-b997-cb65c4f44ebd"
+      }
+    }
+  ],
+  "totalRecords": 2
+}

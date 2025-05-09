@@ -1,0 +1,206 @@
+{
+  "requestPolicies": [
+    {
+      "id": "334e5a9e-94f9-4673-8d1d-ab552863886b",
+      "name": "Allow All",
+      "description": "Allow all request types",
+      "requestTypes": [
+        "Hold",
+        "Page",
+        "Recall"
+      ],
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:55.600+00:00",
+        "updatedDate": "2024-10-04T08:22:04.751+00:00"
+      }
+    },
+    {
+      "id": "142d8ee0-d244-4ff2-9d27-140f4989d868",
+      "name": "Hemlån",
+      "requestTypes": [
+        "Hold",
+        "Page",
+        "Recall"
+      ],
+      "allowedServicePoints": {
+        "Page": [
+          "996760f7-e64b-4c8e-b228-41f52fb9fade"
+        ],
+        "Hold": [
+          "996760f7-e64b-4c8e-b228-41f52fb9fade"
+        ],
+        "Recall": [
+          "996760f7-e64b-4c8e-b228-41f52fb9fade"
+        ]
+      },
+      "metadata": {
+        "createdDate": "2023-11-16T13:30:03.026+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2024-10-08T12:36:38.105+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "15cc440c-b907-48d5-947c-86268ab03fd5",
+      "name": "Specialläsesalen",
+      "description": "För material som ska läsas i specialläsesalen",
+      "requestTypes": [
+        "Hold",
+        "Page",
+        "Recall"
+      ],
+      "allowedServicePoints": {
+        "Page": [
+          "fa60af7f-b89f-4a73-87b1-7d123900eb2f"
+        ],
+        "Hold": [
+          "fa60af7f-b89f-4a73-87b1-7d123900eb2f"
+        ],
+        "Recall": [
+          "fa60af7f-b89f-4a73-87b1-7d123900eb2f"
+        ]
+      },
+      "metadata": {
+        "createdDate": "2024-10-07T07:49:42.869+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-10-11T14:00:10.543+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "c6fc16d6-9da7-4f1b-b8f0-897936dd6756",
+      "name": "Vardagstryck",
+      "requestTypes": [
+        "Hold",
+        "Page",
+        "Recall"
+      ],
+      "allowedServicePoints": {
+        "Page": [
+          "fa60af7f-b89f-4a73-87b1-7d123900eb2f"
+        ],
+        "Hold": [
+          "fa60af7f-b89f-4a73-87b1-7d123900eb2f"
+        ],
+        "Recall": [
+          "fa60af7f-b89f-4a73-87b1-7d123900eb2f"
+        ]
+      },
+      "metadata": {
+        "createdDate": "2024-10-11T14:36:33.992+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-10-14T11:59:37.747+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "fabc7cec-5ccc-4892-9106-0d8aa2462c78",
+      "name": "Beställningsförfrågningar",
+      "description": "Tidigare Kollas före lån, Förlängd framtagning, Beställ manuellt",
+      "requestTypes": [
+        "Hold",
+        "Page",
+        "Recall"
+      ],
+      "allowedServicePoints": {
+        "Page": [
+          "fa60af7f-b89f-4a73-87b1-7d123900eb2f"
+        ],
+        "Hold": [
+          "fa60af7f-b89f-4a73-87b1-7d123900eb2f"
+        ],
+        "Recall": [
+          "fa60af7f-b89f-4a73-87b1-7d123900eb2f"
+        ]
+      },
+      "metadata": {
+        "createdDate": "2024-10-23T13:45:38.323+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-10-23T13:45:38.323+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "3f980f01-1736-4a31-ba8a-2ba1fb96953c",
+      "name": "Ej beställningsbar",
+      "requestTypes": [],
+      "metadata": {
+        "createdDate": "2023-11-02T14:38:29.733+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2024-12-23T09:03:32.479+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "d85ce8a2-80ab-42ea-9c1a-513d237c32ca",
+      "name": "Digitisereringsbeställning",
+      "requestTypes": [
+        "Hold",
+        "Page",
+        "Recall"
+      ],
+      "allowedServicePoints": {
+        "Page": [
+          "ce8221d5-d05a-4341-9df8-702664d0d819"
+        ],
+        "Hold": [
+          "ce8221d5-d05a-4341-9df8-702664d0d819"
+        ],
+        "Recall": [
+          "ce8221d5-d05a-4341-9df8-702664d0d819"
+        ]
+      },
+      "metadata": {
+        "createdDate": "2024-04-19T14:31:34.569+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-01-17T14:05:32.215+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "660a4659-e4e7-4ac8-ad33-148986dbf682",
+      "name": "Stora läsesalen",
+      "requestTypes": [
+        "Hold",
+        "Page",
+        "Recall"
+      ],
+      "allowedServicePoints": {
+        "Page": [
+          "996760f7-e64b-4c8e-b228-41f52fb9fade"
+        ],
+        "Hold": [
+          "996760f7-e64b-4c8e-b228-41f52fb9fade"
+        ],
+        "Recall": [
+          "996760f7-e64b-4c8e-b228-41f52fb9fade"
+        ]
+      },
+      "metadata": {
+        "createdDate": "2023-11-02T14:35:31.133+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2025-01-17T14:06:15.132+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "a254101e-3b87-45d4-a447-b6d7f59447f1",
+      "name": "Bevarande",
+      "requestTypes": [
+        "Page"
+      ],
+      "allowedServicePoints": {
+        "Page": [
+          "54ff2ca8-8ad5-43c5-9979-b46830455fc2"
+        ]
+      },
+      "metadata": {
+        "createdDate": "2025-01-17T14:07:21.174+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-04-02T14:48:07.793+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    }
+  ],
+  "totalRecords": 9
+}

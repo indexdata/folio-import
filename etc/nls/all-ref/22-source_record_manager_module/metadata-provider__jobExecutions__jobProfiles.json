@@ -1,0 +1,17 @@
+{
+  "jobProfilesInfo": [
+    {
+      "id": "d0ebb7b0-2f0f-11eb-adc1-0242ac120002",
+      "name": "Inventory Single Record - Default Create Instance",
+      "dataType": "MARC",
+      "hidden": false
+    },
+    {
+      "id": "2da5abe1-2a62-4bbc-83c3-c81436ab03dc",
+      "name": "KB Create Instance, holding and item",
+      "dataType": "MARC",
+      "hidden": false
+    }
+  ],
+  "totalRecords": 2
+}

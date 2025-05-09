@@ -1,0 +1,52 @@
+{
+  "organizationTypes": [
+    {
+      "id": "f04c7277-0019-43cf-84b3-02d894a9d81a",
+      "name": "Auction house",
+      "status": "Active",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:05.525+00:00",
+        "updatedDate": "2023-03-13T12:10:05.525+00:00"
+      }
+    },
+    {
+      "id": "9805505e-6029-410e-ae5b-51bc4d59d1d0",
+      "name": "Publisher",
+      "status": "Active",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:05.530+00:00",
+        "updatedDate": "2023-03-13T12:10:05.530+00:00"
+      }
+    },
+    {
+      "id": "e7e9af00-c12c-448f-8ad1-d15ff209605a",
+      "name": "Book trade",
+      "status": "Inactive",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:05.532+00:00",
+        "updatedDate": "2023-03-13T12:10:05.532+00:00"
+      }
+    },
+    {
+      "id": "1e7692ea-5fc4-4618-9cdf-1918f11be585",
+      "name": "Private person",
+      "status": "Active",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:05.534+00:00",
+        "updatedDate": "2023-03-13T12:10:05.534+00:00"
+      }
+    },
+    {
+      "id": "e42b2bbd-5ab3-485e-a8ed-b2185f70298b",
+      "name": "KB: Ramavtalsleverantör",
+      "status": "Active",
+      "metadata": {
+        "createdDate": "2025-03-14T11:52:38.989+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-03-14T11:52:38.989+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    }
+  ],
+  "totalRecords": 5
+}

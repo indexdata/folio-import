@@ -1,0 +1,76 @@
+{
+  "feefines": [
+    {
+      "automatic": true,
+      "feeFineType": "Overdue fine",
+      "id": "9523cb96-e752-40c2-89da-60f3961a488d"
+    },
+    {
+      "automatic": true,
+      "feeFineType": "Replacement processing fee",
+      "id": "d20df2fb-45fd-4184-b238-0d25747ffdd9"
+    },
+    {
+      "automatic": true,
+      "feeFineType": "Lost item fee",
+      "id": "cf238f9f-7018-47b7-b815-bb2db798e19f"
+    },
+    {
+      "automatic": true,
+      "feeFineType": "Lost item processing fee",
+      "id": "c7dede15-aa48-45ed-860b-f996540180e0"
+    },
+    {
+      "automatic": true,
+      "feeFineType": "Lost item fee (actual cost)",
+      "id": "73785370-d3bd-4d92-942d-ae2268e02ded"
+    },
+    {
+      "automatic": true,
+      "feeFineType": "Reminder fee",
+      "id": "6b830703-f828-4e38-a0bb-ee81deacbd03"
+    },
+    {
+      "automatic": false,
+      "feeFineType": "Fjärrlånekopia",
+      "ownerId": "9dd3b798-11d2-45b0-a939-b94c0440fb91",
+      "metadata": {
+        "createdDate": "2025-03-07T14:39:53.472+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-03-07T14:39:53.472+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "id": "bd6c1de2-a196-43b4-95cc-9a3fff4532ad"
+    },
+    {
+      "automatic": false,
+      "feeFineType": "Fjärrlånekopia",
+      "ownerId": "a83cc351-a6db-46ec-aa67-f0b9fb230399",
+      "metadata": {
+        "createdDate": "2025-03-07T14:46:35.803+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-03-07T14:46:35.803+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "id": "54695862-a465-41d9-82dc-8dbeb274e1f3"
+    },
+    {
+      "automatic": false,
+      "feeFineType": "Reprobeställning",
+      "ownerId": "a83cc351-a6db-46ec-aa67-f0b9fb230399",
+      "metadata": {
+        "createdDate": "2025-03-07T14:46:47.711+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-03-07T14:46:47.711+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "id": "39b86daa-05c7-449b-bfbc-e5b46b21f0ac"
+    }
+  ],
+  "totalRecords": 9,
+  "resultInfo": {
+    "totalRecords": 9,
+    "facets": [],
+    "diagnostics": []
+  }
+}

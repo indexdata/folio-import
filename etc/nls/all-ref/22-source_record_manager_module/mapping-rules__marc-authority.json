@@ -1,0 +1,930 @@
+{
+  "100": [
+    {
+      "rules": [],
+      "target": "personalName",
+      "subfield": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "g",
+        "q",
+        "v",
+        "x",
+        "y",
+        "z"
+      ],
+      "description": "Heading personal Name",
+      "exclusiveSubfield": [
+        "t"
+      ],
+      "applyRulesOnConcatenatedData": true
+    },
+    {
+      "rules": [],
+      "target": "personalNameTitle",
+      "subfield": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "f",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "q",
+        "r",
+        "s",
+        "t"
+      ],
+      "description": "Heading personal name title",
+      "requiredSubfield": [
+        "t"
+      ],
+      "applyRulesOnConcatenatedData": true
+    }
+  ],
+  "110": [
+    {
+      "rules": [],
+      "target": "corporateName",
+      "subfield": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "g",
+        "n",
+        "v",
+        "x",
+        "y",
+        "z"
+      ],
+      "description": "Heading corporate name",
+      "exclusiveSubfield": [
+        "t"
+      ]
+    },
+    {
+      "rules": [],
+      "target": "corporateNameTitle",
+      "subfield": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "f",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "q",
+        "r",
+        "s",
+        "t"
+      ],
+      "description": "Heading corporate name title",
+      "requiredSubfield": [
+        "t"
+      ]
+    }
+  ],
+  "111": [
+    {
+      "rules": [],
+      "target": "meetingName",
+      "subfield": [
+        "a",
+        "c",
+        "d",
+        "n",
+        "q",
+        "g",
+        "v",
+        "x",
+        "y",
+        "z"
+      ],
+      "description": "Heading meeting name",
+      "exclusiveSubfield": [
+        "t"
+      ]
+    },
+    {
+      "rules": [],
+      "target": "meetingNameTitle",
+      "subfield": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "f",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "q",
+        "r",
+        "s",
+        "t"
+      ],
+      "description": "Heading meeting name title",
+      "requiredSubfield": [
+        "t"
+      ]
+    }
+  ],
+  "130": [
+    {
+      "rules": [],
+      "target": "uniformTitle",
+      "subfield": [
+        "a",
+        "d",
+        "f",
+        "g",
+        "h",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "r",
+        "s",
+        "t",
+        "v",
+        "x",
+        "y",
+        "z"
+      ],
+      "description": "Heading uniform title"
+    }
+  ],
+  "150": [
+    {
+      "rules": [],
+      "target": "topicalTerm",
+      "subfield": [
+        "a",
+        "b",
+        "v",
+        "x",
+        "y",
+        "z"
+      ],
+      "description": "Heading topical term"
+    }
+  ],
+  "151": [
+    {
+      "rules": [],
+      "target": "geographicName",
+      "subfield": [
+        "a",
+        "g",
+        "v",
+        "x",
+        "y",
+        "z"
+      ],
+      "description": "Heading geographic name"
+    }
+  ],
+  "155": [
+    {
+      "rules": [],
+      "target": "genreTerm",
+      "subfield": [
+        "a",
+        "v",
+        "x",
+        "y",
+        "z"
+      ],
+      "description": "Heading genre/form term"
+    }
+  ],
+  "400": [
+    {
+      "rules": [],
+      "target": "sftPersonalName",
+      "subfield": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "g",
+        "q",
+        "v",
+        "x",
+        "y",
+        "z"
+      ],
+      "description": "See from tracing personal Name",
+      "exclusiveSubfield": [
+        "t"
+      ]
+    },
+    {
+      "rules": [],
+      "target": "sftPersonalNameTitle",
+      "subfield": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "f",
+        "i",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "q",
+        "r",
+        "s",
+        "t"
+      ],
+      "description": "See from tracing personal name title",
+      "requiredSubfield": [
+        "t"
+      ]
+    }
+  ],
+  "410": [
+    {
+      "rules": [],
+      "target": "sftCorporateName",
+      "subfield": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "g",
+        "n",
+        "v",
+        "x",
+        "y",
+        "z"
+      ],
+      "description": "See from tracing corporate name",
+      "exclusiveSubfield": [
+        "t"
+      ]
+    },
+    {
+      "rules": [],
+      "target": "sftCorporateNameTitle",
+      "subfield": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "f",
+        "i",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "q",
+        "r",
+        "s",
+        "t"
+      ],
+      "description": "See from tracing corporate name title",
+      "requiredSubfield": [
+        "t"
+      ]
+    }
+  ],
+  "411": [
+    {
+      "rules": [],
+      "target": "sftMeetingName",
+      "subfield": [
+        "a",
+        "c",
+        "d",
+        "n",
+        "q",
+        "g",
+        "v",
+        "x",
+        "y",
+        "z"
+      ],
+      "description": "See from tracing meeting name",
+      "exclusiveSubfield": [
+        "t"
+      ]
+    },
+    {
+      "rules": [],
+      "target": "sftMeetingNameTitle",
+      "subfield": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "f",
+        "i",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "q",
+        "r",
+        "s",
+        "t"
+      ],
+      "description": "See from tracing meeting name title",
+      "requiredSubfield": [
+        "t"
+      ]
+    }
+  ],
+  "430": [
+    {
+      "rules": [],
+      "target": "sftUniformTitle",
+      "subfield": [
+        "a",
+        "d",
+        "f",
+        "g",
+        "h",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "r",
+        "s",
+        "t",
+        "v",
+        "x",
+        "y",
+        "z"
+      ],
+      "description": "See from tracing uniform title"
+    }
+  ],
+  "450": [
+    {
+      "rules": [],
+      "target": "sftTopicalTerm",
+      "subfield": [
+        "a",
+        "b",
+        "g",
+        "i",
+        "v",
+        "x",
+        "y",
+        "z",
+        "4",
+        "5"
+      ],
+      "description": "See from tracing topical term"
+    }
+  ],
+  "451": [
+    {
+      "rules": [],
+      "target": "sftGeographicName",
+      "subfield": [
+        "a",
+        "g",
+        "i",
+        "v",
+        "x",
+        "y",
+        "z",
+        "4",
+        "5"
+      ],
+      "description": "See from tracing geographic name"
+    }
+  ],
+  "455": [
+    {
+      "rules": [],
+      "target": "sftGenreTerm",
+      "subfield": [
+        "a",
+        "i",
+        "v",
+        "x",
+        "y",
+        "z",
+        "x",
+        "4",
+        "5"
+      ],
+      "description": "See from tracing genre/form term"
+    }
+  ],
+  "500": [
+    {
+      "rules": [],
+      "target": "saftPersonalName",
+      "subfield": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "g",
+        "q",
+        "v",
+        "x",
+        "y",
+        "z"
+      ],
+      "description": "See also from tracing personal Name",
+      "exclusiveSubfield": [
+        "t"
+      ]
+    },
+    {
+      "rules": [],
+      "target": "saftPersonalNameTitle",
+      "subfield": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "f",
+        "i",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "q",
+        "r",
+        "s",
+        "t"
+      ],
+      "description": "See also from tracing personal name title",
+      "requiredSubfield": [
+        "t"
+      ]
+    }
+  ],
+  "510": [
+    {
+      "rules": [],
+      "target": "saftCorporateName",
+      "subfield": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "g",
+        "n",
+        "v",
+        "x",
+        "y",
+        "z"
+      ],
+      "description": "See also from tracing corporate name",
+      "exclusiveSubfield": [
+        "t"
+      ]
+    },
+    {
+      "rules": [],
+      "target": "saftCorporateNameTitle",
+      "subfield": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "f",
+        "i",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "q",
+        "r",
+        "s",
+        "t"
+      ],
+      "description": "See also from tracing corporate name title",
+      "requiredSubfield": [
+        "t"
+      ]
+    }
+  ],
+  "511": [
+    {
+      "rules": [],
+      "target": "saftMeetingName",
+      "subfield": [
+        "a",
+        "c",
+        "d",
+        "n",
+        "q",
+        "g",
+        "v",
+        "x",
+        "y",
+        "z"
+      ],
+      "description": "See also from tracing meeting name",
+      "exclusiveSubfield": [
+        "t"
+      ]
+    },
+    {
+      "rules": [],
+      "target": "saftMeetingNameTitle",
+      "subfield": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "f",
+        "i",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "q",
+        "r",
+        "s",
+        "t"
+      ],
+      "description": "See also from tracing meeting name title",
+      "requiredSubfield": [
+        "t"
+      ]
+    }
+  ],
+  "530": [
+    {
+      "rules": [],
+      "target": "saftUniformTitle",
+      "subfield": [
+        "a",
+        "d",
+        "f",
+        "g",
+        "h",
+        "i",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "r",
+        "s",
+        "t",
+        "v",
+        "x",
+        "y",
+        "z",
+        "4"
+      ],
+      "description": "See also from tracing uniform title"
+    }
+  ],
+  "550": [
+    {
+      "rules": [],
+      "target": "saftTopicalTerm",
+      "subfield": [
+        "a",
+        "b",
+        "g",
+        "i",
+        "v",
+        "x",
+        "y",
+        "z",
+        "4",
+        "5"
+      ],
+      "description": "See also from tracing topical term"
+    }
+  ],
+  "551": [
+    {
+      "rules": [],
+      "target": "saftGeographicName",
+      "subfield": [
+        "a",
+        "g",
+        "i",
+        "v",
+        "x",
+        "y",
+        "z",
+        "4",
+        "5"
+      ],
+      "description": "See also from tracing geographic name"
+    }
+  ],
+  "555": [
+    {
+      "rules": [],
+      "target": "saftGenreTerm",
+      "subfield": [
+        "a",
+        "i",
+        "v",
+        "x",
+        "y",
+        "z",
+        "x",
+        "4",
+        "5"
+      ],
+      "description": "See also from tracing genre/form term"
+    }
+  ],
+  "667": [
+    {
+      "entity": [
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_authority_note_type_id",
+                  "parameter": {
+                    "name": "Nonpublic general note"
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "notes.noteTypeId",
+          "subfield": [
+            "a"
+          ],
+          "description": "Authority note type id"
+        },
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "trim"
+                }
+              ]
+            }
+          ],
+          "target": "notes.note",
+          "subfield": [
+            "a"
+          ],
+          "description": "Authority note"
+        }
+      ]
+    }
+  ],
+  "999": [
+    {
+      "rules": [],
+      "target": "id",
+      "subfield": [
+        "i"
+      ],
+      "description": "Authority id"
+    }
+  ],
+  "001": [
+    {
+      "rules": [],
+      "target": "identifiers.value",
+      "subfield": [],
+      "description": "Control number"
+    },
+    {
+      "rules": [
+        {
+          "conditions": [
+            {
+              "type": "set_identifier_type_id_by_name",
+              "parameter": {
+                "name": "Control number"
+              }
+            }
+          ]
+        }
+      ],
+      "target": "identifiers.identifierTypeId",
+      "subfield": [],
+      "description": "Control number"
+    }
+  ],
+  "008": [
+    {
+      "rules": [
+        {
+          "conditions": [
+            {
+              "type": "char_select",
+              "parameter": {
+                "to": 12,
+                "from": 11
+              }
+            }
+          ]
+        }
+      ],
+      "target": "subjectHeadings",
+      "subfield": [],
+      "description": "Children's subject headings"
+    }
+  ],
+  "010": [
+    {
+      "entity": [
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_identifier_type_id_by_name",
+                  "parameter": {
+                    "name": "LCCN"
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.identifierTypeId",
+          "subfield": [
+            "a"
+          ],
+          "description": "Identifier Type for LCCN"
+        },
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "trim"
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.value",
+          "subfield": [
+            "a"
+          ],
+          "description": "Library of Congress Control Number"
+        },
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_identifier_type_id_by_name",
+                  "parameter": {
+                    "name": "Canceled LCCN"
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.identifierTypeId",
+          "subfield": [
+            "z"
+          ],
+          "description": "Identifier Type for Canceled LCCN"
+        },
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "trim"
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.value",
+          "subfield": [
+            "z"
+          ],
+          "description": "Canceled Library of Congress Control Number"
+        }
+      ],
+      "keepTrailingBackslash": true,
+      "entityPerRepeatedSubfield": true
+    }
+  ],
+  "024": [
+    {
+      "entity": [
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_identifier_type_id_by_name",
+                  "parameter": {
+                    "name": "Other standard identifier"
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.identifierTypeId",
+          "subfield": [
+            "a",
+            "c",
+            "d",
+            "q",
+            "z",
+            "0",
+            "1",
+            "2"
+          ],
+          "description": "Type for Other Standard Identifier",
+          "applyRulesOnConcatenatedData": true
+        },
+        {
+          "rules": [],
+          "target": "identifiers.value",
+          "subfield": [
+            "a",
+            "c",
+            "d",
+            "q",
+            "z",
+            "0",
+            "1",
+            "2"
+          ],
+          "description": "Other Standard Identifier",
+          "applyRulesOnConcatenatedData": true
+        }
+      ]
+    }
+  ],
+  "035": [
+    {
+      "entity": [
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_identifier_type_id_by_value",
+                  "parameter": {
+                    "name": [
+                      "System control number"
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "identifiers.identifierTypeId",
+          "subfield": [
+            "a",
+            "z"
+          ],
+          "description": "Type for System Control Number"
+        },
+        {
+          "target": "identifiers.value",
+          "subfield": [
+            "a",
+            "z"
+          ],
+          "description": "System Control Number"
+        }
+      ],
+      "entityPerRepeatedSubfield": true
+    }
+  ]
+}

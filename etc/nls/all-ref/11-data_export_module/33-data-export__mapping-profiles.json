@@ -1,0 +1,77 @@
+{
+  "mappingProfiles": [
+    {
+      "default": true,
+      "id": "25d81cbe-9686-11ea-bb37-0242ac130002",
+      "name": "Default instance mapping profile",
+      "description": "Default mapping profile for the inventory instance record",
+      "recordTypes": [
+        "INSTANCE"
+      ],
+      "userInfo": {
+        "firstName": "System",
+        "lastName": "Process",
+        "userName": "system_process"
+      },
+      "outputFormat": "MARC",
+      "suppress999ff": false,
+      "metadata": {
+        "createdDate": "2020-07-28T00:00:00.000+00:00",
+        "createdByUserId": "00000000-0000-0000-0000-000000000000",
+        "createdByUsername": "system_process",
+        "updatedDate": "2020-07-28T00:00:00.000+00:00",
+        "updatedByUserId": "00000000-0000-0000-0000-000000000000",
+        "updatedByUsername": "system_process"
+      }
+    },
+    {
+      "default": true,
+      "id": "5d636597-a59d-4391-a270-4e79d5ba70e3",
+      "name": "Default authority mapping profile",
+      "description": "Default authority profile for MARC for authority record",
+      "recordTypes": [
+        "AUTHORITY"
+      ],
+      "userInfo": {
+        "firstName": "System",
+        "lastName": "Process",
+        "userName": "system_process"
+      },
+      "outputFormat": "MARC",
+      "suppress999ff": false,
+      "metadata": {
+        "createdDate": "2020-07-28T00:00:00.000+00:00",
+        "createdByUserId": "00000000-0000-0000-0000-000000000000",
+        "createdByUsername": "system_process",
+        "updatedDate": "2020-07-28T00:00:00.000+00:00",
+        "updatedByUserId": "00000000-0000-0000-0000-000000000000",
+        "updatedByUsername": "system_process"
+      }
+    },
+    {
+      "default": true,
+      "id": "1ef7d0ac-f0a8-42b5-bbbb-c7e249009c13",
+      "name": "Default holdings mapping profile",
+      "description": "Default mapping profile for MARC for holdings record",
+      "recordTypes": [
+        "HOLDINGS"
+      ],
+      "userInfo": {
+        "firstName": "System",
+        "lastName": "Process",
+        "userName": "system_process"
+      },
+      "outputFormat": "MARC",
+      "suppress999ff": false,
+      "metadata": {
+        "createdDate": "2020-07-28T00:00:00.000+00:00",
+        "createdByUserId": "00000000-0000-0000-0000-000000000000",
+        "createdByUsername": "system_process",
+        "updatedDate": "2020-07-28T00:00:00.000+00:00",
+        "updatedByUserId": "00000000-0000-0000-0000-000000000000",
+        "updatedByUsername": "system_process"
+      }
+    }
+  ],
+  "totalRecords": 3
+}

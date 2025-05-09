@@ -1,0 +1,40 @@
+{
+  "reindexJobs": [
+    {
+      "id": "f4c1bf50-6872-4759-a164-749c9e3983c6",
+      "published": 0,
+      "jobStatus": "Ids published",
+      "resourceName": "Instance",
+      "submittedDate": "2024-12-18T11:31:33.017+00:00"
+    },
+    {
+      "id": "6cbc75b9-f0b0-426a-80bb-fcda7179ed7a",
+      "published": 185,
+      "jobStatus": "Ids published",
+      "resourceName": "Instance",
+      "submittedDate": "2025-02-17T20:18:55.682+00:00"
+    },
+    {
+      "id": "2d26cff3-2c8d-415f-8086-36d55ab5e8c5",
+      "published": 2903815,
+      "jobStatus": "Ids published",
+      "resourceName": "Instance",
+      "submittedDate": "2024-10-07T06:22:33.146+00:00"
+    },
+    {
+      "id": "25e35050-74fc-4203-9bd7-253e1542e439",
+      "published": 2903815,
+      "jobStatus": "Ids published",
+      "resourceName": "Instance",
+      "submittedDate": "2024-10-07T15:15:20.655+00:00"
+    },
+    {
+      "id": "6075df0d-9021-4663-883c-c23a96e021c5",
+      "published": 2903815,
+      "jobStatus": "Ids published",
+      "resourceName": "Instance",
+      "submittedDate": "2024-10-08T04:53:28.094+00:00"
+    }
+  ],
+  "totalRecords": 5
+}

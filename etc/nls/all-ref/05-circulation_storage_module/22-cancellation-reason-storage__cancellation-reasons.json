@@ -1,0 +1,67 @@
+{
+  "cancellationReasons": [
+    {
+      "id": "b548b182-55c2-4741-b169-616d9cd995a8",
+      "name": "Other",
+      "description": "Other",
+      "requiresAdditionalInformation": true,
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:55.814+00:00",
+        "updatedDate": "2024-10-04T08:22:05.222+00:00"
+      }
+    },
+    {
+      "id": "1c0e9ba1-6a97-4bbc-94fc-83eecc32f5fd",
+      "name": "Needed For Course Reserves",
+      "description": "Item is needed for course reserves",
+      "publicDescription": "Item is no longer available for request",
+      "requiresAdditionalInformation": false,
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:55.818+00:00",
+        "updatedDate": "2024-10-04T08:22:05.226+00:00"
+      }
+    },
+    {
+      "id": "ff474f60-d9ce-4bd8-8659-eb51af825a56",
+      "name": "Item Not Available",
+      "description": "Item is no longer available",
+      "requiresAdditionalInformation": false,
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:55.826+00:00",
+        "updatedDate": "2024-10-04T08:22:05.245+00:00"
+      }
+    },
+    {
+      "id": "75187e8d-e25a-47a7-89ad-23ba612338de",
+      "name": "Patron Cancelled",
+      "description": "Cancelled at patron’s request",
+      "requiresAdditionalInformation": false,
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:55.834+00:00",
+        "updatedDate": "2024-10-04T08:22:05.242+00:00"
+      }
+    },
+    {
+      "id": "d54e2fa5-f118-47f9-a6f4-1f10990f426f",
+      "name": "Digitisering",
+      "description": "digital beställning",
+      "publicDescription": "Materialet är digitiserat",
+      "metadata": {
+        "createdDate": "2024-05-17T12:23:44.043+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-05-17T12:23:44.043+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "50ed35b2-1397-4e83-a76b-642adf91ca2a",
+      "name": "DCB Cancelled",
+      "description": "DCB Cancelled",
+      "metadata": {
+        "createdDate": "2025-04-17T13:29:59.722+00:00",
+        "updatedDate": "2025-04-17T13:29:59.722+00:00"
+      }
+    }
+  ],
+  "totalRecords": 6
+}

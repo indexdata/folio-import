@@ -1,0 +1,18 @@
+{
+  "circulationSettings": [
+    {
+      "id": "88d65fff-e5c4-470d-8955-e63b07fa0e56",
+      "name": "printEventLogFeature",
+      "value": {
+        "enablePrintLog": "true"
+      },
+      "metadata": {
+        "createdDate": "2025-04-23T08:52:10.777+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-04-23T08:52:10.777+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    }
+  ],
+  "totalRecords": 1
+}

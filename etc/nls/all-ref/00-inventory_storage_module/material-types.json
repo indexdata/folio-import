@@ -1,0 +1,195 @@
+{
+  "mtypes": [
+    {
+      "id": "51520bb0-5748-4b00-94e4-9a5c2b708451",
+      "name": "Bunden volym",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-10-31T15:46:04.758+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-10-31T15:46:04.758+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "1a54b431-2e4f-452d-9cae-9cee66c9a892",
+      "name": "Monografi",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:42.505+00:00",
+        "updatedDate": "2023-10-31T15:46:44.864+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "651ade40-1518-47f4-84f2-976bff2c9131",
+      "name": "Häfte - periodika",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-10-31T15:46:10.846+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-10-31T15:47:31.165+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "67a32710-9d19-49e8-87f7-0831478994b3",
+      "name": "Bild",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-10-31T15:48:35.532+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-10-31T15:48:35.532+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "55307e47-efb1-4ec3-b0bc-353658edbf5e",
+      "name": "Kartblad",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-10-31T15:48:51.376+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-10-31T15:48:51.376+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "83202544-1a2d-46b3-8d8e-e9626a7c92f3",
+      "name": "Digitalt medium",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-10-31T15:56:39.182+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-10-31T15:56:39.182+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "fd6c6515-d470-4561-9c32-3e3290d4ca98",
+      "name": "Mikrofilm/fiche",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:42.496+00:00",
+        "updatedDate": "2023-10-31T15:57:36.866+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "77683d04-d643-4b2a-8151-31ab43999027",
+      "name": "Unmapped",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-10-31T16:00:53.959+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-10-31T16:00:53.959+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "30b3e36a-d3b2-415e-98c2-47fbdf878862",
+      "name": "Video",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:42.471+00:00",
+        "updatedDate": "2023-10-31T16:01:30.185+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "0a65688a-c7be-4f9f-83c7-148b0e50c5d9",
+      "name": "Bokskåp",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-10-31T16:01:46.238+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-10-31T16:01:46.238+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "5eb29b44-e55d-4e50-a1a2-3f040f6b35e4",
+      "name": "Blandat",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-10-31T16:02:04.148+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-10-31T16:02:04.148+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "ed5ed2e0-b426-481c-b984-e65bc7ec5f9f",
+      "name": "Handskrift",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-10-31T16:02:17.184+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-10-31T16:02:17.184+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "83dfcb73-878b-47ed-b9e8-b8838b0f0720",
+      "name": "Ljudupptagning",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-10-31T16:02:32.567+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-10-31T16:02:32.567+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "5ee11d91-f7e8-481d-b079-65d708582ccc",
+      "name": "_dvd",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:42.513+00:00",
+        "updatedDate": "2023-10-31T16:02:49.939+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "615b8413-82d5-4203-aa6e-e37984cb5ac3",
+      "name": "_electronic resource",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:42.508+00:00",
+        "updatedDate": "2023-10-31T16:02:59.795+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "dd0bf600-dbd9-44ab-9ff2-e2a61a6539f1",
+      "name": "_sound recording",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:42.491+00:00",
+        "updatedDate": "2023-10-31T16:03:14.861+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "d9acad2f-2aac-4b48-9097-e6ab85906b25",
+      "name": "_text",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:42.488+00:00",
+        "updatedDate": "2023-10-31T16:03:21.010+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "71fbd940-1027-40a6-8a48-49b44d795e46",
+      "name": "_unspecified",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:42.487+00:00",
+        "updatedDate": "2023-10-31T16:03:34.532+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    }
+  ],
+  "totalRecords": 18
+}

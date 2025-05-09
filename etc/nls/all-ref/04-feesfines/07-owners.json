@@ -1,0 +1,43 @@
+{
+  "owners": [
+    {
+      "owner": "Räkningsansvarig",
+      "servicePointOwner": [
+        {
+          "value": "996760f7-e64b-4c8e-b228-41f52fb9fade",
+          "label": "Information och lån"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2024-09-04T11:29:51.613+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-09-04T11:30:04.578+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "id": "9dd3b798-11d2-45b0-a939-b94c0440fb91"
+    },
+    {
+      "owner": "Repro",
+      "servicePointOwner": [],
+      "metadata": {
+        "createdDate": "2025-03-07T14:46:05.542+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-03-07T14:46:05.542+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "id": "5cbf34cb-40a5-41e9-a3fb-ac07c2c98770"
+    },
+    {
+      "owner": "Fjärrlån",
+      "servicePointOwner": [],
+      "metadata": {
+        "createdDate": "2025-03-07T14:46:12.273+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-03-07T14:46:12.273+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "id": "a83cc351-a6db-46ec-aa67-f0b9fb230399"
+    }
+  ],
+  "totalRecords": 3
+}

@@ -1,0 +1,95 @@
+{
+  "patronBlockConditions": [
+    {
+      "id": "08530ac4-07f2-48e6-9dda-a97bc2bf7053",
+      "name": "Recall overdue by maximum number of days",
+      "blockBorrowing": true,
+      "blockRenewals": true,
+      "blockRequests": true,
+      "valueType": "Integer",
+      "message": "Kontot är låst på grund av ej återlämnat lån",
+      "metadata": {
+        "createdDate": "2025-02-14T16:37:02.253+00:00",
+        "createdByUserId": "39a1ef78-5c0d-426c-b997-cb65c4f44ebd",
+        "updatedDate": "2025-02-14T16:37:02.253+00:00",
+        "updatedByUserId": "39a1ef78-5c0d-426c-b997-cb65c4f44ebd"
+      }
+    },
+    {
+      "id": "72b67965-5b73-4840-bc0b-be8f3f6e047e",
+      "name": "Maximum number of lost items",
+      "blockBorrowing": true,
+      "blockRenewals": true,
+      "blockRequests": true,
+      "valueType": "Integer",
+      "message": "Kontot är låst på grund av förkommet lån",
+      "metadata": {
+        "createdDate": "2025-02-14T16:56:43.783+00:00",
+        "createdByUserId": "39a1ef78-5c0d-426c-b997-cb65c4f44ebd",
+        "updatedDate": "2025-02-14T16:56:43.783+00:00",
+        "updatedByUserId": "39a1ef78-5c0d-426c-b997-cb65c4f44ebd"
+      }
+    },
+    {
+      "id": "cf7a0d5f-a327-4ca1-aa9e-dc55ec006b8a",
+      "name": "Maximum outstanding fee/fine balance",
+      "blockBorrowing": true,
+      "blockRenewals": false,
+      "blockRequests": false,
+      "valueType": "Double",
+      "message": "Obetalda avgifter",
+      "metadata": {
+        "createdDate": "2025-03-07T14:47:38.583+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-03-07T14:47:38.583+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "3d7c52dc-c732-4223-8bf8-e5917801386f",
+      "name": "Maximum number of items charged out",
+      "blockBorrowing": true,
+      "blockRenewals": true,
+      "blockRequests": true,
+      "valueType": "Integer",
+      "message": "Kontot är låst på grund av max antal utlån",
+      "metadata": {
+        "createdDate": "2024-11-07T11:07:01.323+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-11-07T11:07:01.323+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "584fbd4f-6a34-4730-a6ca-73a6a6a9d845",
+      "name": "Maximum number of overdue items",
+      "blockBorrowing": true,
+      "blockRenewals": true,
+      "blockRequests": false,
+      "valueType": "Integer",
+      "message": "Kontot är låst på grund av försenade lån",
+      "metadata": {
+        "createdDate": "2024-11-07T11:07:48.859+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-11-07T11:07:48.859+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "e5b45031-a202-4abb-917b-e1df9346fe2c",
+      "name": "Maximum number of overdue recalls",
+      "blockBorrowing": true,
+      "blockRenewals": true,
+      "blockRequests": false,
+      "valueType": "Integer",
+      "message": "Kontot är låst",
+      "metadata": {
+        "createdDate": "2024-11-07T11:07:56.361+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-11-07T11:07:56.361+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    }
+  ],
+  "totalRecords": 6
+}
