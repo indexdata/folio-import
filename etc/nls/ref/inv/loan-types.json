@@ -1,143 +1,150 @@
 {
   "loantypes": [
     {
-      "id": "5fe8b93d-5a99-44d2-aa4e-fe6c423bab9d",
-      "name": "Vardagstryck",
+      "id": "2e48e713-17f3-4c13-a9f8-23845bb210a4",
+      "name": "Läsesalslån/Reading room loan",
       "metadata": {
-        "createdDate": "2024-10-11T13:23:34.388+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2024-10-11T13:23:34.388+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+        "createdDate": "2025-01-19T22:09:02.113+00:00",
+        "updatedDate": "2025-01-24T15:48:45.021+00:00",
+        "updatedByUserId": "6c4efc2a-853a-432c-9785-566416bd0035"
       }
     },
     {
-      "id": "e7afa435-a4c8-4e9f-b2c6-9921ea4e027f",
-      "name": "Hemlån",
+      "id": "a1dc1ce3-d56f-4d8a-b498-d5d674ccc845",
+      "name": "Hemlån/Home loan",
       "metadata": {
-        "createdDate": "2023-08-07T07:50:36.346+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2023-08-07T07:50:36.346+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+        "createdDate": "2025-01-19T22:09:02.114+00:00",
+        "updatedDate": "2025-01-24T15:48:58.143+00:00",
+        "updatedByUserId": "6c4efc2a-853a-432c-9785-566416bd0035"
       }
     },
     {
-      "id": "1c9f3c34-43be-44d7-b18f-f9e4ab891bbe",
-      "name": "Läsesalslån",
+      "id": "2052a9fa-01ca-4cef-9502-4b8313f10e4c",
+      "name": "Vardagstryck /Ephemera",
       "metadata": {
-        "createdDate": "2023-08-07T07:50:47.771+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2023-08-07T07:50:47.771+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+        "createdDate": "2025-01-24T15:49:38.256+00:00",
+        "createdByUserId": "6c4efc2a-853a-432c-9785-566416bd0035",
+        "updatedDate": "2025-01-24T15:49:38.256+00:00",
+        "updatedByUserId": "6c4efc2a-853a-432c-9785-566416bd0035"
       }
     },
     {
-      "id": "603dd1de-f45a-44f2-adab-ab89aa7ff339",
-      "name": "Specialläsesalslån",
+      "id": "8822bad5-1f72-431d-ad8b-75a38eb656c9",
+      "name": "Bokskåp/Book locker",
       "metadata": {
-        "createdDate": "2023-11-01T13:01:44.457+00:00",
-        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
-        "updatedDate": "2023-11-01T13:01:44.457+00:00",
-        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+        "createdDate": "2025-01-24T15:49:51.911+00:00",
+        "createdByUserId": "6c4efc2a-853a-432c-9785-566416bd0035",
+        "updatedDate": "2025-01-24T15:49:51.911+00:00",
+        "updatedByUserId": "6c4efc2a-853a-432c-9785-566416bd0035"
       }
     },
     {
-      "id": "30520547-c7dd-4a8f-8d8a-4ae92c128dba",
-      "name": "Bokskåp",
+      "id": "e8b311a6-3b21-43f2-a269-dd9310cb2d0e",
+      "name": "Ej utlån/No loan",
       "metadata": {
-        "createdDate": "2025-01-17T14:00:19.847+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-01-17T14:00:19.847+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+        "createdDate": "2025-01-19T22:09:02.114+00:00",
+        "updatedDate": "2025-01-24T15:50:11.889+00:00",
+        "updatedByUserId": "6c4efc2a-853a-432c-9785-566416bd0035"
       }
     },
     {
-      "id": "822e0700-cd2d-4ab9-87ec-8e8a69d92e8d",
-      "name": "Lagas före lån",
+      "id": "2b94c631-fca9-4892-a730-03ee529ffe27",
+      "name": "Lagas före lån/Preservetion needed",
       "metadata": {
-        "createdDate": "2024-06-03T14:40:36.217+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-02-04T16:10:29.589+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+        "createdDate": "2025-01-19T22:09:02.115+00:00",
+        "updatedDate": "2025-01-24T15:50:42.595+00:00",
+        "updatedByUserId": "6c4efc2a-853a-432c-9785-566416bd0035"
       }
     },
     {
-      "id": "4066b059-c081-4dbb-a0ee-cbac3950cc87",
-      "name": "Digital beställning ",
+      "id": "6777c7a3-89ac-44f7-9f61-2dc5edc2911a",
+      "name": "Specialläsesalslån - special reading room loans ",
       "metadata": {
-        "createdDate": "2024-04-19T14:28:12.419+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-02-04T16:11:15.323+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+        "createdDate": "2025-01-24T15:49:16.188+00:00",
+        "createdByUserId": "6c4efc2a-853a-432c-9785-566416bd0035",
+        "updatedDate": "2025-01-27T08:57:08.779+00:00",
+        "updatedByUserId": "6c4efc2a-853a-432c-9785-566416bd0035"
       }
     },
     {
-      "id": "c66ae595-953b-45e7-b613-8dd28b206240",
-      "name": "Under leverans (ABON)",
+      "id": "b15a3de2-f683-4184-ab02-577a9a552b2a",
+      "name": "1 hour loan",
       "metadata": {
-        "createdDate": "2025-02-04T16:22:40.171+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-02-04T16:22:40.171+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+        "createdDate": "2025-03-05T09:51:00.631+00:00",
+        "createdByUserId": "d6c04653-bd47-5b32-8319-a4d44e3bf3b4",
+        "updatedDate": "2025-03-05T09:51:00.631+00:00",
+        "updatedByUserId": "d6c04653-bd47-5b32-8319-a4d44e3bf3b4"
       }
     },
     {
-      "id": "d416a50c-d2a3-4a79-8cd7-394ec0342a7a",
-      "name": "Referens",
-      "metadata": {
-        "createdDate": "2025-02-05T15:24:06.119+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-02-05T15:24:06.119+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
-      "id": "8c6cd6a0-914c-4fc6-98bc-8ea8f4994d09",
-      "name": "Manuell beställning",
-      "metadata": {
-        "createdDate": "2025-02-14T08:37:02.117+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-02-14T08:37:02.117+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
-      "id": "2993d9f1-9620-4117-8a36-72bec2e4a2cb",
+      "id": "5037d641-288d-4ac1-afa2-0395e9b54bd1",
       "name": "Beställ i Arken",
       "metadata": {
-        "createdDate": "2025-02-14T08:37:19.117+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-02-14T08:37:40.315+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+        "createdDate": "2025-03-17T16:56:05.156+00:00",
+        "createdByUserId": "8ffac617-2e98-453b-bb2e-0d3d3a6fad7a",
+        "updatedDate": "2025-03-17T16:56:05.156+00:00",
+        "updatedByUserId": "8ffac617-2e98-453b-bb2e-0d3d3a6fad7a"
+      }
+    },
+    {
+      "id": "4dec5417-0765-4767-bed6-b363a2d7d4e2",
+      "name": "Digital beställning/Digitisation",
+      "metadata": {
+        "createdDate": "2025-01-19T22:10:34.696+00:00",
+        "updatedDate": "2025-03-17T16:57:15.276+00:00",
+        "updatedByUserId": "8ffac617-2e98-453b-bb2e-0d3d3a6fad7a"
+      }
+    },
+    {
+      "id": "c32b698b-7979-4eeb-878f-c5a6569eb0d1",
+      "name": "Framtages ej/spärrat",
+      "metadata": {
+        "createdDate": "2025-03-17T16:57:40.292+00:00",
+        "createdByUserId": "8ffac617-2e98-453b-bb2e-0d3d3a6fad7a",
+        "updatedDate": "2025-03-17T16:57:40.292+00:00",
+        "updatedByUserId": "8ffac617-2e98-453b-bb2e-0d3d3a6fad7a"
+      }
+    },
+    {
+      "id": "611cae48-5933-4008-950b-1af5aa5010fc",
+      "name": "Manuell beställning",
+      "metadata": {
+        "createdDate": "2025-03-17T16:58:59.607+00:00",
+        "createdByUserId": "8ffac617-2e98-453b-bb2e-0d3d3a6fad7a",
+        "updatedDate": "2025-03-17T16:58:59.607+00:00",
+        "updatedByUserId": "8ffac617-2e98-453b-bb2e-0d3d3a6fad7a"
+      }
+    },
+    {
+      "id": "ef931883-c804-4bda-a87d-77258aaeb029",
+      "name": "Referens",
+      "metadata": {
+        "createdDate": "2025-03-17T16:59:11.525+00:00",
+        "createdByUserId": "8ffac617-2e98-453b-bb2e-0d3d3a6fad7a",
+        "updatedDate": "2025-03-17T16:59:11.525+00:00",
+        "updatedByUserId": "8ffac617-2e98-453b-bb2e-0d3d3a6fad7a"
+      }
+    },
+    {
+      "id": "9c91d11a-0457-4f1c-b338-3b959ac495e8",
+      "name": "Under leverans (ABON)",
+      "metadata": {
+        "createdDate": "2025-03-17T16:59:39.140+00:00",
+        "createdByUserId": "8ffac617-2e98-453b-bb2e-0d3d3a6fad7a",
+        "updatedDate": "2025-03-17T16:59:39.140+00:00",
+        "updatedByUserId": "8ffac617-2e98-453b-bb2e-0d3d3a6fad7a"
       }
     },
     {
       "id": "cddf164f-8b0b-4f88-8451-d81bf61c3dd4",
       "name": "L-samling - kollas före lån",
       "metadata": {
-        "createdDate": "2025-02-04T16:10:39.437+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-02-17T11:14:28.376+00:00",
-        "updatedByUserId": "39a1ef78-5c0d-426c-b997-cb65c4f44ebd"
-      }
-    },
-    {
-      "id": "bcdc202b-5e05-4385-bbd6-1c41d7b1746f",
-      "name": "Framtages ej/spärrat",
-      "metadata": {
-        "createdDate": "2023-11-01T13:07:45.268+00:00",
-        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
-        "updatedDate": "2025-03-17T14:34:11.963+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
-      "id": "4dec5417-0765-4767-bed6-b363a2d7d4e2",
-      "name": "DCB Can circulate",
-      "metadata": {
-        "createdDate": "2025-04-17T13:29:59.814+00:00",
-        "updatedDate": "2025-04-17T13:29:59.814+00:00"
+        "createdDate": "2025-03-27T17:27:03.297+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2025-03-27T17:27:03.297+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     }
   ],
-  "totalRecords": 14
+  "totalRecords": 15
 }

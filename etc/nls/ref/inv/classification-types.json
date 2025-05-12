@@ -5,8 +5,9 @@
       "name": "UDC",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.182+00:00",
-        "updatedDate": "2023-03-13T12:10:45.182+00:00"
+        "createdDate": "2025-01-19T22:09:03.289+00:00",
+        "updatedDate": "2025-03-27T17:24:10.782+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -14,8 +15,9 @@
       "name": "NLM",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.179+00:00",
-        "updatedDate": "2023-03-13T12:10:45.179+00:00"
+        "createdDate": "2025-01-19T22:09:03.290+00:00",
+        "updatedDate": "2025-03-27T17:24:11.140+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -23,8 +25,9 @@
       "name": "Additional Dewey",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.182+00:00",
-        "updatedDate": "2023-03-13T12:10:45.182+00:00"
+        "createdDate": "2025-01-19T22:09:03.289+00:00",
+        "updatedDate": "2025-03-27T17:24:11.501+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -32,8 +35,9 @@
       "name": "Dewey",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.188+00:00",
-        "updatedDate": "2023-03-13T12:10:45.188+00:00"
+        "createdDate": "2025-01-19T22:09:03.290+00:00",
+        "updatedDate": "2025-03-27T17:24:11.844+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -41,8 +45,9 @@
       "name": "Canadian Classification",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.194+00:00",
-        "updatedDate": "2023-03-13T12:10:45.194+00:00"
+        "createdDate": "2025-01-19T22:09:03.291+00:00",
+        "updatedDate": "2025-03-27T17:24:12.180+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -50,8 +55,9 @@
       "name": "LC (local)",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.199+00:00",
-        "updatedDate": "2023-03-13T12:10:45.199+00:00"
+        "createdDate": "2025-01-19T22:09:03.301+00:00",
+        "updatedDate": "2025-03-27T17:24:12.516+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -59,8 +65,9 @@
       "name": "LC",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.198+00:00",
-        "updatedDate": "2023-03-13T12:10:45.198+00:00"
+        "createdDate": "2025-01-19T22:09:03.300+00:00",
+        "updatedDate": "2025-03-27T17:24:12.840+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -68,8 +75,9 @@
       "name": "SUDOC",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.200+00:00",
-        "updatedDate": "2023-03-13T12:10:45.200+00:00"
+        "createdDate": "2025-01-19T22:09:03.301+00:00",
+        "updatedDate": "2025-03-27T17:24:13.176+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -77,8 +85,9 @@
       "name": "GDC",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.203+00:00",
-        "updatedDate": "2023-03-13T12:10:45.203+00:00"
+        "createdDate": "2025-01-19T22:09:03.302+00:00",
+        "updatedDate": "2025-03-27T17:24:13.504+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -86,8 +95,9 @@
       "name": "National Agricultural Library",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.206+00:00",
-        "updatedDate": "2023-03-13T12:10:45.206+00:00"
+        "createdDate": "2025-01-19T22:09:03.302+00:00",
+        "updatedDate": "2025-03-27T17:24:13.844+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -95,10 +105,10 @@
       "name": "SAB",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-18T09:49:56.753+00:00",
-        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-03-18T09:49:56.753+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+        "createdDate": "2025-03-27T17:24:14.000+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2025-03-27T17:24:14.000+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     }
   ],

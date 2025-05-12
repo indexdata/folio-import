@@ -5,8 +5,9 @@
       "name": "single unit",
       "source": "rdamodeissue",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.446+00:00",
-        "updatedDate": "2023-03-13T12:10:45.446+00:00"
+        "createdDate": "2025-01-19T22:09:03.398+00:00",
+        "updatedDate": "2025-03-27T17:27:08.388+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -14,8 +15,9 @@
       "name": "unspecified",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.448+00:00",
-        "updatedDate": "2023-03-13T12:10:45.448+00:00"
+        "createdDate": "2025-01-19T22:09:03.398+00:00",
+        "updatedDate": "2025-03-27T17:27:08.709+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -23,8 +25,9 @@
       "name": "multipart monograph",
       "source": "rdamodeissue",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.450+00:00",
-        "updatedDate": "2023-03-13T12:10:45.450+00:00"
+        "createdDate": "2025-01-19T22:09:03.399+00:00",
+        "updatedDate": "2025-03-27T17:27:09.053+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -32,8 +35,9 @@
       "name": "serial",
       "source": "rdamodeissue",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.456+00:00",
-        "updatedDate": "2023-03-13T12:10:45.456+00:00"
+        "createdDate": "2025-01-19T22:09:03.399+00:00",
+        "updatedDate": "2025-03-27T17:27:09.377+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -41,8 +45,9 @@
       "name": "integrating resource",
       "source": "rdamodeissue",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.458+00:00",
-        "updatedDate": "2023-03-13T12:10:45.458+00:00"
+        "createdDate": "2025-01-19T22:09:03.399+00:00",
+        "updatedDate": "2025-03-27T17:27:09.728+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     }
   ],

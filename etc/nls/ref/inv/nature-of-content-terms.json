@@ -5,8 +5,9 @@
       "name": "report",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.093+00:00",
-        "updatedDate": "2023-03-13T12:10:45.093+00:00"
+        "createdDate": "2025-01-19T22:09:03.254+00:00",
+        "updatedDate": "2025-03-27T17:27:10.128+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -14,8 +15,9 @@
       "name": "illustrated book / picture book",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.096+00:00",
-        "updatedDate": "2023-03-13T12:10:45.096+00:00"
+        "createdDate": "2025-01-19T22:09:03.256+00:00",
+        "updatedDate": "2025-03-27T17:27:10.457+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -23,8 +25,9 @@
       "name": "newspaper",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.101+00:00",
-        "updatedDate": "2023-03-13T12:10:45.101+00:00"
+        "createdDate": "2025-01-19T22:09:03.255+00:00",
+        "updatedDate": "2025-03-27T17:27:10.788+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -32,8 +35,9 @@
       "name": "textbook",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.104+00:00",
-        "updatedDate": "2023-03-13T12:10:45.104+00:00"
+        "createdDate": "2025-01-19T22:09:03.256+00:00",
+        "updatedDate": "2025-03-27T17:27:11.136+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -41,8 +45,9 @@
       "name": "experience report",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.108+00:00",
-        "updatedDate": "2023-03-13T12:10:45.108+00:00"
+        "createdDate": "2025-01-19T22:09:03.259+00:00",
+        "updatedDate": "2025-03-27T17:27:11.468+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -50,8 +55,9 @@
       "name": "thesis",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.108+00:00",
-        "updatedDate": "2023-03-13T12:10:45.108+00:00"
+        "createdDate": "2025-01-19T22:09:03.257+00:00",
+        "updatedDate": "2025-03-27T17:27:11.801+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -59,8 +65,9 @@
       "name": "research report",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.110+00:00",
-        "updatedDate": "2023-03-13T12:10:45.110+00:00"
+        "createdDate": "2025-01-19T22:09:03.260+00:00",
+        "updatedDate": "2025-03-27T17:27:12.127+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -68,8 +75,9 @@
       "name": "monographic series",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.113+00:00",
-        "updatedDate": "2023-03-13T12:10:45.113+00:00"
+        "createdDate": "2025-01-19T22:09:03.261+00:00",
+        "updatedDate": "2025-03-27T17:27:12.472+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -77,8 +85,9 @@
       "name": "festschrift",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.115+00:00",
-        "updatedDate": "2023-03-13T12:10:45.115+00:00"
+        "createdDate": "2025-01-19T22:09:03.262+00:00",
+        "updatedDate": "2025-03-27T17:27:12.819+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -86,8 +95,9 @@
       "name": "biography",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.117+00:00",
-        "updatedDate": "2023-03-13T12:10:45.117+00:00"
+        "createdDate": "2025-01-19T22:09:03.265+00:00",
+        "updatedDate": "2025-03-27T17:27:13.141+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -95,8 +105,9 @@
       "name": "autobiography",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.117+00:00",
-        "updatedDate": "2023-03-13T12:10:45.117+00:00"
+        "createdDate": "2025-01-19T22:09:03.262+00:00",
+        "updatedDate": "2025-03-27T17:27:13.473+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -104,8 +115,9 @@
       "name": "journal",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.121+00:00",
-        "updatedDate": "2023-03-13T12:10:45.121+00:00"
+        "createdDate": "2025-01-19T22:09:03.263+00:00",
+        "updatedDate": "2025-03-27T17:27:13.812+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -113,8 +125,9 @@
       "name": "travel report",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.123+00:00",
-        "updatedDate": "2023-03-13T12:10:45.123+00:00"
+        "createdDate": "2025-01-19T22:09:03.264+00:00",
+        "updatedDate": "2025-03-27T17:27:14.160+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -122,8 +135,9 @@
       "name": "proceedings",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.125+00:00",
-        "updatedDate": "2023-03-13T12:10:45.125+00:00"
+        "createdDate": "2025-01-19T22:09:03.266+00:00",
+        "updatedDate": "2025-03-27T17:27:14.496+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -131,8 +145,9 @@
       "name": "exhibition catalogue",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.127+00:00",
-        "updatedDate": "2023-03-13T12:10:45.127+00:00"
+        "createdDate": "2025-01-19T22:09:03.267+00:00",
+        "updatedDate": "2025-03-27T17:27:14.824+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -140,8 +155,9 @@
       "name": "website",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.128+00:00",
-        "updatedDate": "2023-03-13T12:10:45.128+00:00"
+        "createdDate": "2025-01-19T22:09:03.268+00:00",
+        "updatedDate": "2025-03-27T17:27:15.156+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -149,8 +165,9 @@
       "name": "audiobook",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.130+00:00",
-        "updatedDate": "2023-03-13T12:10:45.130+00:00"
+        "createdDate": "2025-01-19T22:09:03.268+00:00",
+        "updatedDate": "2025-03-27T17:27:15.495+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -158,8 +175,9 @@
       "name": "comic (book)",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.141+00:00",
-        "updatedDate": "2023-03-13T12:10:45.141+00:00"
+        "createdDate": "2025-01-19T22:09:03.270+00:00",
+        "updatedDate": "2025-03-27T17:27:15.812+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -167,8 +185,9 @@
       "name": "literature report",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.140+00:00",
-        "updatedDate": "2023-03-13T12:10:45.140+00:00"
+        "createdDate": "2025-01-19T22:09:03.269+00:00",
+        "updatedDate": "2025-03-27T17:27:16.150+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -176,8 +195,9 @@
       "name": "bibliography",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.144+00:00",
-        "updatedDate": "2023-03-13T12:10:45.144+00:00"
+        "createdDate": "2025-01-19T22:09:03.271+00:00",
+        "updatedDate": "2025-03-27T17:27:16.490+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -185,8 +205,9 @@
       "name": "school program",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.143+00:00",
-        "updatedDate": "2023-03-13T12:10:45.143+00:00"
+        "createdDate": "2025-01-19T22:09:03.272+00:00",
+        "updatedDate": "2025-03-27T17:27:16.812+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     }
   ],

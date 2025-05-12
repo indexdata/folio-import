@@ -1,57 +1,70 @@
 {
   "itemNoteTypes": [
     {
+      "id": "2c8f0b79-78d9-4187-832f-b5d3d96c8546",
+      "name": "Public note",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-02-28T11:04:52.217+00:00",
+        "createdByUserId": "6c4efc2a-853a-432c-9785-566416bd0035",
+        "updatedDate": "2025-02-28T11:04:52.217+00:00",
+        "updatedByUserId": "6c4efc2a-853a-432c-9785-566416bd0035"
+      }
+    },
+    {
+      "id": "1bf2a9ff-f598-4442-8124-19d9b346e98b",
+      "name": "Staff note",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-02-28T11:04:59.655+00:00",
+        "createdByUserId": "6c4efc2a-853a-432c-9785-566416bd0035",
+        "updatedDate": "2025-02-28T11:04:59.655+00:00",
+        "updatedByUserId": "6c4efc2a-853a-432c-9785-566416bd0035"
+      }
+    },
+    {
+      "id": "c97de4ac-0642-4259-800d-6cee892bf16c",
+      "name": "Internal note",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-03-17T17:01:09.453+00:00",
+        "createdByUserId": "8ffac617-2e98-453b-bb2e-0d3d3a6fad7a",
+        "updatedDate": "2025-03-17T17:01:09.453+00:00",
+        "updatedByUserId": "8ffac617-2e98-453b-bb2e-0d3d3a6fad7a"
+      }
+    },
+    {
+      "id": "3112bd21-0293-433e-96c9-1c53ed9cc42c",
+      "name": "Samlingskod",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-03-17T17:01:36.030+00:00",
+        "createdByUserId": "8ffac617-2e98-453b-bb2e-0d3d3a6fad7a",
+        "updatedDate": "2025-03-17T17:01:36.030+00:00",
+        "updatedByUserId": "8ffac617-2e98-453b-bb2e-0d3d3a6fad7a"
+      }
+    },
+    {
       "id": "c3a539b9-9576-4e3a-b6de-d910200b2919",
       "name": "Provenance",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.993+00:00",
-        "updatedDate": "2023-03-13T12:10:45.993+00:00"
+        "createdDate": "2025-01-19T22:09:03.586+00:00",
+        "updatedDate": "2025-03-27T17:26:59.540+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
-      "id": "2fab608b-8018-4ddd-aaf5-6e361cd33ad5",
-      "name": "Samlingskod",
-      "source": "local",
-      "metadata": {
-        "createdDate": "2023-11-27T15:58:21.301+00:00",
-        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
-        "updatedDate": "2023-11-27T15:58:21.301+00:00",
-        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
-      }
-    },
-    {
-      "id": "8d0a5eca-25de-4391-81a9-236eeefdd20b",
-      "name": "Internal note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2023-03-13T12:10:45.997+00:00",
-        "updatedDate": "2025-02-14T09:09:28.645+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
-      "id": "af899254-3037-4bf7-8b2d-0ff385a7b37c",
-      "name": "Public note",
-      "source": "local",
-      "metadata": {
-        "createdDate": "2023-11-27T16:00:32.122+00:00",
-        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
-        "updatedDate": "2025-02-14T09:09:36.821+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
-      "id": "78478a92-bc5f-4461-88dc-83941a13f9fe",
+      "id": "8183827a-ee10-43bb-ac02-2726dff81167",
       "name": "Aleph check out count",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-04-07T14:08:15.502+00:00",
-        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-04-07T14:08:15.502+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+        "createdDate": "2025-04-28T09:18:11.051+00:00",
+        "createdByUserId": "e297b7ce-90ef-4e9c-a2d2-36050ebf7765",
+        "updatedDate": "2025-04-28T09:18:11.051+00:00",
+        "updatedByUserId": "e297b7ce-90ef-4e9c-a2d2-36050ebf7765"
       }
     }
   ],
-  "totalRecords": 5
+  "totalRecords": 6
 }

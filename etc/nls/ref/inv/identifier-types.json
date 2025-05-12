@@ -1,25 +1,22 @@
 {
   "identifierTypes": [
     {
-      "id": "f11e1b46-3f28-419e-b1e2-d79741a4e3a5",
-      "name": "Libris number",
-      "source": "local",
+      "id": "fcca2643-406a-482a-b760-7a7f8aec640e",
+      "name": "Invalid ISBN",
+      "source": "folio",
       "metadata": {
-        "createdDate": "2025-02-17T18:21:33.204+00:00",
-        "createdByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487",
-        "updatedDate": "2025-02-17T18:21:33.204+00:00",
-        "updatedByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487"
+        "createdDate": "2025-01-19T22:09:02.173+00:00",
+        "updatedDate": "2025-03-27T17:26:03.440+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
-      "id": "5ac34587-a4a4-4167-a9a2-35307731659e",
-      "name": "SE-LIBR",
-      "source": "local",
+      "id": "c858e4f2-2b6b-4385-842b-60532ee34abb",
+      "name": "Canceled LCCN",
+      "source": "folio",
       "metadata": {
-        "createdDate": "2025-02-25T09:27:25.324+00:00",
-        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-02-25T09:27:25.324+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+        "createdDate": "2025-01-19T22:09:02.161+00:00",
+        "updatedDate": "2025-01-19T22:09:02.161+00:00"
       }
     },
     {
@@ -27,8 +24,9 @@
       "name": "UkMac",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:42.716+00:00",
-        "updatedDate": "2023-03-13T12:10:42.716+00:00"
+        "createdDate": "2025-01-19T22:09:02.147+00:00",
+        "updatedDate": "2025-03-27T17:25:54.905+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -36,8 +34,9 @@
       "name": "Other standard identifier",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:42.712+00:00",
-        "updatedDate": "2023-03-13T12:10:42.712+00:00"
+        "createdDate": "2025-01-19T22:09:02.147+00:00",
+        "updatedDate": "2025-03-27T17:25:55.253+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -45,8 +44,9 @@
       "name": "Control number",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:42.720+00:00",
-        "updatedDate": "2023-03-13T12:10:42.720+00:00"
+        "createdDate": "2025-01-19T22:09:02.148+00:00",
+        "updatedDate": "2025-03-27T17:25:55.608+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -54,8 +54,9 @@
       "name": "Publisher or distributor number",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:42.723+00:00",
-        "updatedDate": "2023-03-13T12:10:42.723+00:00"
+        "createdDate": "2025-01-19T22:09:02.150+00:00",
+        "updatedDate": "2025-03-27T17:25:55.939+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -63,8 +64,9 @@
       "name": "System control number",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:42.728+00:00",
-        "updatedDate": "2023-03-13T12:10:42.728+00:00"
+        "createdDate": "2025-01-19T22:09:02.150+00:00",
+        "updatedDate": "2025-03-27T17:25:56.273+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -72,8 +74,9 @@
       "name": "Cancelled GPO item number",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:42.735+00:00",
-        "updatedDate": "2023-03-13T12:10:42.735+00:00"
+        "createdDate": "2025-01-19T22:09:02.152+00:00",
+        "updatedDate": "2025-03-27T17:25:56.608+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -81,8 +84,9 @@
       "name": "ISBN",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:42.734+00:00",
-        "updatedDate": "2023-03-13T12:10:42.734+00:00"
+        "createdDate": "2025-01-19T22:09:02.151+00:00",
+        "updatedDate": "2025-03-27T17:25:56.968+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -90,8 +94,10 @@
       "name": "ISMN",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:42.741+00:00",
-        "updatedDate": "2023-03-13T12:10:42.741+00:00"
+        "createdDate": "2025-03-27T17:25:57.324+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2025-03-27T17:25:57.324+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -99,8 +105,10 @@
       "name": "Cancelled system control number",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:42.745+00:00",
-        "updatedDate": "2023-03-13T12:10:42.745+00:00"
+        "createdDate": "2025-03-27T17:25:57.648+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2025-03-27T17:25:57.648+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -108,8 +116,9 @@
       "name": "StEdNL",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:42.756+00:00",
-        "updatedDate": "2023-03-13T12:10:42.756+00:00"
+        "createdDate": "2025-01-19T22:09:02.156+00:00",
+        "updatedDate": "2025-03-27T17:25:57.971+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -117,17 +126,9 @@
       "name": "ASIN",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:42.751+00:00",
-        "updatedDate": "2023-03-13T12:10:42.751+00:00"
-      }
-    },
-    {
-      "id": "5860f255-a27f-4916-a830-262aa900a6b9",
-      "name": "Linking ISSN",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2023-03-13T12:10:42.757+00:00",
-        "updatedDate": "2023-03-13T12:10:42.757+00:00"
+        "createdDate": "2025-01-19T22:09:02.155+00:00",
+        "updatedDate": "2025-03-27T17:25:58.310+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -135,8 +136,10 @@
       "name": "UPC",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:42.762+00:00",
-        "updatedDate": "2023-03-13T12:10:42.762+00:00"
+        "createdDate": "2025-03-27T17:25:58.997+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2025-03-27T17:25:58.997+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -144,8 +147,9 @@
       "name": "CODEN",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:42.766+00:00",
-        "updatedDate": "2023-03-13T12:10:42.766+00:00"
+        "createdDate": "2025-01-19T22:09:02.159+00:00",
+        "updatedDate": "2025-03-27T17:25:59.361+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -153,17 +157,9 @@
       "name": "Report number",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:42.770+00:00",
-        "updatedDate": "2023-03-13T12:10:42.770+00:00"
-      }
-    },
-    {
-      "id": "4f07ea37-6c7f-4836-add2-14249e628ed1",
-      "name": "Invalid ISMN",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2023-03-13T12:10:42.771+00:00",
-        "updatedDate": "2023-03-13T12:10:42.771+00:00"
+        "createdDate": "2025-01-19T22:09:02.161+00:00",
+        "updatedDate": "2025-03-27T17:25:59.700+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -171,8 +167,10 @@
       "name": "Invalid UPC",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:42.775+00:00",
-        "updatedDate": "2023-03-13T12:10:42.775+00:00"
+        "createdDate": "2025-03-27T17:26:00.387+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2025-03-27T17:26:00.387+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -180,8 +178,9 @@
       "name": "GPO item number",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:42.784+00:00",
-        "updatedDate": "2023-03-13T12:10:42.784+00:00"
+        "createdDate": "2025-01-19T22:09:02.163+00:00",
+        "updatedDate": "2025-03-27T17:26:00.716+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -189,17 +188,9 @@
       "name": "Invalid ISSN",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:42.787+00:00",
-        "updatedDate": "2023-03-13T12:10:42.787+00:00"
-      }
-    },
-    {
-      "id": "8e3dd25e-db82-4b06-8311-90d41998c109",
-      "name": "Standard technical report number",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2023-03-13T12:10:42.793+00:00",
-        "updatedDate": "2023-03-13T12:10:42.793+00:00"
+        "createdDate": "2025-01-19T22:09:02.166+00:00",
+        "updatedDate": "2025-03-27T17:26:01.058+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -207,8 +198,9 @@
       "name": "DOI",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:42.790+00:00",
-        "updatedDate": "2023-03-13T12:10:42.790+00:00"
+        "createdDate": "2025-01-19T22:09:02.167+00:00",
+        "updatedDate": "2025-03-27T17:26:01.718+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -216,8 +208,9 @@
       "name": "OCLC",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:42.796+00:00",
-        "updatedDate": "2023-03-13T12:10:42.796+00:00"
+        "createdDate": "2025-01-19T22:09:02.169+00:00",
+        "updatedDate": "2025-03-27T17:26:02.047+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -225,8 +218,9 @@
       "name": "URN",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:42.799+00:00",
-        "updatedDate": "2023-03-13T12:10:42.799+00:00"
+        "createdDate": "2025-01-19T22:09:02.169+00:00",
+        "updatedDate": "2025-03-27T17:26:02.401+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -234,26 +228,9 @@
       "name": "LCCN",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:42.805+00:00",
-        "updatedDate": "2023-03-13T12:10:42.805+00:00"
-      }
-    },
-    {
-      "id": "3187432f-9434-40a8-8782-35a111a1491e",
-      "name": "BNB",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2023-03-13T12:10:42.810+00:00",
-        "updatedDate": "2023-03-13T12:10:42.810+00:00"
-      }
-    },
-    {
-      "id": "fcca2643-406a-482a-b760-7a7f8aec640e",
-      "name": "Invalid ISBN",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2023-03-13T12:10:42.809+00:00",
-        "updatedDate": "2023-03-13T12:10:42.809+00:00"
+        "createdDate": "2025-01-19T22:09:02.171+00:00",
+        "updatedDate": "2025-03-27T17:26:02.731+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -261,17 +238,19 @@
       "name": "Handle",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:42.815+00:00",
-        "updatedDate": "2023-03-13T12:10:42.815+00:00"
+        "createdDate": "2025-01-19T22:09:02.176+00:00",
+        "updatedDate": "2025-03-27T17:26:03.781+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
-      "id": "913300b2-03ed-469a-8179-c1092c991227",
-      "name": "ISSN",
+      "id": "3187432f-9434-40a8-8782-35a111a1491e",
+      "name": "BNB",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:42.818+00:00",
-        "updatedDate": "2023-03-13T12:10:42.818+00:00"
+        "createdDate": "2025-01-19T22:09:02.173+00:00",
+        "updatedDate": "2025-03-27T17:26:03.094+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -279,8 +258,9 @@
       "name": "Local identifier",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:42.824+00:00",
-        "updatedDate": "2023-03-13T12:10:42.824+00:00"
+        "createdDate": "2025-01-19T22:09:02.177+00:00",
+        "updatedDate": "2025-03-27T17:26:04.458+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -288,26 +268,84 @@
       "name": "KBKATALOG1955",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-18T14:59:19.043+00:00",
-        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-03-19T15:13:09.618+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+        "createdDate": "2025-03-27T17:26:04.632+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2025-03-27T17:26:04.632+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
-      "id": "c858e4f2-2b6b-4385-842b-60532ee34abb",
-      "name": "Canceled LCCN",
-      "source": "folio"
+      "id": "f11e1b46-3f28-419e-b1e2-d79741a4e3a5",
+      "name": "Libris number",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-03-27T17:25:54.368+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2025-03-27T17:25:54.368+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
     },
     {
-      "id": "a6d2b6ea-bcca-44cf-b704-3df0a6eff81a",
+      "id": "5ac34587-a4a4-4167-a9a2-35307731659e",
+      "name": "SE-LIBR",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-03-27T17:25:54.537+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2025-03-27T17:25:54.537+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "913300b2-03ed-469a-8179-c1092c991227",
+      "name": "ISSN",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:02.176+00:00",
+        "updatedDate": "2025-03-27T17:26:04.112+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "f4c77d83-634e-41b6-b8a9-7e70840c3bd9",
       "name": "Libris",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-05-05T07:41:04.163+00:00",
-        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-05-05T07:41:04.163+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+        "createdDate": "2025-05-05T07:40:11.484+00:00",
+        "createdByUserId": "e297b7ce-90ef-4e9c-a2d2-36050ebf7765",
+        "updatedDate": "2025-05-05T07:40:11.484+00:00",
+        "updatedByUserId": "e297b7ce-90ef-4e9c-a2d2-36050ebf7765"
+      }
+    },
+    {
+      "id": "5860f255-a27f-4916-a830-262aa900a6b9",
+      "name": "Linking ISSN",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:02.157+00:00",
+        "updatedDate": "2025-03-27T17:25:58.651+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "4f07ea37-6c7f-4836-add2-14249e628ed1",
+      "name": "Invalid ISMN",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-03-27T17:26:00.066+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2025-03-27T17:26:00.066+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "8e3dd25e-db82-4b06-8311-90d41998c109",
+      "name": "Standard technical report number",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:02.167+00:00",
+        "updatedDate": "2025-03-27T17:26:01.388+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     }
   ],

@@ -140,13 +140,14 @@ try {
           refData[prop][p.code] = p.id;
         } 
         if (p.name) {
+          // if (prop === 'loantypes') p.name = p.name.replace(/^(.+)\/.+$/, '$1'); 
           p.name = p.name.trim();
           refData[prop][p.name] = p.id;
         }
       });
     } catch {}
   });
-  // throw(refData.statisticalCodes);
+  // throw(refData.loantypes);
 
   // create tsv map
   let tsvDir = conf.tsvDir || conf.refDir;
