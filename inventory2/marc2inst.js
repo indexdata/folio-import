@@ -148,7 +148,7 @@ const funcs = {
     return refData.contributorNameTypes[param.name] || refData.contributorNameTypes['Personal name'];
   },
   set_contributor_type_id_by_code_or_name: function (data, param) {
-    data = data.toLowerCase().trim().replace(/[ ,.].*/g, '');
+    data = data.toLowerCase().trim().replace(/[ ,.]*$/g, '');
     let out = refData.contributorTypes[data];
     return out;
   },
