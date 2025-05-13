@@ -115,8 +115,8 @@ try {
     let group = p['Patron group'].toLowerCase();
     let edate = '';
     let email = p['Email address'];
-    let ac = p['Add credentials'];
-    let pw = p['Column 1'];
+    let ac = p['Add credentials'] || p['Add credential'];
+    let pw = p['Column 1'] || p['PW'];
     let ukey = ten + ':' + uid;
     let tenKey = ten.replace(/\W+/g, '_');
     if (!useen[ukey]) {

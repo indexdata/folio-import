@@ -85,13 +85,13 @@ console.log = (msg, path) => {
     }
 
     const ufile = inDir + '/users.jsonl';
-    await postObjects(ufile, 'users');
+    if (fs.existsSync(ufile)) await postObjects(ufile, 'users');
 
     const pfile = inDir + '/perms.jsonl';
-    await postObjects(pfile, 'perms/users');
+    if (fs.existsSync(pfile)) await postObjects(pfile, 'perms/users');
 
     const credFile = inDir + '/credentials.jsonl';
-    await postObjects(credFile, 'authn/credentials')
+    if (fs.existsSync(credFile)) await postObjects(credFile, 'authn/credentials')
 
     console.log('----------------------------------', logPath);
     console.log(`Success: ${success}`, logPath);
