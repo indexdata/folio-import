@@ -90,6 +90,9 @@ console.log = (msg, path) => {
     const pfile = inDir + '/perms.jsonl';
     await postObjects(pfile, 'perms/users');
 
+    const credFile = inDir + '/credentials.jsonl';
+    await postObjects(credFile, 'authn/credentials')
+
     console.log('----------------------------------', logPath);
     console.log(`Success: ${success}`, logPath);
     console.log(`Fail: ${fail}`, logPath);

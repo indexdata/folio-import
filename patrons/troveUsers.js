@@ -88,6 +88,7 @@ try {
   let success = 0;
   let ecount = 0;
   let tcount = 0;
+  let ccount = 0;
   let skipped = 0;
   const useen = {};
   const bcseen = {};
@@ -114,6 +115,8 @@ try {
     let group = p['Patron group'].toLowerCase();
     let edate = '';
     let email = p['Email address'];
+    let ac = p['Add credentials'];
+    let pw = p['Column 1'];
     let ukey = ten + ':' + uid;
     let tenKey = ten.replace(/\W+/g, '_');
     if (!useen[ukey]) {
@@ -142,9 +145,18 @@ try {
       }
 
       if (u.patronGroup) {
-        if (!out[tenKey]) out[tenKey] = { users: [] };
+        
+        if (!out[tenKey]) out[tenKey] = { users: [], creds: [] };
         out[tenKey].users.push(u);
-        // writeOut(files.u, u);
+        if (ac && pw) {
+          let cred = {
+            userId: u.id,
+            username: u.username,
+            password: pw,
+            tenant: ten
+          };
+          out[tenKey].creds.push(cred);
+        }
         if (process.env.DEBUG) console.log(JSON.stringify(u, null, 2));
         success++
         useen[ukey] = 1;
@@ -200,8 +212,10 @@ try {
 
     let ufn = `${dirPath}/users.jsonl`;
     let pfn = `${dirPath}/perms.jsonl`;
+    let cfn = `${dirPath}/credentials.jsonl`;
     if (fs.existsSync(ufn)) fs.unlinkSync(ufn);
     if (fs.existsSync(pfn)) fs.unlinkSync(pfn);
+    if (fs.existsSync(cfn)) fs.unlinkSync(cfn);
     out[k].users.forEach(u => {
       u.patronGroup = groups.staff;
       writeOut(ufn, u);
@@ -212,6 +226,11 @@ try {
       };
       writeOut(pfn, p);
     });
+
+    out[k].creds.forEach(c => {
+      writeOut(cfn, c);
+      ccount++;
+    })
 
     if (tenFile) {
       let t = tns[k];
@@ -227,6 +246,7 @@ try {
   console.log('Finished!');
   console.log('Processed:', count);
   console.log('Users created:', success);
+  console.log('Creds created:', ccount);
   console.log('Configs:', tcount);
   console.log('Skipped:', skipped);
   console.log('Errors:', ecount);
