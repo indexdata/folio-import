@@ -48,6 +48,9 @@ users: $(in)/Users*csv
 	cd $(udir); grep -vc USERNAME users.txt > count.txt; cat count.txt
 	cd $(wd)/patrons; node pcomUsers $(uref) $(udir)/users.csv > $(log)/makeUsers.log
 	cat $(log)/makeUsers.log
+	cd $(udir); split -l 4000 users-users.jsonl users
+	cd $(udir); split -l 4000 users-perms.jsonl perms
+	cd $(udir); split -l 4000 users-request-prefs.jsonl prefs
 
 clean-users: $(udir)/*.csv
 	rm $(udir)/*.csv
