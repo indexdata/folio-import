@@ -10,9 +10,15 @@ try {
   uuid = v5;
 }
 
+const urls = {
+  prod: 'https://trove-prod-okapi.ap-southeast-2.folio.indexdata.com',
+  test: 'https://trove-test-okapi.ap-southeast-2.folio.indexdata.com'
+}
+
 const ns = '07003236-c744-4fad-a7a5-72aa08636791';
 let inFile = process.argv[2];
 let tenFile = process.argv[3];
+let testProd = process.argv[4] || 'prod';
 
 const groups = {
   staff: '3684a786-6671-4268-8ed0-9db82ebca60b'
@@ -68,7 +74,7 @@ const writeOut = (fileName, data) => {
 }
 
 try {
-  if (!inFile) throw 'Usage: node troveUsers.js <users_csv_file> [ tenant_csv_file ]';
+  if (!tenFile) throw 'Usage: node troveUsers.js <users_csv_file> <tenant_csv_file> [ <prod|test> ]';
   if (!fs.existsSync(inFile)) throw `Can't find user file: ${inFile}!`;
   let patronDir = path.dirname(inFile);
   let loadDir = `${patronDir}/load`;
@@ -184,7 +190,7 @@ try {
       t = t.replace(/_/, '');
       let u = r.username;
       let p = r.password;
-      let url = 'https://trove-prod-okapi.ap-southeast-2.folio.indexdata.com'; 
+      let url = urls[testProd]; 
       if (url && p && u && t) {
         let o = {
           okapi: url,
