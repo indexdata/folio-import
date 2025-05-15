@@ -365,10 +365,10 @@ try {
           notes: [],
           status: { name: 'Available' }
         };
-        let desc = r.Z30_DESCRIPTION || '';
         let istat = r.Z30_ITEM_STATISTIC || '';
         let bc = r.Z30_BARCODE;
-        let en = r.Z30_ENUMERATION_A;
+        let desc = r.Z30_DESCRIPTION || '';
+        let en = r.Z30_ENUMERATION_A || '';
         if (r.Z30_NOTE_OPAC) nt.p.push(r.Z30_NOTE_OPAC);
         if (r.Z30_NOTE_INTERNAL) nt.s.push(r.Z30_NOTE_INTERNAL);
         let cnote = r.Z30_NOTE_CIRCULATION
@@ -389,8 +389,11 @@ try {
           i.itemLevelCallNumber = cn;
           i.itemLevelCallNumberTypeId = refData.callNumberTypes['Other scheme'];
         }
-        if (en) {
-          i.enumeration = en;
+        if (desc || en) {
+          i.enumeration = desc || en;
+          if (!desc && en) {
+            console.log(bc);
+          }
         }
 
         if (ips.match(/^(FK|CL|NA)$/)) {
