@@ -20,51 +20,58 @@ const wait = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
+const types = [ 'instances', 'srs' ];
+
 try {
   if (!inFile) { throw "Usage: node suppressInst.js <suppress_jsonl_file>" }
   let wdir = path.dirname(inFile);
-  let fn = path.basename(inFile);
-  fn = fn.replace(/-suppress/, '-instances');
-  fn = wdir + '/' + fn;
-  let start = new Date().valueOf();
-  let outFile = wdir + '/' + start;
-  if (fs.existsSync(outFile)) fs.unlinkSync(outFile);
-  let outStream = fs.createWriteStream(outFile);
+  for (let x = 0; x < types.length; x++) {
+    let fn = path.basename(inFile);
+    let t = types[x];
+    fn = fn.replace(/-suppress/, `-${t}`);
+    fn = wdir + '/' + fn;
+    let start = new Date().valueOf();
+    let outFile = wdir + '/' + start;
+    if (fs.existsSync(outFile)) fs.unlinkSync(outFile);
+    let outStream = fs.createWriteStream(outFile);
 
-  let fileStream = fs.createReadStream(inFile);
-  let rl = readline.createInterface({
-    input: fileStream,
-    crlfDelay: Infinity
-  });
-  for await (let line of rl) {
-    let k = line.replace(/.*"(\d+)".*/, '$1');
-    suppMap[k] = 1;
-  }
-  // throw(suppMap);
-
-  fileStream = fs.createReadStream(fn);
-  rl = readline.createInterface({
-    input: fileStream,
-    crlfDelay: Infinity
-  });
-  let c = 0;
-  let i = 0;
-  for await (let line of rl) {
-    i++;
-    let r = JSON.parse(line);
-    let hrid = r.hrid;
-    if (suppMap[hrid]) {
-      r.discoverySuppress = true;
-      c++;
+    let fileStream = fs.createReadStream(inFile);
+    let rl = readline.createInterface({
+      input: fileStream,
+      crlfDelay: Infinity
+    });
+    for await (let line of rl) {
+      let k = line.replace(/.*"(\d+)".*/, '$1');
+      suppMap[k] = 1;
     }
-    writeOut(outStream, r);
+    // throw(suppMap);
+
+    fileStream = fs.createReadStream(fn);
+    rl = readline.createInterface({
+      input: fileStream,
+      crlfDelay: Infinity
+    });
+    let c = 0;
+    let i = 0;
+    for await (let line of rl) {
+      i++;
+      let r = JSON.parse(line);
+      let hrid = (t === 'instances') ? r.hrid : r.externalIdsHolder.instanceHrid;
+      if (suppMap[hrid]) {
+        if (t === 'instances') {
+          r.discoverySuppress = true;
+        } else {
+          r.additionalInfo.suppressDiscovery = true;
+        }
+        c++;
+      }
+      writeOut(outStream, r);
+    }
+
+    console.log(`${t} read`, i);
+    console.log(`${t} suppressed:`, c);
+    fs.renameSync(outFile, fn);
   }
-
-  console.log('Done!');
-  console.log('Instances read:', i);
-  console.log('Instances suppressed:', c);
-  fs.renameSync(outFile, fn);
-
 } catch (e) {
   console.log(e);
 }

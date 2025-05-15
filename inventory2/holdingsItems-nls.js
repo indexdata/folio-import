@@ -147,7 +147,8 @@ try {
       });
     } catch {}
   });
-  // throw(refData.loantypes);
+  const refLoc = refData.locations;
+  // throw(refLoc);
 
   // create tsv map
   let tsvDir = conf.tsvDir || conf.refDir;
@@ -250,6 +251,7 @@ try {
   const iseen = {};
   const bcseen = {};
   const occ = {};
+  let sro = 0;
 
   const makeHoldingsItems = (r) => {
     // console.log(r);
@@ -314,7 +316,19 @@ try {
         let anf = af['852'] || [];
         if (anf[0]) h.administrativeNotes = [];
         anf.forEach(f => {
-          h.administrativeNotes.push(f.string);
+          let str = '';
+          let l = f['5'];
+          if (l === 'SRo') {
+          } else if (l === 'S') {
+            if (f.h === 'RefKB' && locId === refData.locations['loc-ref']) {
+              str = f.string;
+            } else if (f.h && f.h.match(/^Astrid Lindgrensamlingen/) && locId === refData.locations['loc-al']) {
+              str = f.string;
+            } else if (locId === refLoc['loc-des'] || locId === refLoc['loc-hs'] || locId === refLoc['loc-ts'] || locId === refLoc['loc-vt'] || locId === refLoc['loc-prum'] || locId === refLoc['loc-tls'] || locId === refLoc['loc-tlkb'] || locId === refLoc['ldc-hem']) {
+              str = f.string;
+            }
+          }
+          if (str) h.administrativeNotes.push(str);
         });
 
         let hsf = af['866'] || [];
@@ -582,7 +596,7 @@ try {
         }
       }
     } else {
-      console.log(`ERROR instance not found for ${r.Z30_REC_KEY}!`);
+      // console.log(`ERROR instance not found for ${r.Z30_REC_KEY}!`);
     }
   }
   

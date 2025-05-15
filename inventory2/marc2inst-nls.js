@@ -682,7 +682,7 @@ try {
   const iconf = conf.items;
   const idmap = conf.makeInstMap;
   const mapcn = conf.callNumbers;
-  const supp = (conf.suppress.tag) ? conf.suppress : '';
+  let supp = false;
   let prefix = conf.hridPrefix;
   iprefix = (iconf) ? iconf.hridPrefix : '';
   let wdir = path.dirname(rawFile);
@@ -874,6 +874,24 @@ try {
         continue;
       }
       let d001 = (marc.fields['001']) ? marc.fields['001'][0] : '';
+      let fsta = marc.fields['STA'];
+      if (fsta) {
+        fsta.forEach(f => {
+          let d = getSubs(f, 'a');
+          if (!supp && d.match(/Suppressed/i)) {
+            supp = true;
+          }
+        });
+      }
+      let f040 = marc.fields['040'];
+      if (f040) {
+        f040.forEach(f => {
+          let d = getSubs(f, 'a');
+          if (!supp && d === 'Vardagstryck') {
+            supp = true;
+          }
+        });
+      }
 
       if (marc.fields['004'] && conf.hasMfhd) {
         if (conf.hasMfhd) {
@@ -994,8 +1012,13 @@ try {
             let d;
             let str;
             if (t === '852') {
-              str = getSubs(f, '53chijlmtz');
+              str = getSubs(f, '3chijlmt');
               d = getSubsHash(f, true);
+              if (d.z && str) { 
+                str = `${str} (${d.z})`;
+              } else if (d.z) {
+                str = `(${d.z})`;
+              };
             } else if (t === '866') {
               d = getSubsHash(f, true);
             } else {
@@ -1123,16 +1146,7 @@ try {
           let itype = typeMap[itypeCode];
           if (itype) inst.instanceTypeId = refData.instanceTypes[itype] || refData.instanceTypes.unspecified;
         }
-        inst.discoverySuppress = false;
-        if (supp) {
-          let sf = (marc.fields[supp.tag]) ? marc.fields[supp.tag][0] : '';
-          if (sf) {
-            let val = getSubs(sf, supp.subfield);
-            if (val === supp.value) {
-              inst.discoverySuppress = true;
-            }
-          }
-        }
+        inst.discoverySuppress = supp;
         if (conf.catDate && conf.catDate.tag) {
           let t = conf.catDate.tag;
           let s = conf.catDate.subfield;
