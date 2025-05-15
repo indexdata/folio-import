@@ -994,7 +994,7 @@ try {
             let d;
             let str;
             if (t === '852') {
-              str = getSubs(f, 'chijlmz');
+              str = getSubs(f, '53chijlmtz');
               d = getSubsHash(f, true);
             } else if (t === '866') {
               d = getSubsHash(f, true);
