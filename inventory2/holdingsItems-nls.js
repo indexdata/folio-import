@@ -175,7 +175,7 @@ try {
       }
     });
   }
-  // throw(tsvMap);
+  // throw(tsvMap.locations);
 
   const instMap = {};
   if (conf.makeInstMap) {
@@ -266,7 +266,7 @@ try {
     let ips = r.Z30_ITEM_PROCESS_STATUS;
     let loc = r.Z30_SUB_LIBRARY;
     let noLoans = r.Z30_NO_LOANS;
-    let locKey = loc + ':' + st;
+    let locKey = (loc.match(/TLKB|MFL|REF|PRUMS/)) ? loc : loc + ':' + st;
     let locId;
     if (col === '400') { 
       locId = refData.locations['loc-hs'];
@@ -279,7 +279,7 @@ try {
     }
     
     if (inst) {
-      let hkey = bid + ':' + loc;
+      let hkey = bid + ':' + locId;
       if ((loc === 'ENHET' && st === '73') || (loc === 'RRLEX' && (st === '31' || st === '32')) || cn === 'AVM') {
         if (!suppMap[bid]) {
           suppMap[bid] = 1;
@@ -304,10 +304,12 @@ try {
           holdingsTypeId: htypeId,
           notes: []
         }
+        /*
         if (cn) { 
           h.callNumber = cn;
           h.callNumberTypeId = refData.callNumberTypes['Other scheme'];
         }
+        */
 
         let anf = af['852'] || [];
         if (anf[0]) h.administrativeNotes = [];
@@ -385,15 +387,12 @@ try {
         } else if (bc) {
           console.log(`WARN ITEM barcode "${bc}" already used!`);
         }
-        if (cn !== hr.cn) {
+        if (cn) {
           i.itemLevelCallNumber = cn;
           i.itemLevelCallNumberTypeId = refData.callNumberTypes['Other scheme'];
         }
         if (desc || en) {
           i.enumeration = desc || en;
-          if (!desc && en) {
-            console.log(bc);
-          }
         }
 
         if (ips.match(/^(FK|CL|NA)$/)) {
