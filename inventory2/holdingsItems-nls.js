@@ -265,6 +265,7 @@ try {
     let col = r.Z30_COLLECTION || '';
     let ips = r.Z30_ITEM_PROCESS_STATUS;
     let loc = r.Z30_SUB_LIBRARY;
+    let noLoans = r.Z30_NO_LOANS;
     let locKey = loc + ':' + st;
     let locId;
     if (col === '400') { 
@@ -436,6 +437,16 @@ try {
               console.log(`WARN ITEM note type for "${k}" not found (${iid})`);
             }
           });
+        }
+        if (noLoans) {
+          let tstr = 'Aleph check out count';
+          let t = refData.itemNoteTypes[tstr];
+          if (t) {
+            let o = makeNote(noLoans, t, true);
+            i.notes.push(o);
+          } else {
+            console.log(`WARN ITEM note type for "${tstr}" not found (${iid})`);
+          }
         }
 
         if (cnote) {
