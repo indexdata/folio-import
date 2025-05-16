@@ -16,6 +16,13 @@ let ty = process.argv[2];
     if (!rn) throw Error(`"${ty}" is not a proper resourceName!`);
     let pl = { recreateIndex: true, resourceName: 'linked-data-instance' };
 	  pl = {};
+	  pl = {
+		    "indexSettings": {
+			        "numberOfShards": 2,
+			        "numberOfReplicas": 4,
+			        "refreshInterval": 1
+			      }
+	  };
 
     const config = await getAuthToken(superagent);
 
