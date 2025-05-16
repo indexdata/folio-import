@@ -289,13 +289,33 @@ try {
           ttl.instanceSupp++;
         }
       }
+
+      // item administrativeNotes from the bib 852 field
+      let af = (inst.af) ? JSON.parse(inst.af) : {};
+      let anf = af['852'] || [];
+      let adminNotes = [];
+      anf.forEach(f => {
+        let str = '';
+        let l = f['5'];
+        if (l === 'SRo') {
+        } else if (l === 'S') {
+          if (f.h === 'RefKB' && locId === refData.locations['loc-ref']) {
+            str = f.string;
+          } else if (f.h && f.h.match(/^Astrid Lindgrensamlingen/) && locId === refData.locations['loc-al']) {
+            str = f.string;
+          } else if (locId === refLoc['loc-des'] || locId === refLoc['loc-hs'] || locId === refLoc['loc-ts'] || locId === refLoc['loc-vt'] || locId === refLoc['loc-prum'] || locId === refLoc['loc-tls'] || locId === refLoc['loc-tlkb'] || locId === refLoc['ldc-hem']) {
+            str = f.string;
+          }
+        }
+        if (str) adminNotes.push(str);
+      });
+
       if (!hseen[hkey]) {
         occ[bid] = (!occ[bid]) ? 1 : occ[bid] + 1;
         let occStr = occ[bid].toString().padStart(3, '0');
         let hhrid = bid + '-' + occStr;
         let hid = uuid(hhrid, ns);
         let htypeId = (inst.blvl === 's') ? refData.holdingsTypes['Serial'] : refData.holdingsTypes['Monograph'];
-        let af = (inst.af) ? JSON.parse(inst.af) : {};
         let h = {
           _version: 1,
           id: hid,
@@ -312,24 +332,6 @@ try {
           h.callNumberTypeId = refData.callNumberTypes['Other scheme'];
         }
         */
-
-        let anf = af['852'] || [];
-        if (anf[0]) h.administrativeNotes = [];
-        anf.forEach(f => {
-          let str = '';
-          let l = f['5'];
-          if (l === 'SRo') {
-          } else if (l === 'S') {
-            if (f.h === 'RefKB' && locId === refData.locations['loc-ref']) {
-              str = f.string;
-            } else if (f.h && f.h.match(/^Astrid Lindgrensamlingen/) && locId === refData.locations['loc-al']) {
-              str = f.string;
-            } else if (locId === refLoc['loc-des'] || locId === refLoc['loc-hs'] || locId === refLoc['loc-ts'] || locId === refLoc['loc-vt'] || locId === refLoc['loc-prum'] || locId === refLoc['loc-tls'] || locId === refLoc['loc-tlkb'] || locId === refLoc['ldc-hem']) {
-              str = f.string;
-            }
-          }
-          if (str) h.administrativeNotes.push(str);
-        });
 
         let hsf = af['866'] || [];
         if (hsf[0]) h.holdingsStatements = [];
@@ -369,6 +371,7 @@ try {
           ttl.errors++;
         }
       }
+
       let hr = hseen[hkey];
       if (hr) {
         let nt = { p: [], s: []};
@@ -408,6 +411,7 @@ try {
         if (desc || en) {
           i.enumeration = desc || en;
         }
+        if (adminNotes[0]) i.administrativeNotes = adminNotes;
 
         if (ips.match(/^(FK|CL|NA)$/)) {
           i.status.name = 'Missing';
