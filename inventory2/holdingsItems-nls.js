@@ -426,17 +426,23 @@ try {
           i.status.name = 'Long missing';
         } else if (st === '72' && loc === 'RRLEX') {
           i.status.name = 'Intellectual item';
+        } else if (st === '05' && loc === 'RRLEX') {
+          i.status.name = 'Restricted';
         }
 
         if (loc === 'RRSPE' && st === '21' && ips === 'DS') {
           nt.p.push('Läses digitalt på läsplatta');
         } else if (loc === 'RRSPE' && st === '28' && ips === 'RP') {
           nt.p.push('Spärrad av bevarandeskäl');
+          i.status.name = 'Restricted';
         } else if (loc === 'RESTR') {
           if ((st === '03' || st === '22') && ips === 'RP') {
             nt.p.push('Spärrad av bevarandeskäl');
           } else if (st === '22') {
             nt.p.push('Annat ex finns');
+          }
+          if (st.match(/03|22|23/)) {
+            i.status.name = 'Restricted';
           }
         }
 
