@@ -238,7 +238,8 @@ const elRelMap = {
 const files = {
   instances: 1,
   srs: 1,
-  aholdings: 1,
+  xholdings: 1,
+  xitems: 1,
   snapshot: 1,
   presuc: 1,
   err: 1
@@ -574,7 +575,48 @@ const dedupe = function (arr, props) {
   return newArr;
 }
 
-const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
+let ttl = {
+    count: 0,
+    instances: 0,
+    snapshots: 0,
+    srs: 0,
+    xholdings: 0,
+    xitems: 0,
+    presuc: 0,
+    errors: 0
+  }
+
+let sro = {};
+const makeSroHoldings = (instId, instHrid, fields) => {
+  if (!sro[instId]) sro[instId] = 0;
+  sro[instId]++;
+  let hrid = instHrid + 's' + sro[instId].toString().padStart(2, '0');
+  let id = uuid(hrid, ns);
+  let h = {
+    id: id,
+    hrid: hrid,
+    instanceId: instId,
+    sourceId: refData.holdingsRecordsSources.FOLIO,
+    permanentLocationId: refData.locations['LOC-SRO'] || refData.locations['loc-sro']
+  };
+  writeOut(outs.xholdings, h);
+  ttl.xholdings++;
+  if (fields.h) {
+    let hrid = h.hrid;
+    let id = uuid(hrid + 'item', ns);
+    let i = {
+      id: id,
+      hrid: hrid,
+      holdingsRecordId: h.id,
+      permanentLoanTypeId: refData.loantypes['Manuell beställning'],
+      materialTypeId: refData.mtypes.Unmapped,
+      itemLevelCallNumber: fields.h,
+      itemLevelCallNumberTypeId: refData.callNumberTypes['Other scheme'],
+      status: { name: 'Available' }
+    };
+    writeOut(outs.xitems, i);
+    ttl.xitems++;
+  }
 }
 
 const makeAleph = (fields) => {
@@ -810,22 +852,7 @@ try {
   // throw(librisMap);
 
   let t;
-  let ttl = {
-    count: 0,
-    instances: 0,
-    snapshots: 0,
-    srs: 0,
-    aholdings: 0,
-    presuc: 0,
-    errors: 0
-  }
-  if (iconf) {
-    ttl.holdings = 0;
-    ttl.items = 0;
-  }
-  if (conf.hasMfhd) {
-    ttl.mfhds = 0;
-  }
+  
 
   let start = new Date().valueOf();
   let jobId = '';
@@ -868,8 +895,8 @@ try {
         writeOut(outs.instances, o.instances);
         ttl.instances++;
         if (o.holdings) {
-          writeOut(outs.aholdings, o.holdings);
-          ttl.aholdings++;
+          writeOut(outs.xholdings, o.holdings);
+          ttl.xholdings++;
         }
         continue;
       }
@@ -1019,6 +1046,7 @@ try {
               } else if (d.z) {
                 str = `(${d.z})`;
               };
+              if (d['5'] === 'SRo') makeSroHoldings(instId, hrid, d);
             } else if (t === '866') {
               d = getSubsHash(f, true);
             } else {
@@ -1187,22 +1215,6 @@ try {
           let af = JSON.stringify(addFields);
           let instMap = `${inst.hrid}|${inst.id}|${bibCallNum.value}|${bibCallNum.type}|${blvl}|${ea}|${itypeCode}|${af}`;
           writeOut(outs.idmap, instMap, true, '\n');
-        }
-        if (iconf) {
-          let itag = iconf.tag;
-          let ifields = marc.fields[itag];
-          let suppress = false;
-          if (ifields) {
-            let hi = makeHoldingsItems(ifields, instId, inst.hrid, suppress, inst.electronicAccess);
-            hi.h.forEach(r => {
-              writeOut(outs.holdings, r);
-              ttl.holdings++;
-            });
-            hi.i.forEach(r => {
-              writeOut(outs.items, r);
-              ttl.items++;
-            });
-          }
         }
       }
 
