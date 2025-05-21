@@ -92,6 +92,8 @@ Engage Index Data to assist with or carry out the migration. There are bespoke t
 
 See some actual script and endpoint commands in spreadsheet "STC dry run checklist".
 
+Consider using '[screen](https://github.com/indexdata/id-folio-infrastructure/blob/master/runbooks/screen.md)' for each workspace and daily session. Useful for keeping interaction logs, and useful if we get disconnected from ssh.
+
 ## Download reference data
 
 On the prod-bastion host, do:
@@ -169,7 +171,7 @@ Do: `make items`
 
 That will link up the data files into sensible filenames.
 
-It will run `/inventory2/holdingsItems-stc.js` to create items and holdings from the legacy flat text files.
+It will run `inventory2/holdingsItems-stc.js` to create items and holdings from the legacy flat text files.
 
 In this case there was only one error reported, due to a missing mapping in locations.tsv file. That will get mapped to "Unmapped" location. The customer can then followup later to search for those and fix them.
 
@@ -264,7 +266,7 @@ In this case do not bother with the other operations as they were so fast.
 
 ### Visit the UI for quick inventory inspection
 
-Login to stc-test UI and inspect some records.
+Login to UI and inspect some records.
 
 Go "Inventory > Instances", select some and do "View holdings" and "Actions > View source".
 
@@ -355,14 +357,14 @@ Repeat the succ/err dances.
 
 ```
 cd ~/folio-import
-node get users
+node get users | jq '.totalRecords'
 ```
 
 The count will be off because some users were already in there.
 
 ```
-node get perms/users
-node get _/request-preference-storage__request-preference
+node get perms/users | jq '.totalRecords'
+node get _/request-preference-storage__request-preference | jq '.totalRecords'
 cat ../stc/log/makeUsers.log
 ```
 
@@ -379,7 +381,7 @@ Add the counts to the "STC dry run checklist" spreadsheet at the "Added" column.
 
 ### Visit the UI for quick users inspection
 
-Login to stc-test UI and inspect some records.
+Login to UI and inspect some records.
 
 Go "Users" select Active and Inactive. Select some.
 
@@ -467,7 +469,7 @@ Visit UI `/users/lost-items`
 
 ### Visit the UI for quick loans inspection
 
-Login to stc-test UI.
+Login to UI.
 
 Visit the "Circulation log" and select "Loan > Changed due date". Note that this is not an accurate count.
 
@@ -493,7 +495,7 @@ The circulation log does not give and accurate count, so use the API.
 The result should match the count from earlier in this section.
 
 ```
-node get _/loan-storage__loans
+node get _/loan-storage__loans node | jq '.totalRecords'
 ```
 
 ### Document the checkouts counts
@@ -541,7 +543,7 @@ tail -f ~/stc/log/bills.jsonl.log
 
 ### Visit the UI for quick feefines inspection
 
-Login to stc-test UI.
+Login to UI.
 
 Visit "Users" and "Actions > Lost items requiring actual cost" and then select "Status > Billed".
 
@@ -604,7 +606,7 @@ Review `~/stc/log/loadCourses.log`
 
 ### Visit the UI for quick courses inspection
 
-Login to stc-test UI.
+Login to UI.
 
 Visit "Courses"
 
@@ -666,8 +668,8 @@ Do the succ/err dance.
 Sometimes there will be timeouts. That will create error files, which we can reload (see following section).
 
 ```
-grep error ~/stc/log/autha*log | wc -l
-grep error ~/stc/log/autha*log
+grep -i error ~/stc/log/autha*log | wc -l
+grep -i error ~/stc/log/autha*log
 ... proxyClient failure
 ```
 
@@ -715,7 +717,7 @@ There might be remaining errors. Go again:
 
 ### Visit the UI for quick authorities inspection
 
-Login to stc-test UI.
+Login to UI.
 
 Visit "MARC authority" and glance at some records.
 
