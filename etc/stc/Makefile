@@ -84,7 +84,7 @@ clean-feefines: $(fdir)/*.txt
 course-reserves: $(in)/Course*
 	cp $(in)/Courses* $(rdir)/courses.txt
 	cp $(in)/*Instructors* $(rdir)/instructors.txt
-	cp $(in)/*Items* $(rdir)/reserves.txt
+	cp $(in)/Reserve*Items* $(rdir)/reserves.txt
 	cd $(wd); [ -f $(rdir)/users.jsonl ] || node downloadJSONL users $(rdir)/users.jsonl
 	cd $(wd); [ -f $(rdir)/items.jsonl ] || node downloadJSONL item-storage/items $(rdir)/items.jsonl
 	cd $(wd)/courses; node stcCourses $(ref)/crs $(rdir)/instructors.txt $(rdir)/courses.txt $(rdir)/reserves.txt > $(log)/makeCourses.log
