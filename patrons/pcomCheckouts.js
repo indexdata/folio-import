@@ -120,7 +120,8 @@ const lib2sp = {
     const inRecs = parse(csv, {
       columns: true,
       skip_empty_lines: true,
-      delimiter: ','
+      delimiter: ',',
+      bom: true
     });
 
     inRecs.forEach(r => {
@@ -131,15 +132,15 @@ const lib2sp = {
       let ubc = r.PATRON_BARCODE;
       let user = users[ubc];
       if (!user) {
-        console.log(`ERROR no user found with barcode ${ubc}`);
+        console.log(`ERROR no user found with barcode "${ubc}" (${r.LAST_NAME}, ${r.FIRST_NAME})`);
         ttl.unf++;
         ttl.err++;
       } else if (!item) {
-        console.log(`ERROR no item found with barcode ${ibc}`);
+        console.log(`ERROR no item found with barcode "${ibc}"`);
         ttl.inf++;
         ttl.err++;
       } else if (item.st !== 'Available') {
-        console.log(`ERROR item status for ${item.hrid} is not available`);
+        console.log(`ERROR item status for ${r.ITEM_BARCODE} is "${item.st}"`);
         ttl.ina++;
         ttl.err++;
       } else {
