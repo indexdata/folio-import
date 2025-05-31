@@ -39,3 +39,5 @@ ITEM_TYPE_ID	ITEM_TYPE_CODE	ITEM_TYPE_NAME	ITEM_TYPE_DISPLAY	Folio material type
 44			LAPTOP - TESTING	laptop	Standard	
 43			SMARTBOARD PENS KIT	equipment 	Standard	
 33			EZBITEM	ezb item	Standard	
+14	RECORDER	RECORDER	AUDIO RECORDER	equipment 	Standard	
+36	PROJECTOR	RECORDER	RECORDER	equipment 	Standard	
