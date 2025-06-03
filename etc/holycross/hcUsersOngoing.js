@@ -70,8 +70,9 @@ try {
   if (succ % 500 === 0) {
     mui = { users: [] };
   }
+  let depts = {};
   rl.on('line', l => {
-   count++;
+    count++;
     l = l.trim();
     if (!l.match(/createdDate/)) {
       let c = l.split(/\|/);
@@ -87,7 +88,10 @@ try {
       }
       if (c[1]) u.barcode = c[1];
       let dept = c[3];
-      if (dept && !dept.match(/^No/i)) u.departments = [ dept ];
+      if (dept && !dept.match(/^No/i)) {
+        u.departments = [ dept ];
+        depts[dept] = 1;
+      }
       if (c[4]) {
 	      let d = c[4].replace(/(..)-(..)-(....)/, '$3-$1-$2');
         u.enrollmentDate = d + 'T05:00:00.000Z';
@@ -114,6 +118,10 @@ try {
         per.addresses = [ addr ];
       }
       per.preferredContactTypeId = '002'; // email
+      let gradDate = c[18];
+      if (gradDate) {
+        u.customFields = { graduation: gradDate };
+      }
       u.personal = per;
       if (u.personal.lastName && u.username) {
         succ++;
@@ -132,11 +140,18 @@ try {
   });
   rl.on('close', () => {
 
+    const inc = {
+      departments: []
+    };
+    for (let n in depts) {
+      inc.departments.push({ name: n });
+    }
     // create and write mod-user-import object;
     let muiCount = 0;
     while (mui.users.length > 0) {
       let out = {};
       out.users = mui.users.splice(0, 5000);
+      out.included = inc;
       out.totalRecords = out.users.length;
       out.deactivateMissingUsers = false;
       out.updateOnlyPresentFields = true;
