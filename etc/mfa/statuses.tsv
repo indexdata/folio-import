@@ -6,7 +6,7 @@ Renewed	724	Checked out							Available
 Overdue	411	Checked out							Awaiting delivery 
 Withdrawn	279	Withdrawn	*HJL: are the accompanying bib records suppressed?						Awaiting pickup
 Cataloging Review	255	Unavailable							Checked out
-Lost -- System Applied	147	Aged to Lost							Claimed Returned
+Lost--System Applied	147	Aged to Lost							Claimed Returned
 Damaged	42		This is a condition in FOLIO, not an item status						Declared lost
 Lost--Library Applied	26	Declared Lost							In process
 In Transit Discharged	26	In Transit	*HJL: is this current? If this is pre-2022, can we have a report of these items?						In process (not requestable)

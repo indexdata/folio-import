@@ -272,9 +272,9 @@ try {
         if (cn !== holdings.callNumber) {
           i.itemLevelCallNumber = cn;
           i.itemLevelCallNumberTypeId = refData.callNumberTypes['Other scheme'];
-          if (ih.x) i.itemLevelCallNumberPrefix = ih.x;
         }
       }
+      if (ih.x && ih.x !== holdings.callNumberPrefix) i.itemLevelCallNumberPrefix = ih.x; 
       if (ih.i && !bcseen[ih.i]) {
         i.barcode = ih.i;
         bcseen[ih.i] = i.id;
@@ -412,9 +412,9 @@ try {
       if (cn) {
         h.callNumber = cn;
         h.callNumberTypeId = cnTypeMap[mh.ind1] || cnTypeMap['8'];
-        if (mh.k) h.callNumberPrefix = mh.k;
-        if (mh.m) h.callNumberSuffix = mh.m;
       }
+      if (mh.m) h.callNumberSuffix = mh.m;
+      if (mh.k) h.callNumberPrefix = mh.k;
       h.notes = [];
       let ntype = refData.holdingsNoteTypes.Note;
       if (mh.x) {

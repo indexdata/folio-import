@@ -1,6 +1,6 @@
 Location Code	Location Name	Location Display Name	MFHD Perm Loc (Unsuppressed)	Item Perm Loc (Unsuppressed)	Item Temp Loc (Unsuppressed)	MFHD Perm Loc (Suppressed)	Item Perm Loc (Suppressed)	Item Temp Loc (Suppressed)	Unsuppressed	Suppressed	FOLIO Location Name (Staff Client)	FOLIO Location Code	Display Name (VuFind OPAC)	FOLIO service point	Note
 MFA-02	MFA-02	MFA Art of Asia, Africa and Oceania Library	8,987	11,338	3	65	17		Keep	Keep	02	02	Art of Asia, 02	Circulation Desk	
-MFA-02A	MFA-02A	MFA Art of Asia, Africa and Oceania Library, 02A	2,292	2,513		5	6		Keep	Keep	02A	02A	Art of India & Islamic Art, 02A	Circulation Desk	item 94850 perm loc "MCA-MAIN" and charged to MCA tech services
+MFA-02A	MFA-02A	MFA Art of Asia, Africa and Oceania Library, 02A	2,292	2,513		5	6		Keep	Keep	02A	02A	Art of India & Islamic Art, 02A	Circulation Desk	
 MFA-02B	MFA-02B	MFA Art of Asia, Africa and Oceania Library, 02B	1,238	1,249		2	1		Keep	Keep	02B	02B	Art of Africa & Oceania, 02B	Circulation Desk	
 MFA-03	MFA-03	MFA Center for Netherlandish Art	19,707	22,593	6	546	408		Keep	Keep	03	03	Center for Netherlandish Art	Circulation Desk	
 MFA-03R	MFA-03R	MFA Center for Netherlandish Art, Reading Room	2,084	2,618					Keep	Keep	03R	03R	Center for Netherlandish Art, Reading Room	Circulation Desk	
@@ -23,7 +23,7 @@ MFA-MAIN	MFA-MAIN	MFA Main Library	88,205	92,564	39	1,228	162		Keep	Keep	MAIN	MA
 MFA-REF	MFA-REF	MFA Main Library, Reference	2,378	2,902		56	52		Keep	Keep	REF	MAIN-REF	Main Reference	Circulation Desk	
 MFA-REFM	MFA-REFM	MFA Main Library, Reference/Microform	175	230		4	4		Keep	Keep	REFM	REFM	Reference/Microform	Circulation Desk	
 MFA-VF	MFA-VF	MFA Main Library, Vertical Files	132	133	27	3	2		Keep	Keep	VF	VF	Vertical File	Circulation Desk	
-MFA-465	MFA-465	MFA 465							Keep	Keep	465	465	465	Circulation Desk	
+MFA-465	MFA-465	MFA 465							Keep	Keep	465	465	On-site Library Storage	Circulation Desk	
 MFA-PROV	MFA-PROV	MFA Provenance							Keep	Keep	PROV	PROV	Provenance	Circulation Desk	
 MFA-ADA	zMFA-ADA do not use			2					Purge	Purge					
 MFA-Circ	MFA-Circulation Desk	MFA Main Library, Reading Room				1	1		Purge	Purge				Circulation Desk	

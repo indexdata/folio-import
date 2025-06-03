@@ -13,7 +13,7 @@ Non-Circ.	Non-Circ.	1087	4	5		Keep	Keep	Non-Circ.
 Vert. File	Vert. File	12804		4		Keep	Keep	Vertical File	
 CD-ROM	CD-ROM	62		19		Purge	Purge		
 DVD	DVD	37		13		Purge	Purge		
-PERIODICAL	PERIODICAL	1				Keep	Keep		
-Online	Online					New Type	New Type		
+PERIODICAL	PERIODICAL	1				Keep	Keep	Serial	
+Online	Online					New Type	New Type	Online	
 Videotape	Videotape	17		21		Purge	Purge		
 	Totals	508,809	26	5,607	0				

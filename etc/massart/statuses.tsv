@@ -7,7 +7,7 @@ Hold Request	13	Keep	Paged							Awaiting delivery
 In Transit Discharged	7	Merge	In transit							Awaiting pickup	
 In Transit On Hold	12	Merge	In transit							Checked out	
 Lost--Library Applied	59	Keep	Declared Lost							Claimed Returned	
-Lost -- System Applied	1078	Keep	Aged to Lost							Declared lost	
+Lost--System Applied	1078	Keep	Aged to Lost							Declared lost	
 Missing	107	Keep	Missing							In process	
 Not Charged	96,091	Merge	Available							In process (not requestable)	
 Overdue	253	Merge	Checked Out							Intellectual item	
