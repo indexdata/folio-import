@@ -7,6 +7,7 @@ import lib from 'pg';
 
 let confFile = process.argv[2];
 let instSource = 'MARC';
+
 const customRules = {
   "042": [
     {
@@ -180,6 +181,40 @@ const customRules = {
               "value": "true"
             }
           ]
+        }
+      ]
+    }
+  ],
+  "084": [
+    {
+      "entity": [
+        {
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_classification_type_id",
+                  "parameter": {
+                    "name": "SAB"
+                  }
+                }
+              ]
+            }
+          ],
+          "target": "classifications.classificationTypeId",
+          "subfield": [
+            "a"
+          ],
+          "description": "Type for SAB classification",
+          "applyRulesOnConcatenatedData": true
+        },
+        {
+          "target": "classifications.classificationNumber",
+          "subfield": [
+            "a"
+          ],
+          "description": "SAB classification",
+          "applyRulesOnConcatenatedData": true
         }
       ]
     }
@@ -487,6 +522,7 @@ const makeInst = function (map, field, allFields, tag) {
       subs[Object.keys(s)[0]] = 1;
     });
   }
+  if (tag = '084' && subs['5']) return;
   for (let w = 0; w < ents.length; w++) {
     let e = ents[w];
     let ar = false;
