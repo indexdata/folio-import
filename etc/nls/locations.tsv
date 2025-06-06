@@ -1,39 +1,40 @@
-Aleph z30_sub_library	Aleph z30_item_status	Aleph z30_item_process_status	z30_call_no	Z30_COLLECTION	Legacy location code	Folio Library	Folio perm location code	Folio label (optional)	Folio temp location code		
-											
-				400	Z30_COLLECTION=400	Humlegården	loc-hs	Handskrifter			
-											
-RRLEX	01				z30_sub_library=RRLEX, z30_item_status=01	Humlegården	loc-ts	Tryckt samling			
-RRLEX	02				z30_sub_library=RRLEX, z30_item_status=02	Humlegården	loc-ts	Tryckt samling			
-RRLEX	06				z30_sub_library=RRLEX, z30_item_status=06	Humlegården	loc-ts	Tryckt samling			
-RRLEX	05				z30_sub_library=RRLEX, z30_item_status=05	Humlegården	loc-ts	Tryckt samling			Suppressed from Discovery
-RRLEX	71				z30_sub_library=RRLEX, z30_item_status=71	Humlegården	loc-ts	Tryckt samling			
-RRLEX	72				z30_sub_library=RRLEX, z30_item_status=72	Humlegården	loc-des	Desiderata			
-RRLEX	02	SN			z30_sub_library=RRLEX, z30_item_status=02, z30_item_process_status=SN	Humlegården	loc-hem	Står framme - Hemlån			
-RRLEX	31				z30_sub_library=RRLEX, z30_item_status=31	Fjärrlån	loc-ill	Fjärrlån			
-RRLEX	32				z30_sub_library=RRLEX, z30_item_status=32	Fjärrlån	loc-ill	Fjärrlån			
-											
-RRSPE	21				z30_sub_library=RRSPE, z30_item_status=21	Humlegården	loc-ts	Tryckt samling			
-RRSPE	27				z30_sub_library=RRSPE, z30_item_status=27	Humlegården	loc-ts	Tryckt samling			
-RRSPE	26				z30_sub_library=RRSPE, z30_item_status=26	Humlegården	loc-ts	Tryckt samling			
-RRSPE	23				z30_sub_library=RRSPE, z30_item_status=23	Humlegården	loc-ts	Tryckt samling			
-RRSPE	72				z30_sub_library=RRSPE, z30_item_status=72	Humlegården	loc-des	Desiderata			
-RRSPE	28				z30_sub_library=RRSPE, z30_item_status=28	Humlegården	loc-vt	Vardagstryck			
-											
-MFL					z30_sub_library=MFL	Humlegården	loc-tls	Tidningsläsesalen			
-											
-TLKB					z30_sub_library=TLKB	Humlegården	loc-tlkb	Tidskriftsläsesal			
-											
-REF					z30_sub_library=REF	Humlegården	loc-ref	Referensbiblioteket			
-											
-ENHET	73				z30_sub_library=ENHET, z30_item_status=73	Humlegården	loc-bok	Bokskåp			
-											
-PRUMS					z30_sub_library=PRUMS	Humlegården	loc-prum	Periodikarum			
-											
-RESTR	03		Astrid Lindgrensamlingen*		z30_sub_library=RESTR, z30_item_status=03, z30_call_no=Astrid Lindgrensamlingen*	Astrid Lindgren-samlingen	loc-al	Astrid Lindgrens lgh			
-RESTR	03				z30_sub_library=RESTR, z30_item_status=03	Humlegården	loc-ts	Tryckt samling			
-RESTR	22				z30_sub_library=RESTR, z30_item_status=22	Humlegården	loc-ts	Tryckt samling			
-RESTR	23				z30_sub_library=RESTR, z30_item_status=23	Humlegården	loc-ts	Tryckt samling			
-											
-											
-											
-Items that does not match the above						Humlegården	datamigration	Omappat vid datamigration			
+Aleph z30_sub_library	Aleph z30_item_status	Aleph z30_item_process_status	z30_call_no	Z30_COLLECTION	Legacy location code	Folio Library	Folio perm location code	Folio label (optional)	Folio temp location code
+									
+				400	Z30_COLLECTION=400	Humlegården	loc-hs	Handskrifter	
+									
+RRLEX	01				z30_sub_library=RRLEX, z30_item_status=01	Humlegården	loc-ts	Tryckt samling	
+RRLEX	02				z30_sub_library=RRLEX, z30_item_status=02	Humlegården	loc-ts	Tryckt samling	
+RRLEX	06				z30_sub_library=RRLEX, z30_item_status=06	Humlegården	loc-ts	Tryckt samling	
+RRLEX	05				z30_sub_library=RRLEX, z30_item_status=05	Humlegården	loc-ts	Tryckt samling	
+RRLEX	71				z30_sub_library=RRLEX, z30_item_status=71	Humlegården	loc-ts	Tryckt samling	
+RRLEX	72				z30_sub_library=RRLEX, z30_item_status=72	Humlegården	loc-des	Desiderata	
+RRLEX	02	SN			z30_sub_library=RRLEX, z30_item_status=02, z30_item_process_status=SN	Humlegården	loc-hem	Står framme - Hemlån	
+RRLEX	31				z30_sub_library=RRLEX, z30_item_status=31	Fjärrlån	loc-ill	Fjärrlån	
+RRLEX	32				z30_sub_library=RRLEX, z30_item_status=32	Fjärrlån	loc-ill	Fjärrlån	
+									
+RRSPE	21				z30_sub_library=RRSPE, z30_item_status=21	Humlegården	loc-ts	Tryckt samling	
+RRSPE	27				z30_sub_library=RRSPE, z30_item_status=27	Humlegården	loc-ts	Tryckt samling	
+RRSPE	26				z30_sub_library=RRSPE, z30_item_status=26	Humlegården	loc-ts	Tryckt samling	
+RRSPE	23				z30_sub_library=RRSPE, z30_item_status=23	Humlegården	loc-ts	Tryckt samling	
+RRSPE	71					Humlegården	loc-ts	Tryckt samling	
+RRSPE	72				z30_sub_library=RRSPE, z30_item_status=72	Humlegården	loc-des	Desiderata	
+RRSPE	28				z30_sub_library=RRSPE, z30_item_status=28	Humlegården	loc-vt	Vardagstryck	
+									
+MFL	all				z30_sub_library=MFL	Humlegården	loc-tls	Tidningsläsesalen	
+									
+TLKB	all				z30_sub_library=TLKB	Humlegården	loc-tlkb	Tidskriftsläsesal	
+									
+REF	all				z30_sub_library=REF	Humlegården	loc-ref	Referensbiblioteket	
+									
+ENHET	73				z30_sub_library=ENHET, z30_item_status=73	Humlegården	loc-bok	Bokskåp	
+									
+PRUMS					z30_sub_library=PRUMS	Humlegården	loc-prum	Periodikarum	
+									
+RESTR	03		Astrid Lindgrensamlingen*		z30_sub_library=RESTR, z30_item_status=03, z30_call_no=Astrid Lindgrensamlingen*	Astrid Lindgren-samlingen	loc-al	Astrid Lindgrens lgh	
+RESTR	03				z30_sub_library=RESTR, z30_item_status=03	Humlegården	loc-ts	Tryckt samling	
+RESTR	22				z30_sub_library=RESTR, z30_item_status=22	Humlegården	loc-ts	Tryckt samling	
+RESTR	23				z30_sub_library=RESTR, z30_item_status=23	Humlegården	loc-ts	Tryckt samling	
+									
+									
+									
+Items that does not match the above						Humlegården	datamigration	Omappat vid datamigration	

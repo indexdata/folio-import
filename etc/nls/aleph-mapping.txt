@@ -1,0 +1,25 @@
+Version:0.9 StartHTML:0000000208 EndHTML:0000015553 StartFragment:0000000244 EndFragment:0000015517 SourceURL:https://kbse.atlassian.net/jira/software/c/projects/FOLIO/boards/125?selectedIssue=FOLIO-69
+Description
+
+
+New description
+
+We would like to migrate our Aleph-tags records to Folio instances/holdings not as MARC-records. We have two different types of Aleph-tag records, and we want to map these two types differently:
+	•	Okat or Vardagstryck (Ephemera) that have the tag MTI $a OKAT, or MTI $a Vardagstryck. We have 35000+ of these in Aleph.
+	•	Miniposter with the tag MTI $a MINIPOST. We have 9800+ of these in Aleph.
+OKAT and Vardagstryck
+This is the tags we want to migrate for records with MTI $a OKAT or MTI $a Vardagstryck
+All should have:
+	•	Suppress from discovery
+	•	Statistical code “85B” + statistical code name = “OKAT SLS” + Statistical code type ”Samling”
+FMT > Resource type ”Other” MTI > Instance status term  = "Minipost - vardagstryck” + Instance status code = ”mv” PUB > Resource title  SGN > Holdings call number/Call number ENH > Instance administrative note ANM > Instance note/general note DAT > Cataloged date ”yyyy-mm-dd” SYS > Instance HRID 
+If the records have other tags, they should not be migrated (eg. CAT, NMN, LPL)  Example records with MTI = OKAT 004031714 002500422 Example records with MTI = Vardagstryck 004714490 004986202 005001429  Minipost
+This is the tags we want to migrate for records with MTI $a Minipost
+All should have:
+	•	Suppress from discovery
+	•	Statistical code “999” + statistical code name = “Okänd” + Statistical code type ”Samling”
+FMT > Resource type ”Other” MTI > Instance status term  = "Minipost” + Instance status code = ”mi” TIT > Resource title  UPP > Contributor/Name + Name type = ”Personal name” UPL >  Editions/Edition AAR > Publication date SGN > Holdings call number/Call number INN > Physical description ANM > Instance note/general note ENH > Instance administrative note CAT  $c > Cataloged date ”yyyy-mm-dd” (If multiple CAT take the newest) SYS > Instance HRID
+If the records have other tags, they should not be migrated 
+Example records with MTI = Minipost 001860850 002242196 
+Below are notes from @Charles Ledvina when loading testset provided by @Anders Blomgren 
+Should we include Aleph fields in the mapping sheet? Or migrate all of them to a designated place in FOLIO, to deal with “later”?

@@ -10,3 +10,4 @@ test/Batch*
 pica/test/m?
 log
 .editorconfig
+*.log

@@ -1,17 +1,17 @@
-Legacy material type code (from item record)	Folio material type name or ID	Libris	Kommentar
-Z30_MATERIAL	folio_name		
-BOOK	Monografi		
-ISSBD	Bunden volym		
-ISSUE	Häfte - periodika		
-IMAGE	Bild		
-MAP	Kartblad		Atlas?
-DIGIT	Digitalt medium		
-MICRO	Mikrofilm/fiche		
-AUDIO	Ljudupptagning		
-MANUS	Handskrift		
-MIXED	Blandat		
-BKSKP	Bokskåp		
-VIDEO	Video		
-BOUND	Unmapped		
-OBJCT	Unmapped		
-*	Unmapped		
+Legacy material type code (from item record)	Folio material type name or ID
+Z30_MATERIAL	folio_name
+BOOK	Monografi
+ISSBD	Bunden volym
+ISSUE	Häfte - periodika
+IMAGE	Bild
+MAP	Kartblad
+DIGIT	Digitalt medium
+MICRO	Mikrofilm/fiche
+AUDIO	Ljudupptagning
+MANUS	Handskrift
+MIXED	Blandat
+BKSKP	Bokskåp
+VIDEO	Video
+BOUND	Unmapped
+OBJCT	Unmapped
+*	Unmapped
