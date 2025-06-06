@@ -120,7 +120,7 @@ try {
       per.preferredContactTypeId = '002'; // email
       let gradDate = c[18];
       if (gradDate) {
-        u.customFields = { graduation: gradDate };
+        u.customFields = { expectedGraduationDate: gradDate };
       }
       u.personal = per;
       if (u.personal.lastName && u.username) {
