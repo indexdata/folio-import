@@ -61,7 +61,19 @@
         "createdDate": "2025-04-17T13:29:59.722+00:00",
         "updatedDate": "2025-04-17T13:29:59.722+00:00"
       }
+    },
+    {
+      "id": "a0fd6c2e-2642-4fe9-af5d-1f1922a77815",
+      "name": "Materialet kunde inte tas fram",
+      "description": "Ej på fack/depå / Hittas ej / Hyllfel",
+      "publicDescription": "Materialet kunde inte tas fram. Kontakta KB för mer information.",
+      "metadata": {
+        "createdDate": "2025-05-13T12:33:53.398+00:00",
+        "createdByUserId": "58ad3ef6-4855-466e-bcfb-004e0eace875",
+        "updatedDate": "2025-05-13T12:33:53.398+00:00",
+        "updatedByUserId": "58ad3ef6-4855-466e-bcfb-004e0eace875"
+      }
     }
   ],
-  "totalRecords": 6
+  "totalRecords": 7
 }

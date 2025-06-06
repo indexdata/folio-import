@@ -30,13 +30,26 @@
       "module": "@folio/stripes-core",
       "configName": "localeSettings",
       "enabled": true,
-      "value": "{\"locale\":\"sv-u-nu-latn\",\"timezone\":\"Europe/Stockholm\",\"currency\":\"SEK\"}",
+      "value": "{\"locale\":\"en-SE\"}",
       "userId": "ccd9c2a1-5455-4512-bf54-956fe923a8ab",
       "metadata": {
         "createdDate": "2023-03-17T11:45:20.804+00:00",
         "createdByUserId": "ccd9c2a1-5455-4512-bf54-956fe923a8ab",
-        "updatedDate": "2023-03-17T11:45:20.804+00:00",
+        "updatedDate": "2025-05-21T10:40:17.667+00:00",
         "updatedByUserId": "ccd9c2a1-5455-4512-bf54-956fe923a8ab"
+      }
+    },
+    {
+      "id": "52801d6a-669e-4093-a83e-ce75e113124e",
+      "module": "ORDERS CRUD MODULE",
+      "configName": "custom_fields_label",
+      "enabled": true,
+      "value": "KB-information",
+      "metadata": {
+        "createdDate": "2025-05-27T10:40:56.928+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-05-27T10:40:56.928+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
       }
     },
     {
@@ -365,9 +378,9 @@
       }
     }
   ],
-  "totalRecords": 26,
+  "totalRecords": 27,
   "resultInfo": {
-    "totalRecords": 26,
+    "totalRecords": 27,
     "facets": [],
     "diagnostics": []
   }

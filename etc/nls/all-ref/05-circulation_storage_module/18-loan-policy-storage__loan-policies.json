@@ -33,13 +33,13 @@
       "metadata": {
         "createdDate": "2023-11-30T10:13:42.215+00:00",
         "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
-        "updatedDate": "2025-01-17T14:02:52.631+00:00",
+        "updatedDate": "2025-05-22T14:01:16.414+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     },
     {
       "id": "fcfd79ed-f558-4e9a-90aa-8f8219c398cc",
-      "name": "Läsesalslån - 1 dag",
+      "name": "Läsesalslån",
       "loanable": true,
       "loansPolicy": {
         "profileId": "Rolling",
@@ -53,8 +53,8 @@
       "metadata": {
         "createdDate": "2025-01-17T14:02:30.287+00:00",
         "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-01-17T14:03:19.475+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+        "updatedDate": "2025-05-20T17:07:29.363+00:00",
+        "updatedByUserId": "58ad3ef6-4855-466e-bcfb-004e0eace875"
       }
     },
     {

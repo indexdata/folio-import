@@ -101,16 +101,6 @@
       }
     },
     {
-      "id": "2993d9f1-9620-4117-8a36-72bec2e4a2cb",
-      "name": "Beställ i Arken",
-      "metadata": {
-        "createdDate": "2025-02-14T08:37:19.117+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-02-14T08:37:40.315+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
       "id": "cddf164f-8b0b-4f88-8451-d81bf61c3dd4",
       "name": "L-samling - kollas före lån",
       "metadata": {
@@ -131,13 +121,15 @@
       }
     },
     {
-      "id": "4dec5417-0765-4767-bed6-b363a2d7d4e2",
+      "id": "f7f3036e-aec4-4104-8de1-83dd207b16d6",
       "name": "DCB Can circulate",
       "metadata": {
-        "createdDate": "2025-04-17T13:29:59.814+00:00",
-        "updatedDate": "2025-04-17T13:29:59.814+00:00"
+        "createdDate": "2025-05-28T08:26:26.075+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-05-28T08:26:26.075+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     }
   ],
-  "totalRecords": 14
+  "totalRecords": 13
 }

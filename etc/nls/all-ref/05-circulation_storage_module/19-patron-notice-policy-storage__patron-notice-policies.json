@@ -47,12 +47,12 @@
     },
     {
       "id": "7a07339a-2951-4e68-9433-b49b83dbbd83",
-      "name": "Läsesalslån",
+      "name": "Läsesalslån - ordinarie",
       "active": true,
       "metadata": {
         "createdDate": "2024-04-22T13:34:50.179+00:00",
         "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-03-07T11:54:54.927+00:00",
+        "updatedDate": "2025-05-22T13:59:29.734+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       },
       "loanNotices": [
@@ -73,35 +73,12 @@
           }
         },
         {
-          "templateId": "d5ac811a-1e5a-4628-93e4-51d666b43152",
+          "templateId": "24078e2e-991d-4ed4-943e-9216e3ffe556",
           "format": "Email",
           "frequency": "One time",
           "realTime": false,
           "sendOptions": {
             "sendHow": "Before",
-            "sendWhen": "Due date",
-            "sendBy": {
-              "duration": 7,
-              "intervalId": "Days"
-            }
-          }
-        },
-        {
-          "templateId": "daac1119-3e47-4d5b-989a-14286655ef8b",
-          "format": "Email",
-          "realTime": false,
-          "sendOptions": {
-            "sendHow": "Upon At",
-            "sendWhen": "Due date"
-          }
-        },
-        {
-          "templateId": "a27fcf32-acab-4532-8acd-1d34b14c1bfa",
-          "format": "Email",
-          "frequency": "One time",
-          "realTime": false,
-          "sendOptions": {
-            "sendHow": "After",
             "sendWhen": "Due date",
             "sendBy": {
               "duration": 7,
@@ -292,7 +269,89 @@
           }
         }
       ]
+    },
+    {
+      "id": "d26daf59-d061-4a96-bfe0-eaecd4efb7b0",
+      "name": "Läsesalslån - bokskåp/personal",
+      "active": true,
+      "metadata": {
+        "createdDate": "2025-05-22T13:56:55.392+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-05-22T13:56:55.392+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "loanNotices": [
+        {
+          "templateId": "4d720121-a97e-4ad4-b35b-35f37cd5902a",
+          "format": "Email",
+          "realTime": false,
+          "sendOptions": {
+            "sendWhen": "Check in"
+          }
+        },
+        {
+          "templateId": "0f719c5e-972c-41ff-a723-a8478f6a5c60",
+          "format": "Email",
+          "realTime": false,
+          "sendOptions": {
+            "sendWhen": "Item recalled"
+          }
+        },
+        {
+          "templateId": "d5ac811a-1e5a-4628-93e4-51d666b43152",
+          "format": "Email",
+          "frequency": "One time",
+          "realTime": false,
+          "sendOptions": {
+            "sendHow": "Before",
+            "sendWhen": "Due date",
+            "sendBy": {
+              "duration": 7,
+              "intervalId": "Days"
+            }
+          }
+        },
+        {
+          "templateId": "daac1119-3e47-4d5b-989a-14286655ef8b",
+          "format": "Email",
+          "frequency": "One time",
+          "realTime": false,
+          "sendOptions": {
+            "sendHow": "After",
+            "sendWhen": "Due date",
+            "sendBy": {
+              "duration": 1,
+              "intervalId": "Days"
+            }
+          }
+        },
+        {
+          "templateId": "a27fcf32-acab-4532-8acd-1d34b14c1bfa",
+          "format": "Email",
+          "frequency": "One time",
+          "realTime": false,
+          "sendOptions": {
+            "sendHow": "After",
+            "sendWhen": "Due date",
+            "sendBy": {
+              "duration": 7,
+              "intervalId": "Days"
+            }
+          }
+        }
+      ],
+      "feeFineNotices": [],
+      "requestNotices": [
+        {
+          "templateId": "53a47d74-4f66-4626-b48d-1819773d2e16",
+          "format": "Email",
+          "realTime": false,
+          "sendOptions": {
+            "sendWhen": "Available"
+          }
+        }
+      ]
     }
   ],
-  "totalRecords": 6
+  "totalRecords": 7
 }
