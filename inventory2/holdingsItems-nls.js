@@ -148,7 +148,7 @@ try {
     } catch {}
   });
   const refLoc = refData.locations;
-  throw(refLoc);
+  // throw(refLoc);
 
   // create tsv map
   let tsvDir = conf.tsvDir || conf.refDir;
@@ -168,7 +168,6 @@ try {
             k += `:${c[1]}:${c[2]}:${c[3]}:${c[4]}`;
             k = k.replace(/:+$/, '');
             v = c[7].toLowerCase().trim();
-            console.log(k, v);
           } else if (c[1]) {
             v = c[1].trim();
           }
@@ -177,7 +176,7 @@ try {
       }
     });
   }
-  throw(tsvMap.locations);
+  // throw(tsvMap.locations);
 
   const instMap = {};
   if (conf.makeInstMap) {
@@ -280,7 +279,6 @@ try {
     } else {
       locId = tsvMap.locations[locKey] || refData.locations.datamigration;
     }
-    console.log(tsvMap.locations[locKey], locId);
     
     if (inst) {
       let hkey = bid + ':' + locId;
