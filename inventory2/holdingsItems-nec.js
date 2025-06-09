@@ -277,7 +277,7 @@ try {
         i.itemDamagedStatusId = refData.itemDamageStatuses.Damaged;
         if (statDate) i.itemDamagedStatusDate = statDate;
       }
-      if (ih.s.match(/Review/)) {
+      if (ih.s && ih.s.match(/Review/)) {
         let note = ih.s
         let t = ['Check in', 'Check out'];
         t.forEach(y => {
