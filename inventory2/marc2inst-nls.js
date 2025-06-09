@@ -623,7 +623,7 @@ let ttl = {
   }
 
 let sro = {};
-const makeSroHoldings = (instId, instHrid, fields) => {
+const makeSroHoldings = (instId, instHrid, fields, str) => {
   if (!sro[instId]) sro[instId] = 0;
   sro[instId]++;
   let hrid = instHrid + 's' + sro[instId].toString().padStart(2, '0');
@@ -648,7 +648,8 @@ const makeSroHoldings = (instId, instHrid, fields) => {
       materialTypeId: refData.mtypes.Unmapped,
       itemLevelCallNumber: fields.h,
       itemLevelCallNumberTypeId: refData.callNumberTypes['Other scheme'],
-      status: { name: 'Available' }
+      status: { name: 'Available' },
+      administrativeNotes: [ str ]
     };
     writeOut(outs.xitems, i);
     ttl.xitems++;
@@ -1082,7 +1083,7 @@ try {
               } else if (d.z) {
                 str = `(${d.z})`;
               };
-              if (d['5'] === 'SRo') makeSroHoldings(instId, hrid, d);
+              if (d['5'] === 'SRo') makeSroHoldings(instId, hrid, d, str);
             } else if (t === '866') {
               d = getSubsHash(f, true);
             } else {
