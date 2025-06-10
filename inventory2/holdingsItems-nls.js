@@ -165,6 +165,7 @@ try {
           let k = c[0].trim();
           let v = '';
           if (prop === 'locations') {
+            if (c[1] === 'all') c[1] = '';
             k += `:${c[1]}:${c[2]}:${c[3]}:${c[4]}`;
             k = k.replace(/:+$/, '');
             v = c[7].toLowerCase().trim();
