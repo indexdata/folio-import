@@ -293,21 +293,25 @@ try {
       // item administrativeNotes from the bib 852 field
       let af = (inst.af) ? JSON.parse(inst.af) : {};
       let anf = af['852'] || [];
-      let adminNotes = [];
+      let adminNotes = {};
       anf.forEach(f => {
         let str = '';
         let l = f['5'];
         if (l === 'SRo') {
+          if (locId === refData.locations['loc-ref']) str = f.string;
         } else if (l === 'S') {
-          if (f.h === 'RefKB' && locId === refData.locations['loc-ref']) {
-            str = f.string;
-          } else if (f.h && f.h.match(/^Astrid Lindgrensamlingen/) && locId === refData.locations['loc-al']) {
-            str = f.string;
+          if (f.h && f.h.match(/^RefKB/)) {
+            if (locId === refData.locations['loc-ref']) str = f.string;
+          } else if (f.h && f.h.match(/^Astrid Lindgrensamlingen/)) {
+            if (locId === refData.locations['loc-al']) str = f.string;
           } else if (locId === refLoc['loc-des'] || locId === refLoc['loc-hs'] || locId === refLoc['loc-ts'] || locId === refLoc['loc-vt'] || locId === refLoc['loc-prum'] || locId === refLoc['loc-tls'] || locId === refLoc['loc-tlkb'] || locId === refLoc['ldc-hem']) {
             str = f.string;
           }
         }
-        if (str) adminNotes.push(str);
+        if (str) {
+            if (!adminNotes[locId]) adminNotes[locId] = [];
+            adminNotes[locId].push(str);
+        }
       });
 
       if (!hseen[hkey]) {
@@ -411,7 +415,7 @@ try {
         if (desc || en) {
           i.enumeration = desc || en;
         }
-        if (adminNotes[0]) i.administrativeNotes = adminNotes;
+        if (adminNotes[locId]) i.administrativeNotes = adminNotes[locId];
 
         if (ips.match(/^(FK|CL|NA)$/)) {
           i.status.name = 'Missing';
