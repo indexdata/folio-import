@@ -1,0 +1,29 @@
+{
+  "creds": [
+    {
+      "username": "kbtest1",
+      "userId": "9e4e3804-3da1-48f8-95f0-d2fb2a81ae28",
+      "password": ""
+    },
+    {
+      "username": "mod-lists",
+      "userId": "1235f815-585a-4793-ac33-92c604859b46",
+      "password": ""
+    },
+    {
+      "username": "mod-search",
+      "userId": "f80e228e-9908-4c93-b9fc-e8e467b641ef",
+      "password": ""
+    },
+    {
+      "username": "pubsub-user",
+      "userId": "690b6150-60fd-4272-bdea-4f2df7825906",
+      "password": ""
+    },
+    {
+      "username": "system-user",
+      "userId": "de28b1c5-824e-43fe-a2d4-06084a950ae3",
+      "password": ""
+    }
+  ]
+}

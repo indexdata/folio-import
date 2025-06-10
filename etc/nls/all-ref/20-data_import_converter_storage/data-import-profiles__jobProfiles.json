@@ -1,0 +1,605 @@
+{
+  "jobProfiles": [
+    {
+      "id": "2da5abe1-2a62-4bbc-83c3-c81436ab03dc",
+      "name": "KB Create Instance, holding and item",
+      "description": "Skapar bibliografisk post, med tillhörande bestånd och exemplar utifrån sammanslagen Libris-post.",
+      "dataType": "MARC",
+      "userInfo": {
+        "firstName": "Andreas",
+        "lastName": "Mace",
+        "userName": "andmac"
+      },
+      "parentProfiles": [],
+      "childProfiles": [
+        {
+          "id": "798c9011-7956-42b3-b3f0-7efc63dc9f1c",
+          "profileWrapperId": "070c04d0-9adf-4ece-b3a0-77d392c0471b",
+          "contentType": "ACTION_PROFILE",
+          "content": {
+            "id": "798c9011-7956-42b3-b3f0-7efc63dc9f1c",
+            "name": "KB Create Item",
+            "description": "",
+            "action": "CREATE",
+            "folioRecord": "ITEM",
+            "userInfo": {
+              "firstName": "Andreas",
+              "lastName": "Mace",
+              "userName": "andmac"
+            },
+            "parentProfiles": [],
+            "childProfiles": [],
+            "hidden": false,
+            "remove9Subfields": false,
+            "metadata": {
+              "createdDate": 1680846563951,
+              "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+              "updatedDate": 1680846563951,
+              "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        },
+        {
+          "id": "64ca3d23-1482-4299-9dc9-36e1f6751963",
+          "profileWrapperId": "2859d869-17cc-4e57-abc4-bed34dd851b9",
+          "contentType": "ACTION_PROFILE",
+          "content": {
+            "id": "64ca3d23-1482-4299-9dc9-36e1f6751963",
+            "name": "KB Create Holding",
+            "description": "Skapa bestånd",
+            "action": "CREATE",
+            "folioRecord": "HOLDINGS",
+            "userInfo": {
+              "firstName": "Andreas",
+              "lastName": "Mace",
+              "userName": "andmac"
+            },
+            "parentProfiles": [],
+            "childProfiles": [],
+            "hidden": false,
+            "remove9Subfields": false,
+            "metadata": {
+              "createdDate": 1680774755980,
+              "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+              "updatedDate": 1680774755980,
+              "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        },
+        {
+          "id": "fa45f3ec-9b83-11eb-a8b3-0242ac130003",
+          "profileWrapperId": "fcea1ee7-e238-4333-adf2-4bba74de18f8",
+          "contentType": "ACTION_PROFILE",
+          "content": {
+            "id": "fa45f3ec-9b83-11eb-a8b3-0242ac130003",
+            "name": "Default - Create instance",
+            "description": "This action profile is used with FOLIO's default job profile for creating Inventory Instances and SRS MARC Bibliographic records. It can be edited, duplicated, or deleted.",
+            "action": "CREATE",
+            "folioRecord": "INSTANCE",
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "parentProfiles": [],
+            "childProfiles": [],
+            "hidden": false,
+            "remove9Subfields": true,
+            "metadata": {
+              "createdDate": 1618322400000,
+              "createdByUserId": "00000000-0000-0000-0000-000000000000",
+              "updatedDate": 1618326000462,
+              "updatedByUserId": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "hidden": false,
+      "metadata": {
+        "createdDate": "2023-04-06T08:26:12.278+00:00",
+        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+        "updatedDate": "2023-04-07T05:49:56.840+00:00",
+        "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+      }
+    },
+    {
+      "id": "6409dcff-71fa-433a-bc6a-e70ad38a9604",
+      "name": "quickMARC - Derive a new SRS MARC Bib and Instance",
+      "description": "This job profile is used by the quickMARC Derive action to create a new SRS MARC Bib record and corresponding Inventory Instance. It cannot be edited or deleted.",
+      "dataType": "MARC",
+      "userInfo": {
+        "firstName": "System",
+        "lastName": "System",
+        "userName": "System"
+      },
+      "parentProfiles": [],
+      "childProfiles": [
+        {
+          "id": "f8e58651-f651-485d-aead-d2fa8700e2d1",
+          "profileWrapperId": "73f4036c-da47-48c3-b90b-414c5860cdf3",
+          "contentType": "ACTION_PROFILE",
+          "content": {
+            "id": "f8e58651-f651-485d-aead-d2fa8700e2d1",
+            "name": "quickMARC Derive - Create Inventory Instance",
+            "description": "This action profile is used by the quickMARC Derive action to create a new Inventory Instance. It cannot be edited or deleted.",
+            "action": "CREATE",
+            "folioRecord": "INSTANCE",
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "parentProfiles": [],
+            "childProfiles": [],
+            "hidden": false,
+            "remove9Subfields": false,
+            "metadata": {
+              "createdDate": 1610632800000,
+              "createdByUserId": "00000000-0000-0000-0000-000000000000",
+              "updatedDate": 1610636400462,
+              "updatedByUserId": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "hidden": false,
+      "metadata": {
+        "createdDate": "2021-01-14T14:00:00.000+00:00",
+        "createdByUserId": "00000000-0000-0000-0000-000000000000",
+        "updatedDate": "2021-01-14T15:00:00.462+00:00",
+        "updatedByUserId": "00000000-0000-0000-0000-000000000000"
+      }
+    },
+    {
+      "id": "6eefa4c6-bbf7-4845-ad82-de7fc5abd0e3",
+      "name": "Default - Create SRS MARC Authority",
+      "description": "Default job profile for creating MARC authority records. These records are stored in source record storage (SRS). Profile cannot be deleted.",
+      "dataType": "MARC",
+      "tags": {
+        "tagList": []
+      },
+      "userInfo": {
+        "firstName": "System",
+        "lastName": "System",
+        "userName": "System"
+      },
+      "parentProfiles": [],
+      "childProfiles": [
+        {
+          "id": "7915c72e-c6af-4962-969d-403c7238b051",
+          "profileWrapperId": "4c61b385-9e70-428d-a752-f8893192aa71",
+          "contentType": "ACTION_PROFILE",
+          "content": {
+            "id": "7915c72e-c6af-4962-969d-403c7238b051",
+            "name": "Default - Create MARC Authority",
+            "description": "This action profile is used with FOLIO's default job profile for creating a MARC authority record in source-record-storage. It cannot be edited, duplicated, or deleted.",
+            "action": "CREATE",
+            "folioRecord": "AUTHORITY",
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "parentProfiles": [],
+            "childProfiles": [],
+            "hidden": false,
+            "remove9Subfields": false,
+            "metadata": {
+              "createdDate": 1633701600000,
+              "createdByUserId": "00000000-0000-0000-0000-000000000000",
+              "updatedDate": 1633705200462,
+              "updatedByUserId": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "hidden": false,
+      "metadata": {
+        "createdDate": "2021-03-16T15:00:00.000+00:00",
+        "createdByUserId": "00000000-0000-0000-0000-000000000000",
+        "updatedDate": "2021-03-16T15:00:00.000+00:00",
+        "updatedByUserId": "00000000-0000-0000-0000-000000000000"
+      }
+    },
+    {
+      "id": "80898dee-449f-44dd-9c8e-37d5eb469b1d",
+      "name": "Default - Create Holdings and SRS MARC Holdings",
+      "description": "Default job profile for creating MARC holdings and corresponding Inventory holdings. Profile cannot be edited or deleted",
+      "dataType": "MARC",
+      "tags": {
+        "tagList": []
+      },
+      "userInfo": {
+        "firstName": "System",
+        "lastName": "System",
+        "userName": "System"
+      },
+      "parentProfiles": [],
+      "childProfiles": [
+        {
+          "id": "8aa0b850-9182-4005-8435-340b704b2a19",
+          "profileWrapperId": "1b0c68a4-9e3a-4ade-ac66-c57327052f5f",
+          "contentType": "ACTION_PROFILE",
+          "content": {
+            "id": "8aa0b850-9182-4005-8435-340b704b2a19",
+            "name": "Default - Create MARC holdings",
+            "description": "This action profile is used with FOLIO's default job profile for creating Inventory Holdings and SRS MARC Holdings records. It cannot be edited, duplicated, or deleted.",
+            "action": "CREATE",
+            "folioRecord": "HOLDINGS",
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "parentProfiles": [],
+            "childProfiles": [],
+            "hidden": false,
+            "remove9Subfields": false,
+            "metadata": {
+              "createdDate": 1628172000000,
+              "createdByUserId": "00000000-0000-0000-0000-000000000000",
+              "updatedDate": 1628175600462,
+              "updatedByUserId": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "hidden": false,
+      "metadata": {
+        "createdDate": "2021-03-16T15:00:00.000+00:00",
+        "createdByUserId": "00000000-0000-0000-0000-000000000000",
+        "updatedDate": "2021-03-16T15:00:00.000+00:00",
+        "updatedByUserId": "00000000-0000-0000-0000-000000000000"
+      }
+    },
+    {
+      "id": "e34d7b92-9b83-11eb-a8b3-0242ac130003",
+      "name": "Default - Create instance and SRS MARC Bib",
+      "description": "This job profile creates SRS MARC Bib records and corresponding Inventory Instances using the library's default MARC-to-Instance mapping. It can be edited, duplicated, or deleted.",
+      "dataType": "MARC",
+      "userInfo": {
+        "firstName": "System",
+        "lastName": "System",
+        "userName": "System"
+      },
+      "parentProfiles": [],
+      "childProfiles": [
+        {
+          "id": "fa45f3ec-9b83-11eb-a8b3-0242ac130003",
+          "profileWrapperId": "fcea1ee7-e238-4333-adf2-4bba74de18f8",
+          "contentType": "ACTION_PROFILE",
+          "content": {
+            "id": "fa45f3ec-9b83-11eb-a8b3-0242ac130003",
+            "name": "Default - Create instance",
+            "description": "This action profile is used with FOLIO's default job profile for creating Inventory Instances and SRS MARC Bibliographic records. It can be edited, duplicated, or deleted.",
+            "action": "CREATE",
+            "folioRecord": "INSTANCE",
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "parentProfiles": [],
+            "childProfiles": [],
+            "hidden": false,
+            "remove9Subfields": true,
+            "metadata": {
+              "createdDate": 1618322400000,
+              "createdByUserId": "00000000-0000-0000-0000-000000000000",
+              "updatedDate": 1618326000462,
+              "updatedByUserId": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "hidden": false,
+      "metadata": {
+        "createdDate": "2021-04-13T14:00:00.000+00:00",
+        "createdByUserId": "00000000-0000-0000-0000-000000000000",
+        "updatedDate": "2021-04-13T15:00:00.462+00:00",
+        "updatedByUserId": "00000000-0000-0000-0000-000000000000"
+      }
+    },
+    {
+      "id": "d0ebb7b0-2f0f-11eb-adc1-0242ac120002",
+      "name": "Inventory Single Record - Default Create Instance",
+      "description": "Triggered by an action in Inventory, this job profile imports a single record from an external system, to create an Instance and MARC record",
+      "dataType": "MARC",
+      "tags": {
+        "tagList": []
+      },
+      "userInfo": {
+        "firstName": "System",
+        "lastName": "System",
+        "userName": "System"
+      },
+      "parentProfiles": [],
+      "childProfiles": [
+        {
+          "id": "d0ebba8a-2f0f-11eb-adc1-0242ac120002",
+          "profileWrapperId": "b8ca075d-df26-4474-b71a-9d8dabf36086",
+          "contentType": "ACTION_PROFILE",
+          "content": {
+            "id": "d0ebba8a-2f0f-11eb-adc1-0242ac120002",
+            "name": "Inventory Single Record - Default Create Instance",
+            "description": "Creates new Inventory Instances and SRS MARC Bib records based on Inventory single record imports",
+            "action": "CREATE",
+            "folioRecord": "INSTANCE",
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "parentProfiles": [],
+            "childProfiles": [],
+            "hidden": false,
+            "remove9Subfields": true,
+            "metadata": {
+              "createdDate": 1606132800000,
+              "createdByUserId": "00000000-0000-0000-0000-000000000000",
+              "createdByUsername": "System",
+              "updatedDate": 1606219200000,
+              "updatedByUserId": "00000000-0000-0000-0000-000000000000",
+              "updatedByUsername": "System"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "hidden": false,
+      "metadata": {
+        "createdDate": "2020-11-23T12:00:00.000+00:00",
+        "createdByUserId": "00000000-0000-0000-0000-000000000000",
+        "createdByUsername": "System",
+        "updatedDate": "2020-11-24T12:00:00.000+00:00",
+        "updatedByUserId": "00000000-0000-0000-0000-000000000000",
+        "updatedByUsername": "System"
+      }
+    },
+    {
+      "id": "cd000610-4805-424b-9bdd-da00d4936919",
+      "name": "EDI",
+      "description": "",
+      "dataType": "EDIFACT",
+      "userInfo": {
+        "firstName": "KB",
+        "lastName": "ADMIN",
+        "userName": "kbadmin"
+      },
+      "parentProfiles": [],
+      "childProfiles": [],
+      "hidden": false,
+      "metadata": {
+        "createdDate": "2023-11-24T10:23:18.492+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-11-24T10:23:18.492+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "91f9b8d6-d80e-4727-9783-73fb53e3c786",
+      "name": "Inventory Single Record - Default Update Instance",
+      "description": "Triggered by an action in Inventory, this job profile imports a single record from an external system, to update an existing Instance, and either create a new MARC record or update an existing MARC record",
+      "dataType": "MARC",
+      "userInfo": {
+        "firstName": "System",
+        "lastName": "System",
+        "userName": "System"
+      },
+      "parentProfiles": [],
+      "childProfiles": [
+        {
+          "id": "d27d71ce-8a1e-44c6-acea-96961b5592c6",
+          "profileWrapperId": "cef029fc-856d-42f8-9d75-ae1e42bd3322",
+          "contentType": "MATCH_PROFILE",
+          "content": {
+            "id": "d27d71ce-8a1e-44c6-acea-96961b5592c6",
+            "name": "Inventory Single Record - Default match for existing SRS record",
+            "description": "Matches the Instance UUID from the 999 ff $i in the incoming MARC record to the same field in any SRS MARC Bib",
+            "incomingRecordType": "MARC_BIBLIOGRAPHIC",
+            "existingRecordType": "MARC_BIBLIOGRAPHIC",
+            "matchDetails": [
+              {
+                "incomingRecordType": "MARC_BIBLIOGRAPHIC",
+                "existingRecordType": "MARC_BIBLIOGRAPHIC",
+                "incomingMatchExpression": {
+                  "dataValueType": "VALUE_FROM_RECORD",
+                  "fields": [
+                    {
+                      "label": "field",
+                      "value": "999"
+                    },
+                    {
+                      "label": "indicator1",
+                      "value": "f"
+                    },
+                    {
+                      "label": "indicator2",
+                      "value": "f"
+                    },
+                    {
+                      "label": "recordSubfield",
+                      "value": "i"
+                    }
+                  ]
+                },
+                "matchCriterion": "EXACTLY_MATCHES",
+                "existingMatchExpression": {
+                  "dataValueType": "VALUE_FROM_RECORD",
+                  "fields": [
+                    {
+                      "label": "field",
+                      "value": "999"
+                    },
+                    {
+                      "label": "indicator1",
+                      "value": "f"
+                    },
+                    {
+                      "label": "indicator2",
+                      "value": "f"
+                    },
+                    {
+                      "label": "recordSubfield",
+                      "value": "i"
+                    }
+                  ]
+                }
+              }
+            ],
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "parentProfiles": [],
+            "childProfiles": [],
+            "hidden": false,
+            "metadata": {
+              "createdDate": 1606727161520,
+              "createdByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575",
+              "updatedDate": 1606730341248,
+              "updatedByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        },
+        {
+          "id": "cddff0e1-233c-47ba-8be5-553c632709d9",
+          "profileWrapperId": "30f1c597-5e7c-4558-8be6-a8fe7c113a95",
+          "contentType": "ACTION_PROFILE",
+          "content": {
+            "id": "cddff0e1-233c-47ba-8be5-553c632709d9",
+            "name": "Inventory Single Record - Default Update Instance",
+            "description": "Updates existing Inventory Instances based on Inventory single record imports",
+            "action": "UPDATE",
+            "folioRecord": "INSTANCE",
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "parentProfiles": [],
+            "childProfiles": [],
+            "hidden": false,
+            "remove9Subfields": true,
+            "metadata": {
+              "createdDate": 1606726985334,
+              "createdByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575",
+              "updatedDate": 1606737434464,
+              "updatedByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        },
+        {
+          "id": "6aa8e98b-0d9f-41dd-b26f-15658d07eb52",
+          "profileWrapperId": "789242a9-9701-45fc-9ce1-359d3f774b4a",
+          "contentType": "ACTION_PROFILE",
+          "content": {
+            "id": "6aa8e98b-0d9f-41dd-b26f-15658d07eb52",
+            "name": "Inventory Single Record - Default Update MARC Bib",
+            "description": "Updates existing SRS MARC Bib records based on Inventory single record imports",
+            "action": "UPDATE",
+            "folioRecord": "MARC_BIBLIOGRAPHIC",
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "parentProfiles": [],
+            "childProfiles": [],
+            "hidden": false,
+            "remove9Subfields": true,
+            "metadata": {
+              "createdDate": 1606726959960,
+              "createdByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575",
+              "updatedDate": 1606737444083,
+              "updatedByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "hidden": false,
+      "metadata": {
+        "createdDate": "2020-11-30T09:07:47.667+00:00",
+        "createdByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575",
+        "updatedDate": "2020-11-30T09:09:10.382+00:00",
+        "updatedByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575"
+      }
+    },
+    {
+      "id": "fa0262c7-5816-48d0-b9b3-7b7a862a5bc7",
+      "name": "quickMARC - Create Holdings and SRS MARC Holdings",
+      "description": "This job profile is used by the quickMARC to allow a user to create a new SRS MARC holdings record and corresponding Inventory holdings. Profile cannot be edited or deleted",
+      "dataType": "MARC",
+      "tags": {
+        "tagList": []
+      },
+      "userInfo": {
+        "firstName": "System",
+        "lastName": "System",
+        "userName": "System"
+      },
+      "parentProfiles": [],
+      "childProfiles": [
+        {
+          "id": "f5feddba-f892-4fad-b702-e4e77f04f9a3",
+          "profileWrapperId": "b07abb56-5855-4868-a380-ec2e5522c0ae",
+          "contentType": "ACTION_PROFILE",
+          "content": {
+            "id": "f5feddba-f892-4fad-b702-e4e77f04f9a3",
+            "name": "quickMARC Derive - Create Inventory Holdings",
+            "description": "This action profile is used with FOLIO's default job profile for creating Inventory Holdings and SRS MARC Holdings records. It cannot be edited or deleted.",
+            "action": "CREATE",
+            "folioRecord": "HOLDINGS",
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "parentProfiles": [],
+            "childProfiles": [],
+            "hidden": false,
+            "remove9Subfields": false,
+            "metadata": {
+              "createdDate": 1628172000000,
+              "createdByUserId": "00000000-0000-0000-0000-000000000000",
+              "updatedDate": 1628175600462,
+              "updatedByUserId": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "hidden": false,
+      "metadata": {
+        "createdDate": "2021-03-16T15:00:00.000+00:00",
+        "createdByUserId": "00000000-0000-0000-0000-000000000000",
+        "updatedDate": "2021-03-16T15:00:00.000+00:00",
+        "updatedByUserId": "00000000-0000-0000-0000-000000000000"
+      }
+    }
+  ],
+  "totalRecords": 9
+}

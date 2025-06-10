@@ -1,0 +1,433 @@
+{
+  "matchProfiles": [
+    {
+      "id": "a0c4e1e4-9813-4bf5-b7c8-b5abc36d64e5",
+      "name": "Inventory Single Record - 001 match",
+      "description": "Matches the Instance UUID from the 001 in the incoming MARC record to the same field in any SRS MARC Bib",
+      "incomingRecordType": "MARC_BIBLIOGRAPHIC",
+      "existingRecordType": "MARC_BIBLIOGRAPHIC",
+      "matchDetails": [
+        {
+          "incomingRecordType": "MARC_BIBLIOGRAPHIC",
+          "existingRecordType": "MARC_BIBLIOGRAPHIC",
+          "incomingMatchExpression": {
+            "dataValueType": "VALUE_FROM_RECORD",
+            "fields": [
+              {
+                "label": "field",
+                "value": "001"
+              },
+              {
+                "label": "indicator1",
+                "value": ""
+              },
+              {
+                "label": "indicator2",
+                "value": ""
+              },
+              {
+                "label": "recordSubfield",
+                "value": ""
+              }
+            ],
+            "qualifier": {}
+          },
+          "matchCriterion": "EXACTLY_MATCHES",
+          "existingMatchExpression": {
+            "dataValueType": "VALUE_FROM_RECORD",
+            "fields": [
+              {
+                "label": "field",
+                "value": "001"
+              },
+              {
+                "label": "indicator1",
+                "value": ""
+              },
+              {
+                "label": "indicator2",
+                "value": ""
+              },
+              {
+                "label": "recordSubfield",
+                "value": ""
+              }
+            ]
+          }
+        }
+      ],
+      "userInfo": {
+        "firstName": "Andreas",
+        "lastName": "Mace",
+        "userName": "andmac"
+      },
+      "parentProfiles": [],
+      "childProfiles": [],
+      "hidden": false,
+      "metadata": {
+        "createdDate": "2023-04-07T06:13:38.386+00:00",
+        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+        "updatedDate": "2023-04-07T06:13:38.386+00:00",
+        "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+      }
+    },
+    {
+      "id": "d27d71ce-8a1e-44c6-acea-96961b5592c6",
+      "name": "Inventory Single Record - Default match for existing SRS record",
+      "description": "Matches the Instance UUID from the 999 ff $i in the incoming MARC record to the same field in any SRS MARC Bib",
+      "incomingRecordType": "MARC_BIBLIOGRAPHIC",
+      "existingRecordType": "MARC_BIBLIOGRAPHIC",
+      "matchDetails": [
+        {
+          "incomingRecordType": "MARC_BIBLIOGRAPHIC",
+          "existingRecordType": "MARC_BIBLIOGRAPHIC",
+          "incomingMatchExpression": {
+            "dataValueType": "VALUE_FROM_RECORD",
+            "fields": [
+              {
+                "label": "field",
+                "value": "999"
+              },
+              {
+                "label": "indicator1",
+                "value": "f"
+              },
+              {
+                "label": "indicator2",
+                "value": "f"
+              },
+              {
+                "label": "recordSubfield",
+                "value": "i"
+              }
+            ]
+          },
+          "matchCriterion": "EXACTLY_MATCHES",
+          "existingMatchExpression": {
+            "dataValueType": "VALUE_FROM_RECORD",
+            "fields": [
+              {
+                "label": "field",
+                "value": "999"
+              },
+              {
+                "label": "indicator1",
+                "value": "f"
+              },
+              {
+                "label": "indicator2",
+                "value": "f"
+              },
+              {
+                "label": "recordSubfield",
+                "value": "i"
+              }
+            ]
+          }
+        }
+      ],
+      "userInfo": {
+        "firstName": "System",
+        "lastName": "System",
+        "userName": "System"
+      },
+      "parentProfiles": [
+        {
+          "id": "91f9b8d6-d80e-4727-9783-73fb53e3c786",
+          "contentType": "JOB_PROFILE",
+          "content": {
+            "id": "91f9b8d6-d80e-4727-9783-73fb53e3c786",
+            "name": "Inventory Single Record - Default Update Instance",
+            "description": "Triggered by an action in Inventory, this job profile imports a single record from an external system, to update an existing Instance, and either create a new MARC record or update an existing MARC record",
+            "dataType": "MARC",
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "parentProfiles": [],
+            "childProfiles": [],
+            "hidden": false,
+            "metadata": {
+              "createdDate": 1606727267667,
+              "createdByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575",
+              "updatedDate": 1606727350382,
+              "updatedByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "childProfiles": [
+        {
+          "id": "31dbb554-0826-48ec-a0a4-3c55293d4dee",
+          "profileWrapperId": "9facf84c-49eb-45aa-b274-d9e588fe5ab5",
+          "contentType": "MATCH_PROFILE",
+          "content": {
+            "id": "31dbb554-0826-48ec-a0a4-3c55293d4dee",
+            "name": "Inventory Single Record - Default match for no SRS record",
+            "description": "Matches the Instance UUID from the 999 ff $i in the incoming MARC record to the UUID of the existing Instance record",
+            "incomingRecordType": "MARC_BIBLIOGRAPHIC",
+            "existingRecordType": "INSTANCE",
+            "matchDetails": [
+              {
+                "incomingRecordType": "MARC_BIBLIOGRAPHIC",
+                "existingRecordType": "INSTANCE",
+                "incomingMatchExpression": {
+                  "dataValueType": "VALUE_FROM_RECORD",
+                  "fields": [
+                    {
+                      "label": "field",
+                      "value": "999"
+                    },
+                    {
+                      "label": "indicator1",
+                      "value": "f"
+                    },
+                    {
+                      "label": "indicator2",
+                      "value": "f"
+                    },
+                    {
+                      "label": "recordSubfield",
+                      "value": "i"
+                    }
+                  ]
+                },
+                "matchCriterion": "EXACTLY_MATCHES",
+                "existingMatchExpression": {
+                  "dataValueType": "VALUE_FROM_RECORD",
+                  "fields": [
+                    {
+                      "label": "field",
+                      "value": "instance.id"
+                    }
+                  ]
+                }
+              }
+            ],
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "parentProfiles": [],
+            "childProfiles": [],
+            "hidden": false,
+            "metadata": {
+              "createdDate": 1606727217367,
+              "createdByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575",
+              "updatedDate": 1606730410359,
+              "updatedByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        },
+        {
+          "id": "6aa8e98b-0d9f-41dd-b26f-15658d07eb52",
+          "profileWrapperId": "789242a9-9701-45fc-9ce1-359d3f774b4a",
+          "contentType": "ACTION_PROFILE",
+          "content": {
+            "id": "6aa8e98b-0d9f-41dd-b26f-15658d07eb52",
+            "name": "Inventory Single Record - Default Update MARC Bib",
+            "description": "Updates existing SRS MARC Bib records based on Inventory single record imports",
+            "action": "UPDATE",
+            "folioRecord": "MARC_BIBLIOGRAPHIC",
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "parentProfiles": [],
+            "childProfiles": [],
+            "hidden": false,
+            "remove9Subfields": true,
+            "metadata": {
+              "createdDate": 1606726959960,
+              "createdByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575",
+              "updatedDate": 1606737444083,
+              "updatedByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "hidden": false,
+      "metadata": {
+        "createdDate": "2020-11-30T09:06:01.520+00:00",
+        "createdByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575",
+        "updatedDate": "2020-11-30T09:59:01.248+00:00",
+        "updatedByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575"
+      }
+    },
+    {
+      "id": "31dbb554-0826-48ec-a0a4-3c55293d4dee",
+      "name": "Inventory Single Record - Default match for no SRS record",
+      "description": "Matches the Instance UUID from the 999 ff $i in the incoming MARC record to the UUID of the existing Instance record",
+      "incomingRecordType": "MARC_BIBLIOGRAPHIC",
+      "existingRecordType": "INSTANCE",
+      "matchDetails": [
+        {
+          "incomingRecordType": "MARC_BIBLIOGRAPHIC",
+          "existingRecordType": "INSTANCE",
+          "incomingMatchExpression": {
+            "dataValueType": "VALUE_FROM_RECORD",
+            "fields": [
+              {
+                "label": "field",
+                "value": "999"
+              },
+              {
+                "label": "indicator1",
+                "value": "f"
+              },
+              {
+                "label": "indicator2",
+                "value": "f"
+              },
+              {
+                "label": "recordSubfield",
+                "value": "i"
+              }
+            ]
+          },
+          "matchCriterion": "EXACTLY_MATCHES",
+          "existingMatchExpression": {
+            "dataValueType": "VALUE_FROM_RECORD",
+            "fields": [
+              {
+                "label": "field",
+                "value": "instance.id"
+              }
+            ]
+          }
+        }
+      ],
+      "userInfo": {
+        "firstName": "System",
+        "lastName": "System",
+        "userName": "System"
+      },
+      "parentProfiles": [
+        {
+          "id": "d27d71ce-8a1e-44c6-acea-96961b5592c6",
+          "contentType": "MATCH_PROFILE",
+          "content": {
+            "id": "d27d71ce-8a1e-44c6-acea-96961b5592c6",
+            "name": "Inventory Single Record - Default match for existing SRS record",
+            "description": "Matches the Instance UUID from the 999 ff $i in the incoming MARC record to the same field in any SRS MARC Bib",
+            "incomingRecordType": "MARC_BIBLIOGRAPHIC",
+            "existingRecordType": "MARC_BIBLIOGRAPHIC",
+            "matchDetails": [
+              {
+                "incomingRecordType": "MARC_BIBLIOGRAPHIC",
+                "existingRecordType": "MARC_BIBLIOGRAPHIC",
+                "incomingMatchExpression": {
+                  "dataValueType": "VALUE_FROM_RECORD",
+                  "fields": [
+                    {
+                      "label": "field",
+                      "value": "999"
+                    },
+                    {
+                      "label": "indicator1",
+                      "value": "f"
+                    },
+                    {
+                      "label": "indicator2",
+                      "value": "f"
+                    },
+                    {
+                      "label": "recordSubfield",
+                      "value": "i"
+                    }
+                  ]
+                },
+                "matchCriterion": "EXACTLY_MATCHES",
+                "existingMatchExpression": {
+                  "dataValueType": "VALUE_FROM_RECORD",
+                  "fields": [
+                    {
+                      "label": "field",
+                      "value": "999"
+                    },
+                    {
+                      "label": "indicator1",
+                      "value": "f"
+                    },
+                    {
+                      "label": "indicator2",
+                      "value": "f"
+                    },
+                    {
+                      "label": "recordSubfield",
+                      "value": "i"
+                    }
+                  ]
+                }
+              }
+            ],
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "parentProfiles": [],
+            "childProfiles": [],
+            "hidden": false,
+            "metadata": {
+              "createdDate": 1606727161520,
+              "createdByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575",
+              "updatedDate": 1606730341248,
+              "updatedByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "childProfiles": [
+        {
+          "id": "cddff0e1-233c-47ba-8be5-553c632709d9",
+          "profileWrapperId": "30f1c597-5e7c-4558-8be6-a8fe7c113a95",
+          "contentType": "ACTION_PROFILE",
+          "content": {
+            "id": "cddff0e1-233c-47ba-8be5-553c632709d9",
+            "name": "Inventory Single Record - Default Update Instance",
+            "description": "Updates existing Inventory Instances based on Inventory single record imports",
+            "action": "UPDATE",
+            "folioRecord": "INSTANCE",
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "parentProfiles": [],
+            "childProfiles": [],
+            "hidden": false,
+            "remove9Subfields": true,
+            "metadata": {
+              "createdDate": 1606726985334,
+              "createdByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575",
+              "updatedDate": 1606737434464,
+              "updatedByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "hidden": false,
+      "metadata": {
+        "createdDate": "2020-11-30T09:06:57.367+00:00",
+        "createdByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575",
+        "updatedDate": "2020-11-30T10:00:10.359+00:00",
+        "updatedByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575"
+      }
+    }
+  ],
+  "totalRecords": 3
+}

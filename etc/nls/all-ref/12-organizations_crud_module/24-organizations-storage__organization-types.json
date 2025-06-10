@@ -46,7 +46,19 @@
         "updatedDate": "2025-03-14T11:52:38.989+00:00",
         "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
       }
+    },
+    {
+      "id": "f68174c3-00c2-4013-bf1e-67945d0f06d7",
+      "_version": 1,
+      "name": "Pliktleverantör",
+      "status": "Active",
+      "metadata": {
+        "createdDate": "2025-06-09T10:25:24.955+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-06-09T10:25:24.955+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
     }
   ],
-  "totalRecords": 5
+  "totalRecords": 6
 }

@@ -1,0 +1,3215 @@
+{
+  "actionProfiles": [
+    {
+      "id": "d0ebba8a-2f0f-11eb-adc1-0242ac120002",
+      "name": "Inventory Single Record - Default Create Instance",
+      "description": "Creates new Inventory Instances and SRS MARC Bib records based on Inventory single record imports",
+      "action": "CREATE",
+      "folioRecord": "INSTANCE",
+      "userInfo": {
+        "firstName": "System",
+        "lastName": "System",
+        "userName": "System"
+      },
+      "parentProfiles": [
+        {
+          "id": "d0ebb7b0-2f0f-11eb-adc1-0242ac120002",
+          "contentType": "JOB_PROFILE",
+          "content": {
+            "id": "d0ebb7b0-2f0f-11eb-adc1-0242ac120002",
+            "name": "Inventory Single Record - Default Create Instance",
+            "description": "Triggered by an action in Inventory, this job profile imports a single record from an external system, to create an Instance and MARC record",
+            "dataType": "MARC",
+            "tags": {
+              "tagList": []
+            },
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "parentProfiles": [],
+            "childProfiles": [],
+            "hidden": false,
+            "metadata": {
+              "createdDate": 1606132800000,
+              "createdByUserId": "00000000-0000-0000-0000-000000000000",
+              "createdByUsername": "System",
+              "updatedDate": 1606219200000,
+              "updatedByUserId": "00000000-0000-0000-0000-000000000000",
+              "updatedByUsername": "System"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "childProfiles": [
+        {
+          "id": "d0ebbc2e-2f0f-11eb-adc1-0242ac120002",
+          "profileWrapperId": "27328351-90a1-479b-b388-f80f724f0a8e",
+          "contentType": "MAPPING_PROFILE",
+          "content": {
+            "id": "d0ebbc2e-2f0f-11eb-adc1-0242ac120002",
+            "name": "Inventory Single Record - Default Create Instance",
+            "description": "Creates new Inventory Instances and SRS MARC Bib records based on Inventory single record imports",
+            "incomingRecordType": "MARC_BIBLIOGRAPHIC",
+            "existingRecordType": "INSTANCE",
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "marcFieldProtectionSettings": [],
+            "parentProfiles": [],
+            "childProfiles": [],
+            "mappingDetails": {
+              "name": "instance",
+              "recordType": "INSTANCE",
+              "mappingFields": [
+                {
+                  "name": "discoverySuppress",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.discoverySuppress",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "staffSuppress",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.staffSuppress",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "previouslyHeld",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.previouslyHeld",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "hrid",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.hrid",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "source",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.source",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "catalogedDate",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.catalogedDate",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "statusId",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.statusId",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "modeOfIssuanceId",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.modeOfIssuanceId",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "statisticalCodeIds",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.statisticalCodeIds[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "title",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.title",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "alternativeTitles",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.alternativeTitles[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "indexTitle",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.indexTitle",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "series",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.series[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "precedingTitles",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.precedingTitles[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "succeedingTitles",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.succeedingTitles[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "identifiers",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.identifiers[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "contributors",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.contributors[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "publication",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.publication[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "editions",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.editions[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "physicalDescriptions",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.physicalDescriptions[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "instanceTypeId",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.instanceTypeId",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "natureOfContentTermIds",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.natureOfContentTermIds[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "instanceFormatIds",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.instanceFormatIds[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "languages",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.languages[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "publicationFrequency",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.publicationFrequency[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "publicationRange",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.publicationRange[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "notes",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.notes[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "electronicAccess",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.electronicAccess[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "subjects",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.subjects[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "classifications",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.classifications[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "parentInstances",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.parentInstances[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "childInstances",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.childInstances[]",
+                  "value": "",
+                  "subfields": []
+                }
+              ],
+              "marcMappingDetails": []
+            },
+            "hidden": false,
+            "metadata": {
+              "createdDate": 1606132800000,
+              "createdByUserId": "00000000-0000-0000-0000-000000000000",
+              "createdByUsername": "System",
+              "updatedDate": 1606219200000,
+              "updatedByUserId": "00000000-0000-0000-0000-000000000000",
+              "updatedByUsername": "System"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "hidden": false,
+      "remove9Subfields": true,
+      "metadata": {
+        "createdDate": "2020-11-23T12:00:00.000+00:00",
+        "createdByUserId": "00000000-0000-0000-0000-000000000000",
+        "createdByUsername": "System",
+        "updatedDate": "2020-11-24T12:00:00.000+00:00",
+        "updatedByUserId": "00000000-0000-0000-0000-000000000000",
+        "updatedByUsername": "System"
+      }
+    },
+    {
+      "id": "64ca3d23-1482-4299-9dc9-36e1f6751963",
+      "name": "KB Create Holding",
+      "description": "Skapa bestånd",
+      "action": "CREATE",
+      "folioRecord": "HOLDINGS",
+      "userInfo": {
+        "firstName": "Andreas",
+        "lastName": "Mace",
+        "userName": "andmac"
+      },
+      "parentProfiles": [
+        {
+          "id": "2da5abe1-2a62-4bbc-83c3-c81436ab03dc",
+          "contentType": "JOB_PROFILE",
+          "content": {
+            "id": "2da5abe1-2a62-4bbc-83c3-c81436ab03dc",
+            "name": "KB Create Instance, holding and item",
+            "description": "Skapar bibliografisk post, med tillhörande bestånd och exemplar utifrån sammanslagen Libris-post.",
+            "dataType": "MARC",
+            "userInfo": {
+              "firstName": "Andreas",
+              "lastName": "Mace",
+              "userName": "andmac"
+            },
+            "parentProfiles": [],
+            "childProfiles": [],
+            "hidden": false,
+            "metadata": {
+              "createdDate": 1680769572278,
+              "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+              "updatedDate": 1680846596840,
+              "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "childProfiles": [
+        {
+          "id": "466b2257-d400-4413-870b-d68f82eb2953",
+          "profileWrapperId": "dbbb48a0-da81-4f44-81b8-628e3736bbd4",
+          "contentType": "MAPPING_PROFILE",
+          "content": {
+            "id": "466b2257-d400-4413-870b-d68f82eb2953",
+            "name": "KB Create Holding",
+            "description": "",
+            "incomingRecordType": "MARC_BIBLIOGRAPHIC",
+            "existingRecordType": "HOLDINGS",
+            "userInfo": {
+              "firstName": "Andreas",
+              "lastName": "Mace",
+              "userName": "andmac"
+            },
+            "marcFieldProtectionSettings": [],
+            "parentProfiles": [],
+            "childProfiles": [],
+            "mappingDetails": {
+              "name": "holdings",
+              "recordType": "HOLDINGS",
+              "mappingFields": [
+                {
+                  "name": "discoverySuppress",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.discoverySuppress",
+                  "value": ""
+                },
+                {
+                  "name": "hrid",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.discoverySuppress",
+                  "value": ""
+                },
+                {
+                  "name": "formerIds",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.formerIds[]",
+                  "value": ""
+                },
+                {
+                  "name": "holdingsTypeId",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.holdingsTypeId",
+                  "value": ""
+                },
+                {
+                  "name": "statisticalCodeIds",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.statisticalCodeIds[]",
+                  "value": ""
+                },
+                {
+                  "name": "administrativeNotes",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.administrativeNotes[]",
+                  "value": ""
+                },
+                {
+                  "name": "permanentLocationId",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.permanentLocationId",
+                  "value": "\"Lilla läsesalen (LL)\""
+                },
+                {
+                  "name": "temporaryLocationId",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.temporaryLocationId",
+                  "value": ""
+                },
+                {
+                  "name": "shelvingOrder",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.shelvingOrder",
+                  "value": ""
+                },
+                {
+                  "name": "shelvingTitle",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.shelvingTitle",
+                  "value": ""
+                },
+                {
+                  "name": "copyNumber",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.copyNumber",
+                  "value": ""
+                },
+                {
+                  "name": "callNumberTypeId",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.callNumberTypeId",
+                  "value": ""
+                },
+                {
+                  "name": "callNumberPrefix",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.callNumberPrefix"
+                },
+                {
+                  "name": "callNumber",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.callNumber",
+                  "value": "852$h"
+                },
+                {
+                  "name": "callNumberSuffix",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.callNumberSuffix",
+                  "value": "852$j"
+                },
+                {
+                  "name": "numberOfItems",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.numberOfItems",
+                  "value": ""
+                },
+                {
+                  "name": "holdingsStatements",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.holdingsStatements[]",
+                  "value": ""
+                },
+                {
+                  "name": "holdingsStatementsForSupplements",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.holdingsStatementsForSupplements[]",
+                  "value": ""
+                },
+                {
+                  "name": "holdingsStatementsForIndexes",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.holdingsStatementsForIndexes[]",
+                  "value": ""
+                },
+                {
+                  "name": "illPolicyId",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.illPolicyId",
+                  "value": ""
+                },
+                {
+                  "name": "digitizationPolicy",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.digitizationPolicy",
+                  "value": ""
+                },
+                {
+                  "name": "retentionPolicy",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.retentionPolicy",
+                  "value": ""
+                },
+                {
+                  "name": "notes",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.notes[]",
+                  "value": "",
+                  "repeatableFieldAction": "EXTEND_EXISTING",
+                  "subfields": [
+                    {
+                      "order": 0,
+                      "path": "holdings.notes[]",
+                      "fields": [
+                        {
+                          "name": "noteType",
+                          "enabled": "true",
+                          "required": true,
+                          "path": "holdings.notes[].holdingsNoteTypeId",
+                          "value": "\"Note\""
+                        },
+                        {
+                          "name": "note",
+                          "enabled": "true",
+                          "required": true,
+                          "path": "holdings.notes[].note",
+                          "value": "852$x"
+                        },
+                        {
+                          "name": "staffOnly",
+                          "enabled": "true",
+                          "required": false,
+                          "path": "holdings.notes[].staffOnly",
+                          "booleanFieldAction": "AS_IS"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "electronicAccess",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.electronicAccess[]",
+                  "value": ""
+                },
+                {
+                  "name": "receivingHistory.entries",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.receivingHistory.entries[]",
+                  "value": ""
+                }
+              ]
+            },
+            "hidden": false,
+            "metadata": {
+              "createdDate": 1680775233617,
+              "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+              "updatedDate": 1680779254434,
+              "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "hidden": false,
+      "remove9Subfields": false,
+      "metadata": {
+        "createdDate": "2023-04-06T09:52:35.980+00:00",
+        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+        "updatedDate": "2023-04-06T09:52:35.980+00:00",
+        "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+      }
+    },
+    {
+      "id": "8aa0b850-9182-4005-8435-340b704b2a19",
+      "name": "Default - Create MARC holdings",
+      "description": "This action profile is used with FOLIO's default job profile for creating Inventory Holdings and SRS MARC Holdings records. It cannot be edited, duplicated, or deleted.",
+      "action": "CREATE",
+      "folioRecord": "HOLDINGS",
+      "userInfo": {
+        "firstName": "System",
+        "lastName": "System",
+        "userName": "System"
+      },
+      "parentProfiles": [
+        {
+          "id": "80898dee-449f-44dd-9c8e-37d5eb469b1d",
+          "contentType": "JOB_PROFILE",
+          "content": {
+            "id": "80898dee-449f-44dd-9c8e-37d5eb469b1d",
+            "name": "Default - Create Holdings and SRS MARC Holdings",
+            "description": "Default job profile for creating MARC holdings and corresponding Inventory holdings. Profile cannot be edited or deleted",
+            "dataType": "MARC",
+            "tags": {
+              "tagList": []
+            },
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "parentProfiles": [],
+            "childProfiles": [],
+            "hidden": false,
+            "metadata": {
+              "createdDate": 1615906800000,
+              "createdByUserId": "00000000-0000-0000-0000-000000000000",
+              "updatedDate": 1615906800000,
+              "updatedByUserId": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "childProfiles": [
+        {
+          "id": "13cf7adf-c7a7-4c2e-838f-14d0ac36ec0a",
+          "profileWrapperId": "7e7b57db-8d2b-4c0b-954c-62b1dbf88801",
+          "contentType": "MAPPING_PROFILE",
+          "content": {
+            "id": "13cf7adf-c7a7-4c2e-838f-14d0ac36ec0a",
+            "name": "Default Create MARC holdings and Inventory holdings",
+            "description": "This field mapping profile is used with FOLIO's default job profile for creating Inventory Holdings and SRS MARC Holdings records. It cannot be edited, duplicated, deleted, or linked to additional action profiles.",
+            "incomingRecordType": "MARC_HOLDINGS",
+            "existingRecordType": "HOLDINGS",
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "marcFieldProtectionSettings": [],
+            "parentProfiles": [],
+            "childProfiles": [],
+            "mappingDetails": {
+              "name": "holdings",
+              "recordType": "HOLDINGS",
+              "mappingFields": [
+                {
+                  "name": "hrid",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.hrid",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "holdingsTypeId",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.holdingsTypeId",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "discoverySuppress",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.discoverySuppress",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "formerIds",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.formerIds[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "instanceId",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.instanceId",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "permanentLocationId",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.permanentLocationId",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "temporaryLocationId",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.temporaryLocationId",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "effectiveLocationId",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.effectiveLocationId",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "callNumberTypeId",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.callNumberTypeId",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "callNumberPrefix",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.callNumberPrefix",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "callNumber",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.callNumber",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "callNumberSuffix",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.callNumberSuffix",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "shelvingTitle",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.shelvingTitle",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "acquisitionFormat",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.acquisitionFormat",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "acquisitionMethod",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.acquisitionMethod",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "receiptStatus",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.receiptStatus",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "illPolicyId",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.illPolicyId",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "retentionPolicy",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.retentionPolicy",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "digitizationPolicy",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.digitizationPolicy",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "copyNumber",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.copyNumber",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "numberOfItems",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.numberOfItems",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "electronicAccess",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.electronicAccess[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "notes",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.notes[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "holdingsStatements",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.holdingsStatements[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "holdingsStatementsForIndexes",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.holdingsStatementsForIndexes[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "holdingsStatementsForSupplements",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.holdingsStatementsForSupplements[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "receivingHistory",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.receivingHistory",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "statisticalCodeIds",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.statisticalCodeIds[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "holdingsItems",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.holdingsItems[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "bareHoldingsItems",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.bareHoldingsItems[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "holdingsInstance",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.holdingsInstance",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "sourceId",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.sourceId",
+                  "value": "",
+                  "subfields": []
+                }
+              ],
+              "marcMappingDetails": []
+            },
+            "hidden": false,
+            "metadata": {
+              "createdDate": 1628172000000,
+              "createdByUserId": "00000000-0000-0000-0000-000000000000",
+              "updatedDate": 1628175600462,
+              "updatedByUserId": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "hidden": false,
+      "remove9Subfields": false,
+      "metadata": {
+        "createdDate": "2021-08-05T14:00:00.000+00:00",
+        "createdByUserId": "00000000-0000-0000-0000-000000000000",
+        "updatedDate": "2021-08-05T15:00:00.462+00:00",
+        "updatedByUserId": "00000000-0000-0000-0000-000000000000"
+      }
+    },
+    {
+      "id": "f5feddba-f892-4fad-b702-e4e77f04f9a3",
+      "name": "quickMARC Derive - Create Inventory Holdings",
+      "description": "This action profile is used with FOLIO's default job profile for creating Inventory Holdings and SRS MARC Holdings records. It cannot be edited or deleted.",
+      "action": "CREATE",
+      "folioRecord": "HOLDINGS",
+      "userInfo": {
+        "firstName": "System",
+        "lastName": "System",
+        "userName": "System"
+      },
+      "parentProfiles": [
+        {
+          "id": "fa0262c7-5816-48d0-b9b3-7b7a862a5bc7",
+          "contentType": "JOB_PROFILE",
+          "content": {
+            "id": "fa0262c7-5816-48d0-b9b3-7b7a862a5bc7",
+            "name": "quickMARC - Create Holdings and SRS MARC Holdings",
+            "description": "This job profile is used by the quickMARC to allow a user to create a new SRS MARC holdings record and corresponding Inventory holdings. Profile cannot be edited or deleted",
+            "dataType": "MARC",
+            "tags": {
+              "tagList": []
+            },
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "parentProfiles": [],
+            "childProfiles": [],
+            "hidden": false,
+            "metadata": {
+              "createdDate": 1615906800000,
+              "createdByUserId": "00000000-0000-0000-0000-000000000000",
+              "updatedDate": 1615906800000,
+              "updatedByUserId": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "childProfiles": [
+        {
+          "id": "e0fbaad5-10c0-40d5-9228-498b351dbbaa",
+          "profileWrapperId": "a3dcf5c1-79c1-4e9b-b2e9-0aefdd141311",
+          "contentType": "MAPPING_PROFILE",
+          "content": {
+            "id": "e0fbaad5-10c0-40d5-9228-498b351dbbaa",
+            "name": "quickMARC - Create MARC holdings and Inventory holdings",
+            "description": "This field mapping profile is used with FOLIO's default job profile for creating Inventory Holdings and SRS MARC Holdings records. It cannot be edited, duplicated, or deleted.",
+            "incomingRecordType": "MARC_HOLDINGS",
+            "existingRecordType": "HOLDINGS",
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "marcFieldProtectionSettings": [],
+            "parentProfiles": [],
+            "childProfiles": [],
+            "mappingDetails": {
+              "name": "holdings",
+              "recordType": "HOLDINGS",
+              "mappingFields": [
+                {
+                  "name": "hrid",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.hrid",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "holdingsTypeId",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.holdingsTypeId",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "discoverySuppress",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.discoverySuppress",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "formerIds",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.formerIds[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "instanceId",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.instanceId",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "permanentLocationId",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.permanentLocationId",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "temporaryLocationId",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.temporaryLocationId",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "effectiveLocationId",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.effectiveLocationId",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "callNumberTypeId",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.callNumberTypeId",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "callNumberPrefix",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.callNumberPrefix",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "callNumber",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.callNumber",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "callNumberSuffix",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.callNumberSuffix",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "shelvingTitle",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.shelvingTitle",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "acquisitionFormat",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.acquisitionFormat",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "acquisitionMethod",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.acquisitionMethod",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "receiptStatus",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.receiptStatus",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "illPolicyId",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.illPolicyId",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "retentionPolicy",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.retentionPolicy",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "digitizationPolicy",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.digitizationPolicy",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "copyNumber",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.copyNumber",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "numberOfItems",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.numberOfItems",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "electronicAccess",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.electronicAccess[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "notes",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.notes[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "holdingsStatements",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.holdingsStatements[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "holdingsStatementsForIndexes",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.holdingsStatementsForIndexes[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "holdingsStatementsForSupplements",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "holdings.holdingsStatementsForSupplements[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "receivingHistory",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.receivingHistory",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "statisticalCodeIds",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.statisticalCodeIds[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "holdingsItems",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.holdingsItems[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "bareHoldingsItems",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.bareHoldingsItems[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "holdingsInstance",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.holdingsInstance",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "sourceId",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "holdings.sourceId",
+                  "value": "",
+                  "subfields": []
+                }
+              ],
+              "marcMappingDetails": []
+            },
+            "hidden": false,
+            "metadata": {
+              "createdDate": 1628172000000,
+              "createdByUserId": "00000000-0000-0000-0000-000000000000",
+              "updatedDate": 1628175600462,
+              "updatedByUserId": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "hidden": false,
+      "remove9Subfields": false,
+      "metadata": {
+        "createdDate": "2021-08-05T14:00:00.000+00:00",
+        "createdByUserId": "00000000-0000-0000-0000-000000000000",
+        "updatedDate": "2021-08-05T15:00:00.462+00:00",
+        "updatedByUserId": "00000000-0000-0000-0000-000000000000"
+      }
+    },
+    {
+      "id": "fa45f3ec-9b83-11eb-a8b3-0242ac130003",
+      "name": "Default - Create instance",
+      "description": "This action profile is used with FOLIO's default job profile for creating Inventory Instances and SRS MARC Bibliographic records. It can be edited, duplicated, or deleted.",
+      "action": "CREATE",
+      "folioRecord": "INSTANCE",
+      "userInfo": {
+        "firstName": "System",
+        "lastName": "System",
+        "userName": "System"
+      },
+      "parentProfiles": [
+        {
+          "id": "e34d7b92-9b83-11eb-a8b3-0242ac130003",
+          "contentType": "JOB_PROFILE",
+          "content": {
+            "id": "e34d7b92-9b83-11eb-a8b3-0242ac130003",
+            "name": "Default - Create instance and SRS MARC Bib",
+            "description": "This job profile creates SRS MARC Bib records and corresponding Inventory Instances using the library's default MARC-to-Instance mapping. It can be edited, duplicated, or deleted.",
+            "dataType": "MARC",
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "parentProfiles": [],
+            "childProfiles": [],
+            "hidden": false,
+            "metadata": {
+              "createdDate": 1618322400000,
+              "createdByUserId": "00000000-0000-0000-0000-000000000000",
+              "updatedDate": 1618326000462,
+              "updatedByUserId": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        },
+        {
+          "id": "2da5abe1-2a62-4bbc-83c3-c81436ab03dc",
+          "contentType": "JOB_PROFILE",
+          "content": {
+            "id": "2da5abe1-2a62-4bbc-83c3-c81436ab03dc",
+            "name": "KB Create Instance, holding and item",
+            "description": "Skapar bibliografisk post, med tillhörande bestånd och exemplar utifrån sammanslagen Libris-post.",
+            "dataType": "MARC",
+            "userInfo": {
+              "firstName": "Andreas",
+              "lastName": "Mace",
+              "userName": "andmac"
+            },
+            "parentProfiles": [],
+            "childProfiles": [],
+            "hidden": false,
+            "metadata": {
+              "createdDate": 1680769572278,
+              "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+              "updatedDate": 1680846596840,
+              "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "childProfiles": [
+        {
+          "id": "bf7b3b86-9b84-11eb-a8b3-0242ac130003",
+          "profileWrapperId": "08b97285-4ad5-491e-a1a9-5017166910a1",
+          "contentType": "MAPPING_PROFILE",
+          "content": {
+            "id": "bf7b3b86-9b84-11eb-a8b3-0242ac130003",
+            "name": "Default - Create instance",
+            "description": "This field mapping profile is used with FOLIO's default job profile for creating Inventory Instances and SRS MARC Bibliographic records. It can be edited, duplicated, deleted, or linked to additional action profiles.",
+            "incomingRecordType": "MARC_BIBLIOGRAPHIC",
+            "existingRecordType": "INSTANCE",
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "marcFieldProtectionSettings": [],
+            "parentProfiles": [],
+            "childProfiles": [],
+            "mappingDetails": {
+              "name": "instance",
+              "recordType": "INSTANCE",
+              "mappingFields": [
+                {
+                  "name": "discoverySuppress",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.discoverySuppress",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "staffSuppress",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.staffSuppress",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "previouslyHeld",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.previouslyHeld",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "hrid",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.hrid",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "source",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.source",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "catalogedDate",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.catalogedDate",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "statusId",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.statusId",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "modeOfIssuanceId",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.modeOfIssuanceId",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "statisticalCodeIds",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.statisticalCodeIds[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "title",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.title",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "alternativeTitles",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.alternativeTitles[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "indexTitle",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.indexTitle",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "series",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.series[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "precedingTitles",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.precedingTitles[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "succeedingTitles",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.succeedingTitles[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "identifiers",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.identifiers[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "contributors",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.contributors[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "publication",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.publication[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "editions",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.editions[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "physicalDescriptions",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.physicalDescriptions[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "instanceTypeId",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.instanceTypeId",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "natureOfContentTermIds",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.natureOfContentTermIds[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "instanceFormatIds",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.instanceFormatIds[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "languages",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.languages[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "publicationFrequency",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.publicationFrequency[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "publicationRange",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.publicationRange[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "notes",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.notes[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "electronicAccess",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.electronicAccess[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "subjects",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.subjects[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "classifications",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.classifications[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "parentInstances",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.parentInstances[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "childInstances",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.childInstances[]",
+                  "value": "",
+                  "subfields": []
+                }
+              ],
+              "marcMappingDetails": []
+            },
+            "hidden": false,
+            "metadata": {
+              "createdDate": 1618322400000,
+              "createdByUserId": "00000000-0000-0000-0000-000000000000",
+              "updatedDate": 1618326000462,
+              "updatedByUserId": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "hidden": false,
+      "remove9Subfields": true,
+      "metadata": {
+        "createdDate": "2021-04-13T14:00:00.000+00:00",
+        "createdByUserId": "00000000-0000-0000-0000-000000000000",
+        "updatedDate": "2021-04-13T15:00:00.462+00:00",
+        "updatedByUserId": "00000000-0000-0000-0000-000000000000"
+      }
+    },
+    {
+      "id": "cddff0e1-233c-47ba-8be5-553c632709d9",
+      "name": "Inventory Single Record - Default Update Instance",
+      "description": "Updates existing Inventory Instances based on Inventory single record imports",
+      "action": "UPDATE",
+      "folioRecord": "INSTANCE",
+      "userInfo": {
+        "firstName": "System",
+        "lastName": "System",
+        "userName": "System"
+      },
+      "parentProfiles": [
+        {
+          "id": "31dbb554-0826-48ec-a0a4-3c55293d4dee",
+          "contentType": "MATCH_PROFILE",
+          "content": {
+            "id": "31dbb554-0826-48ec-a0a4-3c55293d4dee",
+            "name": "Inventory Single Record - Default match for no SRS record",
+            "description": "Matches the Instance UUID from the 999 ff $i in the incoming MARC record to the UUID of the existing Instance record",
+            "incomingRecordType": "MARC_BIBLIOGRAPHIC",
+            "existingRecordType": "INSTANCE",
+            "matchDetails": [
+              {
+                "incomingRecordType": "MARC_BIBLIOGRAPHIC",
+                "existingRecordType": "INSTANCE",
+                "incomingMatchExpression": {
+                  "dataValueType": "VALUE_FROM_RECORD",
+                  "fields": [
+                    {
+                      "label": "field",
+                      "value": "999"
+                    },
+                    {
+                      "label": "indicator1",
+                      "value": "f"
+                    },
+                    {
+                      "label": "indicator2",
+                      "value": "f"
+                    },
+                    {
+                      "label": "recordSubfield",
+                      "value": "i"
+                    }
+                  ]
+                },
+                "matchCriterion": "EXACTLY_MATCHES",
+                "existingMatchExpression": {
+                  "dataValueType": "VALUE_FROM_RECORD",
+                  "fields": [
+                    {
+                      "label": "field",
+                      "value": "instance.id"
+                    }
+                  ]
+                }
+              }
+            ],
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "parentProfiles": [],
+            "childProfiles": [],
+            "hidden": false,
+            "metadata": {
+              "createdDate": 1606727217367,
+              "createdByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575",
+              "updatedDate": 1606730410359,
+              "updatedByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        },
+        {
+          "id": "91f9b8d6-d80e-4727-9783-73fb53e3c786",
+          "contentType": "JOB_PROFILE",
+          "content": {
+            "id": "91f9b8d6-d80e-4727-9783-73fb53e3c786",
+            "name": "Inventory Single Record - Default Update Instance",
+            "description": "Triggered by an action in Inventory, this job profile imports a single record from an external system, to update an existing Instance, and either create a new MARC record or update an existing MARC record",
+            "dataType": "MARC",
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "parentProfiles": [],
+            "childProfiles": [],
+            "hidden": false,
+            "metadata": {
+              "createdDate": 1606727267667,
+              "createdByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575",
+              "updatedDate": 1606727350382,
+              "updatedByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "childProfiles": [
+        {
+          "id": "862000b9-84ea-4cae-a223-5fc0552f2b42",
+          "profileWrapperId": "f2426155-88da-4d1d-be2e-ee3238a8b04c",
+          "contentType": "MAPPING_PROFILE",
+          "content": {
+            "id": "862000b9-84ea-4cae-a223-5fc0552f2b42",
+            "name": "Inventory Single Record - Default Update Instance",
+            "description": "Updates existing Inventory Instances based on Inventory single record imports",
+            "incomingRecordType": "MARC_BIBLIOGRAPHIC",
+            "existingRecordType": "INSTANCE",
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "marcFieldProtectionSettings": [],
+            "parentProfiles": [],
+            "childProfiles": [],
+            "mappingDetails": {
+              "name": "instance",
+              "recordType": "INSTANCE",
+              "mappingFields": [
+                {
+                  "name": "discoverySuppress",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.discoverySuppress",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "staffSuppress",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.staffSuppress",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "previouslyHeld",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.previouslyHeld",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "hrid",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.hrid",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "source",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.source",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "catalogedDate",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.catalogedDate",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "statusId",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.statusId",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "modeOfIssuanceId",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.modeOfIssuanceId",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "statisticalCodeIds",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.statisticalCodeIds[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "title",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.title",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "alternativeTitles",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.alternativeTitles[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "indexTitle",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.indexTitle",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "series",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.series[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "precedingTitles",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.precedingTitles[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "succeedingTitles",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.succeedingTitles[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "identifiers",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.identifiers[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "contributors",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.contributors[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "publication",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.publication[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "editions",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.editions[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "physicalDescriptions",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.physicalDescriptions[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "instanceTypeId",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.instanceTypeId",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "natureOfContentTermIds",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.natureOfContentTermIds[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "instanceFormatIds",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.instanceFormatIds[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "languages",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.languages[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "publicationFrequency",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.publicationFrequency[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "publicationRange",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.publicationRange[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "notes",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.notes[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "electronicAccess",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.electronicAccess[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "subjects",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.subjects[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "classifications",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.classifications[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "parentInstances",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.parentInstances[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "childInstances",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.childInstances[]",
+                  "value": "",
+                  "subfields": []
+                }
+              ],
+              "marcMappingDetails": []
+            },
+            "hidden": false,
+            "metadata": {
+              "createdDate": 1606726889039,
+              "createdByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575",
+              "updatedDate": 1606737455927,
+              "updatedByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "hidden": false,
+      "remove9Subfields": true,
+      "metadata": {
+        "createdDate": "2020-11-30T09:03:05.334+00:00",
+        "createdByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575",
+        "updatedDate": "2020-11-30T11:57:14.464+00:00",
+        "updatedByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575"
+      }
+    },
+    {
+      "id": "f8e58651-f651-485d-aead-d2fa8700e2d1",
+      "name": "quickMARC Derive - Create Inventory Instance",
+      "description": "This action profile is used by the quickMARC Derive action to create a new Inventory Instance. It cannot be edited or deleted.",
+      "action": "CREATE",
+      "folioRecord": "INSTANCE",
+      "userInfo": {
+        "firstName": "System",
+        "lastName": "System",
+        "userName": "System"
+      },
+      "parentProfiles": [
+        {
+          "id": "6409dcff-71fa-433a-bc6a-e70ad38a9604",
+          "contentType": "JOB_PROFILE",
+          "content": {
+            "id": "6409dcff-71fa-433a-bc6a-e70ad38a9604",
+            "name": "quickMARC - Derive a new SRS MARC Bib and Instance",
+            "description": "This job profile is used by the quickMARC Derive action to create a new SRS MARC Bib record and corresponding Inventory Instance. It cannot be edited or deleted.",
+            "dataType": "MARC",
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "parentProfiles": [],
+            "childProfiles": [],
+            "hidden": false,
+            "metadata": {
+              "createdDate": 1610632800000,
+              "createdByUserId": "00000000-0000-0000-0000-000000000000",
+              "updatedDate": 1610636400462,
+              "updatedByUserId": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "childProfiles": [
+        {
+          "id": "991c0300-44a6-47e3-8ea2-b01bb56a38cc",
+          "profileWrapperId": "d536d2bf-d924-4098-b81d-9bebdf92874f",
+          "contentType": "MAPPING_PROFILE",
+          "content": {
+            "id": "991c0300-44a6-47e3-8ea2-b01bb56a38cc",
+            "name": "quickMARC Derive - Create Inventory Instance",
+            "description": "This field mapping profile is used by the quickMARC Derive action to create an Inventory Instance. It cannot be edited or deleted.",
+            "incomingRecordType": "MARC_BIBLIOGRAPHIC",
+            "existingRecordType": "INSTANCE",
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "marcFieldProtectionSettings": [],
+            "parentProfiles": [],
+            "childProfiles": [],
+            "mappingDetails": {
+              "name": "instance",
+              "recordType": "INSTANCE",
+              "mappingFields": [
+                {
+                  "name": "discoverySuppress",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.discoverySuppress",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "staffSuppress",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.staffSuppress",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "previouslyHeld",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.previouslyHeld",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "hrid",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.hrid",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "source",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.source",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "catalogedDate",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.catalogedDate",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "statusId",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.statusId",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "modeOfIssuanceId",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.modeOfIssuanceId",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "statisticalCodeIds",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.statisticalCodeIds[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "title",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.title",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "alternativeTitles",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.alternativeTitles[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "indexTitle",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.indexTitle",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "series",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.series[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "precedingTitles",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.precedingTitles[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "succeedingTitles",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.succeedingTitles[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "identifiers",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.identifiers[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "contributors",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.contributors[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "publication",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.publication[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "editions",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.editions[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "physicalDescriptions",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.physicalDescriptions[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "instanceTypeId",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.instanceTypeId",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "natureOfContentTermIds",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.natureOfContentTermIds[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "instanceFormatIds",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.instanceFormatIds[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "languages",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.languages[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "publicationFrequency",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.publicationFrequency[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "publicationRange",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.publicationRange[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "notes",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.notes[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "electronicAccess",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.electronicAccess[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "subjects",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.subjects[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "classifications",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "instance.classifications[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "parentInstances",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.parentInstances[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "childInstances",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "instance.childInstances[]",
+                  "value": "",
+                  "subfields": []
+                }
+              ],
+              "marcMappingDetails": []
+            },
+            "hidden": false,
+            "metadata": {
+              "createdDate": 1610632800000,
+              "createdByUserId": "00000000-0000-0000-0000-000000000000",
+              "updatedDate": 1610636400462,
+              "updatedByUserId": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "hidden": false,
+      "remove9Subfields": false,
+      "metadata": {
+        "createdDate": "2021-01-14T14:00:00.000+00:00",
+        "createdByUserId": "00000000-0000-0000-0000-000000000000",
+        "updatedDate": "2021-01-14T15:00:00.462+00:00",
+        "updatedByUserId": "00000000-0000-0000-0000-000000000000"
+      }
+    },
+    {
+      "id": "7915c72e-c6af-4962-969d-403c7238b051",
+      "name": "Default - Create MARC Authority",
+      "description": "This action profile is used with FOLIO's default job profile for creating a MARC authority record in source-record-storage. It cannot be edited, duplicated, or deleted.",
+      "action": "CREATE",
+      "folioRecord": "AUTHORITY",
+      "userInfo": {
+        "firstName": "System",
+        "lastName": "System",
+        "userName": "System"
+      },
+      "parentProfiles": [
+        {
+          "id": "6eefa4c6-bbf7-4845-ad82-de7fc5abd0e3",
+          "contentType": "JOB_PROFILE",
+          "content": {
+            "id": "6eefa4c6-bbf7-4845-ad82-de7fc5abd0e3",
+            "name": "Default - Create SRS MARC Authority",
+            "description": "Default job profile for creating MARC authority records. These records are stored in source record storage (SRS). Profile cannot be deleted.",
+            "dataType": "MARC",
+            "tags": {
+              "tagList": []
+            },
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "parentProfiles": [],
+            "childProfiles": [],
+            "hidden": false,
+            "metadata": {
+              "createdDate": 1615906800000,
+              "createdByUserId": "00000000-0000-0000-0000-000000000000",
+              "updatedDate": 1615906800000,
+              "updatedByUserId": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "childProfiles": [
+        {
+          "id": "6a0ec1de-68eb-4833-bdbf-0741db25c314",
+          "profileWrapperId": "bf6ce707-e0f6-4879-bf8d-d73833311a15",
+          "contentType": "MAPPING_PROFILE",
+          "content": {
+            "id": "6a0ec1de-68eb-4833-bdbf-0741db25c314",
+            "name": "Default - Create MARC Authority",
+            "description": "This field mapping profile is used with FOLIO's default job profile for creating MARC Authority records. It cannot be edited, duplicated, deleted, or linked to additional action profiles.",
+            "incomingRecordType": "MARC_AUTHORITY",
+            "existingRecordType": "AUTHORITY",
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "marcFieldProtectionSettings": [],
+            "parentProfiles": [],
+            "childProfiles": [],
+            "mappingDetails": {
+              "name": "authority",
+              "recordType": "AUTHORITY",
+              "mappingFields": [
+                {
+                  "name": "personalName",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "authority.personalName",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "sftPersonalName",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "authority.sftPersonalName[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "saftPersonalName",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "authority.saftPersonalName[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "corporateName",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "authority.corporateName",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "sftCorporateName",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "authority.sftCorporateName[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "saftCorporateName",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "authority.saftCorporateName[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "meetingName",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "authority.meetingName[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "sftMeetingName",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "authority.sftMeetingName[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "saftMeetingName",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "authority.saftMeetingName[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "uniformTitle",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "authority.uniformTitle",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "sftUniformTitle",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "authority.sftUniformTitle[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "saftUniformTitle",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "authority.saftUniformTitle[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "topicalTerm",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "authority.topicalTerm",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "sftTopicalTerm",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "authority.sftTopicalTerm[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "saftTopicalTerm",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "authority.saftTopicalTerm[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "subjectHeadings",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "authority.subjectHeadings",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "geographicName",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "authority.geographicName",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "sftGeographicTerm",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "authority.sftGeographicTerm[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "saftGeographicTerm",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "authority.saftGeographicTerm[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "genre",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "authority.genre",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "identifiers",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "authority.identifiers[]",
+                  "value": "",
+                  "subfields": []
+                },
+                {
+                  "name": "notes",
+                  "enabled": "false",
+                  "required": false,
+                  "path": "authority.notes[]",
+                  "value": "",
+                  "subfields": []
+                }
+              ],
+              "marcMappingDetails": []
+            },
+            "hidden": false,
+            "metadata": {
+              "createdDate": 1633701600000,
+              "createdByUserId": "00000000-0000-0000-0000-000000000000",
+              "updatedDate": 1633705200462,
+              "updatedByUserId": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "hidden": false,
+      "remove9Subfields": false,
+      "metadata": {
+        "createdDate": "2021-10-08T14:00:00.000+00:00",
+        "createdByUserId": "00000000-0000-0000-0000-000000000000",
+        "updatedDate": "2021-10-08T15:00:00.462+00:00",
+        "updatedByUserId": "00000000-0000-0000-0000-000000000000"
+      }
+    },
+    {
+      "id": "6aa8e98b-0d9f-41dd-b26f-15658d07eb52",
+      "name": "Inventory Single Record - Default Update MARC Bib",
+      "description": "Updates existing SRS MARC Bib records based on Inventory single record imports",
+      "action": "UPDATE",
+      "folioRecord": "MARC_BIBLIOGRAPHIC",
+      "userInfo": {
+        "firstName": "System",
+        "lastName": "System",
+        "userName": "System"
+      },
+      "parentProfiles": [
+        {
+          "id": "d27d71ce-8a1e-44c6-acea-96961b5592c6",
+          "contentType": "MATCH_PROFILE",
+          "content": {
+            "id": "d27d71ce-8a1e-44c6-acea-96961b5592c6",
+            "name": "Inventory Single Record - Default match for existing SRS record",
+            "description": "Matches the Instance UUID from the 999 ff $i in the incoming MARC record to the same field in any SRS MARC Bib",
+            "incomingRecordType": "MARC_BIBLIOGRAPHIC",
+            "existingRecordType": "MARC_BIBLIOGRAPHIC",
+            "matchDetails": [
+              {
+                "incomingRecordType": "MARC_BIBLIOGRAPHIC",
+                "existingRecordType": "MARC_BIBLIOGRAPHIC",
+                "incomingMatchExpression": {
+                  "dataValueType": "VALUE_FROM_RECORD",
+                  "fields": [
+                    {
+                      "label": "field",
+                      "value": "999"
+                    },
+                    {
+                      "label": "indicator1",
+                      "value": "f"
+                    },
+                    {
+                      "label": "indicator2",
+                      "value": "f"
+                    },
+                    {
+                      "label": "recordSubfield",
+                      "value": "i"
+                    }
+                  ]
+                },
+                "matchCriterion": "EXACTLY_MATCHES",
+                "existingMatchExpression": {
+                  "dataValueType": "VALUE_FROM_RECORD",
+                  "fields": [
+                    {
+                      "label": "field",
+                      "value": "999"
+                    },
+                    {
+                      "label": "indicator1",
+                      "value": "f"
+                    },
+                    {
+                      "label": "indicator2",
+                      "value": "f"
+                    },
+                    {
+                      "label": "recordSubfield",
+                      "value": "i"
+                    }
+                  ]
+                }
+              }
+            ],
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "parentProfiles": [],
+            "childProfiles": [],
+            "hidden": false,
+            "metadata": {
+              "createdDate": 1606727161520,
+              "createdByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575",
+              "updatedDate": 1606730341248,
+              "updatedByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        },
+        {
+          "id": "91f9b8d6-d80e-4727-9783-73fb53e3c786",
+          "contentType": "JOB_PROFILE",
+          "content": {
+            "id": "91f9b8d6-d80e-4727-9783-73fb53e3c786",
+            "name": "Inventory Single Record - Default Update Instance",
+            "description": "Triggered by an action in Inventory, this job profile imports a single record from an external system, to update an existing Instance, and either create a new MARC record or update an existing MARC record",
+            "dataType": "MARC",
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "parentProfiles": [],
+            "childProfiles": [],
+            "hidden": false,
+            "metadata": {
+              "createdDate": 1606727267667,
+              "createdByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575",
+              "updatedDate": 1606727350382,
+              "updatedByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "childProfiles": [
+        {
+          "id": "f90864ef-8030-480f-a43f-8cdd21233252",
+          "profileWrapperId": "acecf283-109a-41b3-a83c-4d05139b0ae6",
+          "contentType": "MAPPING_PROFILE",
+          "content": {
+            "id": "f90864ef-8030-480f-a43f-8cdd21233252",
+            "name": "Inventory Single Record - Default Update MARC Bib",
+            "description": "Updates existing SRS MARC Bib records based on Inventory single record imports",
+            "incomingRecordType": "MARC_BIBLIOGRAPHIC",
+            "existingRecordType": "MARC_BIBLIOGRAPHIC",
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "marcFieldProtectionSettings": [],
+            "parentProfiles": [],
+            "childProfiles": [],
+            "mappingDetails": {
+              "name": "marcBib",
+              "recordType": "MARC_BIBLIOGRAPHIC",
+              "mappingFields": [],
+              "marcMappingDetails": [],
+              "marcMappingOption": "UPDATE"
+            },
+            "hidden": false,
+            "metadata": {
+              "createdDate": 1606726926555,
+              "createdByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575",
+              "updatedDate": 1606737466948,
+              "updatedByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "hidden": false,
+      "remove9Subfields": true,
+      "metadata": {
+        "createdDate": "2020-11-30T09:02:39.960+00:00",
+        "createdByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575",
+        "updatedDate": "2020-11-30T11:57:24.083+00:00",
+        "updatedByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575"
+      }
+    },
+    {
+      "id": "798c9011-7956-42b3-b3f0-7efc63dc9f1c",
+      "name": "KB Create Item",
+      "description": "",
+      "action": "CREATE",
+      "folioRecord": "ITEM",
+      "userInfo": {
+        "firstName": "Andreas",
+        "lastName": "Mace",
+        "userName": "andmac"
+      },
+      "parentProfiles": [
+        {
+          "id": "2da5abe1-2a62-4bbc-83c3-c81436ab03dc",
+          "contentType": "JOB_PROFILE",
+          "content": {
+            "id": "2da5abe1-2a62-4bbc-83c3-c81436ab03dc",
+            "name": "KB Create Instance, holding and item",
+            "description": "Skapar bibliografisk post, med tillhörande bestånd och exemplar utifrån sammanslagen Libris-post.",
+            "dataType": "MARC",
+            "userInfo": {
+              "firstName": "Andreas",
+              "lastName": "Mace",
+              "userName": "andmac"
+            },
+            "parentProfiles": [],
+            "childProfiles": [],
+            "hidden": false,
+            "metadata": {
+              "createdDate": 1680769572278,
+              "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+              "updatedDate": 1680846596840,
+              "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "childProfiles": [
+        {
+          "id": "ce5dc028-1179-42c8-951c-c1fb72a2b0cf",
+          "profileWrapperId": "890dab0d-8bcc-4e87-99db-6423ae1f2542",
+          "contentType": "MAPPING_PROFILE",
+          "content": {
+            "id": "ce5dc028-1179-42c8-951c-c1fb72a2b0cf",
+            "name": "KB Create Item",
+            "description": "Skapa exemplar utifrån Libris beståndsdata.",
+            "incomingRecordType": "MARC_BIBLIOGRAPHIC",
+            "existingRecordType": "ITEM",
+            "userInfo": {
+              "firstName": "Andreas",
+              "lastName": "Mace",
+              "userName": "andmac"
+            },
+            "marcFieldProtectionSettings": [],
+            "parentProfiles": [],
+            "childProfiles": [],
+            "mappingDetails": {
+              "name": "item",
+              "recordType": "ITEM",
+              "mappingFields": [
+                {
+                  "name": "discoverySuppress",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.discoverySuppress"
+                },
+                {
+                  "name": "hrid",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.hrid",
+                  "value": ""
+                },
+                {
+                  "name": "barcode",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.barcode",
+                  "value": "001"
+                },
+                {
+                  "name": "accessionNumber",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.accessionNumber",
+                  "value": ""
+                },
+                {
+                  "name": "itemIdentifier",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.itemIdentifier",
+                  "value": ""
+                },
+                {
+                  "name": "formerIds",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.formerIds[]",
+                  "value": ""
+                },
+                {
+                  "name": "statisticalCodeIds",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.statisticalCodeIds[]",
+                  "value": ""
+                },
+                {
+                  "name": "administrativeNotes",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.administrativeNotes[]",
+                  "value": ""
+                },
+                {
+                  "name": "materialType.id",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.materialType.id",
+                  "value": "\"book\""
+                },
+                {
+                  "name": "copyNumber",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.copyNumber",
+                  "value": ""
+                },
+                {
+                  "name": "itemLevelCallNumberTypeId",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.itemLevelCallNumberTypeId",
+                  "value": ""
+                },
+                {
+                  "name": "itemLevelCallNumberPrefix",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.itemLevelCallNumberPrefix",
+                  "value": ""
+                },
+                {
+                  "name": "itemLevelCallNumber",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.itemLevelCallNumber",
+                  "value": ""
+                },
+                {
+                  "name": "itemLevelCallNumberSuffix",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.itemLevelCallNumberSuffix",
+                  "value": ""
+                },
+                {
+                  "name": "numberOfPieces",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.numberOfPieces",
+                  "value": ""
+                },
+                {
+                  "name": "descriptionOfPieces",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.descriptionOfPieces",
+                  "value": ""
+                },
+                {
+                  "name": "enumeration",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.enumeration",
+                  "value": ""
+                },
+                {
+                  "name": "chronology",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.chronology",
+                  "value": ""
+                },
+                {
+                  "name": "volume",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.volume",
+                  "value": ""
+                },
+                {
+                  "name": "yearCaption",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.yearCaption[]",
+                  "value": ""
+                },
+                {
+                  "name": "numberOfMissingPieces",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.numberOfMissingPieces",
+                  "value": ""
+                },
+                {
+                  "name": "missingPieces",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.missingPieces",
+                  "value": ""
+                },
+                {
+                  "name": "missingPiecesDate",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.missingPiecesDate",
+                  "value": ""
+                },
+                {
+                  "name": "itemDamagedStatusId",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.itemDamagedStatusId",
+                  "value": ""
+                },
+                {
+                  "name": "itemDamagedStatusDate",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.itemDamagedStatusDate",
+                  "value": ""
+                },
+                {
+                  "name": "notes",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.notes[]",
+                  "value": ""
+                },
+                {
+                  "name": "permanentLoanType.id",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.permanentLoanType.id",
+                  "value": "\"Can circulate\""
+                },
+                {
+                  "name": "temporaryLoanType.id",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.temporaryLoanType.id",
+                  "value": ""
+                },
+                {
+                  "name": "status.name",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.status.name",
+                  "value": "\"Available\""
+                },
+                {
+                  "name": "circulationNotes",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.circulationNotes[]",
+                  "value": ""
+                },
+                {
+                  "name": "permanentLocation.id",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.permanentLocation.id",
+                  "value": ""
+                },
+                {
+                  "name": "temporaryLocation.id",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.temporaryLocation.id",
+                  "value": ""
+                },
+                {
+                  "name": "electronicAccess",
+                  "enabled": "true",
+                  "required": false,
+                  "path": "item.electronicAccess[]",
+                  "value": ""
+                }
+              ]
+            },
+            "hidden": false,
+            "metadata": {
+              "createdDate": 1680846460811,
+              "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+              "updatedDate": 1680849754749,
+              "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "hidden": false,
+      "remove9Subfields": false,
+      "metadata": {
+        "createdDate": "2023-04-07T05:49:23.951+00:00",
+        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+        "updatedDate": "2023-04-07T05:49:23.951+00:00",
+        "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+      }
+    },
+    {
+      "id": "7783df06-3f1e-4b12-b4d6-837a8c85135c",
+      "name": "order från folio",
+      "description": "",
+      "action": "CREATE",
+      "folioRecord": "ORDER",
+      "userInfo": {
+        "firstName": "KB",
+        "lastName": "ADMIN",
+        "userName": "kbadmin"
+      },
+      "parentProfiles": [],
+      "childProfiles": [],
+      "hidden": false,
+      "remove9Subfields": false,
+      "metadata": {
+        "createdDate": "2023-11-24T10:36:31.439+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-11-24T10:36:31.439+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    }
+  ],
+  "totalRecords": 11
+}

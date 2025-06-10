@@ -1,0 +1,117 @@
+{
+  "users": [
+    {
+      "username": "kbtest1",
+      "id": "9e4e3804-3da1-48f8-95f0-d2fb2a81ae28",
+      "active": true,
+      "type": "",
+      "patronGroup": "acf8ca33-c59b-4d2c-8615-75434f8e4ba2",
+      "departments": [],
+      "proxyFor": [],
+      "personal": {
+        "lastName": "SYSTEM",
+        "firstName": "EDGE",
+        "email": "noreply@kb.se",
+        "addresses": [],
+        "preferredContactTypeId": "002"
+      },
+      "createdDate": "2025-04-25T08:47:28.073+00:00",
+      "updatedDate": "2025-04-25T08:47:28.073+00:00",
+      "metadata": {
+        "createdDate": "2025-03-18T08:38:30.591+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2025-04-25T08:47:28.070+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      },
+      "customFields": {},
+      "preferredEmailCommunication": []
+    },
+    {
+      "username": "mod-lists",
+      "id": "1235f815-585a-4793-ac33-92c604859b46",
+      "active": true,
+      "type": "system",
+      "patronGroup": "bbb4e6d1-8c05-45c8-9a0a-14935f33decb",
+      "departments": [],
+      "proxyFor": [],
+      "personal": {
+        "lastName": "System",
+        "email": "a@b.se",
+        "addresses": [],
+        "preferredContactTypeId": "002"
+      },
+      "expirationDate": "2027-05-20T21:59:59.999+00:00",
+      "createdDate": "2025-05-28T16:49:42.423+00:00",
+      "updatedDate": "2025-05-28T16:49:42.423+00:00",
+      "metadata": {
+        "createdDate": "2025-04-17T13:29:11.625+00:00",
+        "updatedDate": "2025-05-28T16:49:42.421+00:00",
+        "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+      },
+      "customFields": {},
+      "preferredEmailCommunication": []
+    },
+    {
+      "username": "mod-search",
+      "id": "f80e228e-9908-4c93-b9fc-e8e467b641ef",
+      "active": true,
+      "type": "system",
+      "departments": [],
+      "proxyFor": [],
+      "personal": {
+        "lastName": "System",
+        "addresses": []
+      },
+      "createdDate": "2024-05-17T08:54:58.541+00:00",
+      "updatedDate": "2024-05-17T08:54:58.541+00:00",
+      "metadata": {
+        "createdDate": "2023-03-13T12:12:01.657+00:00",
+        "updatedDate": "2024-05-17T08:54:58.353+00:00"
+      },
+      "preferredEmailCommunication": []
+    },
+    {
+      "username": "pubsub-user",
+      "id": "690b6150-60fd-4272-bdea-4f2df7825906",
+      "active": true,
+      "departments": [],
+      "proxyFor": [],
+      "personal": {
+        "lastName": "System",
+        "addresses": []
+      },
+      "createdDate": "2023-09-08T12:04:15.426+00:00",
+      "updatedDate": "2023-09-08T12:04:15.426+00:00",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:24.326+00:00",
+        "updatedDate": "2023-09-08T12:04:15.414+00:00"
+      },
+      "preferredEmailCommunication": []
+    },
+    {
+      "username": "system-user",
+      "id": "de28b1c5-824e-43fe-a2d4-06084a950ae3",
+      "active": true,
+      "type": "system",
+      "departments": [],
+      "proxyFor": [],
+      "personal": {
+        "lastName": "System",
+        "addresses": []
+      },
+      "createdDate": "2023-03-13T12:12:58.808+00:00",
+      "updatedDate": "2023-03-13T12:12:58.808+00:00",
+      "metadata": {
+        "createdDate": "2023-03-13T12:11:48.974+00:00",
+        "updatedDate": "2023-03-13T12:12:58.802+00:00"
+      },
+      "preferredEmailCommunication": []
+    }
+  ],
+  "totalRecords": 5,
+  "resultInfo": {
+    "totalRecords": 5,
+    "facets": [],
+    "diagnostics": []
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "reserves": [
+    {
+      "id": "67227d94-7333-4d22-98a0-718b49d36595",
+      "courseListingId": "c03bcba3-a6a0-4251-b316-0631bb2e6f21",
+      "itemId": "100d10bf-2f06-4aa0-be15-0b95b2d9f9e3",
+      "copiedItem": {
+        "barcode": "90000",
+        "temporaryLocationId": "53cf956f-c1df-410b-8bea-27f712cca7c0",
+        "permanentLocationId": "fcd64ce1-6995-48f0-840e-89ffa2288371",
+        "title": "A semantic web primer",
+        "contributors": [
+          {
+            "name": "Antoniou, Grigoris",
+            "contributorTypeId": "6e09d47d-95e2-4d8a-831b-f777b8ef6d81",
+            "contributorTypeText": "",
+            "contributorNameTypeId": "2b94c631-fca9-4892-a730-03ee529ffe2a"
+          },
+          {
+            "name": "Van Harmelen, Frank",
+            "contributorTypeId": "6e09d47d-95e2-4d8a-831b-f777b8ef6d81",
+            "contributorTypeText": "",
+            "contributorNameTypeId": "2b94c631-fca9-4892-a730-03ee529ffe2a"
+          }
+        ],
+        "publication": [
+          {
+            "publisher": "MIT Press",
+            "place": "Cambridge, Mass. ",
+            "dateOfPublication": "c2004",
+            "role": "Publisher"
+          }
+        ],
+        "callNumber": "TK5105.88815 . A58 2004 FT MEADE",
+        "uri": "http://www.loc.gov/catdir/toc/ecip0718/2007020429.html",
+        "enumeration": "",
+        "url": "Table of contents only",
+        "instanceId": "5bf370e0-8cca-4d9c-82e4-5170ab2a0a39",
+        "instanceHrid": "inst000000000022",
+        "instanceDiscoverySuppress": false,
+        "holdingsId": "e3ff6133-b9a2-4d4c-a1c9-dc1867d4df19"
+      },
+      "metadata": {
+        "createdDate": "2023-03-13T12:12:14.653+00:00",
+        "updatedDate": "2023-03-13T12:12:14.653+00:00"
+      }
+    },
+    {
+      "id": "58e857de-0d18-46d0-b607-781e180ce95c",
+      "courseListingId": "1049e672-dcde-4c7c-b95b-edf9f60c6cbd",
+      "itemId": "d6f7c1ba-a237-465e-94ed-f37e91bc64bd",
+      "copiedItem": {
+        "barcode": "4539876054383",
+        "temporaryLocationId": "53cf956f-c1df-410b-8bea-27f712cca7c0",
+        "permanentLocationId": "53cf956f-c1df-410b-8bea-27f712cca7c0",
+        "title": "Bridget Jones's Baby: the diaries",
+        "contributors": [
+          {
+            "name": "Fielding, Helen",
+            "contributorNameTypeId": "2b94c631-fca9-4892-a730-03ee529ffe2a"
+          }
+        ],
+        "publication": [
+          {
+            "publisher": "Alfred A. Knopf",
+            "place": "New York",
+            "dateOfPublication": "2016"
+          }
+        ],
+        "callNumber": "PR6056.I4588 B749 2016",
+        "copy": "Copy 3",
+        "instanceId": "7fbd5d84-62d1-44c6-9c45-6cb173998bbd",
+        "instanceHrid": "inst000000000006",
+        "instanceDiscoverySuppress": true,
+        "holdingsId": "fb7b70f1-b898-4924-a991-0e4b6312bb5f"
+      },
+      "temporaryLoanTypeId": "e8b311a6-3b21-43f2-a269-dd9310cb2d0e",
+      "metadata": {
+        "createdDate": "2023-03-13T12:12:14.657+00:00",
+        "updatedDate": "2023-03-13T12:12:14.657+00:00"
+      }
+    }
+  ],
+  "totalRecords": 2
+}

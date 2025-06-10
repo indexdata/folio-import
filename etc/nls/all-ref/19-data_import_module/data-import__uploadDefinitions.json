@@ -1,0 +1,989 @@
+{
+  "uploadDefinitions": [
+    {
+      "id": "68487d85-da20-4c61-a015-d94b9d8449a6",
+      "metaJobExecutionId": "c6972ae3-f2c1-4c99-a125-11ab1c47115d",
+      "status": "COMPLETED",
+      "createDate": "2023-04-06T10:26:05.485+00:00",
+      "fileDefinitions": [
+        {
+          "id": "bfaa0efd-730c-402f-a5bc-768699381fca",
+          "sourcePath": "./storage/upload/68487d85-da20-4c61-a015-d94b9d8449a6/bfaa0efd-730c-402f-a5bc-768699381fca/S-1-post.mrc",
+          "name": "S-1-post.mrc",
+          "status": "UPLOADED",
+          "jobExecutionId": "c6972ae3-f2c1-4c99-a125-11ab1c47115d",
+          "uploadDefinitionId": "68487d85-da20-4c61-a015-d94b9d8449a6",
+          "createDate": "2023-04-06T10:26:05.485+00:00",
+          "uploadedDate": "2023-04-06T10:26:06.532+00:00",
+          "size": 10,
+          "uiKey": "S-1-post.mrc1680776716676"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-04-06T10:26:05.458+00:00",
+        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+        "updatedDate": "2023-04-06T10:26:05.458+00:00",
+        "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+      }
+    },
+    {
+      "id": "642cbfb1-d09b-440d-b8f8-f648663495e0",
+      "metaJobExecutionId": "72bd528a-74e0-4556-899e-5e10f8ac15a0",
+      "status": "COMPLETED",
+      "createDate": "2023-04-06T10:31:07.030+00:00",
+      "fileDefinitions": [
+        {
+          "id": "5aba4957-53ab-4b13-9f5e-5308492fb98d",
+          "sourcePath": "./storage/upload/642cbfb1-d09b-440d-b8f8-f648663495e0/5aba4957-53ab-4b13-9f5e-5308492fb98d/S-1-post.xml",
+          "name": "S-1-post.xml",
+          "status": "UPLOADED",
+          "jobExecutionId": "72bd528a-74e0-4556-899e-5e10f8ac15a0",
+          "uploadDefinitionId": "642cbfb1-d09b-440d-b8f8-f648663495e0",
+          "createDate": "2023-04-06T10:31:07.030+00:00",
+          "uploadedDate": "2023-04-06T10:31:07.235+00:00",
+          "size": 10,
+          "uiKey": "S-1-post.xml1680776716676"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-04-06T10:31:07.024+00:00",
+        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+        "updatedDate": "2023-04-06T10:31:07.024+00:00",
+        "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+      }
+    },
+    {
+      "id": "41f52d84-4ac8-40f4-8a4b-7b4a15804bc1",
+      "metaJobExecutionId": "46703677-2426-446f-ab01-1fb635b83af3",
+      "status": "COMPLETED",
+      "createDate": "2023-04-06T10:47:46.369+00:00",
+      "fileDefinitions": [
+        {
+          "id": "e2862516-ac27-4ee7-bb9d-da43ccf8bbc1",
+          "sourcePath": "./storage/upload/41f52d84-4ac8-40f4-8a4b-7b4a15804bc1/e2862516-ac27-4ee7-bb9d-da43ccf8bbc1/S_bibs_FOLIO_test.mrc",
+          "name": "S_bibs_FOLIO_test.mrc",
+          "status": "UPLOADED",
+          "jobExecutionId": "46703677-2426-446f-ab01-1fb635b83af3",
+          "uploadDefinitionId": "41f52d84-4ac8-40f4-8a4b-7b4a15804bc1",
+          "createDate": "2023-04-06T10:47:46.369+00:00",
+          "uploadedDate": "2023-04-06T10:47:47.811+00:00",
+          "size": 3504,
+          "uiKey": "S_bibs_FOLIO_test.mrc1667423455147"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-04-06T10:47:46.364+00:00",
+        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+        "updatedDate": "2023-04-06T10:47:46.364+00:00",
+        "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+      }
+    },
+    {
+      "id": "5161c1dc-2078-4c06-8da8-43760c28498c",
+      "metaJobExecutionId": "a080c7e0-caa0-46e5-82c8-63887b10136e",
+      "status": "COMPLETED",
+      "createDate": "2023-04-06T10:48:52.157+00:00",
+      "fileDefinitions": [
+        {
+          "id": "8f8e0dba-a824-45fc-ab88-71014b8c123e",
+          "sourcePath": "./storage/upload/5161c1dc-2078-4c06-8da8-43760c28498c/8f8e0dba-a824-45fc-ab88-71014b8c123e/S_bibs_FOLIO_test2.mrc",
+          "name": "S_bibs_FOLIO_test2.mrc",
+          "status": "UPLOADED",
+          "jobExecutionId": "a080c7e0-caa0-46e5-82c8-63887b10136e",
+          "uploadDefinitionId": "5161c1dc-2078-4c06-8da8-43760c28498c",
+          "createDate": "2023-04-06T10:48:52.157+00:00",
+          "uploadedDate": "2023-04-06T10:48:52.899+00:00",
+          "size": 1366,
+          "uiKey": "S_bibs_FOLIO_test2.mrc1667424114242"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-04-06T10:48:52.152+00:00",
+        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+        "updatedDate": "2023-04-06T10:48:52.152+00:00",
+        "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+      }
+    },
+    {
+      "id": "4b5c5362-63a0-4743-be0d-11ba3cc4369c",
+      "metaJobExecutionId": "b183a380-4c66-4a84-8b06-6b9a1f354ecc",
+      "status": "COMPLETED",
+      "createDate": "2023-04-06T10:51:28.888+00:00",
+      "fileDefinitions": [
+        {
+          "id": "10dc2def-bb4d-407a-b779-6b4f49c6ee57",
+          "sourcePath": "./storage/upload/4b5c5362-63a0-4743-be0d-11ba3cc4369c/10dc2def-bb4d-407a-b779-6b4f49c6ee57/S-1-post.xml",
+          "name": "S-1-post.xml",
+          "status": "UPLOADED",
+          "jobExecutionId": "b183a380-4c66-4a84-8b06-6b9a1f354ecc",
+          "uploadDefinitionId": "4b5c5362-63a0-4743-be0d-11ba3cc4369c",
+          "createDate": "2023-04-06T10:51:28.888+00:00",
+          "uploadedDate": "2023-04-06T10:51:29.099+00:00",
+          "size": 10,
+          "uiKey": "S-1-post.xml1680776716676"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-04-06T10:51:28.883+00:00",
+        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+        "updatedDate": "2023-04-06T10:51:28.883+00:00",
+        "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+      }
+    },
+    {
+      "id": "046eb908-c703-4d08-a7d5-366de807fba7",
+      "metaJobExecutionId": "91980ab7-4a35-41ef-b51e-a0b361f9e56e",
+      "status": "COMPLETED",
+      "createDate": "2023-04-06T10:55:08.042+00:00",
+      "fileDefinitions": [
+        {
+          "id": "57bbd288-cdd4-4189-aef8-2caac5b1170d",
+          "sourcePath": "./storage/upload/046eb908-c703-4d08-a7d5-366de807fba7/57bbd288-cdd4-4189-aef8-2caac5b1170d/S-1-post.xml",
+          "name": "S-1-post.xml",
+          "status": "UPLOADED",
+          "jobExecutionId": "91980ab7-4a35-41ef-b51e-a0b361f9e56e",
+          "uploadDefinitionId": "046eb908-c703-4d08-a7d5-366de807fba7",
+          "createDate": "2023-04-06T10:55:08.042+00:00",
+          "uploadedDate": "2023-04-06T10:55:08.255+00:00",
+          "size": 10,
+          "uiKey": "S-1-post.xml1680776716676"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-04-06T10:55:08.038+00:00",
+        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+        "updatedDate": "2023-04-06T10:55:08.038+00:00",
+        "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+      }
+    },
+    {
+      "id": "14cb2bd3-b410-41ba-9190-d4d9063db8dd",
+      "metaJobExecutionId": "efdaaeb2-1492-4971-a340-5804b551d9b4",
+      "status": "COMPLETED",
+      "createDate": "2023-04-06T10:57:53.900+00:00",
+      "fileDefinitions": [
+        {
+          "id": "f34324bd-537b-4cfc-8f3c-918f2ced2a82",
+          "sourcePath": "./storage/upload/14cb2bd3-b410-41ba-9190-d4d9063db8dd/f34324bd-537b-4cfc-8f3c-918f2ced2a82/S-1-post.xml",
+          "name": "S-1-post.xml",
+          "status": "UPLOADED",
+          "jobExecutionId": "efdaaeb2-1492-4971-a340-5804b551d9b4",
+          "uploadDefinitionId": "14cb2bd3-b410-41ba-9190-d4d9063db8dd",
+          "createDate": "2023-04-06T10:57:53.900+00:00",
+          "uploadedDate": "2023-04-06T10:57:53.995+00:00",
+          "size": 10,
+          "uiKey": "S-1-post.xml1680776716676"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-04-06T10:57:53.896+00:00",
+        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+        "updatedDate": "2023-04-06T10:57:53.896+00:00",
+        "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+      }
+    },
+    {
+      "id": "78d0fc94-8aba-4b7e-9d78-d5f30acac4e6",
+      "metaJobExecutionId": "6080a011-3a81-4c77-9d19-de4f82b018ea",
+      "status": "COMPLETED",
+      "createDate": "2023-04-06T11:07:49.189+00:00",
+      "fileDefinitions": [
+        {
+          "id": "d13ecacb-e150-4930-a0f3-4d5aab02f5a6",
+          "sourcePath": "./storage/upload/78d0fc94-8aba-4b7e-9d78-d5f30acac4e6/d13ecacb-e150-4930-a0f3-4d5aab02f5a6/S-1-post.xml",
+          "name": "S-1-post.xml",
+          "status": "UPLOADED",
+          "jobExecutionId": "6080a011-3a81-4c77-9d19-de4f82b018ea",
+          "uploadDefinitionId": "78d0fc94-8aba-4b7e-9d78-d5f30acac4e6",
+          "createDate": "2023-04-06T11:07:49.189+00:00",
+          "uploadedDate": "2023-04-06T11:07:49.323+00:00",
+          "size": 10,
+          "uiKey": "S-1-post.xml1680776716676"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-04-06T11:07:49.186+00:00",
+        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+        "updatedDate": "2023-04-06T11:07:49.186+00:00",
+        "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+      }
+    },
+    {
+      "id": "16432549-7cf2-4801-9a92-0ba194388813",
+      "metaJobExecutionId": "f1ba90c0-bdc6-4c86-b7f5-c6a024da9fb0",
+      "status": "COMPLETED",
+      "createDate": "2023-04-07T05:57:57.983+00:00",
+      "fileDefinitions": [
+        {
+          "id": "c68bbf1e-e9d1-4a75-8611-e41a036a1917",
+          "sourcePath": "./storage/upload/16432549-7cf2-4801-9a92-0ba194388813/c68bbf1e-e9d1-4a75-8611-e41a036a1917/S-1-post.xml",
+          "name": "S-1-post.xml",
+          "status": "UPLOADED",
+          "jobExecutionId": "f1ba90c0-bdc6-4c86-b7f5-c6a024da9fb0",
+          "uploadDefinitionId": "16432549-7cf2-4801-9a92-0ba194388813",
+          "createDate": "2023-04-07T05:57:57.983+00:00",
+          "uploadedDate": "2023-04-07T05:57:58.163+00:00",
+          "size": 10,
+          "uiKey": "S-1-post.xml1680776716676"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-04-07T05:57:57.978+00:00",
+        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+        "updatedDate": "2023-04-07T05:57:57.978+00:00",
+        "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+      }
+    },
+    {
+      "id": "120583b8-d8f1-429c-95dc-604680a13b53",
+      "metaJobExecutionId": "c00d7dbf-1dcb-4942-98f5-1daa970e7122",
+      "status": "COMPLETED",
+      "createDate": "2023-04-07T06:16:14.213+00:00",
+      "fileDefinitions": [
+        {
+          "id": "7300c304-6a14-462a-99bf-d0476521cc62",
+          "sourcePath": "./storage/upload/120583b8-d8f1-429c-95dc-604680a13b53/7300c304-6a14-462a-99bf-d0476521cc62/S-1-post.xml",
+          "name": "S-1-post.xml",
+          "status": "UPLOADED",
+          "jobExecutionId": "c00d7dbf-1dcb-4942-98f5-1daa970e7122",
+          "uploadDefinitionId": "120583b8-d8f1-429c-95dc-604680a13b53",
+          "createDate": "2023-04-07T06:16:14.213+00:00",
+          "uploadedDate": "2023-04-07T06:16:14.591+00:00",
+          "size": 10,
+          "uiKey": "S-1-post.xml1680776716676"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-04-07T06:16:14.207+00:00",
+        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+        "updatedDate": "2023-04-07T06:16:14.207+00:00",
+        "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+      }
+    },
+    {
+      "id": "7c50ab12-568c-46ff-a52a-30e177928ca4",
+      "metaJobExecutionId": "14d858a6-9c63-4a8d-b811-b747a5c95447",
+      "status": "COMPLETED",
+      "createDate": "2023-04-07T06:17:58.028+00:00",
+      "fileDefinitions": [
+        {
+          "id": "1f3a5a28-ca8e-48fa-8db8-ba3d426a0cfe",
+          "sourcePath": "./storage/upload/7c50ab12-568c-46ff-a52a-30e177928ca4/1f3a5a28-ca8e-48fa-8db8-ba3d426a0cfe/S-1-post.xml",
+          "name": "S-1-post.xml",
+          "status": "UPLOADED",
+          "jobExecutionId": "14d858a6-9c63-4a8d-b811-b747a5c95447",
+          "uploadDefinitionId": "7c50ab12-568c-46ff-a52a-30e177928ca4",
+          "createDate": "2023-04-07T06:17:58.028+00:00",
+          "uploadedDate": "2023-04-07T06:17:58.372+00:00",
+          "size": 10,
+          "uiKey": "S-1-post.xml1680776716676"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-04-07T06:17:58.025+00:00",
+        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+        "updatedDate": "2023-04-07T06:17:58.025+00:00",
+        "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+      }
+    },
+    {
+      "id": "f934cd96-2d6c-4cc6-af60-7e391bc29be7",
+      "metaJobExecutionId": "767e49a9-b549-474e-be25-98b288a2b928",
+      "status": "COMPLETED",
+      "createDate": "2023-04-07T06:22:09.464+00:00",
+      "fileDefinitions": [
+        {
+          "id": "9ed54d42-c577-46ad-8103-75f86cc1800b",
+          "sourcePath": "./storage/upload/f934cd96-2d6c-4cc6-af60-7e391bc29be7/9ed54d42-c577-46ad-8103-75f86cc1800b/S-1-post.xml",
+          "name": "S-1-post.xml",
+          "status": "UPLOADED",
+          "jobExecutionId": "767e49a9-b549-474e-be25-98b288a2b928",
+          "uploadDefinitionId": "f934cd96-2d6c-4cc6-af60-7e391bc29be7",
+          "createDate": "2023-04-07T06:22:09.464+00:00",
+          "uploadedDate": "2023-04-07T06:22:09.737+00:00",
+          "size": 10,
+          "uiKey": "S-1-post.xml1680776716676"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-04-07T06:22:09.460+00:00",
+        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+        "updatedDate": "2023-04-07T06:22:09.460+00:00",
+        "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+      }
+    },
+    {
+      "id": "5e4abbb4-28cc-4e2f-975d-bf398c613e54",
+      "metaJobExecutionId": "564bac57-cbd3-4391-bcb8-70062aa5ffec",
+      "status": "COMPLETED",
+      "createDate": "2023-05-02T07:53:09.585+00:00",
+      "fileDefinitions": [
+        {
+          "id": "944469f3-955a-4679-8b17-d3c6b595fd04",
+          "sourcePath": "./storage/upload/5e4abbb4-28cc-4e2f-975d-bf398c613e54/944469f3-955a-4679-8b17-d3c6b595fd04/btm77rtn51q1b5p.mrc",
+          "name": "btm77rtn51q1b5p.mrc",
+          "status": "UPLOADED",
+          "jobExecutionId": "564bac57-cbd3-4391-bcb8-70062aa5ffec",
+          "uploadDefinitionId": "5e4abbb4-28cc-4e2f-975d-bf398c613e54",
+          "createDate": "2023-05-02T07:53:09.585+00:00",
+          "uploadedDate": "2023-05-02T07:53:10.300+00:00",
+          "size": 3,
+          "uiKey": "btm77rtn51q1b5p.mrc1683013859000"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-05-02T07:53:09.559+00:00",
+        "createdByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d",
+        "updatedDate": "2023-05-02T07:53:09.559+00:00",
+        "updatedByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d"
+      }
+    },
+    {
+      "id": "84a6c0c2-3408-410e-820e-ebecb724c001",
+      "metaJobExecutionId": "a4ebd44b-a68e-45c3-aefc-d6f607da79c3",
+      "status": "COMPLETED",
+      "createDate": "2023-04-07T06:31:26.993+00:00",
+      "fileDefinitions": [
+        {
+          "id": "d3cb78e0-e133-40e2-adab-d7447ce2e054",
+          "sourcePath": "./storage/upload/84a6c0c2-3408-410e-820e-ebecb724c001/d3cb78e0-e133-40e2-adab-d7447ce2e054/S-1-post.xml",
+          "name": "S-1-post.xml",
+          "status": "UPLOADED",
+          "jobExecutionId": "a4ebd44b-a68e-45c3-aefc-d6f607da79c3",
+          "uploadDefinitionId": "84a6c0c2-3408-410e-820e-ebecb724c001",
+          "createDate": "2023-04-07T06:31:26.993+00:00",
+          "uploadedDate": "2023-04-07T06:31:27.230+00:00",
+          "size": 10,
+          "uiKey": "S-1-post.xml1680776716676"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-04-07T06:31:26.990+00:00",
+        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+        "updatedDate": "2023-04-07T06:31:26.990+00:00",
+        "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+      }
+    },
+    {
+      "id": "8a52935a-b0ce-465f-b76d-a3136b824547",
+      "metaJobExecutionId": "2977da6d-94a7-4943-a0d9-bc81fcbcd40d",
+      "status": "COMPLETED",
+      "createDate": "2023-05-11T09:54:05.093+00:00",
+      "fileDefinitions": [
+        {
+          "id": "b54baf72-4433-4383-b7bb-aef3cd030dcb",
+          "sourcePath": "./storage/upload/8a52935a-b0ce-465f-b76d-a3136b824547/b54baf72-4433-4383-b7bb-aef3cd030dcb/1jbz2nvc5gpxf74.xml",
+          "name": "1jbz2nvc5gpxf74.xml",
+          "status": "UPLOADED",
+          "jobExecutionId": "2977da6d-94a7-4943-a0d9-bc81fcbcd40d",
+          "uploadDefinitionId": "8a52935a-b0ce-465f-b76d-a3136b824547",
+          "createDate": "2023-05-11T09:54:05.093+00:00",
+          "uploadedDate": "2023-05-11T09:54:05.313+00:00",
+          "size": 2,
+          "uiKey": "1jbz2nvc5gpxf74.xml1683798472402"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-05-11T09:54:05.085+00:00",
+        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+        "updatedDate": "2023-05-11T09:54:05.085+00:00",
+        "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+      }
+    },
+    {
+      "id": "b19e96d4-efe7-4c74-b875-3c535537d287",
+      "metaJobExecutionId": "301f72f7-9086-4f67-8052-2b255923567a",
+      "status": "COMPLETED",
+      "createDate": "2023-04-07T06:38:47.600+00:00",
+      "fileDefinitions": [
+        {
+          "id": "6ac2becb-62f0-4b8f-b1ff-06ee0453be14",
+          "sourcePath": "./storage/upload/b19e96d4-efe7-4c74-b875-3c535537d287/6ac2becb-62f0-4b8f-b1ff-06ee0453be14/S-1-post.xml",
+          "name": "S-1-post.xml",
+          "status": "UPLOADED",
+          "jobExecutionId": "301f72f7-9086-4f67-8052-2b255923567a",
+          "uploadDefinitionId": "b19e96d4-efe7-4c74-b875-3c535537d287",
+          "createDate": "2023-04-07T06:38:47.600+00:00",
+          "uploadedDate": "2023-04-07T06:38:47.964+00:00",
+          "size": 10,
+          "uiKey": "S-1-post.xml1680776716676"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-04-07T06:38:47.596+00:00",
+        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+        "updatedDate": "2023-04-07T06:38:47.596+00:00",
+        "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+      }
+    },
+    {
+      "id": "9ff3b3d8-6508-4e1d-bad0-fb2f2162f3a3",
+      "metaJobExecutionId": "ebb52d65-7d57-48d9-8531-1186b8d28fa3",
+      "status": "COMPLETED",
+      "createDate": "2023-04-07T06:40:20.738+00:00",
+      "fileDefinitions": [
+        {
+          "id": "9b66a4d0-2637-4750-b33f-34aff1702545",
+          "sourcePath": "./storage/upload/9ff3b3d8-6508-4e1d-bad0-fb2f2162f3a3/9b66a4d0-2637-4750-b33f-34aff1702545/S-1-post.xml",
+          "name": "S-1-post.xml",
+          "status": "UPLOADED",
+          "jobExecutionId": "ebb52d65-7d57-48d9-8531-1186b8d28fa3",
+          "uploadDefinitionId": "9ff3b3d8-6508-4e1d-bad0-fb2f2162f3a3",
+          "createDate": "2023-04-07T06:40:20.738+00:00",
+          "uploadedDate": "2023-04-07T06:40:20.955+00:00",
+          "size": 10,
+          "uiKey": "S-1-post.xml1680776716676"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-04-07T06:40:20.735+00:00",
+        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+        "updatedDate": "2023-04-07T06:40:20.735+00:00",
+        "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+      }
+    },
+    {
+      "id": "73bdec38-3dc4-4715-9a96-39bce56b3a91",
+      "metaJobExecutionId": "088e3d79-0928-4bb0-9de5-1465aa24e6d6",
+      "status": "COMPLETED",
+      "createDate": "2023-04-07T06:41:32.094+00:00",
+      "fileDefinitions": [
+        {
+          "id": "dfbdec39-3dea-415a-b8f0-6351ee9defb7",
+          "sourcePath": "./storage/upload/73bdec38-3dc4-4715-9a96-39bce56b3a91/dfbdec39-3dea-415a-b8f0-6351ee9defb7/S-1-post.xml",
+          "name": "S-1-post.xml",
+          "status": "UPLOADED",
+          "jobExecutionId": "088e3d79-0928-4bb0-9de5-1465aa24e6d6",
+          "uploadDefinitionId": "73bdec38-3dc4-4715-9a96-39bce56b3a91",
+          "createDate": "2023-04-07T06:41:32.094+00:00",
+          "uploadedDate": "2023-04-07T06:41:32.253+00:00",
+          "size": 10,
+          "uiKey": "S-1-post.xml1680776716676"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-04-07T06:41:32.091+00:00",
+        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+        "updatedDate": "2023-04-07T06:41:32.091+00:00",
+        "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+      }
+    },
+    {
+      "id": "94ef5635-ae34-4ab7-a536-5401346a288e",
+      "metaJobExecutionId": "a566df5b-3b6b-403e-b2f5-adedb94ea485",
+      "status": "COMPLETED",
+      "createDate": "2023-04-07T06:42:47.334+00:00",
+      "fileDefinitions": [
+        {
+          "id": "c8b05b1d-e72a-4fd1-a365-d4380527af7c",
+          "sourcePath": "./storage/upload/94ef5635-ae34-4ab7-a536-5401346a288e/c8b05b1d-e72a-4fd1-a365-d4380527af7c/S-1-post.xml",
+          "name": "S-1-post.xml",
+          "status": "UPLOADED",
+          "jobExecutionId": "a566df5b-3b6b-403e-b2f5-adedb94ea485",
+          "uploadDefinitionId": "94ef5635-ae34-4ab7-a536-5401346a288e",
+          "createDate": "2023-04-07T06:42:47.334+00:00",
+          "uploadedDate": "2023-04-07T06:42:47.500+00:00",
+          "size": 10,
+          "uiKey": "S-1-post.xml1680776716676"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-04-07T06:42:47.331+00:00",
+        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+        "updatedDate": "2023-04-07T06:42:47.331+00:00",
+        "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+      }
+    },
+    {
+      "id": "7253ce9a-9eb3-421b-a3d4-48c8f1fd4355",
+      "metaJobExecutionId": "d2d32b8f-be0d-4d1c-9952-7ed1ba559399",
+      "status": "COMPLETED",
+      "createDate": "2023-04-07T06:48:14.716+00:00",
+      "fileDefinitions": [
+        {
+          "id": "5d311a1e-10f2-4432-aa77-81e540728876",
+          "sourcePath": "./storage/upload/7253ce9a-9eb3-421b-a3d4-48c8f1fd4355/5d311a1e-10f2-4432-aa77-81e540728876/S_bibs_FOLIO_test2.mrc",
+          "name": "S_bibs_FOLIO_test2.mrc",
+          "status": "UPLOADED",
+          "jobExecutionId": "d2d32b8f-be0d-4d1c-9952-7ed1ba559399",
+          "uploadDefinitionId": "7253ce9a-9eb3-421b-a3d4-48c8f1fd4355",
+          "createDate": "2023-04-07T06:48:14.716+00:00",
+          "uploadedDate": "2023-04-07T06:48:15.218+00:00",
+          "size": 1366,
+          "uiKey": "S_bibs_FOLIO_test2.mrc1667424114242"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-04-07T06:48:14.713+00:00",
+        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+        "updatedDate": "2023-04-07T06:48:14.713+00:00",
+        "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+      }
+    },
+    {
+      "id": "fd799c9e-c9f2-46ca-bff9-a6a9dbf248ae",
+      "metaJobExecutionId": "b0ede3aa-e979-4d03-b7fa-d09b3f8451ab",
+      "status": "COMPLETED",
+      "createDate": "2023-08-07T07:43:35.725+00:00",
+      "fileDefinitions": [
+        {
+          "id": "74943cc9-8ac6-4471-a274-4e13588964f2",
+          "sourcePath": "./storage/upload/fd799c9e-c9f2-46ca-bff9-a6a9dbf248ae/74943cc9-8ac6-4471-a274-4e13588964f2/r82rb7c32f051vb.mrc",
+          "name": "r82rb7c32f051vb.mrc",
+          "status": "UPLOADED",
+          "jobExecutionId": "b0ede3aa-e979-4d03-b7fa-d09b3f8451ab",
+          "uploadDefinitionId": "fd799c9e-c9f2-46ca-bff9-a6a9dbf248ae",
+          "createDate": "2023-08-07T07:43:35.725+00:00",
+          "uploadedDate": "2023-08-07T07:43:35.868+00:00",
+          "size": 2,
+          "uiKey": "r82rb7c32f051vb.mrc1691394181235"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-08-07T07:43:35.720+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2023-08-07T07:43:35.720+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "a49ac912-5990-477f-85ab-16e7a5628c41",
+      "metaJobExecutionId": "fb32b18f-2b32-43bb-a0f5-9c6fb59aeb67",
+      "status": "LOADED",
+      "createDate": "2023-05-02T08:02:21.880+00:00",
+      "fileDefinitions": [
+        {
+          "id": "3d4b8499-7dc3-4869-a56c-2b750ec076bc",
+          "sourcePath": "./storage/upload/a49ac912-5990-477f-85ab-16e7a5628c41/3d4b8499-7dc3-4869-a56c-2b750ec076bc/btm77rtn51q1b5p.mrc",
+          "name": "btm77rtn51q1b5p.mrc",
+          "status": "UPLOADED",
+          "jobExecutionId": "fb32b18f-2b32-43bb-a0f5-9c6fb59aeb67",
+          "uploadDefinitionId": "a49ac912-5990-477f-85ab-16e7a5628c41",
+          "createDate": "2023-05-02T08:02:21.880+00:00",
+          "uploadedDate": "2023-05-02T08:02:21.997+00:00",
+          "size": 3,
+          "uiKey": "btm77rtn51q1b5p.mrc1683013859000"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-05-02T08:02:21.876+00:00",
+        "createdByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d",
+        "updatedDate": "2023-05-02T08:02:21.876+00:00",
+        "updatedByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d"
+      }
+    },
+    {
+      "id": "8d36db93-cb28-4238-a926-bc3f1ad90bdc",
+      "metaJobExecutionId": "074f784d-5b71-4aa3-bb5f-4fd3404a3412",
+      "status": "COMPLETED",
+      "createDate": "2023-05-11T09:49:41.096+00:00",
+      "fileDefinitions": [
+        {
+          "id": "9e8be02a-893d-4d58-a4ee-599f169d8bcf",
+          "sourcePath": "./storage/upload/8d36db93-cb28-4238-a926-bc3f1ad90bdc/9e8be02a-893d-4d58-a4ee-599f169d8bcf/1jbz2nvc5gpxf74.mrc",
+          "name": "1jbz2nvc5gpxf74.mrc",
+          "status": "UPLOADED",
+          "jobExecutionId": "074f784d-5b71-4aa3-bb5f-4fd3404a3412",
+          "uploadDefinitionId": "8d36db93-cb28-4238-a926-bc3f1ad90bdc",
+          "createDate": "2023-05-11T09:49:41.096+00:00",
+          "uploadedDate": "2023-05-11T09:49:41.629+00:00",
+          "size": 2,
+          "uiKey": "1jbz2nvc5gpxf74.mrc1683798472402"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-05-11T09:49:41.068+00:00",
+        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+        "updatedDate": "2023-05-11T09:49:41.068+00:00",
+        "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+      }
+    },
+    {
+      "id": "767c1c57-38d8-4b22-9824-23e08e32e2bc",
+      "metaJobExecutionId": "15392f82-6b25-4618-9818-ad20b6501809",
+      "status": "COMPLETED",
+      "createDate": "2023-05-11T10:43:04.229+00:00",
+      "fileDefinitions": [
+        {
+          "id": "c9911dba-e14b-433a-921a-d57c66f95b80",
+          "sourcePath": "./storage/upload/767c1c57-38d8-4b22-9824-23e08e32e2bc/c9911dba-e14b-433a-921a-d57c66f95b80/p5kh9nrcm04gwjdx.xml",
+          "name": "p5kh9nrcm04gwjdx.xml",
+          "status": "UPLOADED",
+          "jobExecutionId": "15392f82-6b25-4618-9818-ad20b6501809",
+          "uploadDefinitionId": "767c1c57-38d8-4b22-9824-23e08e32e2bc",
+          "createDate": "2023-05-11T10:43:04.229+00:00",
+          "uploadedDate": "2023-05-11T10:43:04.392+00:00",
+          "size": 7,
+          "uiKey": "p5kh9nrcm04gwjdx.xml1683801692571"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-05-11T10:43:04.223+00:00",
+        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+        "updatedDate": "2023-05-11T10:43:04.223+00:00",
+        "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+      }
+    },
+    {
+      "id": "cf12e235-b8bf-46ae-8ef1-32dbba993948",
+      "metaJobExecutionId": "c0f5d399-f671-4e48-a6f6-3e81c7c416be",
+      "status": "COMPLETED",
+      "createDate": "2023-05-11T12:02:31.947+00:00",
+      "fileDefinitions": [
+        {
+          "id": "e9af68aa-5d63-4956-aecd-23677e3f59de",
+          "sourcePath": "./storage/upload/cf12e235-b8bf-46ae-8ef1-32dbba993948/e9af68aa-5d63-4956-aecd-23677e3f59de/9sl78hsm054j95d.xml",
+          "name": "9sl78hsm054j95d.xml",
+          "status": "UPLOADED",
+          "jobExecutionId": "c0f5d399-f671-4e48-a6f6-3e81c7c416be",
+          "uploadDefinitionId": "cf12e235-b8bf-46ae-8ef1-32dbba993948",
+          "createDate": "2023-05-11T12:02:31.947+00:00",
+          "uploadedDate": "2023-05-11T12:02:32.119+00:00",
+          "size": 1,
+          "uiKey": "9sl78hsm054j95d.xml1683805709526"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-05-11T12:02:31.942+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2023-05-11T12:02:31.942+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    },
+    {
+      "id": "9a541456-0c45-4cc4-a2f4-88427210d9b9",
+      "metaJobExecutionId": "9ab0b3b2-5839-4ee3-9f09-036ba910fc11",
+      "status": "COMPLETED",
+      "createDate": "2023-05-11T12:03:45.284+00:00",
+      "fileDefinitions": [
+        {
+          "id": "9ec77923-3908-4138-8e0f-2d7d32089ec4",
+          "sourcePath": "./storage/upload/9a541456-0c45-4cc4-a2f4-88427210d9b9/9ec77923-3908-4138-8e0f-2d7d32089ec4/5ng5vkqh4hv1zx9.xml",
+          "name": "5ng5vkqh4hv1zx9.xml",
+          "status": "UPLOADED",
+          "jobExecutionId": "9ab0b3b2-5839-4ee3-9f09-036ba910fc11",
+          "uploadDefinitionId": "9a541456-0c45-4cc4-a2f4-88427210d9b9",
+          "createDate": "2023-05-11T12:03:45.284+00:00",
+          "uploadedDate": "2023-05-11T12:03:45.373+00:00",
+          "size": 1,
+          "uiKey": "5ng5vkqh4hv1zx9.xml1683805876384"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-05-11T12:03:45.280+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2023-05-11T12:03:45.280+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    },
+    {
+      "id": "7944ab64-148c-4d90-8460-88b71041a741",
+      "metaJobExecutionId": "c064c836-2d49-4f1c-b0eb-6d31f47c6478",
+      "status": "COMPLETED",
+      "createDate": "2023-05-11T12:06:01.555+00:00",
+      "fileDefinitions": [
+        {
+          "id": "31ae414d-de81-407f-bf30-15d3e4b1e489",
+          "sourcePath": "./storage/upload/7944ab64-148c-4d90-8460-88b71041a741/31ae414d-de81-407f-bf30-15d3e4b1e489/l3wjcq4x0ktdhjf.xml",
+          "name": "l3wjcq4x0ktdhjf.xml",
+          "status": "UPLOADED",
+          "jobExecutionId": "c064c836-2d49-4f1c-b0eb-6d31f47c6478",
+          "uploadDefinitionId": "7944ab64-148c-4d90-8460-88b71041a741",
+          "createDate": "2023-05-11T12:06:01.555+00:00",
+          "uploadedDate": "2023-05-11T12:06:01.756+00:00",
+          "size": 1,
+          "uiKey": "l3wjcq4x0ktdhjf.xml1683806732031"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-05-11T12:06:01.551+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2023-05-11T12:06:01.551+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    },
+    {
+      "id": "bda0a48c-d734-4312-bfa6-0cd0bba77f08",
+      "metaJobExecutionId": "8e8eb911-a242-4fe4-ab92-5dc604a500ec",
+      "status": "NEW",
+      "createDate": "2024-10-21T09:18:54.707+00:00",
+      "fileDefinitions": [
+        {
+          "id": "e83bad9a-0ae9-43ec-94ca-ae2860c3b8a8",
+          "name": "j1tn502v0n03tq5.mrc",
+          "status": "NEW",
+          "jobExecutionId": "8e8eb911-a242-4fe4-ab92-5dc604a500ec",
+          "uploadDefinitionId": "bda0a48c-d734-4312-bfa6-0cd0bba77f08",
+          "createDate": "2024-10-21T09:18:54.707+00:00",
+          "size": 2,
+          "uiKey": "j1tn502v0n03tq5.mrc1728997620247"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2024-10-21T09:18:54.697+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-10-21T09:18:54.697+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "7584bed5-6af7-4c51-b67f-387a048e96c0",
+      "metaJobExecutionId": "ab61e549-d612-4365-87bd-b9240f0a8231",
+      "status": "NEW",
+      "createDate": "2024-11-12T12:46:47.475+00:00",
+      "fileDefinitions": [
+        {
+          "id": "7c71299c-7ce0-488a-a0e6-7981f4db0d4c",
+          "name": "cxfvr1ts9v26crz2.mrc",
+          "status": "NEW",
+          "jobExecutionId": "ab61e549-d612-4365-87bd-b9240f0a8231",
+          "uploadDefinitionId": "7584bed5-6af7-4c51-b67f-387a048e96c0",
+          "createDate": "2024-11-12T12:46:47.475+00:00",
+          "size": 2,
+          "uiKey": "cxfvr1ts9v26crz2.mrc1731415574778"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2024-11-12T12:46:47.473+00:00",
+        "createdByUserId": "c27c16a6-e591-4042-8157-316fe0df3b28",
+        "updatedDate": "2024-11-12T12:46:47.473+00:00",
+        "updatedByUserId": "c27c16a6-e591-4042-8157-316fe0df3b28"
+      }
+    },
+    {
+      "id": "e36962a4-6991-4383-bf98-aeab9f0e0f6a",
+      "metaJobExecutionId": "b8d97580-25ba-445f-805d-bf344b442d61",
+      "status": "COMPLETED",
+      "createDate": "2023-05-11T12:08:47.270+00:00",
+      "fileDefinitions": [
+        {
+          "id": "d3637230-3d68-491b-ac56-ebe05acbb82f",
+          "sourcePath": "./storage/upload/e36962a4-6991-4383-bf98-aeab9f0e0f6a/d3637230-3d68-491b-ac56-ebe05acbb82f/l3wjcq4x0ktdhjf.xml",
+          "name": "l3wjcq4x0ktdhjf.xml",
+          "status": "UPLOADED",
+          "jobExecutionId": "b8d97580-25ba-445f-805d-bf344b442d61",
+          "uploadDefinitionId": "e36962a4-6991-4383-bf98-aeab9f0e0f6a",
+          "createDate": "2023-05-11T12:08:47.270+00:00",
+          "uploadedDate": "2023-05-11T12:08:47.385+00:00",
+          "size": 1,
+          "uiKey": "l3wjcq4x0ktdhjf.xml1683806870664"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-05-11T12:08:47.266+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2023-05-11T12:08:47.266+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    },
+    {
+      "id": "8622eda9-44b0-4f4a-8ba6-1c74482677b1",
+      "metaJobExecutionId": "7e2adb50-8444-4eb6-9c04-6ede8ae5c778",
+      "status": "COMPLETED",
+      "createDate": "2023-05-16T08:20:30.469+00:00",
+      "fileDefinitions": [
+        {
+          "id": "581cd305-f471-4d20-aa12-9b5d30d76059",
+          "sourcePath": "./storage/upload/8622eda9-44b0-4f4a-8ba6-1c74482677b1/581cd305-f471-4d20-aa12-9b5d30d76059/9sl78hsm054j95d.xml",
+          "name": "9sl78hsm054j95d.xml",
+          "status": "UPLOADED",
+          "jobExecutionId": "7e2adb50-8444-4eb6-9c04-6ede8ae5c778",
+          "uploadDefinitionId": "8622eda9-44b0-4f4a-8ba6-1c74482677b1",
+          "createDate": "2023-05-16T08:20:30.469+00:00",
+          "uploadedDate": "2023-05-16T08:20:30.682+00:00",
+          "size": 1,
+          "uiKey": "9sl78hsm054j95d.xml1684225169957"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-05-16T08:20:30.464+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2023-05-16T08:20:30.464+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    },
+    {
+      "id": "e313e87c-b3d1-4b74-a487-2a0f01dd5f48",
+      "metaJobExecutionId": "9e27b7d4-9cac-484a-bddd-e533527e6c35",
+      "status": "COMPLETED",
+      "createDate": "2023-05-16T09:16:08.256+00:00",
+      "fileDefinitions": [
+        {
+          "id": "aaac4ca3-ce13-46fb-af89-d8e7e11556bd",
+          "sourcePath": "./storage/upload/e313e87c-b3d1-4b74-a487-2a0f01dd5f48/aaac4ca3-ce13-46fb-af89-d8e7e11556bd/9sl78hsm054j95d.mrc",
+          "name": "9sl78hsm054j95d.mrc",
+          "status": "UPLOADED",
+          "jobExecutionId": "9e27b7d4-9cac-484a-bddd-e533527e6c35",
+          "uploadDefinitionId": "e313e87c-b3d1-4b74-a487-2a0f01dd5f48",
+          "createDate": "2023-05-16T09:16:08.256+00:00",
+          "uploadedDate": "2023-05-16T09:16:08.418+00:00",
+          "size": 1,
+          "uiKey": "9sl78hsm054j95d.mrc1684225169957"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-05-16T09:16:08.251+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2023-05-16T09:16:08.251+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    },
+    {
+      "id": "60587cdf-d3c3-40df-accf-ed6e4d79976b",
+      "metaJobExecutionId": "bc51c2bf-4f1e-4709-8c28-78e17e71fdcd",
+      "status": "COMPLETED",
+      "createDate": "2023-05-22T14:33:59.915+00:00",
+      "fileDefinitions": [
+        {
+          "id": "f898a856-38a9-439b-86dc-9de0b016ce34",
+          "sourcePath": "./storage/upload/60587cdf-d3c3-40df-accf-ed6e4d79976b/f898a856-38a9-439b-86dc-9de0b016ce34/s93qdnb43cdc27s.mrc",
+          "name": "s93qdnb43cdc27s.mrc",
+          "status": "UPLOADED",
+          "jobExecutionId": "bc51c2bf-4f1e-4709-8c28-78e17e71fdcd",
+          "uploadDefinitionId": "60587cdf-d3c3-40df-accf-ed6e4d79976b",
+          "createDate": "2023-05-22T14:33:59.915+00:00",
+          "uploadedDate": "2023-05-22T14:34:00.281+00:00",
+          "size": 7,
+          "uiKey": "s93qdnb43cdc27s.mrc1684765881812"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-05-22T14:33:59.910+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2023-05-22T14:33:59.910+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "a021a776-0a9a-448d-aec1-1fc9335da0db",
+      "metaJobExecutionId": "2d615275-5fc5-4dcc-a177-a9f7f01256be",
+      "status": "COMPLETED",
+      "createDate": "2023-05-30T14:29:28.182+00:00",
+      "fileDefinitions": [
+        {
+          "id": "874362d8-8be6-4aab-acdc-cfe00b38bdd1",
+          "sourcePath": "./storage/upload/a021a776-0a9a-448d-aec1-1fc9335da0db/874362d8-8be6-4aab-acdc-cfe00b38bdd1/h1t55mht118xv16.mrc",
+          "name": "h1t55mht118xv16.mrc",
+          "status": "UPLOADED",
+          "jobExecutionId": "2d615275-5fc5-4dcc-a177-a9f7f01256be",
+          "uploadDefinitionId": "a021a776-0a9a-448d-aec1-1fc9335da0db",
+          "createDate": "2023-05-30T14:29:28.182+00:00",
+          "uploadedDate": "2023-05-30T14:29:28.452+00:00",
+          "size": 6,
+          "uiKey": "h1t55mht118xv16.mrc1685456842364"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-05-30T14:29:28.177+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2023-05-30T14:29:28.177+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "24cfe8a6-151d-42b1-8300-c4cbc14e637c",
+      "metaJobExecutionId": "ad8f78c5-fc20-4761-bb94-caa8e3c56653",
+      "status": "COMPLETED",
+      "createDate": "2023-06-08T14:10:44.174+00:00",
+      "fileDefinitions": [
+        {
+          "id": "9e4a82f3-f567-4690-9f2e-7da77b81a83b",
+          "sourcePath": "./storage/upload/24cfe8a6-151d-42b1-8300-c4cbc14e637c/9e4a82f3-f567-4690-9f2e-7da77b81a83b/new_york.xml",
+          "name": "new_york.xml",
+          "status": "UPLOADED",
+          "jobExecutionId": "ad8f78c5-fc20-4761-bb94-caa8e3c56653",
+          "uploadDefinitionId": "24cfe8a6-151d-42b1-8300-c4cbc14e637c",
+          "createDate": "2023-06-08T14:10:44.174+00:00",
+          "uploadedDate": "2023-06-08T14:10:44.514+00:00",
+          "size": 3,
+          "uiKey": "new_york.xml1686233422277"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-06-08T14:10:44.171+00:00",
+        "createdByUserId": "ccd9c2a1-5455-4512-bf54-956fe923a8ab",
+        "updatedDate": "2023-06-08T14:10:44.171+00:00",
+        "updatedByUserId": "ccd9c2a1-5455-4512-bf54-956fe923a8ab"
+      }
+    },
+    {
+      "id": "0957da1e-680c-4a8c-a9b7-62ae2382cb74",
+      "metaJobExecutionId": "e3a3e592-513a-4e80-9051-d80df8737f11",
+      "status": "COMPLETED",
+      "createDate": "2023-06-14T12:15:18.641+00:00",
+      "fileDefinitions": [
+        {
+          "id": "c2c9d907-5814-41f6-ad4a-9484aefcdfc4",
+          "sourcePath": "./storage/upload/0957da1e-680c-4a8c-a9b7-62ae2382cb74/c2c9d907-5814-41f6-ad4a-9484aefcdfc4/9sl78hsm054j95d.mrc",
+          "name": "9sl78hsm054j95d.mrc",
+          "status": "UPLOADED",
+          "jobExecutionId": "e3a3e592-513a-4e80-9051-d80df8737f11",
+          "uploadDefinitionId": "0957da1e-680c-4a8c-a9b7-62ae2382cb74",
+          "createDate": "2023-06-14T12:15:18.641+00:00",
+          "uploadedDate": "2023-06-14T12:15:18.915+00:00",
+          "size": 1,
+          "uiKey": "9sl78hsm054j95d.mrc1684225169957"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-06-14T12:15:18.638+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2023-06-14T12:15:18.638+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    },
+    {
+      "id": "fc9b4e19-d555-43d3-869c-7948ba9f12de",
+      "metaJobExecutionId": "2a15c51c-b358-4a8a-9f91-f2de85b86527",
+      "status": "COMPLETED",
+      "createDate": "2023-06-14T12:17:47.914+00:00",
+      "fileDefinitions": [
+        {
+          "id": "9655f1cc-650e-4cef-9965-40770ee8dbcd",
+          "sourcePath": "./storage/upload/fc9b4e19-d555-43d3-869c-7948ba9f12de/9655f1cc-650e-4cef-9965-40770ee8dbcd/4l8f5h4w26g02k1c.mrc",
+          "name": "4l8f5h4w26g02k1c.mrc",
+          "status": "UPLOADED",
+          "jobExecutionId": "2a15c51c-b358-4a8a-9f91-f2de85b86527",
+          "uploadDefinitionId": "fc9b4e19-d555-43d3-869c-7948ba9f12de",
+          "createDate": "2023-06-14T12:17:47.914+00:00",
+          "uploadedDate": "2023-06-14T12:17:48.028+00:00",
+          "size": 4,
+          "uiKey": "4l8f5h4w26g02k1c.mrc1686744798876"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-06-14T12:17:47.911+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2023-06-14T12:17:47.911+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    },
+    {
+      "id": "25f07756-677c-4e14-89c1-641d4a34b90f",
+      "metaJobExecutionId": "d2d86730-4b4c-469c-aded-84959f8b0c82",
+      "status": "COMPLETED",
+      "createDate": "2023-08-07T07:41:15.160+00:00",
+      "fileDefinitions": [
+        {
+          "id": "1a742e81-5b2c-4062-b867-31e15a86a381",
+          "sourcePath": "./storage/upload/25f07756-677c-4e14-89c1-641d4a34b90f/1a742e81-5b2c-4062-b867-31e15a86a381/sb4958t40z5g4zr.mrc",
+          "name": "sb4958t40z5g4zr.mrc",
+          "status": "UPLOADED",
+          "jobExecutionId": "d2d86730-4b4c-469c-aded-84959f8b0c82",
+          "uploadDefinitionId": "25f07756-677c-4e14-89c1-641d4a34b90f",
+          "createDate": "2023-08-07T07:41:15.160+00:00",
+          "uploadedDate": "2023-08-07T07:41:16.047+00:00",
+          "size": 1,
+          "uiKey": "sb4958t40z5g4zr.mrc1691394017848"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2023-08-07T07:41:15.132+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2023-08-07T07:41:15.132+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    }
+  ],
+  "totalRecords": 38
+}

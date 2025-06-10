@@ -1,0 +1,35 @@
+{
+  "instructors": [
+    {
+      "id": "2e53ca2f-9bd9-424d-bcef-67f5f268edb0",
+      "userId": "3579811e-379f-4c09-8b2b-a0a08c94fe30",
+      "name": "Adams, Christa A",
+      "courseListingId": "c03bcba3-a6a0-4251-b316-0631bb2e6f21",
+      "metadata": {
+        "createdDate": "2023-03-13T12:12:14.484+00:00",
+        "updatedDate": "2023-03-13T12:12:14.484+00:00"
+      }
+    },
+    {
+      "id": "f61c6a9e-92b5-470c-8463-6494afd108e6",
+      "userId": "b7ad6a2b-73d3-41e0-ae10-8fc3db4e57ec",
+      "name": "Taylor, Mike",
+      "courseListingId": "c03bcba3-a6a0-4251-b316-0631bb2e6f21",
+      "metadata": {
+        "createdDate": "2023-03-13T12:12:14.495+00:00",
+        "updatedDate": "2023-03-13T12:12:14.495+00:00"
+      }
+    },
+    {
+      "id": "9cc888e5-f6d7-4709-b113-3040e8fbe648",
+      "userId": "b2aeb3de-a156-4a8b-a25b-72d7febe1674",
+      "name": "Aagard, Madgeline",
+      "courseListingId": "c03bcba3-a6a0-4251-b316-0631bb2e6f21",
+      "metadata": {
+        "createdDate": "2023-03-13T12:12:14.498+00:00",
+        "updatedDate": "2023-03-13T12:12:14.498+00:00"
+      }
+    }
+  ],
+  "totalRecords": 3
+}
