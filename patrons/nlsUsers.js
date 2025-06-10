@@ -253,7 +253,7 @@ try {
     if (u.personal.email) {
       u.personal.preferredContactTypeId = '002'
     } else {
-      u.personal.preferredContactTypeId = '002'
+      u.personal.preferredContactTypeId = '001'
     }
 
     if (u.patronGroup) {
