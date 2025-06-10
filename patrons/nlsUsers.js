@@ -1,9 +1,14 @@
 const readline = require('readline');
 const fs = require('fs');
 const path = require('path');
-const { v5 } = require('uuid');
 const { parse } = require('csv-parse/sync');
-const uuid = v5;
+let uuid;
+try {
+  uuid = require('uuid/v5');
+} catch (e) {
+  const { v5 } = require('uuid');
+  uuid = v5;
+}
 
 const ns = '9903d297-1cb6-44e4-897c-e1e45c58305f';
 let refDir = process.argv[2];
@@ -187,7 +192,7 @@ try {
         if (!email && r.Z304_EMAIL_ADDRESS) email = r.Z304_EMAIL_ADDRESS;
       });
     }
-    let un = id | email || bc || pid;
+    let un = email || '';
 
     let edate = '';
     locs.forEach(r => {
@@ -199,20 +204,27 @@ try {
     let bcode = p.Z303_DELINQ_1;
     let borStat = (locs[0]) ? locs[0].Z305_BOR_STATUS : '';
     let gnum;
+    let glab;
     if (borStat === '01' && bcode === '50') {
       gnum = '6';
+      glab = 'Ny låntagare';
     } else if (borStat === '4' && name.match(/personal/i)) {
       gnum = '3';
+      glab = 'Personal';
     } else if (borStat === '4' || borStat === '54') {
       gnum = '2';
+      glab = 'Bokskåp';
     } else if (borStat === '20') {
       gnum = '4';
+      glab = 'Funktion';
     } else if (borStat === '10' || borStat === '12') {
-      gnum = '5'
+      gnum = '5';
+      glab = 'Fjärrlånebibliotek';
     } else {
       gnum = '1';
+      glab = 'Ordinarie';
     }
-    let groupId = refData.usergroups[gnum];
+    let groupId = refData.usergroups[gnum] || refData.usergroups[glab];
     u = {
       id: uuid(id, ns),
       active: true,
@@ -223,9 +235,11 @@ try {
       },
       customFields: {}
     };
-    if (!unseen[un]) {
-      username = un;
-      unseen[un];
+    if (un && !unseen[un]) {
+      u.username = un;
+      unseen[un] = 1;
+    } else if (unseen[un]) {
+      console.log(`WARN username "${un}" already used.`);
     }
     if (bc) u.barcode = bc;
     if (email) u.personal.email = email
@@ -258,7 +272,7 @@ try {
       }
       writeOut(files.r, pref);
     } else {
-      console.log(`ERROR No patronGroup found for ${groupLabel}`);
+      console.log(`ERROR No patronGroup found for ${gnum}`);
       ecount++;
     }
   } 
