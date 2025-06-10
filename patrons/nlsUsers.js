@@ -157,13 +157,14 @@ try {
           if (!z[type][k][idType]) z[type][k][idType] = [];
           z[type][k][idType].push(data); 
         } else {
+          if (type === 'loc') k = k.substring(0, 12);
           if (!z[type][k]) z[type][k] = [];
           z[type][k].push(r);
         }
       });
     }
   }
-  // throw(JSON.stringify(z, null, 2));
+  // throw(JSON.stringify(z.loc, null, 2));
   
   const today = new Date().valueOf();
   let count = 0;
@@ -185,6 +186,7 @@ try {
     let ln = name.replace(/,.+/, '');
     let fn = (name.match(/,/)) ? name.replace(/^.+?, */, '') : '';
     let bc = (ids['01']) ? ids['01'][0] : '';
+    let bcPre = id.replace(/\d+/, '');
     let pid = (ids['03']) ? ids['03'][0] : '';
     let email = '';
     if (ads) {
@@ -201,11 +203,12 @@ try {
     edate = parseDate(edate);
     let cdate = parseDate(p.Z303_OPEN_DATE);
 
-    let bcode = p.Z303_DELINQ_1;
+    let bcodes = [ '', p.Z303_DELINQ_1, p.Z303_DELINQ_2, p.Z303_DELINQ_3 ];
     let borStat = (locs[0]) ? locs[0].Z305_BOR_STATUS : '';
+    console.log(bcPre, borStat, id, bc);
     let gnum;
     let glab;
-    if (borStat === '01' && bcode === '50') {
+    if (bcodes[1] === '50' || bcodes[2] === '50' || bcodes[3] === '50') {
       gnum = '6';
       glab = 'Ny låntagare';
     } else if (borStat === '4' && name.match(/personal/i)) {
@@ -242,10 +245,12 @@ try {
       console.log(`WARN username "${un}" already used.`);
     }
     if (bc) u.barcode = bc;
+    console.log(bcPre);
+    if (u.barcode && bcPre && (borStat === '10' || borStat === '12')) u.barcode = bcPre + u.barcode;
     if (email) u.personal.email = email
     if (edate) u.expirationDate = edate;
     if (cdate) u.enrollmentDate = cdate;
-    if (pid) u.customFields.personnummer = pid;
+    if (pid && borStat.match(/^(01|04|51|54|40)$/)) u.customFields.personnummer = pid.replace(/-/g, '');
     
     if (u.personal.email) {
       u.personal.preferredContactTypeId = '002'
