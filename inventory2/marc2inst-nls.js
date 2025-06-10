@@ -1071,7 +1071,7 @@ try {
       let addFields = {};
       for (let t in marc.fields) {
         let fields = marc.fields[t];
-        if (t.match(/852|866|520|561/)) {
+        if (t.match(/852|866|561/)) {
           fields.forEach(f => {
             let d;
             let str;
