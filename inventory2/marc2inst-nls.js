@@ -669,12 +669,14 @@ const makeAleph = (fields) => {
   let notes = [];
   if (fields.ANM) {
     fields.ANM.forEach(f => {
-      let d = getSubs(f, 'a');
-      let o = {
-        note: d,
-        instanceNoteTypeId: refData.instanceNoteTypes['General note']
+      if (f.subfields) {
+        let d = getSubs(f, 'a');
+        let o = {
+          note: d,
+          instanceNoteTypeId: refData.instanceNoteTypes['General note']
+        }
+        notes.push(o);
       }
-      notes.push(o);
     });
   }
   let cn = (fields.SGN) ? getSubs(fields.SGN[0], 'a') : '';
@@ -1182,7 +1184,7 @@ try {
         if (inst.languages) {
           let langs = [];
           inst.languages.forEach(l => {
-            let r = l.match(/.{1,3}/g);
+            let r = l.match(/.{1,3}/g) || [];
             r.forEach(c => {
               if (langs.indexOf(c) === -1) langs.push(c);
             });
