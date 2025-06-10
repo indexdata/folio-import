@@ -205,7 +205,6 @@ try {
 
     let bcodes = [ '', p.Z303_DELINQ_1, p.Z303_DELINQ_2, p.Z303_DELINQ_3 ];
     let borStat = (locs[0]) ? locs[0].Z305_BOR_STATUS : '';
-    console.log(bcPre, borStat, id, bc);
     let gnum;
     let glab;
     if (bcodes[1] === '50' || bcodes[2] === '50' || bcodes[3] === '50') {
@@ -245,7 +244,6 @@ try {
       console.log(`WARN username "${un}" already used.`);
     }
     if (bc) u.barcode = bc;
-    console.log(bcPre);
     if (u.barcode && bcPre && (borStat === '10' || borStat === '12')) u.barcode = bcPre + u.barcode;
     if (email) u.personal.email = email
     if (edate) u.expirationDate = edate;
