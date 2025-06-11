@@ -929,7 +929,10 @@ try {
         writeOut(outs.err, r, true);
         continue;
       }
-      if (!marc.fields['245'] && marc.fields['MTI']) {
+      if (!marc.fields['245'] && !marc.fields['008'] && !marc.fields.MTI) {
+        marc.fields.MTI = [{ind1: '1', ind2: '0', subfields: [{a: '[Ingen titel]'}] }]
+      }
+      if (!marc.fields['245'] && marc.fields.MTI) {
         let o = makeAleph(marc.fields);
         writeOut(outs.instances, o.instances);
         ttl.instances++;
