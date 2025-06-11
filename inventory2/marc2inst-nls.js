@@ -522,7 +522,11 @@ const makeInst = function (map, field, allFields, tag) {
       subs[Object.keys(s)[0]] = 1;
     });
   }
-  if (tag = '084' && subs['5']) return;
+  if (tag === '084' && subs['5']) return;
+  if (tag.match(/^65/)) {
+    let subStr = Object.keys(subs).sort().join('');
+    if (!subStr.match(/[a-z]/)) return;
+  }
   for (let w = 0; w < ents.length; w++) {
     let e = ents[w];
     let ar = false;
