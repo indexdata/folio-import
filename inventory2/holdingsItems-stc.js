@@ -214,7 +214,7 @@ try {
       ownMap[k].push(v);
     }
   }
-  // throw(ownMap);
+  throw(ownMap);
 
   let start = new Date().valueOf();
 

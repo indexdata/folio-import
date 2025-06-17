@@ -762,7 +762,7 @@ try {
           if (mr) {
             fields.forEach(f => {
               let actFields = [];
-              if (mr.erps) {
+              if (mr.erps && f.subfields) {
                 f.subfields.forEach(a => {
                   actFields.push({ ind1: f.ind1, ind2: f.ind2, subfields: [ a ]});
                 });

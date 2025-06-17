@@ -210,10 +210,10 @@ try {
     if (bcodes[1] === '50' || bcodes[2] === '50' || bcodes[3] === '50') {
       gnum = '6';
       glab = 'Ny låntagare';
-    } else if (borStat === '4' && name.match(/personal/i)) {
+    } else if (borStat === '04' && name.match(/personal/i)) {
       gnum = '3';
       glab = 'Personal';
-    } else if (borStat === '4' || borStat === '54') {
+    } else if (borStat === '04' || borStat === '54') {
       gnum = '2';
       glab = 'Bokskåp';
     } else if (borStat === '20') {
