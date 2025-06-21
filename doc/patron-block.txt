@@ -1,0 +1,21 @@
+GET manual-block-templates
+
+POST to manualblocks
+
+{
+  "type" : "Manual",
+  "desc" : "Räkningsärende",
+  "code" : "01",
+  "patronMessage" : "Ditt konto är låst på grund av pågående räkningsärende.",
+  "borrowing" : true,
+  "renewals" : true,
+  "requests" : true,
+  "userId" : "0e505354-01eb-4899-98f6-ba4731031c0d",
+  "metadata" : {
+    "createdDate" : "2025-06-21T12:06:56.617+00:00",
+    "createdByUserId" : "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+    "updatedDate" : "2025-06-21T12:06:56.617+00:00",
+    "updatedByUserId" : "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+  },
+  "id" : "50220853-ed4c-4b34-825e-9683bce1b26f"
+}
