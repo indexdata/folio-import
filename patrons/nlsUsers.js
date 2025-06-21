@@ -19,6 +19,7 @@ const files = {
   p: 'perms',
   r: 'request-prefs',
   n: 'notes',
+  b: 'blocks',
   e: 'errors'
 };
 
@@ -118,6 +119,16 @@ try {
     refData.servicepoints[a.name] = a.id;
   });
   // throw(refData.servicepoints);
+
+  // map folio block templates from file
+  const btypes = require(`${refDir}/manual-block-templates.json`);
+  refData.manualBlockTemplates = {};
+  btypes.manualBlockTemplates.forEach(a => {
+    delete a.metadata;
+    refData.manualBlockTemplates[a.name] = a;
+    refData.manualBlockTemplates[a.code] = a;
+  });
+  // throw(refData.manualBlockTemplates);
   
   const ntypes = require(`${refDir}/note-types.json`);
   refData.noteTypes = {};
@@ -169,6 +180,7 @@ try {
   const today = new Date().valueOf();
   let count = 0;
   let success = 0;
+  let bcount = 0;
   let ncount = 0;
   let ecount = 0;
   const nseen = {};
@@ -179,6 +191,8 @@ try {
     let p = main[x];
     if (process.env.DEBUG) console.log(p);
     let id = p.Z303_REC_KEY;
+    let dels = [ p.Z303_DELINQ_1, p.Z303_DELINQ_2, p.Z303_DELINQ_3 ];
+    let blockStaff = p.Z303_DELINQ_N_1
     let ads = z.add[id];
     let ids = z.id[id];
     let locs = z.loc[id] || [];
@@ -274,6 +288,29 @@ try {
         defaultServicePointId: refData.servicepoints['Pecan Library']
       }
       writeOut(files.r, pref);
+      
+      for (let x = 0; x < dels.length; x++) {
+        d = dels[x];
+        let t = refData.manualBlockTemplates[d];
+        if (t) {
+          let o = {
+            id: uuid(t.id, u.id),
+            type: 'manual',
+            code: t.code,
+            desc: t.blockTemplate.desc,
+            patronMessage: t.blockTemplate.patronMessage,
+            borrowing: t.blockTemplate.borrowing,
+            renewals: t.blockTemplate.renewals,
+            requests: t.blockTemplate.requests,
+            userId: u.id
+          }
+          if (blockStaff) {
+            o.staffInformation = blockStaff;
+          }
+          writeOut(files.b, o);
+          bcount++;
+        }
+      }
     } else {
       console.log(`ERROR No patronGroup found for ${gnum}`);
       ecount++;
@@ -288,6 +325,7 @@ try {
   console.log('Perms created:', success, '-->', files.p);
   console.log('Prefs created:', success, '-->', files.r);
   console.log('Notes created:', ncount, '-->', files.n);
+  console.log('Blocks created:', bcount, '-->', files.b);
   console.log('Errors:', ecount, '-->', files.e);
   console.log('Time (secs):', t);
 } catch (e) {

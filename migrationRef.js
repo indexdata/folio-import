@@ -17,7 +17,7 @@ let paths = {
   fin: `acquisitions-units/units finance-storage/expense-classes finance-storage/funds finance-storage/fund-types
         finance-storage/fiscal-years finance-storage/ledgers finance-storage/budget-expense-classes
         finance-storage/groups finance-storage/group-fund-fiscal-years`,
-  usr: `groups addresstypes departments custom-fields note-types service-points`,
+  usr: `groups addresstypes departments custom-fields note-types service-points manual-block-templates`,
   fee: `owners feefines`,
   erm: `erm/custprops erm/refdata organizations-storage/organizations acquisitions-units/units note-types`, 
   lic: `licenses/custprops licenses/refdata organizations-storage/organizations acquisitions-units/units`,
