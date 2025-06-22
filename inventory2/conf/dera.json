@@ -1,0 +1,14 @@
+{
+    "nameSpace": "da74f4b2-9645-4bf2-a367-b348fcaa4972",
+    "refDir": "/Users/charles/Folio/dera/ref/inv",
+    "tsvDir": "",
+    "mapFile": "",
+    "controlNum": "",
+    "hridPrefix": "",
+    "makeInstMap": true,
+    "hasMfhd": false,
+    "noTitle": "",
+    "catDate": { "tag": "008" },
+    "suppress": { "tag": "", "subfield": "", "value":"" },
+    "callNumbers": {}
+}
