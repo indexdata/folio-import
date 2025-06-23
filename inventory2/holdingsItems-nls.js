@@ -401,6 +401,7 @@ try {
         let chhour = r.Z30_HOUR_LAST_RETURN;
 
         if (st === '05') i.discoverySuppress = true;
+        if (ips === 'NA') i.discoverySuppress = true;
         // if (desc) i.displaySummary = desc;
         if (istat === 'TG') i.accessionNumber = 'RFID';
         if (bc && !bcseen[bc]) {
@@ -418,13 +419,13 @@ try {
         }
         if (adminNotes[locId]) i.administrativeNotes = adminNotes[locId];
 
-        if (ips.match(/^(FK|CL|NA)$/)) {
+        if (ips.match(/^(FK|CL)$/)) {
           i.status.name = 'Missing';
           if (ips === 'CL') {
             nt.s.push('Reklamerad');
-          } else if (ips === 'NA') {
-            nt.s.push('Ej anländ');
           }
+        } else if (ips.match(/^(NA|UL)$/)) {
+          i.status.name = 'On order';
         } else if (ips === 'UA') {
           i.status.name = 'In process';
         } else if (st === '71' && loc.match(/^(RRLEX|RRSPE)$/)) {
@@ -503,13 +504,13 @@ try {
               case 'DB': tl = 'Digital beställning'; break;
               case 'LA': tl = 'Lagas före lån'; break;
               case 'LL': tl = 'L-samling - kollas före lån'; break;
-              case 'UL': tl = 'Under leverans (ABON)'; 
+              // case 'UL': tl = 'Under leverans (ABON)'; 
             }
           } else if (st === '02') {
             pl = 'Hemlån';
             switch(ips) {
               case 'LA': tl = 'Lagas före lån'; break;
-              case 'UL': tl = 'Under leverans (ABON)'; 
+              // case 'UL': tl = 'Under leverans (ABON)'; 
             }
           } else if (st === '05') {
             pl = 'Framtages ej/spärrat'; 
