@@ -366,11 +366,16 @@ const funcs = {
     return refData.contributorNameTypes[param.name] || refData.contributorNameTypes['Personal name'];
   },
   set_contributor_type_id_by_code_or_name: function (data, param) {
+    data = data.replace(/ .+/, '');
     data = data.toLowerCase().trim().replace(/[,.]/g, '');
     return refData.contributorTypes[data] || refData.contributorTypes['author'];
   },
   set_classification_type_id: function (data, param) {
     return refData.classificationTypes[param.name] || 'ERROR';
+  },
+  set_date_type_id: function (data) {
+    let code = data.substring(6, 7);
+    return code;
   },
   set_identifier_type_id_by_value: function (data, param) {
     let type = '';
@@ -1170,7 +1175,10 @@ try {
                     if (!inst[rt]) inst[rt] = [];
                     obj[pr] = ff[prop].data;
                     root = rt;
-                  } 
+                  } else {
+                    if (!inst[rt]) inst[rt] = {};
+                    if (ff[prop].data) inst[rt][pr] = ff[prop].data;
+                  }
                 }
                 if (root) {
                   if (!inst[root]) inst[root] = [];
