@@ -354,9 +354,11 @@ const funcs = {
     return out;
   },
   set_instance_type_id: function (data, param) {
+    data = data.replace(/ .+/, '');
     let [ n, c ] = data.split(/~/);
     let u = param.unspecifiedInstanceTypeCode;
     let out = refData.instanceTypes[c] || refData.instanceTypes[u];
+    console.log(data, out);
     return out
   },
   set_instance_format_id: function (data) {
@@ -713,7 +715,7 @@ const makeAleph = (fields) => {
     }
     statCode = refData.statisticalCodes['999'];
     istat = refData.instanceStatuses.Minipost;
-  } else {
+  } else if (mti === 'OKAT' || mti === 'Vardagstryck') {
     ti = (fields.PUB) ? getSubs(fields.PUB[0], 'a') : '[okänd titel]';
     cdate = (fields.DAT) ? getSubs(fields.DAT[0], 'a') : '';
     statCode = refData.statisticalCodes['85B'];
