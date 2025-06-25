@@ -358,7 +358,6 @@ const funcs = {
     let [ n, c ] = data.split(/~/);
     let u = param.unspecifiedInstanceTypeCode;
     let out = refData.instanceTypes[c] || refData.instanceTypes[u];
-    console.log(data, out);
     return out
   },
   set_instance_format_id: function (data) {
