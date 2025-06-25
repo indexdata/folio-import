@@ -375,7 +375,7 @@ const funcs = {
   },
   set_date_type_id: function (data) {
     let code = data.substring(6, 7);
-    return code;
+    return refData.instanceDateTypes[code] || refData.instanceDateTypes.n || 'ERROR';
   },
   set_identifier_type_id_by_value: function (data, param) {
     let type = '';
