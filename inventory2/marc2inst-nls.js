@@ -719,6 +719,8 @@ const makeAleph = (fields) => {
     cdate = (fields.DAT) ? getSubs(fields.DAT[0], 'a') : '';
     statCode = refData.statisticalCodes['85B'];
     istat = refData.instanceStatuses.mv
+  } else {
+    ti = '[okänd titel]';
   }
   const out = {}
   let i = {
