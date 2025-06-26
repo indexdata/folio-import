@@ -61,6 +61,12 @@ const wait = (ms) => {
       logger = console;
     }
 
+    const writeErr = (errPath, rec, errMsg) => {
+      rec._errMessage = `${errMsg}`;
+      let erec = JSON.stringify(rec) + '\n';
+      fs.writeFileSync(errPath, erec, { flag: 'a' });
+    }
+
     const actionUrl = `${config.okapi}/${ep}`;
     let success = 0;
     let fail = 0;
@@ -96,6 +102,7 @@ const wait = (ms) => {
           rec._version = res.body._version;
           if (recUrl.match(/item-storage/)) rec.status = res.body.status; 
         } catch (e) {
+          writeErr(errPath, rec, e);
           logger.error(`${e}`);
           continue;
         }
@@ -112,6 +119,7 @@ const wait = (ms) => {
               rec.id = res.body[0].id;
             };
         } catch (e) {
+          writeErr(errPath, rec, e);
           logger.error(`${e}`);
           continue;
         }
@@ -126,6 +134,7 @@ const wait = (ms) => {
         logger.info(`  Successfully updated record id ${id}`);
         success++;
       } catch (e) {
+        writeErr(errPath, rec, e);
 	      let errMsg = (e.response) ? e.response.text : e;
         logger.error(errMsg);
         fail++;
