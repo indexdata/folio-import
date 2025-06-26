@@ -816,7 +816,7 @@ try {
       if (m.entity) {
         m.entity.forEach(e => {
           if (indStr) e.inds = indStr;
-          ents.push(e)
+          if (!e.target.match(/authorityId/)) ents.push(e)
         });
       } else {
         ents.push(m);
