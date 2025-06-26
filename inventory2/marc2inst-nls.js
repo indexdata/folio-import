@@ -529,8 +529,8 @@ const makeInst = function (map, field, allFields, tag) {
     });
   }
   if (tag === '084' && subs['5']) return;
-  if (tag.match(/^65/)) {
-    let subStr = Object.keys(subs).sort().join('');
+  if (tag.match(/^[167]/)) {
+    let subStr = Object.keys(subs).join('');
     if (!subStr.match(/[a-z]/)) return;
   }
   for (let w = 0; w < ents.length; w++) {
