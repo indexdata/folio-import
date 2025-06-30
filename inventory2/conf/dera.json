@@ -1,14 +1,20 @@
 {
     "nameSpace": "da74f4b2-9645-4bf2-a367-b348fcaa4972",
     "refDir": "/Users/charles/Folio/dera/ref/inv",
-    "tsvDir": "",
+    "tsvDir": "/Users/charles/Folio/dera/ref/inv",
     "mapFile": "",
     "controlNum": "",
     "hridPrefix": "",
-    "makeInstMap": true,
+    "makeInstMap": false,
     "hasMfhd": false,
     "noTitle": "",
+    "items": {
+        "tag": "949",
+        "hridPrefix": "i"
+    },
     "catDate": { "tag": "008" },
     "suppress": { "tag": "", "subfield": "", "value":"" },
-    "callNumbers": {}
+    "callNumbers": {
+        "092": "03dd64d0-5626-4ecd-8ece-4531e0069f35"
+    }
 }

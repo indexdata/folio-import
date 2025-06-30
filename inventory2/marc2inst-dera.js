@@ -387,9 +387,17 @@ const dedupe = function (arr, props) {
   return newArr;
 }
 
-const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
+const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum) {
   let out = { h: [], i: []};
   fields.forEach(f => {
+    let cn;
+    let cnt;
+    if (bibCallNum && bibCallNum.value) {
+      cn = bibCallNum.value.replace(/^\^\^/, '');
+      cnt = bibCallNum.type;
+    }
+
+
   });
   return out;
 }
@@ -507,16 +515,18 @@ try {
         dat.split(/\n/).forEach(l => {
           let c = l.split(/\t/);
           let k = c[0];
-          let v = c[6];
-          if (prop === 'locations') { 
+          let v = c[2];
+          if (prop === 'statuses') {
             k = c[1];
-          } 
-          if (k && v && refData[prop]) tsvMap[prop][k] = refData[prop][v];
+            if (!v.match(/Paged/)) tsvMap[prop][k] = v;
+          } else {
+            if (k && v && refData[prop]) tsvMap[prop][k] = refData[prop][v];
+          }
         });
       }
     });
   }
-  throw(tsvMap);
+  // throw(tsvMap);
 
   let t;
   let ttl = {
@@ -845,7 +855,7 @@ try {
           let ifields = marc.fields[itag];
           let suppress = false;
           if (ifields) {
-            let hi = makeHoldingsItems(ifields, instId, inst.hrid, suppress, inst.electronicAccess);
+            let hi = makeHoldingsItems(ifields, instId, inst.hrid, suppress, inst.electronicAccess, bibCallNum);
             hi.h.forEach(r => {
               writeOut(outs.holdings, r);
               ttl.holdings++;
