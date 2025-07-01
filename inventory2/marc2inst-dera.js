@@ -1,5 +1,6 @@
 import { parseMarc, getSubs, mij2raw, fields2mij, getSubsHash } from '../js-marc/js-marc.mjs';
 import fs from 'fs';
+import { get } from 'http';
 import path from 'path';
 import { v5 as uuid } from 'uuid';
 
@@ -15,7 +16,6 @@ let iprefix;
 const refData = {};
 const tsvMap = {};
 const outs = {};
-const bcseen = {};
 const iseen = {};
 const seen = {};
 
@@ -136,6 +136,7 @@ const funcs = {
     return out;
   },
   set_instance_type_id: function (data, param) {
+    data = data.replace(/ .+/, '');
     let [ n, c ] = data.split(/~/);
     let u = param.unspecifiedInstanceTypeCode;
     let out = refData.instanceTypes[c] || refData.instanceTypes[u];
@@ -154,6 +155,14 @@ const funcs = {
   },
   set_classification_type_id: function (data, param) {
     return refData.classificationTypes[param.name] || 'ERROR';
+  },
+  set_date_type_id: function (data) {
+    let code = data.substring(6, 7);
+    if (refData.instanceDateTypes) {
+      return refData.instanceDateTypes[code] || refData.instanceDateTypes.n || 'ERROR';
+    } else {
+      return '';
+    }
   },
   set_identifier_type_id_by_value: function (data, param) {
     let type = '';
@@ -387,17 +396,151 @@ const dedupe = function (arr, props) {
   return newArr;
 }
 
-const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum) {
+const hseen = {};
+const hoc = {};
+const ioc = {};
+const bcseen = {};
+const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum, blvl) {
   let out = { h: [], i: []};
   fields.forEach(f => {
+    let subs = getSubsHash(f, true);
+    let loc = subs.D;
     let cn;
     let cnt;
     if (bibCallNum && bibCallNum.value) {
       cn = bibCallNum.value.replace(/^\^\^/, '');
       cnt = bibCallNum.type;
     }
+    let htype = (blvl === 's') ? refData.holdingsTypes.Serial : refData.holdingsTypes.Monograph;
+    bhrid = bhrid.replace(/^vtls/, '');
+    let hkey = `${bhrid}:${loc}:${cn}`;
+    if (!hseen[hkey]) {
+      if (!hoc[hkey]) {
+        hoc[hkey] = 1;
+      } else {
+        hoc[hkey]++;
+      }
+      let hocStr = hoc[hkey].toString().padStart(3, '0');
+      let hhrid = `h${bhrid}-${hocStr}`;
+      let h = {
+        id: uuid(hhrid, ns),
+        hrid: hhrid,
+        sourceId: refData.holdingsRecordsSources.FOLIO,
+        holdingsTypeId: htype,
+        instanceId: bid,
+        permanentLocationId: tsvMap.locations[loc],
+        callNumber: cn,
+        callNumberTypeId: cnt
+      };
+      if (h.permanentLocationId) {
+        if (h.instanceId) {
+          out.h.push(h);
+          hseen[hkey] = h;
+        } else {
+          console.log(`ERROR holdings: instanceId not found for ${hhrid}`);
+        }
+      } else {
+        console.log(`ERROR holdings: permanentLocationId not found for ${hhrid}`);
+      }
+      // console.log(h);
+    }
 
+    let h = hseen[hkey];
+    if (h) {
+      let bc = subs['6'];
+      let icn = subs.a;
+      let v = subs['9'];
+      let cp = subs.F;
+      let nop = subs.O;
+      let nt = subs.p;
+      let con = subs.q;
+      let cin = subs.r;
+      let st = subs.s;
+      let mt = subs.X;
 
+      if (!ioc[bhrid]) {
+        ioc[bhrid] = 1;
+      } else {
+        ioc[bhrid]++;
+      }
+      let iocStr = ioc[bhrid].toString().padStart(3, '0');
+      let ihrid = `i${bhrid}-${iocStr}`;
+      let i = {
+        id: uuid(ihrid, ns),
+        hrid: ihrid,
+        holdingsRecordId: h.id,
+        status: { name: 'Available' },
+        permanentLoanTypeId: refData.loantypes['Can circulate']
+      };
+      if (subs.o) i.accessionNumber = subs.o.replace(/^(\d+).+/s, '$1');
+      if (bc) {
+        if (!bcseen[bc]) {
+          i.barcode = bc;
+          bcseen[bc] = ihrid;
+        } else {
+          console.log(`WARN item: barcode ${bc} already used by ${bcseen[bc]}`);
+        }
+      }
+      if (icn !== cn) {
+        i.itemLevelCallNumber = icn;
+        i.itemLevelCallNumberTypeId = cnt;
+      }
+      if (v) {
+        if (blvl === 's') {
+          i.enumeration = v;
+        } else {
+          i.volume = v;
+        }
+      }
+      if (cp) i.copyNumber = cp;
+      if (nop) i.numberOfPieces = nop;
+      if (nt && nt !== 'PR122') {
+        let o = {
+          note: nt,
+          itemNoteTypeId: refData.itemNoteTypes.Note,
+          staffOnly: false
+        }
+        i.notes = [ o ];
+      }
+      if ((con || cin) && !i.circulationNotes) i.circulationNotes = [];
+      if (con) {
+        let o = {
+          id: uuid(i.hrid + con + 'out', ns),
+          note: con,
+          noteType: 'Check out',
+          staffOnly: true
+        }
+        i.circulationNotes.push(o);
+      }
+      if (cin) {
+        let o = {
+          id: uuid(i.hrid + cin + 'in', ns),
+          note: cin,
+          noteType: 'Check in',
+          staffOnly: true
+        }
+        i.circulationNotes.push(o);
+      }
+      if (st) {
+        st = st.replace(/:.+/, '');
+        let stName = tsvMap.statuses[st];
+        if (stName) i.status.name = stName;
+      }
+      i.materialTypeId = tsvMap.mtypes[mt];
+      if (i.holdingsRecordId) {
+        if (i.materialTypeId) {
+          if (i.permanentLoanTypeId) {
+            out.i.push(i);
+          } else {
+            console.log(`ERROR item: hardcoded loantypeId not found!`);
+          }
+        } else {
+          console.log(`ERROR item: materialTypeId not found for ${mt} (${ihrid})`);
+        }
+      } else {
+        console.log(`ERROR item: holdingsRecordId not found for ${ihrid}`);
+      }
+    }
   });
   return out;
 }
@@ -456,7 +599,7 @@ try {
       if (m.entity) {
         m.entity.forEach(e => {
           if (indStr) e.inds = indStr;
-          ents.push(e)
+          if (!e.target.match(/authorityId/)) ents.push(e);
         });
       } else {
         ents.push(m);
@@ -762,6 +905,9 @@ try {
                     if (!inst[rt]) inst[rt] = [];
                     obj[pr] = ff[prop].data;
                     root = rt;
+                  } else {
+                    if (!inst[rt]) inst[rt] = {};
+                    if (ff[prop].data) inst[rt][pr] = ff[prop].data;
                   } 
                 }
                 if (root) {
@@ -855,7 +1001,7 @@ try {
           let ifields = marc.fields[itag];
           let suppress = false;
           if (ifields) {
-            let hi = makeHoldingsItems(ifields, instId, inst.hrid, suppress, inst.electronicAccess, bibCallNum);
+            let hi = makeHoldingsItems(ifields, instId, inst.hrid, suppress, inst.electronicAccess, bibCallNum, blvl);
             hi.h.forEach(r => {
               writeOut(outs.holdings, r);
               ttl.holdings++;
