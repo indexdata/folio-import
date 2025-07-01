@@ -136,6 +136,7 @@ const funcs = {
     return out;
   },
   set_instance_type_id: function (data, param) {
+    data = data.replace(/ .+/, '');
     let [ n, c ] = data.split(/~/);
     let u = param.unspecifiedInstanceTypeCode;
     let out = refData.instanceTypes[c] || refData.instanceTypes[u];
@@ -154,6 +155,14 @@ const funcs = {
   },
   set_classification_type_id: function (data, param) {
     return refData.classificationTypes[param.name] || 'ERROR';
+  },
+  set_date_type_id: function (data) {
+    let code = data.substring(6, 7);
+    if (refData.instanceDateTypes) {
+      return refData.instanceDateTypes[code] || refData.instanceDateTypes.n || 'ERROR';
+    } else {
+      return '';
+    }
   },
   set_identifier_type_id_by_value: function (data, param) {
     let type = '';
@@ -448,7 +457,7 @@ try {
       if (m.entity) {
         m.entity.forEach(e => {
           if (indStr) e.inds = indStr;
-          ents.push(e)
+          if (!e.target.match(/authorityId/)) ents.push(e);
         });
       } else {
         ents.push(m);
@@ -516,7 +525,7 @@ try {
       }
     });
   }
-  throw(tsvMap);
+  // throw(tsvMap);
 
   let t;
   let ttl = {
@@ -752,6 +761,9 @@ try {
                     if (!inst[rt]) inst[rt] = [];
                     obj[pr] = ff[prop].data;
                     root = rt;
+                  } else {
+                    if (!inst[rt]) inst[rt] = {};
+                    if (ff[prop].data) inst[rt][pr] = ff[prop].data;
                   } 
                 }
                 if (root) {
