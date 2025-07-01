@@ -415,12 +415,12 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum
     bhrid = bhrid.replace(/^vtls/, '');
     let hkey = `${bhrid}:${loc}:${cn}`;
     if (!hseen[hkey]) {
-      if (!hoc[hkey]) {
-        hoc[hkey] = 1;
+      if (!hoc[bhrid]) {
+        hoc[bhrid] = 1;
       } else {
-        hoc[hkey]++;
+        hoc[bhrid]++;
       }
-      let hocStr = hoc[hkey].toString().padStart(3, '0');
+      let hocStr = hoc[bhrid].toString().padStart(3, '0');
       let hhrid = `h${bhrid}-${hocStr}`;
       let h = {
         id: uuid(hhrid, ns),
@@ -457,6 +457,7 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum
       let cin = subs.r;
       let st = subs.s;
       let mt = subs.X;
+      let tloc = subs.G;
 
       if (!ioc[bhrid]) {
         ioc[bhrid] = 1;
@@ -474,6 +475,7 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum
       };
       if (subs.o) i.accessionNumber = subs.o.replace(/^(\d+).+/s, '$1');
       if (bc) {
+        bc = bc.toLowerCase();
         if (!bcseen[bc]) {
           i.barcode = bc;
           bcseen[bc] = ihrid;
@@ -527,6 +529,8 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum
         if (stName) i.status.name = stName;
       }
       i.materialTypeId = tsvMap.mtypes[mt];
+      let tlocId = tsvMap.locations[tloc];
+      if (tlocId && tlocId !== h.permanentLocationId) i.temporaryLocationId = tlocId;
       if (i.holdingsRecordId) {
         if (i.materialTypeId) {
           if (i.permanentLoanTypeId) {
