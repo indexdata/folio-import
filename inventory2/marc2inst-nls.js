@@ -345,6 +345,7 @@ const funcs = {
   },
   char_select: function (data, param) {
     let out = data.substring(param.from, param.to);
+    if (!out.match(/\S/)) out = ''; 
     return out;
   },
   set_issuance_mode_id: function () {
