@@ -1,0 +1,34 @@
+Legacy location code	Legacy location name	Folio location code	Folio label (optional)	Folio service point
+Main Collection--Term used for the physical library. Below are shelving locations within the library				
+10019	Biographies	BIO	Biographies	Main Library
+10018	Fiction	FIC	Fiction	Main Library
+10010	Foreign Languages	For_Lang	Foreign Languages	Main Library
+10012	Hindi Collection	Hindi	Hindi Collection	Main Library
+10013	Indian Languages, Other	Other_Indian_Lang	Indian Languages, Other	Main Library
+10000	Main Collection	MAIN	English Collection	Main Library
+10027	New Arrivals	New	New Arrivals	Main Library
+10025	Oversized	OS	Oversized	Main Library
+10017	Pamphlets	PAM	Pamphlets	Main Library
+10029	Periodicals	PER	Periodicals	Main Library
+10028	Popular Reading	PR	Popular Reading	Main Library
+10022	Professional	PRO	Professional	Main Library
+10011	Punjabi Collection	PUN	Punjabi Collection	Main Library
+10016	Rare Book Room	RARE	Rare Book Room	Main Library
+10014	Reference Collection	REF	Reference Collection	Main Library
+10015	Reference Desk	REFD	Reference Desk	Main Library
+10023	Restoration	REST	Restoration	Main Library
+10021	Special Collections	SC	Special Collections	Main Library
+10024	Storage	STOR	Storage	Main Library
+10020	Young Adult	YA	Young Adult	Main Library
+				
+Locations Outside of Library				
+30000	Archives	ARCH	Archives	Main Library
+60001	Boston	BOS	Boston	Boston
+60004	Boston Storage	BOS_S	Boston Storage	Boston
+60000	Dera Library US Acquisitions	DL_US_ACQ	Dera Library US Acquisitions	Boston
+40000	Hostel 6	H6	Hostel 6	Main Library
+20000	Reading Room	RR	Reading Room	Main Library
+60005	Petaluma	PET	Petaluma	Petaluma
+60002	New York	NY	New York	New York
+50000	Publications	PUBS	Publications	Main Library
+60003	Houston	HOU	Houston	Houston

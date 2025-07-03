@@ -1,0 +1,13 @@
+Legacy Status	Legacy Status Code	FOLIO item status Aged to lost, Available, Awaiting pickup, Awaiting delivery, Checked out,   Claimed returned, Declared lost, In process, In process (non-requestable),  In transit, Intellectual item, Long missing, Lost and paid, Missing,  On order, Paged, Restricted, Order closed, Unavailable, Unknown, Withdrawn  https://docs.folio.org/docs/platform-essentials/item-status/itemstatus/#currently-implemented-item-statuses	comments
+At Bindery	4710	Unavailable	
+At Photocopy	3703	Unavailable	
+In Cataloging	3712	In process	
+Missing	2100	Missing	
+Needs Repair	3706	Unavailable	
+On Hold	4705	Awaiting pickup	circulation status
+Order Received	2830	On order	
+Repair	4611	Unavailable	
+Repair Shelf	4711	Unavailable	
+Requested for Loan	5710	Paged	circulation status
+Withdrawn	2101	Withdrawn	
+--		Available	Available does not appear to be included, so if there is no status present, the item should be available

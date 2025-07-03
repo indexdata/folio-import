@@ -97,13 +97,14 @@ const wait = (ms) => {
         try {
           let res = await superagent
             .get(recUrl)
-            .set('x-okapi-token', config.token);
+            .set('x-okapi-token', config.token)
+            .set('content-type', 'application/json');
           logger.info(`  Setting version number to ${res.body._version}`);
           rec._version = res.body._version;
           if (recUrl.match(/item-storage/)) rec.status = res.body.status; 
         } catch (e) {
           writeErr(errPath, rec, e);
-          logger.error(`${e}`);
+          logger.error(e);
           continue;
         }
       } else if (recUrl.match(/\/licenses\/licenses/)) {
@@ -125,9 +126,10 @@ const wait = (ms) => {
         }
       }
       try {
-        await superagent
+        let res = await superagent
           .put(recUrl)
           .send(rec)
+          .set('x-okapi-tenant', config.tenant)
           .set('x-okapi-token', config.token)
           .set('content-type', 'application/json')
           .set('accept', '*/*');
