@@ -127,6 +127,7 @@ const funcs = {
   },
   char_select: function (data, param) {
     let out = data.substring(param.from, param.to);
+    if (!out.match(/\S/)) out = ''; 
     return out;
   },
   set_issuance_mode_id: function () {
@@ -915,6 +916,7 @@ try {
                   } 
                 }
                 if (root) {
+                  if (root === 'publication' && !obj.publisher) obj.publisher = '';
                   if (!inst[root]) inst[root] = [];
                   inst[root].push(obj); 
                 }

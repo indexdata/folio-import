@@ -1185,6 +1185,7 @@ try {
                   }
                 }
                 if (root) {
+                  if (root === 'publication' && !obj.publisher) obj.publisher = '';
                   if (!inst[root]) inst[root] = [];
                   inst[root].push(obj); 
                 }
