@@ -262,7 +262,13 @@ try {
     if (email) u.personal.email = email
     if (edate) u.expirationDate = edate;
     if (cdate) u.enrollmentDate = cdate;
-    if (pid && borStat.match(/^(01|04|51|54|40)$/)) u.customFields.personnummer = pid.replace(/-/g, '');
+    if (pid && borStat.match(/^(01|04|51|54|40)$/)) {
+      let pidStr = pid.replace(/-/g, ''); 
+      if (pidStr.length === 7) {
+        pidStr = pidStr.substring(0, 6);
+      }
+      u.customFields.personnummer = pidStr;
+    }
     
     if (u.personal.email) {
       u.personal.preferredContactTypeId = '002'
