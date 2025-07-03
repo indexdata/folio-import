@@ -190,6 +190,7 @@ try {
     count++;
     let p = main[x];
     if (process.env.DEBUG) console.log(p);
+    let aid = p.Z303_PRIMARY_ID;
     let id = p.Z303_REC_KEY;
     let dels = [ p.Z303_DELINQ_1, p.Z303_DELINQ_2, p.Z303_DELINQ_3 ];
     let blockStaff = p.Z303_DELINQ_N_1
@@ -268,6 +269,9 @@ try {
         pidStr = pidStr.substring(0, 6);
       }
       u.customFields.personnummer = pidStr;
+    }
+    if (aid) {
+      u.customFields.alephid = aid;
     }
     
     if (u.personal.email) {
