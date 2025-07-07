@@ -99,7 +99,7 @@ export function parseMarc(raw) {
 export function getSubs(field, codes, delim) {
   let dl = (delim) ? delim : ' ';
   let out = [];
-  if (!field) return;
+  if (!field || !field.subfields) return;
   field.subfields.forEach(s => {
     let code = Object.keys(s)[0];
     if (!codes) {
