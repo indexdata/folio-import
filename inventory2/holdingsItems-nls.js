@@ -187,7 +187,7 @@ try {
       crlfDelay: Infinity
     });
     for await (let line of rl) {
-      let c = line.split(/\|/);
+      let c = line.split(/\x1E/);
       let k = c[0];
       instMap[k] = { id: c[1], blvl: c[4], type: c[6], ea: c[5], af: c[7] };
     }
