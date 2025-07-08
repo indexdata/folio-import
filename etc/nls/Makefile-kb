@@ -1,0 +1,20 @@
+wd=/home/konchaled/folio-import
+data=/data/konchaled
+idir=$(data)/big
+inv2=$(wd)/inventory2
+con=$(inv2)/conf/nls-kb.json
+ldir=$(data)/log
+
+instances:
+	cd $(inv2); node marc2inst-nls.js $(con) $(idir)/bibs.mrc > $(ldir)/makeInst.log &
+
+suppress-inst:
+	cd $(inv2); node suppressInst-nls.js "$(idir)/bibs-suppress.jsonl"
+
+inventory-prep:
+	cd $(idir); cat bibs-xholdings.jsonl >> bibs-holdings.jsonl
+	cd $(idir); cat bibs-xitems.jsonl >> bibs-items.jsonl
+	cd $(idir); split -n l/5 bibs-instances.jsonl in
+	cd $(idir); split -n l/5 bibs-srs.jsonl sr
+	cd $(idir); split -n l/5 bibs-holdings.jsonl ho
+	cd $(idir); split -n l/5 bibs-items.jsonl it
