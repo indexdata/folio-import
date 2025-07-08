@@ -179,6 +179,7 @@ try {
   }
   // throw(tsvMap.locations);
 
+  console.log(`INFO Parsing instance map at ${mapFile}`);
   const instMap = {};
   if (conf.makeInstMap) {
     let fileStream = fs.createReadStream(mapFile);
@@ -186,16 +187,20 @@ try {
       input: fileStream,
       crlfDelay: Infinity
     });
+    let mc = 0;
     for await (let line of rl) {
+      mc++;
       let c = line.split(/\x1E/);
       let k = c[0];
       instMap[k] = { id: c[1], blvl: c[4], type: c[6], ea: c[5], af: c[7] };
+      if (mc % 1000000 === 0) console.log('Map lines read:', mc);
     }
+    console.log('Instances mapped:', mc);
   }
-  // throw(instMap);
+  // throw(instMap['000694902']);
 
   // map link files;
-  console.log(`Reading linker data from ${itemFiles.links}`);
+  console.log(`INFO Reading linker data from ${itemFiles.links}`);
   const linkMap = {};
   let fileStream = fs.createReadStream(itemFiles.links);
   let rl = readline.createInterface({
