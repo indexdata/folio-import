@@ -129,7 +129,37 @@
         "updatedDate": "2025-05-28T08:26:26.075+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
+    },
+    {
+      "id": "7cfb34be-1797-4e68-a4dc-133102b111a8",
+      "name": "Saknas i KB",
+      "metadata": {
+        "createdDate": "2025-06-27T12:40:27.864+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-06-27T12:40:27.864+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "15119d3d-0279-46e9-b228-688eb708befb",
+      "name": "Läsesalslån (L-samling)",
+      "metadata": {
+        "createdDate": "2025-06-30T07:28:18.036+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-06-30T07:28:18.036+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "64d0817d-e7f3-4af8-b970-609d06405730",
+      "name": "Läsesalslån (Lagas före lån)",
+      "metadata": {
+        "createdDate": "2025-06-30T07:26:38.766+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-06-30T07:29:44.430+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
     }
   ],
-  "totalRecords": 13
+  "totalRecords": 16
 }

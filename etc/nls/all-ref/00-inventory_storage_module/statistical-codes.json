@@ -14,6 +14,32 @@
       }
     },
     {
+      "id": "a2293290-3b3a-4e10-b7bc-26327451280f",
+      "code": "tjnst",
+      "name": "Tjänsteexemplar samling2",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-07-08T09:26:56.552+00:00",
+        "createdByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d",
+        "updatedDate": "2025-07-08T09:26:56.552+00:00",
+        "updatedByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d"
+      }
+    },
+    {
+      "id": "988d0bdb-ba9e-4f45-b839-624bce0a1236",
+      "code": "over",
+      "name": "Överförda till andra bibliotek",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-07-08T09:27:23.751+00:00",
+        "createdByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d",
+        "updatedDate": "2025-07-08T09:27:23.751+00:00",
+        "updatedByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d"
+      }
+    },
+    {
       "id": "fb0dbe08-f831-4b4d-8eed-1c3afb14b255",
       "code": "test",
       "name": "test_name",
@@ -1418,5 +1444,5 @@
       }
     }
   ],
-  "totalRecords": 109
+  "totalRecords": 111
 }

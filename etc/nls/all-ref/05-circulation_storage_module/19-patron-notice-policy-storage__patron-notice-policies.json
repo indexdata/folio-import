@@ -100,6 +100,28 @@
       ]
     },
     {
+      "id": "a70d0dc6-3756-412b-a0f8-daaa964ae1a5",
+      "name": "Lagas före lån",
+      "metadata": {
+        "createdDate": "2025-06-30T07:57:43.500+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-06-30T07:57:43.500+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "loanNotices": [],
+      "feeFineNotices": [],
+      "requestNotices": [
+        {
+          "templateId": "6e9d52d6-8eb5-4e53-aa1e-b80c032b312b",
+          "format": "Email",
+          "realTime": false,
+          "sendOptions": {
+            "sendWhen": "Paging request"
+          }
+        }
+      ]
+    },
+    {
       "id": "168f811b-9aeb-4d33-9842-82381760071e",
       "name": "Längre framtagningstid",
       "description": "För  material med tillfällig lånestatus Längre framtagningstid.",
@@ -271,6 +293,59 @@
       ]
     },
     {
+      "id": "a56e1800-db2b-4ab5-9efc-cd26739ac481",
+      "name": "Bokskåp",
+      "description": "Meddelanden som skickas vid lån av bokskåp",
+      "active": true,
+      "metadata": {
+        "createdDate": "2025-06-30T07:06:32.314+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-06-30T07:06:32.314+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "loanNotices": [
+        {
+          "templateId": "740f31e2-72b3-494a-a6c0-d10fb22e7855",
+          "format": "Email",
+          "frequency": "One time",
+          "realTime": false,
+          "sendOptions": {
+            "sendHow": "Before",
+            "sendWhen": "Due date",
+            "sendBy": {
+              "duration": 7,
+              "intervalId": "Days"
+            }
+          }
+        },
+        {
+          "templateId": "42982c21-6d09-4dd1-980c-d5c94ca7d923",
+          "format": "Email",
+          "realTime": false,
+          "sendOptions": {
+            "sendHow": "Upon At",
+            "sendWhen": "Due date"
+          }
+        },
+        {
+          "templateId": "66295ae7-621d-4e75-9e57-3efb5db45f42",
+          "format": "Email",
+          "frequency": "One time",
+          "realTime": false,
+          "sendOptions": {
+            "sendHow": "After",
+            "sendWhen": "Due date",
+            "sendBy": {
+              "duration": 7,
+              "intervalId": "Days"
+            }
+          }
+        }
+      ],
+      "feeFineNotices": [],
+      "requestNotices": []
+    },
+    {
       "id": "d26daf59-d061-4a96-bfe0-eaecd4efb7b0",
       "name": "Läsesalslån - bokskåp/personal",
       "active": true,
@@ -353,5 +428,5 @@
       ]
     }
   ],
-  "totalRecords": 7
+  "totalRecords": 9
 }

@@ -22,7 +22,20 @@
         "updatedDate": "2024-05-22T11:41:26.907994Z",
         "updatedByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08"
       }
+    },
+    {
+      "id": "215b2626-2d38-4052-a917-1dbe43829cf1",
+      "name": "Förvärvsanteckning",
+      "usage": {
+        "isAssigned": true
+      },
+      "metadata": {
+        "createdDate": "2025-07-02T09:23:50.054289Z",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-07-02T09:23:50.054289Z",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
     }
   ],
-  "totalRecords": 2
+  "totalRecords": 3
 }

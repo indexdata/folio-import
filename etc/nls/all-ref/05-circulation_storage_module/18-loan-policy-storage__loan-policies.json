@@ -1,39 +1,27 @@
 {
   "loanPolicies": [
     {
-      "id": "4bfcb3cf-5599-4a1b-8e0a-1d4636d4e31e",
-      "name": "Läsesalslån - 1 år",
+      "id": "d0f1b62e-c2af-41ce-aed8-bde3419a6beb",
+      "name": "Bokskåp",
+      "description": "Lån av bokskåp",
       "loanable": true,
       "loansPolicy": {
         "profileId": "Rolling",
         "period": {
-          "duration": 365,
+          "duration": 366,
           "intervalId": "Days"
         },
         "closedLibraryDueDateManagementId": "END_OF_THE_NEXT_OPEN_DAY",
         "gracePeriod": {
-          "duration": 7,
+          "duration": 1,
           "intervalId": "Days"
         }
       },
       "renewable": false,
-      "requestManagement": {
-        "recalls": {
-          "minimumGuaranteedLoanPeriod": {
-            "duration": 7,
-            "intervalId": "Days"
-          },
-          "recallReturnInterval": {
-            "duration": 1,
-            "intervalId": "Days"
-          },
-          "allowRecallsToExtendOverdueLoans": false
-        }
-      },
       "metadata": {
-        "createdDate": "2023-11-30T10:13:42.215+00:00",
-        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
-        "updatedDate": "2025-05-22T14:01:16.414+00:00",
+        "createdDate": "2025-06-30T06:54:24.305+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-07-07T13:24:12.423+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     },
@@ -58,33 +46,69 @@
       }
     },
     {
-      "id": "fea41ca1-ff77-4283-b9b3-3ad70082701e",
-      "name": "Framtages ej - digitiserad version finns",
-      "loanable": false,
-      "renewable": false,
-      "metadata": {
-        "createdDate": "2023-11-30T09:24:07.360+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2024-04-25T13:17:12.702+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
-      "id": "0b7f71f5-3de5-4bda-b565-ab0dec4be1c0",
-      "name": "Hemlån - 1 år",
+      "id": "4bfcb3cf-5599-4a1b-8e0a-1d4636d4e31e",
+      "name": "Läsesalslån ",
       "loanable": true,
       "loansPolicy": {
         "profileId": "Rolling",
         "period": {
-          "duration": 365,
+          "duration": 366,
           "intervalId": "Days"
         },
         "closedLibraryDueDateManagementId": "END_OF_THE_NEXT_OPEN_DAY",
         "gracePeriod": {
           "duration": 7,
           "intervalId": "Days"
+        }
+      },
+      "renewable": false,
+      "requestManagement": {
+        "recalls": {
+          "minimumGuaranteedLoanPeriod": {
+            "duration": 30,
+            "intervalId": "Days"
+          },
+          "recallReturnInterval": {
+            "duration": 1,
+            "intervalId": "Days"
+          },
+          "allowRecallsToExtendOverdueLoans": false
+        }
+      },
+      "metadata": {
+        "createdDate": "2023-11-30T10:13:42.215+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2025-07-07T13:26:53.978+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "7a588a04-f450-40c5-9a3f-fd46d5cdd2ee",
+      "name": "Ej utlån",
+      "loanable": false,
+      "renewable": false,
+      "metadata": {
+        "createdDate": "2024-06-24T09:01:16.022+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-01-17T14:03:40.757+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "0b7f71f5-3de5-4bda-b565-ab0dec4be1c0",
+      "name": "Hemlån ",
+      "loanable": true,
+      "loansPolicy": {
+        "profileId": "Rolling",
+        "period": {
+          "duration": 366,
+          "intervalId": "Days"
         },
-        "itemLimit": 99
+        "closedLibraryDueDateManagementId": "END_OF_THE_NEXT_OPEN_DAY",
+        "gracePeriod": {
+          "duration": 7,
+          "intervalId": "Days"
+        }
       },
       "renewable": false,
       "requestManagement": {
@@ -103,19 +127,7 @@
       "metadata": {
         "createdDate": "2024-09-04T12:00:04.754+00:00",
         "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-01-17T14:03:03.526+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
-      "id": "7a588a04-f450-40c5-9a3f-fd46d5cdd2ee",
-      "name": "Ej utlån",
-      "loanable": false,
-      "renewable": false,
-      "metadata": {
-        "createdDate": "2024-06-24T09:01:16.022+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-01-17T14:03:40.757+00:00",
+        "updatedDate": "2025-07-07T13:27:48.930+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     }

@@ -1,31 +1,6 @@
 {
   "locations": [
     {
-      "id": "8b8c1458-9a3f-4a05-8832-db9131d6b103",
-      "name": "Periodikarum ",
-      "code": "LOC-PRUM",
-      "discoveryDisplayName": "Magasin - Nyinkomna tidskrifter",
-      "isActive": true,
-      "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
-      "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
-      "libraryId": "1aae945c-bdf7-4e53-a236-477b7dfc77bf",
-      "details": {},
-      "primaryServicePoint": "e3b2dcde-069b-43ab-ba22-b5500cefc2f6",
-      "servicePointIds": [
-        "e3b2dcde-069b-43ab-ba22-b5500cefc2f6",
-        "996760f7-e64b-4c8e-b228-41f52fb9fade",
-        "fa60af7f-b89f-4a73-87b1-7d123900eb2f",
-        "ce8221d5-d05a-4341-9df8-702664d0d819"
-      ],
-      "servicePoints": [],
-      "metadata": {
-        "createdDate": "2023-11-16T10:31:59.932+00:00",
-        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
-        "updatedDate": "2025-03-24T08:01:14.201+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
       "id": "9d1b77e8-f02e-4b7f-b296-3f2042ddac54",
       "name": "DCB",
       "code": "000",
@@ -40,31 +15,6 @@
       "metadata": {
         "createdDate": "2025-04-17T13:29:58.714+00:00",
         "updatedDate": "2025-04-17T13:29:58.714+00:00"
-      }
-    },
-    {
-      "id": "57246b20-76a7-4725-91c7-dea9f336de4f",
-      "name": "Magasin - Tryckt samling",
-      "code": "LOC-TS",
-      "discoveryDisplayName": "Magasin",
-      "isActive": true,
-      "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
-      "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
-      "libraryId": "1aae945c-bdf7-4e53-a236-477b7dfc77bf",
-      "details": {},
-      "primaryServicePoint": "ec9ed36f-f5dd-4a32-9b02-64ace39c2699",
-      "servicePointIds": [
-        "996760f7-e64b-4c8e-b228-41f52fb9fade",
-        "fa60af7f-b89f-4a73-87b1-7d123900eb2f",
-        "ce8221d5-d05a-4341-9df8-702664d0d819",
-        "ec9ed36f-f5dd-4a32-9b02-64ace39c2699"
-      ],
-      "servicePoints": [],
-      "metadata": {
-        "createdDate": "2024-10-07T09:24:16.297+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-05-16T14:43:34.285+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     },
     {
@@ -140,7 +90,7 @@
       "id": "ed5b2b8f-81e1-41a6-8cdc-cd4c9df189f6",
       "name": "Desiderata",
       "code": "LOC-DES",
-      "discoveryDisplayName": "Desiderata",
+      "discoveryDisplayName": "Saknas i KB",
       "isActive": true,
       "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
       "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
@@ -154,7 +104,7 @@
       "metadata": {
         "createdDate": "2025-02-04T15:22:27.539+00:00",
         "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-06-02T06:58:43.054+00:00",
+        "updatedDate": "2025-07-01T09:54:26.800+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     },
@@ -177,6 +127,54 @@
         "createdDate": "2024-10-08T12:27:41.431+00:00",
         "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
         "updatedDate": "2025-01-20T10:49:25.281+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "c91234d9-107f-44de-a8d3-c2e6cbecee99",
+      "name": "Förvärvas ej",
+      "code": "LOC-EJ",
+      "discoveryDisplayName": "Förvärvas ej av KB",
+      "isActive": true,
+      "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
+      "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
+      "libraryId": "1aae945c-bdf7-4e53-a236-477b7dfc77bf",
+      "details": {},
+      "primaryServicePoint": "1876697c-c60a-42cf-8e6c-82776e7a7076",
+      "servicePointIds": [
+        "1876697c-c60a-42cf-8e6c-82776e7a7076"
+      ],
+      "servicePoints": [],
+      "metadata": {
+        "createdDate": "2025-07-03T14:23:34.311+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-07-03T14:23:34.311+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "57246b20-76a7-4725-91c7-dea9f336de4f",
+      "name": "Magasin - Tryckt samling",
+      "code": "LOC-TS",
+      "discoveryDisplayName": "Magasin",
+      "isActive": true,
+      "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
+      "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
+      "libraryId": "1aae945c-bdf7-4e53-a236-477b7dfc77bf",
+      "details": {},
+      "primaryServicePoint": "ec9ed36f-f5dd-4a32-9b02-64ace39c2699",
+      "servicePointIds": [
+        "996760f7-e64b-4c8e-b228-41f52fb9fade",
+        "ec9ed36f-f5dd-4a32-9b02-64ace39c2699",
+        "fa60af7f-b89f-4a73-87b1-7d123900eb2f",
+        "ce8221d5-d05a-4341-9df8-702664d0d819",
+        "54ff2ca8-8ad5-43c5-9979-b46830455fc2"
+      ],
+      "servicePoints": [],
+      "metadata": {
+        "createdDate": "2024-10-07T09:24:16.297+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-07-09T09:29:19.432+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     },
@@ -224,6 +222,31 @@
         "createdDate": "2025-01-17T13:43:35.233+00:00",
         "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
         "updatedDate": "2025-03-25T14:37:37.073+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "8b8c1458-9a3f-4a05-8832-db9131d6b103",
+      "name": "Periodikarum ",
+      "code": "LOC-PRUM",
+      "discoveryDisplayName": "Magasin - Tidskrifter under arbete",
+      "isActive": true,
+      "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
+      "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
+      "libraryId": "1aae945c-bdf7-4e53-a236-477b7dfc77bf",
+      "details": {},
+      "primaryServicePoint": "e3b2dcde-069b-43ab-ba22-b5500cefc2f6",
+      "servicePointIds": [
+        "e3b2dcde-069b-43ab-ba22-b5500cefc2f6",
+        "996760f7-e64b-4c8e-b228-41f52fb9fade",
+        "fa60af7f-b89f-4a73-87b1-7d123900eb2f",
+        "ce8221d5-d05a-4341-9df8-702664d0d819"
+      ],
+      "servicePoints": [],
+      "metadata": {
+        "createdDate": "2023-11-16T10:31:59.932+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2025-07-08T12:57:22.050+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     },
@@ -407,5 +430,5 @@
       }
     }
   ],
-  "totalRecords": 18
+  "totalRecords": 19
 }

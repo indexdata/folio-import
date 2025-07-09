@@ -411,29 +411,6 @@
       "category": "Loan"
     },
     {
-      "id": "d8414e6b-672b-4a43-b9db-81850afbb672",
-      "outputFormats": [
-        "text/html"
-      ],
-      "templateResolver": "mustache",
-      "localizedTemplates": {
-        "en": {
-          "header": "Din beställning är klar - hemlån",
-          "body": "<div>Följande titel som du har beställt är nu tillgänglig i {{request.servicePointPickup}}:</div><div><br></div><div>{{item.title}}</div><div>{{item.enumeration}}</div><div><br></div><div>Detta material är ett {{item.loanType}}. Här kan du läsa mer: <a href=\"https://kb.se/hitta-och-bestall/bestall-och-lana.html\" rel=\"noopener noreferrer\" target=\"_blank\">https://kb.se/hitta-och-bestall/bestall-och-lana.html</a></div><div><br></div><div>Hämtas senast: {{request.holdShelfExpirationDate}}</div><div><br></div><div>Aktuella öppettider: <a href=\"https://www.kb.se/besok-och-anvand/oppettider.html\" rel=\"noopener noreferrer\" target=\"_blank\">https://www.kb.se/besok-och-anvand/oppettider.html</a></div><div><br></div><div><br></div><div>Med vänliga hälsningar</div><div>Kungliga biblioteket</div><div><br></div><div>Telefon: 010-709 30 30 (vardagar kl. 9-16)</div><div>E-post: <a href=\"mailto:info@kb.se\" rel=\"noopener noreferrer\" target=\"_blank\">info@kb.se</a></div><div>Webb: <a href=\"https://www.kb.se\" rel=\"noopener noreferrer\" target=\"_blank\">https://www.kb.se</a></div>",
-          "attachments": []
-        }
-      },
-      "metadata": {
-        "createdDate": "2024-03-21T16:06:00.601+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-03-28T13:17:04.888+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      },
-      "name": "Avisering - hemlån",
-      "active": true,
-      "category": "Request"
-    },
-    {
       "id": "d5ac811a-1e5a-4628-93e4-51d666b43152",
       "description": "Skickas innan lånet går ut. ",
       "outputFormats": [
@@ -503,7 +480,125 @@
       "name": "Läsesalslån - maximal lånetid i pater noster",
       "active": true,
       "category": "Loan"
+    },
+    {
+      "id": "d8414e6b-672b-4a43-b9db-81850afbb672",
+      "outputFormats": [
+        "text/html"
+      ],
+      "templateResolver": "mustache",
+      "localizedTemplates": {
+        "en": {
+          "header": "Din beställning är klar - hemlån",
+          "body": "<div>Följande titel som du har beställt är nu tillgänglig i {{request.servicePointPickup}}:</div><div><br></div><div>{{item.title}}</div><div>{{item.enumeration}}</div><div><br></div><div>Denna bok är för hemlån. Här kan du läsa mer: <a href=\"https://kb.se/hitta-och-bestall/bestall-och-lana.html\" rel=\"noopener noreferrer\" target=\"_blank\">https://kb.se/hitta-och-bestall/bestall-och-lana.html</a></div><div><br></div><div>Hämtas senast: {{request.holdShelfExpirationDate}}</div><div><br></div><div>Aktuella öppettider: <a href=\"https://www.kb.se/besok-och-anvand/oppettider.html\" rel=\"noopener noreferrer\" target=\"_blank\">https://www.kb.se/besok-och-anvand/oppettider.html</a></div><div><br></div><div><br></div><div>Med vänliga hälsningar</div><div>Kungliga biblioteket</div><div><br></div><div>Telefon: 010-709 30 30 (vardagar kl. 9-16)</div><div>E-post: <a href=\"mailto:info@kb.se\" rel=\"noopener noreferrer\" target=\"_blank\">info@kb.se</a></div><div>Webb: <a href=\"https://www.kb.se\" rel=\"noopener noreferrer\" target=\"_blank\">https://www.kb.se</a></div>",
+          "attachments": []
+        }
+      },
+      "metadata": {
+        "createdDate": "2024-03-21T16:06:00.601+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-07-07T13:43:16.773+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "name": "Avisering - hemlån",
+      "active": true,
+      "category": "Request"
+    },
+    {
+      "id": "740f31e2-72b3-494a-a6c0-d10fb22e7855",
+      "description": "Förvarning",
+      "outputFormats": [
+        "text/html"
+      ],
+      "templateResolver": "mustache",
+      "localizedTemplates": {
+        "en": {
+          "header": "Avtalstiden för ditt bokskåp är snart slut",
+          "body": "<div>Hej,</div><div>Avtalstiden för ditt bokskåp är snart slut:{{loan.dueDate}}</div><div><br></div><div>Har du fortsatt behov av bokskåp? Ansök då om <a href=\"https://www.kb.se/besok-och-anvand/hitta-i-huset/forskarlasesalen/bokskap.html\" rel=\"noopener noreferrer\" target=\"_blank\">förlängning av avtalet på KB:s hemsida.</a> Glöm inte att beskriva ditt forskningsämne.</div><div><br></div><div>Vi vill att du uppfyller dessa kriterier:</div><ul><li>Du ska ha ett utökat behov av läsesalslån, det vill säga böcker som inte kan lånas hem. Med utökat behov avser vi fler än de sju som kan förvaras i expeditionen för information och lån. <strong>Vid ansökan måste du därför ha minst sju läsesalslån eller beställningar.</strong></li><li>Du ska bedriva <strong>forskning eller studier inom humaniora</strong>, eftersom KB är forskningsbibliotek inom främst humanistiska ämnen. Har du ett annat ämne kan du nekas bokskåp.</li><li>Du förväntas <strong>kunna besöka KB minst åtta gånger i månaden.</strong></li><li><br></li></ul><div>Om du inte längre har behov av bokskåpet, vänligen töm skåpet och återlämna nyckel och bokskåpsbricka i expeditionen för information och lån.</div><div><br></div><div>Vänliga hälsningar</div><div>Kungliga biblioteket</div><div><br></div><div><br></div><div><br></div>",
+          "attachments": []
+        }
+      },
+      "metadata": {
+        "createdDate": "2025-06-30T06:59:52.448+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-06-30T07:00:07.435+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "name": "Bokskåp - Förvarning",
+      "active": true,
+      "category": "Loan"
+    },
+    {
+      "id": "42982c21-6d09-4dd1-980c-d5c94ca7d923",
+      "description": "Första påminnelsen för lån av bokslåp.",
+      "outputFormats": [
+        "text/html"
+      ],
+      "templateResolver": "mustache",
+      "localizedTemplates": {
+        "en": {
+          "header": "Avtalstiden för ditt bokskåp är slut",
+          "body": "<div>Hej,</div><div>Avtalstiden för ditt bokskåp är slut. Vänligen töm skåpet och återlämna nyckel och bokskåpsbricka i expeditionen för information och lån.</div><div><br></div><div>Om nyckeln inte återlämnas [inom 14 dagar] kommer KB att betrakta nyckeln som förkommen och kräva ersättning för låsbyte à 500 kronor. Skåpet kommer att tömmas och lånen återlämnas.</div><div><br></div><div>Har du fortsatt behov av bokskåp? Ansök då om <a href=\"https://www.kb.se/besok-och-anvand/hitta-i-huset/forskarlasesalen/bokskap.html\" rel=\"noopener noreferrer\" target=\"_blank\">förlängning av avtalet på KB:s hemsida.</a> Glöm inte att beskriva ditt forskningsämne.</div><div><br></div>",
+          "attachments": []
+        }
+      },
+      "metadata": {
+        "createdDate": "2025-06-30T07:01:35.532+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-06-30T07:01:35.532+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "name": "Bokskåp - påminnelse 1",
+      "active": true,
+      "category": "Loan"
+    },
+    {
+      "id": "66295ae7-621d-4e75-9e57-3efb5db45f42",
+      "outputFormats": [
+        "text/html"
+      ],
+      "templateResolver": "mustache",
+      "localizedTemplates": {
+        "en": {
+          "header": "Avtalstiden för ditt bokskåp är slut - påminnelse",
+          "body": "<div>Hej,</div><div>Avtalstiden för ditt bokskåp är slut och du har inte ansökt om förlängning.</div><div><br></div><div>Vänligen töm skåpet och återlämna nyckel och bokskåpsbricka i expeditionen för information och lån.</div><div><br></div><div>Om nyckeln inte återlämnas [inom 14 dagar] kommer KB att betrakta nyckeln som förkommen och kräva ersättning för låsbyte à 500 kronor. Skåpet kommer att tömmas och lånen återlämnas.</div><div><br></div>",
+          "attachments": []
+        }
+      },
+      "metadata": {
+        "createdDate": "2025-06-30T07:02:28.268+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-06-30T07:02:28.268+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "name": "Bokskåp - påminnelse 2",
+      "active": true,
+      "category": "Loan"
+    },
+    {
+      "id": "6e9d52d6-8eb5-4e53-aa1e-b80c032b312b",
+      "description": "Meddelande som skickas vid beställning av Lagas före lån-material",
+      "outputFormats": [
+        "text/html"
+      ],
+      "templateResolver": "mustache",
+      "localizedTemplates": {
+        "en": {
+          "header": "Fördröjd framtagning",
+          "body": "<div>Hej,</div><div><br></div><div>Du har beställt material som behöver lagas eller annan åtgärd innan utlån kan ske. Det kan därför dröja några dagar innan materialet finns tillgängligt. Du får ett meddelande när materialet finns att hämta.</div><div><br></div><div>{{item.primaryContributor}}</div><div>{{item.title}}</div><div>{{item.enumeration}}</div><div><br></div><div>Vänliga hälsningar Kungliga biblioteket</div>",
+          "attachments": []
+        }
+      },
+      "metadata": {
+        "createdDate": "2025-06-30T07:17:37.406+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-06-30T07:20:29.077+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "name": "Lagas före lån - beställning",
+      "active": true,
+      "category": "Request"
     }
   ],
-  "totalRecords": 23
+  "totalRecords": 27
 }

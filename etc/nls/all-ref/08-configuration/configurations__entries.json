@@ -40,6 +40,19 @@
       }
     },
     {
+      "id": "4569f3c8-0828-484d-843d-e9f2786a0b27",
+      "module": "ORDERS",
+      "configName": "inventory-instanceTypeCode",
+      "enabled": true,
+      "value": "txt",
+      "metadata": {
+        "createdDate": "2025-06-16T07:47:47.385+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-06-16T07:47:47.385+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    },
+    {
       "id": "52801d6a-669e-4093-a83e-ce75e113124e",
       "module": "ORDERS CRUD MODULE",
       "configName": "custom_fields_label",
@@ -48,7 +61,7 @@
       "metadata": {
         "createdDate": "2025-05-27T10:40:56.928+00:00",
         "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-05-27T10:40:56.928+00:00",
+        "updatedDate": "2025-06-16T08:28:23.831+00:00",
         "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
       }
     },
@@ -116,18 +129,6 @@
       }
     },
     {
-      "id": "117df689-5d5f-4974-99e1-2cdbb3ae9056",
-      "module": "OAIPMH",
-      "configName": "technical",
-      "enabled": true,
-      "value": "{\"enableValidation\":\"false\",\"formattedOutput\":\"false\",\"srsClientIdleTimeoutSec\":\"20\",\"maxRecordsPerResponse\":\"200\",\"srsHttpRequestRetryAttempts\":\"50\"}",
-      "metadata": {
-        "createdDate": "2023-03-13T12:11:40.089+00:00",
-        "updatedDate": "2024-01-05T09:51:36.757+00:00",
-        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
-      }
-    },
-    {
       "id": "90a6e44a-2d9e-4fc3-8955-d84a8c982752",
       "module": "SETTINGS",
       "configName": "TLR",
@@ -138,45 +139,6 @@
         "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
         "updatedDate": "2024-03-21T16:14:19.443+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
-      "id": "162f218e-e86a-4a41-b1b0-972895c12b1c",
-      "module": "LOAN_HISTORY",
-      "configName": "loan_history",
-      "enabled": true,
-      "value": "{\"closingType\":{\"loan\":\"interval\",\"feeFine\":null,\"loanExceptions\":[]},\"loan\":{\"intervalId\":\"Weeks\",\"duration\":4},\"feeFine\":{},\"loanExceptions\":[],\"treatEnabled\":false}",
-      "metadata": {
-        "createdDate": "2023-11-16T13:41:21.891+00:00",
-        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
-        "updatedDate": "2024-06-03T08:01:41.173+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
-      "id": "a1780e58-236b-43be-b1cc-fd9d6cac8cb1",
-      "module": "USERS",
-      "configName": "custom_fields_label",
-      "enabled": true,
-      "value": "Custom fields",
-      "metadata": {
-        "createdDate": "2023-03-16T11:11:05.891+00:00",
-        "createdByUserId": "39a1ef78-5c0d-426c-b997-cb65c4f44ebd",
-        "updatedDate": "2025-01-17T07:57:10.036+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
-      "id": "77cc9c6d-bb1c-4975-8810-6fef2d93d895",
-      "module": "ORDERS",
-      "configName": "inventory-loanTypeName",
-      "enabled": true,
-      "value": "Hemlån",
-      "metadata": {
-        "createdDate": "2023-11-22T10:35:49.770+00:00",
-        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
-        "updatedDate": "2025-03-14T09:37:01.869+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
       }
     },
     {
@@ -193,15 +155,66 @@
       }
     },
     {
+      "id": "117df689-5d5f-4974-99e1-2cdbb3ae9056",
+      "module": "OAIPMH",
+      "configName": "technical",
+      "enabled": true,
+      "value": "{\"enableValidation\":\"false\",\"formattedOutput\":\"false\",\"srsClientIdleTimeoutSec\":\"20\",\"maxRecordsPerResponse\":\"500\",\"srsHttpRequestRetryAttempts\":\"50\"}",
+      "metadata": {
+        "createdDate": "2023-03-13T12:11:40.089+00:00",
+        "updatedDate": "2025-06-12T18:48:18.507+00:00",
+        "updatedByUserId": "31a8ae6e-5463-43a3-bc91-20f7fc2566f6"
+      }
+    },
+    {
+      "id": "77cc9c6d-bb1c-4975-8810-6fef2d93d895",
+      "module": "ORDERS",
+      "configName": "inventory-loanTypeName",
+      "enabled": true,
+      "value": "Läsesalslån",
+      "metadata": {
+        "createdDate": "2023-11-22T10:35:49.770+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2025-06-16T07:48:32.698+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    },
+    {
+      "id": "a1780e58-236b-43be-b1cc-fd9d6cac8cb1",
+      "module": "USERS",
+      "configName": "custom_fields_label",
+      "enabled": true,
+      "value": "Custom fields",
+      "metadata": {
+        "createdDate": "2023-03-16T11:11:05.891+00:00",
+        "createdByUserId": "39a1ef78-5c0d-426c-b997-cb65c4f44ebd",
+        "updatedDate": "2025-07-03T08:32:43.778+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "162f218e-e86a-4a41-b1b0-972895c12b1c",
+      "module": "LOAN_HISTORY",
+      "configName": "loan_history",
+      "enabled": true,
+      "value": "{\"closingType\":{\"loan\":\"interval\",\"feeFine\":null,\"loanExceptions\":[]},\"loan\":{\"intervalId\":\"Months\",\"duration\":6},\"feeFine\":{},\"loanExceptions\":[],\"treatEnabled\":false}",
+      "metadata": {
+        "createdDate": "2023-11-16T13:41:21.891+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2025-07-07T13:22:04.182+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
       "id": "1600314b-5cc7-42f6-8cfe-5ca44ffb6827",
       "module": "CHECKOUT",
       "configName": "other_settings",
       "enabled": true,
-      "value": "{\"audioAlertsEnabled\":false,\"audioTheme\":\"classic\",\"checkoutTimeout\":true,\"checkoutTimeoutDuration\":3,\"prefPatronIdentifier\":\"barcode,externalSystemId,username,customFields.personnummer\",\"useCustomFieldsAsIdentifiers\":true,\"wildcardLookupEnabled\":true}",
+      "value": "{\"audioAlertsEnabled\":false,\"audioTheme\":\"classic\",\"checkoutTimeout\":true,\"checkoutTimeoutDuration\":3,\"prefPatronIdentifier\":\"barcode,username,customFields.personnummer\",\"useCustomFieldsAsIdentifiers\":true,\"wildcardLookupEnabled\":true}",
       "metadata": {
         "createdDate": "2023-11-02T14:36:49.750+00:00",
         "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
-        "updatedDate": "2025-01-17T14:21:18.357+00:00",
+        "updatedDate": "2025-06-30T08:24:20.395+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     },
@@ -378,9 +391,9 @@
       }
     }
   ],
-  "totalRecords": 27,
+  "totalRecords": 28,
   "resultInfo": {
-    "totalRecords": 27,
+    "totalRecords": 28,
     "facets": [],
     "diagnostics": []
   }

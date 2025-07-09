@@ -1047,6 +1047,37 @@
       "totalRecordsInFile": 0
     },
     {
+      "id": "a0422dd8-0b62-4f6b-9dd8-1b8416a5eaf0",
+      "hrId": 98,
+      "parentJobId": "a0422dd8-0b62-4f6b-9dd8-1b8416a5eaf0",
+      "subordinationType": "PARENT_SINGLE",
+      "jobProfileInfo": {
+        "id": "d0ebb7b0-2f0f-11eb-adc1-0242ac120002",
+        "name": "Inventory Single Record - Default Create Instance",
+        "dataType": "MARC",
+        "hidden": false
+      },
+      "sourcePath": "No file name",
+      "fileName": "No file name",
+      "runBy": {
+        "firstName": "Esther",
+        "lastName": "Thegel"
+      },
+      "progress": {
+        "jobExecutionId": "a0422dd8-0b62-4f6b-9dd8-1b8416a5eaf0",
+        "current": 1,
+        "total": 1
+      },
+      "startedDate": "2025-06-17T10:31:39.621+00:00",
+      "completedDate": "2025-06-17T10:31:41.632+00:00",
+      "status": "COMMITTED",
+      "uiStatus": "RUNNING_COMPLETE",
+      "userId": "c27c16a6-e591-4042-8157-316fe0df3b28",
+      "jobPartNumber": 1,
+      "totalJobParts": 1,
+      "totalRecordsInFile": 0
+    },
+    {
       "id": "b17f599f-aea1-4841-82cc-57f777719346",
       "hrId": 50,
       "parentJobId": "b17f599f-aea1-4841-82cc-57f777719346",
@@ -1979,6 +2010,37 @@
       "totalRecordsInFile": 0
     },
     {
+      "id": "da30253d-adf5-45de-b32e-8b2074f7597b",
+      "hrId": 99,
+      "parentJobId": "da30253d-adf5-45de-b32e-8b2074f7597b",
+      "subordinationType": "PARENT_SINGLE",
+      "jobProfileInfo": {
+        "id": "d0ebb7b0-2f0f-11eb-adc1-0242ac120002",
+        "name": "Inventory Single Record - Default Create Instance",
+        "dataType": "MARC",
+        "hidden": false
+      },
+      "sourcePath": "No file name",
+      "fileName": "No file name",
+      "runBy": {
+        "firstName": "Esther",
+        "lastName": "Thegel"
+      },
+      "progress": {
+        "jobExecutionId": "da30253d-adf5-45de-b32e-8b2074f7597b",
+        "current": 1,
+        "total": 1
+      },
+      "startedDate": "2025-06-17T10:45:31.287+00:00",
+      "completedDate": "2025-06-17T10:45:32.385+00:00",
+      "status": "COMMITTED",
+      "uiStatus": "RUNNING_COMPLETE",
+      "userId": "c27c16a6-e591-4042-8157-316fe0df3b28",
+      "jobPartNumber": 1,
+      "totalJobParts": 1,
+      "totalRecordsInFile": 0
+    },
+    {
       "id": "8f5c7b7b-61c7-4130-ae40-3a8de6f5cf46",
       "hrId": 88,
       "parentJobId": "8f5c7b7b-61c7-4130-ae40-3a8de6f5cf46",
@@ -2005,6 +2067,37 @@
       "status": "COMMITTED",
       "uiStatus": "RUNNING_COMPLETE",
       "userId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+      "jobPartNumber": 1,
+      "totalJobParts": 1,
+      "totalRecordsInFile": 0
+    },
+    {
+      "id": "deb91ffe-4709-4261-bdb9-258779dfd395",
+      "hrId": 104,
+      "parentJobId": "deb91ffe-4709-4261-bdb9-258779dfd395",
+      "subordinationType": "PARENT_SINGLE",
+      "jobProfileInfo": {
+        "id": "d0ebb7b0-2f0f-11eb-adc1-0242ac120002",
+        "name": "Inventory Single Record - Default Create Instance",
+        "dataType": "MARC",
+        "hidden": false
+      },
+      "sourcePath": "No file name",
+      "fileName": "No file name",
+      "runBy": {
+        "firstName": "Esther",
+        "lastName": "Thegel"
+      },
+      "progress": {
+        "jobExecutionId": "deb91ffe-4709-4261-bdb9-258779dfd395",
+        "current": 1,
+        "total": 1
+      },
+      "startedDate": "2025-06-27T10:15:40.838+00:00",
+      "completedDate": "2025-06-27T10:15:42.634+00:00",
+      "status": "COMMITTED",
+      "uiStatus": "RUNNING_COMPLETE",
+      "userId": "c27c16a6-e591-4042-8157-316fe0df3b28",
       "jobPartNumber": 1,
       "totalJobParts": 1,
       "totalRecordsInFile": 0
@@ -2064,6 +2157,37 @@
       "totalJobParts": 1
     },
     {
+      "id": "1142d4de-e707-4ca5-8c4d-3262200162a9",
+      "hrId": 100,
+      "parentJobId": "1142d4de-e707-4ca5-8c4d-3262200162a9",
+      "subordinationType": "PARENT_SINGLE",
+      "jobProfileInfo": {
+        "id": "d0ebb7b0-2f0f-11eb-adc1-0242ac120002",
+        "name": "Inventory Single Record - Default Create Instance",
+        "dataType": "MARC",
+        "hidden": false
+      },
+      "sourcePath": "No file name",
+      "fileName": "No file name",
+      "runBy": {
+        "firstName": "Esther",
+        "lastName": "Thegel"
+      },
+      "progress": {
+        "jobExecutionId": "1142d4de-e707-4ca5-8c4d-3262200162a9",
+        "current": 1,
+        "total": 1
+      },
+      "startedDate": "2025-06-17T11:17:36.290+00:00",
+      "completedDate": "2025-06-17T11:17:37.203+00:00",
+      "status": "COMMITTED",
+      "uiStatus": "RUNNING_COMPLETE",
+      "userId": "c27c16a6-e591-4042-8157-316fe0df3b28",
+      "jobPartNumber": 1,
+      "totalJobParts": 1,
+      "totalRecordsInFile": 0
+    },
+    {
       "id": "1adbeb1b-f8fb-43be-a10b-50a6c1a40040",
       "hrId": 89,
       "parentJobId": "1adbeb1b-f8fb-43be-a10b-50a6c1a40040",
@@ -2090,6 +2214,37 @@
       "status": "COMMITTED",
       "uiStatus": "RUNNING_COMPLETE",
       "userId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+      "jobPartNumber": 1,
+      "totalJobParts": 1,
+      "totalRecordsInFile": 0
+    },
+    {
+      "id": "c531bccb-fa52-4d8a-9a60-02babcccb785",
+      "hrId": 105,
+      "parentJobId": "c531bccb-fa52-4d8a-9a60-02babcccb785",
+      "subordinationType": "PARENT_SINGLE",
+      "jobProfileInfo": {
+        "id": "d0ebb7b0-2f0f-11eb-adc1-0242ac120002",
+        "name": "Inventory Single Record - Default Create Instance",
+        "dataType": "MARC",
+        "hidden": false
+      },
+      "sourcePath": "No file name",
+      "fileName": "No file name",
+      "runBy": {
+        "firstName": "Esther",
+        "lastName": "Thegel"
+      },
+      "progress": {
+        "jobExecutionId": "c531bccb-fa52-4d8a-9a60-02babcccb785",
+        "current": 1,
+        "total": 1
+      },
+      "startedDate": "2025-06-27T10:42:49.830+00:00",
+      "completedDate": "2025-06-27T10:42:51.079+00:00",
+      "status": "COMMITTED",
+      "uiStatus": "RUNNING_COMPLETE",
+      "userId": "c27c16a6-e591-4042-8157-316fe0df3b28",
       "jobPartNumber": 1,
       "totalJobParts": 1,
       "totalRecordsInFile": 0
@@ -2136,6 +2291,37 @@
       "totalRecordsInFile": 0
     },
     {
+      "id": "fc143053-8edd-4088-97c4-a943e5c3bc05",
+      "hrId": 106,
+      "parentJobId": "fc143053-8edd-4088-97c4-a943e5c3bc05",
+      "subordinationType": "PARENT_SINGLE",
+      "jobProfileInfo": {
+        "id": "d0ebb7b0-2f0f-11eb-adc1-0242ac120002",
+        "name": "Inventory Single Record - Default Create Instance",
+        "dataType": "MARC",
+        "hidden": false
+      },
+      "sourcePath": "No file name",
+      "fileName": "No file name",
+      "runBy": {
+        "firstName": "Esther",
+        "lastName": "Thegel"
+      },
+      "progress": {
+        "jobExecutionId": "fc143053-8edd-4088-97c4-a943e5c3bc05",
+        "current": 1,
+        "total": 1
+      },
+      "startedDate": "2025-06-27T11:03:34.099+00:00",
+      "completedDate": "2025-06-27T11:03:35.198+00:00",
+      "status": "COMMITTED",
+      "uiStatus": "RUNNING_COMPLETE",
+      "userId": "c27c16a6-e591-4042-8157-316fe0df3b28",
+      "jobPartNumber": 1,
+      "totalJobParts": 1,
+      "totalRecordsInFile": 0
+    },
+    {
       "id": "cf901207-53be-43c8-86f6-49b4f97f73b2",
       "hrId": 95,
       "parentJobId": "cf901207-53be-43c8-86f6-49b4f97f73b2",
@@ -2155,6 +2341,37 @@
       "status": "DISCARDED",
       "uiStatus": "DISCARDED",
       "userId": "3c2fff57-5348-46cc-b823-b5f54b2be1d0",
+      "jobPartNumber": 1,
+      "totalJobParts": 1,
+      "totalRecordsInFile": 0
+    },
+    {
+      "id": "35ae6320-48a8-486f-b863-e56238633ef2",
+      "hrId": 109,
+      "parentJobId": "35ae6320-48a8-486f-b863-e56238633ef2",
+      "subordinationType": "PARENT_SINGLE",
+      "jobProfileInfo": {
+        "id": "d0ebb7b0-2f0f-11eb-adc1-0242ac120002",
+        "name": "Inventory Single Record - Default Create Instance",
+        "dataType": "MARC",
+        "hidden": false
+      },
+      "sourcePath": "No file name",
+      "fileName": "No file name",
+      "runBy": {
+        "firstName": "Esther",
+        "lastName": "Thegel"
+      },
+      "progress": {
+        "jobExecutionId": "35ae6320-48a8-486f-b863-e56238633ef2",
+        "current": 1,
+        "total": 1
+      },
+      "startedDate": "2025-06-27T11:18:48.106+00:00",
+      "completedDate": "2025-06-27T11:18:49.735+00:00",
+      "status": "COMMITTED",
+      "uiStatus": "RUNNING_COMPLETE",
+      "userId": "c27c16a6-e591-4042-8157-316fe0df3b28",
       "jobPartNumber": 1,
       "totalJobParts": 1,
       "totalRecordsInFile": 0
@@ -2214,6 +2431,161 @@
       "totalJobParts": 1
     },
     {
+      "id": "e6ebe4d8-efb7-4a78-8d25-36df36c7be90",
+      "hrId": 101,
+      "parentJobId": "e6ebe4d8-efb7-4a78-8d25-36df36c7be90",
+      "subordinationType": "PARENT_SINGLE",
+      "jobProfileInfo": {
+        "id": "d0ebb7b0-2f0f-11eb-adc1-0242ac120002",
+        "name": "Inventory Single Record - Default Create Instance",
+        "dataType": "MARC",
+        "hidden": false
+      },
+      "sourcePath": "No file name",
+      "fileName": "No file name",
+      "runBy": {
+        "firstName": "Esther",
+        "lastName": "Thegel"
+      },
+      "progress": {
+        "jobExecutionId": "e6ebe4d8-efb7-4a78-8d25-36df36c7be90",
+        "current": 1,
+        "total": 1
+      },
+      "startedDate": "2025-06-17T11:27:24.574+00:00",
+      "completedDate": "2025-06-17T11:27:25.781+00:00",
+      "status": "COMMITTED",
+      "uiStatus": "RUNNING_COMPLETE",
+      "userId": "c27c16a6-e591-4042-8157-316fe0df3b28",
+      "jobPartNumber": 1,
+      "totalJobParts": 1,
+      "totalRecordsInFile": 0
+    },
+    {
+      "id": "f6d83a3d-f4d5-4a53-867d-2613fceab1ca",
+      "hrId": 102,
+      "parentJobId": "f6d83a3d-f4d5-4a53-867d-2613fceab1ca",
+      "subordinationType": "PARENT_SINGLE",
+      "jobProfileInfo": {
+        "id": "d0ebb7b0-2f0f-11eb-adc1-0242ac120002",
+        "name": "Inventory Single Record - Default Create Instance",
+        "dataType": "MARC",
+        "hidden": false
+      },
+      "sourcePath": "No file name",
+      "fileName": "No file name",
+      "runBy": {
+        "firstName": "Esther",
+        "lastName": "Thegel"
+      },
+      "progress": {
+        "jobExecutionId": "f6d83a3d-f4d5-4a53-867d-2613fceab1ca",
+        "current": 1,
+        "total": 1
+      },
+      "startedDate": "2025-06-17T11:28:25.532+00:00",
+      "completedDate": "2025-06-17T11:28:26.827+00:00",
+      "status": "COMMITTED",
+      "uiStatus": "RUNNING_COMPLETE",
+      "userId": "c27c16a6-e591-4042-8157-316fe0df3b28",
+      "jobPartNumber": 1,
+      "totalJobParts": 1,
+      "totalRecordsInFile": 0
+    },
+    {
+      "id": "4cca1ee3-0086-4ee4-a1ea-f5aa87e9cd4a",
+      "hrId": 107,
+      "parentJobId": "4cca1ee3-0086-4ee4-a1ea-f5aa87e9cd4a",
+      "subordinationType": "PARENT_SINGLE",
+      "jobProfileInfo": {
+        "id": "d0ebb7b0-2f0f-11eb-adc1-0242ac120002",
+        "name": "Inventory Single Record - Default Create Instance",
+        "dataType": "MARC",
+        "hidden": false
+      },
+      "sourcePath": "No file name",
+      "fileName": "No file name",
+      "runBy": {
+        "firstName": "Esther",
+        "lastName": "Thegel"
+      },
+      "progress": {
+        "jobExecutionId": "4cca1ee3-0086-4ee4-a1ea-f5aa87e9cd4a",
+        "current": 1,
+        "total": 1
+      },
+      "startedDate": "2025-06-27T11:08:00.399+00:00",
+      "completedDate": "2025-06-27T11:08:01.384+00:00",
+      "status": "COMMITTED",
+      "uiStatus": "RUNNING_COMPLETE",
+      "userId": "c27c16a6-e591-4042-8157-316fe0df3b28",
+      "jobPartNumber": 1,
+      "totalJobParts": 1,
+      "totalRecordsInFile": 0
+    },
+    {
+      "id": "eb9b57b5-0906-4828-96c8-cfc07150ad5c",
+      "hrId": 108,
+      "parentJobId": "eb9b57b5-0906-4828-96c8-cfc07150ad5c",
+      "subordinationType": "PARENT_SINGLE",
+      "jobProfileInfo": {
+        "id": "d0ebb7b0-2f0f-11eb-adc1-0242ac120002",
+        "name": "Inventory Single Record - Default Create Instance",
+        "dataType": "MARC",
+        "hidden": false
+      },
+      "sourcePath": "No file name",
+      "fileName": "No file name",
+      "runBy": {
+        "firstName": "Esther",
+        "lastName": "Thegel"
+      },
+      "progress": {
+        "jobExecutionId": "eb9b57b5-0906-4828-96c8-cfc07150ad5c",
+        "current": 1,
+        "total": 1
+      },
+      "startedDate": "2025-06-27T11:08:54.592+00:00",
+      "completedDate": "2025-06-27T11:08:55.398+00:00",
+      "status": "COMMITTED",
+      "uiStatus": "RUNNING_COMPLETE",
+      "userId": "c27c16a6-e591-4042-8157-316fe0df3b28",
+      "jobPartNumber": 1,
+      "totalJobParts": 1,
+      "totalRecordsInFile": 0
+    },
+    {
+      "id": "bd1ab237-8463-4cad-b1fe-16b0bce918ec",
+      "hrId": 110,
+      "parentJobId": "bd1ab237-8463-4cad-b1fe-16b0bce918ec",
+      "subordinationType": "PARENT_SINGLE",
+      "jobProfileInfo": {
+        "id": "d0ebb7b0-2f0f-11eb-adc1-0242ac120002",
+        "name": "Inventory Single Record - Default Create Instance",
+        "dataType": "MARC",
+        "hidden": false
+      },
+      "sourcePath": "No file name",
+      "fileName": "No file name",
+      "runBy": {
+        "firstName": "Esther",
+        "lastName": "Thegel"
+      },
+      "progress": {
+        "jobExecutionId": "bd1ab237-8463-4cad-b1fe-16b0bce918ec",
+        "current": 1,
+        "total": 1
+      },
+      "startedDate": "2025-06-27T11:19:58.049+00:00",
+      "completedDate": "2025-06-27T11:19:58.780+00:00",
+      "status": "COMMITTED",
+      "uiStatus": "RUNNING_COMPLETE",
+      "userId": "c27c16a6-e591-4042-8157-316fe0df3b28",
+      "jobPartNumber": 1,
+      "totalJobParts": 1,
+      "totalRecordsInFile": 0
+    },
+    {
       "id": "2a15c51c-b358-4a8a-9f91-f2de85b86527",
       "hrId": 36,
       "parentJobId": "2a15c51c-b358-4a8a-9f91-f2de85b86527",
@@ -2242,6 +2614,37 @@
       "userId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
       "jobPartNumber": 1,
       "totalJobParts": 1
+    },
+    {
+      "id": "2f4660cb-5ac5-4348-be5d-4a77e4904092",
+      "hrId": 103,
+      "parentJobId": "2f4660cb-5ac5-4348-be5d-4a77e4904092",
+      "subordinationType": "PARENT_SINGLE",
+      "jobProfileInfo": {
+        "id": "d0ebb7b0-2f0f-11eb-adc1-0242ac120002",
+        "name": "Inventory Single Record - Default Create Instance",
+        "dataType": "MARC",
+        "hidden": false
+      },
+      "sourcePath": "No file name",
+      "fileName": "No file name",
+      "runBy": {
+        "firstName": "Esther",
+        "lastName": "Thegel"
+      },
+      "progress": {
+        "jobExecutionId": "2f4660cb-5ac5-4348-be5d-4a77e4904092",
+        "current": 1,
+        "total": 1
+      },
+      "startedDate": "2025-06-17T12:20:26.906+00:00",
+      "completedDate": "2025-06-17T12:20:28.742+00:00",
+      "status": "COMMITTED",
+      "uiStatus": "RUNNING_COMPLETE",
+      "userId": "c27c16a6-e591-4042-8157-316fe0df3b28",
+      "jobPartNumber": 1,
+      "totalJobParts": 1,
+      "totalRecordsInFile": 0
     },
     {
       "id": "b183a380-4c66-4a84-8b06-6b9a1f354ecc",
@@ -2424,5 +2827,5 @@
       "totalJobParts": 1
     }
   ],
-  "totalRecords": 92
+  "totalRecords": 105
 }

@@ -83,7 +83,31 @@
         "updatedDate": "2025-04-29T07:22:39.000+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
+    },
+    {
+      "id": "7a22cb69-d78d-44d2-856e-c482824b8ac0",
+      "code": "rt",
+      "name": "Riksdagstryck",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-06-17T11:43:14.696+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-06-17T11:43:14.696+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    },
+    {
+      "id": "c9ee35a5-3847-4172-9958-fa5fca46e749",
+      "code": "fe",
+      "name": "Förvärvas ej",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-07-01T12:49:04.614+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-07-01T12:49:04.614+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
     }
   ],
-  "totalRecords": 8
+  "totalRecords": 10
 }

@@ -38,7 +38,13 @@
       "id": "0b52bca7-db17-4e91-a740-7872ed6d7323",
       "name": "Due date receipt",
       "active": true,
-      "template": "<p></p>"
+      "template": "<div>Lånat material: </div><div><br></div><div>{{item.primaryContributor}}</div><div>{{item.title}}</div><div>{{item.enumeration}}</div><div>{{item.barcode}}</div><div><br></div><div>{{item.loanType}}</div><div><br></div><div>Återlämnas senast: {{loan.dueDate}}</div><div><br></div><div>Garanterad lånetid är 30 dagar från utlåningsdatum. Därefter kan materialet krävas in om annan låntagare ställer sig på kö. </div>",
+      "metadata": {
+        "createdDate": "2025-07-07T14:30:38.133+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-07-07T14:30:38.133+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
     },
     {
       "id": "6a6e72f0-69da-4b4c-8254-7154679e9d88",
@@ -54,10 +60,12 @@
       "id": "f838cdaf-555a-473f-abf1-f35ef6ab8ae1",
       "name": "Transit",
       "active": true,
-      "template": "<p></p>",
+      "template": "<div>Detta exemplar ska till: {{request.servicePointPickup}}</div><div><br></div><div>{{item.primaryContributor}}</div><div>{{item.title}}</div><div>{{item.barcode}}</div><div>{{item.callNumber}}</div><div><br></div><div>{{item.loanType}}</div><div><br></div><div>Beställd: {{request.requestDate}}</div><div><br></div>",
       "metadata": {
-        "createdDate": "2024-10-04T08:22:05.015+00:00",
-        "updatedDate": "2024-10-04T08:22:05.015+00:00"
+        "createdDate": "2025-07-07T14:27:16.587+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-07-07T14:27:16.587+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     }
   ],

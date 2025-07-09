@@ -1,0 +1,108 @@
+{
+  "manualblocks": [
+    {
+      "type": "manual",
+      "desc": "Spärrad pga försenat lån",
+      "code": "40",
+      "staffInformation": "New patron",
+      "patronMessage": "Ditt konto är låst på grund av försenade lån. ",
+      "borrowing": true,
+      "renewals": true,
+      "requests": false,
+      "userId": "26ca0445-2e31-5429-9815-e61caf4dead8",
+      "metadata": {
+        "createdDate": "2025-06-21T15:20:02.122+00:00",
+        "createdByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487",
+        "updatedDate": "2025-06-21T15:20:02.122+00:00",
+        "updatedByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487"
+      },
+      "id": "aae4bd6f-8c1b-5d30-a1cc-1fba9ed0c39f"
+    },
+    {
+      "type": "manual",
+      "desc": "Spärrad pga försenat lån",
+      "code": "40",
+      "patronMessage": "Ditt konto är låst på grund av försenade lån. ",
+      "borrowing": true,
+      "renewals": true,
+      "requests": false,
+      "userId": "bc43deec-8628-5ac8-8b66-53f56e6aca23",
+      "metadata": {
+        "createdDate": "2025-06-21T15:20:02.170+00:00",
+        "createdByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487",
+        "updatedDate": "2025-06-21T15:20:02.170+00:00",
+        "updatedByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487"
+      },
+      "id": "1dabec62-6928-5481-9ed3-be60a98d06aa"
+    },
+    {
+      "type": "manual",
+      "desc": "Spärrad pga försenat lån",
+      "code": "40",
+      "patronMessage": "Ditt konto är låst på grund av försenade lån. ",
+      "borrowing": true,
+      "renewals": true,
+      "requests": false,
+      "userId": "6b189032-b303-5465-8d22-784dde096095",
+      "metadata": {
+        "createdDate": "2025-06-21T15:20:02.192+00:00",
+        "createdByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487",
+        "updatedDate": "2025-06-21T15:20:02.192+00:00",
+        "updatedByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487"
+      },
+      "id": "d832f5d2-d147-5c41-91d8-44cf6b58a71a"
+    },
+    {
+      "type": "manual",
+      "desc": "Spärrad pga försenat lån",
+      "code": "40",
+      "patronMessage": "Ditt konto är låst på grund av försenade lån. ",
+      "borrowing": true,
+      "renewals": true,
+      "requests": false,
+      "userId": "550c31d3-1d62-532c-b0ae-51e27356b3e3",
+      "metadata": {
+        "createdDate": "2025-06-21T15:20:02.211+00:00",
+        "createdByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487",
+        "updatedDate": "2025-06-21T15:20:02.211+00:00",
+        "updatedByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487"
+      },
+      "id": "9243150d-10a2-5c2e-8605-c3c6c8a0c571"
+    },
+    {
+      "type": "manual",
+      "desc": "Spärrad pga försenat lån",
+      "code": "40",
+      "patronMessage": "Ditt konto är låst på grund av försenade lån. ",
+      "borrowing": true,
+      "renewals": true,
+      "requests": false,
+      "userId": "c3116ace-2125-5dc9-a217-5809779a7c1a",
+      "metadata": {
+        "createdDate": "2025-06-21T15:20:02.224+00:00",
+        "createdByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487",
+        "updatedDate": "2025-06-21T15:20:02.224+00:00",
+        "updatedByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487"
+      },
+      "id": "e20054af-0efc-5f45-959b-ab1dfa7b6133"
+    },
+    {
+      "type": "manual",
+      "desc": "Spärrad pga försenat lån",
+      "code": "40",
+      "patronMessage": "Ditt konto är låst på grund av försenade lån. ",
+      "borrowing": true,
+      "renewals": true,
+      "requests": false,
+      "userId": "3b6a2b60-b97d-5d45-90c1-27dfc1a9969b",
+      "metadata": {
+        "createdDate": "2025-06-21T15:20:02.236+00:00",
+        "createdByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487",
+        "updatedDate": "2025-06-21T15:20:02.236+00:00",
+        "updatedByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487"
+      },
+      "id": "bc9f515c-62a0-541c-8502-c0d3ea5969cd"
+    }
+  ],
+  "totalRecords": 6
+}

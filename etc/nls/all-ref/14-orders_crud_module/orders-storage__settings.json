@@ -1,0 +1,17 @@
+{
+  "settings": [
+    {
+      "id": "e6fd9fa0-9900-47c4-ba1d-f686225b707d",
+      "_version": 1,
+      "key": "ROUTING_USER_ADDRESS_TYPE_ID",
+      "value": "b6f4d1c6-0dfa-463c-9534-f49c4f0ae090",
+      "metadata": {
+        "createdDate": "2025-06-19T08:47:03.007+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-06-19T08:47:03.007+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    }
+  ],
+  "totalRecords": 1
+}

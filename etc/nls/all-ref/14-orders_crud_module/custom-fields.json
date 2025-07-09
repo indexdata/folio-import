@@ -15,14 +15,37 @@
         "fieldFormat": "TEXT"
       },
       "metadata": {
-        "createdDate": "2023-03-16T12:11:05.921+00:00",
+        "createdDate": "2023-03-16T11:11:05.921+00:00",
         "createdByUserId": "39a1ef78-5c0d-426c-b997-cb65c4f44ebd",
         "createdByUsername": "kbtest",
-        "updatedDate": "2025-01-17T07:57:10.009+00:00",
+        "updatedDate": "2025-07-03T08:32:44.059+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedByUsername": "kajsa.backius"
+      }
+    },
+    {
+      "id": "fed73747-9132-4196-9c70-34696a0066b7",
+      "name": "Aleph-id",
+      "refId": "alephid",
+      "type": "TEXTBOX_SHORT",
+      "entityType": "user",
+      "visible": true,
+      "required": false,
+      "isRepeatable": false,
+      "order": 2,
+      "helpText": "",
+      "textField": {
+        "fieldFormat": "TEXT"
+      },
+      "metadata": {
+        "createdDate": "2025-07-03T08:32:44.059+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "createdByUsername": "kajsa.backius",
+        "updatedDate": "2025-07-03T08:32:44.059+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
         "updatedByUsername": "kajsa.backius"
       }
     }
   ],
-  "totalRecords": 1
+  "totalRecords": 2
 }
