@@ -1,0 +1,75 @@
+						
+RRLEX	1				Läsesalslån	
+RRLEX	1	DB			Läsesalslån	Digital beställning
+RRLEX	1	LA			Läsesalslån	Lagas före lån
+RRLEX	1	LL			Läsesalslån	L-samling - kollas före lån
+RRLEX	1	UL			Läsesalslån	
+RRLEX	2				Hemlån	
+RRLEX	2	LA			Hemlån	Lagas före lån
+RRLEX	2	UL			Hemlån	
+RRLEX	3				Bokskåp	
+RRLEX	2	DB			Hemlån	Digital beställning
+						
+RRLEX	5				Framtages ej/spärrat	
+RRLEX	6				Läsesalslån	
+RRLEX	6	DB			Läsesalslån	Digital beställning
+						
+RRLEX	71				Läsesalslån	
+RRLEX	71	DB			Läsesalslån	Digital beställning
+RRLEX	71	SN			Hemlån	
+RRLEX	72				Läsesalslån	Saknas i KB
+RRLEX	73					
+						
+RRLEX	32				Hemlån	
+RRLEX	31				Läsesalslån	
+RRLEX	42				Läsesalslån	
+						
+						
+RRSPE	21				Specialläsesalslån	
+RRSPE	21	DB			Specialläsesalslån	Digital beställning
+RRSPE	21	DS			Specialläsesalslån	
+RRSPE	21	LA			Specialläsesalslån	Lagas före lån
+RRSPE	21	LL			Specialläsesalslån	L-samling - kollas före lån
+RRSPE	27				Manuell beställning	
+						
+RRSPE	71				Specialläsesalslån	
+RRSPE	72				Specialläsesalslån	Saknas i KB
+RRSPE	26				Specialläsesalslån	
+RRSPE	26	DB			Specialläsesalslån	Digital beställning
+RRSPE	26	LA			Specialläsesalslån	Lagas före lån
+RRSPE	26	LL			Specialläsesalslån	L-samling - kollas före lån
+RRSPE	23				Specialläsesalslån	
+RRSPE	23	LA			Specialläsesalslån	Lagas före lån
+RRSPE	23	LL			Specialläsesalslån	L-samling - kollas före lån
+						
+RRSPE	28				Specialläsesalslån	
+RRSPE	28	DB			Specialläsesalslån	Digital beställning
+RRSPE	28	LA			Specialläsesalslån	Lagas före lån
+RRSPE	28	RP			Framtages ej/spärrat	
+RRSPE	31				Specialläsesalslån	
+RRSPE	32				Specialläsesalslån	
+						
+MFL	4				Referens	
+MFL	5				Framtages ej/spärrat	
+						
+REF	4				Referens	
+REF	72				Referens	Saknas i KB
+						
+PRUMS	1				Läsesalslån	
+PRUMS	21				Specialläsesalslån	
+PRUMS	5				Framtages ej/spärrat	
+						
+TLKB	4				Referens	
+						
+ENHET	3				Framtages ej/spärrat	
+ENHET	22				Framtages ej/spärrat	
+ENHET	73				Bokskåp	
+						
+RESTR	3				Framtages ej/spärrat	
+RESTR	3	RP			Framtages ej/spärrat	
+RESTR	5				Framtages ej/spärrat	
+RESTR	22				Framtages ej/spärrat	
+RESTR	23				Framtages ej/spärrat	
+RESTR	22	RP			Framtages ej/spärrat	
+						
+REPRO	1				Läsesalslån	

@@ -169,6 +169,18 @@ try {
             k += `:${c[1]}:${c[2]}:${c[3]}:${c[4]}`;
             k = k.replace(/:+$/, '');
             v = c[7].toLowerCase().trim();
+          } else if (k && prop === 'loantypes') {
+            let cb = (c[1] && c[1].match(/\w/)) ? c[1].padStart(2, '0') : '_';
+            let cc = c[2] || '_';
+            let p = c[5].trim();
+            let t = c[6].trim();
+            if (!tsvMap[prop][k]) tsvMap[prop][k] = {};
+            if (cb && !tsvMap[prop][k][cb]) tsvMap[prop][k][cb] = {};
+            if (cc && !tsvMap[prop][k][cc]) tsvMap[prop][k][cb][cc] = {};
+            if (cb && cc) {
+              if (p) tsvMap[prop][k][cb][cc].p = p;
+              if (t) tsvMap[prop][k][cb][cc].t = t;
+            }
           } else if (c[1]) {
             v = c[1].trim();
           }
@@ -177,7 +189,7 @@ try {
       }
     });
   }
-  // throw(tsvMap.locations);
+  // throw(JSON.stringify(tsvMap.loantypes, null, 2));
 
   console.log(`INFO Parsing instance map at ${mapFile}`);
   const instMap = {};
@@ -260,7 +272,6 @@ try {
   let sro = 0;
 
   const makeHoldingsItems = (r) => {
-    // console.log(r);
     let aid = r.Z30_REC_KEY.substring(0, 9);
     let iid = r.Z30_REC_KEY;
     let bid = linkMap[aid] || '';
@@ -500,8 +511,10 @@ try {
           });
         }
 
+        /*
         let pl = '';
         let tl = '';
+
         if (loc === 'RRLEX') {
           if (st === '01') {
             pl = 'Läsesalslån';
@@ -582,7 +595,11 @@ try {
         } else if (loc === 'RESTR' && (st === '03' || st === '22')) {
           pl = 'Framtages ej/spärrat';
         }
+        */
 
+        let ltypes = (tsvMap.loantypes[loc] && tsvMap.loantypes[loc][st]) ? tsvMap.loantypes[loc][st][ips] || tsvMap.loantypes[loc][st]._ : '';
+        let pl = ltypes.p;
+        let tl = ltypes.t;
         i.permanentLoanTypeId = refData.loantypes[pl];
         if (tl) { 
           i.temporaryLoanTypeId = refData.loantypes[tl];
@@ -612,7 +629,7 @@ try {
             console.log(`ERROR ITEM materialType not found for "${mt}"!`);
           }
         } else {
-          console.log(`ERROR ITEM permanantLoanType not found for "${loc}:${st}:${ips} (${pl})"!`);
+          console.log(`ERROR ITEM permanantLoanType not found for "${loc}:${st}:${ips} (${iid})"!`);
           ttl.itemErrors++;
         }
       }
