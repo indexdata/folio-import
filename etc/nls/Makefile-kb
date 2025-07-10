@@ -1,12 +1,21 @@
 wd=/home/konchaled/folio-import
 data=/data/konchaled
+ref=$(data)/ref
+uref=$(ref)/usr
+iref=$(ref)/inv
 idir=$(data)/big
+udir=$(data)/users
 inv2=$(wd)/inventory2
 con=$(inv2)/conf/nls-kb.json
 ldir=$(data)/log
+etc=$(wd)/etc/nls
+
+setup:
+	cd $(wd); node migrationRef.js $(ref)
+	cd $(iref); rm *.tsv; ln -s $(etc)/*.tsv .
 
 instances:
-	cd $(inv2); node marc2inst-nls.js $(con) $(idir)/bibs.mrc > $(ldir)/makeInst.log 2>makeInst.err &
+	cd $(inv2); node marc2inst-nls.js $(con) $(idir)/bibs.mrc > $(ldir)/makeInst.log 2>$(ldir)/makeInst.err &
 
 suppress-inst:
 	cd $(inv2); node suppressInst-nls.js "$(idir)/bibs-suppress.jsonl"
@@ -21,3 +30,7 @@ inventory-prep:
 	cd $(idir); split -n l/5 bibs-srs.jsonl sr
 	cd $(idir); split -n l/5 bibs-holdings.jsonl ho
 	cd $(idir); split -n l/5 bibs-items.jsonl it
+
+users:
+	cd $(wd)/patrons; node nlsUsers.js $(uref) $(udir) > $(ldir)/makeUsers.log 2>$(ldir)/makeUsers.err
+	cat $(ldir)/makeUsers.log
