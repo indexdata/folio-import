@@ -270,8 +270,8 @@ try {
       }
       u.customFields.personnummer = pidStr;
     }
-    if (aid) {
-      u.customFields.alephid = aid;
+    if (id) {
+      u.customFields.alephid = id;
     }
     
     if (u.personal.email) {
