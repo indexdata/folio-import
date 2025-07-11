@@ -791,7 +791,6 @@ try {
             });
           });
           inst.languages = langs;
-          console.log(inst.languages);
         }
         if (!inst.instanceTypeId) inst.instanceTypeId = '30fffe0e-e985-4144-b2e2-1e8179bdb41f';
         if (inst.electronicAccess) {
