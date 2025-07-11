@@ -785,12 +785,13 @@ try {
         if (inst.languages) {
           let langs = [];
           inst.languages.forEach(l => {
-            let r = l.match(/.{1,3}/g);
+            let r = l.match(/.{1,3}/g) || [];
             r.forEach(c => {
               if (langs.indexOf(c) === -1) langs.push(c);
             });
           });
           inst.languages = langs;
+          console.log(inst.languages);
         }
         if (!inst.instanceTypeId) inst.instanceTypeId = '30fffe0e-e985-4144-b2e2-1e8179bdb41f';
         if (inst.electronicAccess) {
