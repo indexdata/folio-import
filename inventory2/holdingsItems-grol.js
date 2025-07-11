@@ -358,7 +358,23 @@ try {
             writeOut(outs.holdings, h);
             ttl.holdings++;
           } else {
-            console.loc(`ERROR holdings record did not pass verification: ${bid}:${c}`);
+            console.log(`ERROR holdings record did not pass verification: ${bid}:${c}`);
+          }
+          let ihrid = iprefix + hhrid;
+          let i = {
+            _version: 1,
+            id: uuid(ihrid, ns),
+            hrid: ihrid,
+            holdingsRecordId: hid,
+            permanentLoanTypeId: refData.loantypes['Reading room'],
+            materialTypeId: refData.mtypes.Physical,
+            status: { name: 'Available' }
+          };
+          if (i.permanentLoanTypeId && i.materialTypeId) {
+            writeOut(outs.items, i);
+            ttl.items++;
+          } else {
+            console.log(`ERROR item record did not pass verification: ${bid}:${c}`);
           }
         }
         occ[bid]++;
