@@ -435,14 +435,16 @@ try {
         }
         if (adminNotes[locId]) i.administrativeNotes = adminNotes[locId];
 
-        if (ips.match(/^(FK|CL)$/)) {
+        if (ips.match(/^(FK)$/)) {
           i.status.name = 'Missing';
+        } else if (ips.match(/^(NA|UL|CL)$/)) {
+          i.status.name = 'On order';
           if (ips === 'CL') {
             nt.s.push('Reklamerad');
           }
-        } else if (ips.match(/^(NA|UL)$/)) {
-          i.status.name = 'On order';
-        } else if (ips === 'UA') {
+        } else if (st === '72') {
+          i.status.name = 'Missing';
+        } else if (!(loc === 'TLKB' && st === '04') && ips === 'UA') {
           i.status.name = 'In process';
         } else if (st === '71' && loc.match(/^(RRLEX|RRSPE)$/)) {
           i.status.name = 'Long missing';
