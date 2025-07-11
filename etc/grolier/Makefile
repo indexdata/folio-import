@@ -31,9 +31,6 @@ items: $(in)/*Items*xlsx
 	cd $(inv2); node holdingsItems-grol conf/grolier.json $(idir)/bibs.map $(idir)/items.csv > $(log)/makeHoldingsItems.log
 	cat $(log)/makeHoldingsItems.log
 
-clean-inventory:
-	cd $(idir); rm *.marc *.mrc *.csv count*
-
 authorities: $(in)/*Auths*.mrc
 	cd $(adir); rm -r auth.raw; ln -s $(in)/*Auths*.mrc auth.raw
 	yaz-marcdump -f marc8 -t utf8 -l 9=97 -o marc $(adir)/auth.raw > $(adir)/auth.mrc
@@ -41,30 +38,14 @@ authorities: $(in)/*Auths*.mrc
 	tail -f $(log)/makeAuth.log
 
 split-authorities: $(adir)/auth-authorities.jsonl
-	cd $(adir); split -l 11000 auth-authorities.jsonl aa
-	cd $(adir); split -l 11000 auth-srs.jsonl as
+	cd $(adir); split -l 6000 auth-authorities.jsonl aa
+	cd $(adir); split -l 6000 auth-srs.jsonl as
 
-clean-authorities: $(adir)/auth.mrc
-	cd $(adir); rm *.mrc
-
-users: $(in)/Users*csv
-	cd $(udir); ln -s $(in)/Users*csv users.csv
-	cd $(udir); grep -vc USERNAME users.txt > count.txt; cat count.txt
-	cd $(wd)/patrons; node pcomUsers $(uref) $(udir)/users.csv > $(log)/makeUsers.log
+users: $(in)/Roster*csv
+	cd $(udir); rm users.csv; ln -s $(in)/Roster*csv users.csv
+	cd $(udir); grep -vc Username users.csv > count.txt; cat count.txt
+	cd $(wd)/patrons; node grolUsers $(uref) $(udir)/users.csv > $(log)/makeUsers.log
 	cat $(log)/makeUsers.log
-	cd $(udir); split -l 4000 users-users.jsonl users
-	cd $(udir); split -l 4000 users-perms.jsonl perms
-	cd $(udir); split -l 4000 users-request-prefs.jsonl prefs
-
-clean-users: $(udir)/*.csv
-	rm $(udir)/*.csv
-
-checkouts: $(in)/Circ*csv
-	cd $(cdir); cp $(in)/Circ* loans.csv
-	cd $(wd); [ -f $(cdir)/users.jsonl ] || node downloadJSONL users $(cdir)/users.jsonl
-	cd $(wd); [ -f $(cdir)/items.jsonl ] || node downloadJSONL item-storage/items $(cdir)/items.jsonl
-	cd $(wd)/patrons; node pcomCheckouts $(cdir)/loans.csv > $(log)/makeCheckouts.log
-	cat $(log)/makeCheckouts.log
 
 setup:
 	cp $(login) $(wd)/config.json
