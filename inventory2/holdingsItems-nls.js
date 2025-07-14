@@ -6,6 +6,16 @@ import { parse } from 'csv-parse';
 
 let confFile = process.argv[2];
 let mapFile = process.argv[3];
+let args = process.argv.slice(4);
+let filters = {};
+args.forEach(a => {
+  if (a.match(/^--Z30_/)) {
+    a = a.replace(/^--/, '');
+    let [ k, v ] = a.split(/=/);
+    filters[k] = v;
+  }
+});
+// throw(filters);
 
 let refDir;
 let ns;
@@ -272,6 +282,11 @@ try {
   let sro = 0;
 
   const makeHoldingsItems = (r) => {
+    for (let k in filters) {
+      if (r[k] !== filters[k]) {
+        return;
+      }
+    }
     let aid = r.Z30_REC_KEY.substring(0, 9);
     let iid = r.Z30_REC_KEY;
     let bid = linkMap[aid] || '';
@@ -293,6 +308,10 @@ try {
       locId = refData.locations['loc-al'];
     } else if (loc === 'RRLEX' && st === '02' && ips === 'SN') {
       locId = refData.locations['loc-hem'];
+    } else if (loc.match(/^(RRLEX|RRSPE)/) && st === '72') {
+      locId = refData.locations['loc-ts'];
+    } else if (loc === 'REF' && st === '72') {
+      locId = refData.locations['loc-ref']
     } else {
       locId = tsvMap.locations[locKey] || refData.locations.datamigration;
     }
@@ -417,7 +436,7 @@ try {
         let chhour = r.Z30_HOUR_LAST_RETURN;
 
         if (st === '05') i.discoverySuppress = true;
-        if (ips === 'NA') i.discoverySuppress = true;
+        if (ips.match(/^NA|CL$/)) i.discoverySuppress = true;
         // if (desc) i.displaySummary = desc;
         if (istat === 'TG') i.accessionNumber = 'RFID';
         if (bc && !bcseen[bc]) {
