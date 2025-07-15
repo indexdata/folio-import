@@ -1,3 +1,4 @@
+Aleph z30_sub_library	Aleph z30_item_status	Aleph z30_item_process_status	Aleph z30_collection	marc	Folio perm loan type	Folio temp loantype
 						
 RRLEX	1				Läsesalslån	
 RRLEX	1	DB			Läsesalslån	Digital beställning
@@ -53,6 +54,7 @@ MFL	4				Referens
 MFL	5				Framtages ej/spärrat	
 						
 REF	4				Referens	
+REF	71				Referens	
 REF	72				Referens	Saknas i KB
 						
 PRUMS	1				Läsesalslån	
@@ -60,6 +62,8 @@ PRUMS	21				Specialläsesalslån
 PRUMS	5				Framtages ej/spärrat	
 						
 TLKB	4				Referens	
+TLKB	72				Referens	
+TLKB	71				Referens	
 						
 ENHET	3				Framtages ej/spärrat	
 ENHET	22				Framtages ej/spärrat	

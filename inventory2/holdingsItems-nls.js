@@ -317,6 +317,7 @@ try {
     }
     
     if (inst) {
+      delete instMap[bid];
       let hkey = bid + ':' + locId;
       if ((loc === 'ENHET' && st === '73') || (loc === 'RRLEX' && (st === '31' || st === '32')) || cn === 'AVM') {
         if (!suppMap[bid]) {
@@ -672,6 +673,62 @@ try {
     makeHoldingsItems(rec);
   });
   parser.on('end', () => {
+    for (let bhrid in instMap) {
+      let inst = instMap[bhrid];
+      if (inst.af) {
+        let af  = JSON.parse(inst.af);
+        let f = af['852'] || [];
+        let o = 0;
+        f.forEach(s => {
+          o++;
+          let ostr = o.toString().padStart(3, 0);
+          if (s.x && s.x.match(/Desiderata/)) {
+            let hrid = bhrid + '-' + ostr;
+            let h = {
+              _version: 1,
+              __: 'dummyHoldings',
+              id: uuid(hrid, ns),
+              hrid: hrid,
+              instanceId: inst.id,
+              sourceId: refData.holdingsRecordsSources.FOLIO,
+              permanentLocationId: refData.locations['loc-des'],
+              callNumber: s.x,
+              callNumberTypeId: refData.callNumberTypes['Other scheme'],
+              notes: []
+            }
+            if (s.z) {
+              let o = {
+                note: s.z,
+                holdingsNoteTypeId: refData.holdingsNoteTypes['Note'],
+                staffOnly: false
+              }
+              h.notes.push(o);
+            }
+            writeOut(outs.holdings, h);
+            ttl.holdings++;
+
+          } else if (s.z && s.z.match(/Förvärvas ej av KB/)) {
+            let hrid = bhrid + '-' + ostr;
+            let h = {
+              _version: 1,
+              __: 'dummyHoldings',
+              id: uuid(hrid, ns),
+              hrid: hrid,
+              instanceId: inst.id,
+              sourceId: refData.holdingsRecordsSources.FOLIO,
+              permanentLocationId: refData.locations['loc-ej'],
+              notes: [{
+                note: s.z,
+                holdingsNoteTypeId: refData.holdingsNoteTypes['Libris beståndsinformation'],
+                staffOnly: false
+              }]
+            }
+            writeOut(outs.holdings, h);
+            ttl.holdings++;
+          }
+        });
+      }
+    }
     showStats();
   })
 

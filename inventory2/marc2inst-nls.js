@@ -648,6 +648,9 @@ const makeSroHoldings = (instId, instHrid, fields, str) => {
   };
   writeOut(outs.xholdings, h);
   ttl.xholdings++;
+
+  /* Dont make SRo items -- see FOLIO-229
+
   if (fields.h) {
     let hrid = h.hrid;
     let id = uuid(hrid + 'item', ns);
@@ -665,6 +668,7 @@ const makeSroHoldings = (instId, instHrid, fields, str) => {
     writeOut(outs.xitems, i);
     ttl.xitems++;
   }
+  */
 }
 
 const makeAleph = (fields) => {
