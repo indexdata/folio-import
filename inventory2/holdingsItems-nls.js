@@ -721,10 +721,16 @@ try {
                 note: s.z,
                 holdingsNoteTypeId: refData.holdingsNoteTypes['Libris beståndsinformation'],
                 staffOnly: false
-              }]
+              }],
+              discoverySuppress: true
             }
             writeOut(outs.holdings, h);
             ttl.holdings++;
+            if (!suppMap[bhrid]) {
+              suppMap[bhrid] = 1;
+              writeOut(outs.suppress, { [bhrid]: 1 });
+              ttl.instanceSupp++;
+            }
           }
         });
       }
