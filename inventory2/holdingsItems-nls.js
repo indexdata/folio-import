@@ -488,6 +488,8 @@ try {
           if (st.match(/03|22|23/)) {
             i.status.name = 'Restricted';
           }
+        } else if ((loc === 'PRUMS' && st === '05') || (loc === 'ENHET' && st === '73')) {
+          i.discoverySuppress = true
         }
 
         i.materialTypeId = tsvMap.mtypes[mt] || refData.mtypes.Unmapped;
