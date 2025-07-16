@@ -8,11 +8,17 @@ let confFile = process.argv[2];
 let mapFile = process.argv[3];
 let args = process.argv.slice(4);
 let filters = {};
+let shortCol = { l: 'Z30_SUB_LIBRARY', s: 'Z30_ITEM_STATUS', p: 'Z30_ITEM_PROCESS_STATUS' };
 args.forEach(a => {
   if (a.match(/^--Z30_/)) {
     a = a.replace(/^--/, '');
     let [ k, v ] = a.split(/=/);
     filters[k] = v;
+  } else if (a.match(/^-\w/)) {
+    a = a.replace(/^-+/, '');
+    let [ k, v ] = a.split(/=/);
+    let n = shortCol[k];
+    filters[n] = v;
   }
 });
 // throw(filters);
@@ -103,7 +109,7 @@ const makeHoldingsNote = function (text, type, staffOnly) {
 }
 
 try {
-  if (!mapFile) { throw "Usage: node holdingsItems-stc.js <conf_file> <instance_map_file>" }
+  if (!mapFile) { throw "Usage: node holdingsItems-stc.js <conf_file> <instance_map_file> [filters: --Z30_WHATEVER=whatever | -l=<sublibrary>, -s=<status>, -p=<process_status> ]" }
   let confDir = path.dirname(confFile);
   let confData = fs.readFileSync(confFile, { encoding: 'utf8' });
   let conf = JSON.parse(confData);
