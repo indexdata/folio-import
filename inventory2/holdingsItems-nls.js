@@ -8,6 +8,7 @@ let confFile = process.argv[2];
 let mapFile = process.argv[3];
 let args = process.argv.slice(4);
 let filters = {};
+let hasFilters = false;
 let shortCol = { l: 'Z30_SUB_LIBRARY', s: 'Z30_ITEM_STATUS', p: 'Z30_ITEM_PROCESS_STATUS' };
 args.forEach(a => {
   if (a.match(/^--Z30_/)) {
@@ -20,6 +21,7 @@ args.forEach(a => {
     let n = shortCol[k];
     filters[n] = v;
   }
+  hasFilters = true;
 });
 // throw(filters);
 
@@ -681,66 +683,68 @@ try {
     makeHoldingsItems(rec);
   });
   parser.on('end', () => {
-    for (let bhrid in instMap) {
-      let inst = instMap[bhrid];
-      if (inst.af) {
-        let af  = JSON.parse(inst.af);
-        let f = af['852'] || [];
-        let o = 0;
-        f.forEach(s => {
-          o++;
-          let ostr = o.toString().padStart(3, 0);
-          if (s.x && s.x.match(/Desiderata/)) {
-            let hrid = bhrid + '-' + ostr;
-            let h = {
-              _version: 1,
-              __: 'dummyHoldings',
-              id: uuid(hrid, ns),
-              hrid: hrid,
-              instanceId: inst.id,
-              sourceId: refData.holdingsRecordsSources.FOLIO,
-              permanentLocationId: refData.locations['loc-des'],
-              callNumber: s.x,
-              callNumberTypeId: refData.callNumberTypes['Other scheme'],
-              notes: []
-            }
-            if (s.z) {
-              let o = {
-                note: s.z,
-                holdingsNoteTypeId: refData.holdingsNoteTypes['Note'],
-                staffOnly: false
+    if (!hasFilters) {
+      for (let bhrid in instMap) {
+        let inst = instMap[bhrid];
+        if (inst.af) {
+          let af  = JSON.parse(inst.af);
+          let f = af['852'] || [];
+          let o = 0;
+          f.forEach(s => {
+            o++;
+            let ostr = o.toString().padStart(3, 0);
+            if (s.x && s.x.match(/Desiderata/)) {
+              let hrid = bhrid + '-' + ostr;
+              let h = {
+                _version: 1,
+                __: 'dummyHoldings',
+                id: uuid(hrid, ns),
+                hrid: hrid,
+                instanceId: inst.id,
+                sourceId: refData.holdingsRecordsSources.FOLIO,
+                permanentLocationId: refData.locations['loc-des'],
+                callNumber: s.x,
+                callNumberTypeId: refData.callNumberTypes['Other scheme'],
+                notes: []
               }
-              h.notes.push(o);
-            }
-            writeOut(outs.holdings, h);
-            ttl.holdings++;
+              if (s.z) {
+                let o = {
+                  note: s.z,
+                  holdingsNoteTypeId: refData.holdingsNoteTypes['Note'],
+                  staffOnly: false
+                }
+                h.notes.push(o);
+              }
+              writeOut(outs.holdings, h);
+              ttl.holdings++;
 
-          } else if (s.z && s.z.match(/Förvärvas ej av KB/)) {
-            let hrid = bhrid + '-' + ostr;
-            let h = {
-              _version: 1,
-              __: 'dummyHoldings',
-              id: uuid(hrid, ns),
-              hrid: hrid,
-              instanceId: inst.id,
-              sourceId: refData.holdingsRecordsSources.FOLIO,
-              permanentLocationId: refData.locations['loc-ej'],
-              notes: [{
-                note: s.z,
-                holdingsNoteTypeId: refData.holdingsNoteTypes['Libris beståndsinformation'],
-                staffOnly: false
-              }],
-              discoverySuppress: true
+            } else if (s.z && s.z.match(/Förvärvas ej av KB/)) {
+              let hrid = bhrid + '-' + ostr;
+              let h = {
+                _version: 1,
+                __: 'dummyHoldings',
+                id: uuid(hrid, ns),
+                hrid: hrid,
+                instanceId: inst.id,
+                sourceId: refData.holdingsRecordsSources.FOLIO,
+                permanentLocationId: refData.locations['loc-ej'],
+                notes: [{
+                  note: s.z,
+                  holdingsNoteTypeId: refData.holdingsNoteTypes['Libris beståndsinformation'],
+                  staffOnly: false
+                }],
+                discoverySuppress: true
+              }
+              writeOut(outs.holdings, h);
+              ttl.holdings++;
+              if (!suppMap[bhrid]) {
+                suppMap[bhrid] = 1;
+                writeOut(outs.suppress, { [bhrid]: 1 });
+                ttl.instanceSupp++;
+              }
             }
-            writeOut(outs.holdings, h);
-            ttl.holdings++;
-            if (!suppMap[bhrid]) {
-              suppMap[bhrid] = 1;
-              writeOut(outs.suppress, { [bhrid]: 1 });
-              ttl.instanceSupp++;
-            }
-          }
-        });
+          });
+        }
       }
     }
     showStats();
