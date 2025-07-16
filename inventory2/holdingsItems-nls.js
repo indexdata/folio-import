@@ -339,6 +339,7 @@ try {
       let af = (inst.af) ? JSON.parse(inst.af) : {};
       let anf = af['852'] || [];
       let adminNotes = {};
+      let inotes = [];
       anf.forEach(f => {
         let str = '';
         let l = f['5'];
@@ -356,6 +357,9 @@ try {
         if (str) {
             if (!adminNotes[locId]) adminNotes[locId] = [];
             adminNotes[locId].push(str);
+        }
+        if (f.z) {
+          inotes.push(f.z);
         }
       });
 
@@ -424,6 +428,7 @@ try {
       let hr = hseen[hkey];
       if (hr) {
         let nt = { p: [], s: []};
+        if (inotes[0]) nt.p = inotes;
         let i = {
           _version: 1,
           id: uuid(iid, ns),
@@ -433,6 +438,7 @@ try {
           notes: [],
           status: { name: 'Available' }
         };
+        if (inotes[0]) i.__ = 'znote';
         let istat = r.Z30_ITEM_STATISTIC || '';
         let bc = r.Z30_BARCODE;
         let desc = r.Z30_DESCRIPTION || '';
