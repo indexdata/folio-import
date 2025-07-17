@@ -474,7 +474,7 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum
         status: { name: 'Available' },
         permanentLoanTypeId: refData.loantypes['Can circulate']
       };
-      if (subs.o) i.accessionNumber = subs.o.replace(/^(\d+).+/s, '$1');
+      if (subs.o) i.accessionNumber = subs.o.replace(/^(\d+).*/s, '$1');
       if (bc) {
         bc = bc.toLowerCase();
         if (!bcseen[bc]) {
@@ -495,7 +495,7 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum
           i.volume = v;
         }
       }
-      if (cp) i.copyNumber = cp;
+      if (cp) i.copyNumber = 'c.' + cp;
       if (nop) i.numberOfPieces = nop;
       if (nt && nt !== 'PR122') {
         let o = {
@@ -827,7 +827,9 @@ try {
 
       seen[hrid] = 1;
       let instId = (hrid) ? uuid(hrid, ns) : '';
-      marc.mij = fields2mij(marc.fields);
+      let mf = JSON.parse(JSON.stringify(marc.fields));
+      delete mf['949'];
+      marc.mij = fields2mij(mf);
       let raw = mij2raw(marc.mij);
       ldr = marc.fields.leader || '';
       let itypeCode = ldr.substring(6, 7);
@@ -933,7 +935,7 @@ try {
         if (inst.languages) {
           let langs = [];
           inst.languages.forEach(l => {
-            let r = l.match(/.{1,3}/g);
+            let r = l.match(/.{1,3}/g) || [];
             r.forEach(c => {
               if (langs.indexOf(c) === -1) langs.push(c);
             });
