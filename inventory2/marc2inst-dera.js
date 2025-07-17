@@ -472,7 +472,7 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum
         hrid: ihrid,
         holdingsRecordId: h.id,
         status: { name: 'Available' },
-        permanentLoanTypeId: refData.loantypes['Can circulate']
+        // permanentLoanTypeId: refData.loantypes['Can circulate']
       };
       if (subs.o) i.accessionNumber = subs.o.replace(/^(\d+).*/s, '$1');
       if (bc) {
@@ -530,6 +530,7 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum
         if (stName) i.status.name = stName;
       }
       i.materialTypeId = tsvMap.mtypes[mt];
+      if (tsvMap.loantypes[mt]) i.permanentLoanTypeId = tsvMap.loantypes[mt];
       let tlocId = tsvMap.locations[tloc];
       if (tlocId && tlocId !== h.permanentLocationId) i.temporaryLocationId = tlocId;
       if (i.holdingsRecordId) {
@@ -537,7 +538,7 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum
           if (i.permanentLoanTypeId) {
             out.i.push(i);
           } else {
-            console.log(`ERROR item: hardcoded loantypeId not found!`);
+            console.log(`ERROR item: loantypeId not found for "${mt}"!`);
           }
         } else {
           console.log(`ERROR item: materialTypeId not found for ${mt} (${ihrid})`);
@@ -668,6 +669,11 @@ try {
             k = c[1];
             if (!v.match(/Paged/)) tsvMap[prop][k] = v;
           } else {
+            if (prop === 'mtypes') {
+              c[3] = c[3].trim();
+              if (!tsvMap.loantypes) tsvMap.loantypes = {};
+              tsvMap.loantypes[k] = (c[3]) ? refData.loantypes['Non-circulating'] : refData.loantypes['Can circulate'];
+            }
             if (k && v && refData[prop]) tsvMap[prop][k] = refData[prop][v];
           }
         });

@@ -2,9 +2,9 @@ Legacy Item Class Codes	Legacy Item Class Name	Folio material type name or ID	No
 10	Book	Book	
 11	Periodical	Periodical	
 14	Reference	Reference	non-circulating loan type
-15	Rare Book	Rare Book	
+15	Rare Book	Rare Book	non-circulating loan type
 17	Pamphlet	Pamphlet	
-18	Archive Material	Archive Material	
+18	Archive Material	Archive Material	non-circulating loan type
 21	Juvenile	Juvenile	
 12	Sant Mat Periodical	Sant Mat Periodical	
 16	Bound Periodical	Bound Periodical	
