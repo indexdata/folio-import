@@ -13,7 +13,7 @@ try {
   if (!inFile) throw new Error('Usage: node xlsx2csv.js <xlsx_file> [ output type: csv | tsv ]')
   const dir = path.dirname(inFile);
   let prefix = path.basename(inFile, '.xlsx');
-  prefix = prefix.replace(/\..+$/);
+  prefix = prefix.replace(/^(.+)\..+$/, '$1');
   prefix = prefix.replace(/\W/g, '_');
 
   // Read the file using pathname
