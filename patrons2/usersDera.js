@@ -11,7 +11,8 @@ const ns = '346479c5-8965-4d74-a43c-5704385c2d01';
 const files = {
   users: 1,
   perms: 1,
-  rprefs: 1
+  rprefs: 1,
+  notes: 1
 }
 
 const dform = (date) => {
@@ -66,6 +67,7 @@ try {
     users: 0,
     perms: 0,
     prefs: 0,
+    notes: 0,
     errors: 0
   }
   let leftOvers = '';
@@ -110,6 +112,7 @@ try {
       let email = (f271) ? getSubs(f271[0], 'a') : '';
       let f270 = f['270'];
       let phone = (f270) ? getSubs(f270[0], 'k') : '';
+      let f500 = f['500'] || [];
       let u = {
         id: uuid(ctrl, ns),
         username: bc,
@@ -160,6 +163,24 @@ try {
       if (phone) u.personal.phone = phone;
       if (enDate) u.enrollmentDate = dform(enDate);
       if (exDate) u.expirationDate = dform(exDate);
+      f500.forEach(f => {
+        let txt = getSubs(f, 'a');
+        let id = uuid(u.id + txt, ns);
+        let type = refData.noteTypes['general note'];
+        let o = {
+          id: id,
+          typeId: type,
+          title: 'Note',
+          content: txt,
+          popUpOnCheckOut: false,
+          popUpOnUser: false,
+          domain: 'users',
+          links: [{ type: 'user', id: u.id }]
+        };
+        writeOut(files.notes, o);
+        ttl.notes++;
+      });
+
       if (process.env.DEBUG) console.log(JSON.stringify(u, null, 2));
       if (u.patronGroup) {
         if (u.personal.lastName) {
