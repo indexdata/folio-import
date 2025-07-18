@@ -39,7 +39,7 @@ export function parseMarc(raw) {
         subs.forEach(s => {
           let code = s.substring(0, 1);
           let data = s.substring(1);
-          obj.subfields.push({ [code]: data });
+          if (code) obj.subfields.push({ [code]: data });
         });
         mij.fields.push({ [tag]: obj });
         fields[tag].push(obj);
