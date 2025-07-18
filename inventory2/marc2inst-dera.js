@@ -199,8 +199,12 @@ const funcs = {
     return r;
   },
   set_subject_source_id: function (data, param) {
+    return refData.subjectSources[param] || refData.subjectSources['Source not specified'];
   },
   set_subject_type_id: function (data, param) {
+  },
+  set_subject_source_id_by_code: function (data, param) {
+    return refData.subjectSources[param] || refData.subjectSources['Source not specified'];
   },
   trim: function (data) {
     data = data.trim();

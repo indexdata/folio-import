@@ -417,6 +417,9 @@ const funcs = {
   },
   set_subject_source_id: function (data, param) {
   },
+  set_subject_source_id_by_code: function (data, param) {
+    return refData.subjectSources[data] || refData.subjectSources['Source not specified'];
+  },
   set_subject_type_id: function (data, param) {
     let tstr = param.name;
     let tid = refData.subjectTypes[tstr] || refData.subjectTypes['Type of entity unspecified'];
