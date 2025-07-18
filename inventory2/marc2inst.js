@@ -204,7 +204,7 @@ const funcs = {
   set_subject_type_id: function (data, param) {
   },
   set_subject_source_id_by_code: function (data, param) {
-    return refData.subjectSources[param] || refData.subjectSources['Source not specified'];
+    return refData.subjectSources[data] || refData.subjectSources['Source not specified'];
   },
   trim: function (data) {
     data = data.trim();
