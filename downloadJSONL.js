@@ -7,6 +7,7 @@ let start = parseInt(process.argv[4], 10);
 let limit = parseInt(process.argv[5], 10);
 let fn;
 let writeStream;
+let dbug = process.env.DEBUG;
 
 (async () => {
   try {
@@ -38,7 +39,7 @@ let writeStream;
 
     let totFetch = 0;
     let totRecs = 1000000;
-    let perPage = 5000;
+    let perPage = (actionUrl.match(/authority-storage/)) ? 2000 : 5000;
     let offset = start || 0;
     while (totFetch < totRecs) {
       let prop;
@@ -78,11 +79,8 @@ let writeStream;
           writeStream.write(rec + '\n', 'utf8');
         }
       } catch (e) {
-        try {
-          throw new Error(e.response.text);
-        } catch {
-          throw new Error(e.message);
-        }
+	 if (dbug) console.log(e);
+         throw new Error(e);
       }
       offset += perPage;
       console.log(url);
@@ -90,7 +88,11 @@ let writeStream;
       console.log(`Received ${totFetch} of ${totRecs}...`);
     }
   } catch (e) {
-    console.error(e.message);
+    if (dbug) {
+        console.log(e);
+    } else {
+    	console.error(e.message);
+    }
     if (writeStream) fs.unlinkSync(fn);
   }
 })();

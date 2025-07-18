@@ -3,7 +3,7 @@ user=charles
 home=/home/$(user)
 wd=$(home)/folio-import
 inv2=$(wd)/inventory2
-login=$(wd)/configs/json/grolierclub-test.json
+login=$(wd)/configs/json/grolierclub.json
 data=$(home)/$(lib)
 ref=$(data)/ref
 iref=$(ref)/inv
@@ -41,8 +41,8 @@ split-authorities: $(adir)/auth-authorities.jsonl
 	cd $(adir); split -l 6000 auth-authorities.jsonl aa
 	cd $(adir); split -l 6000 auth-srs.jsonl as
 
-users: $(in)/Roster*csv
-	cd $(udir); rm users.csv; ln -s $(in)/Roster*csv users.csv
+users: $(in)/User*csv
+	cd $(udir); rm -r users.csv; ln -s $(in)/User*csv users.csv
 	cd $(udir); grep -vc Username users.csv > count.txt; cat count.txt
 	cd $(wd)/patrons; node grolUsers $(uref) $(udir)/users.csv > $(log)/makeUsers.log
 	cat $(log)/makeUsers.log

@@ -6,10 +6,11 @@ const fs = require('fs');
 const superagent = require('superagent');
 const { getAuthToken } = require('./lib/login');
 let anything = process.argv[2];
+let type = process.argv[3] || 'MARC_BIB';
 
 try {
 if (!anything) {
-  throw new Error ('This script will delete all SRS records. You must provide the tenant or jobExecutionId');
+  throw new Error ('Usage: node deleteSnapshotsAndRecords <tenant OR jobExecutionId> [ <recordType> ]');
 }
 
 const wait = (ms) => {
@@ -54,7 +55,7 @@ const wait = (ms) => {
       let id = refData.snapshots[x].jobExecutionId;
       let delFlag = false;
       try {
-        let turl = `${config.okapi}/source-storage/records?recordType=MARC_BIB&snapshotId=${id}&limit=0`;
+        let turl = `${config.okapi}/source-storage/records?recordType=${type}&snapshotId=${id}&limit=0`;
         console.log(`GET ${turl}`);
         let res = await superagent
           .get(turl)
@@ -82,7 +83,7 @@ const wait = (ms) => {
           console.error(msg);
         }
       } else {
-        console.log(`INFO no MARC_BIB records found with snapshotId ${id}-- skipping`);
+        console.log(`INFO no ${type} records found with snapshotId ${id}-- skipping`);
         skipped++;
       }
       await wait(config.delay);

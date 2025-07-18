@@ -1,13 +1,13 @@
 {
     "nameSpace": "da74f4b2-9645-4bf2-a367-b348fcaa4972",
-    "refDir": "/Users/charles/Folio/dera/ref/inv",
-    "tsvDir": "/Users/charles/Folio/dera/ref/inv",
+    "refDir": "/home/charles/dera/ref/inv",
+    "tsvDir": "/home/charles/dera/ref/inv",
     "mapFile": "",
     "controlNum": "",
     "hridPrefix": "",
     "makeInstMap": false,
     "hasMfhd": false,
-    "noTitle": "",
+    "noTitle": "[Unknown title]",
     "items": {
         "tag": "949",
         "hridPrefix": "i"
