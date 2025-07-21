@@ -83,7 +83,7 @@ const y1900 = new Date('1900-01-01').valueOf();
     const parseDate = (dstr, type) => {
       let dt = '';
       let dto;
-      if (dstr.match(/\d{5}\.\d{5}/)) {
+      if (dstr.match(/\d{5}\.\d*/)) {
         let [ d, f ] = dstr.split(/\./);
         d = parseInt(d, 10)*day + y1900;
         f = parseInt(f, 10)/100000;
@@ -134,7 +134,7 @@ const y1900 = new Date('1900-01-01').valueOf();
       let ubc = r.PATRON_BARCODE;
       let user = users[ubc];
       if (!user) {
-        console.log(`ERROR no user found with barcode "${ubc}" (${r.LAST_NAME}, ${r.FIRST_NAME})`);
+        console.log(`ERROR no user found with barcode "${ubc}" (${r.PATRON_NAME})`);
         ttl.unf++;
         ttl.err++;
       } else if (!item) {
@@ -142,7 +142,7 @@ const y1900 = new Date('1900-01-01').valueOf();
         ttl.inf++;
         ttl.err++;
       } else if (item.st !== 'Available') {
-        console.log(`ERROR item status for ${r.ITEM_BARCODE} is "${item.st}"`);
+        console.log(`ERROR item status for "${ibc}" is "${item.st}"`);
         ttl.ina++;
         ttl.err++;
       } else {

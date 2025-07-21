@@ -13,6 +13,7 @@ uref=$(ref)/usr
 idir=$(data)/inv
 udir=$(data)/usr
 adir=$(data)/auth
+cdir=$(data)/circ
 in=$(data)/incoming
 mfile=$(idir)/bibs.mrc
 log=$(data)/log
@@ -26,21 +27,29 @@ inventory: $(in)/*Bibs*out
 	cd $(inv2); node marc2inst-dera $(conf) $(mfile) > $(log)/makeInst.log &
 	tail -f $(log)/makeInst.log
 
-authorities: $(in)/*Auths*.mrc
-	cd $(adir); rm -r auth.raw; ln -s $(in)/*Auths*.mrc auth.raw
+authorities: $(in)/*Auth*out
+	cd $(adir); rm -r auth.raw; ln -s $(in)/*Auth*out auth.raw
 	yaz-marcdump -f marc8 -t utf8 -l 9=97 -o marc $(adir)/auth.raw > $(adir)/auth.mrc
 	cd $(wd)/auth; ./marc2auth010.pl $(wd)/mapping_rules/marc_authority_rules.json $(iref) $(adir)/auth.mrc > $(log)/makeAuth.log &
 	tail -f $(log)/makeAuth.log
 
 split-authorities: $(adir)/auth-authorities.jsonl
-	cd $(adir); split -l 6000 auth-authorities.jsonl aa
-	cd $(adir); split -l 6000 auth-srs.jsonl as
+	cd $(adir); split -l 25000 auth-authorities.jsonl aa
+	cd $(adir); split -l 25000 auth-srs.jsonl as
 
-users: $(in)/User*csv
-	cd $(udir); rm -r users.csv; ln -s $(in)/User*csv users.csv
-	cd $(udir); grep -vc Username users.csv > count.txt; cat count.txt
-	cd $(wd)/patrons; node grolUsers $(uref) $(udir)/users.csv > $(log)/makeUsers.log
+users: $(in)/*Patrons*out
+	cd $(udir); rm -r users.raw; ln -s $(in)/*Patrons*out users.raw
+	yaz-marcdump -f marc8 -t utf8 -l 9=97 -o marc $(udir)/users.raw > $(udir)/users.mrc
+	cd $(wd)/patrons2; node usersDera $(uref) $(udir)/users.mrc > $(log)/makeUsers.log
 	cat $(log)/makeUsers.log
+
+checkouts: $(in)/check*xls
+	cp $(in)/check*xls $(cdir)/loans.xls
+	cd $(wd)/util/; node xlsx2csv.js $(cdir)/loans.xls
+	cd $(cdir); mv *books.csv loans.csv
+	cd $(wd); ./get_circ_requirements.sh $(cdir)
+	cd $(wd)/patrons; node deraCheckouts $(cdir)/loans.csv > $(log)/makeCheckouts.log
+	cat $(log)/makeCheckouts.log
 
 setup:
 	cp $(login) $(wd)/config.json
@@ -52,6 +61,7 @@ setup:
 	mkdir -p $(idir)
 	mkdir -p $(udir)
 	mkdir -p $(adir)
+	mkdir -p $(cdir)
 	mkdir -p $(in)
 	cd $(wd); node migrationRef.js $(ref)
 	cd $(etc); cp *.tsv $(iref);
@@ -65,5 +75,6 @@ really-clean:
 	rm -rf $(idir)
 	rm -rf $(udir)
 	rm -rf $(adir)
+	rm -rf $(cdir)
 	rm -rf $(in)
 
