@@ -10,7 +10,7 @@ try {
   uuid = v5;
 }
 
-const ns = '9903d297-1cb6-44e4-897c-e1e45c58305f';
+const ns = '3eb5d7ac-7f51-4922-bd58-512a1f9710ac';
 let refDir = process.argv[2];
 let ordDir = process.argv[3]
 
@@ -21,11 +21,14 @@ const files = {
 };
 
 const zfiles = {
-  open: 'open-orders.csv',
+  oo: 'open-orders.csv',
+  z68: 'z68.dsv',
+  z16: 'z16.dsv',
+  z104: 'z104.dsv',
+  z78: 'z78.dsv'
 };
 
-const groupMap = {
-};
+const curYear = new Date().getFullYear();
 
 const writeOut = (fileName, data) => {
   let line = JSON.stringify(data) + "\n";
@@ -58,217 +61,97 @@ try {
       }
       refData[prop] = {};
       j[prop].forEach(d => {
-        let n = (d.name) ? d.name : '';
-        let c = (d.code) ? d.code : '';
+        let n = (d.name) ? d.name : d.templateName;
+        let c = (d.code) ? d.code : d.templateCode;
         if (n) refData[prop][n] = d.id;
         if (c) refData[prop][c] = d.id;
       });
     }
   });
+  // throw(refData);
 
-  throw(refData);
-
-  let main = [];
-  let z = {};
+  const d = {};
   for (let f in zfiles) {
-    let type = zfiles[f];
-    let path = usrDir + '/' + f;
+    let path = ordDir + '/' + zfiles[f];
+    console.log(`Reading ${path}`);
+    d[f] = {};
     let csv = fs.readFileSync(path, {encoding: 'utf8'});
-    let zRecs = parse(csv, {
+    let lines = parse(csv, {
       columns: true,
       skip_empty_lines: true,
       delimiter: '\t',
       relax_column_count: true,
+      quote: null,
       trim: true
     });
-    if (type === 'main') {
-      main = zRecs;
+    if (f === 'oo' || f === 'z68') {
+      d[f] = lines;
     } else {
-      z[type] = {};
-      let kprop = (type === 'id') ? 'Z308_ID' : (type === 'add') ? 'Z304_REC_KEY' : 'Z305_REC_KEY'
-      zRecs.forEach(r => {
-        let k = r[kprop];
-        if (k) {
-          k = k.replace(/ .+$/, '');
+      lines.forEach(l => {
+        let k;
+        if (f === 'z104') {
+          k = l.Z104_REC_KEY.substring(2, 9);
+        } else if (f === 'z78') {
+          k = l.Z78_REC_KEY.substring(2, 9);
+        } else if (f === 'z16') {
+          k = l.Z16_REC_KEY.substring(2, 9);
         }
-        if (type === 'id') {
-          let rkey = r.Z308_REC_KEY;
-          let idType = rkey.substring(0, 2);
-          let data = rkey.replace(/^..([^ ]+).*/, '$1');
-          if (!z[type][k]) z[type][k] = {};
-          if (!z[type][k][idType]) z[type][k][idType] = [];
-          z[type][k][idType].push(data); 
-        } else {
-          if (type === 'loc') k = k.substring(0, 12);
-          if (!z[type][k]) z[type][k] = [];
-          z[type][k].push(r);
-        }
+        if (!d[f][k]) d[f][k] = [];
+        d[f][k].push(l);
       });
     }
   }
-  throw(JSON.stringify(z, null, 2));
-  
-  const today = new Date().valueOf();
-  let count = 0;
-  let success = 0;
-  let bcount = 0;
-  let ncount = 0;
-  let ecount = 0;
-  const nseen = {};
-  const unseen = {};
+  // throw(d.z68);
 
-  for (let x = 0; x < main.length; x++) {
-    count++;
-    let p = main[x];
-    if (process.env.DEBUG) console.log(p);
-    let aid = p.Z303_PRIMARY_ID;
-    let id = p.Z303_REC_KEY;
-    let dels = [ p.Z303_DELINQ_1, p.Z303_DELINQ_2, p.Z303_DELINQ_3 ];
-    let blockStaff = p.Z303_DELINQ_N_1
-    let ads = z.add[id];
-    let ids = z.id[id];
-    let locs = z.loc[id] || [];
-    let name = p.Z303_NAME.replace(/ \(.+$/, '');
-    let ln = name.replace(/,.+/, '');
-    let fn = (name.match(/,/)) ? name.replace(/^.+?, */, '') : '';
-    let bc = (ids['01']) ? ids['01'][0] : '';
-    let bcPre = id.replace(/\d+/, '');
-    let pid = (ids['03']) ? ids['03'][0] : '';
-    let email = '';
-    if (ads) {
-      ads.forEach(r => {
-        if (!email && r.Z304_EMAIL_ADDRESS) email = r.Z304_EMAIL_ADDRESS;
-      });
-    }
-    let un = email || '';
+  const ttl = {
+    o: 0,
+    p: 0,
+    l: 0
+  }
 
-    let edate = '';
-    locs.forEach(r => {
-      edate = r.Z305_EXPIRY_DATE;
-    });
-    edate = parseDate(edate);
-    let cdate = parseDate(p.Z303_OPEN_DATE);
-
-    let bcodes = [ '', p.Z303_DELINQ_1, p.Z303_DELINQ_2, p.Z303_DELINQ_3 ];
-    let borStat = (locs[0]) ? locs[0].Z305_BOR_STATUS : '';
-    let gnum;
-    let glab;
-    if (bcodes[1] === '50' || bcodes[2] === '50' || bcodes[3] === '50') {
-      gnum = '6';
-      glab = 'Ny låntagare';
-    } else if (borStat === '04' && name.match(/personal/i)) {
-      gnum = '3';
-      glab = 'Personal';
-    } else if (borStat === '04' || borStat === '54') {
-      gnum = '2';
-      glab = 'Bokskåp';
-    } else if (borStat === '20') {
-      gnum = '4';
-      glab = 'Funktion';
-    } else if (borStat === '10' || borStat === '12') {
-      gnum = '5';
-      glab = 'Fjärrlånebibliotek';
-    } else {
-      gnum = '1';
-      glab = 'Ordinarie';
-    }
-    let groupId = refData.usergroups[gnum] || refData.usergroups[glab];
-    u = {
-      id: uuid(id, ns),
-      active: true,
-      patronGroup: groupId,
-      personal: {
-        lastName: ln,
-        firstName: fn,
-      },
-      customFields: {}
+  d.z68.forEach(r => {
+    let key = r.Z68_REC_KEY.substring(2, 9);
+    let id = uuid(key, ns);
+    let nt = r.Z68_LIBRARY_NOTE;
+    let poNum = r.Z68_ORDER_NUMBER.replace(/^ORDER-/, '');
+    let oType = (r.Z68_ORDER_TYPE === 'O') ? 'Ongoing' : 'One-Time';
+    let vstr = 'DELBANCO';
+    let vid = refData.organizations[vstr];
+    let tstr = 'KB Stående order';
+    let tid = refData.orderTemplates[tstr];
+    let o = {
+      id: id,
+      poNumber: poNum,
+      poNumberPrefix: 'SO',
+      orderType: oType,
+      vendor: vid,
+      template: tid,
+      workflowStatus: 'Open',
+      tags: { tagList: [ "Aleph" ] }
     };
-    if (un && !unseen[un]) {
-      u.username = un;
-      unseen[un] = 1;
-    } else if (unseen[un]) {
-      console.log(`WARN username "${un}" already used.`);
+    if (nt) o.notes = [ nt ];
+    if (o.orderType === 'Ongoing') {
+      o.ongoing = {
+        isSubscription: true,
+        manualRenewal: true,
+        renewalDate: curYear + '-11-30'
+      };
     }
-    if (bc) u.barcode = bc;
-    if (u.barcode && bcPre && (borStat === '10' || borStat === '12')) u.barcode = bcPre + u.barcode;
-    if (email) u.personal.email = email
-    if (edate) u.expirationDate = edate;
-    if (cdate) u.enrollmentDate = cdate;
-    if (pid && borStat.match(/^(01|04|51|54|40)$/)) {
-      let pidStr = pid.replace(/-/g, ''); 
-      if (pidStr.length === 7) {
-        pidStr = pidStr.substring(0, 6);
-      }
-      u.customFields.personnummer = pidStr;
-    }
-    if (id) {
-      u.customFields.alephid = id;
-    }
-    
-    if (u.personal.email) {
-      u.personal.preferredContactTypeId = '002'
-    } else {
-      u.personal.preferredContactTypeId = '001'
-    }
+    // console.log(o);
+    writeOut(files.p, o);
+    ttl.p++;
 
-    if (u.patronGroup) {
-      writeOut(files.u, u);
-      if (process.env.DEBUG) console.log(JSON.stringify(u, null, 2));
-      success++
-      let perm = {
-        id: uuid(u.id, ns),
-        userId: u.id,
-        permissions: []
-      }
-      writeOut(files.p, perm);
-      let pref = {
-        id: uuid(u.id + 'pref', ns),
-        userId: u.id,
-        holdShelf: true,
-        delivery: false,
-        defaultServicePointId: refData.servicepoints['Pecan Library']
-      }
-      writeOut(files.r, pref);
-      
-      for (let x = 0; x < dels.length; x++) {
-        d = dels[x];
-        let t = refData.manualBlockTemplates[d];
-        if (t) {
-          let o = {
-            id: uuid(t.id, u.id),
-            type: 'manual',
-            code: t.code,
-            desc: t.blockTemplate.desc,
-            patronMessage: t.blockTemplate.patronMessage,
-            borrowing: t.blockTemplate.borrowing,
-            renewals: t.blockTemplate.renewals,
-            requests: t.blockTemplate.requests,
-            userId: u.id
-          }
-          if (blockStaff) {
-            o.staffInformation = blockStaff;
-          }
-          writeOut(files.b, o);
-          bcount++;
-        }
-      }
-    } else {
-      console.log(`ERROR No patronGroup found for ${gnum}`);
-      ecount++;
-    }
-  } 
+    o.poLines = []
+    writeOut(files.o, o);
+    ttl.o++;
+  });
 
-  const t = (new Date().valueOf() - today) / 1000;
-  console.log('------------');
-  console.log('Finished!');
-  console.log('Processed:', count);
-  console.log('Users created:', success, '-->', files.u);
-  console.log('Perms created:', success, '-->', files.p);
-  console.log('Prefs created:', success, '-->', files.r);
-  console.log('Notes created:', ncount, '-->', files.n);
-  console.log('Blocks created:', bcount, '-->', files.b);
-  console.log('Errors:', ecount, '-->', files.e);
-  console.log('Time (secs):', t);
+  console.log('------------------------');
+  console.log('Done!')
+  console.log('Composite orders:', ttl.o);
+  console.log('Purchase orders', ttl.p);
+  console.log('Order lines:', ttl.l);
+
 } catch (e) {
   console.log(e);
 }
