@@ -61,8 +61,8 @@ try {
       }
       refData[prop] = {};
       j[prop].forEach(d => {
-        let n = (d.name) ? d.name : d.templateName;
-        let c = (d.code) ? d.code : d.templateCode;
+        let n = d.name || d.templateName || d.value;
+        let c = d.code || d.templateCode;
         if (n) refData[prop][n] = d.id;
         if (c) refData[prop][c] = d.id;
       });
@@ -84,12 +84,15 @@ try {
       quote: null,
       trim: true
     });
-    if (f === 'oo' || f === 'z68') {
+
+    if (f === 'z68') {
       d[f] = lines;
     } else {
       lines.forEach(l => {
         let k;
-        if (f === 'z104') {
+        if (f === 'oo') {
+          k = l['adm. systemID'];
+        } else if (f === 'z104') {
           k = l.Z104_REC_KEY.substring(2, 9);
         } else if (f === 'z78') {
           k = l.Z78_REC_KEY.substring(2, 9);
@@ -101,7 +104,7 @@ try {
       });
     }
   }
-  // throw(d.z68);
+  // throw(d.oo);
 
   const ttl = {
     o: 0,
@@ -111,6 +114,8 @@ try {
 
   d.z68.forEach(r => {
     let key = r.Z68_REC_KEY.substring(2, 9);
+    let oo = d.oo['00' + key];
+    console.log(key, oo);
     let id = uuid(key, ns);
     let nt = r.Z68_LIBRARY_NOTE;
     let poNum = r.Z68_ORDER_NUMBER.replace(/^ORDER-/, '');
@@ -140,6 +145,15 @@ try {
     // console.log(o);
     writeOut(files.p, o);
     ttl.p++;
+
+    let amStr = 'KB: Stående order köp (tryckt material)';
+    let amId = refData.acquisitionMethods[amStr];
+    let pol = {
+      id: uuid(o.id, ns),
+      acquisitionMethod: amId,
+      collection: true
+    };
+    console.log(pol);
 
     o.poLines = []
     writeOut(files.o, o);
