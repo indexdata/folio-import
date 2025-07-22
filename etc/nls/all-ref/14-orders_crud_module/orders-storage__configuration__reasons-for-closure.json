@@ -1,0 +1,100 @@
+{
+  "reasonsForClosure": [
+    {
+      "id": "41153a11-6bb8-4217-93b8-0c83c8b019f5",
+      "reason": "Custom user's reason",
+      "source": "User"
+    },
+    {
+      "id": "22bddeeb-6cbe-45bd-b73d-7343e28c0626",
+      "reason": "Lack of funds",
+      "source": "System"
+    },
+    {
+      "id": "fa4ab110-bf7c-4c1c-9014-fa3f95e1d07c",
+      "reason": "Cancelled",
+      "source": "System"
+    },
+    {
+      "id": "89389f7b-54e9-4b95-b5d0-f89c29b71147",
+      "reason": "Error",
+      "source": "System"
+    },
+    {
+      "id": "8f11f23a-e101-4861-8df2-152da9ce4889",
+      "reason": "Lack of use",
+      "source": "System"
+    },
+    {
+      "id": "af55e63f-10f9-4919-add9-6feaf7097a6c",
+      "reason": "Title received as a gift",
+      "source": "System"
+    },
+    {
+      "id": "71a233f8-edac-4e8e-9600-d55222d64273",
+      "reason": "Unpreferred format",
+      "source": "System"
+    },
+    {
+      "id": "65a75ad7-fbbe-4139-9c69-79fbba805ce9",
+      "reason": "Split into other titles",
+      "source": "System"
+    },
+    {
+      "id": "ebe73dd1-fa30-4c36-aad9-6c95ea5207ae",
+      "reason": "Merged with another title",
+      "source": "System"
+    },
+    {
+      "id": "29936d21-93e4-4ab3-9ac4-2d11fa40e942",
+      "reason": "Low quality",
+      "source": "System"
+    },
+    {
+      "id": "d17f9d15-4520-49ad-9ffa-123e7739ae53",
+      "reason": "Title won't be published this year",
+      "source": "System"
+    },
+    {
+      "id": "7c11e86e-4776-4f4f-9aa4-13e83b4ef44d",
+      "reason": "Duplication",
+      "source": "System"
+    },
+    {
+      "id": "27d10e3b-66cc-490b-bee6-7c1b2b07394c",
+      "reason": "Complete",
+      "source": "System"
+    },
+    {
+      "id": "8ab21f8d-1343-4228-ac5c-2979ba99412b",
+      "reason": "Title is out of print",
+      "source": "System"
+    },
+    {
+      "id": "cae85c3d-a839-420a-868d-283cedb1fd2f",
+      "reason": "Ceased",
+      "source": "System"
+    },
+    {
+      "id": "71a83ae9-6af0-479e-b579-4904b24a3300",
+      "reason": "Unresponsive vendor",
+      "source": "System"
+    },
+    {
+      "id": "b72e8ea6-67b3-4238-9257-5d8e29b95694",
+      "reason": "Transferred to another publisher",
+      "source": "System"
+    },
+    {
+      "id": "a47051ec-7a4f-499f-9541-a5fc5deb2f41",
+      "reason": "Licensing terms (unacceptable)",
+      "source": "System"
+    },
+    {
+      "id": "dcbb7f40-f2ae-4ad3-a367-27bff67ff6e6",
+      "reason": "Title won't be published",
+      "source": "System"
+    }
+  ],
+  "totalRecords": 19
+}

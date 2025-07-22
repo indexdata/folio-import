@@ -1,0 +1,20 @@
+{
+  "prefixes": [
+    {
+      "id": "db9f5d17-0ca3-4d14-ae49-16b63c8fc083",
+      "name": "pref",
+      "description": "Prefix for test purposes"
+    },
+    {
+      "id": "9afa136e-03b3-44e8-bea2-c09b2594e26c",
+      "name": "J",
+      "description": "EBSCO subscriptions"
+    },
+    {
+      "id": "5a6ab7bb-e238-4d05-b60f-3d176586c35c",
+      "name": "SO",
+      "description": "Stående order"
+    }
+  ],
+  "totalRecords": 3
+}

@@ -18289,8 +18289,8 @@
       "id": "b62cbcb5-65fd-481f-83db-d610f00de0f2",
       "userId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487",
       "permissions": [
-        "search.index.instance-records.reindex.upload.post",
-        "search.index.instance-records.reindex.full.post",
+        "orders-storage.module.all",
+        "organizations-storage.organizations.all",
         "circulation-storage.all",
         "users.all",
         "inventory-storage.all",
@@ -18302,14 +18302,12 @@
         "inventory-storage.preceding-succeeding-titles.item.post",
         "inventory-storage.preceding-succeeding-titles.collection.get",
         "inventory-storage.instances.batch.post",
-        "b2860950-9528-4966-8e34-bc16873cbae1",
-        "source-storage.snapshots.item.get",
-        "source-storage.snapshots.collection.get"
+        "b2860950-9528-4966-8e34-bc16873cbae1"
       ],
       "metadata": {
         "createdDate": "2024-12-16T14:13:53.491+00:00",
         "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
-        "updatedDate": "2025-05-08T20:33:45.302+00:00",
+        "updatedDate": "2025-07-22T19:40:34.474+00:00",
         "updatedByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487"
       }
     },

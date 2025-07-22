@@ -1,0 +1,358 @@
+{
+  "orderTemplates": [
+    {
+      "id": "43bb8a31-4e4b-463c-95c5-e163760f0092",
+      "templateName": "eJournal packages",
+      "templateCode": "Packages: eJournals",
+      "orderType": "Ongoing",
+      "cost": {
+        "currency": "USD",
+        "quantityElectronic": 1
+      },
+      "acquisitionMethod": "306489dd-0053-49ee-a068-c316444a8f55",
+      "collection": true,
+      "cancellationRestriction": true,
+      "approved": true,
+      "manualPo": true,
+      "acqUnitIds": [
+        "0ebb1f7d-983f-3026-8a4c-5318e0ebc041"
+      ],
+      "reEncumber": true,
+      "billTo": "103c7625-0142-42f9-896e-cb51dd94a322",
+      "eresource": {
+        "materialType": "615b8413-82d5-4203-aa6e-e37984cb5ac3",
+        "createInventory": "None"
+      },
+      "locations": [
+        {
+          "locationId": "184aae84-a5bf-4c6a-85ba-4a7c73026cd5",
+          "quantityElectronic": 1
+        }
+      ],
+      "polTags": {
+        "tagList": [
+          "e-journal"
+        ]
+      },
+      "orderFormat": "Electronic Resource",
+      "receiptStatus": "Receipt Not Required"
+    },
+    {
+      "id": "5c56e4f6-1296-4b5f-a6dc-8309d9983a16",
+      "templateName": "Our dissertations",
+      "templateCode": "Dissert",
+      "templateDescription": "Use to create orders for our dissertations going to the archives; change the pub year each year",
+      "orderType": "One-Time",
+      "cost": {
+        "listUnitPrice": 0,
+        "quantityPhysical": 1
+      },
+      "acquisitionMethod": "0a4163a5-d225-4007-ad90-2fb41b73efab",
+      "approved": true,
+      "instanceId": null,
+      "manualPo": true,
+      "publisher": "Important University",
+      "poTags": {
+        "tagList": [
+          "dissertation"
+        ]
+      },
+      "locations": [
+        {
+          "locationId": "53cf956f-c1df-410b-8bea-27f712cca7c0",
+          "quantityPhysical": 1
+        }
+      ],
+      "polTags": {
+        "tagList": [
+          "dissert-2020"
+        ]
+      },
+      "physical": {
+        "materialType": "d9acad2f-2aac-4b48-9097-e6ab85906b25",
+        "createInventory": "Instance, Holding, Item"
+      },
+      "publicationDate": "2020",
+      "orderFormat": "Physical Resource",
+      "paymentStatus": "Payment Not Required",
+      "shipTo": "a3a02de3-c31a-4c2b-a2ce-8db9590ea90c"
+    },
+    {
+      "id": "2cec3275-a5c7-4ba1-afab-905ada8c5b65",
+      "templateName": "eBooks",
+      "templateCode": "Individual eBooks",
+      "templateDescription": "Be sure to fill in the proper vendor",
+      "orderType": "One-Time",
+      "cost": {
+        "currency": "USD",
+        "listUnitPriceElectronic": 1
+      },
+      "notes": [
+        "Check for activation & discovery"
+      ],
+      "acquisitionMethod": "306489dd-0053-49ee-a068-c316444a8f55",
+      "cancellationRestriction": true,
+      "approved": true,
+      "acqUnitIds": [
+        "0ebb1f7d-983f-3026-8a4c-5318e0ebc041"
+      ],
+      "billTo": "103c7625-0142-42f9-896e-cb51dd94a322",
+      "eresource": {
+        "materialType": "615b8413-82d5-4203-aa6e-e37984cb5ac3",
+        "createInventory": "Instance, Holding"
+      },
+      "locations": [
+        {
+          "locationId": "184aae84-a5bf-4c6a-85ba-4a7c73026cd5",
+          "quantityElectronic": 1
+        }
+      ],
+      "polTags": {
+        "tagList": [
+          "e-book"
+        ]
+      },
+      "orderFormat": "Electronic Resource",
+      "receiptStatus": "Receipt Not Required"
+    },
+    {
+      "id": "4dee318b-f5b3-40dc-be93-cc89b8c45b6f",
+      "templateName": "Amazon book orders",
+      "templateCode": "Amazon-B",
+      "templateDescription": "Use to create orders in FOLIO after they are placed on Amazon",
+      "orderType": "One-Time",
+      "cost": {
+        "currency": "USD",
+        "quantityPhysical": 1
+      },
+      "notes": [
+        "Check credit card statement to make sure payment shows up"
+      ],
+      "acquisitionMethod": "306489dd-0053-49ee-a068-c316444a8f55",
+      "cancellationRestriction": true,
+      "approved": true,
+      "vendor": "e0fb5df2-cdf1-11e8-a8d5-f2801f1b9fd1",
+      "billTo": "5f8a321e-6b38-4d90-92d4-bf08f91a2242",
+      "poTags": {
+        "tagList": [
+          "amazon"
+        ]
+      },
+      "locations": [
+        {
+          "locationId": "fcd64ce1-6995-48f0-840e-89ffa2288371",
+          "quantityPhysical": 1
+        }
+      ],
+      "physical": {
+        "materialType": "1a54b431-2e4f-452d-9cae-9cee66c9a892",
+        "createInventory": "Instance, Holding, Item",
+        "materialSupplier": "e0fb5df2-cdf1-11e8-a8d5-f2801f1b9fd1"
+      },
+      "orderFormat": "Physical Resource",
+      "shipTo": "f7c36792-05f7-4c8c-969d-103ac6763187"
+    },
+    {
+      "id": "e59bfa30-8365-486b-b31f-fad9abe4b005",
+      "templateName": "KB Stående order",
+      "isPackage": false
+    },
+    {
+      "id": "d15091f6-9928-4a10-8110-72012d1a20fc",
+      "templateName": "KB prenumeration",
+      "templateCode": "PREN",
+      "templateDescription": "Förvärv av tidskrifter",
+      "vendor": "50fb6ae0-cdf1-11e8-a8d5-f2801f1b9fd1",
+      "isPackage": false
+    },
+    {
+      "id": "96b2a15b-097b-4a84-9bc9-b6d2d09e3ae5",
+      "templateName": "KB Tidskriftsprenumerationer",
+      "hiddenFields": {
+        "cost": {
+          "currency": true,
+          "discount": true,
+          "discountType": true,
+          "exchangeRate": true,
+          "listUnitPrice": true,
+          "additionalCost": true,
+          "quantityPhysical": true,
+          "quantityElectronic": true,
+          "useSetExchangeRate": true,
+          "currentExchangeRate": true,
+          "listUnitPriceElectronic": true
+        },
+        "poNumberPrefix": false
+      },
+      "notes": [
+        ""
+      ],
+      "instanceId": null,
+      "acquisitionMethod": "06976e58-bcf3-438e-b0ea-280ed421d764",
+      "vendorDetail": {
+        "referenceNumbers": [
+          {
+            "refNumberType": null
+          }
+        ]
+      },
+      "details": {
+        "productIds": [
+          {
+            "productIdType": ""
+          }
+        ]
+      },
+      "isPackage": false,
+      "locations": [
+        {
+          "__key__": "__key__693"
+        }
+      ]
+    },
+    {
+      "id": "66a29252-1456-471f-9335-e6931d0d9945",
+      "templateName": "KB Pliktleveranser seriellt",
+      "hiddenFields": {
+        "poLineDescription": true,
+        "description": true,
+        "cancellationRestriction": true,
+        "poNumberSuffix": true,
+        "assignedTo": true,
+        "approved": true,
+        "donor": true,
+        "ongoing": {
+          "isSubscription": true
+        },
+        "manualPo": true,
+        "acqUnitIds": true,
+        "reEncumber": true,
+        "poNumberPrefix": true,
+        "billTo": true,
+        "details": {
+          "subscriptionTo": true,
+          "isBinderyActive": true,
+          "subscriptionFrom": true,
+          "subscriptionInterval": true
+        },
+        "selector": true,
+        "checkinItems": true,
+        "paymentStatus": true,
+        "requester": true,
+        "cost": {
+          "currency": true,
+          "discount": true,
+          "discountType": true,
+          "exchangeRate": true,
+          "listUnitPrice": true,
+          "additionalCost": true,
+          "quantityPhysical": true,
+          "quantityElectronic": true,
+          "useSetExchangeRate": true,
+          "currentExchangeRate": true,
+          "listUnitPriceElectronic": true
+        },
+        "vendorDetail": {
+          "instructions": true,
+          "vendorAccount": true
+        },
+        "receiptDate": true,
+        "isPackage": true,
+        "collection": true,
+        "rush": true,
+        "packagePoLineId": true,
+        "automaticExport": true,
+        "cancellationRestrictionNote": true,
+        "receiptStatus": true,
+        "shipTo": true
+      },
+      "vendor": "5e4ed340-2c2a-4cd7-bcca-fbf6167f7c39",
+      "acquisitionMethod": "113a14b8-060b-4aa6-ac26-e67a51477804",
+      "vendorDetail": {
+        "referenceNumbers": [
+          {}
+        ]
+      },
+      "isPackage": false
+    },
+    {
+      "id": "acbe4943-3841-400c-97c8-8fcca4d904ff",
+      "templateName": "Monografi Adlibris",
+      "hiddenFields": {
+        "poLineDescription": true,
+        "description": true,
+        "cancellationRestriction": true,
+        "poNumberSuffix": true,
+        "assignedTo": true,
+        "approved": true,
+        "donor": true,
+        "ongoing": {
+          "isSubscription": true
+        },
+        "manualPo": true,
+        "acqUnitIds": true,
+        "reEncumber": true,
+        "poNumberPrefix": true,
+        "billTo": true,
+        "details": {
+          "subscriptionTo": true,
+          "subscriptionFrom": true,
+          "subscriptionInterval": true
+        },
+        "selector": true,
+        "checkinItems": true,
+        "paymentStatus": true,
+        "requester": true,
+        "cost": {
+          "discount": true,
+          "discountType": true,
+          "listUnitPrice": true,
+          "additionalCost": true,
+          "quantityPhysical": true,
+          "quantityElectronic": true,
+          "listUnitPriceElectronic": true
+        },
+        "vendorDetail": {
+          "instructions": true,
+          "vendorAccount": true
+        },
+        "receiptDate": true,
+        "isPackage": true,
+        "collection": true,
+        "rush": true,
+        "packagePoLineId": true,
+        "automaticExport": true,
+        "cancellationRestrictionNote": true,
+        "receiptStatus": true,
+        "shipTo": true
+      },
+      "orderType": "One-Time",
+      "cost": {
+        "currency": "SEK",
+        "exchangeRate": null,
+        "listUnitPrice": 0,
+        "quantityPhysical": 1,
+        "quantityElectronic": null,
+        "listUnitPriceElectronic": null
+      },
+      "manualPo": true,
+      "vendor": "74f93a5c-9a3d-404a-bef4-791260103743",
+      "acquisitionMethod": "306489dd-0053-49ee-a068-c316444a8f55",
+      "isPackage": false,
+      "locations": [
+        {
+          "__key__": "__key__272",
+          "locationId": "57246b20-76a7-4725-91c7-dea9f336de4f",
+          "quantityPhysical": 1
+        }
+      ],
+      "physical": {
+        "materialType": "1a54b431-2e4f-452d-9cae-9cee66c9a892",
+        "createInventory": "Instance, Holding, Item"
+      },
+      "orderFormat": "Physical Resource",
+      "paymentStatus": "Payment Not Required"
+    }
+  ],
+  "totalRecords": 9
+}

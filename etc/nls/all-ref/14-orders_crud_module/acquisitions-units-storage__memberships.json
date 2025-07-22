@@ -1,0 +1,16 @@
+{
+  "acquisitionsUnitMemberships": [
+    {
+      "id": "795cadba-cb9b-4d10-81a7-e879c0ca46bc",
+      "userId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+      "acquisitionsUnitId": "0ebb1f7d-983f-3026-8a4c-5318e0ebc041",
+      "metadata": {
+        "createdDate": "2023-11-21T13:52:17.158+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-11-21T13:52:17.158+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    }
+  ],
+  "totalRecords": 1
+}
