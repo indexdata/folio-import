@@ -4,27 +4,24 @@
       "id": "30773a27-b485-4dab-aeb6-b8c04fa3cb17",
       "name": "monographic series",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.068+00:00",
-        "updatedDate": "2025-03-27T17:26:45.912+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:44.478+00:00",
+        "updatedDate": "2023-03-13T12:10:44.478+00:00"
       }
     },
     {
       "id": "758f13db-ffb4-440e-bb10-8a364aa6cb4a",
       "name": "bound-with",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.069+00:00",
-        "updatedDate": "2025-03-27T17:26:46.235+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:44.480+00:00",
+        "updatedDate": "2023-03-13T12:10:44.480+00:00"
       }
     },
     {
       "id": "a17daf0a-f057-43b3-9997-13d0724cdf51",
       "name": "multipart monograph",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.069+00:00",
-        "updatedDate": "2025-03-27T17:26:46.591+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:44.481+00:00",
+        "updatedDate": "2023-03-13T12:10:44.481+00:00"
       }
     }
   ],

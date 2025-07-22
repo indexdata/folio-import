@@ -6,9 +6,8 @@
       "name": "Other",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.315+00:00",
-        "updatedDate": "2025-03-27T17:26:46.968+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.230+00:00",
+        "updatedDate": "2023-03-13T12:10:45.230+00:00"
       }
     },
     {
@@ -17,9 +16,8 @@
       "name": "Cataloged",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.315+00:00",
-        "updatedDate": "2025-03-27T17:26:47.306+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.232+00:00",
+        "updatedDate": "2023-03-13T12:10:45.232+00:00"
       }
     },
     {
@@ -28,9 +26,8 @@
       "name": "Uncataloged",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.316+00:00",
-        "updatedDate": "2025-03-27T17:26:47.649+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.237+00:00",
+        "updatedDate": "2023-03-13T12:10:45.237+00:00"
       }
     },
     {
@@ -39,9 +36,8 @@
       "name": "Temporary",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.316+00:00",
-        "updatedDate": "2025-03-27T17:26:47.976+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.237+00:00",
+        "updatedDate": "2023-03-13T12:10:45.237+00:00"
       }
     },
     {
@@ -50,9 +46,8 @@
       "name": "Batch Loaded",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.319+00:00",
-        "updatedDate": "2025-03-27T17:26:48.342+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.244+00:00",
+        "updatedDate": "2023-03-13T12:10:45.244+00:00"
       }
     },
     {
@@ -61,35 +56,58 @@
       "name": "Not yet assigned",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.318+00:00",
-        "updatedDate": "2025-03-27T17:26:48.668+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.243+00:00",
+        "updatedDate": "2023-03-13T12:10:45.243+00:00"
       }
     },
     {
-      "id": "52a2fc42-0b93-4844-8c83-9d29000469fb",
+      "id": "a2d084c1-b563-47bf-b1c3-7735006a3a4a",
       "code": "mv",
       "name": "Minipost - vardagstryck",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-17T17:03:35.414+00:00",
-        "createdByUserId": "8ffac617-2e98-453b-bb2e-0d3d3a6fad7a",
-        "updatedDate": "2025-05-02T09:27:41.349+00:00",
-        "updatedByUserId": "16b8d697-bf25-4316-9765-4319aae7ac1b"
+        "createdDate": "2024-09-10T12:18:04.942+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-04-29T07:22:26.811+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     },
     {
-      "id": "74ab4c8f-e44a-49b0-9065-3b8415872c3b",
+      "id": "e2e2822a-485f-4d0c-afa9-b589ebbbeb5f",
       "code": "mp",
       "name": "Minipost",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-05-02T09:27:58.988+00:00",
-        "createdByUserId": "16b8d697-bf25-4316-9765-4319aae7ac1b",
-        "updatedDate": "2025-05-02T09:27:58.988+00:00",
-        "updatedByUserId": "16b8d697-bf25-4316-9765-4319aae7ac1b"
+        "createdDate": "2025-04-29T07:22:39.000+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-04-29T07:22:39.000+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "7a22cb69-d78d-44d2-856e-c482824b8ac0",
+      "code": "rt",
+      "name": "Riksdagstryck",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-06-17T11:43:14.696+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-06-17T11:43:14.696+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    },
+    {
+      "id": "c9ee35a5-3847-4172-9958-fa5fca46e749",
+      "code": "fe",
+      "name": "Förvärvas ej",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-07-01T12:49:04.614+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-07-01T12:49:04.614+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
       }
     }
   ],
-  "totalRecords": 8
+  "totalRecords": 10
 }

@@ -1,0 +1,32 @@
+{
+  "processingStatuses": [
+    {
+      "id": "a8d247c8-e8af-4a16-8b17-09647863e334",
+      "name": "On order",
+      "description": "Ordered, but not yet available",
+      "metadata": {
+        "createdDate": "2023-03-13T12:12:14.294+00:00",
+        "updatedDate": "2023-03-13T12:12:14.294+00:00"
+      }
+    },
+    {
+      "id": "8bf28ac6-accd-4575-8ffa-365850be1851",
+      "name": "Recalled",
+      "description": "Recalled and unavailable",
+      "metadata": {
+        "createdDate": "2023-03-13T12:12:14.298+00:00",
+        "updatedDate": "2023-03-13T12:12:14.298+00:00"
+      }
+    },
+    {
+      "id": "1585a99d-0b46-48b3-9a32-4050f1039a61",
+      "name": "In cataloging",
+      "description": "Received but not yet catalogued",
+      "metadata": {
+        "createdDate": "2023-03-13T12:12:14.300+00:00",
+        "updatedDate": "2023-03-13T12:12:14.300+00:00"
+      }
+    }
+  ],
+  "totalRecords": 3
+}

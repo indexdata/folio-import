@@ -1,0 +1,50 @@
+{
+  "copyrightStatuses": [
+    {
+      "id": "a18564cf-8b83-44d4-9c58-b793f1d3d754",
+      "name": "CC By-NC",
+      "description": "Creative Commons attribution non-commercial license",
+      "metadata": {
+        "createdDate": "2023-03-13T12:12:14.182+00:00",
+        "updatedDate": "2023-03-13T12:12:14.182+00:00"
+      }
+    },
+    {
+      "id": "fb68f59b-940e-446a-893d-89069d15b803",
+      "name": "Public domain",
+      "description": "No copyright at all",
+      "metadata": {
+        "createdDate": "2023-03-13T12:12:14.192+00:00",
+        "updatedDate": "2023-03-13T12:12:14.192+00:00"
+      }
+    },
+    {
+      "id": "b8beb40f-9fbe-4d54-8cb6-0d16067492ab",
+      "name": "CC By-NC-SA",
+      "description": "Creative Commons attribution non-commercial share-alike license",
+      "metadata": {
+        "createdDate": "2023-03-13T12:12:14.189+00:00",
+        "updatedDate": "2023-03-13T12:12:14.189+00:00"
+      }
+    },
+    {
+      "id": "0a598dcc-237f-4d74-8444-9ac5a8f9d4a8",
+      "name": "CC By",
+      "description": "Creative Commons attribution license",
+      "metadata": {
+        "createdDate": "2023-03-13T12:12:14.187+00:00",
+        "updatedDate": "2023-03-13T12:12:14.187+00:00"
+      }
+    },
+    {
+      "id": "04521370-886e-41de-afbe-55a8b9fe782a",
+      "name": "All rights reserved",
+      "description": "Patron may not copy at all",
+      "metadata": {
+        "createdDate": "2023-03-13T12:12:14.196+00:00",
+        "updatedDate": "2023-03-13T12:12:14.196+00:00"
+      }
+    }
+  ],
+  "totalRecords": 5
+}

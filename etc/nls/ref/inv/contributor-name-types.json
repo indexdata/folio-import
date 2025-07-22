@@ -5,9 +5,8 @@
       "name": "Personal name",
       "ordering": "1",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.080+00:00",
-        "updatedDate": "2025-03-27T17:24:14.369+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:44.520+00:00",
+        "updatedDate": "2023-03-13T12:10:44.520+00:00"
       }
     },
     {
@@ -15,9 +14,8 @@
       "name": "Corporate name",
       "ordering": "2",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.080+00:00",
-        "updatedDate": "2025-03-27T17:24:14.698+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:44.522+00:00",
+        "updatedDate": "2023-03-13T12:10:44.522+00:00"
       }
     },
     {
@@ -25,9 +23,8 @@
       "name": "Meeting name",
       "ordering": "3",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.081+00:00",
-        "updatedDate": "2025-03-27T17:24:15.036+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:44.523+00:00",
+        "updatedDate": "2023-03-13T12:10:44.523+00:00"
       }
     }
   ],

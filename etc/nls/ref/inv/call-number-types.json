@@ -1,58 +1,12 @@
 {
   "callNumberTypes": [
     {
-      "id": "95467209-6d7b-468b-94df-0f5d7ad2747d",
-      "name": "Library of Congress classification",
-      "source": "system",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.618+00:00",
-        "updatedDate": "2025-01-19T22:09:03.618+00:00"
-      }
-    },
-    {
-      "id": "03dd64d0-5626-4ecd-8ece-4531e0069f35",
-      "name": "Dewey Decimal classification",
-      "source": "system",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.619+00:00",
-        "updatedDate": "2025-01-19T22:09:03.619+00:00"
-      }
-    },
-    {
-      "id": "054d460d-d6b9-4469-9e37-7a78a2266655",
-      "name": "National Library of Medicine classification",
-      "source": "system",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.619+00:00",
-        "updatedDate": "2025-01-19T22:09:03.619+00:00"
-      }
-    },
-    {
-      "id": "6caca63e-5651-4db6-9247-3205156e9699",
-      "name": "Other scheme",
-      "source": "system",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.630+00:00",
-        "updatedDate": "2025-01-19T22:09:03.630+00:00"
-      }
-    },
-    {
-      "id": "fc388041-6cd0-4806-8a74-ebe3b9ab4c6e",
-      "name": "Superintendent of Documents classification",
-      "source": "system",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.633+00:00",
-        "updatedDate": "2025-01-19T22:09:03.633+00:00"
-      }
-    },
-    {
       "id": "d644be8f-deb5-4c4d-8c9e-2291b7c0f46f",
       "name": "UDC",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.618+00:00",
-        "updatedDate": "2025-03-27T17:24:06.652+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.676+00:00",
+        "updatedDate": "2023-03-13T12:10:45.676+00:00"
       }
     },
     {
@@ -60,9 +14,8 @@
       "name": "Source specified in subfield $2",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.620+00:00",
-        "updatedDate": "2025-03-27T17:24:06.989+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.684+00:00",
+        "updatedDate": "2023-03-13T12:10:45.684+00:00"
       }
     },
     {
@@ -70,9 +23,8 @@
       "name": "Title",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.628+00:00",
-        "updatedDate": "2025-03-27T17:24:07.344+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.686+00:00",
+        "updatedDate": "2023-03-13T12:10:45.686+00:00"
       }
     },
     {
@@ -80,9 +32,8 @@
       "name": "Shelved separately",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.629+00:00",
-        "updatedDate": "2025-03-27T17:24:07.712+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.691+00:00",
+        "updatedDate": "2023-03-13T12:10:45.691+00:00"
       }
     },
     {
@@ -90,9 +41,8 @@
       "name": "MOYS",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.630+00:00",
-        "updatedDate": "2025-03-27T17:24:08.052+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.692+00:00",
+        "updatedDate": "2023-03-13T12:10:45.692+00:00"
       }
     },
     {
@@ -100,9 +50,8 @@
       "name": "Shelving control number",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.629+00:00",
-        "updatedDate": "2025-03-27T17:24:08.385+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.690+00:00",
+        "updatedDate": "2023-03-13T12:10:45.690+00:00"
       }
     },
     {
@@ -110,9 +59,53 @@
       "name": "LC Modified",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.637+00:00",
-        "updatedDate": "2025-03-27T17:24:08.712+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.700+00:00",
+        "updatedDate": "2023-03-13T12:10:45.700+00:00"
+      }
+    },
+    {
+      "id": "95467209-6d7b-468b-94df-0f5d7ad2747d",
+      "name": "Library of Congress classification",
+      "source": "system",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.671+00:00",
+        "updatedDate": "2023-03-13T12:10:45.671+00:00"
+      }
+    },
+    {
+      "id": "054d460d-d6b9-4469-9e37-7a78a2266655",
+      "name": "National Library of Medicine classification",
+      "source": "system",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.677+00:00",
+        "updatedDate": "2023-03-13T12:10:45.677+00:00"
+      }
+    },
+    {
+      "id": "03dd64d0-5626-4ecd-8ece-4531e0069f35",
+      "name": "Dewey Decimal classification",
+      "source": "system",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.682+00:00",
+        "updatedDate": "2023-03-13T12:10:45.682+00:00"
+      }
+    },
+    {
+      "id": "6caca63e-5651-4db6-9247-3205156e9699",
+      "name": "Other scheme",
+      "source": "system",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.694+00:00",
+        "updatedDate": "2023-03-13T12:10:45.694+00:00"
+      }
+    },
+    {
+      "id": "fc388041-6cd0-4806-8a74-ebe3b9ab4c6e",
+      "name": "Superintendent of Documents classification",
+      "source": "system",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.695+00:00",
+        "updatedDate": "2023-03-13T12:10:45.695+00:00"
       }
     }
   ],

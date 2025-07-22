@@ -1,23 +1,21 @@
 {
   "holdingsNoteTypes": [
     {
+      "id": "88914775-f677-4759-b57b-1a33b90b24e0",
+      "name": "Electronic bookplate",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.945+00:00",
+        "updatedDate": "2023-03-13T12:10:45.945+00:00"
+      }
+    },
+    {
       "id": "c4407cc7-d79f-4609-95bd-1cefb2e2b5c5",
       "name": "Copy note",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.565+00:00",
-        "updatedDate": "2025-03-27T17:25:49.571+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "6a41b714-8574-4084-8d64-a9373c3fbb59",
-      "name": "Reproduction",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.569+00:00",
-        "updatedDate": "2025-03-27T17:25:50.910+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.950+00:00",
+        "updatedDate": "2023-03-13T12:10:45.950+00:00"
       }
     },
     {
@@ -25,40 +23,8 @@
       "name": "Action note",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.566+00:00",
-        "updatedDate": "2025-03-27T17:25:49.897+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "b160f13a-ddba-4053-b9c4-60ec5ea45d56",
-      "name": "Note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.571+00:00",
-        "updatedDate": "2025-03-27T17:25:51.243+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "11b0e5cc-7d3e-4502-8fa0-d922e94acb66",
-      "name": "Sammanfattning av innehåll",
-      "source": "local",
-      "metadata": {
-        "createdDate": "2025-02-28T11:04:33.801+00:00",
-        "createdByUserId": "6c4efc2a-853a-432c-9785-566416bd0035",
-        "updatedDate": "2025-02-28T11:04:33.801+00:00",
-        "updatedByUserId": "6c4efc2a-853a-432c-9785-566416bd0035"
-      }
-    },
-    {
-      "id": "88914775-f677-4759-b57b-1a33b90b24e0",
-      "name": "Electronic bookplate",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.566+00:00",
-        "updatedDate": "2025-03-27T17:25:49.242+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.951+00:00",
+        "updatedDate": "2023-03-13T12:10:45.951+00:00"
       }
     },
     {
@@ -66,9 +32,8 @@
       "name": "Provenance",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.569+00:00",
-        "updatedDate": "2025-03-27T17:25:50.240+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.957+00:00",
+        "updatedDate": "2023-03-13T12:10:45.957+00:00"
       }
     },
     {
@@ -76,9 +41,37 @@
       "name": "Binding",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.568+00:00",
-        "updatedDate": "2025-03-27T17:25:50.584+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.955+00:00",
+        "updatedDate": "2023-03-13T12:10:45.955+00:00"
+      }
+    },
+    {
+      "id": "6a41b714-8574-4084-8d64-a9373c3fbb59",
+      "name": "Reproduction",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.957+00:00",
+        "updatedDate": "2023-03-13T12:10:45.957+00:00"
+      }
+    },
+    {
+      "id": "b160f13a-ddba-4053-b9c4-60ec5ea45d56",
+      "name": "Note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.960+00:00",
+        "updatedDate": "2023-03-13T12:10:45.960+00:00"
+      }
+    },
+    {
+      "id": "090437df-892c-4b11-a4ae-0722a919f9f3",
+      "name": "Libris beståndsinformation",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-03-27T11:47:53.490+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-03-27T11:47:53.490+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     }
   ],

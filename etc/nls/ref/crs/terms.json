@@ -1,0 +1,55 @@
+{
+  "terms": [
+    {
+      "id": "f9712294-2037-44f7-8066-216ae950c26c",
+      "name": "Trinity 2020",
+      "startDate": "2020-04-26",
+      "endDate": "2020-06-20",
+      "metadata": {
+        "createdDate": "2023-03-13T12:12:14.091+00:00",
+        "updatedDate": "2023-03-13T12:12:14.091+00:00"
+      }
+    },
+    {
+      "id": "aa59adff-9e2b-473d-89ad-b2b506b475a2",
+      "name": "Hilary 2020",
+      "startDate": "2020-01-19",
+      "endDate": "2020-03-14",
+      "metadata": {
+        "createdDate": "2023-03-13T12:12:14.103+00:00",
+        "updatedDate": "2023-03-13T12:12:14.103+00:00"
+      }
+    },
+    {
+      "id": "cd1eb7ed-2704-4b6a-9037-d7f1a5351f6b",
+      "name": "Michaelmas 2019",
+      "startDate": "2019-10-13",
+      "endDate": "2019-12-07",
+      "metadata": {
+        "createdDate": "2023-03-13T12:12:14.106+00:00",
+        "updatedDate": "2023-03-13T12:12:14.106+00:00"
+      }
+    },
+    {
+      "id": "d9f7ff3b-eccc-443b-838d-79c9b24caffd",
+      "name": "Spring 2023",
+      "startDate": "2023-01-16T00:00:00.000Z",
+      "endDate": "2023-05-12T00:00:00.000Z",
+      "metadata": {
+        "createdDate": "2023-03-13T12:12:14.108+00:00",
+        "updatedDate": "2023-03-13T12:12:14.108+00:00"
+      }
+    },
+    {
+      "id": "b2dc8d5b-8674-4555-bc7e-aca4e622ca54",
+      "name": "Fall 2022",
+      "startDate": "2022-08-15T00:00:00.000Z",
+      "endDate": "2022-12-10T00:00:00.000Z",
+      "metadata": {
+        "createdDate": "2023-03-13T12:12:14.111+00:00",
+        "updatedDate": "2023-03-13T12:12:14.111+00:00"
+      }
+    }
+  ],
+  "totalRecords": 5
+}

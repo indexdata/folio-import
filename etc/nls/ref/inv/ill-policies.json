@@ -5,19 +5,8 @@
       "name": "Unknown reproduction policy",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.447+00:00",
-        "updatedDate": "2025-03-27T17:26:05.018+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "b0f97013-87f5-4bab-87f2-ac4a5191b489",
-      "name": "Will not lend",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.451+00:00",
-        "updatedDate": "2025-03-27T17:26:06.749+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.590+00:00",
+        "updatedDate": "2023-03-13T12:10:45.590+00:00"
       }
     },
     {
@@ -25,19 +14,8 @@
       "name": "Unknown lending policy",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.447+00:00",
-        "updatedDate": "2025-03-27T17:26:05.365+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "2a572e7b-dfe5-4dee-8a62-b98d26a802e6",
-      "name": "Will reproduce",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.452+00:00",
-        "updatedDate": "2025-03-27T17:26:07.101+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.591+00:00",
+        "updatedDate": "2023-03-13T12:10:45.591+00:00"
       }
     },
     {
@@ -45,9 +23,8 @@
       "name": "Will not reproduce",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.450+00:00",
-        "updatedDate": "2025-03-27T17:26:05.702+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.599+00:00",
+        "updatedDate": "2023-03-13T12:10:45.599+00:00"
       }
     },
     {
@@ -55,9 +32,8 @@
       "name": "Will lend",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.449+00:00",
-        "updatedDate": "2025-03-27T17:26:06.050+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.597+00:00",
+        "updatedDate": "2023-03-13T12:10:45.597+00:00"
       }
     },
     {
@@ -65,9 +41,26 @@
       "name": "Limited lending policy",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.450+00:00",
-        "updatedDate": "2025-03-27T17:26:06.394+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.600+00:00",
+        "updatedDate": "2023-03-13T12:10:45.600+00:00"
+      }
+    },
+    {
+      "id": "b0f97013-87f5-4bab-87f2-ac4a5191b489",
+      "name": "Will not lend",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.602+00:00",
+        "updatedDate": "2023-03-13T12:10:45.602+00:00"
+      }
+    },
+    {
+      "id": "2a572e7b-dfe5-4dee-8a62-b98d26a802e6",
+      "name": "Will reproduce",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.604+00:00",
+        "updatedDate": "2023-03-13T12:10:45.604+00:00"
       }
     },
     {
@@ -75,9 +68,8 @@
       "name": "Will lend hard copy only",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.453+00:00",
-        "updatedDate": "2025-03-27T17:26:07.446+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.607+00:00",
+        "updatedDate": "2023-03-13T12:10:45.607+00:00"
       }
     }
   ],

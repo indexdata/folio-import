@@ -5,9 +5,8 @@
       "name": "Electronic",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.463+00:00",
-        "updatedDate": "2025-03-27T17:25:52.357+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.627+00:00",
+        "updatedDate": "2023-03-13T12:10:45.627+00:00"
       }
     },
     {
@@ -15,9 +14,8 @@
       "name": "Monograph",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.463+00:00",
-        "updatedDate": "2025-03-27T17:25:52.673+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.630+00:00",
+        "updatedDate": "2023-03-13T12:10:45.630+00:00"
       }
     },
     {
@@ -25,9 +23,8 @@
       "name": "Serial",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.464+00:00",
-        "updatedDate": "2025-03-27T17:25:53.000+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.630+00:00",
+        "updatedDate": "2023-03-13T12:10:45.630+00:00"
       }
     },
     {
@@ -35,9 +32,8 @@
       "name": "Multi-part monograph",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.464+00:00",
-        "updatedDate": "2025-03-27T17:25:53.336+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.636+00:00",
+        "updatedDate": "2023-03-13T12:10:45.636+00:00"
       }
     },
     {
@@ -45,9 +41,8 @@
       "name": "Physical",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.464+00:00",
-        "updatedDate": "2025-03-27T17:25:53.676+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.638+00:00",
+        "updatedDate": "2023-03-13T12:10:45.638+00:00"
       }
     },
     {
@@ -55,10 +50,10 @@
       "name": "Sammanbundna verk",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:25:53.847+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:25:53.847+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-11-01T13:41:18.495+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-11-01T13:41:18.495+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     }
   ],

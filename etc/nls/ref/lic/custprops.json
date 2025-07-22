@@ -1,0 +1,818 @@
+[
+  {
+    "id": "2c91808586dad36f0186dae051550032",
+    "retired": false,
+    "name": "authorisedUsers",
+    "primary": true,
+    "defaultInternal": true,
+    "label": "Definition of authorised user",
+    "description": "The definition of an authorised user for a resource",
+    "weight": -1,
+    "type": "com.k_int.web.toolkit.custprops.types.CustomPropertyText"
+  },
+  {
+    "id": "2c91808586dad36f0186dae052a40034",
+    "retired": false,
+    "name": "remoteAccess",
+    "primary": true,
+    "category": {
+      "id": "2c91808586dad36f0186dae05081001e",
+      "desc": "Yes/No/Other",
+      "internal": false,
+      "values": [
+        {
+          "id": "2c91808586dad36f0186dae05085001f",
+          "value": "yes",
+          "label": "Yes"
+        },
+        {
+          "id": "2c91808586dad36f0186dae0508a0020",
+          "value": "no",
+          "label": "No"
+        },
+        {
+          "id": "2c91808586dad36f0186dae0508f0021",
+          "value": "other_(see_notes)",
+          "label": "Other (see notes)"
+        }
+      ]
+    },
+    "defaultInternal": true,
+    "label": "Access restricted to on-campus/campus network?",
+    "description": "Can access to the resource be provided from outside the library or institutional location / network",
+    "weight": 0,
+    "type": "com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata"
+  },
+  {
+    "id": "2c91808586dad36f0186dae052b00035",
+    "retired": false,
+    "name": "illElectronic",
+    "primary": true,
+    "category": {
+      "id": "2c91808586dad36f0186dae050930023",
+      "desc": "Permitted/Prohibited",
+      "internal": false,
+      "values": [
+        {
+          "id": "2c91808586dad36f0186dae050950024",
+          "value": "permitted_(explicit)",
+          "label": "Permitted (explicit)"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050a40028",
+          "value": "permitted_(interpreted)",
+          "label": "Permitted (interpreted)"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050ad002d",
+          "value": "prohibited_(interpreted)",
+          "label": "Prohibited (interpreted)"
+        },
+        {
+          "id": "2c91808586dad36f0186dae0509e0027",
+          "value": "permitted_(explicit)_under_conditions",
+          "label": "Permitted (explicit) under conditions"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050b60030",
+          "value": "not_applicable",
+          "label": "Not applicable"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050b2002f",
+          "value": "unmentioned",
+          "label": "Unmentioned"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050a9002b",
+          "value": "prohibited_(explicit)",
+          "label": "Prohibited (explicit)"
+        }
+      ]
+    },
+    "defaultInternal": true,
+    "label": "Electronic ILL",
+    "description": "The right to provide the licensed materials via interlibrary loan by way of electronic copies",
+    "weight": 0,
+    "type": "com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata"
+  },
+  {
+    "id": "2c91808586dad36f0186dae052ed003b",
+    "retired": false,
+    "name": "copyDigital",
+    "primary": true,
+    "category": {
+      "id": "2c91808586dad36f0186dae050930023",
+      "desc": "Permitted/Prohibited",
+      "internal": false,
+      "values": [
+        {
+          "id": "2c91808586dad36f0186dae050950024",
+          "value": "permitted_(explicit)",
+          "label": "Permitted (explicit)"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050a40028",
+          "value": "permitted_(interpreted)",
+          "label": "Permitted (interpreted)"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050ad002d",
+          "value": "prohibited_(interpreted)",
+          "label": "Prohibited (interpreted)"
+        },
+        {
+          "id": "2c91808586dad36f0186dae0509e0027",
+          "value": "permitted_(explicit)_under_conditions",
+          "label": "Permitted (explicit) under conditions"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050b60030",
+          "value": "not_applicable",
+          "label": "Not applicable"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050b2002f",
+          "value": "unmentioned",
+          "label": "Unmentioned"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050a9002b",
+          "value": "prohibited_(explicit)",
+          "label": "Prohibited (explicit)"
+        }
+      ]
+    },
+    "defaultInternal": true,
+    "label": "Making digital copies",
+    "description": "The right of the licensee and authorized users to download and digitally copy a reasonable portion of the licensed materials",
+    "weight": 0,
+    "type": "com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata"
+  },
+  {
+    "id": "2c91808586dad36f0186dae052fa003c",
+    "retired": false,
+    "name": "copyPrint",
+    "primary": true,
+    "category": {
+      "id": "2c91808586dad36f0186dae050930023",
+      "desc": "Permitted/Prohibited",
+      "internal": false,
+      "values": [
+        {
+          "id": "2c91808586dad36f0186dae050950024",
+          "value": "permitted_(explicit)",
+          "label": "Permitted (explicit)"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050a40028",
+          "value": "permitted_(interpreted)",
+          "label": "Permitted (interpreted)"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050ad002d",
+          "value": "prohibited_(interpreted)",
+          "label": "Prohibited (interpreted)"
+        },
+        {
+          "id": "2c91808586dad36f0186dae0509e0027",
+          "value": "permitted_(explicit)_under_conditions",
+          "label": "Permitted (explicit) under conditions"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050b60030",
+          "value": "not_applicable",
+          "label": "Not applicable"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050b2002f",
+          "value": "unmentioned",
+          "label": "Unmentioned"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050a9002b",
+          "value": "prohibited_(explicit)",
+          "label": "Prohibited (explicit)"
+        }
+      ]
+    },
+    "defaultInternal": true,
+    "label": "Making print copies",
+    "description": "The right of the licensee and authorized users to print a reasonable portion of the licensed materials",
+    "weight": 0,
+    "type": "com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata"
+  },
+  {
+    "id": "2c91808586dad36f0186dae0514f0031",
+    "retired": false,
+    "name": "concurrentAccess",
+    "primary": true,
+    "defaultInternal": true,
+    "label": "Number of concurrent users allowed",
+    "description": "The number of concurrent users allowed by the resource",
+    "weight": 0,
+    "type": "com.k_int.web.toolkit.custprops.types.CustomPropertyInteger"
+  },
+  {
+    "id": "2c91808586dad36f0186dae052c20037",
+    "retired": false,
+    "name": "illPrint",
+    "primary": true,
+    "category": {
+      "id": "2c91808586dad36f0186dae050930023",
+      "desc": "Permitted/Prohibited",
+      "internal": false,
+      "values": [
+        {
+          "id": "2c91808586dad36f0186dae050950024",
+          "value": "permitted_(explicit)",
+          "label": "Permitted (explicit)"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050a40028",
+          "value": "permitted_(interpreted)",
+          "label": "Permitted (interpreted)"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050ad002d",
+          "value": "prohibited_(interpreted)",
+          "label": "Prohibited (interpreted)"
+        },
+        {
+          "id": "2c91808586dad36f0186dae0509e0027",
+          "value": "permitted_(explicit)_under_conditions",
+          "label": "Permitted (explicit) under conditions"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050b60030",
+          "value": "not_applicable",
+          "label": "Not applicable"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050b2002f",
+          "value": "unmentioned",
+          "label": "Unmentioned"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050a9002b",
+          "value": "prohibited_(explicit)",
+          "label": "Prohibited (explicit)"
+        }
+      ]
+    },
+    "defaultInternal": true,
+    "label": "Print ILL",
+    "description": "The right to provide the licensed materials via interlibrary loan by way of print copies or facsimile transmission",
+    "weight": 0,
+    "type": "com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata"
+  },
+  {
+    "id": "2c91808586dad36f0186dae052b80036",
+    "retired": false,
+    "name": "illSecureElectronic",
+    "primary": true,
+    "category": {
+      "id": "2c91808586dad36f0186dae050930023",
+      "desc": "Permitted/Prohibited",
+      "internal": false,
+      "values": [
+        {
+          "id": "2c91808586dad36f0186dae050950024",
+          "value": "permitted_(explicit)",
+          "label": "Permitted (explicit)"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050a40028",
+          "value": "permitted_(interpreted)",
+          "label": "Permitted (interpreted)"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050ad002d",
+          "value": "prohibited_(interpreted)",
+          "label": "Prohibited (interpreted)"
+        },
+        {
+          "id": "2c91808586dad36f0186dae0509e0027",
+          "value": "permitted_(explicit)_under_conditions",
+          "label": "Permitted (explicit) under conditions"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050b60030",
+          "value": "not_applicable",
+          "label": "Not applicable"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050b2002f",
+          "value": "unmentioned",
+          "label": "Unmentioned"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050a9002b",
+          "value": "prohibited_(explicit)",
+          "label": "Prohibited (explicit)"
+        }
+      ]
+    },
+    "defaultInternal": true,
+    "label": "Secure Electronic ILL",
+    "description": "The right to provide the licensed materials via interlibrary loan by way of secure electronic transmission",
+    "weight": 0,
+    "type": "com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata"
+  },
+  {
+    "id": "2c91808586dad36f0186dae052cf0038",
+    "retired": false,
+    "name": "reservesElectronic",
+    "primary": true,
+    "category": {
+      "id": "2c91808586dad36f0186dae050930023",
+      "desc": "Permitted/Prohibited",
+      "internal": false,
+      "values": [
+        {
+          "id": "2c91808586dad36f0186dae050950024",
+          "value": "permitted_(explicit)",
+          "label": "Permitted (explicit)"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050a40028",
+          "value": "permitted_(interpreted)",
+          "label": "Permitted (interpreted)"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050ad002d",
+          "value": "prohibited_(interpreted)",
+          "label": "Prohibited (interpreted)"
+        },
+        {
+          "id": "2c91808586dad36f0186dae0509e0027",
+          "value": "permitted_(explicit)_under_conditions",
+          "label": "Permitted (explicit) under conditions"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050b60030",
+          "value": "not_applicable",
+          "label": "Not applicable"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050b2002f",
+          "value": "unmentioned",
+          "label": "Unmentioned"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050a9002b",
+          "value": "prohibited_(explicit)",
+          "label": "Prohibited (explicit)"
+        }
+      ]
+    },
+    "defaultInternal": true,
+    "label": "Storage of electronic copies on secure network",
+    "description": "The right to make electronic copies of the licensed materials and store them on a secure network",
+    "weight": 0,
+    "type": "com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata"
+  },
+  {
+    "id": "2c91808586dad36f0186dae052d90039",
+    "retired": false,
+    "name": "coursePackElectronic",
+    "primary": true,
+    "category": {
+      "id": "2c91808586dad36f0186dae050930023",
+      "desc": "Permitted/Prohibited",
+      "internal": false,
+      "values": [
+        {
+          "id": "2c91808586dad36f0186dae050950024",
+          "value": "permitted_(explicit)",
+          "label": "Permitted (explicit)"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050a40028",
+          "value": "permitted_(interpreted)",
+          "label": "Permitted (interpreted)"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050ad002d",
+          "value": "prohibited_(interpreted)",
+          "label": "Prohibited (interpreted)"
+        },
+        {
+          "id": "2c91808586dad36f0186dae0509e0027",
+          "value": "permitted_(explicit)_under_conditions",
+          "label": "Permitted (explicit) under conditions"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050b60030",
+          "value": "not_applicable",
+          "label": "Not applicable"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050b2002f",
+          "value": "unmentioned",
+          "label": "Unmentioned"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050a9002b",
+          "value": "prohibited_(explicit)",
+          "label": "Prohibited (explicit)"
+        }
+      ]
+    },
+    "defaultInternal": false,
+    "label": "Use in electronic coursepacks",
+    "description": "The right to use licensed materials in collections or compilations of materials assembled in an electronic format by faculty members for use by students in a class for purposes of instruction",
+    "weight": 0,
+    "type": "com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata"
+  },
+  {
+    "id": "2c91808586dad36f0186dae052e4003a",
+    "retired": false,
+    "name": "coursePackPrint",
+    "primary": true,
+    "category": {
+      "id": "2c91808586dad36f0186dae050930023",
+      "desc": "Permitted/Prohibited",
+      "internal": false,
+      "values": [
+        {
+          "id": "2c91808586dad36f0186dae050950024",
+          "value": "permitted_(explicit)",
+          "label": "Permitted (explicit)"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050a40028",
+          "value": "permitted_(interpreted)",
+          "label": "Permitted (interpreted)"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050ad002d",
+          "value": "prohibited_(interpreted)",
+          "label": "Prohibited (interpreted)"
+        },
+        {
+          "id": "2c91808586dad36f0186dae0509e0027",
+          "value": "permitted_(explicit)_under_conditions",
+          "label": "Permitted (explicit) under conditions"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050b60030",
+          "value": "not_applicable",
+          "label": "Not applicable"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050b2002f",
+          "value": "unmentioned",
+          "label": "Unmentioned"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050a9002b",
+          "value": "prohibited_(explicit)",
+          "label": "Prohibited (explicit)"
+        }
+      ]
+    },
+    "defaultInternal": false,
+    "label": "Use in print course packs",
+    "description": "The right to use licensed materials in collections or compilations of materials assembled in a print format by faculty members for use by students in a class for purposes of instruction",
+    "weight": 0,
+    "type": "com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata"
+  },
+  {
+    "id": "2c91808586dad36f0186dae0529c0033",
+    "retired": false,
+    "name": "walkInAccess",
+    "primary": true,
+    "category": {
+      "id": "2c91808586dad36f0186dae05081001e",
+      "desc": "Yes/No/Other",
+      "internal": false,
+      "values": [
+        {
+          "id": "2c91808586dad36f0186dae05085001f",
+          "value": "yes",
+          "label": "Yes"
+        },
+        {
+          "id": "2c91808586dad36f0186dae0508a0020",
+          "value": "no",
+          "label": "No"
+        },
+        {
+          "id": "2c91808586dad36f0186dae0508f0021",
+          "value": "other_(see_notes)",
+          "label": "Other (see notes)"
+        }
+      ]
+    },
+    "defaultInternal": false,
+    "label": "Walk-in access permitted?",
+    "description": "Can non-members of the library/instittuion use the resource when in the library",
+    "weight": 0,
+    "type": "com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata"
+  },
+  {
+    "id": "2c91808586dad36f0186dae053250042",
+    "retired": false,
+    "name": "authProxy",
+    "primary": false,
+    "category": {
+      "id": "2c91808586dad36f0186dae05081001e",
+      "desc": "Yes/No/Other",
+      "internal": false,
+      "values": [
+        {
+          "id": "2c91808586dad36f0186dae05085001f",
+          "value": "yes",
+          "label": "Yes"
+        },
+        {
+          "id": "2c91808586dad36f0186dae0508a0020",
+          "value": "no",
+          "label": "No"
+        },
+        {
+          "id": "2c91808586dad36f0186dae0508f0021",
+          "value": "other_(see_notes)",
+          "label": "Other (see notes)"
+        }
+      ]
+    },
+    "defaultInternal": true,
+    "label": "Access via a proxy supported?",
+    "description": "Whether authentication via a reverse proxy is supported",
+    "weight": 0,
+    "type": "com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata"
+  },
+  {
+    "id": "2c91808586dad36f0186dae0533d0045",
+    "retired": false,
+    "name": "annualOptOut",
+    "primary": false,
+    "category": {
+      "id": "2c91808586dad36f0186dae05081001e",
+      "desc": "Yes/No/Other",
+      "internal": false,
+      "values": [
+        {
+          "id": "2c91808586dad36f0186dae05085001f",
+          "value": "yes",
+          "label": "Yes"
+        },
+        {
+          "id": "2c91808586dad36f0186dae0508a0020",
+          "value": "no",
+          "label": "No"
+        },
+        {
+          "id": "2c91808586dad36f0186dae0508f0021",
+          "value": "other_(see_notes)",
+          "label": "Other (see notes)"
+        }
+      ]
+    },
+    "defaultInternal": true,
+    "label": "Annual opt-out clause included?",
+    "description": "Whether the license includes an 'annual opt-out' clause within a multi-year agreement",
+    "weight": 0,
+    "type": "com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata"
+  },
+  {
+    "id": "2c91808586dad36f0186dae0531d0041",
+    "retired": false,
+    "name": "authIP",
+    "primary": false,
+    "category": {
+      "id": "2c91808586dad36f0186dae05081001e",
+      "desc": "Yes/No/Other",
+      "internal": false,
+      "values": [
+        {
+          "id": "2c91808586dad36f0186dae05085001f",
+          "value": "yes",
+          "label": "Yes"
+        },
+        {
+          "id": "2c91808586dad36f0186dae0508a0020",
+          "value": "no",
+          "label": "No"
+        },
+        {
+          "id": "2c91808586dad36f0186dae0508f0021",
+          "value": "other_(see_notes)",
+          "label": "Other (see notes)"
+        }
+      ]
+    },
+    "defaultInternal": true,
+    "label": "IP authentication supported?",
+    "description": "Whether authentication via IP range is supported",
+    "weight": 0,
+    "type": "com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata"
+  },
+  {
+    "id": "2c91808586dad36f0186dae053130040",
+    "retired": false,
+    "name": "metadataUsage",
+    "primary": false,
+    "defaultInternal": true,
+    "label": "Metadata usage",
+    "description": "Any restrictions expressed related to the use of metadata in the platforms",
+    "weight": 0,
+    "type": "com.k_int.web.toolkit.custprops.types.CustomPropertyText"
+  },
+  {
+    "id": "2c91808586dad36f0186dae05308003e",
+    "retired": false,
+    "name": "otherRestrictions",
+    "primary": false,
+    "defaultInternal": true,
+    "label": "Other restrictions",
+    "description": "Other restrictions expressed in the license",
+    "weight": 0,
+    "type": "com.k_int.web.toolkit.custprops.types.CustomPropertyText"
+  },
+  {
+    "id": "2c91808586dad36f0186dae053360044",
+    "retired": false,
+    "name": "authSAML",
+    "primary": false,
+    "category": {
+      "id": "2c91808586dad36f0186dae05081001e",
+      "desc": "Yes/No/Other",
+      "internal": false,
+      "values": [
+        {
+          "id": "2c91808586dad36f0186dae05085001f",
+          "value": "yes",
+          "label": "Yes"
+        },
+        {
+          "id": "2c91808586dad36f0186dae0508a0020",
+          "value": "no",
+          "label": "No"
+        },
+        {
+          "id": "2c91808586dad36f0186dae0508f0021",
+          "value": "other_(see_notes)",
+          "label": "Other (see notes)"
+        }
+      ]
+    },
+    "defaultInternal": true,
+    "label": "SAML compliant authentication supported?",
+    "description": "Whether authentication via SAML compliant method is supported",
+    "weight": 0,
+    "type": "com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata"
+  },
+  {
+    "id": "2c91808586dad36f0186dae05303003d",
+    "retired": false,
+    "name": "scholarlySharing",
+    "primary": false,
+    "category": {
+      "id": "2c91808586dad36f0186dae050930023",
+      "desc": "Permitted/Prohibited",
+      "internal": false,
+      "values": [
+        {
+          "id": "2c91808586dad36f0186dae050950024",
+          "value": "permitted_(explicit)",
+          "label": "Permitted (explicit)"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050a40028",
+          "value": "permitted_(interpreted)",
+          "label": "Permitted (interpreted)"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050ad002d",
+          "value": "prohibited_(interpreted)",
+          "label": "Prohibited (interpreted)"
+        },
+        {
+          "id": "2c91808586dad36f0186dae0509e0027",
+          "value": "permitted_(explicit)_under_conditions",
+          "label": "Permitted (explicit) under conditions"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050b60030",
+          "value": "not_applicable",
+          "label": "Not applicable"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050b2002f",
+          "value": "unmentioned",
+          "label": "Unmentioned"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050a9002b",
+          "value": "prohibited_(explicit)",
+          "label": "Prohibited (explicit)"
+        }
+      ]
+    },
+    "defaultInternal": true,
+    "label": "Sharing for scholarly use",
+    "description": "The right of authorized users and/or licensee to transmit hard copy or electronic copy of reasonable amounts of licensed materials to a third party for personal, scholarly, educational, scientific or professional use",
+    "weight": 0,
+    "type": "com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata"
+  },
+  {
+    "id": "2c91808586dad36f0186dae0530d003f",
+    "retired": false,
+    "name": "textAndDataMining",
+    "primary": false,
+    "category": {
+      "id": "2c91808586dad36f0186dae050930023",
+      "desc": "Permitted/Prohibited",
+      "internal": false,
+      "values": [
+        {
+          "id": "2c91808586dad36f0186dae050950024",
+          "value": "permitted_(explicit)",
+          "label": "Permitted (explicit)"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050a40028",
+          "value": "permitted_(interpreted)",
+          "label": "Permitted (interpreted)"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050ad002d",
+          "value": "prohibited_(interpreted)",
+          "label": "Prohibited (interpreted)"
+        },
+        {
+          "id": "2c91808586dad36f0186dae0509e0027",
+          "value": "permitted_(explicit)_under_conditions",
+          "label": "Permitted (explicit) under conditions"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050b60030",
+          "value": "not_applicable",
+          "label": "Not applicable"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050b2002f",
+          "value": "unmentioned",
+          "label": "Unmentioned"
+        },
+        {
+          "id": "2c91808586dad36f0186dae050a9002b",
+          "value": "prohibited_(explicit)",
+          "label": "Prohibited (explicit)"
+        }
+      ]
+    },
+    "defaultInternal": false,
+    "label": "Text and Data mining",
+    "description": "Whether it is permitted to use text and data mining processes on the content of the resource",
+    "weight": 0,
+    "type": "com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata"
+  },
+  {
+    "id": "2c91808586dad36f0186dae053490046",
+    "retired": false,
+    "name": "APCAndOffsetting",
+    "primary": false,
+    "defaultInternal": true,
+    "label": "Whether the resource is subject to an APC discount or subscription cost offsetting agreement",
+    "description": "Whether the resource is subject to an APC discount or subscription cost offsetting agreement",
+    "weight": 0,
+    "type": "com.k_int.web.toolkit.custprops.types.CustomPropertyText"
+  },
+  {
+    "id": "2c91808586dad36f0186dae0532d0043",
+    "retired": false,
+    "name": "postCancellationAccess",
+    "primary": false,
+    "category": {
+      "id": "2c91808586dad36f0186dae05081001e",
+      "desc": "Yes/No/Other",
+      "internal": false,
+      "values": [
+        {
+          "id": "2c91808586dad36f0186dae05085001f",
+          "value": "yes",
+          "label": "Yes"
+        },
+        {
+          "id": "2c91808586dad36f0186dae0508a0020",
+          "value": "no",
+          "label": "No"
+        },
+        {
+          "id": "2c91808586dad36f0186dae0508f0021",
+          "value": "other_(see_notes)",
+          "label": "Other (see notes)"
+        }
+      ]
+    },
+    "defaultInternal": true,
+    "label": "Post-cancellation terms included?",
+    "description": "Does the license include post-cancellation terms?",
+    "weight": 1,
+    "type": "com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata"
+  }
+]

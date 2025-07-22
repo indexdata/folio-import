@@ -1,324 +1,42 @@
 {
   "statisticalCodes": [
     {
-      "id": "bb76b1c1-c9df-445c-8deb-68bb3580edc2",
-      "code": "compfiles",
-      "name": "Computer files, CDs, etc (compfiles)",
-      "statisticalCodeTypeId": "3abd6fc2-b3e4-4879-b1e1-78be41769fe3",
-      "source": "UC",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.361+00:00",
-        "updatedDate": "2025-01-19T22:09:03.361+00:00"
-      }
-    },
-    {
-      "id": "16f2d65e-eb68-4ab1-93e3-03af50cb7370",
-      "code": "mfiche",
-      "name": "Microfiche (mfiche)",
-      "statisticalCodeTypeId": "3abd6fc2-b3e4-4879-b1e1-78be41769fe3",
-      "source": "UC",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.361+00:00",
-        "updatedDate": "2025-01-19T22:09:03.361+00:00"
-      }
-    },
-    {
-      "id": "91b8f0b4-0e13-4270-9fd6-e39203d0f449",
-      "code": "rnonmusic",
-      "name": "Non-music sound recordings (rnonmusic)",
-      "statisticalCodeTypeId": "3abd6fc2-b3e4-4879-b1e1-78be41769fe3",
-      "source": "UC",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.362+00:00",
-        "updatedDate": "2025-01-19T22:09:03.362+00:00"
-      }
-    },
-    {
-      "id": "9d8abbe2-1a94-4866-8731-4d12ac09f7a8",
-      "code": "ebooks",
-      "name": "Books, electronic (ebooks)",
-      "statisticalCodeTypeId": "3abd6fc2-b3e4-4879-b1e1-78be41769fe3",
-      "source": "UC",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.363+00:00",
-        "updatedDate": "2025-01-19T22:09:03.363+00:00"
-      }
-    },
-    {
-      "id": "e10796e0-a594-47b7-b748-3a81b69b3d9b",
-      "code": "audstream",
-      "name": "Streaming audio (audstream)",
-      "statisticalCodeTypeId": "d816175b-578f-4056-af61-689f449c3c45",
-      "source": "UC",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.363+00:00",
-        "updatedDate": "2025-01-19T22:09:03.363+00:00"
-      }
-    },
-    {
-      "id": "1c622d0f-2e91-4c30-ba43-2750f9735f51",
-      "code": "mfilm",
-      "name": "Microfilm (mfilm)",
-      "statisticalCodeTypeId": "3abd6fc2-b3e4-4879-b1e1-78be41769fe3",
-      "source": "UC",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.367+00:00",
-        "updatedDate": "2025-01-19T22:09:03.367+00:00"
-      }
-    },
-    {
-      "id": "2850630b-cd12-4379-af57-5c51491a6873",
-      "code": "mmedia",
-      "name": "Mixed media (mmedia)",
-      "statisticalCodeTypeId": "3abd6fc2-b3e4-4879-b1e1-78be41769fe3",
-      "source": "UC",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.367+00:00",
-        "updatedDate": "2025-01-19T22:09:03.367+00:00"
-      }
-    },
-    {
-      "id": "0868921a-4407-47c9-9b3e-db94644dbae7",
-      "code": "ENF",
-      "name": "Entry not found",
-      "statisticalCodeTypeId": "e2ab27f9-a726-4e5e-9963-fff9e6128680",
-      "source": "UC",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.368+00:00",
-        "updatedDate": "2025-01-19T22:09:03.368+00:00"
-      }
-    },
-    {
-      "id": "d82c025e-436d-4006-a677-bd2b4cdb7692",
-      "code": "mss",
-      "name": "Manuscripts (mss)",
-      "statisticalCodeTypeId": "0d3ec58e-dc3c-4aa1-9eba-180fca95c544",
-      "source": "UC",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.369+00:00",
-        "updatedDate": "2025-01-19T22:09:03.369+00:00"
-      }
-    },
-    {
-      "id": "775b6ad4-9c35-4d29-bf78-8775a9b42226",
-      "code": "serials",
-      "name": "Serials, print (serials)",
-      "statisticalCodeTypeId": "3abd6fc2-b3e4-4879-b1e1-78be41769fe3",
-      "source": "UC",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.370+00:00",
-        "updatedDate": "2025-01-19T22:09:03.370+00:00"
-      }
-    },
-    {
-      "id": "ecab577d-a050-4ea2-8a86-ea5a234283ea",
-      "code": "emusic",
-      "name": "Music scores, electronic",
-      "statisticalCodeTypeId": "3abd6fc2-b3e4-4879-b1e1-78be41769fe3",
-      "source": "UC",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.371+00:00",
-        "updatedDate": "2025-01-19T22:09:03.371+00:00"
-      }
-    },
-    {
-      "id": "b5968c9e-cddc-4576-99e3-8e60aed8b0dd",
-      "code": "books",
-      "name": "Book, print (books)",
-      "statisticalCodeTypeId": "3abd6fc2-b3e4-4879-b1e1-78be41769fe3",
-      "source": "UC",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.372+00:00",
-        "updatedDate": "2025-01-19T22:09:03.372+00:00"
-      }
-    },
-    {
-      "id": "97e91f57-fad7-41ea-a660-4031bf8d4ea8",
-      "code": "maps",
-      "name": "Maps, print (maps)",
-      "statisticalCodeTypeId": "3abd6fc2-b3e4-4879-b1e1-78be41769fe3",
-      "source": "UC",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.372+00:00",
-        "updatedDate": "2025-01-19T22:09:03.372+00:00"
-      }
-    },
-    {
-      "id": "264c4f94-1538-43a3-8b40-bed68384b31b",
-      "code": "XOCLC",
-      "name": "Do not share with OCLC",
-      "statisticalCodeTypeId": "0d3ec58e-dc3c-4aa1-9eba-180fca95c544",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.373+00:00",
-        "updatedDate": "2025-01-19T22:09:03.373+00:00"
-      }
-    },
-    {
-      "id": "972f81d5-9f8f-4b56-a10e-5c05419718e6",
-      "code": "visual",
-      "name": "Visual materials, DVDs, etc. (visual)",
-      "statisticalCodeTypeId": "3abd6fc2-b3e4-4879-b1e1-78be41769fe3",
-      "source": "UC",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.374+00:00",
-        "updatedDate": "2025-01-19T22:09:03.374+00:00"
-      }
-    },
-    {
-      "id": "b2c0e100-0485-43f2-b161-3c60aac9f68a",
-      "code": "evisual",
-      "name": "Visual, static, electronic",
-      "statisticalCodeTypeId": "d816175b-578f-4056-af61-689f449c3c45",
-      "source": "UC",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.375+00:00",
-        "updatedDate": "2025-01-19T22:09:03.375+00:00"
-      }
-    },
-    {
-      "id": "6899291a-1fb9-4130-98ce-b40368556818",
-      "code": "rmusic",
-      "name": "Music sound recordings",
-      "statisticalCodeTypeId": "3abd6fc2-b3e4-4879-b1e1-78be41769fe3",
-      "source": "UC",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.376+00:00",
-        "updatedDate": "2025-01-19T22:09:03.376+00:00"
-      }
-    },
-    {
-      "id": "0e516e54-bf36-4fc2-a0f7-3fe89a61c9c0",
-      "code": "ISER",
-      "name": "Inactive serial",
-      "statisticalCodeTypeId": "e2ab27f9-a726-4e5e-9963-fff9e6128680",
-      "source": "UC",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.376+00:00",
-        "updatedDate": "2025-01-19T22:09:03.376+00:00"
-      }
-    },
-    {
-      "id": "b6b46869-f3c1-4370-b603-29774a1e42b1",
-      "code": "arch",
-      "name": "Archives (arch)",
-      "statisticalCodeTypeId": "0d3ec58e-dc3c-4aa1-9eba-180fca95c544",
-      "source": "UC",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.377+00:00",
-        "updatedDate": "2025-01-19T22:09:03.377+00:00"
-      }
-    },
-    {
-      "id": "f47b773a-bd5f-4246-ac1e-fa4adcd0dcdf",
-      "code": "UCPress",
-      "name": "University of Chicago Press Imprint",
-      "statisticalCodeTypeId": "0d3ec58e-dc3c-4aa1-9eba-180fca95c544",
-      "source": "UC",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.378+00:00",
-        "updatedDate": "2025-01-19T22:09:03.378+00:00"
-      }
-    },
-    {
-      "id": "30b5400d-0b9e-4757-a3d0-db0d30a49e72",
-      "code": "music",
-      "name": "Music scores, print (music)",
-      "statisticalCodeTypeId": "3abd6fc2-b3e4-4879-b1e1-78be41769fe3",
-      "source": "UC",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.379+00:00",
-        "updatedDate": "2025-01-19T22:09:03.379+00:00"
-      }
-    },
-    {
-      "id": "38249f9e-13f8-48bc-a010-8023cd194af5",
-      "code": "its",
-      "name": "Information Technology Services (its)",
-      "statisticalCodeTypeId": "0d3ec58e-dc3c-4aa1-9eba-180fca95c544",
-      "source": "UC",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.380+00:00",
-        "updatedDate": "2025-01-19T22:09:03.380+00:00"
-      }
-    },
-    {
-      "id": "950d3370-9a3c-421e-b116-76e7511af9e9",
-      "code": "polsky",
-      "name": "Polsky TECHB@R (polsky)",
-      "statisticalCodeTypeId": "0d3ec58e-dc3c-4aa1-9eba-180fca95c544",
-      "source": "UC",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.380+00:00",
-        "updatedDate": "2025-01-19T22:09:03.380+00:00"
-      }
-    },
-    {
-      "id": "a5ccf92e-7b1f-4990-ac03-780a6a767f37",
-      "code": "eserials",
-      "name": "Serials, electronic (eserials)",
-      "statisticalCodeTypeId": "d816175b-578f-4056-af61-689f449c3c45",
-      "source": "UC",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.384+00:00",
-        "updatedDate": "2025-01-19T22:09:03.384+00:00"
-      }
-    },
-    {
-      "id": "b76a3088-8de6-46c8-a130-c8e74b8d2c5b",
-      "code": "emaps",
-      "name": "Maps, electronic (emaps)",
-      "statisticalCodeTypeId": "d816175b-578f-4056-af61-689f449c3c45",
-      "source": "UC",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.381+00:00",
-        "updatedDate": "2025-01-19T22:09:03.381+00:00"
-      }
-    },
-    {
-      "id": "c7a32c50-ea7c-43b7-87ab-d134c8371330",
-      "code": "ASER",
-      "name": "Active serial",
-      "statisticalCodeTypeId": "e2ab27f9-a726-4e5e-9963-fff9e6128680",
-      "source": "UC",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.382+00:00",
-        "updatedDate": "2025-01-19T22:09:03.382+00:00"
-      }
-    },
-    {
-      "id": "c4073462-6144-4b69-a543-dd131e241799",
-      "code": "withdrawn",
-      "name": "Withdrawn (withdrawn)",
-      "statisticalCodeTypeId": "0d3ec58e-dc3c-4aa1-9eba-180fca95c544",
-      "source": "UC",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.383+00:00",
-        "updatedDate": "2025-01-19T22:09:03.383+00:00"
-      }
-    },
-    {
-      "id": "6d584d0e-3dbc-46c4-a1bd-e9238dd9a6be",
-      "code": "vidstream",
-      "name": "Streaming video (vidstream)",
-      "statisticalCodeTypeId": "d816175b-578f-4056-af61-689f449c3c45",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.384+00:00",
-        "updatedDate": "2025-01-19T22:09:03.384+00:00"
-      }
-    },
-    {
       "id": "1ff4c84c-de20-43a8-9896-26fe4298df08",
       "code": "000",
       "name": "Slasken",
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:26.676+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:26.676+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2025-03-17T13:37:19.434+00:00",
+        "createdByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d",
+        "updatedDate": "2025-03-17T13:37:19.434+00:00",
+        "updatedByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d"
+      }
+    },
+    {
+      "id": "a2293290-3b3a-4e10-b7bc-26327451280f",
+      "code": "tjnst",
+      "name": "Tjänsteexemplar samling2",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-07-08T09:26:56.552+00:00",
+        "createdByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d",
+        "updatedDate": "2025-07-08T09:26:56.552+00:00",
+        "updatedByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d"
+      }
+    },
+    {
+      "id": "988d0bdb-ba9e-4f45-b839-624bce0a1236",
+      "code": "over",
+      "name": "Överförda till andra bibliotek",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-07-08T09:27:23.751+00:00",
+        "createdByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d",
+        "updatedDate": "2025-07-08T09:27:23.751+00:00",
+        "updatedByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d"
       }
     },
     {
@@ -328,10 +46,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:26.840+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:26.840+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T20:48:18.496+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T20:48:18.496+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -341,10 +59,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:27.012+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:27.012+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T20:50:06.068+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T20:50:06.068+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -354,10 +72,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:27.180+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:27.180+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:18.775+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:18.775+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -367,10 +85,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:27.349+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:27.349+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:18.849+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:18.849+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -380,10 +98,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:27.508+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:27.508+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:18.911+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:18.911+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -393,10 +111,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:27.672+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:27.672+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:18.973+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:18.973+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -406,10 +124,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:27.836+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:27.836+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:19.034+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:19.034+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -419,10 +137,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:27.992+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:27.992+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:19.097+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:19.097+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -432,10 +150,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:28.160+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:28.160+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:19.227+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:19.227+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -445,10 +163,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:28.328+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:28.328+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:19.298+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:19.298+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -458,10 +176,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:28.489+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:28.489+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:19.425+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:19.425+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -471,10 +189,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:28.649+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:28.649+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:19.491+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:19.491+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -484,10 +202,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:28.809+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:28.809+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:19.557+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:19.557+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -497,10 +215,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:28.983+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:28.983+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:19.630+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:19.630+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -510,10 +228,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:29.156+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:29.156+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:19.697+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:19.697+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -523,10 +241,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:29.329+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:29.329+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:19.773+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:19.773+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -536,10 +254,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:29.489+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:29.489+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:19.846+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:19.846+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -549,10 +267,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:29.665+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:29.665+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:19.914+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:19.914+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -562,10 +280,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:29.829+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:29.829+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:20.050+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:20.050+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -575,10 +293,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:29.995+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:29.995+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:20.237+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:20.237+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -588,10 +306,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:30.164+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:30.164+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:20.301+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:20.301+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -601,10 +319,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:30.332+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:30.332+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:20.363+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:20.363+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -614,10 +332,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:30.497+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:30.497+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:20.424+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:20.424+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -627,10 +345,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:30.653+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:30.653+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:20.486+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:20.486+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -640,10 +358,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:30.825+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:30.825+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:20.550+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:20.550+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -653,10 +371,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:30.991+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:30.991+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:20.613+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:20.613+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -666,10 +384,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:31.153+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:31.153+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:20.676+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:20.676+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -679,10 +397,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:31.328+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:31.328+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:20.740+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:20.740+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -692,10 +410,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:31.496+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:31.496+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:20.804+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:20.804+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -705,10 +423,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:31.672+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:31.672+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:20.870+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:20.870+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -718,10 +436,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:31.832+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:31.832+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:20.952+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:20.952+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -731,10 +449,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:32.007+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:32.007+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:21.027+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:21.027+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -744,10 +462,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:32.169+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:32.169+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:21.089+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:21.089+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -757,10 +475,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:32.342+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:32.342+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:21.167+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:21.167+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -770,10 +488,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:32.509+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:32.509+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:21.241+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:21.241+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -783,10 +501,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:32.680+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:32.680+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:21.304+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:21.304+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -796,10 +514,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:32.848+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:32.848+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:21.369+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:21.369+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -809,10 +527,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:33.020+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:33.020+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:21.439+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:21.439+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -822,10 +540,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:33.181+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:33.181+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:21.501+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:21.501+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -835,10 +553,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:33.356+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:33.356+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:21.561+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:21.561+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -848,10 +566,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:33.516+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:33.516+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:21.622+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:21.622+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -861,10 +579,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:33.692+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:33.692+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:21.685+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:21.685+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -874,10 +592,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:33.864+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:33.864+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:21.747+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:21.747+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -887,10 +605,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:34.032+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:34.032+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:21.809+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:21.809+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -900,10 +618,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:34.204+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:34.204+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:21.871+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:21.871+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -913,10 +631,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:34.373+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:34.373+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:21.935+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:21.935+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -926,10 +644,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:34.537+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:34.537+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:22.006+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:22.006+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -939,10 +657,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:34.712+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:34.712+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:22.072+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:22.072+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -952,10 +670,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:34.879+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:34.879+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:22.217+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:22.217+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -965,10 +683,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:35.048+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:35.048+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:22.284+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:22.284+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -978,10 +696,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:35.212+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:35.212+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:22.348+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:22.348+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -991,10 +709,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:35.397+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:35.397+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:22.407+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:22.407+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1004,10 +722,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:35.561+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:35.561+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:22.469+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:22.469+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1017,10 +735,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:35.736+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:35.736+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:22.531+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:22.531+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1030,10 +748,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:35.901+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:35.901+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:22.593+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:22.593+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1043,10 +761,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:36.068+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:36.068+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:22.656+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:22.656+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1056,10 +774,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:36.231+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:36.231+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:22.722+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:22.722+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1069,10 +787,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:36.394+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:36.394+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:22.786+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:22.786+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1082,10 +800,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:36.560+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:36.560+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:22.855+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:22.855+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1095,10 +813,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:36.728+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:36.728+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:22.923+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:22.923+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1108,10 +826,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:36.892+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:36.892+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:22.989+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:22.989+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1121,10 +839,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:37.065+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:37.065+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:23.054+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:23.054+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1134,10 +852,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:37.229+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:37.229+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:23.121+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:23.121+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1147,10 +865,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:37.400+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:37.400+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:23.187+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:23.187+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1160,10 +878,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:37.565+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:37.565+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:23.249+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:23.249+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1173,10 +891,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:37.732+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:37.732+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:23.314+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:23.314+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1186,10 +904,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:37.888+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:37.888+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:23.373+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:23.373+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1199,10 +917,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:38.053+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:38.053+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:23.436+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:23.436+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1212,10 +930,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:38.216+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:38.216+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:23.517+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:23.517+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1225,10 +943,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:38.388+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:38.388+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:23.588+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:23.588+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1238,10 +956,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:38.560+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:38.560+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:23.658+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:23.658+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1251,10 +969,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:38.716+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:38.716+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:23.724+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:23.724+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1264,10 +982,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:38.885+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:38.885+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:23.791+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:23.791+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1277,10 +995,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:39.052+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:39.052+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:23.856+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:23.856+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1290,10 +1008,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:39.213+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:39.213+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:23.922+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:23.922+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1303,10 +1021,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:39.384+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:39.384+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:23.988+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:23.988+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1316,10 +1034,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:39.552+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:39.552+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:24.053+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:24.053+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1329,10 +1047,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:39.716+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:39.716+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:24.118+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:24.118+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1342,10 +1060,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:39.880+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:39.880+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:24.180+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:24.180+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1355,10 +1073,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:40.052+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:40.052+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:24.252+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:24.252+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1368,10 +1086,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:40.228+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:40.228+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:24.317+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:24.317+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1381,10 +1099,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:40.397+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:40.397+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:24.382+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:24.382+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1394,10 +1112,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:40.568+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:40.568+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:24.443+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:24.443+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1407,10 +1125,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:40.749+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:40.749+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:24.531+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:24.531+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1420,10 +1138,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:40.932+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:40.932+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:24.593+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:24.593+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1433,10 +1151,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:41.108+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:41.108+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:24.654+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:24.654+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1446,10 +1164,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:41.292+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:41.292+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:24.718+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:24.718+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1459,10 +1177,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:41.461+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:41.461+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:24.780+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:24.780+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1472,10 +1190,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:41.636+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:41.636+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:24.841+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:24.841+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1485,10 +1203,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:41.808+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:41.808+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:24.904+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:24.904+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1498,10 +1216,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:41.976+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:41.976+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:24.969+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:24.969+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1511,10 +1229,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:42.143+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:42.143+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:25.031+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:25.031+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1524,10 +1242,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:42.308+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:42.308+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:25.094+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:25.094+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1537,10 +1255,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:42.468+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:42.468+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:26.213+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:26.213+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1550,10 +1268,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:42.633+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:42.633+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:26.280+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:26.280+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1563,10 +1281,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:42.808+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:42.808+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:26.341+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:26.341+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1576,10 +1294,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:42.976+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:42.976+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:26.404+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:26.404+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1589,10 +1307,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:43.140+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:43.140+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:26.469+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:26.469+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1602,10 +1320,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:43.304+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:43.304+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:26.532+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:26.532+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1615,10 +1333,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:43.489+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:43.489+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:26.595+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:26.595+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1628,10 +1346,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:43.650+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:43.650+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:26.661+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:26.661+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1641,10 +1359,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:43.819+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:43.819+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:26.723+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:26.723+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1654,10 +1372,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:43.979+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:43.979+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:26.788+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:26.788+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1667,10 +1385,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:44.145+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:44.145+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:26.849+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:26.849+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1680,10 +1398,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:44.330+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:44.330+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:26.911+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:26.911+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1693,10 +1411,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:44.508+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:44.508+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-19T21:02:26.978+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:26.978+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1706,10 +1424,10 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:44.677+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:44.677+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-20T08:10:35.286+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-20T08:10:35.286+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -1719,12 +1437,12 @@
       "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:44.852+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:44.852+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-12-20T08:12:22.955+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-20T08:12:22.955+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     }
   ],
-  "totalRecords": 137
+  "totalRecords": 111
 }

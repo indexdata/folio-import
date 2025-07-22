@@ -1,50 +1,14 @@
 {
   "statisticalCodeTypes": [
     {
-      "id": "0d3ec58e-dc3c-4aa1-9eba-180fca95c544",
-      "name": "RECM (Record management)",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.331+00:00",
-        "updatedDate": "2025-01-19T22:09:03.331+00:00"
-      }
-    },
-    {
-      "id": "d816175b-578f-4056-af61-689f449c3c45",
-      "name": "DISC (Discovery)",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.331+00:00",
-        "updatedDate": "2025-01-19T22:09:03.331+00:00"
-      }
-    },
-    {
-      "id": "3abd6fc2-b3e4-4879-b1e1-78be41769fe3",
-      "name": "ARL (Collection stats)",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.332+00:00",
-        "updatedDate": "2025-01-19T22:09:03.332+00:00"
-      }
-    },
-    {
-      "id": "e2ab27f9-a726-4e5e-9963-fff9e6128680",
-      "name": "SERM (Serial management)",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.332+00:00",
-        "updatedDate": "2025-01-19T22:09:03.332+00:00"
-      }
-    },
-    {
       "id": "41c84876-dfb0-416b-a945-b6e18d578208",
       "name": "Samling",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:26.317+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:26.317+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-11-30T11:00:16.734+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-11-30T11:00:16.734+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -52,12 +16,12 @@
       "name": "RFID",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:29:26.492+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:29:26.492+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2024-06-03T15:11:15.437+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2024-06-03T15:11:15.437+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     }
   ],
-  "totalRecords": 6
+  "totalRecords": 2
 }

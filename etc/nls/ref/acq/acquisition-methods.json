@@ -1,0 +1,221 @@
+{
+  "acquisitionMethods": [
+    {
+      "id": "da6703b1-81fe-44af-927a-94f24d1ab8ee",
+      "value": "Other",
+      "source": "System",
+      "metadata": {
+        "createdDate": "2024-10-04T08:20:40.231+00:00",
+        "updatedDate": "2024-10-04T08:20:40.231+00:00"
+      }
+    },
+    {
+      "id": "df26d81b-9d63-4ff8-bf41-49bf75cfa70e",
+      "value": "Purchase",
+      "source": "System",
+      "metadata": {
+        "createdDate": "2024-10-04T08:20:40.237+00:00",
+        "updatedDate": "2024-10-04T08:20:40.237+00:00"
+      }
+    },
+    {
+      "id": "306489dd-0053-49ee-a068-c316444a8f55",
+      "value": "Purchase At Vendor System",
+      "source": "System",
+      "metadata": {
+        "createdDate": "2024-10-04T08:20:40.250+00:00",
+        "updatedDate": "2024-10-04T08:20:40.250+00:00"
+      }
+    },
+    {
+      "id": "0a4163a5-d225-4007-ad90-2fb41b73efab",
+      "value": "Gift",
+      "source": "System",
+      "metadata": {
+        "createdDate": "2024-10-04T08:20:40.259+00:00",
+        "updatedDate": "2024-10-04T08:20:40.259+00:00"
+      }
+    },
+    {
+      "id": "0c9b09c9-b94f-4702-aa63-a7f43617a225",
+      "value": "Internal transfer",
+      "source": "System",
+      "metadata": {
+        "createdDate": "2024-10-04T08:20:40.264+00:00",
+        "updatedDate": "2024-10-04T08:20:40.264+00:00"
+      }
+    },
+    {
+      "id": "041035ad-b2a4-4aa0-b6a5-234b88bf938c",
+      "value": "Demand Driven Acquisitions (DDA)",
+      "source": "System",
+      "metadata": {
+        "createdDate": "2024-10-04T08:20:40.261+00:00",
+        "updatedDate": "2024-10-04T08:20:40.261+00:00"
+      }
+    },
+    {
+      "id": "5771a8a4-9323-49ee-9002-1b068d71ff42",
+      "value": "Membership",
+      "source": "System",
+      "metadata": {
+        "createdDate": "2024-10-04T08:20:40.267+00:00",
+        "updatedDate": "2024-10-04T08:20:40.267+00:00"
+      }
+    },
+    {
+      "id": "d2420b93-7b93-41b7-8b42-798f64cb6dd2",
+      "value": "Depository",
+      "source": "System",
+      "metadata": {
+        "createdDate": "2024-10-04T08:20:40.275+00:00",
+        "updatedDate": "2024-10-04T08:20:40.275+00:00"
+      }
+    },
+    {
+      "id": "86d12634-b848-4968-adf0-5a95ce41c41b",
+      "value": "Free",
+      "source": "System",
+      "metadata": {
+        "createdDate": "2024-10-04T08:20:40.280+00:00",
+        "updatedDate": "2024-10-04T08:20:40.280+00:00"
+      }
+    },
+    {
+      "id": "d0d3811c-19f8-4c57-a462-958165cdbbea",
+      "value": "Technical",
+      "source": "System",
+      "metadata": {
+        "createdDate": "2024-10-04T08:20:40.282+00:00",
+        "updatedDate": "2024-10-04T08:20:40.282+00:00"
+      }
+    },
+    {
+      "id": "8a33895e-2c69-4a98-ab48-b7ec1fa852d0",
+      "value": "Exchange",
+      "source": "System",
+      "metadata": {
+        "createdDate": "2024-10-04T08:20:40.283+00:00",
+        "updatedDate": "2024-10-04T08:20:40.283+00:00"
+      }
+    },
+    {
+      "id": "aaa541f3-39d2-4887-ab8f-6ba12d08ca52",
+      "value": "Evidence Based Acquisitions (EBA)",
+      "source": "System",
+      "metadata": {
+        "createdDate": "2024-10-04T08:20:40.287+00:00",
+        "updatedDate": "2024-10-04T08:20:40.287+00:00"
+      }
+    },
+    {
+      "id": "796596c4-62b5-4b64-a2ce-524c747afaa2",
+      "value": "Approval Plan",
+      "source": "System",
+      "metadata": {
+        "createdDate": "2024-10-04T08:20:40.294+00:00",
+        "updatedDate": "2024-10-04T08:20:40.294+00:00"
+      }
+    },
+    {
+      "id": "75724ddf-768d-4d4b-8e21-c2fb966f32f5",
+      "value": "KB: Donationer och gåvor",
+      "source": "User",
+      "metadata": {
+        "createdDate": "2025-03-14T09:33:12.226+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-03-14T09:33:12.226+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    },
+    {
+      "id": "c8d63304-bf94-4412-90b7-f2215928ac59",
+      "value": "KB: Inköp av utländsk monografi (tryckt material, ABON)",
+      "source": "User",
+      "metadata": {
+        "createdDate": "2025-03-14T09:34:37.704+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-03-14T09:34:37.704+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    },
+    {
+      "id": "70bf01c0-43b9-44f5-bb56-8e4dd532b0dd",
+      "value": "KB: Förvärv av Suecana",
+      "source": "User",
+      "metadata": {
+        "createdDate": "2025-03-14T09:35:14.000+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-03-14T09:35:14.000+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    },
+    {
+      "id": "a9a57e84-29fb-4c00-8284-21d69030db29",
+      "value": "KB: Inköp av licensierad e-resurs",
+      "source": "User",
+      "metadata": {
+        "createdDate": "2025-03-14T09:41:13.655+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-03-14T09:41:13.655+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    },
+    {
+      "id": "06976e58-bcf3-438e-b0ea-280ed421d764",
+      "value": "KB: Inköp av utländsk tidskrift (prenumerationer, inkl. e-resurs)",
+      "source": "User",
+      "metadata": {
+        "createdDate": "2025-03-14T09:42:06.441+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-03-14T09:42:06.441+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    },
+    {
+      "id": "113a14b8-060b-4aa6-ac26-e67a51477804",
+      "value": "KB: Pliktlevererat",
+      "source": "User",
+      "metadata": {
+        "createdDate": "2025-03-14T09:44:11.961+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-03-14T09:44:11.961+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    },
+    {
+      "id": "06627d0e-e4e5-4234-9420-c6a350f7059b",
+      "value": "KB: Inköp av utländsk monografi (tryckt material, eget förvärv)",
+      "source": "User",
+      "metadata": {
+        "createdDate": "2025-03-19T08:22:17.096+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-03-19T08:22:17.096+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    },
+    {
+      "id": "7ad90caa-8898-4592-9178-2c58ba31ac89",
+      "value": "KB: Stående order köp (tryckt material)",
+      "source": "User",
+      "metadata": {
+        "createdDate": "2025-06-09T08:14:51.635+00:00",
+        "createdByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d",
+        "updatedDate": "2025-06-09T08:14:51.635+00:00",
+        "updatedByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d"
+      }
+    },
+    {
+      "id": "7a04e957-9924-4d45-b1e7-a048dfdc0b6a",
+      "value": "KB: Stående order gåva (tryckt material)",
+      "source": "User",
+      "metadata": {
+        "createdDate": "2025-06-09T08:15:32.854+00:00",
+        "createdByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d",
+        "updatedDate": "2025-06-09T08:15:32.854+00:00",
+        "updatedByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d"
+      }
+    }
+  ],
+  "totalRecords": 22
+}

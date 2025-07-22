@@ -1,0 +1,80 @@
+[
+  {
+    "id": "2c91809f86dad8750186dae1bed7005f",
+    "retired": false,
+    "ctx": "OpenAccess",
+    "name": "AuthorIdentification",
+    "primary": true,
+    "category": {
+      "id": "2c91809f86dad8750186dae1be1b0057",
+      "desc": "AuthIdent",
+      "internal": false,
+      "values": [
+        {
+          "id": "2c91809f86dad8750186dae1be4c005e",
+          "value": "ror_id",
+          "label": "ROR ID"
+        },
+        {
+          "id": "2c91809f86dad8750186dae1be1f0058",
+          "value": "other",
+          "label": "Other"
+        },
+        {
+          "id": "2c91809f86dad8750186dae1be48005d",
+          "value": "ringgold_id",
+          "label": "Ringgold ID"
+        },
+        {
+          "id": "2c91809f86dad8750186dae1be34005b",
+          "value": "over_institute",
+          "label": "Over Institute"
+        },
+        {
+          "id": "2c91809f86dad8750186dae1be2b005a",
+          "value": "orcid",
+          "label": "ORCID"
+        },
+        {
+          "id": "2c91809f86dad8750186dae1be250059",
+          "value": "email_domain",
+          "label": "Email Domain"
+        },
+        {
+          "id": "2c91809f86dad8750186dae1be3f005c",
+          "value": "over_ip_range",
+          "label": "Over IP Range"
+        }
+      ]
+    },
+    "defaultInternal": true,
+    "label": "Author Identification",
+    "description": "Author Identification",
+    "weight": 0,
+    "type": "com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata"
+  },
+  {
+    "id": "2c91809f86dad8750186dae1bee70060",
+    "retired": false,
+    "ctx": "OpenAccess",
+    "name": "Eligible authors",
+    "primary": true,
+    "defaultInternal": true,
+    "label": "Does this agreement support publishing",
+    "description": "Does this agreement support publishing",
+    "weight": 0,
+    "type": "com.k_int.web.toolkit.custprops.types.CustomPropertyText"
+  },
+  {
+    "id": "2c9180e59257261101925727f7ce0000",
+    "retired": false,
+    "ctx": "OpenAccess",
+    "name": "SupportPublishing",
+    "primary": true,
+    "defaultInternal": true,
+    "label": "Does this agreement support publishing",
+    "description": "Does this agreement support publishing",
+    "weight": 0,
+    "type": "com.k_int.web.toolkit.custprops.types.CustomPropertyText"
+  }
+]

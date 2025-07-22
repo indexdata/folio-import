@@ -1,0 +1,230 @@
+[
+  {
+    "id": "2c91808586dad36f0186dae04e7b0000",
+    "desc": "License.Type",
+    "internal": false,
+    "values": [
+      {
+        "id": "2c91808586dad36f0186dae04edf0003",
+        "value": "national",
+        "label": "National"
+      },
+      {
+        "id": "2c91808586dad36f0186dae04ee50004",
+        "value": "alliance",
+        "label": "Alliance"
+      },
+      {
+        "id": "2c91808586dad36f0186dae04ed70002",
+        "value": "consortial",
+        "label": "Consortial"
+      },
+      {
+        "id": "2c91808586dad36f0186dae04ecd0001",
+        "value": "local",
+        "label": "Local"
+      }
+    ]
+  },
+  {
+    "id": "2c91808586dad36f0186dae04eea0005",
+    "desc": "LicenseOrg.Role",
+    "internal": false,
+    "values": [
+      {
+        "id": "2c91808586dad36f0186dae04eee0006",
+        "value": "licensor",
+        "label": "Licensor"
+      }
+    ]
+  },
+  {
+    "id": "2c91808586dad36f0186dae04ef40007",
+    "desc": "License.EndDateSemantics",
+    "internal": true,
+    "values": [
+      {
+        "id": "2c91808586dad36f0186dae04ef70008",
+        "value": "explicit",
+        "label": "Explicit"
+      },
+      {
+        "id": "2c91808586dad36f0186dae04efd0009",
+        "value": "open_ended",
+        "label": "Open ended"
+      },
+      {
+        "id": "2c91808586dad36f0186dae04f03000a",
+        "value": "implicit",
+        "label": "Implicit"
+      }
+    ]
+  },
+  {
+    "id": "2c91808586dad36f0186dae04f0a000b",
+    "desc": "License.Status",
+    "internal": true,
+    "values": [
+      {
+        "id": "2c91808586dad36f0186dae04f18000e",
+        "value": "active",
+        "label": "Active"
+      },
+      {
+        "id": "2c91808586dad36f0186dae04f0d000c",
+        "value": "in_negotiation",
+        "label": "In negotiation"
+      },
+      {
+        "id": "2c91808586dad36f0186dae04f12000d",
+        "value": "not_yet_active",
+        "label": "Not yet active"
+      },
+      {
+        "id": "2c91808586dad36f0186dae04f20000f",
+        "value": "rejected",
+        "label": "Rejected"
+      },
+      {
+        "id": "2c91808586dad36f0186dae04f260010",
+        "value": "expired",
+        "label": "Expired"
+      }
+    ]
+  },
+  {
+    "id": "2c91808586dad36f0186dae04f2b0011",
+    "desc": "InternalContact.Role",
+    "internal": false,
+    "values": [
+      {
+        "id": "2c91808586dad36f0186dae04f2f0012",
+        "value": "authorised_signatory",
+        "label": "Authorised signatory"
+      },
+      {
+        "id": "2c91808586dad36f0186dae04f430015",
+        "value": "negotiator",
+        "label": "Negotiator"
+      },
+      {
+        "id": "2c91808586dad36f0186dae04f350013",
+        "value": "erm_librarian",
+        "label": "ERM Librarian"
+      },
+      {
+        "id": "2c91808586dad36f0186dae04f3c0014",
+        "value": "license_owner",
+        "label": "License owner"
+      },
+      {
+        "id": "2c91808586dad36f0186dae04f490016",
+        "value": "subject_specialist",
+        "label": "Subject specialist"
+      }
+    ]
+  },
+  {
+    "id": "2c91808586dad36f0186dae04f4d0017",
+    "desc": "DocumentAttachment.AtType",
+    "internal": false,
+    "values": [
+      {
+        "id": "2c91808586dad36f0186dae04f560019",
+        "value": "product_data_sheet",
+        "label": "Product data sheet"
+      },
+      {
+        "id": "2c91808586dad36f0186dae04f5b001a",
+        "value": "vendor_terms_and_conditions",
+        "label": "Vendor terms and conditions"
+      },
+      {
+        "id": "2c91808586dad36f0186dae04f500018",
+        "value": "consortium_authorization_statement",
+        "label": "Consortium authorization statement"
+      }
+    ]
+  },
+  {
+    "id": "2c91808586dad36f0186dae04fa4001b",
+    "desc": "FileStorageEngines",
+    "internal": false,
+    "values": [
+      {
+        "id": "2c91808586dad36f0186dae04fab001c",
+        "value": "lob",
+        "label": "LOB"
+      },
+      {
+        "id": "2c91808586dad36f0186dae04fd7001d",
+        "value": "s3",
+        "label": "S3"
+      }
+    ]
+  },
+  {
+    "id": "2c91808586dad36f0186dae05081001e",
+    "desc": "Yes/No/Other",
+    "internal": false,
+    "values": [
+      {
+        "id": "2c91808586dad36f0186dae0508a0020",
+        "value": "no",
+        "label": "No"
+      },
+      {
+        "id": "2c91808586dad36f0186dae05085001f",
+        "value": "yes",
+        "label": "Yes"
+      },
+      {
+        "id": "2c91808586dad36f0186dae0508f0021",
+        "value": "other_(see_notes)",
+        "label": "Other (see notes)"
+      }
+    ]
+  },
+  {
+    "id": "2c91808586dad36f0186dae050930023",
+    "desc": "Permitted/Prohibited",
+    "internal": false,
+    "values": [
+      {
+        "id": "2c91808586dad36f0186dae050b2002f",
+        "value": "unmentioned",
+        "label": "Unmentioned"
+      },
+      {
+        "id": "2c91808586dad36f0186dae050a40028",
+        "value": "permitted_(interpreted)",
+        "label": "Permitted (interpreted)"
+      },
+      {
+        "id": "2c91808586dad36f0186dae050b60030",
+        "value": "not_applicable",
+        "label": "Not applicable"
+      },
+      {
+        "id": "2c91808586dad36f0186dae050a9002b",
+        "value": "prohibited_(explicit)",
+        "label": "Prohibited (explicit)"
+      },
+      {
+        "id": "2c91808586dad36f0186dae050950024",
+        "value": "permitted_(explicit)",
+        "label": "Permitted (explicit)"
+      },
+      {
+        "id": "2c91808586dad36f0186dae050ad002d",
+        "value": "prohibited_(interpreted)",
+        "label": "Prohibited (interpreted)"
+      },
+      {
+        "id": "2c91808586dad36f0186dae0509e0027",
+        "value": "permitted_(explicit)_under_conditions",
+        "label": "Permitted (explicit) under conditions"
+      }
+    ]
+  }
+]

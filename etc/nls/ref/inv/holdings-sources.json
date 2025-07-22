@@ -1,21 +1,12 @@
 {
   "holdingsRecordsSources": [
     {
-      "id": "7fbd5d84-abcd-1978-8899-6cb173998bbd",
-      "name": "TEST",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.724+00:00",
-        "updatedDate": "2025-01-19T22:09:03.724+00:00"
-      }
-    },
-    {
       "id": "f32d531e-df79-46b3-8932-cdd35f7a2264",
       "name": "FOLIO",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.611+00:00",
-        "updatedDate": "2025-03-27T17:25:51.616+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:46.055+00:00",
+        "updatedDate": "2023-03-13T12:10:46.055+00:00"
       }
     },
     {
@@ -23,11 +14,10 @@
       "name": "MARC",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.610+00:00",
-        "updatedDate": "2025-03-27T17:25:51.964+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:46.054+00:00",
+        "updatedDate": "2023-03-13T12:10:46.054+00:00"
       }
     }
   ],
-  "totalRecords": 3
+  "totalRecords": 2
 }

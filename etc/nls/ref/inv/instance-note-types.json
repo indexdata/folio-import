@@ -1,125 +1,12 @@
 {
   "instanceNoteTypes": [
     {
-      "id": "905a260d-2975-4c4b-bfe3-98d39557ce88",
-      "name": "Originalspråk",
-      "source": "local",
-      "metadata": {
-        "createdDate": "2025-04-25T10:10:37.847+00:00",
-        "createdByUserId": "e297b7ce-90ef-4e9c-a2d2-36050ebf7765",
-        "updatedDate": "2025-04-25T10:10:37.847+00:00",
-        "updatedByUserId": "e297b7ce-90ef-4e9c-a2d2-36050ebf7765"
-      }
-    },
-    {
-      "id": "b7392e8b-91a5-4bb6-a497-a71ca0ecb9ec",
-      "name": "Intermediärt språk",
-      "source": "local",
-      "metadata": {
-        "createdDate": "2025-04-25T10:11:13.272+00:00",
-        "createdByUserId": "e297b7ce-90ef-4e9c-a2d2-36050ebf7765",
-        "updatedDate": "2025-04-25T10:11:13.272+00:00",
-        "updatedByUserId": "e297b7ce-90ef-4e9c-a2d2-36050ebf7765"
-      }
-    },
-    {
-      "id": "72c611ab-f353-4c09-a0cc-33ff96cc3bef",
-      "name": "Scale note for graphic material",
+      "id": "06489647-c7b7-4b6c-878a-cb7c1178e9ca",
+      "name": "Study Program Information note",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.512+00:00",
-        "updatedDate": "2025-03-27T17:26:28.205+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "09812302-92f7-497e-9120-ed25de458ea5",
-      "name": "Preferred Citation of Described Materials note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.515+00:00",
-        "updatedDate": "2025-03-27T17:26:29.578+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "922fdcde-952d-45c2-b9ea-5fc8959ad116",
-      "name": "Target Audience note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.519+00:00",
-        "updatedDate": "2025-03-27T17:26:30.973+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "1c017b8d-c783-4f63-b620-079f7a5b9c07",
-      "name": "Action note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.522+00:00",
-        "updatedDate": "2025-03-27T17:26:31.986+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "779c22a2-311c-4ebb-b71e-b246c7ee574d",
-      "name": "Linking Entry Complexity note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.527+00:00",
-        "updatedDate": "2025-03-27T17:26:34.352+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "1c7acba3-523d-4237-acd2-e88549bfc660",
-      "name": "Accumulation and Frequency of Use note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.532+00:00",
-        "updatedDate": "2025-03-27T17:26:35.732+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "654be0fd-bba2-4791-afa3-ae60300d7043",
-      "name": "Information related to Copyright Status",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.543+00:00",
-        "updatedDate": "2025-03-27T17:26:41.454+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "10e2e11b-450f-45c8-b09b-0f819999966e",
-      "name": "Summary",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.537+00:00",
-        "updatedDate": "2025-03-27T17:26:42.840+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "cf635f41-29e7-4dd0-8598-33f230157074",
-      "name": "Numbering peculiarities note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.548+00:00",
-        "updatedDate": "2025-03-27T17:26:44.504+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "5ba8e385-0e27-462e-a571-ffa1fa34ea54",
-      "name": "Formatted Contents Note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.551+00:00",
-        "updatedDate": "2025-03-27T17:26:45.172+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.827+00:00",
+        "updatedDate": "2023-03-13T12:10:45.827+00:00"
       }
     },
     {
@@ -127,119 +14,17 @@
       "name": "Issuing Body note",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.511+00:00",
-        "updatedDate": "2025-03-27T17:26:27.855+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.831+00:00",
+        "updatedDate": "2023-03-13T12:10:45.831+00:00"
       }
     },
     {
-      "id": "66ea8f28-d5da-426a-a7c9-739a5d676347",
-      "name": "Source of Description note",
+      "id": "72c611ab-f353-4c09-a0cc-33ff96cc3bef",
+      "name": "Scale note for graphic material",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.517+00:00",
-        "updatedDate": "2025-03-27T17:26:29.934+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "c6340b85-d048-426a-89aa-163cfb801a56",
-      "name": "Location of Originals / Duplicates note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.521+00:00",
-        "updatedDate": "2025-03-27T17:26:31.308+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "f677d908-69c6-4450-94a6-abbcf94a1ee5",
-      "name": "Terms Governing Use and Reproduction note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.525+00:00",
-        "updatedDate": "2025-03-27T17:26:33.337+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "42be8949-6f69-4c55-874b-60b744ac1103",
-      "name": "Original Version note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.528+00:00",
-        "updatedDate": "2025-03-27T17:26:34.020+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "7356cde5-ec6b-4961-9cb0-961c48a37af4",
-      "name": "Language note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.531+00:00",
-        "updatedDate": "2025-03-27T17:26:36.092+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "6f76f4e7-9c0b-4138-9371-09b36136372d",
-      "name": "Case File Characteristics note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.535+00:00",
-        "updatedDate": "2025-03-27T17:26:37.459+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "0ed2da88-3f81-42f5-b688-91b70919d9bb",
-      "name": "Exhibitions note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.542+00:00",
-        "updatedDate": "2025-03-27T17:26:38.153+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "86b6e817-e1bc-42fb-bab0-70e7547de6c1",
-      "name": "Bibliography note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.546+00:00",
-        "updatedDate": "2025-03-27T17:26:38.857+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "9a4b39f4-a7d5-4c4d-abc6-5ccf1fc1d78c",
-      "name": "Location of Other Archival Materials note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.539+00:00",
-        "updatedDate": "2025-03-27T17:26:43.175+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "86c4bd09-16de-45ee-89d3-b6d32fae6de9",
-      "name": "Immediate Source of Acquisition note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.549+00:00",
-        "updatedDate": "2025-03-27T17:26:44.837+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "e8cdc2fe-c53c-478a-a7f3-47f2fc79c6d4",
-      "name": "Awards note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.552+00:00",
-        "updatedDate": "2025-03-27T17:26:45.531+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.832+00:00",
+        "updatedDate": "2023-03-13T12:10:45.832+00:00"
       }
     },
     {
@@ -247,9 +32,8 @@
       "name": "Additional Physical Form Available note",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.513+00:00",
-        "updatedDate": "2025-03-27T17:26:28.548+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.833+00:00",
+        "updatedDate": "2023-03-13T12:10:45.833+00:00"
       }
     },
     {
@@ -257,9 +41,8 @@
       "name": "Creation / Production Credits note",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.514+00:00",
-        "updatedDate": "2025-03-27T17:26:28.877+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.837+00:00",
+        "updatedDate": "2023-03-13T12:10:45.837+00:00"
       }
     },
     {
@@ -267,229 +50,26 @@
       "name": "Local notes",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.517+00:00",
-        "updatedDate": "2025-03-27T17:26:29.233+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.841+00:00",
+        "updatedDate": "2023-03-13T12:10:45.841+00:00"
       }
     },
     {
-      "id": "c636881b-8927-4480-ad1b-8d7b27b4bbfe",
-      "name": "Biographical or Historical Data",
+      "id": "09812302-92f7-497e-9120-ed25de458ea5",
+      "name": "Preferred Citation of Described Materials note",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.518+00:00",
-        "updatedDate": "2025-03-27T17:26:30.632+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.840+00:00",
+        "updatedDate": "2023-03-13T12:10:45.840+00:00"
       }
     },
     {
-      "id": "95f62ca7-5df5-4a51-9890-d0ec3a34665f",
-      "name": "System Details note",
+      "id": "66ea8f28-d5da-426a-a7c9-739a5d676347",
+      "name": "Source of Description note",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.520+00:00",
-        "updatedDate": "2025-03-27T17:26:31.644+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "aecfda7a-e8aa-46d6-9046-9b0b8c231b85",
-      "name": "Supplement note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.522+00:00",
-        "updatedDate": "2025-03-27T17:26:32.327+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "28e12ad3-4a8d-48cc-b56c-a5ded22fc844",
-      "name": "Geographic Coverage note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.523+00:00",
-        "updatedDate": "2025-03-27T17:26:32.666+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "806cb024-80d2-47c2-8bbf-b91091c85f68",
-      "name": "Former Title Complexity note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.526+00:00",
-        "updatedDate": "2025-03-27T17:26:33.677+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "b73cc9c2-c9fa-49aa-964f-5ae1aa754ecd",
-      "name": "Dissertation note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.527+00:00",
-        "updatedDate": "2025-03-27T17:26:34.708+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "794f19f1-d00b-4b4b-97e9-0de5a34495a0",
-      "name": "Cartographic Mathematical Data",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.528+00:00",
-        "updatedDate": "2025-03-27T17:26:35.045+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "1cb8ac76-01fa-49be-8b9c-fcdaf17458a5",
-      "name": "Entity and Attribute Information note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.530+00:00",
-        "updatedDate": "2025-03-27T17:26:35.393+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "02b5b0c6-3375-4912-ac75-ad9f552362b2",
-      "name": "Methodology note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.533+00:00",
-        "updatedDate": "2025-03-27T17:26:36.780+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "13047c94-7d2c-4c41-9658-abacfa97a5c8",
-      "name": "Information About Documentation note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.533+00:00",
-        "updatedDate": "2025-03-27T17:26:37.120+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "43295b78-3bfa-4c28-bc7f-8d924f63493f",
-      "name": "Date / time and place of an event note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.538+00:00",
-        "updatedDate": "2025-03-27T17:26:37.807+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "06b44741-888e-4b15-a75e-cb29e27752d1",
-      "name": "With note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.543+00:00",
-        "updatedDate": "2025-03-27T17:26:38.505+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "d548fdff-b71c-4359-8055-f1c008c30f01",
-      "name": "Reproduction note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.548+00:00",
-        "updatedDate": "2025-03-27T17:26:39.559+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "56cf513e-a738-40c5-a3ab-b0c60ba07e15",
-      "name": "Ownership and Custodial History note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.552+00:00",
-        "updatedDate": "2025-03-27T17:26:39.911+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "3d931c23-6ae8-4e5a-8802-dc8c2e21ea19",
-      "name": "Type of computer file or data note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.537+00:00",
-        "updatedDate": "2025-03-27T17:26:40.761+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "e814a32e-02da-4773-8f3a-6629cdb7ecdf",
-      "name": "Restrictions on Access note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.538+00:00",
-        "updatedDate": "2025-03-27T17:26:41.108+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "0dc69a30-6d2b-40df-a50e-e4982bda86f4",
-      "name": "Binding Information note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.550+00:00",
-        "updatedDate": "2025-03-27T17:26:42.151+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "a6a5550f-4981-4b48-b821-a57d5c8ca3b3",
-      "name": "Accessibility note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.541+00:00",
-        "updatedDate": "2025-03-27T17:26:43.524+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "9b56b954-7f3b-4e4b-8ed0-cf40aef13975",
-      "name": "Participant or Performer note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.544+00:00",
-        "updatedDate": "2025-03-27T17:26:43.864+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "e0ea861c-959f-4912-8579-5e9ea8a69454",
-      "name": "Publications About Described Materials note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.544+00:00",
-        "updatedDate": "2025-03-27T17:26:44.185+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "f939b820-4a23-43d1-84ba-101add6e1456",
-      "name": "Type of report and period covered note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.553+00:00",
-        "updatedDate": "2025-03-27T17:26:40.241+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
-      }
-    },
-    {
-      "id": "06489647-c7b7-4b6c-878a-cb7c1178e9ca",
-      "name": "Study Program Information note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2025-01-19T22:09:03.512+00:00",
-        "updatedDate": "2025-03-27T17:26:27.492+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.842+00:00",
+        "updatedDate": "2023-03-13T12:10:45.842+00:00"
       }
     },
     {
@@ -497,9 +77,71 @@
       "name": "Copy and Version Identification note",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.517+00:00",
-        "updatedDate": "2025-03-27T17:26:30.299+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.845+00:00",
+        "updatedDate": "2023-03-13T12:10:45.845+00:00"
+      }
+    },
+    {
+      "id": "c636881b-8927-4480-ad1b-8d7b27b4bbfe",
+      "name": "Biographical or Historical Data",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.847+00:00",
+        "updatedDate": "2023-03-13T12:10:45.847+00:00"
+      }
+    },
+    {
+      "id": "922fdcde-952d-45c2-b9ea-5fc8959ad116",
+      "name": "Target Audience note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.851+00:00",
+        "updatedDate": "2023-03-13T12:10:45.851+00:00"
+      }
+    },
+    {
+      "id": "c6340b85-d048-426a-89aa-163cfb801a56",
+      "name": "Location of Originals / Duplicates note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.850+00:00",
+        "updatedDate": "2023-03-13T12:10:45.850+00:00"
+      }
+    },
+    {
+      "id": "95f62ca7-5df5-4a51-9890-d0ec3a34665f",
+      "name": "System Details note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.851+00:00",
+        "updatedDate": "2023-03-13T12:10:45.851+00:00"
+      }
+    },
+    {
+      "id": "1c017b8d-c783-4f63-b620-079f7a5b9c07",
+      "name": "Action note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.853+00:00",
+        "updatedDate": "2023-03-13T12:10:45.853+00:00"
+      }
+    },
+    {
+      "id": "aecfda7a-e8aa-46d6-9046-9b0b8c231b85",
+      "name": "Supplement note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.855+00:00",
+        "updatedDate": "2023-03-13T12:10:45.855+00:00"
+      }
+    },
+    {
+      "id": "28e12ad3-4a8d-48cc-b56c-a5ded22fc844",
+      "name": "Geographic Coverage note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.859+00:00",
+        "updatedDate": "2023-03-13T12:10:45.859+00:00"
       }
     },
     {
@@ -507,9 +149,89 @@
       "name": "General note",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.523+00:00",
-        "updatedDate": "2025-03-27T17:26:33.001+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.858+00:00",
+        "updatedDate": "2023-03-13T12:10:45.858+00:00"
+      }
+    },
+    {
+      "id": "f677d908-69c6-4450-94a6-abbcf94a1ee5",
+      "name": "Terms Governing Use and Reproduction note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.863+00:00",
+        "updatedDate": "2023-03-13T12:10:45.863+00:00"
+      }
+    },
+    {
+      "id": "806cb024-80d2-47c2-8bbf-b91091c85f68",
+      "name": "Former Title Complexity note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.865+00:00",
+        "updatedDate": "2023-03-13T12:10:45.865+00:00"
+      }
+    },
+    {
+      "id": "42be8949-6f69-4c55-874b-60b744ac1103",
+      "name": "Original Version note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.867+00:00",
+        "updatedDate": "2023-03-13T12:10:45.867+00:00"
+      }
+    },
+    {
+      "id": "779c22a2-311c-4ebb-b71e-b246c7ee574d",
+      "name": "Linking Entry Complexity note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.867+00:00",
+        "updatedDate": "2023-03-13T12:10:45.867+00:00"
+      }
+    },
+    {
+      "id": "b73cc9c2-c9fa-49aa-964f-5ae1aa754ecd",
+      "name": "Dissertation note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.868+00:00",
+        "updatedDate": "2023-03-13T12:10:45.868+00:00"
+      }
+    },
+    {
+      "id": "794f19f1-d00b-4b4b-97e9-0de5a34495a0",
+      "name": "Cartographic Mathematical Data",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.871+00:00",
+        "updatedDate": "2023-03-13T12:10:45.871+00:00"
+      }
+    },
+    {
+      "id": "1cb8ac76-01fa-49be-8b9c-fcdaf17458a5",
+      "name": "Entity and Attribute Information note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.873+00:00",
+        "updatedDate": "2023-03-13T12:10:45.873+00:00"
+      }
+    },
+    {
+      "id": "1c7acba3-523d-4237-acd2-e88549bfc660",
+      "name": "Accumulation and Frequency of Use note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.875+00:00",
+        "updatedDate": "2023-03-13T12:10:45.875+00:00"
+      }
+    },
+    {
+      "id": "7356cde5-ec6b-4961-9cb0-961c48a37af4",
+      "name": "Language note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.874+00:00",
+        "updatedDate": "2023-03-13T12:10:45.874+00:00"
       }
     },
     {
@@ -517,9 +239,71 @@
       "name": "Data quality note",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.532+00:00",
-        "updatedDate": "2025-03-27T17:26:36.444+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.877+00:00",
+        "updatedDate": "2023-03-13T12:10:45.877+00:00"
+      }
+    },
+    {
+      "id": "02b5b0c6-3375-4912-ac75-ad9f552362b2",
+      "name": "Methodology note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.879+00:00",
+        "updatedDate": "2023-03-13T12:10:45.879+00:00"
+      }
+    },
+    {
+      "id": "13047c94-7d2c-4c41-9658-abacfa97a5c8",
+      "name": "Information About Documentation note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.882+00:00",
+        "updatedDate": "2023-03-13T12:10:45.882+00:00"
+      }
+    },
+    {
+      "id": "6f76f4e7-9c0b-4138-9371-09b36136372d",
+      "name": "Case File Characteristics note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.881+00:00",
+        "updatedDate": "2023-03-13T12:10:45.881+00:00"
+      }
+    },
+    {
+      "id": "43295b78-3bfa-4c28-bc7f-8d924f63493f",
+      "name": "Date / time and place of an event note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.887+00:00",
+        "updatedDate": "2023-03-13T12:10:45.887+00:00"
+      }
+    },
+    {
+      "id": "0ed2da88-3f81-42f5-b688-91b70919d9bb",
+      "name": "Exhibitions note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.891+00:00",
+        "updatedDate": "2023-03-13T12:10:45.891+00:00"
+      }
+    },
+    {
+      "id": "06b44741-888e-4b15-a75e-cb29e27752d1",
+      "name": "With note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.897+00:00",
+        "updatedDate": "2023-03-13T12:10:45.897+00:00"
+      }
+    },
+    {
+      "id": "86b6e817-e1bc-42fb-bab0-70e7547de6c1",
+      "name": "Bibliography note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.901+00:00",
+        "updatedDate": "2023-03-13T12:10:45.901+00:00"
       }
     },
     {
@@ -527,9 +311,35 @@
       "name": "Funding Information Note",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.548+00:00",
-        "updatedDate": "2025-03-27T17:26:39.197+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.905+00:00",
+        "updatedDate": "2023-03-13T12:10:45.905+00:00"
+      }
+    },
+    {
+      "id": "d548fdff-b71c-4359-8055-f1c008c30f01",
+      "name": "Reproduction note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.908+00:00",
+        "updatedDate": "2023-03-13T12:10:45.908+00:00"
+      }
+    },
+    {
+      "id": "56cf513e-a738-40c5-a3ab-b0c60ba07e15",
+      "name": "Ownership and Custodial History note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.913+00:00",
+        "updatedDate": "2023-03-13T12:10:45.913+00:00"
+      }
+    },
+    {
+      "id": "f939b820-4a23-43d1-84ba-101add6e1456",
+      "name": "Type of report and period covered note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.916+00:00",
+        "updatedDate": "2023-03-13T12:10:45.916+00:00"
       }
     },
     {
@@ -537,10 +347,59 @@
       "name": "Local 591 Spine Binding note",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-03-27T17:26:40.408+00:00",
-        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
-        "updatedDate": "2025-03-27T17:26:40.408+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2024-10-11T10:39:30.338+00:00",
+        "createdByUserId": "39a1ef78-5c0d-426c-b997-cb65c4f44ebd",
+        "updatedDate": "2024-10-11T10:39:30.338+00:00",
+        "updatedByUserId": "39a1ef78-5c0d-426c-b997-cb65c4f44ebd"
+      }
+    },
+    {
+      "id": "0145e215-ffc4-42d5-a50f-42b8e98e10dd",
+      "name": "Originalspråk",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-04-25T09:59:19.532+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-04-25T09:59:19.532+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    },
+    {
+      "id": "db2c5f9c-bead-4342-80cc-9bb8851e066e",
+      "name": "Intermediärt språk",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-04-25T09:59:35.062+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-04-25T09:59:35.062+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    },
+    {
+      "id": "3d931c23-6ae8-4e5a-8802-dc8c2e21ea19",
+      "name": "Type of computer file or data note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.883+00:00",
+        "updatedDate": "2023-03-13T12:10:45.883+00:00"
+      }
+    },
+    {
+      "id": "e814a32e-02da-4773-8f3a-6629cdb7ecdf",
+      "name": "Restrictions on Access note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.889+00:00",
+        "updatedDate": "2023-03-13T12:10:45.889+00:00"
+      }
+    },
+    {
+      "id": "654be0fd-bba2-4791-afa3-ae60300d7043",
+      "name": "Information related to Copyright Status",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.896+00:00",
+        "updatedDate": "2023-03-13T12:10:45.896+00:00"
       }
     },
     {
@@ -548,9 +407,17 @@
       "name": "Cumulative Index / Finding Aides notes",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.547+00:00",
-        "updatedDate": "2025-03-27T17:26:41.807+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.904+00:00",
+        "updatedDate": "2023-03-13T12:10:45.904+00:00"
+      }
+    },
+    {
+      "id": "0dc69a30-6d2b-40df-a50e-e4982bda86f4",
+      "name": "Binding Information note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.912+00:00",
+        "updatedDate": "2023-03-13T12:10:45.912+00:00"
       }
     },
     {
@@ -558,9 +425,89 @@
       "name": "Citation / References note",
       "source": "folio",
       "metadata": {
-        "createdDate": "2025-01-19T22:09:03.553+00:00",
-        "updatedDate": "2025-03-27T17:26:42.506+00:00",
-        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+        "createdDate": "2023-03-13T12:10:45.919+00:00",
+        "updatedDate": "2023-03-13T12:10:45.919+00:00"
+      }
+    },
+    {
+      "id": "10e2e11b-450f-45c8-b09b-0f819999966e",
+      "name": "Summary",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.886+00:00",
+        "updatedDate": "2023-03-13T12:10:45.886+00:00"
+      }
+    },
+    {
+      "id": "9a4b39f4-a7d5-4c4d-abc6-5ccf1fc1d78c",
+      "name": "Location of Other Archival Materials note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.890+00:00",
+        "updatedDate": "2023-03-13T12:10:45.890+00:00"
+      }
+    },
+    {
+      "id": "a6a5550f-4981-4b48-b821-a57d5c8ca3b3",
+      "name": "Accessibility note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.893+00:00",
+        "updatedDate": "2023-03-13T12:10:45.893+00:00"
+      }
+    },
+    {
+      "id": "9b56b954-7f3b-4e4b-8ed0-cf40aef13975",
+      "name": "Participant or Performer note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.898+00:00",
+        "updatedDate": "2023-03-13T12:10:45.898+00:00"
+      }
+    },
+    {
+      "id": "e0ea861c-959f-4912-8579-5e9ea8a69454",
+      "name": "Publications About Described Materials note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.900+00:00",
+        "updatedDate": "2023-03-13T12:10:45.900+00:00"
+      }
+    },
+    {
+      "id": "cf635f41-29e7-4dd0-8598-33f230157074",
+      "name": "Numbering peculiarities note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.905+00:00",
+        "updatedDate": "2023-03-13T12:10:45.905+00:00"
+      }
+    },
+    {
+      "id": "86c4bd09-16de-45ee-89d3-b6d32fae6de9",
+      "name": "Immediate Source of Acquisition note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.908+00:00",
+        "updatedDate": "2023-03-13T12:10:45.908+00:00"
+      }
+    },
+    {
+      "id": "5ba8e385-0e27-462e-a571-ffa1fa34ea54",
+      "name": "Formatted Contents Note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.912+00:00",
+        "updatedDate": "2023-03-13T12:10:45.912+00:00"
+      }
+    },
+    {
+      "id": "e8cdc2fe-c53c-478a-a7f3-47f2fc79c6d4",
+      "name": "Awards note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2023-03-13T12:10:45.916+00:00",
+        "updatedDate": "2023-03-13T12:10:45.916+00:00"
       }
     }
   ],

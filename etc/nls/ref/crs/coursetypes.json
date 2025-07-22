@@ -1,0 +1,32 @@
+{
+  "courseTypes": [
+    {
+      "id": "f5063ee8-b18c-402b-b0c9-1b0f93d8570b",
+      "name": "Online",
+      "description": "No in-person component",
+      "metadata": {
+        "createdDate": "2023-03-13T12:12:14.323+00:00",
+        "updatedDate": "2023-03-13T12:12:14.323+00:00"
+      }
+    },
+    {
+      "id": "0350e271-ddb8-4def-a6a8-a3cf4f01bbfd",
+      "name": "Online/In person",
+      "description": "Both online and in-person components",
+      "metadata": {
+        "createdDate": "2023-03-13T12:12:14.326+00:00",
+        "updatedDate": "2023-03-13T12:12:14.326+00:00"
+      }
+    },
+    {
+      "id": "9154048b-3698-42ec-a5ca-cfcebf04e094",
+      "name": "In person",
+      "description": "No online component",
+      "metadata": {
+        "createdDate": "2023-03-13T12:12:14.328+00:00",
+        "updatedDate": "2023-03-13T12:12:14.328+00:00"
+      }
+    }
+  ],
+  "totalRecords": 3
+}

@@ -1,0 +1,567 @@
+[
+  {
+    "id": "9d6e642ead6879a8391a350daa4c5b4c",
+    "desc": "SubscriptionAgreement.ReasonForClosure",
+    "internal": false,
+    "values": [
+      {
+        "id": "2c91809f86dad8750186dae1bbc00038",
+        "value": "cancelled",
+        "label": "Cancelled"
+      },
+      {
+        "id": "618b060a206ef6029e66274e441418ee",
+        "value": "rejected",
+        "label": "Rejected"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bbcb003a",
+        "value": "superseded",
+        "label": "Superseded"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bbc50039",
+        "value": "ceased",
+        "label": "Ceased"
+      }
+    ]
+  },
+  {
+    "id": "2c91809f86dad8750186dae1bb0f0014",
+    "desc": "StringTemplate.Context",
+    "internal": true,
+    "values": [
+      {
+        "id": "2c91809f86dad8750186dae1bb150015",
+        "value": "urlproxier",
+        "label": "urlProxier"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bb1c0016",
+        "value": "urlcustomiser",
+        "label": "urlCustomiser"
+      }
+    ]
+  },
+  {
+    "id": "4d199e1e611732c3dedefc5e5982a6fa",
+    "desc": "SubscriptionAgreement.AgreementStatus",
+    "internal": true,
+    "values": [
+      {
+        "id": "2c91809f86dad8750186dae1bbda003c",
+        "value": "requested",
+        "label": "Requested"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bbe5003e",
+        "value": "active",
+        "label": "Active"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bbd5003b",
+        "value": "draft",
+        "label": "Draft"
+      },
+      {
+        "id": "9507c329d83ccc4072bfb39f8627f729",
+        "value": "closed",
+        "label": "Closed"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bbe0003d",
+        "value": "in_negotiation",
+        "label": "In negotiation"
+      }
+    ]
+  },
+  {
+    "id": "2c91809f86dad8750186dae1ba780000",
+    "desc": "Pkg.AvailabilityScope",
+    "internal": false,
+    "values": [
+      {
+        "id": "2c91809f86dad8750186dae1ba960001",
+        "value": "global",
+        "label": "Global"
+      }
+    ]
+  },
+  {
+    "id": "2c91809f86dad8750186dae1ba9d0002",
+    "desc": "Pkg.LifecycleStatus",
+    "internal": false,
+    "values": [
+      {
+        "id": "2c91809f86dad8750186dae1bab40004",
+        "value": "retired",
+        "label": "Retired"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bac00005",
+        "value": "expected",
+        "label": "Expected"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bac60006",
+        "value": "deleted",
+        "label": "Deleted"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1baa10003",
+        "value": "current",
+        "label": "Current"
+      }
+    ]
+  },
+  {
+    "id": "2c91809f86dad8750186dae1baca0007",
+    "desc": "Pkg.Type",
+    "internal": false,
+    "values": [
+      {
+        "id": "2c91809f86dad8750186dae1bacd0008",
+        "value": "aggregated_full_text",
+        "label": "Aggregated Full Text"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bad8000a",
+        "value": "package",
+        "label": "Package"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bad20009",
+        "value": "abstracts_and_index",
+        "label": "Abstracts and Index"
+      }
+    ]
+  },
+  {
+    "id": "2c91809f86dad8750186dae1bae0000b",
+    "desc": "PersistentJob.Result",
+    "internal": true,
+    "values": [
+      {
+        "id": "2c91809f86dad8750186dae1baee000e",
+        "value": "failure",
+        "label": "Failure"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bae2000c",
+        "value": "success",
+        "label": "Success"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bae8000d",
+        "value": "partial_success",
+        "label": "Partial success"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1baf4000f",
+        "value": "interrupted",
+        "label": "Interrupted"
+      }
+    ]
+  },
+  {
+    "id": "2c91809f86dad8750186dae1baf90010",
+    "desc": "PersistentJob.Status",
+    "internal": true,
+    "values": [
+      {
+        "id": "2c91809f86dad8750186dae1bafc0011",
+        "value": "queued",
+        "label": "Queued"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bb060013",
+        "value": "ended",
+        "label": "Ended"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bb010012",
+        "value": "in_progress",
+        "label": "In progress"
+      }
+    ]
+  },
+  {
+    "id": "2c91809f86dad8750186dae1bb210017",
+    "desc": "LicenseAmendmentStatus.Status",
+    "internal": true,
+    "values": [
+      {
+        "id": "2c91809f86dad8750186dae1bb280019",
+        "value": "future",
+        "label": "Future"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bb33001b",
+        "value": "does_not_apply",
+        "label": "Does not apply"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bb230018",
+        "value": "current",
+        "label": "Current"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bb2d001a",
+        "value": "historical",
+        "label": "Historical"
+      }
+    ]
+  },
+  {
+    "id": "2c91809f86dad8750186dae1bb37001c",
+    "desc": "SubscriptionAgreementOrg.Role",
+    "internal": false,
+    "values": [
+      {
+        "id": "2c91809f86dad8750186dae1bb39001d",
+        "value": "content_provider",
+        "label": "Content provider"
+      }
+    ]
+  },
+  {
+    "id": "2c91809f86dad8750186dae1bb3e001e",
+    "desc": "RemoteLicenseLink.Status",
+    "internal": true,
+    "values": [
+      {
+        "id": "2c91809f86dad8750186dae1bb41001f",
+        "value": "controlling",
+        "label": "Controlling"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bb4a0021",
+        "value": "historical",
+        "label": "Historical"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bb450020",
+        "value": "future",
+        "label": "Future"
+      }
+    ]
+  },
+  {
+    "id": "2c91809f86dad8750186dae1bb520022",
+    "desc": "InternalContact.Role",
+    "internal": false,
+    "values": [
+      {
+        "id": "2c91809f86dad8750186dae1bb600025",
+        "value": "erm_librarian",
+        "label": "ERM librarian"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bb660026",
+        "value": "subject_specialist",
+        "label": "Subject specialist"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bb540023",
+        "value": "agreement_owner",
+        "label": "Agreement owner"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bb5a0024",
+        "value": "authorized_signatory",
+        "label": "Authorized signatory"
+      }
+    ]
+  },
+  {
+    "id": "2c91809f86dad8750186dae1bb6a0027",
+    "desc": "TitleInstance.SubType",
+    "internal": true,
+    "values": [
+      {
+        "id": "2c91809f86dad8750186dae1bb6c0028",
+        "value": "print",
+        "label": "Print"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bb720029",
+        "value": "electronic",
+        "label": "Electronic"
+      }
+    ]
+  },
+  {
+    "id": "2c91809f86dad8750186dae1bb76002a",
+    "desc": "TitleInstance.Type",
+    "internal": true,
+    "values": [
+      {
+        "id": "2c91809f86dad8750186dae1bb7e002c",
+        "value": "serial",
+        "label": "Serial"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bb78002b",
+        "value": "monograph",
+        "label": "Monograph"
+      }
+    ]
+  },
+  {
+    "id": "2c91809f86dad8750186dae1bb83002d",
+    "desc": "Global.Yes_No",
+    "internal": true,
+    "values": [
+      {
+        "id": "2c91809f86dad8750186dae1bb85002e",
+        "value": "yes",
+        "label": "Yes"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bb8c002f",
+        "value": "no",
+        "label": "No"
+      }
+    ]
+  },
+  {
+    "id": "2c91809f86dad8750186dae1bb9a0030",
+    "desc": "SubscriptionAgreement.AgreementType",
+    "internal": false,
+    "values": [
+      {
+        "id": "2c91809f86dad8750186dae1bba20032",
+        "value": "trial",
+        "label": "Trial"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bb9d0031",
+        "value": "draft",
+        "label": "Draft"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bba70033",
+        "value": "current",
+        "label": "Current"
+      }
+    ]
+  },
+  {
+    "id": "2c91809f86dad8750186dae1bbac0034",
+    "desc": "SubscriptionAgreement.RenewalPriority",
+    "internal": false,
+    "values": [
+      {
+        "id": "2c91809f86dad8750186dae1bbb40036",
+        "value": "for_review",
+        "label": "For review"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bbaf0035",
+        "value": "definitely_renew",
+        "label": "Definitely renew"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bbb90037",
+        "value": "definitely_cancel",
+        "label": "Definitely cancel"
+      }
+    ]
+  },
+  {
+    "id": "2c91809f86dad8750186dae1bbed003f",
+    "desc": "DocumentAttachment.AtType",
+    "internal": false,
+    "values": [
+      {
+        "id": "2c91809f86dad8750186dae1bbf50041",
+        "value": "misc",
+        "label": "Misc"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bbfa0042",
+        "value": "consortium_negotiation_document",
+        "label": "Consortium negotiation document"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bbef0040",
+        "value": "license",
+        "label": "License"
+      }
+    ]
+  },
+  {
+    "id": "2c91809f86dad8750186dae1bbff0043",
+    "desc": "AgreementRelationship.Type",
+    "internal": true,
+    "values": [
+      {
+        "id": "2c91809f86dad8750186dae1bc120047",
+        "value": "related_to",
+        "label": "Related to"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bc170048",
+        "value": "has_backfile_in",
+        "label": "Has backfile in"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bc080045",
+        "value": "provides_post-cancellation_access_for",
+        "label": "Provides post-cancellation access for"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bc0e0046",
+        "value": "tracks_demand-driven_acquisitions_for",
+        "label": "Tracks demand-driven acquisitions for"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bc020044",
+        "value": "supersedes",
+        "label": "Supersedes"
+      }
+    ]
+  },
+  {
+    "id": "2c91809f86dad8750186dae1bc890049",
+    "desc": "FileStorageEngines",
+    "internal": false,
+    "values": [
+      {
+        "id": "2c91809f86dad8750186dae1bc9f004b",
+        "value": "s3",
+        "label": "S3"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bc8e004a",
+        "value": "lob",
+        "label": "LOB"
+      }
+    ]
+  },
+  {
+    "id": "2c91809f86dad8750186dae1bdd90053",
+    "desc": "Yes/No/Other",
+    "internal": false,
+    "values": [
+      {
+        "id": "2c91809f86dad8750186dae1be130056",
+        "value": "other_(see_notes)",
+        "label": "Other (see notes)"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bdde0054",
+        "value": "yes",
+        "label": "Yes"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1bde70055",
+        "value": "no",
+        "label": "No"
+      }
+    ]
+  },
+  {
+    "id": "2c91809f86dad8750186dae1be1b0057",
+    "desc": "AuthIdent",
+    "internal": false,
+    "values": [
+      {
+        "id": "2c91809f86dad8750186dae1be2b005a",
+        "value": "orcid",
+        "label": "ORCID"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1be1f0058",
+        "value": "other",
+        "label": "Other"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1be48005d",
+        "value": "ringgold_id",
+        "label": "Ringgold ID"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1be250059",
+        "value": "email_domain",
+        "label": "Email Domain"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1be34005b",
+        "value": "over_institute",
+        "label": "Over Institute"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1be4c005e",
+        "value": "ror_id",
+        "label": "ROR ID"
+      },
+      {
+        "id": "2c91809f86dad8750186dae1be3f005c",
+        "value": "over_ip_range",
+        "label": "Over IP Range"
+      }
+    ]
+  },
+  {
+    "id": "2c9180b0872ca64f0187504133030000",
+    "desc": "TitleInstance.PublicationType",
+    "internal": false,
+    "values": [
+      {
+        "id": "2c91808a87b721e00187bc8f6ae80000",
+        "value": "monograph",
+        "label": "Monograph"
+      },
+      {
+        "id": "2c9180b0872ca64f01875041330b0001",
+        "value": "serial",
+        "label": "Serial"
+      }
+    ]
+  },
+  {
+    "id": "2c9180b0872ca64f0187504133470002",
+    "desc": "IdentifierOccurrence.Status",
+    "internal": true,
+    "values": [
+      {
+        "id": "2c9180b0872ca64f0187504133480003",
+        "value": "approved",
+        "label": "approved"
+      }
+    ]
+  },
+  {
+    "id": "2c9180de8a74141b018a7467c7a80000",
+    "desc": "SubscriptionAgreement.ContentType",
+    "internal": false,
+    "values": [
+      {
+        "id": "2c9180de8a74141b018a7467c8060002",
+        "value": "journals",
+        "label": "Journals"
+      },
+      {
+        "id": "2c9180de8a74141b018a7467c8120003",
+        "value": "database",
+        "label": "Database"
+      },
+      {
+        "id": "2c9180de8a74141b018a7467c8280004",
+        "value": "audio",
+        "label": "Audio"
+      },
+      {
+        "id": "2c9180de8a74141b018a7467c82e0005",
+        "value": "video",
+        "label": "Video"
+      },
+      {
+        "id": "2c9180de8a74141b018a7467c7e30001",
+        "value": "books",
+        "label": "Books"
+      }
+    ]
+  }
+]

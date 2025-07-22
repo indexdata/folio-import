@@ -1,0 +1,27 @@
+{
+  "expenseClasses": [
+    {
+      "id": "5b5ebe3a-cf8b-4f16-a880-46873ef21388",
+      "_version": 3,
+      "code": "Prn",
+      "externalAccountNumberExt": "02",
+      "name": "Print",
+      "metadata": {
+        "createdDate": "2024-10-04T08:20:32.608+00:00",
+        "updatedDate": "2024-10-04T08:20:32.608+00:00"
+      }
+    },
+    {
+      "id": "1bcc3247-99bf-4dca-9b0f-7bc51a2998c2",
+      "_version": 3,
+      "code": "Elec",
+      "externalAccountNumberExt": "01",
+      "name": "Electronic",
+      "metadata": {
+        "createdDate": "2024-10-04T08:20:32.598+00:00",
+        "updatedDate": "2024-10-04T08:20:32.598+00:00"
+      }
+    }
+  ],
+  "totalRecords": 2
+}
