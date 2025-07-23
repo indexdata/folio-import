@@ -19,7 +19,8 @@ let instFile = process.argv[4];
 const files = {
   o: 'composite-orders',
   p: 'purchase-orders',
-  l: 'po-lines'
+  l: 'po-lines',
+  n: 'pol-notes'
 };
 
 const zfiles = {
@@ -107,7 +108,6 @@ const writeOut = (fileName, data) => {
         });
       }
     }
-    // throw(d.z68);
 
     adminMap = {};
     d.z68.forEach(r => {
@@ -172,7 +172,8 @@ const writeOut = (fileName, data) => {
     const ttl = {
       o: 0,
       p: 0,
-      l: 0
+      l: 0,
+      n: 0
     }
 
     d.z68.forEach(r => {
@@ -252,6 +253,31 @@ const writeOut = (fileName, data) => {
       o.poLines = [ pol ]
       writeOut(files.o, o);
       ttl.o++;
+      
+      let z78 = d.z78[key];
+      if (z78) {
+        z78.forEach(n => {
+          let txt = n.Z78_ARRIVAL_NOTE;
+          let dt = n.Z78_ARRIVAL_DATE;
+          let id = uuid(pol.id + dt + txt, ns);
+          let typeStr = 'Mottagning';
+          let typeId = refData.noteTypes[typeStr];
+          let o = {
+            id: id,
+            title: 'Note',
+            content: `<p>${txt}</p><p>Arrival date: ${dt}</p>`,
+            typeId: typeId,
+            domain: 'orders',
+            links: [{
+              id: pol.id,
+              type: 'poLine'
+            }]
+          };
+          // console.log(o);
+          writeOut(files.n, o);
+          ttl.n++
+        });
+      }
     });
 
     console.log('------------------------');
@@ -259,6 +285,7 @@ const writeOut = (fileName, data) => {
     console.log('Composite orders:', ttl.o);
     console.log('Purchase orders', ttl.p);
     console.log('Order lines:', ttl.l);
+    console.log('POL notes:', ttl.n);
 
   } catch (e) {
     console.log(e);
