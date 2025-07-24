@@ -423,6 +423,7 @@ try {
   const iconf = conf.items;
   const idmap = conf.makeInstMap;
   const mapcn = conf.callNumbers;
+  const addMap = conf.additionalMapTags;
   const supp = (conf.suppress.tag) ? conf.suppress : '';
   let prefix = conf.hridPrefix;
   iprefix = (iconf) ? iconf.hridPrefix : '';
@@ -854,8 +855,18 @@ try {
         ttl.srs++;
         if (idmap) {
           let ea = (inst.electronicAccess) ? JSON.stringify(inst.electronicAccess) : '';
-          if (bibCallNum.value) bibCallNum.value = bibCallNum.value.replace(/\|/g, '%%') 
+          if (bibCallNum.value) bibCallNum.value = bibCallNum.value.replace(/\|/g, '%%');
           let instMap = `${inst.hrid}|${inst.id}|${bibCallNum.value}|${bibCallNum.type}|${blvl}|${ea}|${itypeCode}`;
+          if (addMap && addMap[0]) {
+            let af = {};
+            addMap.forEach(t => {
+              if (marc.fields[t]) {
+                af[t] = marc.fields[t];
+              }
+            });
+            let afStr = JSON.stringify(af);
+            instMap += '|' + afStr;
+          }
           writeOut(outs.idmap, instMap, true, '\n');
         }
         if (iconf) {
