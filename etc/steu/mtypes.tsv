@@ -1,0 +1,3 @@
+Legacy material type code (from item record)	Folio material type name or ID	
+336$a = text	Book	All items under the bib record that has this field should have this material type
+336$a = three-dimensional form	Object	
