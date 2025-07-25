@@ -38,6 +38,27 @@ const writeOut = (fileName, data) => {
   fs.writeFileSync(fileName, line, { flag: 'a' });
 }
 
+const makePolNote = (content, date, type, poLineId, refData) => {
+  let txt = content;
+  date = (date) ? date.replace(/(....)(..)(..)/, '$1-$2-$3') : '';
+  let id = uuid(poLineId + date + txt, ns);
+  let typeStr = type;
+  let typeId = refData.noteTypes[typeStr];
+  if (!typeId) throw new Error(`ERROR noteTypeId not found for "${typeStr}"!`);
+  let o = {
+    id: id,
+    title: 'Note',
+    content: `<p>${txt}</p><p>Date: ${date}</p>`,
+    typeId: typeId,
+    domain: 'orders',
+    links: [{
+      id: poLineId,
+      type: 'poLine'
+    }]
+  };
+  return o;
+}
+
 (async () => {
   try {
     if (!ordDir) throw 'Usage: node nlsOrders.js <ref_dir> <z103_table> <instances_file> <orders_dir>';
@@ -183,7 +204,7 @@ const writeOut = (fileName, data) => {
       let inst = instMap[instId];
       let id = uuid(key, ns);
       let nt = r.Z68_LIBRARY_NOTE;
-      let poNum = r.Z68_ORDER_NUMBER.replace(/^ORDER-/, '');
+      let poNum = r.Z68_ORDER_NUMBER.replace(/^ORDER-/, 'SO');
       let oType = (r.Z68_ORDER_TYPE === 'O') ? 'Ongoing' : 'One-Time';
       let vstr = 'DELBANCO';
       let vid = refData.organizations[vstr];
@@ -192,7 +213,7 @@ const writeOut = (fileName, data) => {
       let o = {
         id: id,
         poNumber: poNum,
-        poNumberPrefix: 'SO',
+        // poNumberPrefix: 'SO',
         orderType: oType,
         vendor: vid,
         template: tid,
@@ -226,8 +247,8 @@ const writeOut = (fileName, data) => {
       }
       pol.physical = {
         createInventory: 'None',
-        materialType: refData.mtypes._unspecified || refData.mtypes.unspecified || refData.mtypes.Monografi
-      }
+        materialType: refData.mtypes['Häfte/Volym Standing order'] || refData.mtypes.unspecified || refData.mtypes._unspecified
+      };
       if (inst) {
         pol.instanceId = inst.id;
         pol.titleOrPackage = inst.title;
@@ -257,23 +278,16 @@ const writeOut = (fileName, data) => {
       let z78 = d.z78[key];
       if (z78) {
         z78.forEach(n => {
-          let txt = n.Z78_ARRIVAL_NOTE;
-          let dt = n.Z78_ARRIVAL_DATE;
-          let id = uuid(pol.id + dt + txt, ns);
-          let typeStr = 'Mottagning';
-          let typeId = refData.noteTypes[typeStr];
-          let o = {
-            id: id,
-            title: 'Note',
-            content: `<p>${txt}</p><p>Arrival date: ${dt}</p>`,
-            typeId: typeId,
-            domain: 'orders',
-            links: [{
-              id: pol.id,
-              type: 'poLine'
-            }]
-          };
-          // console.log(o);
+          let o = makePolNote(n.Z78_ARRIVAL_NOTE, n.Z78_ARRIVAL_DATE, 'Mottagning', pol.id, refData);
+          writeOut(files.n, o);
+          ttl.n++
+        });
+      }
+
+      let z104 = d.z104[key];
+      if (z104) {
+        z104.forEach(n => {
+          let o = makePolNote(n.Z104_TEXT, n.Z78_TRIGGER_DATE, 'Förvärvsanteckning', pol.id, refData);
           writeOut(files.n, o);
           ttl.n++
         });
