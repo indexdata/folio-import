@@ -150,7 +150,7 @@ try {
       }
     });
   }
-  // throw(tsvMap);
+  // throw(tsvMap.loantypes);
   
   const instMap = {};
   if (conf.makeInstMap) {
@@ -231,15 +231,21 @@ try {
     }
   }
 
-  const makeItems = (fields, holdings, inst, leader) => {
-    let htype =  leader.substring(6, 7);
+  const makeItems = (fields, holdings, inst, mh, f866) => {
+    let f336 = (inst && inst.af && inst.af['336'] && inst.af['336'][0].subfields) ? inst.af['336'][0].subfields : [];
+    let mt = '';
+    f336.forEach(s => {
+      if (s.a) mt = s.a;
+    });
+    let loc = mh.c;
+
     fields.forEach(r => {
-      let ih = {};
-      let bwFlag = false;
+      let bc = '';
+      let v = '';
       r.subfields.forEach(s => {
-        let code = Object.keys(s)[0]
-        ih[code] = s[code];
-      });
+        if (s.p) bc = s.p;
+        if (s['3']) v = s['3'];
+      })
       let iid = holdings.hrid.replace(/^[a-z]+/, iprefix);
       if (occ[iid] === undefined) {
         occ[iid] = 0;
@@ -254,130 +260,45 @@ try {
         hrid: ihrid,
         permanentLoanTypeId: refData.loantypes['Can circulate'],
         holdingsRecordId: holdings.id,
-        status: { name: 'Available' },
-        notes: [],
-        circulationNotes: []
+        status: { name: 'Available' }
       }
-      let stat = tsvMap.statuses[ih.s];
-      let statDate = '';
-      if (stat) {
-        i.status.name = stat;
-        if (ih.v) {
-          try {
-            let sd = new Date(ih.v).toISOString();
-            sd = sd.replace(/T00:/, 'T12:');
-            i.status.date = sd;
-            statDate = sd;
-          } catch (e) {
-            console.log(`WARN "${ih.v}" is not a valid status date`);
-            bwFlag = true;
-          }
-        }
-      }
-      if (ih.s === 'Damaged') {
-        i.itemDamagedStatusId = refData.itemDamageStatuses.Damaged;
-        if (statDate) i.itemDamagedStatusDate = statDate;
-      }
-      let mt = tsvMap.mtypes[ih.t] || refData.mtypes[ih.t] || '';
-      i.materialTypeId = mt;
-
-      let permLocId = tsvMap.locations[ih.l] || '';
-      if (permLocId !== holdings.permanentLocationId) {
-        i.permanentLocationId = permLocId;
-      }
-      if (ih.h) {
-        let tempId = tsvMap.locations[ih.h];
-        if (tempId !== permLocId) {
-          i.temporaryLocationId = tempId;
-        }
-      }
-      if (ih.g) i.copyNumber = ih.g;
-      if (ih.a) {
-        let cn = (ih.b) ? ih.a + ' ' + ih.b : ih.a;
-        if (cn !== holdings.callNumber) {
-          i.itemLevelCallNumber = cn;
-          i.itemLevelCallNumberTypeId = refData.callNumberTypes['Other scheme'];
-        }
-      }
-      if (ih.i && !bcseen[ih.i]) {
-        i.barcode = ih.i;
-        bcseen[ih.i] = i.id;
-        bcHoldMap[ih.i] = holdings;
-      } else if (ih.i) {
-        console.log(`INFO [${holdings.hrid}] barcode "${ih.i}" has already been used. Creating bound-with-part.`);
-        bwFlag = true;
-        makeBoundWiths(bcseen[ih.i], holdings, ih.i);
-        let mainHoldingsId = bcHoldMap[ih.i];
-        if (!bwseen[mainHoldingsId]) makeBoundWiths(bcseen[ih.i], bcHoldMap[ih.i], ih.i);
-      }
-      if (ih.c) {
-        if (htype === 'y') {
-          i.enumeration = ih.c;
+      if (bc) {
+        if (!bcseen[bc]) {
+          i.barcode = bc;
+          bcseen[bc] = i.hrid;
         } else {
-          i.volume = ih.c;
+          console.log(`WARN barcode "${bc}" already used by ${i.hrid}`);
         }
       }
-      if (ih.k) i.chronology = ih.k;
-      if (ih.d || ih.o) {
-        i.yearCaption = [];
-        if (ih.d) i.yearCaption.push(ih.d);
-        if (ih.o) i.yearCaption.push(ih.o);
-      }
-      if (ih.m) i.numberOfPieces = ih.m;
-      if (ih.n) i.descriptionOfPieces = ih.n;
-      if (ih.q) {
-        let t = refData.itemNoteTypes.General;
-        if (t) {
-          let o = makeItemNote(ih.q, t, true);
-          i.notes.push(o);
-        }
-      }
-      if (ih.f) {
-        let t = refData.itemNoteTypes['Voyager Historical Charges'];
-        if (t) {
-          let o = makeItemNote(ih.f, t, true);
-          i.notes.push(o);
-        }
-      }
-      if (ih.e) {
-        let t = refData.itemNoteTypes['Voyager Historical Browses'];
-        if (t) {
-          let o = makeItemNote(ih.e, t, true);
-          i.notes.push(o);
-        }
+      if (mh.t) {
+        i.copyNumber = mh.t;
       }
 
-      if (ih.r) {
-        let o = {
-          note: ih.r,
-          noteType: 'Check in',
-          date: new Date().toISOString().replace(/T.+/, ''),
-          id: uuid(iid + 'in', ns)
-        };
-        i.circulationNotes.push(o);
+      if (mh.m) i.itemLevelCallNumberSuffix = mh.m;
+      if (mh.z) {
+        i.notes = [];
+        mh.z.forEach(n => {
+          let t = refData.itemNoteTypes.Note;
+          let o = makeItemNote(n, t, true);
+          i.notes.push(o);
+        });
       }
-      if (ih.u) {
-        let o = {
-          note: ih.u,
-          noteType: 'Check out',
-          date: new Date().toISOString().replace(/T.+/, ''),
-          id: uuid(iid + 'out', ns)
-        };
-        i.circulationNotes.push(o);
+      i.materialTypeId = tsvMap.mtypes[mt] || refData.mtypes.Unspecified;
+      i.permanentLoanTypeId = tsvMap.loantypes[loc] || refData.loantypes['Standard'];
+      if (v) {
+        i.volume = v;
       }
-
+      // console.log(i);
       if (i.materialTypeId) {
         if (i.permanentLoanTypeId) {
-          if (!bwFlag) {
-            writeOut(outs.items, i);
-            ttl.items++;
-          }
+          writeOut(outs.items, i);
+          ttl.items++;
         } else {
-          console.log(`ERROR item loantype not found for "Can circulate"`);
+          console.log(`ERROR item loantype not found for "${loc}"`);
           ttl.itemErr++;
         }
       } else {
-        console.log(`ERROR item material type not found for "${ih.t}"`);
+        console.log(`ERROR item material type not found for "${mt}" (${i.hrid})`);
         ttl.itemErr++;
       }
     });
@@ -402,20 +323,18 @@ try {
       m['852'].forEach(f => {
         f.subfields.forEach(s => {
           let k = Object.keys(s)[0];
-          if (k.match(/[zxi]/)) {
+          if (k === 'z') {
             if (!mh[k]) mh[k] = [];
             mh[k].push(s[k]);
           } else {
-            mh[k] = s[k]; 
+            mh[k] = s[k];
           }
         });
       });
       mh.ind1 = m['852'][0].ind1;
       mh.ind2 = m['852'][0].ind2;
     }
-    if (mh.i) { 
-      mh.i = mh.i.join(' ');
-    } 
+    
     let loc = mh.c;
     let cn = (mh.i) ? mh.h + ' ' + mh.i : mh.h || '';
     let inst = instMap[bhrid];
@@ -431,7 +350,6 @@ try {
         id: hid,
         hrid: hhrid,
         sourceId: refData.holdingsRecordsSources.FOLIO,
-        formerIds: [ ctrl ],
         discoverySuppress: false
       }
       h.instanceId = inst.id;
@@ -445,7 +363,7 @@ try {
         if (tstr === 'object') h.discoverySuppress = true;
         h.holdingsTypeId = tsvMap.holdingsTypes[tstr] || refData.holdingsTypes.Physical;
       }
-      h.permanentLocationId = tsvMap.locations[loc] || '';
+      h.permanentLocationId = tsvMap.locations[loc] || refData.locations.UNMAPPED || '';
       if (cn) {
         h.callNumber = cn;
         h.callNumberTypeId = cnTypeMap[mh.ind1] || cnTypeMap['8'];
@@ -513,8 +431,8 @@ try {
           writeOut(outs.holdings, h);
           hseen[ctrl] = h.id;
 
-          if (m['949']) {
-            makeItems(m['949'], h, inst, m.leader);
+          if (m['876']) {
+            makeItems(m['876'], h, inst, mh, m['866']);
           }
         } else {
           console.log(`ERROR hrid ${hhrid} already used!`);
