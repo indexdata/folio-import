@@ -258,7 +258,6 @@ try {
         _version: 1,
         id: uuid(ihrid, ns),
         hrid: ihrid,
-        permanentLoanTypeId: refData.loantypes['Can circulate'],
         holdingsRecordId: holdings.id,
         status: { name: 'Available' }
       }
@@ -285,6 +284,9 @@ try {
       }
       i.materialTypeId = tsvMap.mtypes[mt] || refData.mtypes.Unspecified;
       i.permanentLoanTypeId = tsvMap.loantypes[loc] || refData.loantypes['Standard'];
+      if (i.materialTypeId === refData.mtypes.Unspecified) {
+        console.log(`WARN materalTypeId not found for "${mt}" (${i.hrid})`);
+      }
       if (v) {
         i.volume = v;
       }
@@ -364,6 +366,9 @@ try {
         h.holdingsTypeId = tsvMap.holdingsTypes[tstr] || refData.holdingsTypes.Physical;
       }
       h.permanentLocationId = tsvMap.locations[loc] || refData.locations.UNMAPPED || '';
+      if (h.permanentLocationId === refData.locations.UNMAPPED) {
+        console.log(`WARN FOLIO location not for "${loc}" (${h.hrid})`);
+      }
       if (cn) {
         h.callNumber = cn;
         h.callNumberTypeId = cnTypeMap[mh.ind1] || cnTypeMap['8'];
