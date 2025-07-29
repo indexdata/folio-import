@@ -318,7 +318,7 @@ try {
     let m = JSON.parse(line);
     if (dbug) console.log(m);
     let ctrl = (m['001']) ? m['001'][0] : '';
-    let bhrid = (m['004']) ? m['004'][0] : '';
+    let bhrid = (m['004']) ? m['004'][0].trim() : '';
     let mh = {};
     let iid = '';
     if (m['852']) {

@@ -622,6 +622,7 @@ try {
           marc.addField('001', cnum);
         }
       }
+      if (marc.fields['001']) marc.fields['001'][0] = marc.fields['001'][0].trim();
       if (conf.callNumbers) {
         for (let t in conf.callNumbers) {
           let cf = marc.fields[t];
