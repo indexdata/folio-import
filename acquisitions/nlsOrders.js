@@ -113,22 +113,34 @@ const makePolNote = (content, date, type, poLineId, refData) => {
       if (f === 'z68') {
         d[f] = lines;
       } else {
+        let dx = {}
         lines.forEach(l => {
-          let k;
-          if (f === 'oo') {
-            k = l['adm. systemID'];
-          } else if (f === 'z104') {
-            k = l.Z104_REC_KEY.substring(2, 9);
-          } else if (f === 'z78') {
-            k = l.Z78_REC_KEY.substring(2, 9);
-          } else if (f === 'z16') {
-            k = l.Z16_REC_KEY.substring(2, 9);
+          if (f === 'z16') {
+            let id = l.Z16_REC_KEY;
+            let k = id.substring(0, 14);
+            let o = id.substring(14, 17);
+            if (!dx[k] || o > dx[k]) {
+              if (!d[f][k]) d[f][k] = {};
+              l.Z16_SEQ = o;
+              d[f][k] = l;
+              dx[k] = o;
+            }
+          } else {
+            let k;
+            if (f === 'oo') {
+              k = l['adm. systemID'];
+            } else if (f === 'z104') {
+              k = l.Z104_REC_KEY.substring(2, 9);
+            } else if (f === 'z78') {
+              k = l.Z78_REC_KEY.substring(2, 9);
+            } 
+            if (!d[f][k]) d[f][k] = [];
+            d[f][k].push(l);
           }
-          if (!d[f][k]) d[f][k] = [];
-          d[f][k].push(l);
         });
       }
     }
+    // throw(d.z16['00120560300001']);
 
     adminMap = {};
     d.z68.forEach(r => {
@@ -210,6 +222,7 @@ const makePolNote = (content, date, type, poLineId, refData) => {
       let vid = refData.organizations[vstr];
       let tstr = 'KB Stående order';
       let tid = refData.orderTemplates[tstr];
+      let odate = r.Z68_OPEN_DATE.replace(/^(....)(..)(..)/, '$1-$2-$3');
       let o = {
         id: id,
         poNumber: poNum,
@@ -218,6 +231,7 @@ const makePolNote = (content, date, type, poLineId, refData) => {
         vendor: vid,
         template: tid,
         workflowStatus: 'Open',
+        dateOrdered: odate,
         tags: { tagList: [ "Aleph" ] }
       };
       if (nt) o.notes = [ nt ];
@@ -225,7 +239,8 @@ const makePolNote = (content, date, type, poLineId, refData) => {
         o.ongoing = {
           isSubscription: true,
           manualRenewal: true,
-          renewalDate: curYear + '-11-30'
+          renewalDate: curYear + '-11-30',
+          reviewPeriod: 90
         };
       }
       // console.log(o);
@@ -293,6 +308,48 @@ const makePolNote = (content, date, type, poLineId, refData) => {
         });
       }
     });
+
+    for (let k in d.z16) {
+      let akey = k.substring(0, 9);
+      let r = d.z16[k];
+      let odate = r.Z16_COPY_FROM_DATE.replace(/^(....)(..)(..)/, '$1-$2-$3');
+      let cnote = r.Z16_CHECK_IN_NOTE;
+      let tstr = 'KB prenumeration';
+      let tid = refData.orderTemplates[tstr];
+      let vstr = 'SREBSCO';
+      let vid = refData.organizations[vstr];
+      // console.log(r);
+      let id = uuid(k + 'sub', ns);
+      let oo = d.oo[akey];
+      let wfs = (oo) ? 'Open' : 'Closed';
+      let puNum = 'SU' + k.replace(/^00/, '');
+      puNum = puNum.replace(/0000(.)$/, '$1');
+
+      let o = {
+        id: id,
+        dateOrdered: odate,
+        manualPo: true,
+        poNumber: puNum,
+        orderType: 'Ongoing',
+        reEncumber: true,
+        template: tid,
+        vendor: vid,
+        workflowStatus: wfs,
+        tags: { tagList: [ "Aleph" ] }
+      }
+      if (cnote) o.notes = [ cnote ];
+      if (o.orderType === 'Ongoing') {
+        o.ongoing = {
+          isSubscription: true,
+          manualRenewal: true,
+          renewalDate: curYear + '-11-30',
+          reviewPeriod: 90
+        };
+      }
+      // console.log(o);
+      writeOut(files.p, o);
+      ttl.p++;
+    }
 
     console.log('------------------------');
     console.log('Done!')
