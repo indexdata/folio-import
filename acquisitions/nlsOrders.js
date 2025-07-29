@@ -59,6 +59,24 @@ const makePolNote = (content, date, type, poLineId, refData) => {
   return o;
 }
 
+const parseInst = (pol, inst) => {
+  pol.instanceId = inst.id;
+  pol.titleOrPackage = inst.title;
+  if (inst.contributors) {
+    inst.contributors.forEach(c => {
+      delete c.contributorTypeId;
+      delete c.primary;
+      c.contributor = c.name || '[No name]';
+      delete c.name;
+    });
+    pol.contributors = inst.contributors;
+  }
+  if (inst.publication && inst.publication[0]) {
+    if (inst.publication[0].dateOfPublication) pol.publicationDate = inst.publication[0].dateOfPublication;
+    if (inst.publication[0].publisher) pol.publisher = inst.publication[0].publisher;
+  }
+}
+
 (async () => {
   try {
     if (!ordDir) throw 'Usage: node nlsOrders.js <ref_dir> <z103_table> <instances_file> <orders_dir>';
@@ -125,12 +143,13 @@ const makePolNote = (content, date, type, poLineId, refData) => {
               d[f][k] = l;
               dx[k] = o;
             }
+          } else if (f === 'oo') {
+              k = l['adm. systemID']; 
+              d[f][k] = l;
           } else {
             let k;
-            if (f === 'oo') {
-              k = l['adm. systemID'];
-            } else if (f === 'z104') {
-              k = l.Z104_REC_KEY.substring(2, 9);
+            if (f === 'z104') {
+              k = l.Z104_REC_KEY.substring(0, 9);
             } else if (f === 'z78') {
               k = l.Z78_REC_KEY.substring(2, 9);
             } 
@@ -140,13 +159,17 @@ const makePolNote = (content, date, type, poLineId, refData) => {
         });
       }
     }
-    // throw(d.z16['00120560300001']);
+    // throw(d.z104);
 
     adminMap = {};
     d.z68.forEach(r => {
       let k = r.Z68_REC_KEY.substring(0, 9);
       adminMap[k] = 1;
     });
+    for (let k in d.z16) {
+      let ak = d.z16[k].Z16_REC_KEY.substring(0, 9);
+      adminMap[ak] = 1;
+    };
     // throw(adminMap);
 
     // map link files;
@@ -226,7 +249,7 @@ const makePolNote = (content, date, type, poLineId, refData) => {
       let o = {
         id: id,
         poNumber: poNum,
-        // poNumberPrefix: 'SO',
+        poNumberPrefix: 'SO',
         orderType: oType,
         vendor: vid,
         template: tid,
@@ -264,23 +287,11 @@ const makePolNote = (content, date, type, poLineId, refData) => {
         createInventory: 'None',
         materialType: refData.mtypes['Häfte/Volym Standing order'] || refData.mtypes.unspecified || refData.mtypes._unspecified
       };
+
       if (inst) {
-        pol.instanceId = inst.id;
-        pol.titleOrPackage = inst.title;
-        if (inst.contributors) {
-          inst.contributors.forEach(c => {
-            delete c.contributorTypeId;
-            delete c.primary;
-            c.contributor = c.name;
-            delete c.name;
-          });
-          pol.contributors = inst.contributors;
-        }
-        if (inst.publication && inst.publication[0]) {
-          if (inst.publication[0].dateOfPublication) pol.publicationDate = inst.publication[0].dateOfPublication;
-          if (inst.publication[0].publisher) pol.publisher = inst.publication[0].publisher;
-        }
+        parseInst(pol, inst);
       }
+
       pol.orderFormat = 'Physical Resource';
       // console.log(pol);
       writeOut(files.l, pol);
@@ -299,14 +310,7 @@ const makePolNote = (content, date, type, poLineId, refData) => {
         });
       }
 
-      let z104 = d.z104[key];
-      if (z104) {
-        z104.forEach(n => {
-          let o = makePolNote(n.Z104_TEXT, n.Z78_TRIGGER_DATE, 'Förvärvsanteckning', pol.id, refData);
-          writeOut(files.n, o);
-          ttl.n++
-        });
-      }
+      
     });
 
     for (let k in d.z16) {
@@ -324,6 +328,8 @@ const makePolNote = (content, date, type, poLineId, refData) => {
       let wfs = (oo) ? 'Open' : 'Closed';
       let puNum = 'SU' + k.replace(/^00/, '');
       puNum = puNum.replace(/0000(.)$/, '$1');
+      let instId = linkMap[akey];
+      let inst = instMap[instId];
 
       let o = {
         id: id,
@@ -349,6 +355,54 @@ const makePolNote = (content, date, type, poLineId, refData) => {
       // console.log(o);
       writeOut(files.p, o);
       ttl.p++;
+
+      let amStr = 'KB: Inköp av utländsk tidskrift (prenumerationer, inkl. e-resurs)';
+      let am = refData.acquisitionMethods[amStr];
+      if (!am) throw new Error(`AquisitionMethodId not found for "${amStr}"`);
+
+      let pol = {
+        id: uuid(o.id, ns),
+        purchaseOrderId: o.id,
+        acquisitionMethod: am,
+        orderFormat: 'Physical Resource',
+        source: 'User'
+      }
+
+      if (inst) {
+        parseInst(pol, inst);
+      }
+
+      if (oo) {
+        let fmt = oo.Format;
+        if (fmt === 'Online') pol.orderFormat = 'Electronic Resource';
+      }
+
+      pol.cost = {
+        currency: 'SEK'
+      }
+
+      if (pol.orderFormat === 'Physical Resource') {
+        pol.physical = {
+          createInventory: 'None',
+          materialType: refData.mtypes['Häfte/Volym Standing order'] || refData.mtypes.unspecified || refData.mtypes._unspecified
+        };
+      }
+
+      let z104 = d.z104[akey];
+      if (z104) {
+        z104.forEach(n => {
+          let o = makePolNote(n.Z104_TEXT, n.Z78_TRIGGER_DATE, 'Förvärvsanteckning', pol.id, refData);
+          writeOut(files.n, o);
+          ttl.n++
+        });
+      }
+      
+      writeOut(files.l, pol);
+      ttl.l++;
+
+      o.poLines = [ pol ];
+      writeOut(files.o, o);
+      ttl.o++;
     }
 
     console.log('------------------------');
