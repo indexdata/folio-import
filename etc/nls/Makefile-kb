@@ -3,12 +3,16 @@ data=/data/konchaled
 ref=$(data)/ref
 uref=$(ref)/usr
 iref=$(ref)/inv
+oref=$(ref)/acq
 idir=$(data)/inv
 udir=$(data)/users
+odir=$(data)/orders
 inv2=$(wd)/inventory2
+acq=$(wd)/acquisitions
 con=$(inv2)/conf/nls-kb.json
 ldir=$(data)/log
 etc=$(wd)/etc/nls
+z103=$(data)/z103.seqaa
 
 setup:
 	cd $(wd); node migrationRef.js $(ref)
@@ -34,3 +38,7 @@ inventory-prep:
 users:
 	cd $(wd)/patrons; node nlsUsers.js $(uref) $(udir) > $(ldir)/makeUsers.log 2>$(ldir)/makeUsers.err
 	cat $(ldir)/makeUsers.log
+
+orders:
+	cd $(acq); node nlsOrders $(oref) $(z103) $(idir)/bibs-instances.jsonl $(odir) > $(ldir)/makeOrders.log
+	cat $(ldir)/makeOrders.log
