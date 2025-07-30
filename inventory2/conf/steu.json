@@ -1,0 +1,15 @@
+{
+    "nameSpace": "22873a62-7397-4a4d-b53a-4c9b23d06311",
+    "refDir": "/home/charles/steu/ref/inv",
+    "tsvDir": "",
+    "mapFile": "",
+    "controlNum": "",
+    "hridPrefix": "",
+    "makeInstMap": true,
+    "hasMfhd": true,
+    "additionalMapTags": [ "338", "336" ],
+    "noTitle": "",
+    "catDate": { "tag": "008" },
+    "suppress": { "tag": "338", "subfield": "a", "value": "object" },
+    "callNumbers": {}
+}
