@@ -31,6 +31,15 @@ const zfiles = {
   z78: 'z78.dsv'
 };
 
+const cost = {
+  currency: 'SEK',
+  quantityPhysical: 0,
+  listUnitPrice: 0,
+  discountType: 'percentage',
+  discount: 0,
+  poLineEstimatedPrice: 0
+};
+
 const curYear = new Date().getFullYear();
 
 const writeOut = (fileName, data) => {
@@ -279,13 +288,14 @@ const parseInst = (pol, inst) => {
         source: 'User',
         collection: true,
         tags: { tagList: [ "Aleph" ] },
+        cost: cost,
+        poLineNumber: o.poNumber + '-1'
       };
-      pol.cost = {
-        currency: 'SEK'
-      }
+
       pol.physical = {
         createInventory: 'None',
-        materialType: refData.mtypes['Häfte/Volym Standing order'] || refData.mtypes.unspecified || refData.mtypes._unspecified
+        materialType: refData.mtypes['Häfte/Volym Standing order'] || refData.mtypes.unspecified || refData.mtypes._unspecified,
+        volumes: []
       };
 
       if (inst) {
@@ -365,7 +375,9 @@ const parseInst = (pol, inst) => {
         purchaseOrderId: o.id,
         acquisitionMethod: am,
         orderFormat: 'Physical Resource',
-        source: 'User'
+        source: 'User',
+        cost: cost,
+        poLineNumber: o.poNumber + '-1'
       }
 
       if (inst) {
@@ -377,14 +389,11 @@ const parseInst = (pol, inst) => {
         if (fmt === 'Online') pol.orderFormat = 'Electronic Resource';
       }
 
-      pol.cost = {
-        currency: 'SEK'
-      }
-
       if (pol.orderFormat === 'Physical Resource') {
         pol.physical = {
           createInventory: 'None',
-          materialType: refData.mtypes['Häfte/Volym Standing order'] || refData.mtypes.unspecified || refData.mtypes._unspecified
+          materialType: refData.mtypes['Häfte/Volym Standing order'] || refData.mtypes.unspecified || refData.mtypes._unspecified,
+          volumes: []
         };
       }
 
