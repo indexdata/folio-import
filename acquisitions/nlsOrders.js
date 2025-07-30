@@ -66,7 +66,7 @@ const parseInst = (pol, inst) => {
     inst.contributors.forEach(c => {
       delete c.contributorTypeId;
       delete c.primary;
-      c.contributor = c.name || '[No name]';
+      if (c.name) c.contributor = c.name;
       delete c.name;
     });
     pol.contributors = inst.contributors;
@@ -391,7 +391,7 @@ const parseInst = (pol, inst) => {
       let z104 = d.z104[akey];
       if (z104) {
         z104.forEach(n => {
-          let o = makePolNote(n.Z104_TEXT, n.Z78_TRIGGER_DATE, 'Förvärvsanteckning', pol.id, refData);
+          let o = makePolNote(n.Z104_TEXT, n.Z104_TRIGGER_DATE, 'Förvärvsanteckning', pol.id, refData);
           writeOut(files.n, o);
           ttl.n++
         });
