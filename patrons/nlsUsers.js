@@ -30,8 +30,22 @@ const zfiles = {
   z308: 'id'
 };
 
-const groupMap = {
-};
+const shelfNum = (k) => {
+  let out = '';
+  if (k.match(/^[xyz{]/)) {
+    out = 'D15';
+  } else if (k.match(/^\|/)) {
+    out = 'D16';
+  } else if (k.match(/^i/)) {
+    out = 'B11';
+  } else if (k.match(/^q/)) {
+    out = 'C14';
+  } else if (k.match(/^u/)) {
+    out = 'B11';
+  }
+  
+  console.log(k, out);
+}
 
 const makeNote = (mesg, userId, noteTypeId) => {
   const note = {
@@ -190,6 +204,9 @@ try {
     count++;
     let p = main[x];
     if (process.env.DEBUG) console.log(p);
+    let nkey = p.Z303_NAME_KEY;
+    // nkey = '{fdsf';
+    let snum = shelfNum(nkey);
     let aid = p.Z303_PRIMARY_ID;
     let id = p.Z303_REC_KEY;
     let dels = [ p.Z303_DELINQ_1, p.Z303_DELINQ_2, p.Z303_DELINQ_3 ];
