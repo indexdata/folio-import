@@ -47,6 +47,249 @@ const shelfNum = (k) => {
   console.log(k, out);
 }
 
+/**
+ * Compute "hyllnr" code based on z302_name_key similar to the XSLT logic.
+ * @param {string} key – z302‑name‑key string
+ * @returns {string} – e.g. " (A2) "
+ */
+function hyllnr(key) {
+  const z = key || "";
+  const sb = translate(z.charAt(0),
+    "yz{}",
+    "xxx|");
+  let code;
+  switch (sb) {
+    case "a": code = namnA(z); break;
+    case "b": code = namnB(z); break;
+    case "c": code = namnC(z); break;
+    case "d": code = namnD(z); break;
+    case "e": code = namnE(z); break;
+    case "f": code = namnF(z); break;
+    case "g": code = namnG(z); break;
+    case "h": code = namnH(z); break;
+    case "i": code = "B11"; break;
+    case "j": code = namnJ(z); break;
+    case "k": code = namnK(z); break;
+    case "l": code = namnL(z); break;
+    case "m": code = namnM(z); break;
+    case "n": code = namnN(z); break;
+    case "o": code = namnO(z); break;
+    case "p": code = namnP(z); break;
+    case "q": code = "C14"; break;
+    case "r": code = namnR(z); break;
+    case "s": code = namnS(z); break;
+    case "t": code = namnT(z); break;
+    case "u": code = "D10"; break;
+    case "v":
+    case "w": code = namnV(z); break;
+    case "x": code = "D15"; break;
+    case "|": code = "D16"; break;
+    default: code = ""; break;
+  }
+  return code;
+}
+
+// JavaScript equivalent of XSLT translate() function: char-by-char mapping.
+function translate(ch, fromChars, toChars) {
+  const idx = fromChars.indexOf(ch);
+  if (idx >= 0 && idx < toChars.length) return toChars[idx];
+  if (idx >= 0 && idx >= toChars.length) return ""; // removed if no mapping
+  return ch;
+}
+
+// Below: implementations of each "namnX" using translate of second/third and further logic.
+
+function namnA(z) {
+  const ab = translate(z.charAt(1),
+    "mnpqrstuvwxyz{|}",
+    "lloooooooooooooo");
+  return ab === "l" ? "A2" : ab === "o" ? "A3" : "A1";
+}
+
+function namnB(z) {
+  const ab = translate(z.charAt(1),
+    "ghijklmnqrstuvwxyz{|}",
+    "ffffffffppppppppppppp");
+  if (ab === "e") {
+    const tb = translate(z.charAt(2),
+      "fghijklmnopqrstuvwxyz{|}",
+      "eeeeeeeeeeeeeeeeeeeeeeee");
+    return tb === "e" ? "A5" : "A4";
+  }
+  if (ab === "f") return "A6";
+  if (ab === "o") return "A7";
+  if (ab === "p") return "A8";
+  return "A4";
+}
+
+function namnC(z) {
+  const ab = translate(z.charAt(1),
+    "ijklmnopqrstuvwxyz{|}",
+    "hhhhhhhhhhhhhhhhhhhhh");
+  return ab === "h" ? "A10" : "A9";
+}
+
+function namnD(z) {
+  const ab = translate(z.charAt(1),
+    "fghijklmnopqrstuvwxyz{|}",
+    "eeeeeeeeeeeeeeeeeeeeeeee");
+  return ab === "e" ? "A12" : "A11";
+}
+
+function namnE(z) {
+  const ab = translate(z.charAt(1),
+    "knopqrstuvwxyz{|}",
+    "lmmmmmmmmmmmmmmmm");
+  if (ab === "l") return "A14";
+  if (ab === "m") return "A15";
+  return "A13";
+}
+
+function namnF(z) {
+  const ab = translate(z.charAt(1),
+    "klmnopqstuvwxyz{|}",
+    "jjjjjjjrrrrrrrrrrr");
+  if (ab === "j") return "B2";
+  if (ab === "r") return "B3";
+  return "B1";
+}
+
+function namnG(z) {
+  const ab = translate(z.charAt(1),
+    "pqstuvwxz{|}",
+    "rrrrryyyyyyy");
+  if (ab === "r") return "B5";
+  if (ab === "y") return "B6";
+  return "B4";
+}
+
+function namnH(z) {
+  const ab = translate(z.charAt(1),
+    "fghjklmnoqrstuvwxyz{|}",
+    "eeeiiiiiippppppppppppp");
+  if (ab === "e") return "B8";
+  if (ab === "i") return "B9";
+  if (ab === "p") return "B10";
+  return "B7";
+}
+
+function namnJ(z) {
+  const ab = translate(z.charAt(1),
+    "pqrstuvwxyz{|}",
+    "oooooooooooooo");
+  return ab === "o" ? "B12" : "B11";
+}
+
+function namnK(z) {
+  const ab = translate(z.charAt(1),
+    "ghijklmnoqrstuvwxyz{|}",
+    "fffffffffppppppppppppp");
+  if (ab === "f") return "B14";
+  if (ab === "p") return "B15";
+  return "B13";
+}
+
+function namnL(z) {
+  const ab = translate(z.charAt(1),
+    "fghkmnopqrstuwxyz{|}",
+    "eeejlllllllllvvvvvvv");
+  if (ab === "e") {
+    const tb = translate(z.charAt(2),
+      "pqrstuwxyz{|}",
+      "oooooooooooooo");
+    if (tb === "n") {
+      const fb = translate(z.charAt(3),
+        "fghijklmnopqrstuvwxyz{|}",
+        "eeeeeeeeeeeeeeeeeeeee");
+      if (fb === "d") {
+        const fifth = translate(z.charAt(4),
+          "hijklmnopqrstuvwxyz{|}",
+          "gggggggggggggggggggggg");
+        return fifth === "g" ? "C4" : "C3";
+      }
+      if (fb === "e") return "C4";
+      return "C3";
+    }
+    if (tb === "o") return "C4";
+    return "C2";
+  }
+  if (ab === "j") return "C4";
+  if (ab === "l") return "C5";
+  if (ab === "v") return "C6";
+  return "C1";
+}
+
+function namnM(z) {
+  const ab = translate(z.charAt(1),
+    "fghijklmnopqrstuvwxyz{|}",
+    "eeeeeeeeeeeeeeeeeeeeeeee");
+  return ab === "e" ? "C8" : "C7";
+}
+
+function namnN(z) {
+  const ab = translate(z.charAt(1),
+    "pqrstuvwxyz{|}",
+    "oooooooooooooo");
+  return ab === "o" ? "C10" : "C9";
+}
+
+function namnO(z) {
+  const ab = translate(z.charAt(1),
+    "nopqrstuvwxyz{|}",
+    "mmmmmmmmmmmmmmmm");
+  return ab === "m" ? "C12" : "C11";
+}
+
+function namnP(z) {
+  const ab = translate(z.charAt(1),
+    "jklmnopqrstuvwxyz{|}",
+    "iiiiiiiiiiiiiiiiiiii");
+  return ab === "i" ? "C14" : "C13";
+}
+
+function namnR(z) {
+  const ab = translate(z.charAt(1),
+    "klmnopqrstuvwxyz{|}",
+    "jjjjjjjjjjjjjjjjjjj");
+  return ab === "j" ? "C16" : "C15";
+}
+
+function namnS(z) {
+  const ab = translate(z.charAt(1),
+    "cdefghjlmnopqrswxyz{|}",
+    "bbbbbbikkkkkkkkvvvvvvv");
+  if (ab === "t") {
+    const tb = translate(z.charAt(2),
+      "pqstuvwxyz{|}",
+      "rrrrrrrrrrrrr");
+    return tb === "r" ? "D6" : "D5";
+  }
+  if (ab === "b") return "D2";
+  if (ab === "i") return "D3";
+  if (ab === "k") return "D4";
+  if (ab === "u") return "D6";
+  if (ab === "v") return "D7";
+  return "D1";
+}
+
+function namnT(z) {
+  const ab = translate(z.charAt(1),
+    "pqrstuvwxyz{|}",
+    "oooooooooooooo");
+  return ab === "o" ? "D9" : "D8";
+}
+
+function namnV(z) {
+  const ab = translate(z.charAt(1),
+    "cdefghijklmnopqrstuvwxyz{|}",
+    "bbbfffffkkkkkkkkkkkkkkkkkkk");
+  if (ab === "f") return "D13";
+  if (ab === "b") return "D12";
+  if (ab === "k") return "D14";
+  return "D11";
+}
+
+
 const makeNote = (mesg, userId, noteTypeId) => {
   const note = {
     id: uuid(userId + mesg, ns),
@@ -205,8 +448,7 @@ try {
     let p = main[x];
     if (process.env.DEBUG) console.log(p);
     let nkey = p.Z303_NAME_KEY;
-    // nkey = '{fdsf';
-    let snum = shelfNum(nkey);
+    let snum = hyllnr(nkey);
     let aid = p.Z303_PRIMARY_ID;
     let id = p.Z303_REC_KEY;
     let dels = [ p.Z303_DELINQ_1, p.Z303_DELINQ_2, p.Z303_DELINQ_3 ];
@@ -266,6 +508,7 @@ try {
       personal: {
         lastName: ln,
         firstName: fn,
+        middleName: snum
       },
       customFields: {}
     };
