@@ -501,17 +501,18 @@ try {
       glab = 'Ordinarie';
     }
     let groupId = refData.usergroups[gnum] || refData.usergroups[glab];
-    u = {
+    let u = {
       id: uuid(id, ns),
       active: true,
       patronGroup: groupId,
       personal: {
         lastName: ln,
         firstName: fn,
-        middleName: snum
+        
       },
       customFields: {}
     };
+    if (snum) u.personal.middleName = `(${snum})`;
     if (un && !unseen[un]) {
       u.username = un;
       unseen[un] = 1;
