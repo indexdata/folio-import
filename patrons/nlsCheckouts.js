@@ -19,7 +19,7 @@ const y1900 = new Date('1900-01-01').valueOf();
 (async () => {
   try {
     if (!circFile) {
-      throw('Usage: node nlsCheckouts.js <service-points_json_file> <users_jsonl_file> <items_jsonl_file> <z36_table>');
+      throw('Usage: node nlsCheckouts.js <servicepoints_file> <users_jsonl_file> <items_jsonl_file> <z36_table>');
     }
     let circDir = path.dirname(circFile);
     const start = new Date().valueOf();
@@ -52,7 +52,7 @@ const y1900 = new Date('1900-01-01').valueOf();
         users[k] = { active: o.active, bc: o.barcode, ex: o.expirationDate || '' };
       }
     }
-    throw(users);
+    // throw(users);
 
     // map items
     const items = {};
@@ -70,16 +70,8 @@ const y1900 = new Date('1900-01-01').valueOf();
     
     const parseDate = (dstr, type) => {
       let dt = '';
-      let dto;
-      if (dstr.match(/\d{5}\.\d*/)) {
-        let [ d, f ] = dstr.split(/\./);
-        d = parseInt(d, 10)*day + y1900;
-        f = parseInt(f, 10)/100000;
-        d += day*f;
-        dto = new Date(d);
-      } else {
-        dto = new Date(dstr);
-      }
+      dstr = dstr.replace(/^(....)(..)(..)/, '$1-$2-$3');
+      let dto = new Date(dstr)
       try {
         let dzo = (dto.getTimezoneOffset() - 60)/60;
 	      if (dzo < 0) dzo = 6 + dzo
@@ -117,29 +109,30 @@ const y1900 = new Date('1900-01-01').valueOf();
     inRecs.forEach(r => {
       if (process.env.DEBUG) console.log(r);
       let loan = {};
-      let ibc = r.BOOK_BARCODE;
-      let item = items[ibc];
-      let ubc = r.PATRON_BARCODE;
-      let user = users[ubc];
+      let lib = r.Z36_SUB_LIBRARY;
+      let iid = r.Z36_REC_KEY;
+      let item = items[iid];
+      let uid = r.Z36_ID.trim();
+      let user = users[uid];
       if (!user) {
-        console.log(`ERROR no user found with barcode "${ubc}" (${r.PATRON_NAME})`);
+        console.log(`ERROR no user found with alephId "${uid}" (${r.PATRON_NAME})`);
         ttl.unf++;
         ttl.err++;
       } else if (!item) {
-        console.log(`ERROR no item found with barcode "${ibc}"`);
+        console.log(`ERROR no item found with hrid "${iid}"`);
         ttl.inf++;
         ttl.err++;
       } else if (item.st !== 'Available') {
-        console.log(`ERROR item status for "${ibc}" is "${item.st}"`);
+        console.log(`ERROR item status for "${iid}" is "${item.st}"`);
         ttl.ina++;
         ttl.err++;
       } else {
-        loan.itemBarcode = ibc;
-        loan.userBarcode = ubc;
-        let ld = r.CHECKOUT_DATE;
+        loan.itemBarcode = item.bc;
+        loan.userBarcode = user.bc;
+        let ld = r.Z36_LOAN_DATE;
         let ldate = parseDate(ld, 'loan');
         if (ldate) loan.loanDate = ldate;
-        let dd = r.DUE_DATE;
+        let dd = r.Z36_DUE_DATE;
         let ddate = parseDate(dd, 'due');
         if (ddate) loan.dueDate = ddate;
         loan.servicePointId = spMap.main;
@@ -153,7 +146,7 @@ const y1900 = new Date('1900-01-01').valueOf();
             ttl.ia++;
           }
         } else {
-          console.log(`ERROR service point not found for ${lib} (${iid} --> ${pid})`);
+          console.log(`ERROR service point not found for "${lib}" (${item.bc} --> ${uid})`);
           ttl.err++;
         }
       }
