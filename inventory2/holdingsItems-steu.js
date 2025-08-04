@@ -335,6 +335,8 @@ try {
       });
       mh.ind1 = m['852'][0].ind1;
       mh.ind2 = m['852'][0].ind2;
+    } else {
+      continue;
     }
     
     let loc = mh.c;
