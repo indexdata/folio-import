@@ -39,11 +39,11 @@ let dbug = process.env.DEBUG;
 
     let totFetch = 0;
     let totRecs = 1000000;
-    let perPage = (actionUrl.match(/authority-storage/)) ? 2000 : (actionUrl.match(/source-storage/)) ? 1000 : 5000;
+    let perPage = (actionUrl.match(/authority-storage/)) ? 2000 : (actionUrl.match(/source-storage/)) ? 1000 : 1000;
     let offset = start || 0;
     while (totFetch < totRecs) {
       let prop;
-      let url = `${actionUrl}?limit=${perPage}&offset=${offset}`;
+      let url = `${actionUrl}?limit=${perPage}&offset=${offset}&query=cql.allRecords=1 sortBy id`;
       if (actionUrl.match(/\?/)) url = url.replace(/\?limit/, '&limit');
       if (actionUrl.match(/\/(licenses|erm)\//)) {
 	      perPage = 100;

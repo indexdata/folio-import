@@ -66,7 +66,7 @@ const y1900 = new Date('1900-01-01').valueOf();
       let k = o.hrid;
       items[k] = { bc: o.barcode, st: o.status.name };
     }
-    // throw(items);
+    // throw(items['001158172001030']);
     
     const parseDate = (dstr, type) => {
       let dt = '';
@@ -135,7 +135,7 @@ const y1900 = new Date('1900-01-01').valueOf();
         let dd = r.Z36_DUE_DATE;
         let ddate = parseDate(dd, 'due');
         if (ddate) loan.dueDate = ddate;
-        loan.servicePointId = spMap.main;
+        loan.servicePointId = spMap['SP-INFO'];
         if (r.RENEWAL_COUNT) loan.renewalCount = parseInt(r.RENEWAL_COUNT, 10);
         if (user.ex) loan.expirationDate = user.ex;
         if (loan.servicePointId) {
