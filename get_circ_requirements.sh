@@ -17,3 +17,5 @@ echo $L
 node downloadJSONL item-storage/items $DIR/items.jsonl 
 echo $L
 node downloadJSONL service-points $DIR/service-points.jsonl 
+echo $L
+node downloadJSONL feefines $DIR/feefines.jsonl
