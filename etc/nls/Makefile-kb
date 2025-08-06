@@ -7,6 +7,7 @@ oref=$(ref)/acq
 idir=$(data)/inv
 udir=$(data)/users
 odir=$(data)/orders
+cdir=$(data)/circ
 inv2=$(wd)/inventory2
 acq=$(wd)/acquisitions
 con=$(inv2)/conf/nls-kb.json
@@ -42,3 +43,7 @@ users:
 orders:
 	cd $(acq); node nlsOrders $(oref) $(z103) $(idir)/bibs-instances.jsonl $(odir) > $(ldir)/makeOrders.log
 	cat $(ldir)/makeOrders.log
+
+checkouts:
+	cd $(wd)/patrons; node nlsCheckouts $(iref)/service-points.json $(cdir)/users.jsonl $(cdir)/items.jsonl $(cdir)/z36.dsv > $(ldir)/makeCheckouts.log
+	cat $(ldir)/makeCheckouts.log
