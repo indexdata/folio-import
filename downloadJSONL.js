@@ -25,6 +25,7 @@ let dbug = process.env.DEBUG;
     endPoint = endPoint.replace(/^\//, '');
 
     let actionUrl = config.okapi + '/' + endPoint;
+    let lm = endPoint.match(/limit=(\d+)/);
 
     fn = fileName;
     if (fs.existsSync(fn)) {
@@ -39,12 +40,11 @@ let dbug = process.env.DEBUG;
 
     let totFetch = 0;
     let totRecs = 1000000;
-    let perPage = (actionUrl.match(/authority-storage/)) ? 2000 : (actionUrl.match(/source-storage/)) ? 1000 : 1000;
+    let perPage = (lm) ? parseInt(lm[1], 10) : 1000;
     let offset = start || 0;
     while (totFetch < totRecs) {
       let prop;
-      let url = `${actionUrl}?limit=${perPage}&offset=${offset}&query=cql.allRecords=1 sortBy id`;
-      if (actionUrl.match(/\?/)) url = url.replace(/\?limit/, '&limit');
+      let url = (actionUrl.match(/\?/)) ? actionUrl : `${actionUrl}?limit=${perPage}&offset=${offset}&query=cql.allRecords=1 sortBy id`;
       if (actionUrl.match(/\/(licenses|erm)\//)) {
 	      perPage = 100;
 	      url = `${actionUrl}?perPage=${perPage}&offset=${offset}&stats=true`;
@@ -56,7 +56,9 @@ let dbug = process.env.DEBUG;
         perPage = 100;
         url = `${actionUrl}?limit=${perPage}&offset=${offset}`;
       }
+      if (!url.match(/offset=\d/)) url += `&offset=${offset}`;
       try {
+        console.log(`GET ${url}`);
         let res = await superagent
           .get(url)
           .timeout({response: 10000})
@@ -79,7 +81,7 @@ let dbug = process.env.DEBUG;
           writeStream.write(rec + '\n', 'utf8');
         }
       } catch (e) {
-	 if (dbug) console.log(e);
+	    if (dbug) console.log(e);
          throw new Error(e);
       }
       offset += perPage;
