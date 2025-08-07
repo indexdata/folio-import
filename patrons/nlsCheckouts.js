@@ -2,6 +2,13 @@ const fs = require('fs');
 const path = require('path');
 const { parse } = require('csv-parse/sync');
 const readline = require('readline');
+let uuid;
+try {
+  uuid = require('uuid/v5');
+} catch (e) {
+  const { v5 } = require('uuid');
+  uuid = v5;
+}
 
 let spFile = process.argv[2];
 let usersFile = process.argv[3];
@@ -9,13 +16,13 @@ let itemFile = process.argv[4];
 let circFile = process.argv[5];
 let reqFile = process.argv[6];
 
+const ns = '25515560-9d65-4fcf-bf95-2cb27984f3e3';
+
 const outFiles = {
   co: 'checkouts.jsonl',
-  ia: 'inactive-checkouts.jsonl'
+  ia: 'inactive-checkouts.jsonl',
+  rq: 'requests.jsonl'
 };
-
-const day = new Date('1970-01-02').valueOf();
-const y1900 = new Date('1900-01-01').valueOf();
 
 (async () => {
   try {
@@ -50,10 +57,10 @@ const y1900 = new Date('1900-01-01').valueOf();
       let o = JSON.parse(line);
       let k = (o.customFields) ? o.customFields.alephid : '';
       if (k) {
-        users[k] = { active: o.active, bc: o.barcode, ex: o.expirationDate || '' };
+        users[k] = { id: o.id, active: o.active, bc: o.barcode, ex: o.expirationDate || '' };
       }
     }
-    // throw(users);
+    // throw(users.KB111141);
 
     // map items
     const items = {};
@@ -96,6 +103,7 @@ const y1900 = new Date('1900-01-01').valueOf();
       inf: 0,
       ina: 0,
       ibc: 0,
+      req: 0,
       err: 0,
     }
 
@@ -163,7 +171,21 @@ const y1900 = new Date('1900-01-01').valueOf();
       });
 
       inRecs.forEach(r => {
-        console.log(r)
+        // console.log(r)
+        let key = r.Z37_REC_KEY;
+        let aid = r.Z37_ID;
+        let user = users[aid];
+        if (user) {
+          let id = uuid(r.Z37_REQUEST_NUMBER, ns);
+          let o = {
+            id: id
+          }
+          console.log(o);
+          writeOut(outFiles.rq, o);
+          ttl.req++;
+        } else {
+          console.log(`ERROR No user found with alephid ${aid}`);
+        }
       });
     }
 
@@ -175,6 +197,7 @@ const y1900 = new Date('1900-01-01').valueOf();
     console.log('Items not found:', ttl.inf);
     console.log('Items not available:', ttl.ina);
     console.log('Items with no barcode:', ttl.ibc);
+    console.log('Requests:', ttl.req);
     console.log('Total errors:', ttl.err);
     console.log('Time (sec):', time);
   } catch (e) {
