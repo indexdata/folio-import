@@ -7,6 +7,7 @@ let spFile = process.argv[2];
 let usersFile = process.argv[3];
 let itemFile = process.argv[4];
 let circFile = process.argv[5];
+let reqFile = process.argv[6];
 
 const outFiles = {
   co: 'checkouts.jsonl',
@@ -19,7 +20,7 @@ const y1900 = new Date('1900-01-01').valueOf();
 (async () => {
   try {
     if (!circFile) {
-      throw('Usage: node nlsCheckouts.js <servicepoints_file> <users_jsonl_file> <items_jsonl_file> <z36_table>');
+      throw('Usage: node nlsCheckouts.js <servicepoints_file> <users_jsonl_file> <items_jsonl_file> <z36_table> [ <z37_table> ]');
     }
     let circDir = path.dirname(circFile);
     const start = new Date().valueOf();
@@ -151,6 +152,20 @@ const y1900 = new Date('1900-01-01').valueOf();
         }
       }
     });
+
+    if (reqFile) {
+      let csv = fs.readFileSync(reqFile, {encoding: 'utf8'});
+      const inRecs = parse(csv, {
+        columns: true,
+        skip_empty_lines: true,
+        delimiter: '\t',
+        bom: true
+      });
+
+      inRecs.forEach(r => {
+        console.log(r)
+      });
+    }
 
     const end = new Date().valueOf();
     const time = (end - start)/1000;
