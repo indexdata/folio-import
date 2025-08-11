@@ -21,7 +21,12 @@ const ns = '25515560-9d65-4fcf-bf95-2cb27984f3e3';
 const outFiles = {
   co: 'checkouts.jsonl',
   ia: 'inactive-checkouts.jsonl',
-  rq: 'requests.jsonl'
+  rq: 'requests.jsonl',
+};
+
+const spTran = {
+  RRLEX: 'SP-INFO',
+  RRSPE: 'SP-SPE'
 };
 
 (async () => {
@@ -46,6 +51,13 @@ const outFiles = {
     });
     // throw(spMap);
 
+    for (let k in spTran) {
+      let c = spTran[k];
+      spTran[k] = spMap[c];
+    }
+    // throw(spTran);
+
+
     // map users
     let fileStream = fs.createReadStream(usersFile);
     let rl = readline.createInterface({
@@ -60,7 +72,7 @@ const outFiles = {
         users[k] = { id: o.id, active: o.active, bc: o.barcode, ex: o.expirationDate || '' };
       }
     }
-    // throw(users.KB111141);
+    // throw(users.KB115469);
 
     // map items
     const items = {};
@@ -72,7 +84,7 @@ const outFiles = {
     for await (let line of rl) {
       let o = JSON.parse(line);
       let k = o.hrid;
-      items[k] = { bc: o.barcode, st: o.status.name };
+      items[k] = { bc: o.barcode, st: o.status.name, id: o.id };
     }
     // throw(items['001158172001030']);
     
@@ -81,9 +93,10 @@ const outFiles = {
       dstr = dstr.replace(/^(....)(..)(..)/, '$1-$2-$3');
       let dto = new Date(dstr)
       try {
-        let dzo = (dto.getTimezoneOffset() - 60)/60;
-	      if (dzo < 0) dzo = 6 + dzo
-        let pto = `-0${dzo}:00`;
+        // let dzo = (dto.getTimezoneOffset() - 60)/60;
+	      // if (dzo < 0) dzo = 6 + dzo
+        // let pto = `-0${dzo}:00`;
+        let pto = 'Z';
         dt = dto.toISOString();
         dt = (type === 'due') ? dt.replace(/T.+/, `T23:59:59.000${pto}`) : dt.replace(/T.+/, `T12:00:00.000${pto}`);
       } catch (e) {
@@ -105,6 +118,7 @@ const outFiles = {
       ibc: 0,
       req: 0,
       err: 0,
+      rerr: 0
     }
 
     let csv = fs.readFileSync(circFile, {encoding: 'utf8'});
@@ -136,6 +150,7 @@ const outFiles = {
         ttl.ina++;
         ttl.err++;
       } else {
+        item.st = 'Checked out';
         loan.itemBarcode = item.bc;
         loan.userBarcode = user.bc;
         let ld = r.Z36_LOAN_DATE;
@@ -171,20 +186,54 @@ const outFiles = {
       });
 
       inRecs.forEach(r => {
-        // console.log(r)
-        let key = r.Z37_REC_KEY;
-        let aid = r.Z37_ID;
-        let user = users[aid];
-        if (user) {
-          let id = uuid(r.Z37_REQUEST_NUMBER, ns);
-          let o = {
-            id: id
+        let key = r.Z37_REC_KEY.substring(0, 15);
+        let p = parseInt(r.Z37_REC_KEY.substring(15), 10);
+        let uid = r.Z37_ID.trim();
+        let user = users[uid];
+        let item = items[key];
+        if (item) {
+          if (user) {
+            let id = uuid(r.Z37_REQUEST_NUMBER, ns);
+            let hr = r.Z37_OPEN_HOUR.replace(/^(..)(..)/, 'T$1:$2:00');
+            let rdate = r.Z37_OPEN_DATE;
+            let rdateStr = parseDate(rdate);
+            let nt = r.Z37_NOTE_1;
+            let nt2 = r.Z37_NOTE_2;
+            let t = (item.st === 'Available') ? 'Page' : 'Hold';
+            let stat = (r.Z37_STATUS === 'S') ? 'Open - Awaiting pickup' : 'Open - Not yet filled';
+            let edate = r.Z37_END_REQUEST_DATE;
+            let hdate = r.Z37_END_HOLD_DATE;
+            let pul = r.Z37_PICKUP_LOCATION.trim();
+            let spId = spTran[pul];
+            let o = {
+              id: id,
+              requesterId: user.id,
+              itemId: item.id,
+              requestType: t,
+              requestDate: rdateStr,
+              status: stat,
+              position: p,
+              fulfillmentPreference: 'Hold Shelf'
+            }
+            let pc = (nt & nt2) ? `${nt}; ${nt2}` : nt;
+            if (pc) o.patronComments = pc;
+            if (edate && edate > rdate) o.requestExpirationDate = parseDate(edate);
+            if (hdate && hdate !== '0') o.holdShelfExpirationDate = parseDate(hdate);
+            if (spId) o.pickupServicePointId = spId;
+            if (spId) {
+              writeOut(outFiles.rq, o);
+              ttl.req++;
+            } else {
+              console.log(`ERROR Request pickup service point for "${pul}" not found!`);
+              ttl.rerr++;
+            }
+          } else {
+            console.log(`ERROR Request user not found with alephid "${aid}"!`);
+            ttl.rerr++;
           }
-          console.log(o);
-          writeOut(outFiles.rq, o);
-          ttl.req++;
         } else {
-          console.log(`ERROR No user found with alephid ${aid}`);
+          console.log(`ERROR Request item not found with HRID "${key}"!`);
+          ttl.rerr++;
         }
       });
     }
@@ -197,8 +246,9 @@ const outFiles = {
     console.log('Items not found:', ttl.inf);
     console.log('Items not available:', ttl.ina);
     console.log('Items with no barcode:', ttl.ibc);
+    console.log('Checkout errors:', ttl.err);
     console.log('Requests:', ttl.req);
-    console.log('Total errors:', ttl.err);
+    console.log('Request errors:', ttl.rerr);
     console.log('Time (sec):', time);
   } catch (e) {
     console.error(e);
