@@ -224,7 +224,6 @@ const spTran = {
               writeOut(outFiles.rq, o);
               ttl.req++;
               if (!user.active) {
-                console.log(user);
                 let o = {
                   userBarcode: user.bc,
                   expirationDate: user.ex
