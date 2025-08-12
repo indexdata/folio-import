@@ -32,7 +32,7 @@ const spTran = {
 (async () => {
   try {
     if (!circFile) {
-      throw('Usage: node nlsCheckouts.js <servicepoints_file> <users_jsonl_file> <items_jsonl_file> <z36_table> [ <z37_table> ]');
+      throw('Usage: node nlsCirc.js <servicepoints_file> <users_jsonl_file> <items_jsonl_file> <z36_table> [ <z37_table> ]');
     }
     let circDir = path.dirname(circFile);
     const start = new Date().valueOf();
