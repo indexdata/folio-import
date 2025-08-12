@@ -17,7 +17,8 @@ const mods = {
     users: 'users',
     'perms/users': 'perms/users',
     'request prefs': 'request-preference-storage/request-preference',
-    'patron groups': 'groups'
+    'patron groups': 'groups',
+    'notes': 'notes?query=domain==users'
   },
   auth: {
 	  authorities: 'authority-storage/authorities?limit=1',
