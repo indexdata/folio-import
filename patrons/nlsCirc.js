@@ -20,7 +20,7 @@ const ns = '25515560-9d65-4fcf-bf95-2cb27984f3e3';
 
 const outFiles = {
   co: 'checkouts.jsonl',
-  ia: 'inactive-checkouts.jsonl',
+  ia: 'inactive-users.jsonl',
   rq: 'requests.jsonl',
 };
 
@@ -72,7 +72,7 @@ const spTran = {
         users[k] = { id: o.id, active: o.active, bc: o.barcode, ex: o.expirationDate || '' };
       }
     }
-    // throw(users.KB115469);
+    // throw(users);
 
     // map items
     const items = {};
@@ -223,6 +223,15 @@ const spTran = {
             if (spId) {
               writeOut(outFiles.rq, o);
               ttl.req++;
+              if (!user.active) {
+                console.log(user);
+                let o = {
+                  userBarcode: user.bc,
+                  expirationDate: user.ex
+                }
+                writeOut(outFiles.ia, o);
+                ttl.ia++;
+              }
             } else {
               console.log(`ERROR Request pickup service point for "${pul}" not found!`);
               ttl.rerr++;
