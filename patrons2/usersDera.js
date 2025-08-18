@@ -106,7 +106,12 @@ try {
       let enDate = (f42) ? getSubs(f42[0], 'a') : '';
       let exDate = (f42) ? getSubs(f42[0], 'b') : '';
       let f100 = f['100'];
-      let name = (f100) ? getSubs(f100[0], 'a') : (f['110']) ? getSubs(f['110'][0], 'a') : '';
+      let ln = '';
+      let fn = '';
+      if (f100) {
+        ln = getSubs(f100[0], 'a');
+        fn = getSubs(f100[0], 'h');
+      }
       let lang = (f100) ? getSubs(f100[0], 'l') : '';
       let f271 = f['271'];
       let email = (f271) ? getSubs(f271[0], 'a') : '';
@@ -125,12 +130,8 @@ try {
         u.barcode = bc;
         u.externalSystemId = bc;
       }
-      if (name) {
-        let n = name.match(/^(.+?)(, (.+?)( (.+))?)?$/);
-        u.personal.lastName = n[1] || name;
-        if (n[3]) u.personal.firstName = n[3];
-        if (n[5]) u.personal.middleName = n[5];
-      }
+      if (ln) u.personal.lastName = ln;
+      if (fn) u.personal.firstName = fn;
       if (f270) {
         let ac = 0;
         f270.forEach(f => {
@@ -143,7 +144,13 @@ try {
             if (a.b) o.city = a.b;
             if (a.d) o.region = a.d;
             if (a.e) o.postalCode = a.e;
-            o.countryId = (a.f && a.f === 'USA') ? 'US' : 'IN';
+            if (a.f) {
+              if (a.f.match(/india/i)) {
+                o.countryId = 'IN';
+              } else if (a.f.match(/usa/i)) {
+                o.countryId = 'US';
+              }
+            }
             if (ac === 0) {
               o.addressTypeId = refData.addressTypes.home;
               o.primaryAddress = true;
