@@ -1,7 +1,7 @@
 {
     "nameSpace": "70a86ff4-8960-4b42-9191-4330be4c6e6c",
     "refDir": "/Users/charles/Folio/nls/ref-dev/inv",
-    "tsvDir": "",
+    "tsvDir": "/Users/charles/Folio/folio-import/etc/nls",
     "mapFile": "",
     "controlNum": "SYS",
     "hridPrefix": "",

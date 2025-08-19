@@ -207,7 +207,7 @@ try {
       }
     });
   }
-  // throw(JSON.stringify(tsvMap.loantypes, null, 2));
+  // throw(JSON.stringify(tsvMap, null, 2));
 
   console.log(`INFO Parsing instance map at ${mapFile}`);
   const instMap = {};
@@ -259,6 +259,7 @@ try {
   // throw(linkMap);
 
   let ttl = {
+    linesRead: 0,
     holdings: 0,
     items: 0,
     boundwiths: 0,
@@ -686,7 +687,9 @@ try {
   });
   fileStream.pipe(parser);
   parser.on('data', (rec) => {
+    ttl.linesRead++;
     makeHoldingsItems(rec);
+    if (ttl.linesRead % 100000 === 0) console.log('Z30 lines read:', ttl.linesRead);
   });
   parser.on('end', () => {
     if (!hasFilters) {
@@ -739,7 +742,7 @@ try {
                   holdingsNoteTypeId: refData.holdingsNoteTypes['Libris beståndsinformation'],
                   staffOnly: false
                 }],
-                discoverySuppress: true
+                discoverySuppress: false 
               }
               writeOut(outs.holdings, h);
               ttl.holdings++;
