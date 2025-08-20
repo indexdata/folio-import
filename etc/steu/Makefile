@@ -42,13 +42,15 @@ users: $(in)/users.csv
 	cd $(wd)/patrons; node steuUsers $(uref) $(udir)/users.csv > $(log)/makeUsers.log
 	cat $(log)/makeUsers.log
 
-XXXcheckouts: $(in)/check*xls
-	cp $(in)/check*xls $(cdir)/loans.xls
-	cd $(wd)/util/; node xlsx2csv.js $(cdir)/loans.xls
-	cd $(cdir); mv *books.csv loans.csv
+checkouts: $(in)/loans.csv
+	cp $(in)/loans.csv $(cdir)/loans.csv
 	cd $(wd); ./get_circ_requirements.sh $(cdir)
-	cd $(wd)/patrons; node deraCheckouts $(cdir)/loans.csv > $(log)/makeCheckouts.log
+	cd $(wd)/patrons; node steuCheckouts $(cdir)/loans.csv > $(log)/makeCheckouts.log
 	cat $(log)/makeCheckouts.log
+
+fines: $(cdir)/fines.csv
+	cd $(wd)/patrons; node steuFines $(cdir)/fines.csv > $(log)/makeFines.log
+	cat $(log)/makeFines.log
 
 setup:
 	cp $(login) $(wd)/config.json
