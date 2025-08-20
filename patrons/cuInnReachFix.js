@@ -19,7 +19,7 @@ const gmap = {
 };
 
 (async () => {
-    if (!ufile) throw ('Usage: cuInnReachFix.js <users_jsonl_file>');
+    if (!ufile) throw new Error('Usage: cuInnReachFix.js <users_jsonl_file>');
 
     let dir = path.dirname(ufile);
     let base = path.basename(ufile, '.jsonl');
