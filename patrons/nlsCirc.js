@@ -166,6 +166,7 @@ const spTran = {
         if (r.RENEWAL_COUNT) loan.renewalCount = parseInt(r.RENEWAL_COUNT, 10);
         if (user.ex) loan.expirationDate = user.ex;
         if (loan.servicePointId) {
+          if (dbug) loan.__ = r;
           writeOut(outFiles.co, loan);
           ttl.co++;
           if (!user.active) {
