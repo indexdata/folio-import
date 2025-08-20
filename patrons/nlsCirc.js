@@ -15,6 +15,7 @@ let usersFile = process.argv[3];
 let itemFile = process.argv[4];
 let circFile = process.argv[5];
 let reqFile = process.argv[6];
+let dbug = process.env.DEBUG;
 
 const ns = '25515560-9d65-4fcf-bf95-2cb27984f3e3';
 
@@ -26,6 +27,8 @@ const outFiles = {
 
 const spTran = {
   RRLEX: 'SP-INFO',
+  HEML: 'SP-INFO',
+  PRUMS: 'SP-INFO',
   RRSPE: 'SP-SPE'
 };
 
@@ -130,7 +133,7 @@ const spTran = {
     });
 
     inRecs.forEach(r => {
-      if (process.env.DEBUG) console.log(r);
+      // if (process.env.DEBUG) console.log(r);
       let loan = {};
       let lib = r.Z36_SUB_LIBRARY;
       let iid = r.Z36_REC_KEY;
@@ -213,7 +216,7 @@ const spTran = {
               requestDate: rdateStr,
               status: stat,
               position: p,
-              fulfillmentPreference: 'Hold Shelf'
+              fulfillmentPreference: 'Hold Shelf',
             }
             let pc = (nt & nt2) ? `${nt}; ${nt2}` : nt;
             if (pc) o.patronComments = pc;
@@ -221,6 +224,7 @@ const spTran = {
             if (hdate && hdate !== '0') o.holdShelfExpirationDate = parseDate(hdate);
             if (spId) o.pickupServicePointId = spId;
             if (spId) {
+              if (dbug) o.__ = r;
               writeOut(outFiles.rq, o);
               ttl.req++;
               if (!user.active) {

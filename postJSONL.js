@@ -82,7 +82,8 @@ const wait = (ms) => {
       x++;
       let rec = JSON.parse(line);
       if (rec._errMessage) delete rec._errMessage;
-      if (rec.__) delete rec.__;
+      let orec = JSON.parse(JSON.stringify(rec));
+      if (rec.__) { delete rec.__; };
       let lDate = new Date();
       if (config.expiry && config.expiry <= lDate.valueOf()) {
         config = await getAuthToken(superagent);
@@ -103,8 +104,8 @@ const wait = (ms) => {
       } catch (e) {
           let errMsg = (e.response && e.response.text && !debug) ? e.response.text : e;
           logger.error(errMsg);
-          rec._errMessage = errMsg;
-          let recStr = JSON.stringify(rec);
+          orec._errMessage = errMsg;
+          let recStr = JSON.stringify(orec);
           fs.writeFileSync(errPath, recStr + '\n', { flag: 'a'});
           fail++;
       }
