@@ -27,7 +27,10 @@ try {
       leftOvers = '';
     }
     recs.forEach(r => {
-      let m = parseMarc(r);
+      count++;
+      let m = parseMarc(r, true);
+      console.log(m.text + '\n');
+      /*
       let ldr = m.fields.leader;
       delete m.fields.leader;
       let l = ldr + '\n';
@@ -50,13 +53,14 @@ try {
           console.log(l);
         });
       });
+      */
     });
   });
   fileStream.on('close', () => {
     let now = new Date().valueOf();
     let t = (now - start) / 1000;
-    console.log('--------------------');
-    console.log('Records processed', count, `${t} secs.`);
+    console.warn('--------------------');
+    console.warn('Records processed', count, `${t} secs.`);
   });
 } catch (e) {
   console.log(e);

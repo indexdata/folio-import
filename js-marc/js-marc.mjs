@@ -3,16 +3,16 @@ import { Buffer } from 'node:buffer';
 /**
  * Parse raw a MARC record into JSON
  * @param {binary} raw
- * @returns {Object} a record object with "mij" and "fields" properties
+ * @param {boolean} txt
+ * @returns {Object} a record object with "mij", "fields" objects and optional text rendering
  */
-export function parseMarc(raw) {
+export function parseMarc(raw, txt) {
   try {
     let record = {};
     let leader = raw.substring(0, 24);
     let dirEnd = parseInt(leader.substring(12, 17), 10);
     let dir = raw.substring(24, dirEnd);
     let dirParts = dir.match(/.{12}/g);
-    let tags = {};
     let mij = {
       leader: leader,
       fields: [],
@@ -20,6 +20,7 @@ export function parseMarc(raw) {
     let fields = {
       leader: leader,
     };
+    let lines = (txt) ? [ leader ] : [];
     let buf = Buffer.from(raw);
     dirParts.forEach(d => {
       let p = d.match(/^(.{3})(.{4})(.{5})/);
@@ -36,21 +37,33 @@ export function parseMarc(raw) {
         let subs = data.split(/\x1F/);
         subs.shift();
         obj.subfields = [];
+        let sparts = (txt) ? [ `${tag} ${obj.ind1}${obj.ind2}`] : [];
         subs.forEach(s => {
           let code = s.substring(0, 1);
           let data = s.substring(1);
           if (code) obj.subfields.push({ [code]: data });
+          if (txt) {
+            sparts.push(`${code} ${data}`);
+          }
         });
         mij.fields.push({ [tag]: obj });
         fields[tag].push(obj);
+        if (txt) {
+          lines.push(sparts.join(' '));
+        }
+
       } else {
         mij.fields.push({ [tag]: data });
         fields[tag].push(data);
+        if (txt) {
+          lines.push(`${tag} ${data}`);
+        }
       }
     });
     record = {
       mij: mij,
       fields: fields,
+      text: lines.join('\n'),
       deleteField: (tag, occurance) => {
         if (fields[tag]) {
           fields[tag].splice(occurance, 1);
@@ -83,6 +96,7 @@ export function parseMarc(raw) {
         }
       }
     };
+    
     return record;
   } catch(e) {
     throw new Error(e);
