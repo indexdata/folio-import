@@ -209,6 +209,9 @@ const spTran = {
             let hdate = r.Z37_END_HOLD_DATE;
             let pul = r.Z37_PICKUP_LOCATION.trim();
             let spId = spTran[pul];
+            let fps = r.Z37_FILTER_PROCESS_STATUS;
+            if (fps === 'DB') spId = spMap['SP-REPRO'];
+            if (fps === 'LA') spId = spMap['SP-BE'];
             let o = {
               id: id,
               requesterId: user.id,
@@ -237,7 +240,7 @@ const spTran = {
                 ttl.ia++;
               }
             } else {
-              console.log(`ERROR Request pickup service point for "${pul}" not found!`);
+              console.log(`ERROR Request pickup service point for "${pul}:${fps}" not found!`);
               ttl.rerr++;
             }
           } else {

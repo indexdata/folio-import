@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 pd=/Users/charles/Folio/nls
-node nlsCirc $pd/ref-dev/inv/service-points.json $pd/circ/users.jsonl $pd/circ/items.jsonl $pd/circ/z36.dsv $pd/circ/z37.dsv
+DEBUG=1 node nlsCirc $pd/ref-dev/inv/service-points.json $pd/circ/users.jsonl $pd/circ/items.jsonl $pd/circ/z36.dsv $pd/circ/z37.dsv
