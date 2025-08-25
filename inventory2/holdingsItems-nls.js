@@ -9,7 +9,7 @@ let mapFile = process.argv[3];
 let args = process.argv.slice(4);
 let filters = {};
 let hasFilters = false;
-let shortCol = { l: 'Z30_SUB_LIBRARY', s: 'Z30_ITEM_STATUS', p: 'Z30_ITEM_PROCESS_STATUS' };
+let shortCol = { l: 'Z30_SUB_LIBRARY', s: 'Z30_ITEM_STATUS', p: 'Z30_ITEM_PROCESS_STATUS', m: 'Z30_MATERIAL' };
 args.forEach(a => {
   if (a.match(/^--Z30_/)) {
     a = a.replace(/^--/, '');
@@ -111,7 +111,7 @@ const makeHoldingsNote = function (text, type, staffOnly) {
 }
 
 try {
-  if (!mapFile) { throw "Usage: node holdingsItems-stc.js <conf_file> <instance_map_file> [filters: --Z30_WHATEVER=whatever | -l=<sublibrary>, -s=<status>, -p=<process_status> ]" }
+  if (!mapFile) { throw "Usage: node holdingsItems-stc.js <conf_file> <instance_map_file> [filters: --Z30_WHATEVER=whatever | -l=<sublibrary>, -s=<status>, -p=<process_status> -m=<material>]" }
   let confDir = path.dirname(confFile);
   let confData = fs.readFileSync(confFile, { encoding: 'utf8' });
   let conf = JSON.parse(confData);
@@ -186,7 +186,7 @@ try {
             if (c[1] === 'all') c[1] = '';
             k += `:${c[1]}:${c[2]}:${c[3]}:${c[4]}`;
             k = k.replace(/:+$/, '');
-            v = c[7].toLowerCase().trim();
+            v = c[8].toLowerCase().trim();
           } else if (k && prop === 'loantypes') {
             let cb = (c[1] && c[1].match(/\w/)) ? c[1].padStart(2, '0') : '_';
             let cc = c[2] || '_';
@@ -207,7 +207,7 @@ try {
       }
     });
   }
-  // throw(JSON.stringify(tsvMap, null, 2));
+  // throw(JSON.stringify(tsvMap.locations, null, 2));
 
   console.log(`INFO Parsing instance map at ${mapFile}`);
   const instMap = {};
@@ -318,7 +318,7 @@ try {
     } else if (loc === 'RRLEX' && st === '02' && ips === 'SN') {
       locId = refData.locations['loc-hem'];
     } else if (loc.match(/^(RRLEX|RRSPE)/) && st === '72') {
-      locId = refData.locations['loc-ts'];
+      locId = (mt === 'BOOK') ? refData.locations['loc-des'] : refData.locations['loc-ts'];
     } else if (loc === 'REF' && st === '72') {
       locId = refData.locations['loc-ref']
     } else {
@@ -359,9 +359,11 @@ try {
             if (!adminNotes[locId]) adminNotes[locId] = [];
             adminNotes[locId].push(str);
         }
+        /*
         if (f.z) {
           inotes.push(f.z);
         }
+        */
       });
 
       if (!hseen[hkey]) {
@@ -380,6 +382,7 @@ try {
           holdingsTypeId: htypeId,
           notes: []
         }
+        if (dbug) h.__ = r;
         /*
         if (cn) { 
           h.callNumber = cn;
@@ -742,7 +745,7 @@ try {
                   holdingsNoteTypeId: refData.holdingsNoteTypes['Libris beståndsinformation'],
                   staffOnly: false
                 }],
-                discoverySuppress: false 
+                discoverySuppress: true 
               }
               writeOut(outs.holdings, h);
               ttl.holdings++;
