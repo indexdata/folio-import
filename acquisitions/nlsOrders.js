@@ -387,6 +387,8 @@ const parseInst = (pol, inst) => {
       if (oo) {
         let fmt = oo.Format;
         if (fmt === 'Online') pol.orderFormat = 'Electronic Resource';
+        let vn = oo['POL Vendor reference number'];
+        if (vn) pol.vendorDetail = { vendorAccount: vn };
       }
 
       if (pol.orderFormat === 'Physical Resource') {
