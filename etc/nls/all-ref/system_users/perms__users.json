@@ -115,7 +115,10 @@
         "users.collection.get",
         "users.item.get",
         "voucher.voucher-lines.collection.get",
-        "voucher.vouchers.collection.get"
+        "voucher.vouchers.collection.get",
+        "finance.budgets.collection.get",
+        "source-storage.records.collection.get",
+        "finance.groups.collection.get"
       ],
       "metadata": {
         "createdDate": "2025-04-17T13:29:11.849+00:00",

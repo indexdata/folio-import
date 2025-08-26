@@ -35,7 +35,20 @@
         "updatedDate": "2025-07-02T09:23:50.054289Z",
         "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
       }
+    },
+    {
+      "id": "11450eee-58da-442c-8e07-9cd88cbbba34",
+      "name": "Mottagning",
+      "usage": {
+        "isAssigned": true
+      },
+      "metadata": {
+        "createdDate": "2025-07-24T06:52:46.812593Z",
+        "createdByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d",
+        "updatedDate": "2025-07-24T06:52:46.812593Z",
+        "updatedByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d"
+      }
     }
   ],
-  "totalRecords": 3
+  "totalRecords": 4
 }

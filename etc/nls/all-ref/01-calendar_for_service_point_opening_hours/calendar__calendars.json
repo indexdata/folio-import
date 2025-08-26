@@ -20,16 +20,10 @@
       ],
       "normalHours": [
         {
-          "startDay": "FRIDAY",
+          "startDay": "THURSDAY",
           "startTime": "09:00:00",
-          "endDay": "FRIDAY",
-          "endTime": "17:00:00"
-        },
-        {
-          "startDay": "SATURDAY",
-          "startTime": "11:00:00",
-          "endDay": "SATURDAY",
-          "endTime": "15:00:00"
+          "endDay": "THURSDAY",
+          "endTime": "19:00:00"
         },
         {
           "startDay": "MONDAY",
@@ -38,22 +32,28 @@
           "endTime": "19:00:00"
         },
         {
+          "startDay": "TUESDAY",
+          "startTime": "09:00:00",
+          "endDay": "TUESDAY",
+          "endTime": "19:00:00"
+        },
+        {
+          "startDay": "SATURDAY",
+          "startTime": "11:00:00",
+          "endDay": "SATURDAY",
+          "endTime": "15:00:00"
+        },
+        {
           "startDay": "WEDNESDAY",
           "startTime": "09:00:00",
           "endDay": "WEDNESDAY",
           "endTime": "19:00:00"
         },
         {
-          "startDay": "THURSDAY",
+          "startDay": "FRIDAY",
           "startTime": "09:00:00",
-          "endDay": "THURSDAY",
-          "endTime": "19:00:00"
-        },
-        {
-          "startDay": "TUESDAY",
-          "startTime": "09:00:00",
-          "endDay": "TUESDAY",
-          "endTime": "19:00:00"
+          "endDay": "FRIDAY",
+          "endTime": "17:00:00"
         }
       ],
       "exceptions": [],

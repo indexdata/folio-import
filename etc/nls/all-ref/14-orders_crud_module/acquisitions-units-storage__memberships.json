@@ -1,6 +1,17 @@
 {
   "acquisitionsUnitMemberships": [
     {
+      "id": "2b667fab-8294-491c-8732-e6de4f713642",
+      "userId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487",
+      "acquisitionsUnitId": "0ebb1f7d-983f-3026-8a4c-5318e0ebc041",
+      "metadata": {
+        "createdDate": "2025-07-30T18:55:50.129+00:00",
+        "createdByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487",
+        "updatedDate": "2025-07-30T18:55:50.129+00:00",
+        "updatedByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487"
+      }
+    },
+    {
       "id": "795cadba-cb9b-4d10-81a7-e879c0ca46bc",
       "userId": "87497b7b-344c-5fbb-9131-d108b36c767c",
       "acquisitionsUnitId": "0ebb1f7d-983f-3026-8a4c-5318e0ebc041",
@@ -10,7 +21,18 @@
         "updatedDate": "2023-11-21T13:52:17.158+00:00",
         "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
+    },
+    {
+      "id": "570cb393-4756-491b-b4f1-ffe84d643197",
+      "userId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487",
+      "acquisitionsUnitId": "72efc78c-4402-4b4f-bacd-dd9c0fef6539",
+      "metadata": {
+        "createdDate": "2025-07-30T18:56:04.583+00:00",
+        "createdByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487",
+        "updatedDate": "2025-07-30T18:56:04.583+00:00",
+        "updatedByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487"
+      }
     }
   ],
-  "totalRecords": 1
+  "totalRecords": 3
 }
