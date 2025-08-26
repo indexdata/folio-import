@@ -315,6 +315,79 @@
       }
     },
     {
+      "id": "cd000610-4805-424b-9bdd-da00d4936919",
+      "name": "EDI",
+      "description": "",
+      "dataType": "EDIFACT",
+      "userInfo": {
+        "firstName": "KB",
+        "lastName": "ADMIN",
+        "userName": "kbadmin"
+      },
+      "parentProfiles": [],
+      "childProfiles": [],
+      "hidden": false,
+      "metadata": {
+        "createdDate": "2023-11-24T10:23:18.492+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-11-24T10:23:18.492+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "fa0262c7-5816-48d0-b9b3-7b7a862a5bc7",
+      "name": "quickMARC - Create Holdings and SRS MARC Holdings",
+      "description": "This job profile is used by the quickMARC to allow a user to create a new SRS MARC holdings record and corresponding Inventory holdings. Profile cannot be edited or deleted",
+      "dataType": "MARC",
+      "tags": {
+        "tagList": []
+      },
+      "userInfo": {
+        "firstName": "System",
+        "lastName": "System",
+        "userName": "System"
+      },
+      "parentProfiles": [],
+      "childProfiles": [
+        {
+          "id": "f5feddba-f892-4fad-b702-e4e77f04f9a3",
+          "profileWrapperId": "b07abb56-5855-4868-a380-ec2e5522c0ae",
+          "contentType": "ACTION_PROFILE",
+          "content": {
+            "id": "f5feddba-f892-4fad-b702-e4e77f04f9a3",
+            "name": "quickMARC Derive - Create Inventory Holdings",
+            "description": "This action profile is used with FOLIO's default job profile for creating Inventory Holdings and SRS MARC Holdings records. It cannot be edited or deleted.",
+            "action": "CREATE",
+            "folioRecord": "HOLDINGS",
+            "userInfo": {
+              "firstName": "System",
+              "lastName": "System",
+              "userName": "System"
+            },
+            "parentProfiles": [],
+            "childProfiles": [],
+            "hidden": false,
+            "remove9Subfields": false,
+            "metadata": {
+              "createdDate": 1628172000000,
+              "createdByUserId": "00000000-0000-0000-0000-000000000000",
+              "updatedDate": 1628175600462,
+              "updatedByUserId": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "order": 0,
+          "childSnapshotWrappers": []
+        }
+      ],
+      "hidden": false,
+      "metadata": {
+        "createdDate": "2021-03-16T15:00:00.000+00:00",
+        "createdByUserId": "00000000-0000-0000-0000-000000000000",
+        "updatedDate": "2021-03-16T15:00:00.000+00:00",
+        "updatedByUserId": "00000000-0000-0000-0000-000000000000"
+      }
+    },
+    {
       "id": "d0ebb7b0-2f0f-11eb-adc1-0242ac120002",
       "name": "Inventory Single Record - Default Create Instance",
       "description": "Triggered by an action in Inventory, this job profile imports a single record from an external system, to create an Instance and MARC record",
@@ -369,26 +442,6 @@
         "updatedDate": "2020-11-24T12:00:00.000+00:00",
         "updatedByUserId": "00000000-0000-0000-0000-000000000000",
         "updatedByUsername": "System"
-      }
-    },
-    {
-      "id": "cd000610-4805-424b-9bdd-da00d4936919",
-      "name": "EDI",
-      "description": "",
-      "dataType": "EDIFACT",
-      "userInfo": {
-        "firstName": "KB",
-        "lastName": "ADMIN",
-        "userName": "kbadmin"
-      },
-      "parentProfiles": [],
-      "childProfiles": [],
-      "hidden": false,
-      "metadata": {
-        "createdDate": "2023-11-24T10:23:18.492+00:00",
-        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
-        "updatedDate": "2023-11-24T10:23:18.492+00:00",
-        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
     },
     {
@@ -545,59 +598,6 @@
         "createdByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575",
         "updatedDate": "2020-11-30T09:09:10.382+00:00",
         "updatedByUserId": "6a010e5b-5421-5b1c-9b52-568b37038575"
-      }
-    },
-    {
-      "id": "fa0262c7-5816-48d0-b9b3-7b7a862a5bc7",
-      "name": "quickMARC - Create Holdings and SRS MARC Holdings",
-      "description": "This job profile is used by the quickMARC to allow a user to create a new SRS MARC holdings record and corresponding Inventory holdings. Profile cannot be edited or deleted",
-      "dataType": "MARC",
-      "tags": {
-        "tagList": []
-      },
-      "userInfo": {
-        "firstName": "System",
-        "lastName": "System",
-        "userName": "System"
-      },
-      "parentProfiles": [],
-      "childProfiles": [
-        {
-          "id": "f5feddba-f892-4fad-b702-e4e77f04f9a3",
-          "profileWrapperId": "b07abb56-5855-4868-a380-ec2e5522c0ae",
-          "contentType": "ACTION_PROFILE",
-          "content": {
-            "id": "f5feddba-f892-4fad-b702-e4e77f04f9a3",
-            "name": "quickMARC Derive - Create Inventory Holdings",
-            "description": "This action profile is used with FOLIO's default job profile for creating Inventory Holdings and SRS MARC Holdings records. It cannot be edited or deleted.",
-            "action": "CREATE",
-            "folioRecord": "HOLDINGS",
-            "userInfo": {
-              "firstName": "System",
-              "lastName": "System",
-              "userName": "System"
-            },
-            "parentProfiles": [],
-            "childProfiles": [],
-            "hidden": false,
-            "remove9Subfields": false,
-            "metadata": {
-              "createdDate": 1628172000000,
-              "createdByUserId": "00000000-0000-0000-0000-000000000000",
-              "updatedDate": 1628175600462,
-              "updatedByUserId": "00000000-0000-0000-0000-000000000000"
-            }
-          },
-          "order": 0,
-          "childSnapshotWrappers": []
-        }
-      ],
-      "hidden": false,
-      "metadata": {
-        "createdDate": "2021-03-16T15:00:00.000+00:00",
-        "createdByUserId": "00000000-0000-0000-0000-000000000000",
-        "updatedDate": "2021-03-16T15:00:00.000+00:00",
-        "updatedByUserId": "00000000-0000-0000-0000-000000000000"
       }
     }
   ],

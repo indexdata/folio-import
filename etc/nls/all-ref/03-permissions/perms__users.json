@@ -8883,71 +8883,6 @@
       }
     },
     {
-      "id": "edd5e083-7053-43bb-ab8c-34d5a37d569a",
-      "userId": "1235f815-585a-4793-ac33-92c604859b46",
-      "permissions": [
-        "acquisitions-units.units.collection.get",
-        "addresstypes.collection.get",
-        "organizations-storage.categories.collection.get",
-        "circulation.loans.collection.get",
-        "circulation-storage.loan-policies.collection.get",
-        "configuration.entries.collection.get",
-        "departments.collection.get",
-        "finance.expense-classes.collection.get",
-        "finance.exchange-rate.item.get",
-        "finance.fiscal-years.collection.get",
-        "finance.funds.collection.get",
-        "fqm.entityTypes.item.get",
-        "fqm.entityTypes.collection.get",
-        "fqm.entityTypes.item.columnValues.get",
-        "fqm.version.get",
-        "fqm.query.privileged.async.results.post",
-        "fqm.query.async.results.post",
-        "fqm.query.async.results.query.get",
-        "fqm.query.async.results.get",
-        "fqm.query.async.results.sortedids.get",
-        "fqm.migrate.post",
-        "finance.fund-types.collection.get",
-        "inventory-storage.call-number-types.collection.get",
-        "inventory-storage.classification-types.collection.get",
-        "inventory-storage.contributor-name-types.collection.get",
-        "inventory-storage.contributor-types.collection.get",
-        "inventory-storage.instance-formats.collection.get",
-        "inventory-storage.holdings.item.get",
-        "inventory-storage.instances.item.get",
-        "inventory-storage.instance-types.item.get",
-        "inventory-storage.items.item.get",
-        "inventory-storage.instance-statuses.collection.get",
-        "inventory-storage.instance-types.collection.get",
-        "inventory-storage.instance-date-types.collection.get",
-        "inventory-storage.material-types.collection.get",
-        "inventory-storage.modes-of-issuance.collection.get",
-        "inventory-storage.service-points.collection.get",
-        "inventory-storage.statistical-code-types.collection.get",
-        "inventory-storage.statistical-codes.collection.get",
-        "inventory-storage.location-units.libraries.collection.get",
-        "inventory-storage.locations.collection.get",
-        "ui-inventory.all-permissions.TEMPORARY",
-        "invoice.invoices.collection.get",
-        "invoice.invoice-lines.collection.get",
-        "finance.ledgers.collection.get",
-        "orders.item.get",
-        "orders.po-lines.item.get",
-        "organizations-storage.organization-types.collection.get",
-        "organizations.organizations.collection.get",
-        "usergroups.collection.get",
-        "users.collection.get",
-        "users.item.get",
-        "voucher.voucher-lines.collection.get",
-        "voucher.vouchers.collection.get"
-      ],
-      "metadata": {
-        "createdDate": "2025-04-17T13:29:11.849+00:00",
-        "updatedDate": "2025-05-28T16:49:42.432+00:00",
-        "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
-      }
-    },
-    {
       "id": "0a8aeb36-4b80-4d50-93d5-50cd7c6be0ec",
       "userId": "909f67e3-f8df-49e1-af38-77789837b243",
       "permissions": [
@@ -9776,19 +9711,6 @@
       }
     },
     {
-      "id": "0bac5bb6-79ce-4a49-b4bc-62441b0ab77b",
-      "userId": "31a8ae6e-5463-43a3-bc91-20f7fc2566f6",
-      "permissions": [
-        "b2860950-9528-4966-8e34-bc16873cbae1"
-      ],
-      "metadata": {
-        "createdDate": "2025-04-14T14:26:35.945+00:00",
-        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
-        "updatedDate": "2025-04-14T14:27:00.057+00:00",
-        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
-      }
-    },
-    {
       "id": "50811f50-1b0f-4bc5-9a18-f434b1d56478",
       "userId": "43bc6a56-a14e-4cf2-9d8f-a0a77f3e8761",
       "permissions": [],
@@ -10365,6 +10287,30 @@
       }
     },
     {
+      "id": "0bac5bb6-79ce-4a49-b4bc-62441b0ab77b",
+      "userId": "31a8ae6e-5463-43a3-bc91-20f7fc2566f6",
+      "permissions": [
+        "b2860950-9528-4966-8e34-bc16873cbae1"
+      ],
+      "metadata": {
+        "createdDate": "2025-04-14T14:26:35.945+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2025-07-25T20:21:21.568+00:00",
+        "updatedByUserId": "31a8ae6e-5463-43a3-bc91-20f7fc2566f6"
+      }
+    },
+    {
+      "id": "d2641ffb-9eef-505d-afda-69adfe1a5756",
+      "userId": "8794a9ff-870c-5afa-b46e-8ac10c8220d5",
+      "permissions": [],
+      "metadata": {
+        "createdDate": "2025-03-17T14:37:31.860+00:00",
+        "createdByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487",
+        "updatedDate": "2025-08-20T11:34:39.024+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
       "id": "d49f13e4-3d67-4552-bfd5-185ea35a1b90",
       "userId": "c47fa0cd-22c6-4a2f-aa65-fc4dbe22ae3b",
       "permissions": [
@@ -10396,17 +10342,6 @@
         "createdDate": "2025-03-17T14:37:31.837+00:00",
         "createdByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487",
         "updatedDate": "2025-03-17T14:37:31.837+00:00",
-        "updatedByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487"
-      }
-    },
-    {
-      "id": "d2641ffb-9eef-505d-afda-69adfe1a5756",
-      "userId": "8794a9ff-870c-5afa-b46e-8ac10c8220d5",
-      "permissions": [],
-      "metadata": {
-        "createdDate": "2025-03-17T14:37:31.860+00:00",
-        "createdByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487",
-        "updatedDate": "2025-03-17T14:37:31.860+00:00",
         "updatedByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487"
       }
     },
@@ -17549,6 +17484,129 @@
       }
     },
     {
+      "id": "b62cbcb5-65fd-481f-83db-d610f00de0f2",
+      "userId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487",
+      "permissions": [
+        "source-storage.snapshots.get",
+        "SYS#mod-orders-12.8.10#/orders/composite-orders#[POST]",
+        "orders-storage.module.all",
+        "b2860950-9528-4966-8e34-bc16873cbae1",
+        "circulation.all",
+        "circulation.requests.item.delete",
+        "circulation-storage.all",
+        "inventory-storage.preceding-succeeding-titles.item.post",
+        "inventory-storage.instances.batch.post",
+        "inventory-storage.instances.collection.delete",
+        "inventory-storage.preceding-succeeding-titles.collection.get",
+        "inventory-storage.all",
+        "orders.all",
+        "orders.item.post",
+        "orders.po-lines.item.post",
+        "ui-orders.order.approve",
+        "ui-orders.acq.unit.assignment.assign",
+        "ui-orders.orders.create",
+        "ui-orders.orders.delete",
+        "ui-orders.orders.edit",
+        "ui-orders.orders.view",
+        "ui-orders.order-lines.cancel",
+        "ui-orders.order.cancel",
+        "ui-orders.order.exportCSV",
+        "ui-orders.acq.unit.assignment.manage",
+        "ui-orders.order.reopen",
+        "ui-orders.order.showHidden",
+        "ui-orders.order.unopen",
+        "ui-orders.order.updateEncumbrances",
+        "organizations-storage.organizations.all",
+        "ui-orders.settings.custom-fields.delete",
+        "ui-orders.settings.custom-fields.edit",
+        "ui-orders.settings.view",
+        "ui-orders.settings.all",
+        "ui-orders.settings.custom-fields.view",
+        "ui-orders.settings.order-templates.view",
+        "ui-orders.settings.order-templates.edit",
+        "ui-orders.settings.order-templates.create",
+        "ui-orders.settings.order-templates.delete",
+        "source-storage.records.post",
+        "source-storage.snapshots.post",
+        "source-storage.snapshots.delete",
+        "users.all"
+      ],
+      "metadata": {
+        "createdDate": "2024-12-16T14:13:53.491+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2025-08-12T19:57:35.621+00:00",
+        "updatedByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487"
+      }
+    },
+    {
+      "id": "edd5e083-7053-43bb-ab8c-34d5a37d569a",
+      "userId": "1235f815-585a-4793-ac33-92c604859b46",
+      "permissions": [
+        "acquisitions-units.units.collection.get",
+        "addresstypes.collection.get",
+        "organizations-storage.categories.collection.get",
+        "circulation.loans.collection.get",
+        "circulation-storage.loan-policies.collection.get",
+        "configuration.entries.collection.get",
+        "departments.collection.get",
+        "finance.expense-classes.collection.get",
+        "finance.exchange-rate.item.get",
+        "finance.fiscal-years.collection.get",
+        "finance.funds.collection.get",
+        "fqm.entityTypes.item.get",
+        "fqm.entityTypes.collection.get",
+        "fqm.entityTypes.item.columnValues.get",
+        "fqm.version.get",
+        "fqm.query.privileged.async.results.post",
+        "fqm.query.async.results.post",
+        "fqm.query.async.results.query.get",
+        "fqm.query.async.results.get",
+        "fqm.query.async.results.sortedids.get",
+        "fqm.migrate.post",
+        "finance.fund-types.collection.get",
+        "inventory-storage.call-number-types.collection.get",
+        "inventory-storage.classification-types.collection.get",
+        "inventory-storage.contributor-name-types.collection.get",
+        "inventory-storage.contributor-types.collection.get",
+        "inventory-storage.instance-formats.collection.get",
+        "inventory-storage.holdings.item.get",
+        "inventory-storage.instances.item.get",
+        "inventory-storage.instance-types.item.get",
+        "inventory-storage.items.item.get",
+        "inventory-storage.instance-statuses.collection.get",
+        "inventory-storage.instance-types.collection.get",
+        "inventory-storage.instance-date-types.collection.get",
+        "inventory-storage.material-types.collection.get",
+        "inventory-storage.modes-of-issuance.collection.get",
+        "inventory-storage.service-points.collection.get",
+        "inventory-storage.statistical-code-types.collection.get",
+        "inventory-storage.statistical-codes.collection.get",
+        "inventory-storage.location-units.libraries.collection.get",
+        "inventory-storage.locations.collection.get",
+        "ui-inventory.all-permissions.TEMPORARY",
+        "invoice.invoices.collection.get",
+        "invoice.invoice-lines.collection.get",
+        "finance.ledgers.collection.get",
+        "orders.item.get",
+        "orders.po-lines.item.get",
+        "organizations-storage.organization-types.collection.get",
+        "organizations.organizations.collection.get",
+        "usergroups.collection.get",
+        "users.collection.get",
+        "users.item.get",
+        "voucher.voucher-lines.collection.get",
+        "voucher.vouchers.collection.get",
+        "finance.budgets.collection.get",
+        "source-storage.records.collection.get",
+        "finance.groups.collection.get"
+      ],
+      "metadata": {
+        "createdDate": "2025-04-17T13:29:11.849+00:00",
+        "updatedDate": "2025-05-28T16:49:42.432+00:00",
+        "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+      }
+    },
+    {
       "id": "37f70137-e477-4fc6-973b-c9ffee667c1c",
       "userId": "f80e228e-9908-4c93-b9fc-e8e467b641ef",
       "permissions": [
@@ -18283,32 +18341,6 @@
         "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
         "updatedDate": "2025-01-17T07:56:47.262+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
-      "id": "b62cbcb5-65fd-481f-83db-d610f00de0f2",
-      "userId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487",
-      "permissions": [
-        "orders-storage.module.all",
-        "organizations-storage.organizations.all",
-        "circulation-storage.all",
-        "users.all",
-        "inventory-storage.all",
-        "source-storage.snapshots.post",
-        "source-storage.records.post",
-        "inventory-storage.instances.collection.delete",
-        "source-storage.snapshots.get",
-        "source-storage.snapshots.delete",
-        "inventory-storage.preceding-succeeding-titles.item.post",
-        "inventory-storage.preceding-succeeding-titles.collection.get",
-        "inventory-storage.instances.batch.post",
-        "b2860950-9528-4966-8e34-bc16873cbae1"
-      ],
-      "metadata": {
-        "createdDate": "2024-12-16T14:13:53.491+00:00",
-        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
-        "updatedDate": "2025-07-22T19:40:34.474+00:00",
-        "updatedByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487"
       }
     },
     {

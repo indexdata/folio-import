@@ -1,6 +1,17 @@
 {
   "mtypes": [
     {
+      "id": "6f57adcb-862e-4b6a-b1c1-ab9470b079ee",
+      "name": "Häfte/Volym Standing order",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-07-30T18:29:22.212+00:00",
+        "createdByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487",
+        "updatedDate": "2025-07-30T18:29:22.212+00:00",
+        "updatedByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487"
+      }
+    },
+    {
       "id": "51520bb0-5748-4b00-94e4-9a5c2b708451",
       "name": "Bunden volym",
       "source": "local",
@@ -191,5 +202,5 @@
       }
     }
   ],
-  "totalRecords": 18
+  "totalRecords": 19
 }
