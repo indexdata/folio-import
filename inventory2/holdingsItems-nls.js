@@ -701,7 +701,7 @@ try {
         if (inst.af) {
           let af  = JSON.parse(inst.af);
           let f = af['852'] || [];
-          let o = 0;
+          let o = occ[bhrid] || 0;
           f.forEach(s => {
             o++;
             let ostr = o.toString().padStart(3, 0);
