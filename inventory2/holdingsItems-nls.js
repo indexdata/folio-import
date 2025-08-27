@@ -326,7 +326,6 @@ try {
     }
     
     if (inst) {
-      delete instMap[bid];
       let hkey = bid + ':' + locId;
       if ((loc === 'ENHET' && st === '73') || (loc === 'RRLEX' && (st === '31' || st === '32')) || cn === 'AVM') {
         if (!suppMap[bid]) {
@@ -675,6 +674,7 @@ try {
           ttl.itemErrors++;
         }
       }
+      
     } else {
       // console.log(`ERROR instance not found for ${r.Z30_REC_KEY}!`);
     }
@@ -692,7 +692,7 @@ try {
   parser.on('data', (rec) => {
     ttl.linesRead++;
     makeHoldingsItems(rec);
-    if (ttl.linesRead % 100000 === 0) console.log('Z30 lines read:', ttl.linesRead);
+    if (ttl.linesRead % 100000 === 0) console.log(`(Z30 lines read: ${ttl.linesRead})`);
   });
   parser.on('end', () => {
     if (!hasFilters) {
