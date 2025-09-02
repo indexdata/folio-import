@@ -27,15 +27,15 @@ inventory: $(in)/*Bibs*out
 	cd $(inv2); node marc2inst-dera $(conf) $(mfile) > $(log)/makeInst.log &
 	tail -f $(log)/makeInst.log
 
-authorities: $(in)/*Auth*out
-	cd $(adir); rm -r auth.raw; ln -s $(in)/*Auth*out auth.raw
+authorities: $(in)/*Auth*
+	cd $(adir); rm -r auth.raw; ln -s $(in)/*Auth* auth.raw
 	yaz-marcdump -f marc8 -t utf8 -l 9=97 -o marc $(adir)/auth.raw > $(adir)/auth.mrc
 	cd $(wd)/auth; ./marc2auth010.pl $(wd)/mapping_rules/marc_authority_rules.json $(iref) $(adir)/auth.mrc > $(log)/makeAuth.log &
 	tail -f $(log)/makeAuth.log
 
 split-authorities: $(adir)/auth-authorities.jsonl
-	cd $(adir); split -l 25000 auth-authorities.jsonl aa
-	cd $(adir); split -l 25000 auth-srs.jsonl as
+	cd $(adir); split -l 10000 auth-authorities.jsonl aa
+	cd $(adir); split -l 10000 auth-srs.jsonl as
 
 users: $(in)/*Patrons*out
 	cd $(udir); rm -r users.raw; ln -s $(in)/*Patrons*out users.raw
