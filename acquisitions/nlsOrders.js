@@ -144,8 +144,8 @@ const parseInst = (pol, inst) => {
         lines.forEach(l => {
           if (f === 'z16') {
             let id = l.Z16_REC_KEY;
-            let k = id.substring(0, 14);
-            let o = id.substring(14, 17);
+            let k = id.substring(0, 13);
+            let o = id.substring(13, 17);
             if (!dx[k] || o > dx[k]) {
               if (!d[f][k]) d[f][k] = {};
               l.Z16_SEQ = o;
@@ -168,7 +168,7 @@ const parseInst = (pol, inst) => {
         });
       }
     }
-    // throw(d.z104);
+    // throw(d.z16);
 
     adminMap = {};
     d.z68.forEach(r => {
@@ -336,8 +336,14 @@ const parseInst = (pol, inst) => {
       let id = uuid(k + 'sub', ns);
       let oo = d.oo[akey];
       let wfs = (oo) ? 'Open' : 'Closed';
-      let puNum = 'SU' + k.replace(/^00/, '');
-      puNum = puNum.replace(/0000(.)$/, '$1');
+      let vrf = oo['POL Vendor reference number'];
+      let puNum;
+      if (vrf) {
+        puNum = vrf;
+      } else {
+        puNum = 'SU' + k.replace(/^00/, '');
+        puNum = puNum.replace(/0000(.)$/, '$1');
+      }
       let instId = linkMap[akey];
       let inst = instMap[instId];
 
@@ -387,8 +393,7 @@ const parseInst = (pol, inst) => {
       if (oo) {
         let fmt = oo.Format;
         if (fmt === 'Online') pol.orderFormat = 'Electronic Resource';
-        let vn = oo['POL Vendor reference number'];
-        if (vn) pol.vendorDetail = { vendorAccount: vn };
+        // if (vrf) pol.vendorDetail = { vendorAccount: vrf };
       }
 
       if (pol.orderFormat === 'Physical Resource') {
