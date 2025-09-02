@@ -29,11 +29,11 @@ use Time::Piece;
 use File::Basename;
 use Data::Dumper;
 
-my $ver = ($ENV{_VERSION}) ? $ENV{_VERSION} : '1';
 binmode STDOUT, ":utf8";
 $| = 1;
 
-my $version = '1';
+my $ver = '1';
+my $version = ($ENV{_VERSION}) ? $ENV{_VERSION} : '1';
 my $isil = 'xxz';
 my $prefix = '';
 my $srstype = 'MARC';
