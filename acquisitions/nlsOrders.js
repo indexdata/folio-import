@@ -68,7 +68,7 @@ const makePolNote = (content, date, type, poLineId, refData) => {
   return o;
 }
 
-const parseInst = (pol, inst) => {
+const parseInst = (pol, inst, refData) => {
   pol.instanceId = inst.id;
   pol.titleOrPackage = inst.title;
   if (inst.contributors) {
@@ -83,6 +83,20 @@ const parseInst = (pol, inst) => {
   if (inst.publication && inst.publication[0]) {
     if (inst.publication[0].dateOfPublication) pol.publicationDate = inst.publication[0].dateOfPublication;
     if (inst.publication[0].publisher) pol.publisher = inst.publication[0].publisher;
+  }
+  let pns = inst.identifiers;
+  if (pns) {
+    pol.details.productIds = [];
+    pns.forEach(p => {
+      let itype = p.identifierTypeId;
+      if (refData.productIdentifiers[itype]) {
+        let o = {
+          productId: p.value,
+          productIdType: p.identifierTypeId
+        }
+        pol.details.productIds.push(o);
+      }
+    });
   }
 }
 
@@ -112,9 +126,13 @@ const parseInst = (pol, inst) => {
           }
         }
         refData[prop] = {};
+        if (prop === 'identifierTypes') refData.productIdentifiers = {};
         j[prop].forEach(d => {
           let n = d.name || d.templateName || d.value;
           let c = d.code || d.templateCode;
+          if (prop === 'identifierTypes') {
+            if (!d.name.match(/control|OCLC|LCCN|local|libris|LIBR|katalog/i)) refData.productIdentifiers[d.id] = d.name;
+          }
           if (n) refData[prop][n] = d.id;
           if (c) refData[prop][c] = d.id;
         });
@@ -299,7 +317,8 @@ const parseInst = (pol, inst) => {
       };
 
       if (inst) {
-        parseInst(pol, inst);
+        pol.details = {};
+        parseInst(pol, inst, refData);
       }
 
       pol.orderFormat = 'Physical Resource';
@@ -387,7 +406,8 @@ const parseInst = (pol, inst) => {
       }
 
       if (inst) {
-        parseInst(pol, inst);
+        pol.details = {};
+        parseInst(pol, inst, refData);
       }
 
       if (oo) {
