@@ -19,6 +19,7 @@ let instFile = process.argv[4];
 const files = {
   o: 'composite-orders',
   p: 'purchase-orders',
+  c: 'purchase-orders-pending',
   l: 'po-lines',
   n: 'pol-notes'
 };
@@ -295,6 +296,9 @@ const parseInst = (pol, inst, refData) => {
       }
       // console.log(o);
       writeOut(files.p, o);
+      o.workflowStatus = 'Pending';
+      writeOut(files.c, o);
+      o.workflowStatus = 'Open';
       ttl.p++;
 
       let amStr = 'KB: Stående order köp (tryckt material)';
@@ -389,6 +393,9 @@ const parseInst = (pol, inst, refData) => {
       }
       // console.log(o);
       writeOut(files.p, o);
+      o.workflowStatus = 'Pending';
+      writeOut(files.c, o);
+      o.workflowStatus = 'Open';
       ttl.p++;
 
       let amStr = 'KB: Inköp av utländsk tidskrift (prenumerationer, inkl. e-resurs)';
