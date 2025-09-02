@@ -55,6 +55,9 @@ let dbug = process.env.DEBUG;
       } else if (actionUrl.match(/inventory\/items/)) {
         perPage = 100;
         url = `${actionUrl}?limit=${perPage}&offset=${offset}`;
+      } else if (actionUrl.match(/authority-storage/)) {
+	perPage = 1000;
+	url = `${actionUrl}?limit=${perPage}&offset=${offset}`;
       }
       if (!url.match(/offset=\d/)) url += `&offset=${offset}`;
       try {
