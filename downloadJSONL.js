@@ -56,8 +56,8 @@ let dbug = process.env.DEBUG;
         perPage = 100;
         url = `${actionUrl}?limit=${perPage}&offset=${offset}`;
       } else if (actionUrl.match(/authority-storage/)) {
-	perPage = 1000;
-	url = `${actionUrl}?limit=${perPage}&offset=${offset}`;
+	      perPage = 1000;
+	      url = `${actionUrl}?limit=${perPage}&offset=${offset}`;
       }
       if (!url.match(/offset=\d/)) url += `&offset=${offset}`;
       try {
@@ -78,7 +78,7 @@ let dbug = process.env.DEBUG;
           start = 0;
         }
         totFetch += recs.length;
-        totRecs = limit || res.body.totalRecords;
+        totRecs = limit || res.body.totalRecords || res.body.resultInfo.totalRecords;
         for (let y = 0; y < recs.length; y++) {
           let rec = JSON.stringify(recs[y]);
           writeStream.write(rec + '\n', 'utf8');
