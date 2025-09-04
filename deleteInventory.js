@@ -5,6 +5,7 @@ const { getAuthToken } = require('./lib/login');
 let ten = argv._[0];
 let saveDir = argv.s;
 let instId = argv.i || '*';
+let inFile = argv.f;
 let dbug = process.env.DEBUG;
 let tval = new Date().valueOf();
 
@@ -22,7 +23,7 @@ const sep = '-------------------------------------------------------------------
 (async () => {
   try {
     if (!ten) {
-      throw new Error('Usage: node deleteInventory.js <tenant> [ options: -s <save_dir>, -i <instance_id> ]');
+      throw new Error('Usage: node deleteInventory.js <tenant> [ options: -s <save_dir>, -i <instance_id>, -f <instance_file> ]');
     }
 
     let config = await getAuthToken(superagent);
@@ -135,47 +136,54 @@ const sep = '-------------------------------------------------------------------
       return c;
     }
 
+    const runSearch = async (instId, ttl, totRecs, perPage) => {
+      console.log(sep);
+      while (totRecs > 0) {
+        let url = `${config.okapi}/search/instances?expandAll=true&query=id==${instId} sortby title&limit=${perPage}`;
+        let res = await get(url);
+        let recs = res.instances;
+        totRecs = res.totalRecords;
+        if (totRecs === 0) {
+          console.log(`No instances found`);
+          console.log(sep);
+          continue;
+        } else {
+          console.log(`Instances found: ${totRecs}`);
+          if (totRecs === 1) totRecs = 0;
+        }
+        for (let x = 0; x < recs.length; x++) {
+          let rec = recs[x];
+          let ic = await delItems(rec.items);
+          let hc = -1;
+          if (ic > -1) { 
+            ttl.items += ic;
+            hc = await delHoldings(rec.holdings);
+          }
+          if (hc > -1) {
+            ttl.holdings += hc;
+            let bc = await del(`${config.okapi}/instance-storage/instances/${rec.id}`);
+            if (bc !== -1) {
+              ttl.instances++;
+              let sc = await del(`${config.okapi}/source-storage/records/${rec.id}?idType=INSTANCE`);
+              if (sc !== -1) ttl.srs++;
+            }
+          }
+          console.log(sep);
+        }
+      }
+      return;
+    }
+
     let ttl = {
       instances: 0,
       holdings: 0,
       items: 0,
       srs: 0
     };
-    let totRecs = 1000000;
-    let perPage = 10; 
-    console.log(sep);
-    while (totRecs > 0) {
-      let url = `${config.okapi}/search/instances?expandAll=true&query=id==${instId} sortby title&limit=${perPage}`;
-      let res = await get(url);
-      let recs = res.instances;
-      totRecs = res.totalRecords;
-      if (totRecs === 0) {
-        console.log(`No instances found`);
-        console.log(sep);
-        continue;
-      }
-      for (let x = 0; x < recs.length; x++) {
-        let rec = recs[x];
-        let ic = await delItems(rec.items);
-        let hc = -1;
-        if (ic > -1) { 
-          ttl.items += ic;
-          hc = await delHoldings(rec.holdings);
-        }
-        if (hc > -1) {
-          ttl.holdings += hc;
-          let bc = await del(`${config.okapi}/instance-storage/instances/${rec.id}`);
-          if (bc !== -1) {
-            ttl.instances++;
-            let sc = await del(`${config.okapi}/source-storage/records/${rec.id}?idType=INSTANCE`);
-            if (sc !== -1) ttl.srs++;
-          }
-        }
-        console.log(sep);
-      }
-      totRecs = 0;
-    }
+
+    await runSearch(instId, ttl, 100000, 10);
     console.log(ttl);
+
   } catch (e) {
     if (dbug) {
         console.log(e);
