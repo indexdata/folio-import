@@ -1,6 +1,7 @@
 const fs = require('fs');
 const argv = require('minimist')(process.argv.slice(2));
 const superagent = require('superagent');
+const readline = require('readline');
 const { getAuthToken } = require('./lib/login');
 let ten = argv._[0];
 let saveDir = argv.s;
@@ -181,7 +182,21 @@ const sep = '-------------------------------------------------------------------
       srs: 0
     };
 
-    await runSearch(instId, ttl, 100000, 10);
+    if (inFile) {
+      const fileStream = fs.createReadStream(inFile);
+
+      const rl = readline.createInterface({
+        input: fileStream,
+        crlfDelay: Infinity
+      });
+
+      for await (const line of rl) {
+        let r = JSON.parse(line);
+        await runSearch(r.id, ttl, 100000, 10);
+      }
+    } else {
+      await runSearch(instId, ttl, 100000, 10);
+    }
     console.log(ttl);
 
   } catch (e) {
