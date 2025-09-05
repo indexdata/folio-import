@@ -420,7 +420,15 @@ const parseInst = (pol, inst, refData) => {
       if (oo) {
         let fmt = oo.Format;
         if (fmt === 'Online') pol.orderFormat = 'Electronic Resource';
-        // if (vrf) pol.vendorDetail = { vendorAccount: vrf };
+        if (vrf) pol.vendorDetail = {
+          referenceNumbers: [
+            {
+              refNumber: vrf,
+              refNumberType: 'Vendor order reference number',
+              vendorDetailsSource: 'OrderLine'
+            }
+          ]
+        };
       }
 
       if (pol.orderFormat === 'Physical Resource') {
