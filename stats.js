@@ -8,7 +8,7 @@ const mods = {
     instances: 'instance-storage/instances',
     holdings: 'holdings-storage/holdings',
     items: 'item-storage/items',
-    srs: 'source-storage/records',
+    srs: 'source-storage/records?state=ACTUAL',
     'pre/suc': 'preceding-succeeding-titles',
     'relationships': 'instance-storage/instance-relationships',
     'bound-withs': 'inventory-storage/bound-with-parts'
