@@ -42,6 +42,11 @@ const sep = '-------------------------------------------------------------------
     }
     // console.log(sfiles); return;
 
+    const wait = (ms) => {
+      console.log(`(Waiting ${ms}ms...)`);
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    };
+
     const delBound = async (url) => {
       let id = url.replace(/.+\//, '');
       let idType = (url.match(/items/)) ? 'itemId' : 'holdingsRecordId';
@@ -138,7 +143,6 @@ const sep = '-------------------------------------------------------------------
     }
 
     const runSearch = async (instId, ttl, totRecs, perPage) => {
-      console.log(sep);
       while (totRecs > 0) {
         let url = `${config.okapi}/search/instances?expandAll=true&query=id==${instId} sortby title&limit=${perPage}`;
         let res = await get(url);
@@ -153,6 +157,10 @@ const sep = '-------------------------------------------------------------------
           if (totRecs === 1) totRecs = 0;
         }
         for (let x = 0; x < recs.length; x++) {
+          let lDate = new Date();
+          if (config.expiry && config.expiry <= lDate.valueOf()) {
+            config = await getAuthToken(superagent);
+          }
           let rec = recs[x];
           let ic = await delItems(rec.items);
           let hc = -1;
@@ -165,9 +173,14 @@ const sep = '-------------------------------------------------------------------
             let bc = await del(`${config.okapi}/instance-storage/instances/${rec.id}`);
             if (bc !== -1) {
               ttl.instances++;
-              let sc = await del(`${config.okapi}/source-storage/records/${rec.id}?idType=INSTANCE`);
-              if (sc !== -1) ttl.srs++;
+              if (rec.source === 'MARC') {
+                let sc = await del(`${config.okapi}/source-storage/records/${rec.id}?idType=INSTANCE`);
+                if (sc !== -1) ttl.srs++;
+              }
             }
+          }
+          if (config.delay) {
+            await wait(config.delay);
           }
           console.log(sep);
         }
