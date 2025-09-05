@@ -633,7 +633,7 @@ let ttl = {
     xholdings: 0,
     xitems: 0,
     presuc: 0,
-    errors: 0
+    err: 0
   }
 
 let sro = {};
@@ -945,7 +945,7 @@ try {
         marc = parseMarc(r)
       } catch(e) {
         console.log(e);
-        ttl.errors++;
+        ttl.err++;
         writeOut(outs.err, r, true);
         continue;
       }
@@ -989,7 +989,7 @@ try {
         } else {
           let ctrl = (marc.fields['001']) ? marc.fields['001'][0] : '(unknown)'
           console.log(`WARN ${ctrl} is a MFHD record. Skipping...`);
-          ttl.errors++;
+          ttl.err++;
         }
         continue;
       }
@@ -1037,14 +1037,14 @@ try {
       }
       let hrid = (marc.fields['001']) ? marc.fields['001'][0] : '';
       if (!hrid) {
-        ttl.errors++;
+        ttl.err++;
         console.log(`ERROR HRID not found at ${ttl.count}!`);
         if (process.env.DEBUG) console.log(r);
         writeOut(outs.err, r, true);
         continue;
       }
       if (seen[hrid]) {
-        ttl.errors++;
+        ttl.err++;
         console.log(`ERROR Instance HRID (${hrid}) already found at ${ttl.count}`);
         writeOut(outs.err, r, true);
         continue;
@@ -1056,7 +1056,7 @@ try {
           marc.fields['245'] = [ { ind1: '1', ind2: '0', subfields: [ { a: conf.noTitle } ] } ];
           console.log(`WARN no title found for ${hrid}, setting 245$a to "${conf.noTitle}"`);
         } else {
-          ttl.errors++;
+          ttl.err++;
           console.log(`ERROR no title found (HRID ${hrid})!`);
           writeOut(outs.err, r, true);
           continue;
@@ -1302,6 +1302,8 @@ try {
       l = l.padEnd(12);
       let n = ttl[x].toString().padStart(8);
       console.log(l, ':', n);
+      let fn = files[x];
+      if (ttl[x] === 0 && fs.existsSync(fn)) fs.unlinkSync(fn);
     }
   });
 } catch (e) {
