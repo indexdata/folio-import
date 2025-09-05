@@ -55,8 +55,6 @@ const elRelMap = {
 const files = {
   holdings: 1,
   items: 1,
-  bwp: 1,
-  rel: 1,
   suppress: 1
 };
 
@@ -262,8 +260,6 @@ try {
     linesRead: 0,
     holdings: 0,
     items: 0,
-    boundwiths: 0,
-    relationships: 0,
     instanceSupp: 0,
     errors: 0,
     itemErrors: 0
@@ -285,10 +281,9 @@ try {
   }
 
   const hseen = {};
-  const iseen = {};
+  const dseen = {};
   const bcseen = {};
   const occ = {};
-  let sro = 0;
 
   const makeHoldingsItems = (r) => {
     for (let k in filters) {
@@ -358,11 +353,6 @@ try {
             if (!adminNotes[locId]) adminNotes[locId] = [];
             adminNotes[locId].push(str);
         }
-        /*
-        if (f.z) {
-          inotes.push(f.z);
-        }
-        */
       });
 
       if (!hseen[hkey]) {
@@ -382,12 +372,6 @@ try {
           notes: []
         }
         if (dbug) h.__ = r;
-        /*
-        if (cn) { 
-          h.callNumber = cn;
-          h.callNumberTypeId = refData.callNumberTypes['Other scheme'];
-        }
-        */
 
         let hsf = af['866'] || [];
         if (hsf[0]) h.holdingsStatements = [];
@@ -422,6 +406,9 @@ try {
           writeOut(outs.holdings, h);
           ttl.holdings++;
           hseen[hkey] = { id: hid, cn: cn };
+          if (h.permanentLocationId === refData.locations['loc-des']) {
+            dseen[bid] = 1;
+          }
         } else {
           console.log(`ERROR permanentLocationId not found for ${loc}!`);
           ttl.errors++;
@@ -552,92 +539,6 @@ try {
           });
         }
 
-        /*
-        let pl = '';
-        let tl = '';
-
-        if (loc === 'RRLEX') {
-          if (st === '01') {
-            pl = 'Läsesalslån';
-            switch(ips) {
-              case 'DB': tl = 'Digital beställning'; break;
-              case 'LA': tl = 'Lagas före lån'; break;
-              case 'LL': tl = 'L-samling - kollas före lån'; break;
-              // case 'UL': tl = 'Under leverans (ABON)'; 
-            }
-          } else if (st === '02') {
-            pl = 'Hemlån';
-            switch(ips) {
-              case 'LA': tl = 'Lagas före lån'; break;
-              // case 'UL': tl = 'Under leverans (ABON)'; 
-            }
-          } else if (st === '05') {
-            pl = 'Framtages ej/spärrat'; 
-            i.discoverySuppress = true;
-          } else if (st === '06') {
-            pl = 'Läsesalslån';
-            if (ips === 'DB') tl = 'Digital beställning';
-          } else if (st === '71') {
-            pl = 'Läsesalslån';
-            switch(ips) {
-              case 'DB': tl = 'Digital beställning'; break;
-              case 'SN': pl = 'Hemlån';
-            }
-          } else if (st === '72') {
-            pl = 'Läsesalslån';
-          } else if (st === '32') {
-            pl = 'Hemlån';
-          } else if (st === '31') {
-            pl = 'Läsesalslån';
-          }
-        } else if (loc === 'RRSPE') {
-          if (st === '21') {
-            pl = 'Specialläsesalslån';
-            switch(ips) {
-              case 'DB': tl = 'Digital beställning'; break;
-              case 'LA': tl = 'Lagas före lån'; break;
-              case 'LL': tl = 'L-samling - kollas före lån';
-            }
-          } else if (st === '27') {
-            pl = 'Manuell beställning';
-          } else if (st === '71') {
-            pl = 'Specialläsesalslån';
-          } else if (st === '26') {
-            pl = 'Specialläsesalslån';
-            switch(ips) {
-              case 'DB': tl = 'Digital beställning'; break;
-              case 'LA': tl = 'Lagas före lån'; break;
-              case 'LL': tl = 'L-samling - kollas före lån';
-            }
-          } else if (st === '23') {
-            pl = 'Specialläsesalslån';
-            switch(ips) {
-              case 'LA': tl = 'Lagas före lån'; break;
-              case 'LL': tl = 'L-samling - kollas före lån';
-            }
-          } else if (st === '28') {
-            pl = 'Specialläsesalslån';
-            switch(ips) {
-              case 'DB': tl = 'Digital beställning'; break;
-              case 'LA': tl = 'Lagas före lån';
-            }
-          }
-        } else if (loc.match(/^(MFL|REF|TLKB)$/) && st === '04') {
-          pl = 'Referens';
-        } else if (loc === 'PRUMS') {
-          switch(st) {
-            case '01': pl = 'Läsesalslån'; break;
-            case '21': pl = 'Specialläsesalslån'; break;
-            case '05': pl = 'Framtages ej/spärrat'; i.discoverySuppress = true;
-          }
-        } else if (loc === 'ENHET' && st === '73') {
-          pl = 'Bokskåp';
-          i.discoverySuppress = true;
-        } else if (loc === 'RESTR' && (st === '03' || st === '22')) {
-          pl = 'Framtages ej/spärrat';
-        }
-        */
-
         let ltypes = (tsvMap.loantypes[loc] && tsvMap.loantypes[loc][st]) ? tsvMap.loantypes[loc][st][ips] || tsvMap.loantypes[loc][st]._ : '';
         let pl = ltypes.p;
         let tl = ltypes.t;
@@ -705,7 +606,7 @@ try {
           f.forEach(s => {
             o++;
             let ostr = o.toString().padStart(3, 0);
-            if (s.x && s.x.match(/Desiderata/)) {
+            if (s.x && s.x.match(/Desiderata/) && !dseen[bhrid]) {
               let hrid = bhrid + '-' + ostr;
               let h = {
                 _version: 1,
@@ -760,8 +661,7 @@ try {
       }
     }
     showStats();
-  })
-
+  });
 } catch (e) {
   console.log(e);
 }
