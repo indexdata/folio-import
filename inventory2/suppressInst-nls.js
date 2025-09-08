@@ -35,6 +35,11 @@ try {
     if (fs.existsSync(outFile)) fs.unlinkSync(outFile);
     let outStream = fs.createWriteStream(outFile);
 
+    let cfn = fn.replace(/\.jsonl/, '');
+    let changeFile = wdir + '/' + cfn + '-changed.jsonl'
+    if (fs.existsSync(changeFile)) fs.unlinkSync(changeFile);
+    let changeStream = fs.createWriteStream(changeFile);
+
     let fileStream = fs.createReadStream(inFile);
     let rl = readline.createInterface({
       input: fileStream,
@@ -59,9 +64,15 @@ try {
       let hrid = (t === 'instances') ? r.hrid : r.externalIdsHolder.instanceHrid;
       if (suppMap[hrid]) {
         if (t === 'instances') {
-          r.discoverySuppress = true;
+          if (!r.discoverySuppress) {
+            r.discoverySuppress = true;
+            writeOut(changeStream, r);
+          }
         } else {
-          r.additionalInfo.suppressDiscovery = true;
+          if (!r.additionalInfo.suppressDiscovery) {
+            r.additionalInfo.suppressDiscovery = true;
+            writeOut(changeStream, r);
+          }
         }
         c++;
       }
