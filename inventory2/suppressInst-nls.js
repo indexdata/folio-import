@@ -25,6 +25,7 @@ const types = [ 'instances', 'srs' ];
 try {
   if (!inFile) { throw "Usage: node suppressInst.js <suppress_jsonl_file>" }
   let wdir = path.dirname(inFile);
+  wdir = wdir.replace(/\/$/, '');
   for (let x = 0; x < types.length; x++) {
     let fn = path.basename(inFile);
     let t = types[x];
