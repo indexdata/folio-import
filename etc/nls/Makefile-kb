@@ -45,5 +45,5 @@ orders:
 	tail -f $(ldir)/makeOrders.log
 
 circ:
-	cd $(wd)/patrons; DEBUG=1 node nlsCirc $(iref)/service-points.json $(cdir)/users.jsonl $(idir)/bibs-items.jsonl $(cdir)/z36.dsv $(cdir)/z37.dsv > $(ldir)/makeCirc.log
-	cat $(ldir)/makeCirc.log
+	cd $(wd)/patrons; node --max-old-space-size=5120 nlsCirc $(iref)/service-points.json $(udir)/users-users.jsonl $(idir)/bibs-items.jsonl $(cdir)/z36.dsv $(cdir)/z37.dsv > $(ldir)/makeCirc.log 2>$(ldir)/makeCirc.err &
+	tail -f $(ldir)/makeCirc.log

@@ -1,22 +1,6 @@
 {
   "owners": [
     {
-      "owner": "Räkningsansvarig",
-      "servicePointOwner": [
-        {
-          "value": "996760f7-e64b-4c8e-b228-41f52fb9fade",
-          "label": "Information och lån"
-        }
-      ],
-      "metadata": {
-        "createdDate": "2024-09-04T11:29:51.613+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2024-09-04T11:30:04.578+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      },
-      "id": "9dd3b798-11d2-45b0-a939-b94c0440fb91"
-    },
-    {
       "owner": "Repro",
       "servicePointOwner": [],
       "metadata": {
@@ -37,7 +21,43 @@
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       },
       "id": "a83cc351-a6db-46ec-aa67-f0b9fb230399"
+    },
+    {
+      "owner": "Test",
+      "servicePointOwner": [
+        {
+          "value": "fa60af7f-b89f-4a73-87b1-7d123900eb2f",
+          "label": "Specialläsesalen"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2025-09-02T13:16:32.132+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-09-02T13:16:32.132+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "id": "6fe39202-8522-4156-9501-36f7f3eb1b0b"
+    },
+    {
+      "owner": "Räkningsansvarig",
+      "servicePointOwner": [
+        {
+          "value": "996760f7-e64b-4c8e-b228-41f52fb9fade",
+          "label": "Information och lån"
+        },
+        {
+          "value": "ec9ed36f-f5dd-4a32-9b02-64ace39c2699",
+          "label": "Tryckt samling"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2024-09-04T11:29:51.613+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-09-02T13:19:25.359+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "id": "9dd3b798-11d2-45b0-a939-b94c0440fb91"
     }
   ],
-  "totalRecords": 3
+  "totalRecords": 4
 }

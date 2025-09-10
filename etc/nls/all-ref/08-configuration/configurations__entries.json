@@ -91,19 +91,6 @@
       }
     },
     {
-      "id": "363f3e6a-1c54-45b9-9924-7fe0057fef60",
-      "module": "ORDERS",
-      "configName": "openOrder",
-      "enabled": true,
-      "value": "{\"isOpenOrderEnabled\":true}",
-      "metadata": {
-        "createdDate": "2023-11-22T10:34:47.171+00:00",
-        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
-        "updatedDate": "2023-11-22T10:34:47.171+00:00",
-        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
-      }
-    },
-    {
       "id": "5a07f2db-7410-424e-b831-1419fec4ffea",
       "module": "INVOICE",
       "configName": "approvals",
@@ -206,16 +193,16 @@
       }
     },
     {
-      "id": "047e1b2c-e831-4d61-8590-b69ae469f8d7",
+      "id": "363f3e6a-1c54-45b9-9924-7fe0057fef60",
       "module": "ORDERS",
-      "configName": "poLines-limit",
+      "configName": "openOrder",
       "enabled": true,
-      "value": "999",
+      "value": "{\"isOpenOrderEnabled\":false,\"isDuplicateCheckDisabled\":false}",
       "metadata": {
-        "createdDate": "2023-11-22T13:52:45.747+00:00",
+        "createdDate": "2023-11-22T10:34:47.171+00:00",
         "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
-        "updatedDate": "2025-08-26T13:41:39.101+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+        "updatedDate": "2025-09-02T20:36:19.349+00:00",
+        "updatedByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487"
       }
     },
     {
@@ -404,9 +391,9 @@
       }
     }
   ],
-  "totalRecords": 29,
+  "totalRecords": 28,
   "resultInfo": {
-    "totalRecords": 29,
+    "totalRecords": 28,
     "facets": [],
     "diagnostics": []
   }

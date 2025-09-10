@@ -5128,21 +5128,6 @@
       }
     },
     {
-      "id": "4e551af4-193f-4912-bc94-6b78a880e13c",
-      "userId": "3c7da0e3-9298-4286-b037-6b0035237d08",
-      "servicePointsIds": [
-        "996760f7-e64b-4c8e-b228-41f52fb9fade",
-        "fa60af7f-b89f-4a73-87b1-7d123900eb2f"
-      ],
-      "defaultServicePointId": "996760f7-e64b-4c8e-b228-41f52fb9fade",
-      "metadata": {
-        "createdDate": "2024-03-08T07:16:29.501+00:00",
-        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
-        "updatedDate": "2024-05-16T11:11:22.785+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
       "id": "c47873c2-85eb-40e6-a603-0cff863ce0fb",
       "userId": "050932c6-05cf-46c7-8207-dd8f8e99f36d",
       "servicePointsIds": [
@@ -5155,6 +5140,21 @@
         "createdByUserId": "39a1ef78-5c0d-426c-b997-cb65c4f44ebd",
         "updatedDate": "2025-06-18T11:18:55.474+00:00",
         "updatedByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d"
+      }
+    },
+    {
+      "id": "4e551af4-193f-4912-bc94-6b78a880e13c",
+      "userId": "3c7da0e3-9298-4286-b037-6b0035237d08",
+      "servicePointsIds": [
+        "996760f7-e64b-4c8e-b228-41f52fb9fade",
+        "fa60af7f-b89f-4a73-87b1-7d123900eb2f"
+      ],
+      "defaultServicePointId": "996760f7-e64b-4c8e-b228-41f52fb9fade",
+      "metadata": {
+        "createdDate": "2024-03-08T07:16:29.501+00:00",
+        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+        "updatedDate": "2025-09-09T13:12:00.974+00:00",
+        "updatedByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08"
       }
     },
     {
@@ -5944,7 +5944,21 @@
         "updatedDate": "2025-08-20T11:34:39.117+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
+    },
+    {
+      "id": "aca76b82-c41e-4f3f-b70a-1e5d4920ec0d",
+      "userId": "8d8357c0-e4bb-4fb0-ae6b-280acfb21922",
+      "servicePointsIds": [
+        "996760f7-e64b-4c8e-b228-41f52fb9fade"
+      ],
+      "defaultServicePointId": "996760f7-e64b-4c8e-b228-41f52fb9fade",
+      "metadata": {
+        "createdDate": "2025-09-01T13:21:47.906+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-09-01T13:21:47.906+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
     }
   ],
-  "totalRecords": 400
+  "totalRecords": 401
 }

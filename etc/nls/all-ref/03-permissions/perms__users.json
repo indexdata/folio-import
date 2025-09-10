@@ -11236,57 +11236,6 @@
       }
     },
     {
-      "id": "dc70271e-f89c-493c-a557-f28aa72231f9",
-      "userId": "3c7da0e3-9298-4286-b037-6b0035237d08",
-      "permissions": [
-        "ui-circulation.settings.edit-loan-history",
-        "b2860950-9528-4966-8e34-bc16873cbae1",
-        "ui-inventory.all-permissions.TEMPORARY",
-        "role-cataloger",
-        "role-checkin-all",
-        "role-checkout-all",
-        "role-circ-admin",
-        "role-circ-manager",
-        "ui-circulation.settings.cancellation-reasons",
-        "ui-circulation.settings.circulation-rules",
-        "ui-circulation.settings.fixed-due-date-schedules",
-        "ui-circulation.settings.loan-policies",
-        "ui-circulation.settings.lost-item-fees-policies",
-        "ui-circulation.settings.notice-policies",
-        "ui-circulation.settings.other-settings",
-        "ui-circulation.settings.overdue-fines-policies",
-        "ui-circulation.settings.notice-templates",
-        "ui-circulation.settings.request-policies",
-        "ui-circulation.settings.staff-slips",
-        "ui-circulation.settings.loan-history",
-        "ui-circulation.settings.view-loan-policies",
-        "ui-circulation.settings.view-lost-item-fees-policies",
-        "ui-circulation.settings.view-overdue-fines-policies",
-        "ui-circulation.settings.titleLevelRequests",
-        "ui-inventory.settings.instance-formats",
-        "ui-inventory.settings.holdings-note-types",
-        "ui-inventory.settings.holdings-types",
-        "ui-inventory.settings.ill-policies",
-        "ui-inventory.settings.instance-note-types",
-        "ui-inventory.settings.instance-statuses",
-        "ui-inventory.settings.item-note-types",
-        "ui-inventory.settings.loantypes",
-        "ui-inventory.settings.modes-of-issuance",
-        "ui-inventory.settings.instance-types",
-        "ui-inventory.settings.materialtypes",
-        "ui-inventory.settings.nature-of-content-terms",
-        "ui-inventory.settings.material-types",
-        "ui-inventory.all",
-        "ui-inventory.settings.loan-types"
-      ],
-      "metadata": {
-        "createdDate": "2024-03-07T22:18:23.496+00:00",
-        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
-        "updatedDate": "2024-05-16T11:11:22.784+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
       "id": "0ab9fdf8-852d-44cb-a5e9-d322e3fa29ea",
       "userId": "e1d138cc-f855-4eeb-bec4-883765dc67e3",
       "permissions": [],
@@ -17484,61 +17433,6 @@
       }
     },
     {
-      "id": "b62cbcb5-65fd-481f-83db-d610f00de0f2",
-      "userId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487",
-      "permissions": [
-        "source-storage.snapshots.get",
-        "SYS#mod-orders-12.8.10#/orders/composite-orders#[POST]",
-        "orders-storage.module.all",
-        "b2860950-9528-4966-8e34-bc16873cbae1",
-        "circulation.all",
-        "circulation.requests.item.delete",
-        "circulation-storage.all",
-        "inventory-storage.preceding-succeeding-titles.item.post",
-        "inventory-storage.instances.batch.post",
-        "inventory-storage.instances.collection.delete",
-        "inventory-storage.preceding-succeeding-titles.collection.get",
-        "inventory-storage.all",
-        "orders.all",
-        "orders.item.post",
-        "orders.po-lines.item.post",
-        "ui-orders.order.approve",
-        "ui-orders.acq.unit.assignment.assign",
-        "ui-orders.orders.create",
-        "ui-orders.orders.delete",
-        "ui-orders.orders.edit",
-        "ui-orders.orders.view",
-        "ui-orders.order-lines.cancel",
-        "ui-orders.order.cancel",
-        "ui-orders.order.exportCSV",
-        "ui-orders.acq.unit.assignment.manage",
-        "ui-orders.order.reopen",
-        "ui-orders.order.showHidden",
-        "ui-orders.order.unopen",
-        "ui-orders.order.updateEncumbrances",
-        "organizations-storage.organizations.all",
-        "ui-orders.settings.custom-fields.delete",
-        "ui-orders.settings.custom-fields.edit",
-        "ui-orders.settings.view",
-        "ui-orders.settings.all",
-        "ui-orders.settings.custom-fields.view",
-        "ui-orders.settings.order-templates.view",
-        "ui-orders.settings.order-templates.edit",
-        "ui-orders.settings.order-templates.create",
-        "ui-orders.settings.order-templates.delete",
-        "source-storage.records.post",
-        "source-storage.snapshots.post",
-        "source-storage.snapshots.delete",
-        "users.all"
-      ],
-      "metadata": {
-        "createdDate": "2024-12-16T14:13:53.491+00:00",
-        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
-        "updatedDate": "2025-08-12T19:57:35.621+00:00",
-        "updatedByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487"
-      }
-    },
-    {
       "id": "edd5e083-7053-43bb-ab8c-34d5a37d569a",
       "userId": "1235f815-585a-4793-ac33-92c604859b46",
       "permissions": [
@@ -17604,6 +17498,70 @@
         "createdDate": "2025-04-17T13:29:11.849+00:00",
         "updatedDate": "2025-05-28T16:49:42.432+00:00",
         "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+      }
+    },
+    {
+      "id": "a0752231-7769-4bf1-aa06-046662c0e77b",
+      "userId": "8d8357c0-e4bb-4fb0-ae6b-280acfb21922",
+      "permissions": [
+        "role-circ-manager"
+      ],
+      "metadata": {
+        "createdDate": "2025-09-01T13:19:06.794+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-09-01T13:21:48.158+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "dc70271e-f89c-493c-a557-f28aa72231f9",
+      "userId": "3c7da0e3-9298-4286-b037-6b0035237d08",
+      "permissions": [
+        "ui-inventory.settings.loantypes",
+        "ui-inventory.settings.materialtypes",
+        "b2860950-9528-4966-8e34-bc16873cbae1",
+        "ui-inventory.all-permissions.TEMPORARY",
+        "ui-inventory.all",
+        "role-cataloger",
+        "role-checkin-all",
+        "role-checkout-all",
+        "role-circ-admin",
+        "role-circ-manager",
+        "ui-circulation.settings.cancellation-reasons",
+        "ui-circulation.settings.circulation-rules",
+        "ui-circulation.settings.fixed-due-date-schedules",
+        "ui-circulation.settings.loan-policies",
+        "ui-circulation.settings.lost-item-fees-policies",
+        "ui-circulation.settings.notice-policies",
+        "ui-circulation.settings.other-settings",
+        "ui-circulation.settings.overdue-fines-policies",
+        "ui-circulation.settings.notice-templates",
+        "ui-circulation.settings.request-policies",
+        "ui-circulation.settings.staff-slips",
+        "ui-circulation.settings.edit-loan-history",
+        "ui-circulation.settings.loan-history",
+        "ui-circulation.settings.view-loan-policies",
+        "ui-circulation.settings.view-lost-item-fees-policies",
+        "ui-circulation.settings.view-overdue-fines-policies",
+        "ui-circulation.settings.titleLevelRequests",
+        "ui-inventory.settings.instance-formats",
+        "ui-inventory.settings.holdings-note-types",
+        "ui-inventory.settings.holdings-types",
+        "ui-inventory.settings.ill-policies",
+        "ui-inventory.settings.instance-note-types",
+        "ui-inventory.settings.instance-statuses",
+        "ui-inventory.settings.item-note-types",
+        "ui-inventory.settings.loan-types",
+        "ui-inventory.settings.modes-of-issuance",
+        "ui-inventory.settings.instance-types",
+        "ui-inventory.settings.material-types",
+        "ui-inventory.settings.nature-of-content-terms"
+      ],
+      "metadata": {
+        "createdDate": "2024-03-07T22:18:23.496+00:00",
+        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+        "updatedDate": "2025-09-09T13:12:01.254+00:00",
+        "updatedByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08"
       }
     },
     {
@@ -17692,6 +17650,64 @@
       }
     },
     {
+      "id": "b62cbcb5-65fd-481f-83db-d610f00de0f2",
+      "userId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487",
+      "permissions": [
+        "source-storage.snapshots.collection.get",
+        "source-storage.records.delete",
+        "search.index.instance-records.reindex.full.post",
+        "circulation.all",
+        "circulation.requests.item.delete",
+        "SYS#mod-orders-12.8.10#/orders/composite-orders#[POST]",
+        "orders.po-lines.item.post",
+        "source-storage.snapshots.get",
+        "orders-storage.module.all",
+        "b2860950-9528-4966-8e34-bc16873cbae1",
+        "circulation-storage.all",
+        "inventory-storage.preceding-succeeding-titles.item.post",
+        "inventory-storage.instances.batch.post",
+        "inventory-storage.instances.collection.delete",
+        "inventory-storage.preceding-succeeding-titles.collection.get",
+        "inventory-storage.all",
+        "orders.all",
+        "orders.item.post",
+        "ui-orders.order.approve",
+        "ui-orders.acq.unit.assignment.assign",
+        "ui-orders.orders.create",
+        "ui-orders.orders.delete",
+        "ui-orders.orders.edit",
+        "ui-orders.orders.view",
+        "ui-orders.order-lines.cancel",
+        "ui-orders.order.cancel",
+        "ui-orders.order.exportCSV",
+        "ui-orders.acq.unit.assignment.manage",
+        "ui-orders.order.reopen",
+        "ui-orders.order.showHidden",
+        "ui-orders.order.unopen",
+        "ui-orders.order.updateEncumbrances",
+        "organizations-storage.organizations.all",
+        "ui-orders.settings.custom-fields.delete",
+        "ui-orders.settings.custom-fields.edit",
+        "ui-orders.settings.view",
+        "ui-orders.settings.all",
+        "ui-orders.settings.custom-fields.view",
+        "ui-orders.settings.order-templates.view",
+        "ui-orders.settings.order-templates.edit",
+        "ui-orders.settings.order-templates.create",
+        "ui-orders.settings.order-templates.delete",
+        "source-storage.records.post",
+        "source-storage.snapshots.post",
+        "source-storage.snapshots.delete",
+        "users.all"
+      ],
+      "metadata": {
+        "createdDate": "2024-12-16T14:13:53.491+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2025-09-10T14:02:55.949+00:00",
+        "updatedByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487"
+      }
+    },
+    {
       "id": "bc716078-ea8a-4b71-ae0a-ffdb4d243f92",
       "userId": "11110fa9-5fb0-4625-bab0-ec2e00cdb150",
       "permissions": [],
@@ -17711,6 +17727,17 @@
         "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
         "updatedDate": "2024-10-28T07:43:36.951+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "c9164d89-8e9a-4c46-a6e3-fcaa55ce441a",
+      "userId": "a59b0c48-881e-4e39-8527-d0a42103a5fe",
+      "permissions": [],
+      "metadata": {
+        "createdDate": "2025-09-09T13:10:20.231+00:00",
+        "createdByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08",
+        "updatedDate": "2025-09-09T13:10:20.231+00:00",
+        "updatedByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08"
       }
     },
     {
@@ -18423,9 +18450,9 @@
       }
     }
   ],
-  "totalRecords": 443,
+  "totalRecords": 445,
   "resultInfo": {
-    "totalRecords": 443,
+    "totalRecords": 445,
     "facets": [],
     "diagnostics": []
   }

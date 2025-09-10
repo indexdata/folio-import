@@ -62,33 +62,42 @@ const spTran = {
 
 
     // map users
+    console.log(`Parsing users from ${usersFile}`);
     let fileStream = fs.createReadStream(usersFile);
     let rl = readline.createInterface({
       input: fileStream,
       crlfDelay: Infinity
     });
     const users = {};
+    let uc = 0;
     for await (let line of rl) {
+      uc++;
       let o = JSON.parse(line);
       let k = (o.customFields) ? o.customFields.alephid : '';
       if (k) {
         users[k] = { id: o.id, active: o.active, bc: o.barcode, ex: o.expirationDate || '' };
       }
     }
+    console.log(`Users parsed: ${uc}`);
     // throw(users);
 
     // map items
     const items = {};
+    console.log(`Parsing items from ${itemFile}`);
     fileStream = fs.createReadStream(itemFile);
     rl = readline.createInterface({
       input: fileStream,
       crlfDelay: Infinity
     });
+    let ic = 0;
     for await (let line of rl) {
+      ic++;
       let o = JSON.parse(line);
       let k = o.hrid;
       items[k] = { bc: o.barcode, st: o.status.name, id: o.id };
+      if (ic%250000 === 0) console.log(`Items parsed: ${ic}`);
     }
+    console.log(`Items parsed: ${uc}`);
     // throw(items['001158172001030']);
     
     const parseDate = (dstr, type) => {
@@ -124,6 +133,7 @@ const spTran = {
       rerr: 0
     }
 
+    console.log(`Reading circ lines from ${circFile}`);
     let csv = fs.readFileSync(circFile, {encoding: 'utf8'});
     const inRecs = parse(csv, {
       columns: true,
@@ -132,8 +142,10 @@ const spTran = {
       bom: true
     });
 
+    let cc = 0;
+    console.log('Total rows in circ file:', inRecs.length);
     inRecs.forEach(r => {
-      // if (process.env.DEBUG) console.log(r);
+      cc++;
       let loan = {};
       let lib = r.Z36_SUB_LIBRARY;
       let iid = r.Z36_REC_KEY;
@@ -181,6 +193,7 @@ const spTran = {
     });
 
     if (reqFile) {
+      console.log(`Reading request lines from ${reqFile}`);
       let csv = fs.readFileSync(reqFile, {encoding: 'utf8'});
       const inRecs = parse(csv, {
         columns: true,
@@ -188,6 +201,8 @@ const spTran = {
         delimiter: '\t',
         bom: true
       });
+
+      console.log('Total rows in request file:', inRecs.length);
 
       inRecs.forEach(r => {
         let key = r.Z37_REC_KEY.substring(0, 15);

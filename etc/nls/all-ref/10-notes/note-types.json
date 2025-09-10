@@ -27,7 +27,7 @@
       "id": "215b2626-2d38-4052-a917-1dbe43829cf1",
       "name": "Förvärvsanteckning",
       "usage": {
-        "isAssigned": true
+        "isAssigned": false
       },
       "metadata": {
         "createdDate": "2025-07-02T09:23:50.054289Z",
@@ -40,7 +40,7 @@
       "id": "11450eee-58da-442c-8e07-9cd88cbbba34",
       "name": "Mottagning",
       "usage": {
-        "isAssigned": true
+        "isAssigned": false
       },
       "metadata": {
         "createdDate": "2025-07-24T06:52:46.812593Z",

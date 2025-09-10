@@ -26,15 +26,15 @@
           "endTime": "19:00:00"
         },
         {
-          "startDay": "MONDAY",
-          "startTime": "09:00:00",
-          "endDay": "MONDAY",
-          "endTime": "19:00:00"
-        },
-        {
           "startDay": "TUESDAY",
           "startTime": "09:00:00",
           "endDay": "TUESDAY",
+          "endTime": "19:00:00"
+        },
+        {
+          "startDay": "MONDAY",
+          "startTime": "09:00:00",
+          "endDay": "MONDAY",
           "endTime": "19:00:00"
         },
         {
