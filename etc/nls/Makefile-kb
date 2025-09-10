@@ -4,7 +4,7 @@ ref=$(data)/ref
 uref=$(ref)/usr
 iref=$(ref)/inv
 oref=$(ref)/acq
-idir=$(data)/big
+idir=$(data)/inv
 udir=$(data)/users
 odir=$(data)/orders
 cdir=$(data)/circ
@@ -22,28 +22,28 @@ setup:
 instances:
 	cd $(inv2); node marc2inst-nls.js $(con) $(idir)/bibs.mrc > $(ldir)/makeInst.log 2>$(ldir)/makeInst.err &
 
-suppress-inst:
-	cd $(inv2); node suppressInst-nls.js "$(idir)/bibs-suppress.jsonl"
-
 items:
 	cd $(inv2); node --max-old-space-size=4096 holdingsItems-nls.js $(con) $(idir)/bibs.map > $(ldir)/makeHoldingsItems.log 2>$(ldir)/makeHoldingsItems.err &
 
+suppress:
+	cd $(inv2); node --max-old-space-size=4096 suppressInst-nls.js $(idir)/bibs-suppress.jsonl
+
 inventory-prep:
 	cd $(idir); cat bibs-xholdings.jsonl >> bibs-holdings.jsonl
-	cd $(idir); cat bibs-xitems.jsonl >> bibs-items.jsonl
-	cd $(idir); split -n l/5 bibs-instances.jsonl in
-	cd $(idir); split -n l/5 bibs-srs.jsonl sr
-	cd $(idir); split -n l/5 bibs-holdings.jsonl ho
-	cd $(idir); split -n l/5 bibs-items.jsonl it
+	cd $(inv2); node --max-old-space-size=4096 suppressInst-nls.js "$(idir)/bibs-suppress.jsonl"
+	cd $(idir); split -n l/2 bibs-instances.jsonl in
+	cd $(idir); split -n l/2 bibs-srs.jsonl sr
+	cd $(idir); split -n l/2 bibs-holdings.jsonl ho
+	cd $(idir); split -n l/2 bibs-items.jsonl it
 
 users:
 	cd $(wd)/patrons; node nlsUsers.js $(uref) $(udir) > $(ldir)/makeUsers.log 2>$(ldir)/makeUsers.err
 	cat $(ldir)/makeUsers.log
 
 orders:
-	cd $(acq); node nlsOrders $(oref) $(z103) $(idir)/bibs-instances.jsonl $(odir) > $(ldir)/makeOrders.log
-	cat $(ldir)/makeOrders.log
+	cd $(acq); node --max-old-space-size=4096 nlsOrders $(oref) $(z103) $(idir)/bibs-instances.jsonl $(odir) > $(ldir)/makeOrders.log 2>$(ldir)/makeOrders.err &
+	tail -f $(ldir)/makeOrders.log
 
 circ:
-	cd $(wd)/patrons; DEBUG=1 node nlsCirc $(iref)/service-points.json $(cdir)/users.jsonl $(cdir)/items.jsonl $(cdir)/z36.dsv $(cdir)/z37.dsv > $(ldir)/makeCirc.log
+	cd $(wd)/patrons; DEBUG=1 node nlsCirc $(iref)/service-points.json $(cdir)/users.jsonl $(idir)/bibs-items.jsonl $(cdir)/z36.dsv $(cdir)/z37.dsv > $(ldir)/makeCirc.log
 	cat $(ldir)/makeCirc.log

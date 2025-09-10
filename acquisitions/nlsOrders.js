@@ -41,7 +41,9 @@ const cost = {
   poLineEstimatedPrice: 0
 };
 
-const curYear = new Date().getFullYear();
+let newDate = new Date();
+let start = newDate.valueOf();
+const curYear = newDate.getFullYear();
 
 const writeOut = (fileName, data) => {
   let line = JSON.stringify(data) + "\n";
@@ -106,6 +108,7 @@ const parseInst = (pol, inst, refData) => {
     if (!ordDir) throw 'Usage: node nlsOrders.js <ref_dir> <z103_table> <instances_file> <orders_dir>';
     refDir = refDir.replace(/\/$/, '');
     ordDir = ordDir.replace(/\/$/, '');
+    console.log(`Start: ${newDate}`);
 
     for (let f in files) {
       let path = `${ordDir}/${files[f]}.jsonl`;
@@ -243,8 +246,8 @@ const parseInst = (pol, inst, refData) => {
     mc = 0;
     for await (let line of rl) {
       lc++
-      let m = line.match(/"hrid":"(\d+)"/);
-      if (linkMapRev[m[1]]) {
+      let m = line.match(/"hrid":"(\w+)"/);
+      if (m && linkMapRev[m[1]]) {
         let inst = JSON.parse(line);
         instMap[inst.hrid] = inst;
       }
@@ -456,13 +459,16 @@ const parseInst = (pol, inst, refData) => {
       ttl.o++;
     }
 
+    newDate = new Date();
+    let end = newDate.valueOf();
+    let tt = (end - start)/1000;
     console.log('------------------------');
-    console.log('Done!')
+    console.log(`Done: ${newDate}`)
     console.log('Composite orders:', ttl.o);
     console.log('Purchase orders', ttl.p);
     console.log('Order lines:', ttl.l);
     console.log('POL notes:', ttl.n);
-
+    console.log('Total time (secs):', tt);
   } catch (e) {
     console.log(e);
   }

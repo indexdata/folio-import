@@ -37,7 +37,7 @@ try {
     let outStream = fs.createWriteStream(outFile);
 
     let cfn = fn.replace(/\.jsonl/, '');
-    let changeFile = wdir + '/' + cfn + '-changed.jsonl'
+    let changeFile = cfn + '-changed.jsonl'
     if (fs.existsSync(changeFile)) fs.unlinkSync(changeFile);
     let changeStream = fs.createWriteStream(changeFile);
 
