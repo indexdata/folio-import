@@ -11,7 +11,8 @@ const mods = {
     srs: 'source-storage/records?state=ACTUAL',
     'pre/suc': 'preceding-succeeding-titles',
     'relationships': 'instance-storage/instance-relationships',
-    'bound-withs': 'inventory-storage/bound-with-parts'
+    'bound-withs': 'inventory-storage/bound-with-parts',
+    search: 'search/instances?query=id==*&limit=0'
   },
   users: {
     users: 'users',
