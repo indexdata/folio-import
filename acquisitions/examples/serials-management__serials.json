@@ -1,0 +1,19 @@
+{
+  "serialStatus": {
+    "value": "active"
+  },
+  "description": "description",
+  "orderLine": {
+    "remoteId": "7d7ea877-eb60-542b-8e1c-3f2f2e4d9973",
+    "title": "Print quarterly.",
+    "titleId": "0047a8aa-f3c4-437b-b4ec-21a8f8c02bae"
+  },
+  "notes": [
+    {
+      "note": "Note"
+    },
+    {
+      "note": "Note2"
+    }
+  ]
+}

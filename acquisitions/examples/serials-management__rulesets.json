@@ -1,0 +1,88 @@
+{
+  "rulesetStatus": {
+    "value": "active"
+  },
+  "description": "description",
+  "recurrence": {
+    "timeUnit": {
+      "value": "month"
+    },
+    "period": "12",
+    "issues": "1",
+    "rules": [
+      {
+        "pattern": {
+          "day": "1"
+        },
+        "ordinal": "1",
+        "patternType": "month_date"
+      }
+    ]
+  },
+  "patternType": "month_date",
+  "omission": {
+    "rules": [
+      {
+        "timeUnit": {
+          "value": "day"
+        },
+        "patternType": "day_month",
+        "pattern": {
+          "day": "1",
+          "month": {
+            "value": "january"
+          }
+        }
+      }
+    ]
+  },
+  "templateConfig": {
+    "chronologyRules": [
+      {
+        "ruleLocale": "en",
+        "templateMetadataRuleFormat": "chronology_date",
+        "ruleFormat": {
+          "weekdayFormat": {
+            "value": "slice_lower"
+          },
+          "monthDayFormat": {
+            "value": "number"
+          },
+          "monthFormat": {
+            "value": "slice"
+          },
+          "yearFormat": {
+            "value": "full"
+          }
+        },
+        "index": 0
+      }
+    ],
+    "enumerationRules": [
+      {
+        "templateMetadataRuleFormat": "enumeration_numeric",
+        "ruleFormat": {
+          "levels": [
+            {
+              "units": "1",
+              "format": {
+                "value": "number"
+              },
+              "sequence": {
+                "value": "continuous"
+              },
+              "internalNote": "internal note",
+              "index": 0
+            }
+          ]
+        },
+        "index": 0
+      }
+    ],
+    "templateString": "test template"
+  },
+  "owner": {
+    "id": "3f8a6736-9ccc-4b82-955d-e54cc1e7459c"
+  },
+  "rulesetNumber": "pattern-000000001"
+}

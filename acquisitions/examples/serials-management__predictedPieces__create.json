@@ -1,0 +1,160 @@
+{
+  "id": "aaa0c6c0-c6b5-4add-b575-69daf304bb4a",
+  "dateCreated": "2025-09-11T16:23:05Z",
+  "recurrence": {
+    "id": "6781e61f-a077-4ade-bd79-04813a2ae7b7",
+    "rules": [
+      {
+        "id": "a585a084-85a1-49cb-8aae-959741a2777b",
+        "ordinal": 1,
+        "patternType": {
+          "id": "2c912bea94808c2a0194809ce50500af",
+          "value": "month_date",
+          "label": "Month Date"
+        },
+        "pattern": {
+          "id": "3e4e7c68-c5cb-478c-84a1-f3c74f9b4623",
+          "day": 1
+        }
+      }
+    ],
+    "timeUnit": {
+      "id": "2c912bea94808c2a0194809ce48100a3",
+      "value": "month",
+      "label": "Month"
+    },
+    "period": 12,
+    "issues": 1
+  },
+  "lastUpdated": "2025-09-11T16:23:05Z",
+  "rulesetStatus": {
+    "id": "2c912bea94808c2a0194809ce3ac0088",
+    "value": "active",
+    "label": "Active"
+  },
+  "owner": {
+    "id": "3f8a6736-9ccc-4b82-955d-e54cc1e7459c"
+  },
+  "rulesetNumber": "pattern-000000001",
+  "omission": {
+    "id": "c8683b29-aa51-4887-921e-66a6bc949811",
+    "rules": [
+      {
+        "id": "5ec2773f-ca17-49d2-a637-9970bb199eab",
+        "timeUnit": {
+          "id": "2c912bea94808c2a0194809ce3d8008c",
+          "value": "day",
+          "label": "Day"
+        },
+        "patternType": {
+          "id": "2c912bea94808c2a0194809ce3e90092",
+          "value": "day_month",
+          "label": "Day Month"
+        },
+        "pattern": {
+          "id": "7233be66-5e9f-4aa1-affd-f01ac9c31a89",
+          "month": {
+            "id": "2c912bea94808c2a0194809ce2ea0069",
+            "value": "january",
+            "label": "January"
+          },
+          "day": 1
+        }
+      }
+    ]
+  },
+  "templateConfig": {
+    "id": "c97f981a-cd1b-4ce7-aaf4-92056da41967",
+    "chronologyRules": [
+      {
+        "id": "59a55f62-a427-4b19-bbd9-fd7adc05a454",
+        "index": 0,
+        "ruleLocale": "en",
+        "templateMetadataRuleFormat": {
+          "id": "2c912bea94808c2a0194809ce5ba00cd",
+          "value": "chronology_date",
+          "label": "Date"
+        },
+        "ruleFormat": {
+          "id": "9b642508-bc79-4e30-a61c-a34483882732",
+          "yearFormat": {
+            "id": "2c912bea94808c2a0194809ce4cb00a6",
+            "value": "full",
+            "label": "Full"
+          },
+          "monthFormat": {
+            "id": "2c912bea94808c2a0194809ce4d600aa",
+            "value": "slice",
+            "label": "Slice"
+          },
+          "weekdayFormat": {
+            "id": "2c912bea94808c2a0194809ce59500c2",
+            "value": "slice_lower",
+            "label": "Slice Lower"
+          },
+          "monthDayFormat": {
+            "id": "2c912bea94808c2a0194809ce5a500c8",
+            "value": "number",
+            "label": "Number"
+          }
+        }
+      }
+    ],
+    "enumerationRules": [
+      {
+        "id": "e27924a2-b907-47a1-9fdb-dc8db887df62",
+        "index": 0,
+        "templateMetadataRuleFormat": {
+          "id": "2c912bea94808c2a0194809ce5b800cb",
+          "value": "enumeration_numeric",
+          "label": "Numeric"
+        },
+        "ruleFormat": {
+          "id": "4cf258e1-cb0b-4b9a-9bec-94a1021d8270",
+          "levels": [
+            {
+              "id": "8d2fa624-9110-4328-af2e-adc6ccf55c83",
+              "index": 0,
+              "internalNote": "internal note",
+              "units": 1,
+              "sequence": {
+                "id": "2c912bea94808c2a0194809ce52d00b6",
+                "value": "continuous",
+                "label": "Continuous"
+              },
+              "format": {
+                "id": "2c912bea94808c2a0194809ce53400b9",
+                "value": "number",
+                "label": "Number"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "templateString": "test template"
+  },
+  "description": "description",
+  "startDate": "2025-09-11",
+  "note": "note",
+  "startingValues": [
+    {
+      "userConfiguredTemplateMetadataType": "chronology",
+      "index": 0,
+      "metadataType": {}
+    },
+    {
+      "userConfiguredTemplateMetadataType": "enumeration",
+      "index": 0,
+      "metadataType": {
+        "levels": [
+          {
+            "rawValue": "one",
+            "index": 0
+          }
+        ]
+      }
+    }
+  ],
+  "numberOfCycles": 1
+}
