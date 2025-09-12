@@ -207,7 +207,7 @@ let modName = process.argv[3];
       'data-export__job-profiles'
     ]
 
-    let userMod = '';
+    custMods = {};
     try {
       console.log('Getting modules list...');
       let res = await superagent
@@ -215,11 +215,13 @@ let modName = process.argv[3];
         .set('x-okapi-token', authToken);
         for (let x = 0; x < res.body.length; x++) {
           let m = res.body[x];
-          if (m.id.match(/mod-users-\d/)) userMod = m.id;
+          if (m.id.match(/mod-users-\d/)) custMods.users= m.id;
+          if (m.id.match(/mod-orders-storage/)) custMods.orders= m.id;
         };
     } catch (e) {
       console.log(e);
     }
+    // console.log(custMods); return;
     
     let paths = [];
 
@@ -302,12 +304,13 @@ let modName = process.argv[3];
       try {
         let res = {};
         if (url.match(/custom-fields/)) {
+          let mkey = (paths[x].mod.match(/order/i)) ? 'orders' : 'users';
           res = await superagent
             .get(url)
             .timeout({ response: 5000 })
             .set('accept', 'application/json')
             .set('x-okapi-token', authToken)
-            .set('x-okapi-module-id', userMod);
+            .set('x-okapi-module-id', custMods[mkey]);
         } else {
           res = await superagent
             .get(url)
