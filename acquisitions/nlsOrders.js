@@ -363,6 +363,7 @@ const parseInst = (pol, inst, refData) => {
       let oo = d.oo[akey];
       let wfs = (oo) ? 'Open' : 'Closed';
       let vrf = oo['POL Vendor reference number'];
+      let kos = oo['Kostnadsställe'];
       let puNum;
       if (vrf) {
         puNum = vrf;
@@ -412,7 +413,8 @@ const parseInst = (pol, inst, refData) => {
         orderFormat: 'Physical Resource',
         source: 'User',
         cost: cost,
-        poLineNumber: o.poNumber + '-1'
+        poLineNumber: o.poNumber + '-1',
+        customFields: {}
       }
 
       if (inst) {
@@ -432,6 +434,7 @@ const parseInst = (pol, inst, refData) => {
             }
           ]
         };
+        if (kos) pol.customFields.kostnadsstalle = kos;
       }
 
       if (pol.orderFormat === 'Physical Resource') {
