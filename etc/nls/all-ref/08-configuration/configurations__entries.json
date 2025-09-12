@@ -40,6 +40,19 @@
       }
     },
     {
+      "id": "52801d6a-669e-4093-a83e-ce75e113124e",
+      "module": "ORDERS CRUD MODULE",
+      "configName": "custom_fields_label",
+      "enabled": true,
+      "value": "KB-information",
+      "metadata": {
+        "createdDate": "2025-05-27T10:40:56.928+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-09-11T14:27:50.058+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    },
+    {
       "id": "4569f3c8-0828-484d-843d-e9f2786a0b27",
       "module": "ORDERS",
       "configName": "inventory-instanceTypeCode",
@@ -49,19 +62,6 @@
         "createdDate": "2025-06-16T07:47:47.385+00:00",
         "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
         "updatedDate": "2025-06-16T07:47:47.385+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
-      }
-    },
-    {
-      "id": "52801d6a-669e-4093-a83e-ce75e113124e",
-      "module": "ORDERS CRUD MODULE",
-      "configName": "custom_fields_label",
-      "enabled": true,
-      "value": "KB-information",
-      "metadata": {
-        "createdDate": "2025-05-27T10:40:56.928+00:00",
-        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-06-16T08:28:23.831+00:00",
         "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
       }
     },

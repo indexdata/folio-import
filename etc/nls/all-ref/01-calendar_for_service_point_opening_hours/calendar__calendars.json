@@ -20,10 +20,10 @@
       ],
       "normalHours": [
         {
-          "startDay": "THURSDAY",
-          "startTime": "09:00:00",
-          "endDay": "THURSDAY",
-          "endTime": "19:00:00"
+          "startDay": "SATURDAY",
+          "startTime": "11:00:00",
+          "endDay": "SATURDAY",
+          "endTime": "15:00:00"
         },
         {
           "startDay": "TUESDAY",
@@ -32,16 +32,16 @@
           "endTime": "19:00:00"
         },
         {
+          "startDay": "THURSDAY",
+          "startTime": "09:00:00",
+          "endDay": "THURSDAY",
+          "endTime": "19:00:00"
+        },
+        {
           "startDay": "MONDAY",
           "startTime": "09:00:00",
           "endDay": "MONDAY",
           "endTime": "19:00:00"
-        },
-        {
-          "startDay": "SATURDAY",
-          "startTime": "11:00:00",
-          "endDay": "SATURDAY",
-          "endTime": "15:00:00"
         },
         {
           "startDay": "WEDNESDAY",

@@ -1,51 +1,88 @@
 {
   "customFields": [
     {
-      "id": "9779d526-579d-434c-b155-89cb187141a6",
-      "name": "Personnummer",
-      "refId": "personnummer",
+      "id": "94082bcd-3fbe-4c1f-9636-da5ded63856c",
+      "name": "Ämne",
+      "refId": "amne",
       "type": "TEXTBOX_SHORT",
-      "entityType": "user",
+      "entityType": "po_line",
       "visible": true,
       "required": false,
       "isRepeatable": false,
       "order": 1,
-      "helpText": "10 eller 12 siffor",
+      "helpText": "T. ex Bokhistoria",
       "textField": {
         "fieldFormat": "TEXT"
       },
       "metadata": {
-        "createdDate": "2023-03-16T11:11:05.921+00:00",
-        "createdByUserId": "39a1ef78-5c0d-426c-b997-cb65c4f44ebd",
-        "createdByUsername": "kbtest",
-        "updatedDate": "2025-07-03T08:32:44.059+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedByUsername": "kajsa.backius"
+        "createdDate": "2025-09-11T14:17:27.290+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-09-11T14:27:50.073+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
       }
     },
     {
-      "id": "fed73747-9132-4196-9c70-34696a0066b7",
-      "name": "Aleph-id",
-      "refId": "alephid",
+      "id": "248e91f0-dad8-4f43-bb7e-324b5c41b687",
+      "name": "Kostnadsställe",
+      "refId": "kostnadsstalle",
       "type": "TEXTBOX_SHORT",
-      "entityType": "user",
+      "entityType": "po_line",
       "visible": true,
       "required": false,
       "isRepeatable": false,
       "order": 2,
-      "helpText": "",
+      "helpText": "T. ex SUECANA",
       "textField": {
         "fieldFormat": "TEXT"
       },
       "metadata": {
-        "createdDate": "2025-07-03T08:32:44.059+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "createdByUsername": "kajsa.backius",
-        "updatedDate": "2025-07-03T08:32:44.059+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedByUsername": "kajsa.backius"
+        "createdDate": "2025-09-11T14:18:49.696+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-09-11T14:27:50.073+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+      }
+    },
+    {
+      "id": "74d52446-81e1-4f00-aef2-5ab0716fd5f4",
+      "name": "Flerbandsverk",
+      "refId": "flerbandsverk",
+      "type": "RADIO_BUTTON",
+      "entityType": "po_line",
+      "visible": true,
+      "required": false,
+      "isRepeatable": false,
+      "order": 3,
+      "helpText": "",
+      "selectField": {
+        "multiSelect": false,
+        "options": {
+          "values": [
+            {
+              "id": "opt_0",
+              "value": "Ja",
+              "default": false
+            },
+            {
+              "id": "opt_1",
+              "value": "Nej",
+              "default": false
+            },
+            {
+              "id": "opt_2",
+              "value": "Oklart",
+              "default": false
+            }
+          ],
+          "sortingOrder": "CUSTOM"
+        }
+      },
+      "metadata": {
+        "createdDate": "2025-09-11T14:27:50.073+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2025-09-11T14:27:50.073+00:00",
+        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
       }
     }
   ],
-  "totalRecords": 2
+  "totalRecords": 3
 }
