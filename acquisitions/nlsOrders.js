@@ -12,9 +12,9 @@ try {
 
 const ns = '3eb5d7ac-7f51-4922-bd58-512a1f9710ac';
 let refDir = process.argv[2];
-let ordDir = process.argv[5];
 let z103file = process.argv[3];
 let instFile = process.argv[4];
+let ordDir = process.argv[5];
 
 const files = {
   o: 'composite-orders',
@@ -25,7 +25,8 @@ const files = {
 };
 
 const zfiles = {
-  oo: 'open-orders.csv',
+  oo: 'open-orders.tsv',
+  so: 'standing-orders.tsv',
   z68: 'z68.dsv',
   z16: 'z16.dsv',
   z104: 'z104.dsv',
@@ -144,6 +145,8 @@ const parseInst = (pol, inst, refData) => {
     });
     // throw(refData);
 
+    const linkMap = {};
+    const linkMapRev = {};
     const d = {};
     for (let f in zfiles) {
       let path = ordDir + '/' + zfiles[f];
@@ -175,8 +178,13 @@ const parseInst = (pol, inst, refData) => {
               dx[k] = o;
             }
           } else if (f === 'oo') {
-              k = l['adm. systemID']; 
-              d[f][k] = l;
+            k = l['adm. systemID']; 
+            d[f][k] = l;
+          } else if (f === 'so') {
+            k = l['Sysnr Aleph (HRID)'];
+            delete l['Sysnr Aleph (HRID)'];
+            d[f][k] = l;
+            linkMapRev[k] = 1; 
           } else {
             let k;
             if (f === 'z104') {
@@ -190,7 +198,7 @@ const parseInst = (pol, inst, refData) => {
         });
       }
     }
-    // throw(d.z16);
+    // throw(d.so);
 
     adminMap = {};
     d.z68.forEach(r => {
@@ -205,8 +213,7 @@ const parseInst = (pol, inst, refData) => {
 
     // map link files;
     console.log(`INFO Reading linker data from ${z103file}`);
-    const linkMap = {};
-    const linkMapRev = {};
+
     let fileStream = fs.createReadStream(z103file);
     let rl = readline.createInterface({
       input: fileStream,
@@ -254,7 +261,7 @@ const parseInst = (pol, inst, refData) => {
       if (lc % 100000 === 0) console.log('Instance lines read:', lc);
     }
     console.log('Instance lines read:', lc);
-    // throw(instMap);
+    // throw(instMap['004351406']);
 
     const ttl = {
       o: 0,
@@ -345,8 +352,6 @@ const parseInst = (pol, inst, refData) => {
           ttl.n++
         });
       }
-
-      
     });
 
     for (let k in d.z16) {
@@ -460,6 +465,17 @@ const parseInst = (pol, inst, refData) => {
       o.poLines = [ pol ];
       writeOut(files.o, o);
       ttl.o++;
+    }
+
+    // standing orders??
+    if (d.so) {
+      for (let x in d.so) {
+        let r = d.so[x];
+        let inst = instMap[x];
+        if (inst) {
+          // console.log(r);
+        }
+      }
     }
 
     newDate = new Date();
