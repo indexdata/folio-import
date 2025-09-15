@@ -6,101 +6,102 @@ import { Buffer } from 'node:buffer';
  * @param {boolean} txt
  * @returns {Object} a record object with "mij", "fields" objects and optional text rendering
  */
-export function parseMarc(raw, txt) {
-  try {
-    let record = {};
-    let leader = raw.substring(0, 24);
-    let dirEnd = parseInt(leader.substring(12, 17), 10);
-    let dir = raw.substring(24, dirEnd);
-    let dirParts = dir.match(/.{12}/g);
-    let mij = {
-      leader: leader,
-      fields: [],
-    };
-    let fields = {
-      leader: leader,
-    };
-    let lines = (txt) ? [ leader ] : [];
-    let buf = Buffer.from(raw);
-    dirParts.forEach(d => {
-      let p = d.match(/^(.{3})(.{4})(.{5})/);
-      let tag = p[1];
-      let len = parseInt(p[2], 10) - 1;
-      let start = parseInt(p[3], 10) + dirEnd;
-      let end = start + len;
-      let obj = {};
-      let data = buf.subarray(start, end).toString();
-      if (!fields[tag]) fields[tag] = [];
-      if (data.match(/\x1F/)) {
-        obj.ind1 = data.substring(0, 1).replace(/\W/, ' ');
-        obj.ind2 = data.substring(1, 2).replace(/\W/, ' ');
-        let subs = data.split(/\x1F/);
-        subs.shift();
-        obj.subfields = [];
-        let sparts = (txt) ? [ `${tag} ${obj.ind1}${obj.ind2}`] : [];
-        subs.forEach(s => {
-          let code = s.substring(0, 1);
-          let data = s.substring(1);
-          if (code) obj.subfields.push({ [code]: data });
-          if (txt) {
-            sparts.push(`${code} ${data}`);
-          }
-        });
-        mij.fields.push({ [tag]: obj });
-        fields[tag].push(obj);
-        if (txt) {
-          lines.push(sparts.join(' '));
-        }
-
-      } else {
-        mij.fields.push({ [tag]: data });
-        fields[tag].push(data);
-        if (txt) {
-          lines.push(`${tag} ${data}`);
-        }
-      }
-    });
-    record = {
-      mij: mij,
-      fields: fields,
-      text: lines.join('\n'),
-      deleteField: (tag, occurance) => {
-        if (fields[tag]) {
-          fields[tag].splice(occurance, 1);
-        } 
-        mij.fields.forEach((f, i) => {
-          let o = 0;
-          if (f[tag] && o === occurance) {
-            mij.fields.splice(i, 1);
-            o++;
-          }
-        });
-      },
-      addField: (tag, data) => {
-        mij.fields.push({[tag]: data});
-        if (!fields[tag]) fields[tag] = [];
-        fields[tag].push(data);
-      },
-      updateField: (tag, data, occurance) => {
-        let o = (occurance === undefined) ? 0 : occurance;
-        if (fields[tag]) {
-          if (fields[tag][o]) {
-            fields[tag][o] = data;
-          }
-          mij.fields.forEach((f) => {
-            let ctag = Object.keys(f)[0];
-            if (ctag === tag) {
-              f[tag] = data;
-            }
-          });
-        }
-      }
-    };
-    
-    return record;
-  } catch(e) {
-    throw new Error(e);
+export function parseMarc(raw, txt = false) {
+  if (typeof raw !== 'string') {
+    throw new TypeError('raw must be a string');
   }
+  if (typeof txt !== 'boolean') {
+    throw new TypeError('txt must be a boolean');
+  }
+
+  const leader = raw.substring(0, 24);
+  const dirEnd = parseInt(leader.substring(12, 17), 10);
+  const dir = raw.substring(24, dirEnd);
+  const dirParts = dir.match(/.{12}/g) || [];
+  const mij = { leader, fields: [] };
+  const fields = { leader };
+  const lines = txt ? [leader] : [];
+  const buf = Buffer.from(raw);
+
+  dirParts.forEach(d => {
+    const p = d.match(/^(.{3})(.{4})(.{5})/);
+    const tag = p[1];
+    const len = parseInt(p[2], 10) - 1;
+    const start = parseInt(p[3], 10) + dirEnd;
+    const end = start + len;
+    const fieldData = buf.subarray(start, end).toString();
+
+    if (!fields[tag]) fields[tag] = [];
+
+    if (fieldData.includes('\x1F')) {
+      const ind1 = fieldData.substring(0, 1).replace(/\W/, ' ');
+      const ind2 = fieldData.substring(1, 2).replace(/\W/, ' ');
+      const subs = fieldData.split(/\x1F/).slice(1);
+      const subfields = subs.map(s => {
+        const code = s.substring(0, 1);
+        const value = s.substring(1);
+        return { [code]: value };
+      });
+
+      const fieldObj = { ind1, ind2, subfields };
+      mij.fields.push({ [tag]: fieldObj });
+      fields[tag].push(fieldObj);
+
+      if (txt) {
+        const sparts = [`${tag} ${ind1}${ind2}`, ...subfields.map(sf => {
+          const code = Object.keys(sf)[0];
+          return `$${code} ${sf[code]}`;
+        })];
+        lines.push(sparts.join(' '));
+      }
+    } else {
+      mij.fields.push({ [tag]: fieldData });
+      fields[tag].push(fieldData);
+      if (txt) lines.push(`${tag} ${fieldData}`);
+    }
+  });
+
+  function deleteField(tag, occurrence) {
+    if (fields[tag]) fields[tag].splice(occurrence, 1);
+    let count = 0;
+    for (let i = 0; i < mij.fields.length; i++) {
+      if (Object.keys(mij.fields[i])[0] === tag) {
+        if (count === occurrence) {
+          mij.fields.splice(i, 1);
+          break;
+        }
+        count++;
+      }
+    }
+  }
+
+  function addField(tag, data) {
+    mij.fields.push({ [tag]: data });
+    if (!fields[tag]) fields[tag] = [];
+    fields[tag].push(data);
+  }
+
+  function updateField(tag, data, occurrence = 0) {
+    if (fields[tag] && fields[tag][occurrence]) {
+      fields[tag][occurrence] = data;
+      let count = 0;
+      mij.fields.forEach(f => {
+        if (Object.keys(f)[0] === tag && count === occurrence) {
+          f[tag] = data;
+        }
+        if (Object.keys(f)[0] === tag) count++;
+      });
+    }
+  }
+
+  return {
+    mij,
+    fields,
+    text: lines.join('\n'),
+    deleteField,
+    addField,
+    updateField
+  };
 }
 
 /**
@@ -110,6 +111,7 @@ export function parseMarc(raw, txt) {
  * @param {string|number} [ delim= ] - An optional join character (default: " "), set to -1 to return an array
  * @returns {string|array}
  */
+
 export function getSubs(field, codes, delim) {
   let dl = (delim) ? delim : ' ';
   let out = [];
