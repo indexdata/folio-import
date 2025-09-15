@@ -10,10 +10,7 @@ let ep = process.argv[2];
 let debug = process.env.DEBUG;
 let dolog = process.env.LOG;
 
-const wait = (ms) => {
-  console.log(`(Waiting ${ms}ms...)`);
-  return new Promise((resolve) => setTimeout(resolve, ms));
-};
+const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 (async () => {
   try {

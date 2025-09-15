@@ -10,10 +10,7 @@ let inFile = process.argv[3];
 let ep = process.argv[2];
 let ver = process.env.version;
 
-const wait = (ms) => {
-  console.log(`(Waiting ${ms}ms...)`);
-  return new Promise((resolve) => setTimeout(resolve, ms));
-};
+const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 (async () => {
   try {
