@@ -11,6 +11,7 @@ try {
 }
 
 const ns = '3eb5d7ac-7f51-4922-bd58-512a1f9710ac';
+const tstr = 'KB Stående order';
 let refDir = process.argv[2];
 let z103file = process.argv[3];
 let instFile = process.argv[4];
@@ -132,18 +133,32 @@ const parseInst = (pol, inst, refData) => {
         }
         refData[prop] = {};
         if (prop === 'identifierTypes') refData.productIdentifiers = {};
+        
         j[prop].forEach(d => {
+
           let n = d.name || d.templateName || d.value;
           let c = d.code || d.templateCode;
+
           if (prop === 'identifierTypes') {
             if (!d.name.match(/control|OCLC|LCCN|local|libris|LIBR|katalog/i)) refData.productIdentifiers[d.id] = d.name;
+          }
+          if (prop === 'customFields') {
+            let o = { refId: d.refId };
+            if (d.selectField) {
+              o.opts = {};
+              d.selectField.options.values.forEach(v => {
+                o.opts[v.value] = v.id;
+              });
+            }
+            d.id = o;
+            c = d.refId;
           }
           if (n) refData[prop][n] = d.id;
           if (c) refData[prop][c] = d.id;
         });
       }
     });
-    // throw(refData);
+    // throw(refData.customFields);
 
     const linkMap = {};
     const linkMapRev = {};
@@ -159,7 +174,8 @@ const parseInst = (pol, inst, refData) => {
         delimiter: '\t',
         relax_column_count: true,
         quote: null,
-        trim: true
+        trim: true,
+        bom: true
       });
 
       if (f === 'z68') {
@@ -269,10 +285,12 @@ const parseInst = (pol, inst, refData) => {
       l: 0,
       n: 0
     }
-
+    const tid = refData.orderTemplates[tstr];
+    const hridSeen = {};
     d.z68.forEach(r => {
       let key = r.Z68_REC_KEY.substring(2, 9);
       let akey = r.Z68_REC_KEY.substring(0, 9);
+      hridSeen[akey] = 1;
       let instId = linkMap[akey];
       let inst = instMap[instId];
       let id = uuid(key, ns);
@@ -470,11 +488,88 @@ const parseInst = (pol, inst, refData) => {
     // standing orders??
     if (d.so) {
       for (let x in d.so) {
+        if (hridSeen[x]) continue;
         let r = d.so[x];
-        let inst = instMap[x];
-        if (inst) {
-          // console.log(r);
+        let poNum = 'SO' + x;
+        let id = uuid(poNum, ns);
+        let v = r['Material supplier (Vendor, in Organizations)'];
+        let vid = refData.organizations[v];
+
+        let o = {
+          id: id,
+          manualPo: true,
+          poNumber: poNum,
+          orderType: 'Ongoing',
+          reEncumber: true,
+          template: tid,
+          vendor: vid,
+          workflowStatus: 'Open',
+          tags: { tagList: [ "Aleph" ] }
+        };
+        if (o.orderType === 'Ongoing') {
+          o.ongoing = {
+            isSubscription: true,
+            manualRenewal: true,
+            renewalDate: curYear + '-11-30',
+            reviewPeriod: 90
+          };
         }
+        writeOut(files.p, o);
+        ttl.p++;
+        o.poLines = [];
+        let inst = instMap[x];
+        let ti = r['Title'];
+        let flerb = r.Flerbandsverk;
+        let amne = r['Ämne (Custom field Ämne)'];
+        let oform = r['Order format'];
+        let polNum = o.poNumber + '-1';
+        let issn = r['ISSN/99-nummer (sync from Inventory Identifiers ISSN or ISBN)'];
+        let amStr = r['Acquisition method'];
+        let amId = refData.acquisitionMethods[amStr];
+        let mt = r['Material type'];
+        let pol = {
+          id: uuid(polNum, ns),
+          purchaseOrderId: o.id,
+          acquisitionMethod: amId,
+          orderFormat: oform,
+          source: 'User',
+          cost: cost,
+          details: {},
+          customFields: {}
+        }
+        if (amne) pol.customFields.amne = amne;
+        if (flerb) pol.customFields.flerbandsverk = refData.customFields.flerbandsverk.opts[flerb];
+        pol.physical = {
+          createInventory: 'None',
+          materialType: refData.mtypes[mt] || refData.mtypes.unspecified,
+          volumes: []
+        };
+        if (inst) {
+          parseInst(pol, inst, refData);
+        } else {
+          pol.titleOrPackage = ti;
+          if (issn) {
+            let t = 'ISSN';
+            if (issn.match(/^97[89]/)) {
+              t = 'ISBN';
+            } else if (issn.match(/^\w{14}/)) {
+              t = 'Libris';
+            }
+            let typeId = refData.identifierTypes[t];
+            pol.details.productIds = [{ productId: issn, productIdType: typeId }];
+          }
+        }
+        // console.log(pol);
+        o.poLines.push(pol);
+        writeOut(files.o, o);
+        ttl.o++;
+
+        writeOut(files.l, pol);
+        ttl.l++;
+
+        delete o.poLines;
+        o.workflowStatus = 'Pending';
+        writeOut(files.c, o)
       }
     }
 
