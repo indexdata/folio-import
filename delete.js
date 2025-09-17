@@ -24,6 +24,7 @@ const wait = (ms) => {
     try {
       const res = await superagent
         .delete(url)
+        .set('User-Agent', config.agent)
         .set('x-okapi-token', config.token);
         console.log('HTTP status:', res.status);
     } catch (e) {

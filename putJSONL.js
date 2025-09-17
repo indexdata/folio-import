@@ -94,6 +94,7 @@ const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
         try {
           let res = await superagent
             .get(recUrl)
+            .set('User-Agent', config.agent)
             .set('x-okapi-token', config.token)
             .set('content-type', 'application/json');
           logger.info(`  Setting version number to ${res.body._version}`);
@@ -111,6 +112,7 @@ const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
           logger.info(`  GET ${getUrl}`);
             let res = await superagent
               .get(getUrl)
+              .set('User-Agent', config.agent)
               .set('x-okapi-token', config.token);
             if (res.body.length === 1) {
               recUrl = `${actionUrl}/${res.body[0].id}`;
@@ -126,6 +128,7 @@ const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
         let res = await superagent
           .put(recUrl)
           .send(rec)
+          .set('User-Agent', config.agent)
           .set('x-okapi-tenant', config.tenant)
           .set('x-okapi-token', config.token)
           .set('content-type', 'application/json')

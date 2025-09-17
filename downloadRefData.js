@@ -212,6 +212,7 @@ let modName = process.argv[3];
       console.log('Getting modules list...');
       let res = await superagent
         .get(`${config.okapi}/_/proxy/tenants/${config.tenant}/modules`)
+        .set('User-Agent', config.agent)
         .set('x-okapi-token', authToken);
         for (let x = 0; x < res.body.length; x++) {
           let m = res.body[x];
@@ -229,7 +230,8 @@ let modName = process.argv[3];
       let ordStr = z.toString().padStart(2, '0')
       let url = mdUrls[z];
       try {
-        let res = await superagent.get(url);
+        let res = await superagent.get(url)
+          .set('User-Agent', config.agent);
         let md = JSON.parse(res.text);
         let name = md.name.replace(/ +/g, '_');
         if (name === '${info.app.name}') name = 'agreements';
@@ -308,6 +310,7 @@ let modName = process.argv[3];
           res = await superagent
             .get(url)
             .timeout({ response: 5000 })
+            .set('User-Agent', config.agent)
             .set('accept', 'application/json')
             .set('x-okapi-token', authToken)
             .set('x-okapi-module-id', custMods[mkey]);
@@ -315,6 +318,7 @@ let modName = process.argv[3];
           res = await superagent
             .get(url)
             .timeout({response: 9000})
+            .set('User-Agent', config.agent)
             .set('accept', 'application/json')
             .set('x-okapi-token', authToken)
         }

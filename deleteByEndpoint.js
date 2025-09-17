@@ -59,6 +59,7 @@ const wait = (ms) => {
       try {
         const res = await superagent
           .get(getUrl)
+          .set('User-Agent', config.agent)
           .set('accept', 'application/json')
           .set('x-okapi-tenant', config.tenant)
           .set('x-okapi-token', config.token);
@@ -88,6 +89,7 @@ const wait = (ms) => {
       try {
       	await superagent
           .delete(`${deleteUrl}/${id}`)
+          .set('User-Agent', config.agent)
           .set('accept', '*/*')
           .set('x-okapi-tenant', config.tenant)
           .set('x-okapi-token', config.token);

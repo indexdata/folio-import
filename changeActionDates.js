@@ -23,6 +23,7 @@ const getId = async (config, id, ep) => {
   try {
     res = await superagent
       .get(url)
+      .set('User-Agent', config.agent)
       .set('x-okapi-token', config.token);
     rec = res.body;
   } catch (e) {
@@ -53,6 +54,7 @@ const putId = async (config, id, ep, payload) => {
     res = await superagent
       .put(url)
       .send(payload)
+      .set('User-Agent', config.agent)
       .set('content-type', 'application/json')
       .set('x-okapi-token', config.token);
   } catch (e) {

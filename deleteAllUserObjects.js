@@ -29,6 +29,7 @@ const getId = async (config, uid, ep, prop) => {
   try {
     res = await superagent
       .get(url)
+      .set('User-Agent', config.agent)
       .set('x-okapi-token', config.token);
     let arr = res.body[prop];
     if (arr && arr[0]) {
@@ -47,6 +48,7 @@ const delId = async (config, id, ep) => {
   try {
     res = await superagent
       .delete(url)
+      .set('User-Agent', config.agent)
       .set('x-okapi-token', config.token);
     out = res.body
   } catch (e) {

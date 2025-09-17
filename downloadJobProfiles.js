@@ -16,6 +16,7 @@ let profId = process.argv[2];
       try {
         let res = await superagent
           .get(url)
+          .set('User-Agent', config.agent)
           .set('x-okapi-token', config.token);
         let ostr = JSON.stringify(res.body);
         return res.body;
@@ -48,6 +49,7 @@ let profId = process.argv[2];
         console.log('Getting job profiles...');
         let res = await superagent
           .get(`${config.okapi}/data-import-profiles/jobProfiles?limit=1000`)
+          .set('User-Agent', config.agent)
           .set('x-okapi-token', config.token);
 
         res.body.jobProfiles.forEach(j => {

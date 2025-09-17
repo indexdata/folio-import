@@ -41,6 +41,7 @@ const wait = (ms) => {
       try {
         const res = await superagent
           .get(getUrl)
+          .set('User-Agent', config.agent)
           .set('accept', 'application/json')
           .set('x-okapi-tenant', config.tenant)
           .set('x-okapi-token', config.token); 
@@ -59,6 +60,7 @@ const wait = (ms) => {
         console.log(`GET ${turl}`);
         let res = await superagent
           .get(turl)
+          .set('User-Agent', config.agent)
           .set('accept', 'application/json')
           .set('x-okapi-tenant', config.tenant)
           .set('x-okapi-token', config.token);
@@ -74,6 +76,7 @@ const wait = (ms) => {
         try {
           await superagent
             .delete(`${config.okapi}/source-storage/snapshots/${id}`)
+            .set('User-Agent', config.agent)
             .set('accept', 'text/plain')
             .set('x-okapi-tenant', config.tenant)
             .set('x-okapi-token', config.token);

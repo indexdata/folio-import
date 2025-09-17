@@ -42,6 +42,7 @@ let offset = parseInt(argv.o, 10) || 0;
         let res = await superagent
           .get(url)
           .timeout({response: 120000})
+          .set('User-Agent', config.agent)
           .set('accept', 'application/json')
           .set('x-okapi-token', authToken);
         if (argv.l) {

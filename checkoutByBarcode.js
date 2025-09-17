@@ -24,6 +24,7 @@ const post_put = async (authToken, url, checkout, r, username, config) => {
       await superagent
         .put(url)
         .timeout(tout)
+        .set('User-Agent', config.agent)
         .set('accept', 'application/json', 'text/plain')
         .set('x-okapi-token', authToken)
         .set('content-type', 'application/json')
@@ -33,6 +34,7 @@ const post_put = async (authToken, url, checkout, r, username, config) => {
       let res = await superagent
         .post(url)
         .timeout(tout)
+        .set('User-Agent', config.agent)
         .set('accept', 'application/json', 'text/plain')
         .set('x-okapi-token', authToken)
         .set('content-type', 'application/json')
@@ -75,6 +77,7 @@ const post_put = async (authToken, url, checkout, r, username, config) => {
         try {
           let res = await superagent
             .get(`${config.okapi}/users?query=username==${username}`)
+            .set('User-Agent', config.agent)
             .set('x-okapi-token', config.token);
           let u = res.body.users[0];
           if (u.barcode) {
@@ -143,7 +146,7 @@ const post_put = async (authToken, url, checkout, r, username, config) => {
       let data = JSON.parse(line);
       delete data.errorMessage;
       let errData = JSON.parse(line);
-      delete __;
+      delete data.__;
       let errMsg;
       let dueDate;
       let claimedReturnedDate = '';

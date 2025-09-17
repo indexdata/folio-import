@@ -16,6 +16,7 @@ let dbug = process.env.DEBUG;
     try {
       const res = await superagent
       .get(url)
+      .set('User-Agent', config.agent)
       .set('x-okapi-token', config.token)
       .set('accept', 'application/json');
       console.log(JSON.stringify(res.body, null, 2));

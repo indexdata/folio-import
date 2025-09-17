@@ -84,6 +84,7 @@ const sep = '-------------------------------------------------------------------
         console.log(`GET ${url}`);
         let res = await superagent
           .get(url)
+          .set('User-Agent', config.agent)
           .set('accept', 'application/json')
           .set('x-okapi-token', config.token);
         return res.body;
@@ -97,6 +98,7 @@ const sep = '-------------------------------------------------------------------
         console.log(`DELETE ${url}`);
         let res = await superagent
           .delete(url)
+          .set('User-Agent', config.agent)
           .set('x-okapi-token', config.token)
         return res;
       } catch (e) {

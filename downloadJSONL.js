@@ -65,6 +65,7 @@ let dbug = process.env.DEBUG;
         let res = await superagent
           .get(url)
           .timeout({response: 10000})
+          .set('User-Agent', config.agent)
           .set('accept', 'application/json')
           .set('x-okapi-token', config.token);
         for (let x in res.body) {

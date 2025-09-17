@@ -13,15 +13,15 @@ const action = process.argv[2];
     if (!action || !action.match(/find|delete/)) {
       throw new Error('Usage: deleteEmptyLocations <action (find|delete)>');
     }
-    const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
-    const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
+    const config = await getAuthToken(superagent);
     
     const locUrl = `${config.okapi}/locations?query=isActive==true&limit=5000`;
     console.warn(`Getting locations ${locUrl}`);
       try {
         let res = await superagent
           .get(locUrl)
-          .set('x-okapi-token', authToken)
+          .set('User-Agent', config.agent)
+          .set('x-okapi-token', config.token)
           .set('accept', 'application/json');
         let totLocs = res.body.totalRecords;
         console.warn(`${totLocs} active locations found...`);
@@ -31,7 +31,8 @@ const action = process.argv[2];
             let hurl = `${config.okapi}/holdings-storage/holdings?query=permanentLocationId==${l.id}&limit=0`;
             let hres = await superagent
               .get(hurl)
-              .set('x-okapi-token', authToken)
+              .set('User-Agent', config.agent)
+              .set('x-okapi-token', config.token)
               .set('accept', 'application/json');
             let hcount = hres.body.totalRecords;
             if (action === 'delete' && hcount === 0) {
@@ -39,7 +40,8 @@ const action = process.argv[2];
               let durl = `${config.okapi}/locations/${l.id}`;
               let dres = await superagent
                 .delete(durl)
-                .set('x-okapi-token', authToken)
+                .set('User-Agent', config.agent)
+                .set('x-okapi-token', config.token)
                 .set('accept', 'text/plain')
             } else if (hcount === 0) {
               console.log(JSON.stringify(l));

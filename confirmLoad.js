@@ -15,7 +15,7 @@ let inFile = process.argv[3];
     } else if (!fs.existsSync(inFile)) {
       throw new Error('Can\'t find input file');
     } 
-    const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
+    const config = await getAuthToken(superagent);
 
     ep = ep.replace(/__/g, '/');
     ep = ep.replace(/^\.x\//, '');
@@ -25,8 +25,6 @@ let inFile = process.argv[3];
     if (fs.existsSync(notFoundPath)) {
       fs.unlinkSync(notFoundPath);
     }
-    
-    const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
 
     const actionUrl = `${config.okapi}/${ep}`;
     let updated = 0;
@@ -50,7 +48,8 @@ let inFile = process.argv[3];
       try {
         let res = await superagent
           .get(recUrl)
-          .set('x-okapi-token', authToken)
+          .set('User-Agent', config.agent)
+          .set('x-okapi-token', config.token)
           .set('accept', 'application/json');
         success++;
       } catch (e) {
