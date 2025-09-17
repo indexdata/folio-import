@@ -14,7 +14,7 @@ let paths = {
   acq: `acquisitions-units/units locations material-types batch-group-storage/batch-groups orders/acquisition-methods
         finance/expense-classes organizations-storage/categories organizations-storage/contacts organizations-storage/organizations
         organizations-storage/interfaces organizations-storage/organization-types note-types finance-storage/funds
-        orders-storage/order-templates identifier-types`,
+        orders-storage/order-templates identifier-types custom-fields`,
   fin: `acquisitions-units/units finance-storage/expense-classes finance-storage/funds finance-storage/fund-types
         finance-storage/fiscal-years finance-storage/ledgers finance-storage/budget-expense-classes
         finance-storage/groups finance-storage/group-fund-fiscal-years`,
@@ -35,34 +35,17 @@ let modId = '';
 
     const config = await getAuthToken(superagent);
 
-    const get = async (ep) => {
+    const get = async (ep, modId) => {
       let lim = (ep.match(/authority/)) ? 1000 : limit;
       url = `${config.okapi}/${ep}?limit=${lim}`;
       if (ep.match(/^(erm|licenses)\//)) url = `${config.okapi}/${ep}?max=100`;
       console.warn('GET', url);
-      if (ep === 'custom-fields') {
-        try {
-          let res = await superagent
-          .get(`${config.okapi}/_/proxy/tenants/${config.tenant}/modules`)
-          .set('x-okapi-token', config.token)
-          .set('accept', 'application/json');
-          for (let x = 0; x < res.body.length; x++) {
-            let r = res.body[x];
-            if (r.id.match(/mod-users-\d/)) {
-              modId = r.id;
-            }
-          }
-        } catch(e) {
-          console.log(`${e}`);
-        }
-      }
       try {
         let h = 'dummy';
         let v = 'dummy';
         if (modId) {
           h = 'x-okapi-module-id';
           v = modId;
-          modId = '';
         }
         const res = await superagent
         .get(url)
@@ -76,6 +59,16 @@ let modId = '';
     }
 
     refDir = refDir.replace(/\/$/, '');
+
+    let mods = await get(`_/proxy/tenants/${config.tenant}/modules`);
+    let modVer = {}
+    mods.forEach(m => {
+      if (m.id.match(/mod-users-\d/)) {
+        modVer.usr = m.id;
+      } else if (m.id.match(/mod-orders-storage/)) {
+        modVer.acq = m.id;
+      }
+    });
     
     if (mtype) {
       let val = paths[mtype];
@@ -86,9 +79,14 @@ let modId = '';
     for (let t in paths) {
       let path = paths[t];
       path = path.replace(/\n/g, ' ');
+      
       let eps = path.split(/ +/);
       for (let x = 0; x < eps.length; x++) {
         let ep = eps[x];
+        let mver = '';
+        if (ep === 'custom-fields') {
+          mver = modVer[t];
+        }
         let tdir = `${refDir}/${t}`;
         if (!fs.existsSync(tdir)) { 
           console.log('INFO Making directory:', tdir);
@@ -96,7 +94,7 @@ let modId = '';
         }
         let name = ep.replace(/^.+\//, '');
         let fn = `${tdir}/${name}.json`;
-        let res = await get(ep);
+        let res = await get(ep, mver);
         if (res) {
           let out = JSON.stringify(res, null, 2) + '\n';
           fs.writeFileSync(fn, out);
