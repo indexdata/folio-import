@@ -783,7 +783,6 @@ try {
   const iconf = conf.items;
   const idmap = conf.makeInstMap;
   const mapcn = conf.callNumbers;
-  let supp = false;
   let prefix = conf.hridPrefix;
   iprefix = (iconf) ? iconf.hridPrefix : '';
   let wdir = path.dirname(rawFile);
@@ -915,7 +914,7 @@ try {
 
   let start = new Date().valueOf();
   let jobId = '';
-  if (instSource === 'MARC') {
+  if (!conf.noSrs && instSource === 'MARC') {
     let snap = makeSnap();
     writeOut(outs.snapshot, snap);
     ttl.snapshots++;
@@ -941,6 +940,7 @@ try {
       let inst = {};
       let marc = {};
       let bibCallNum = { value: '', type: ''};
+      let supp = false;
       try { 
         marc = parseMarc(r)
       } catch(e) {
@@ -1271,7 +1271,7 @@ try {
         }
         writeOut(outs.instances, inst);
         ttl.instances++;
-        if (instSource === 'MARC') {
+        if (!conf.noSrs && instSource === 'MARC') {
           let srsObj = makeSrs(raw, jobId, inst.id, inst.hrid, inst.discoverySuppress);
           writeOut(outs.srs, srsObj);
           ttl.srs++;

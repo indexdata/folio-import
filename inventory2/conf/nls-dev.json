@@ -6,6 +6,7 @@
     "controlNum": "SYS",
     "hridPrefix": "",
     "makeInstMap": true,
+    "noSrs": false,
     "hasMfhd": false,
     "noTitle": "[Ingen titel]",
     "catDate": { "tag": "008" },
