@@ -1,13 +1,15 @@
 const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
+const jp = require('jsonpath');
 
 const inFile = process.argv[2];
 const folFile = process.argv[3];
+const extraMatch = process.argv[4];
 
 (async () => {
   try {
-    if (!folFile) throw('Usage: node compJSONL.js <local_jsonl_file> <jsonl_file_from_folio');
+    if (!folFile) throw('Usage: node compJSONL.js <jsonl_file_1> <jsonl_file_2> [ <extra_match_property> ]');
     
     const dir = path.dirname(inFile);
     const fn = path.basename(inFile, '.jsonl');
@@ -26,7 +28,8 @@ const folFile = process.argv[3];
     for await (const line of rl) {
       c++;
       let j = JSON.parse(line);
-      fol[j.id] = 1;
+      let k = (extraMatch) ? j.id + '::' + jp.query(j, extraMatch) : j.id;
+      fol[k] = 1;
       if (c%10000 === 0) console.log('Lines read:', c);
     }
     console.log('Total lines read:', c);
@@ -42,8 +45,9 @@ const folFile = process.argv[3];
     for await (const line of rl) {
       c++;
       let j = JSON.parse(line);
-      if (!fol[j.id]) {
-        console.log('INFO Not found in Folio', j.id);
+      let k = (extraMatch) ? j.id + '::' + jp.query(j, extraMatch) : j.id;
+      if (!fol[k]) {
+        console.log('INFO Not found in Folio', k);
         fs.writeFileSync(outFile, JSON.stringify(j) + '\n', { flag: 'a' });
       }
       if (c%10000 === 0) console.log('Lines read:', c);
