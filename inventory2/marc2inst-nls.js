@@ -637,18 +637,37 @@ let ttl = {
   }
 
 let sro = {};
-const makeSroHoldings = (instId, instHrid, fields, str) => {
+const makeSroHoldings = (instId, instHrid, fields, str, f852, f866) => {
   if (!sro[instId]) sro[instId] = 0;
   sro[instId]++;
   let hrid = instHrid + 's' + sro[instId].toString().padStart(2, '0');
   let id = uuid(hrid, ns);
+  let cnParts = [];
+  if (fields.h) cnParts.push(fields.h);
+  if (fields.j) cnParts.push(fields.j);
+  let cn = cnParts.join(' ')
   let h = {
     id: id,
     hrid: hrid,
     instanceId: instId,
     sourceId: refData.holdingsRecordsSources.FOLIO,
-    permanentLocationId: refData.locations['LOC-SRO'] || refData.locations['loc-sro']
+    permanentLocationId: refData.locations['LOC-SRO'] || refData.locations['loc-sro'],
+    notes: []
   };
+  if (cn) {
+    h.callNumber = cn;
+    h.callNumberTypeId = refData.callNumberTypes['Other scheme'];
+  }
+  if (fields.z) {
+    let shash = getSubsHash(f852);
+    shash.z.forEach(n => {
+      let o = {
+        holdingsNoteTypeId: refData.holdingsNoteTypes.Note,
+        note: n
+      };
+      h.notes.push(o);
+    });
+  }
   writeOut(outs.xholdings, h);
   ttl.xholdings++;
 
@@ -1108,7 +1127,7 @@ try {
               } else if (d.z) {
                 str = `(${d.z})`;
               };
-              if (d['5'] === 'SRo') makeSroHoldings(instId, hrid, d, str);
+              if (d['5'] === 'SRo') makeSroHoldings(instId, hrid, d, str, f, marc.fields['866']);
             } else if (t === '866') {
               d = getSubsHash(f, true);
             } else {
