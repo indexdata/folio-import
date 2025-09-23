@@ -643,6 +643,7 @@ const makeSroHoldings = (instId, instHrid, fields, str, f852, f866) => {
   let hrid = instHrid + 's' + sro[instId].toString().padStart(2, '0');
   let id = uuid(hrid, ns);
   let cnParts = [];
+  let l852 = fields['8'];
   if (fields.h) cnParts.push(fields.h);
   if (fields.j) cnParts.push(fields.j);
   let cn = cnParts.join(' ')
@@ -666,6 +667,20 @@ const makeSroHoldings = (instId, instHrid, fields, str, f852, f866) => {
         note: n
       };
       h.notes.push(o);
+    });
+  }
+  if (f866) {
+    f866.forEach(f => {
+      let subs = getSubsHash(f, true);
+      let s5 = subs['5'];
+      let l866 = subs['8'];
+      if (s5 === 'SRo' && subs.a) {
+        if (l866 === l852) {
+          let o = { statement: subs.a };
+          if (subs.z) o.note = subs.z;
+          h.holdingsStatements = [ o ];
+        }
+      }
     });
   }
   writeOut(outs.xholdings, h);
