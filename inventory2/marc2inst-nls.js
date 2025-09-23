@@ -1015,6 +1015,15 @@ try {
           }
         });
       }
+      let f599 = marc.fields['599'];
+      if (f599) {
+        f599.forEach(f => {
+          let d = getSubs(f, 'a');
+          if (d.match(/suppress/i)) {
+            supp = true;
+          }
+        });
+      }
 
       if (marc.fields['004'] && conf.hasMfhd) {
         if (conf.hasMfhd) {
