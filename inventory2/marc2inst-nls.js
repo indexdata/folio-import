@@ -1019,7 +1019,7 @@ try {
       if (f599) {
         f599.forEach(f => {
           let d = getSubs(f, 'a');
-          if (d.match(/suppress/i)) {
+          if (d && d.match(/suppress/i)) {
             supp = true;
           }
         });
