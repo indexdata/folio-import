@@ -273,8 +273,9 @@ const elRelMap = {
 const files = {
   instances: 1,
   srs: 1,
+  rel: 1,
   xholdings: 1,
-  xitems: 1,
+  xitems: 0,
   snapshot: 1,
   presuc: 1,
   err: 1
@@ -629,6 +630,7 @@ let ttl = {
     count: 0,
     instances: 0,
     snapshots: 0,
+    relations: 0,
     srs: 0,
     xholdings: 0,
     xitems: 0,
@@ -939,6 +941,7 @@ try {
     let v = (c[1].match(/^\w{14,17}/)) ? c[1] : '';
     if (k && v) {
       librisMap[k] = v;
+      librisMap[v] = k;
     }
   }
   // throw(librisMap);
@@ -1325,6 +1328,23 @@ try {
           let instMap = `${inst.hrid}\x1E${inst.id}\x1E${bibCallNum.value}\x1E${bibCallNum.type}\x1E${blvl}\x1E${ea}\x1E${itypeCode}\x1E${af}`;
           writeOut(outs.idmap, instMap, true, '\n');
         }
+        let f773 = (marc && marc.fields) ? marc.fields['773'] : [];
+        f773.forEach(f => {
+          let w = getSubs(f, 'w');
+          if (!w.match(/^\d+$/)) {
+            w = librisMap[w];
+          }
+          if (w) {
+            w = w.padStart(9, '0');
+            let o = {
+              superInstanceId: uuid(w, ns),
+              subInstanceId: inst.id,
+              instanceRelationshipTypeId: refData.instanceRelationshipTypes['multipart monograph']
+            };
+            writeOut(outs.rel, o);
+            ttl.relations++;
+          }
+        });
       }
 
       if (ttl.count % 10000 === 0) {
