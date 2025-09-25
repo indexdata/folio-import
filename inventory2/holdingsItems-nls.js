@@ -635,7 +635,7 @@ try {
               let hrid = bhrid + '-' + ostr;
               let h = {
                 _version: 1,
-                __: 'dummyHoldings',
+                __: 'dummyHoldings (LOC-EJ)',
                 id: uuid(hrid, ns),
                 hrid: hrid,
                 instanceId: inst.id,
@@ -646,7 +646,7 @@ try {
                   holdingsNoteTypeId: refData.holdingsNoteTypes['Libris beståndsinformation'],
                   staffOnly: false
                 }],
-                discoverySuppress: true 
+                discoverySuppress: false 
               }
               writeOut(outs.holdings, h);
               ttl.holdings++;
