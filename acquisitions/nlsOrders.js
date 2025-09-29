@@ -293,7 +293,6 @@ const parseInst = (pol, inst, refData) => {
       hridSeen[akey] = 1;
       let instId = linkMap[akey];
       let inst = instMap[instId];
-      let id = uuid(key, ns);
       let nt = r.Z68_LIBRARY_NOTE;
       let poNum = r.Z68_ORDER_NUMBER.replace(/^ORDER-/, 'SO');
       let oType = (r.Z68_ORDER_TYPE === 'O') ? 'Ongoing' : 'One-Time';
@@ -302,6 +301,7 @@ const parseInst = (pol, inst, refData) => {
       let tstr = 'KB Stående order';
       let tid = refData.orderTemplates[tstr];
       let odate = r.Z68_OPEN_DATE.replace(/^(....)(..)(..)/, '$1-$2-$3');
+      let id = uuid(poNum, ns);
       let o = {
         id: id,
         poNumber: poNum,
@@ -382,7 +382,6 @@ const parseInst = (pol, inst, refData) => {
       let vstr = 'SREBSCO';
       let vid = refData.organizations[vstr];
       // console.log(r);
-      let id = uuid(k + 'sub', ns);
       let oo = d.oo[akey];
       let wfs = (oo) ? 'Open' : 'Closed';
       let vrf = oo['POL Vendor reference number'];
@@ -396,6 +395,7 @@ const parseInst = (pol, inst, refData) => {
       }
       let instId = linkMap[akey];
       let inst = instMap[instId];
+      let id = uuid(puNum, ns);
 
       let o = {
         id: id,
