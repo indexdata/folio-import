@@ -294,7 +294,9 @@ const parseInst = (pol, inst, refData) => {
       let instId = linkMap[akey];
       let inst = instMap[instId];
       let nt = r.Z68_LIBRARY_NOTE;
-      let poNum = r.Z68_ORDER_NUMBER.replace(/^ORDER-/, 'SO');
+      let poNum = r.Z68_ORDER_NUMBER.replace(/^ORDER-/, '');
+      poNum = poNum.replace(/\W/, 'X');
+      poNum = 'SO' + poNum;
       let oType = (r.Z68_ORDER_TYPE === 'O') ? 'Ongoing' : 'One-Time';
       let vstr = 'DELBANCO';
       let vid = refData.organizations[vstr];
