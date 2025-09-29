@@ -52,6 +52,25 @@ const writeOut = (fileName, data) => {
   fs.writeFileSync(fileName, line, { flag: 'a' });
 }
 
+const checkPo = (po, raw) => {
+  if (!po.vendor) {
+    console.log(`ERROR Vendor not found for ${raw}`);
+    return false;
+  } else {
+    return true;
+  }
+};
+
+const checkPol = (pol, raw) => {
+  if (!pol.titleOrPackage) {
+    let rawStr = JSON.stringify(raw);
+    console.log(`ERROR titleOrPackage not found for ${rawStr}`);
+    return false;
+  } else {
+    return true;
+  }
+};
+
 const makePolNote = (content, date, type, poLineId, refData) => {
   let txt = content;
   date = (date) ? date.replace(/(....)(..)(..)/, '$1-$2-$3') : '';
@@ -283,7 +302,9 @@ const parseInst = (pol, inst, refData) => {
       o: 0,
       p: 0,
       l: 0,
-      n: 0
+      n: 0,
+      pe: 0,
+      le: 0
     }
     const tid = refData.orderTemplates[tstr];
     const hridSeen = {};
@@ -325,11 +346,13 @@ const parseInst = (pol, inst, refData) => {
         };
       }
       // console.log(o);
-      writeOut(files.p, o);
-      o.workflowStatus = 'Pending';
-      writeOut(files.c, o);
-      o.workflowStatus = 'Open';
-      ttl.p++;
+      if (checkPo(o)) {
+        writeOut(files.p, o);
+        o.workflowStatus = 'Pending';
+        writeOut(files.c, o);
+        o.workflowStatus = 'Open';
+        ttl.p++;
+      }
 
       let amStr = 'KB: Stående order köp (tryckt material)';
       let amId = refData.acquisitionMethods[amStr];
@@ -357,12 +380,17 @@ const parseInst = (pol, inst, refData) => {
 
       pol.orderFormat = 'Physical Resource';
       // console.log(pol);
-      writeOut(files.l, pol);
-      ttl.l++;
 
-      o.poLines = [ pol ]
-      writeOut(files.o, o);
-      ttl.o++;
+      if (checkPol(pol, r)) {
+        writeOut(files.l, pol);
+        ttl.l++;
+
+        o.poLines = [ pol ]
+        writeOut(files.o, o);
+        ttl.o++;
+      } else {
+        ttl.le++;
+      }
       
       let z78 = d.z78[key];
       if (z78) {
@@ -562,12 +590,16 @@ const parseInst = (pol, inst, refData) => {
           }
         }
         // console.log(pol);
-        o.poLines.push(pol);
-        writeOut(files.o, o);
-        ttl.o++;
+        if (checkPol(pol)) {
+          o.poLines.push(pol);
+          writeOut(files.o, o);
+          ttl.o++;
 
-        writeOut(files.l, pol);
-        ttl.l++;
+          writeOut(files.l, pol);
+          ttl.l++;
+        } else {
+          ttl.le++;  
+        }
 
         delete o.poLines;
         o.workflowStatus = 'Pending';
@@ -584,6 +616,7 @@ const parseInst = (pol, inst, refData) => {
     console.log('Purchase orders', ttl.p);
     console.log('Order lines:', ttl.l);
     console.log('POL notes:', ttl.n);
+    console.log('POL errors:', ttl.le);
     console.log('Total time (secs):', tt);
   } catch (e) {
     console.log(e);
