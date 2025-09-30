@@ -62,6 +62,7 @@ const wait = (ms) => {
           let res = await superagent
           .post(url)
           .send(pl)
+          .set('User-Agent', config.agent)
           .set('x-okapi-token', config.token)
           .set('content-type', 'application/json')
           .set('accept', 'application/json');

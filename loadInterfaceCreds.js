@@ -75,6 +75,7 @@ let inFile = process.argv[2];
         await superagent
           .post(actionUrl)
           .send(rec)
+          .set('User-Agent', config.agent)
           .set('x-okapi-token', config.token)
           .set('content-type', 'application/json')
           .set('accept', 'application/json');
@@ -88,6 +89,7 @@ let inFile = process.argv[2];
           await superagent
             .put(recUrl)
             .send(rec)
+            .set('User-Agent', config.agent)
             .set('x-okapi-token', config.token)
             .set('content-type', 'application/json')
             .set('accept', 'text/plain');
