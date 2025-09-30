@@ -38,8 +38,7 @@ let inFile = process.argv[2];
     } else if (!fs.existsSync(inFile)) {
       throw new Error('Can\'t find input file');
     } 
-    const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
-
+    const config = await getAuthToken(superagent);
     let limit = (process.argv[3]) ? parseInt(process.argv[3], 10) : 10000000;
     if (isNaN(limit)) {
       throw new Error('Limit must be a number.');
@@ -73,7 +72,6 @@ let inFile = process.argv[2];
       logger = console;
     }
 
-    const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
 
     const searchUrl = `${config.okapi}/erm/sas?match=name&perPage=100&term=`;
     let success = 0;
@@ -101,7 +99,8 @@ let inFile = process.argv[2];
         try {
           let res = await superagent
             .get(agreementUrl)
-            .set('x-okapi-token', authToken)
+            .set('User-Agent', config.agent)
+            .set('x-okapi-token', config.token)
             .set('accept', 'application/json');
           if (res.body.length > 0) {
             res.body.forEach(a => {
@@ -118,16 +117,17 @@ let inFile = process.argv[2];
       if (agreementMap[rec.owner]) {
         let ownerId = agreementMap[rec.owner];
         const actionUrl = `${config.okapi}/erm/entitlements`;
-        logger.info(`[${x}] ${lDate} POST Adding entitlment ${rec.id} to "${rec.owner}"`);
+        logger.info(`[${x}] ${lDate} POST Adding entitlment "${rec.owner}" to ${ownerId}`);
         rec.owner = ownerId;
         try {
-          await superagent
+          let res = await superagent
             .post(actionUrl)
             .send(rec)
-            .set('x-okapi-token', authToken)
+            .set('User-Agent', config.agent)
+            .set('x-okapi-token', config.token)
             .set('content-type', 'application/json')
             .set('accept', 'application/json');
-          logger.info(`  Successfully added record id ${rec.id}`);
+          logger.info(`  Successfully added agreement as ${res.body.id}`);
           success++;
         } catch (e) {
           let errMsg = (e.response.text) ? e.response.text : e;

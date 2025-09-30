@@ -70,6 +70,7 @@ console.log = (msg) => {
               console.log(`[${deleted[p]}] DELETE ${url}`);
               await superagent
                 .delete(url)
+                .set('User-Agent', config.agent)
                 .timeout({ response: 5000 })
                 .set('accept', 'text/plain')
                 .set('x-okapi-token', config.token)
@@ -79,6 +80,7 @@ console.log = (msg) => {
               let res = await superagent
                 .post(url)
                 .timeout({ response: 5000 })
+                .set('User-Agent', config.agent)
                 .set('accept', 'application/json', 'text/plain')
                 .set('x-okapi-token', config.token)
                 .set('content-type', 'application/json')
