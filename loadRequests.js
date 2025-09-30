@@ -18,7 +18,7 @@ let dolog = process.env.LOG;
     } else if (!fs.existsSync(inFile)) {
       throw new Error('Can\'t find input file');
     } 
-    const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
+    const config = await getAuthToken(superagent);
 
     const workingDir = path.dirname(inFile);
     const baseName = path.basename(inFile, '.jsonl');
@@ -61,6 +61,7 @@ let dolog = process.env.LOG;
         let res = await superagent
           .post(actionUrl)
           .send(rec)
+          .set('User-Agent', config.agent)
           .set('x-okapi-token', authToken)
           .set('content-type', 'application/json')
           .set('accept', 'application/json');
@@ -106,8 +107,8 @@ let dolog = process.env.LOG;
         success++;
       } catch (e) {
           logger.error(`${e}`);
-	  let l = JSON.parse(line);
-	  l.errorMessage = `${e}`;
+	        let l = JSON.parse(line);
+	        l.errorMessage = `${e}`;
           fs.writeFileSync(errPath, JSON.stringify(l) + '\n', { flag: 'a'});
           fail++;
       }

@@ -22,7 +22,6 @@ let dolog = process.env.LOG;
     } else if (!fs.existsSync(inFile)) {
       throw new Error('Can\'t find input file');
     } 
-    const config = (fs.existsSync('./config.js')) ? require('./config.js') : require('./config.default.js');
 
     const workingDir = path.dirname(inFile);
     const baseName = path.basename(inFile, '.jsonl');
@@ -35,6 +34,8 @@ let dolog = process.env.LOG;
     if (fs.existsSync(outPath)) {
       fs.unlinkSync(outPath);
     }
+
+    let config = await getAuthToken(superagent);
     
     var logger;
 
@@ -57,7 +58,6 @@ let dolog = process.env.LOG;
       logger = console;
     }
 
-    const authToken = await getAuthToken(superagent, config.okapi, config.tenant, config.authpath, config.username, config.password);
 
     let success = 0;
     let fail = 0;
@@ -82,7 +82,8 @@ let dolog = process.env.LOG;
         let res = await superagent
           .post(actionUrl)
           .send(rec)
-          .set('x-okapi-token', authToken)
+          .set('User-Agent', config.agent)
+          .set('x-okapi-token', config.token)
           .set('content-type', 'application/json')
           .set('accept', 'application/json');
         logger.info(`  Successfully added record id ${rec.id}`);
@@ -96,7 +97,8 @@ let dolog = process.env.LOG;
               let url = `${config.okapi}/accounts/${accId}`;
               let res = await superagent
                 .get(url)
-                .set('x-okapi-token', authToken);
+                .set('User-Agent', config.agent)
+                .set('x-okapi-token', config.token);
               let acc = res.body;
               rec.amount = acc.remaining;
               try {
@@ -104,7 +106,8 @@ let dolog = process.env.LOG;
                 let res = await superagent
                   .post(actionUrl)
                   .send(rec)
-                  .set('x-okapi-token', authToken)
+                  .set('User-Agent', config.agent)
+                  .set('x-okapi-token', config.token)
                   .set('content-type', 'application/json')
                   .set('accept', 'application/json');
                 logger.info(`  Successfully added record id ${rec.id}`);

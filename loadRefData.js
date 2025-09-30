@@ -115,6 +115,7 @@ console.log = (msg, path) => {
           let res = await superagent
             .post(url)
             .timeout({ response: 5000 })
+            .set('User-Agent', config.agent)
             .set('accept', 'application/json', 'text/plain')
             .set('x-okapi-token', config.token)
             .set('content-type', 'application/json')
@@ -136,6 +137,7 @@ console.log = (msg, path) => {
             let res = await superagent
               .put(purl)
               .timeout({ response: 5000 })
+              .set('User-Agent', config.agent)
               .set('accept', 'text/plain')
               .set('x-okapi-token', config.token)
               .set('content-type', 'application/json')
