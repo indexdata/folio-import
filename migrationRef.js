@@ -10,7 +10,8 @@ let paths = {
         identifier-types ill-policies instance-formats instance-note-types instance-relationship-types
         instance-statuses instance-types item-damaged-statuses item-note-types loan-types locations material-types
         modes-of-issuance nature-of-content-terms service-points statistical-code-types statistical-codes
-        authority-note-types authority-source-files mapping-rules/marc-bib subject-sources subject-types instance-date-types`,
+        authority-note-types authority-source-files mapping-rules/marc-bib mapping-rules/marc-authority 
+        subject-sources subject-types instance-date-types`,
   acq: `acquisitions-units/units locations material-types batch-group-storage/batch-groups orders/acquisition-methods
         finance/expense-classes organizations-storage/categories organizations-storage/contacts organizations-storage/organizations
         organizations-storage/interfaces organizations-storage/organization-types note-types finance-storage/funds
