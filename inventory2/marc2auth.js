@@ -29,70 +29,10 @@ const writeOut = (outStream, data, notJson, newLineChar) => {
 };
 
 const funcs = {
-  remove_ending_punc: function (data) {
-    data = data.replace(/[;:,/+= ]$/g, '');
-    return data;
-  },
-  remove_prefix_by_indicator: function(data, param, ind1, ind2) {
-    let n = parseInt(ind2, 10);
-    return data.substring(n);
-  },
-  remove_substring: function(data, param) {
-    let re = new RegExp(param.substring, 'g');
-    data = data.replace(re, '');
-    return data;
-  },
-  capitalize: function (data) {
-    let fl = data.charAt(0);
-    let upfl = fl.toUpperCase();
-    data = data.replace(/^./, upfl);
-    return data;
-  },
-  concat_subfields_by_name: function (data, param, ind1, ind2, allFields) {
-    let stc = param.subfieldsToConcat.join('');
-    let cdata = getSubs(allFields, stc);
-    data += (cdata) ? ' ' + cdata : '';
-    return data;
-  },
   char_select: function (data, param) {
     let out = data.substring(param.from, param.to);
     if (!out.match(/\S/)) out = ''; 
     return out;
-  },
-  set_issuance_mode_id: function () {
-    let c = ldr.substring(7,8);
-    let cstr = modeMap[c] || 'unspecified';
-    let out = refData.issuanceModes[cstr];
-    return out;
-  },
-  set_instance_type_id: function (data, param) {
-    data = data.replace(/ .+/, '');
-    let [ n, c ] = data.split(/~/);
-    let u = param.unspecifiedInstanceTypeCode;
-    let out = refData.instanceTypes[c] || refData.instanceTypes[u];
-    return out
-  },
-  set_instance_format_id: function (data) {
-    return refData.instanceFormats[data] || refData.instanceFormats.zu;
-  },
-  set_contributor_name_type_id: function (data, param) {
-    return refData.contributorNameTypes[param.name] || refData.contributorNameTypes['Personal name'];
-  },
-  set_contributor_type_id_by_code_or_name: function (data, param) {
-    data = data.toLowerCase().trim().replace(/[ ,.]*$/g, '');
-    let out = refData.contributorTypes[data];
-    return out;
-  },
-  set_classification_type_id: function (data, param) {
-    return refData.classificationTypes[param.name] || 'ERROR';
-  },
-  set_date_type_id: function (data) {
-    let code = data.substring(6, 7);
-    if (refData.instanceDateTypes) {
-      return refData.instanceDateTypes[code] || refData.instanceDateTypes.n || 'ERROR';
-    } else {
-      return '';
-    }
   },
   set_identifier_type_id_by_value: function (data, param) {
     let type = '';
@@ -106,11 +46,8 @@ const funcs = {
   set_identifier_type_id_by_name: function (data, param) {
     return refData.identifierTypes[param.name];
   },
-  set_alternative_title_type_id: function (data, param) {
-    return refData.alternativeTitleTypes[param.name];
-  },
-  set_note_type_id: function (data, param) {
-    return refData.instanceNoteTypes[param.name];
+  set_authority_note_type_id: function (data, param) {
+    return refData.authorityNoteTypes[param.name];
   },
   set_note_staff_only_via_indicator: function (data, param, ind1) {
     if (ind1 === '0') {
@@ -119,28 +56,8 @@ const funcs = {
       return "false"
     }
   },
-  set_electronic_access_relations_id: function (data, param, ind1, ind2) {
-    let relStr = elRelMap[ind2] || 'Resource';
-    return refData.electronicAccessRelationships[relStr];
-  },
-  set_publisher_role: function (data, param, ind1, ind2) {
-    let r = pubRoleMap[ind2];
-    return r;
-  },
-  set_subject_source_id: function (data, param) {
-    return refData.subjectSources[data] || refData.subjectSources['Source not specified'];
-  },
-  set_subject_type_id: function (data, param) {
-  },
-  set_subject_source_id_by_code: function (data, param) {
-    return refData.subjectSources[data] || refData.subjectSources['Source not specified'];
-  },
   trim: function (data) {
     data = data.trim();
-    return data;
-  },
-  trim_period: function (data) {
-    data = data.replace(/\.$/, '');
     return data;
   }
 }
@@ -492,7 +409,7 @@ try {
             actFields.forEach(af => {
               let ff = makeRec(mr, af, f, t);
               let obj = {};
-              let root = '';
+              let root;
               for (let prop in ff) {
                 let [rt, pr] = prop.split('.');
                 if (propMap[prop] === 'string' || propMap[prop] === 'boolean') {
@@ -509,24 +426,24 @@ try {
                   if (ff[prop].data) rec[rt][pr] = ff[prop].data;
                 } 
               }
+              if (root) {
+                if (!rec[root]) re[root] = [];
+                rec[root].push(obj); 
+              }
             });
           });
         }
       }
-      rec.hrid = hrid;
+      rec.naturalId = hrid;
       rec.source = 'MARC';
-      if (rec.hrid) {
+      if (rec.naturalId) {
         rec.id = recId;
-        let scode = hrid.replace(/^([^ 0-9]+).+/, '$1');
+        let scode = rec.naturalId.replace(/^([^ 0-9]+).+/, '$1');
         rec.sourceFileId = refData.authoritySourceFiles[scode] || refData.authoritySourceFiles.local;
-        if (rec.notes) {
-          rec.notes.forEach(n => {
-            n.staffOnly = n.staffOnly.replace(/ .*/, '');
-          });
-        }
+        if (rec.subjectHeadings === '') rec.subjectHeadings = 'z';
         writeOut(outs.authorities, rec);
         ttl.authorities++;
-        let srsObj = makeSrs(raw, jobId, rec.id, rec.hrid, rec.discoverySuppress);
+        let srsObj = makeSrs(raw, jobId, rec.id, rec.naturalId, rec.discoverySuppress);
         writeOut(outs.srs, srsObj);
         ttl.srs++;
       }
