@@ -387,6 +387,15 @@ try {
         continue;
       }
 
+      let f999 = marc.fields['999'];
+      if (f999) {
+        for(let x = 0; x < f999.length; x++) {
+          if (f999[x].ind1 === 'f' && f999[x].ind2 === 'f') {
+            f999.splice(x, 1);
+            x--;
+          }
+        }
+      }
       seen[hrid] = 1;
       let recId = (hrid) ? uuid(hrid, ns) : '';
       marc.mij = fields2mij(marc.fields);
