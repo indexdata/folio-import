@@ -1328,7 +1328,7 @@ try {
           let instMap = `${inst.hrid}\x1E${inst.id}\x1E${bibCallNum.value}\x1E${bibCallNum.type}\x1E${blvl}\x1E${ea}\x1E${itypeCode}\x1E${af}`;
           writeOut(outs.idmap, instMap, true, '\n');
         }
-        let f773 = (marc && marc.fields) ? marc.fields['773'] : [];
+        let f773 = (marc && marc.fields && marc.fields['773']) ? marc.fields['773'] : [];
         f773.forEach(f => {
           let w = getSubs(f, 'w');
           if (!w.match(/^\d+$/)) {

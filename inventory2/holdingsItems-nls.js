@@ -245,7 +245,9 @@ try {
     let t = c[2];
     let bid = c[3];
     let e = c[8];
+    console.log(c);
     if (t === 'KBS01') {
+      console.log(k, t, bid);
       linkMap[k] = bid;
       mc++;
     }
@@ -294,7 +296,9 @@ try {
     let aid = r.Z30_REC_KEY.substring(0, 9);
     let iid = r.Z30_REC_KEY;
     let bid = linkMap[aid] || '';
+    console.log(aid, bid);
     let inst = instMap[bid];
+    // console.log(inst);
     let bc = r.Z30_BARCODE;
     let mt = r.Z30_MATERIAL;
     let st = r.Z30_ITEM_STATUS;
