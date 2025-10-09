@@ -30,22 +30,9 @@ const zfiles = {
   z308: 'id'
 };
 
-const shelfNum = (k) => {
-  let out = '';
-  if (k.match(/^[xyz{]/)) {
-    out = 'D15';
-  } else if (k.match(/^\|/)) {
-    out = 'D16';
-  } else if (k.match(/^i/)) {
-    out = 'B11';
-  } else if (k.match(/^q/)) {
-    out = 'C14';
-  } else if (k.match(/^u/)) {
-    out = 'B11';
-  }
-  
-  console.log(k, out);
-}
+const nfields = [ 'Z303_FIELD_1', 'Z303_FIELD_2', 'Z303_FIELD_3', 'Z303_NOTE_1', 'Z303_NOTE_2' ];
+const ntitle = 'Aleph user note';
+const ntype = 'User note';
 
 /**
  * Compute "hyllnr" code based on z302_name_key similar to the XSLT logic.
@@ -462,13 +449,18 @@ try {
     let bc = (ids['01']) ? ids['01'][0] : '';
     let bcPre = id.replace(/\d+/, '');
     let pid = (ids['03']) ? ids['03'][0] : '';
+    let notes = [];
+    nfields.forEach(f => {
+      let n = p[f];
+      if (n) notes.push(n);
+    });
     let email = '';
     if (ads) {
       ads.forEach(r => {
         if (!email && r.Z304_EMAIL_ADDRESS) email = r.Z304_EMAIL_ADDRESS;
       });
     }
-    let un = email || '';
+    // let un = email || '';
 
     let edate = '';
     locs.forEach(r => {
@@ -508,7 +500,6 @@ try {
       personal: {
         lastName: ln,
         firstName: fn,
-        
       },
       customFields: {}
     };
@@ -545,7 +536,7 @@ try {
       u.personal.preferredContactTypeId = '001'
     }
 
-    if (u.patronGroup) {
+    if (u.patronGroup && u.personal.lastName) {
       writeOut(files.u, u);
       if (process.env.DEBUG) console.log(JSON.stringify(u, null, 2));
       success++
@@ -563,6 +554,24 @@ try {
         defaultServicePointId: refData.servicepoints['Pecan Library']
       }
       writeOut(files.r, pref);
+
+      notes.forEach((n, i) => {
+        let nid = uuid(`${id}::${n}::${i}`, ns);
+        let note = {
+          id: nid,
+          content: `<p>${n}</p>`,
+          title: ntitle,
+          typeId: refData.noteTypes[ntype],
+          domain: 'users',
+          links: [ { id: u.id, type: 'user' } ]
+        }
+        if (note.typeId) {
+          writeOut(files.n, note);
+          ncount++;
+        } else {
+          console.log(`ERROR [notes] noteTypeId not found for "${ntype}" (${note.id})`)
+        }
+      });
       
       for (let x = 0; x < dels.length; x++) {
         d = dels[x];
@@ -587,7 +596,11 @@ try {
         }
       }
     } else {
-      console.log(`ERROR No patronGroup found for ${gnum}`);
+      if (u.personal.lastName) {
+        console.log(`ERROR lastName missing from user ${id}`);
+      } else {
+        console.log(`ERROR No patronGroup found for ${gnum}`);
+      }
       ecount++;
     }
   } 
