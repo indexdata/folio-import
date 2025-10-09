@@ -526,8 +526,9 @@ try {
     if (u.barcode && bcPre && (borStat === '10' || borStat === '12')) u.barcode = bcPre + u.barcode;
     if (u.barcode && bcseen[u.barcode]) {
       console.log(`WARN barcode "${u.barcode}" already taken for userId ${u.id}`)
-      bcseen[u.barcode] = 1;
       delete u.barcode;
+    } else {
+      bcseen[u.barcode] = 1;
     }
     if (email) u.personal.email = email
     if (edate) u.expirationDate = edate;
