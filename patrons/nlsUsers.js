@@ -452,7 +452,7 @@ try {
     let name = p.Z303_NAME.replace(/ \(.+$/, '');
     let ln = name.replace(/,.+/, '');
     let fn = (name.match(/,/)) ? name.replace(/^.+?, */, '') : '';
-    let bc = (ids['01'] && Array.isArray(ids['01'])) ? ids['01'][0] : '';
+    let bc = (ids && ids['01']) ? ids['01'][0] : '';
     let bcPre = id.replace(/\d+/, '');
     let pid = (ids['03']) ? ids['03'][0] : '';
     let notes = [];
