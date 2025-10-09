@@ -513,12 +513,16 @@ try {
       customFields: {}
     };
     if (snum) u.personal.middleName = `(${snum})`;
+
+    /* do not map anything to username (FOLIO-293)
     if (un && !unseen[un]) {
       u.username = un;
       unseen[un] = 1;
     } else if (unseen[un]) {
       console.log(`WARN username "${un}" already used.`);
     }
+    */
+
     if (bc) u.barcode = bc;
     if (u.barcode && bcPre && (borStat === '10' || borStat === '12')) u.barcode = bcPre + u.barcode;
     if (email) u.personal.email = email
