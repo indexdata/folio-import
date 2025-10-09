@@ -454,7 +454,7 @@ try {
     let fn = (name.match(/,/)) ? name.replace(/^.+?, */, '') : '';
     let bc = (ids && ids['01']) ? ids['01'][0] : '';
     let bcPre = id.replace(/\d+/, '');
-    let pid = (ids['03']) ? ids['03'][0] : '';
+    let pid = (ids && ids['03']) ? ids['03'][0] : '';
     let notes = [];
     nfields.forEach(f => {
       let n = p[f];
