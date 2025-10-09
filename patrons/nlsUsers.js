@@ -425,7 +425,7 @@ try {
       console.log(`  ${zc} "${f}" lines processed`);
     }
   }
-  // throw(JSON.stringify(z.loc, null, 2));
+  // throw(JSON.stringify(z, null, 2));
   
   const today = new Date().valueOf();
   let count = 0;
@@ -452,7 +452,7 @@ try {
     let name = p.Z303_NAME.replace(/ \(.+$/, '');
     let ln = name.replace(/,.+/, '');
     let fn = (name.match(/,/)) ? name.replace(/^.+?, */, '') : '';
-    let bc = (ids['01']) ? ids['01'][0] : '';
+    let bc = (ids['01'] && Array.isArray(ids['01'])) ? ids['01'][0] : '';
     let bcPre = id.replace(/\d+/, '');
     let pid = (ids['03']) ? ids['03'][0] : '';
     let notes = [];
