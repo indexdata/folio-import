@@ -363,6 +363,7 @@ try {
   refData.servicepoints = {};
   stypes.servicepoints.forEach(a => {
     refData.servicepoints[a.name] = a.id;
+    refData.servicepoints[a.code] = a.id;
   });
   // throw(refData.servicepoints);
 
@@ -434,8 +435,8 @@ try {
   let bcount = 0;
   let ncount = 0;
   let ecount = 0;
-  const nseen = {};
-  const unseen = {};
+  const bcseen = {};
+  const blseen = {};
 
   for (let x = 0; x < main.length; x++) {
     count++;
@@ -523,6 +524,11 @@ try {
 
     if (bc) u.barcode = bc;
     if (u.barcode && bcPre && (borStat === '10' || borStat === '12')) u.barcode = bcPre + u.barcode;
+    if (u.barcode && bcseen[u.barcode]) {
+      console.log(`WARN barcode "${u.barcode}" already taken for userId ${u.id}`)
+      bcseen[u.barcode] = 1;
+      delete u.barcode;
+    }
     if (email) u.personal.email = email
     if (edate) u.expirationDate = edate;
     if (cdate) u.enrollmentDate = cdate;
@@ -558,8 +564,8 @@ try {
         userId: u.id,
         holdShelf: true,
         delivery: false,
-        defaultServicePointId: refData.servicepoints['Pecan Library']
-      }
+        defaultServicePointId: refData.servicepoints['SP-INFO']
+      };
       writeOut(files.r, pref);
 
       notes.forEach((n, i) => {
@@ -598,8 +604,13 @@ try {
           if (blockStaff) {
             o.staffInformation = blockStaff;
           }
-          writeOut(files.b, o);
-          bcount++;
+          if (!blseen[o.id]) {
+            writeOut(files.b, o);
+            bcount++;
+            blseen[o.id] = 1;
+          } else {
+            console.log(`WARN [blocks] Duplicate block found for userId ${u.id}`)
+          }
         }
       }
     } else {
