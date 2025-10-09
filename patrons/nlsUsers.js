@@ -34,6 +34,8 @@ const nfields = [ 'Z303_FIELD_1', 'Z303_FIELD_2', 'Z303_FIELD_3', 'Z303_NOTE_1',
 const ntitle = 'Aleph user note';
 const ntype = 'User note';
 
+const today = new Date().valueOf();
+
 /**
  * Compute "hyllnr" code based on z302_name_key similar to the XSLT logic.
  * @param {string} key – z302‑name‑key string
@@ -427,7 +429,6 @@ try {
   }
   // throw(JSON.stringify(z, null, 2));
   
-  const today = new Date().valueOf();
   let count = 0;
   let success = 0;
   let bcount = 0;
