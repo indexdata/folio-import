@@ -392,14 +392,18 @@ try {
       skip_empty_lines: true,
       delimiter: '\t',
       relax_column_count: true,
+      relax_quotes: true,
       trim: true
     });
     if (type === 'main') {
       main = zRecs;
     } else {
+      console.log(`INFO parsing "${f}" file...`);
       z[type] = {};
       let kprop = (type === 'id') ? 'Z308_ID' : (type === 'add') ? 'Z304_REC_KEY' : 'Z305_REC_KEY'
+      let zc = 0;
       zRecs.forEach(r => {
+        zc++;
         let k = r[kprop];
         if (k) {
           k = k.replace(/ .+$/, '');
@@ -416,7 +420,9 @@ try {
           if (!z[type][k]) z[type][k] = [];
           z[type][k].push(r);
         }
+        if (zc%10000 === 0) console.log(`  ${zc} lines processed`);
       });
+      console.log(`  ${zc} "${f}" lines processed`);
     }
   }
   // throw(JSON.stringify(z.loc, null, 2));
@@ -603,6 +609,7 @@ try {
       }
       ecount++;
     }
+    if (count%10000 === 0) console.log(`INFO ${count} "z303" lines processed`);
   } 
 
   const t = (new Date().valueOf() - today) / 1000;
