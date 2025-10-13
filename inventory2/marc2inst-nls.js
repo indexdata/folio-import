@@ -744,6 +744,7 @@ const makeAleph = (fields) => {
   let statCode;
   let cdate;  
   let istat;
+  let locId;
   if (mti === 'MINIPOST') {
     ti = (fields.TIT) ? getSubs(fields.TIT[0], 'a') : '[okänd titel]';
     if (fields.CAT) {
@@ -758,11 +759,13 @@ const makeAleph = (fields) => {
     }
     statCode = refData.statisticalCodes['999'];
     istat = refData.instanceStatuses.Minipost;
+    locId = refData.locations['LOC-TS'];
   } else if (mti === 'OKAT' || mti === 'Vardagstryck') {
     ti = (fields.PUB) ? getSubs(fields.PUB[0], 'a') : '[okänd titel]';
     cdate = (fields.DAT) ? getSubs(fields.DAT[0], 'a') : '';
     statCode = refData.statisticalCodes['85B'];
     istat = refData.instanceStatuses.mv
+    locId = refData.locations['LOC-VT'];
   } else {
     ti = '[okänd titel]';
   }
@@ -794,7 +797,7 @@ const makeAleph = (fields) => {
       id: uuid(i.id, ns),
       hrid: i.hrid + '-000',
       instanceId: i.id,
-      permanentLocationId: refData.locations.datamigration,
+      permanentLocationId: locId,
       callNumber: cn,
       callNumberTypeId: cnt,
       sourceId: refData.holdingsRecordsSources.FOLIO
