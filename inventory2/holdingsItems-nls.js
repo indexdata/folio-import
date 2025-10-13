@@ -466,7 +466,7 @@ try {
             nt.s.push('Reklamerad');
           }
         } else if (st === '72') {
-          i.status.name = 'Missing';
+          i.status.name = 'Long missing';
         } else if (!(loc === 'TLKB' && st === '04') && ips === 'UA') {
           i.status.name = 'In process';
         } else if (st === '71' && loc.match(/^(RRLEX|RRSPE)$/)) {
