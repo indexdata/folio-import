@@ -919,7 +919,7 @@ try {
       });
     } catch {}
   });
-  // throw(refData.identifierTypes);
+  // throw(refData.instanceStatuses);
 
   // create tsv map
   if (conf.tsvDir) {
@@ -1182,8 +1182,7 @@ try {
               addFields[t].push(d);
             }
           });
-        }
-        if (t.match(/^78[05]/)) {
+        } else if (t.match(/^78[05]/)) {
           let occ = 0;
           fields.forEach(f => {
             occ++;
@@ -1221,6 +1220,9 @@ try {
             writeOut(outs.presuc, ps); 
             ttl.presuc++;
           }); 
+        } else if (t === '541') {
+          let stcode = getSubs(fields[0], 'b');
+          if (stcode) inst.statusId = refData.instanceStatuses[stcode];
         } else {
           let mr = mappingRules[t];
           if (mr) {
@@ -1344,16 +1346,15 @@ try {
           let instMap = `${inst.hrid}\x1E${inst.id}\x1E${bibCallNum.value}\x1E${bibCallNum.type}\x1E${blvl}\x1E${ea}\x1E${itypeCode}\x1E${af}`;
           writeOut(outs.idmap, instMap, true, '\n');
         }
-        let f773 = (marc && marc.fields && marc.fields['773']) ? marc.fields['773'] : [];
-        f773.forEach(f => {
-          let w = getSubs(f, 'w');
-          if (!w.match(/^\d+$/)) {
-            w = librisMap[w];
-          }
-          if (w) {
-            w = w.padStart(9, '0');
+        let lkr = (marc && marc.fields && marc.fields['LKR']) ? marc.fields['LKR'] : [];
+        lkr.forEach(f => {
+          let b = getSubs(f, 'b');
+          if (b) {
+            b = b.padStart(9, '0');
+            let key = b + '::' + inst.id;
             let o = {
-              superInstanceId: uuid(w, ns),
+              id: uuid(key, ns),
+              superInstanceId: uuid(b, ns),
               subInstanceId: inst.id,
               instanceRelationshipTypeId: refData.instanceRelationshipTypes['multipart monograph']
             };
