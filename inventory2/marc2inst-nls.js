@@ -275,7 +275,7 @@ const files = {
   srs: 1,
   rel: 1,
   xholdings: 1,
-  xitems: 0,
+  xitems: 1,
   snapshot: 1,
   presuc: 1,
   err: 1
@@ -688,26 +688,33 @@ const makeSroHoldings = (instId, instHrid, fields, str, f852, f866) => {
   writeOut(outs.xholdings, h);
   ttl.xholdings++;
 
-  /* Dont make SRo items -- see FOLIO-229
+  // Don't make SRo items -- see FOLIO-229
+  
+}
 
-  if (fields.h) {
-    let hrid = h.hrid;
+const makeItem = (holdingsId, holdingsHrid, mtype, ltype, status, callNumber) => {
+  if (!status) status = 'Available';
+  if (holdingsId && mtype && ltype) {
+    let hrid = holdingsHrid;
     let id = uuid(hrid + 'item', ns);
     let i = {
       id: id,
       hrid: hrid,
-      holdingsRecordId: h.id,
-      permanentLoanTypeId: refData.loantypes['Manuell beställning'],
-      materialTypeId: refData.mtypes.Unmapped,
-      itemLevelCallNumber: fields.h,
-      itemLevelCallNumberTypeId: refData.callNumberTypes['Other scheme'],
-      status: { name: 'Available' },
-      administrativeNotes: [ str ]
+      holdingsRecordId: holdingsId,
+      permanentLoanTypeId: refData.loantypes[ltype],
+      materialTypeId: refData.mtypes[mtype],
+      status: { name: status },
     };
+    if (callNumber) {
+      i.itemLevelCallNumber = callNumber;
+      i.itemLevelCallNumberTypeId =  refData.callNumberTypes['Other scheme'];
+    }
     writeOut(outs.xitems, i);
     ttl.xitems++;
+    return 1;
+  } else {
+    return 0;
   }
-  */
 }
 
 const makeAleph = (fields) => {
@@ -803,7 +810,13 @@ const makeAleph = (fields) => {
       sourceId: refData.holdingsRecordsSources.FOLIO
     }
     out.holdings = h;
+    if (mti === 'MINIPOST') {
+      let res = makeItem(h.id, h.hrid, 'Monografi', 'Läsesalslån');
+      if (!res) console.log(`WARN could not create MITIPOST item from ${i.hrid}`);
+    }
   }
+
+  
   return out;
 }
 
