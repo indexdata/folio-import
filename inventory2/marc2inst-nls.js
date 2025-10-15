@@ -1,3 +1,5 @@
+// ENV variables: snapshotId (default jobExecutionId for snapshots and SRS records)
+
 import { parseMarc, getSubs, mij2raw, fields2mij, getSubsHash } from '../js-marc/js-marc.mjs';
 import fs from 'fs';
 import path from 'path';
@@ -597,11 +599,11 @@ const makeSrs = function (raw, jobId, bid, hrid, suppress) {
   return srs;
 }
 
-const makeSnap = function () {
+const makeSnap = function (jobId) {
   const now = new Date().toISOString();
-  const id = uuid(now, ns);
+  if (!jobId) jobId = uuid(now, ns); 
   const so = {
-    jobExecutionId: id,
+    jobExecutionId: jobId,
     status: 'COMMITTED',
     processingStartedDate: now
   }
@@ -966,9 +968,9 @@ try {
   
 
   let start = new Date().valueOf();
-  let jobId = '';
+  let jobId = process.env.snapshotId || '';
   if (!conf.noSrs && instSource === 'MARC') {
-    let snap = makeSnap();
+    let snap = makeSnap(jobId);
     writeOut(outs.snapshot, snap);
     ttl.snapshots++;
     jobId = snap.jobExecutionId;
@@ -1131,11 +1133,34 @@ try {
         marc.fields.leader = marc.fields.leader.replace(/....$/, '4500');
       }
 
+      // add 655 for "rt" status records (FOLIO-214) Ex: $a Riksdagstryck $0 https://id.kb.se/term/saogf/Riksdagstryck $2 saogf 
+      let d541 = '';
+      if (marc.fields['541']) {
+        d541 = getSubs(marc.fields['541'][0], 'b');
+        if (d541.match(/^rt/)) {
+          let fdata = {
+            ind1: ' ',
+            ind2: '7',
+            subfields: [ 
+              { a: 'Riksdagstryck' },
+              { '0': 'https://id.kb.se/term/saogf/Riksdagstryck' },
+              { '2': 'saogf'}
+            ]
+          };
+          marc.addField('655', fdata);
+        } else {
+          d541 = '';
+        }
+      }
+
+      /* this block doesn't get used (for some reason)
+
       let librisNumField = marc.fields.UID;
       let librisNum = '';
       if (librisNumField) {
         librisNum = librisNumField[0].trim();
       }
+      */
 
       seen[hrid] = 1;
       let instId = (hrid) ? uuid(hrid, ns) : '';
@@ -1220,9 +1245,8 @@ try {
             writeOut(outs.presuc, ps); 
             ttl.presuc++;
           }); 
-        } else if (t === '541') {
-          let stcode = getSubs(fields[0], 'b');
-          if (stcode) inst.statusId = refData.instanceStatuses[stcode];
+        } else if (t === '541' && d541) {
+          inst.statusId = refData.instanceStatuses[d541];
         } else {
           let mr = mappingRules[t];
           if (mr) {
