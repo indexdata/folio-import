@@ -465,7 +465,7 @@ try {
           if (ips === 'CL') {
             nt.s.push('Reklamerad');
           }
-        } else if (st === '72') {
+        } else if (st === '72' || st === '71') {
           i.status.name = 'Long missing';
         } else if (!(loc === 'TLKB' && st === '04') && ips === 'UA') {
           i.status.name = 'In process';
