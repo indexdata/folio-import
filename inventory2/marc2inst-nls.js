@@ -1183,7 +1183,7 @@ try {
       let addFields = {};
       for (let t in marc.fields) {
         let fields = marc.fields[t];
-        if (t.match(/852|866|561/)) {
+        if (t.match(/852|866|561|042/)) {
           fields.forEach(f => {
             let d;
             let str;
@@ -1198,6 +1198,8 @@ try {
               if (d['5'] === 'SRo') makeSroHoldings(instId, hrid, d, str, f, marc.fields['866']);
             } else if (t === '866') {
               d = getSubsHash(f, true);
+            } else if (t === '042') {
+              d = getSubs(f, '9');
             } else {
               d = getSubs(f, 'a');
             }
