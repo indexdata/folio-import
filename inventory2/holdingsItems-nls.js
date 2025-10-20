@@ -243,8 +243,8 @@ try {
     let c = line.split(/\t/);
     let k = c[0].substring(5, 14);
     let seq = c[0].substring(14);
-    if (c[2] === 'KBS01' && c[4] === 'ADM' && (!linkMap[k] || seq > linkMap[k].s)) {
-      linkMap[k] = { l: c[3], s: seq };
+    if (c[2] === 'KBS01' && c[4] === 'ADM') {
+      linkMap[k] = c[3];
       mc++;
     }
     if (lc % 1000000 === 0) {
@@ -291,9 +291,9 @@ try {
     }
     let aid = r.Z30_REC_KEY.substring(0, 9);
     let iid = r.Z30_REC_KEY;
-    let bid = (linkMap[aid]) ? linkMap[aid].l : '';
+    let bid =  linkMap[aid];
     let inst = instMap[bid];
-    // console.log(inst);
+    console.log(inst);
     let bc = r.Z30_BARCODE;
     let mt = r.Z30_MATERIAL;
     let st = r.Z30_ITEM_STATUS;

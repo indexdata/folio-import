@@ -52,7 +52,7 @@ const post_put = async (authToken, url, checkout, r, username, config) => {
         throw new Error(`Too many retries (${r})!`);
       }
     } else {
-      let text = e.response.text;
+      let text = (e.response) ? e.response.text : JSON.stringify(e);
       if (text.match(/overridableBlock/) && !r) {
         let err = JSON.parse(text);
 	      let block = {};
