@@ -30,8 +30,10 @@ inventory: $(in)/*Bibs*out
 authorities: $(in)/*Auth*
 	cd $(adir); rm -r auth.raw; ln -s $(in)/*Auth* auth.raw
 	yaz-marcdump -f marc8 -t utf8 -l 9=97 -o marc $(adir)/auth.raw > $(adir)/auth.mrc
-	cd $(wd)/auth; ./marc2auth010.pl $(wd)/mapping_rules/marc_authority_rules.json $(iref) $(adir)/auth.mrc > $(log)/makeAuth.log &
-	tail -f $(log)/makeAuth.log
+	cd $(inv2); node marc2auth $(conf) $(adir)/auth.mrc > $(log)/makeAuth.log
+	cat $(log)/makeAuth.log
+	# cd $(wd)/auth; ./marc2auth010.pl $(wd)/mapping_rules/marc_authority_rules.json $(iref) $(adir)/auth.mrc > $(log)/makeAuth.log &
+	# tail -f $(log)/makeAuth.log
 
 split-authorities: $(adir)/auth-authorities.jsonl
 	cd $(adir); split -l 10000 auth-authorities.jsonl aa

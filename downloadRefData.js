@@ -257,7 +257,7 @@ let modName = process.argv[3];
         console.error(e.message);
       }
     }
-    paths.push({mod: 'system_users', path: 'users?query=personal.lastName==system%20OR%20username==canary-svc&limit=100'});
+    paths.push({mod: 'system_users', path: 'users?query=personal.lastName==system%20OR%20username==canary-svc%20OR%20username==system-z3950&limit=100'});
 
     for (let x = 0; x < paths.length; x++) {
       if (paths[x].path === 'mapping-rules/') {
