@@ -28,7 +28,8 @@ inventory: $(in)/*Bibs*out
 	tail -f $(log)/makeInst.log
 
 authorities: $(in)/*Auth*
-	cd $(adir); rm -r auth.raw; ln -s $(in)/*Auth* auth.raw
+	cd $(adir); rm -f auth.raw
+	ln -s $(in)/*Auth* $(adir)/auth.raw
 	yaz-marcdump -f marc8 -t utf8 -l 9=97 -o marc $(adir)/auth.raw > $(adir)/auth.mrc
 	cd $(inv2); node marc2auth $(conf) $(adir)/auth.mrc > $(log)/makeAuth.log
 	cat $(log)/makeAuth.log
@@ -48,7 +49,7 @@ users: $(in)/*Patrons*out
 checkouts: $(in)/check*xls
 	cp $(in)/check*xls $(cdir)/loans.xls
 	cd $(wd)/util/; node xlsx2csv.js $(cdir)/loans.xls
-	cd $(cdir); mv *books.csv loans.csv
+	cd $(cdir); mv *Export*.csv loans.csv
 	cd $(wd); ./get_circ_requirements.sh $(cdir)
 	cd $(wd)/patrons; node deraCheckouts $(cdir)/loans.csv > $(log)/makeCheckouts.log
 	cat $(log)/makeCheckouts.log

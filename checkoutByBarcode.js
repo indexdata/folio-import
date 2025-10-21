@@ -17,7 +17,9 @@ const wait = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
-const post_put = async (authToken, url, checkout, r, username, config) => {
+let config;
+
+const post_put = async (authToken, url, checkout, r, username) => {
   r = (r) ? r : 0;
   try {
     if (url.match(/.{8}-.{4}-.{4}-.{4}-.{12}$/)) {
@@ -42,6 +44,7 @@ const post_put = async (authToken, url, checkout, r, username, config) => {
       return res.body;
     }
   } catch (e) {
+    if (process.env.DEBUG) console.log(e);
     if (e.code) {
       console.log(`    Connection timed out! Retrying (${r})...`);
       r++;
@@ -120,7 +123,7 @@ const post_put = async (authToken, url, checkout, r, username, config) => {
       fs.unlinkSync(errPath);
     }
 
-    let config = await getAuthToken(superagent);
+    config = await getAuthToken(superagent);
 
     let url = `${config.okapi}/circulation/check-out-by-barcode`;
     let today;
