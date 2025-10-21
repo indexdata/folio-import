@@ -189,7 +189,7 @@ const makeSrs = function (raw, jobId, bid, hrid, suppress) {
   let ldr = raw.mij.leader;
   let lstat = ldr.substring(5, 6);
   if (!lstat.match(/[a|c|d|n|p|o|s|x]/)) lstat = 'c';
-  const id = uuid(bid, ns);
+  const id = uuid(bid + 'auth', ns);
   raw.mij.fields.push({'999': {ind1: 'f', ind2: 'f', subfields: [{i: bid}, {s: id}] } })
   const srs = {
     id: id,
