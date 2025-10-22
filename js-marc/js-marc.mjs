@@ -36,11 +36,21 @@ export function parseMarc(raw, txt = false) {
     if (fieldData.includes('\x1F')) {
       const ind1 = fieldData.substring(0, 1).replace(/\W/, ' ');
       const ind2 = fieldData.substring(1, 2).replace(/\W/, ' ');
+      /* 
       const subs = fieldData.split(/\x1F/).slice(1);
-      const subfields = subs.map(s => {
-        const code = s.substring(0, 1);
+      const subfields = subs.map((s, i) => {
+        const code = s.substring(0, 1) || '_';
         const value = s.substring(1);
         return { [code]: value };
+      });
+      */
+
+      
+      let subfields = [];
+      fieldData.split(/\x1F/).slice(1).forEach(s => {
+        let c = s.substring(0, 1);
+        let v = s.substring(1);
+        if (c && v) subfields.push({ [c]: v });
       });
 
       const fieldObj = { ind1, ind2, subfields };
