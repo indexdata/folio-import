@@ -397,7 +397,7 @@ try {
         }
       }
       seen[hrid] = 1;
-      let recId = (hrid) ? uuid(hrid, ns) : '';
+      let recId = (hrid) ? uuid(hrid + 'auth', ns) : '';
       marc.mij = fields2mij(marc.fields);
       let raw = mij2raw(marc.mij);
       ldr = marc.fields.leader || '';
