@@ -30,6 +30,8 @@ const zfiles = {
   z308: 'id'
 };
 
+const knownExt = [ '', '.seqaa', '.dsv', '.tsv', '_anon.seqaa', '_anon.dsv' ];
+
 const nfields = [ 'Z303_FIELD_1', 'Z303_FIELD_2', 'Z303_FIELD_3', 'Z303_NOTE_1', 'Z303_NOTE_2' ];
 const ntitle = 'Aleph user note';
 const ntype = 'User note';
@@ -37,8 +39,8 @@ const ntype = 'User note';
 const today = new Date().valueOf();
 
 /**
- * Compute "hyllnr" code based on z302_name_key similar to the XSLT logic.
- * @param {string} key – z302‑name‑key string
+ * Compute "hyllnr" code based on z303_name_key similar to the XSLT logic.
+ * @param {string} key – z303‑name‑key string
  * @returns {string} – e.g. " (A2) "
  */
 function hyllnr(key) {
@@ -388,7 +390,13 @@ try {
   let z = {};
   for (let f in zfiles) {
     let type = zfiles[f];
-    let path = usrDir + '/' + f;
+    let path;
+    for (let x = 0; x < knownExt.length; x++) {
+      let ext = knownExt[x];
+      let fn = f + ext;
+      path = usrDir + '/' + fn;
+      if (fs.existsSync(path)) break;
+    }
     let csv = fs.readFileSync(path, {encoding: 'utf8'});
     let zRecs = parse(csv, {
       columns: true,
@@ -401,11 +409,12 @@ try {
     if (type === 'main') {
       main = zRecs;
     } else {
-      console.log(`INFO parsing "${f}" file...`);
+      console.log(`INFO parsing "${path}" file...`);
       z[type] = {};
       let kprop = (type === 'id') ? 'Z308_ID' : (type === 'add') ? 'Z304_REC_KEY' : 'Z305_REC_KEY'
       let zc = 0;
-      zRecs.forEach(r => {
+      for (let x = 0; x < zRecs.length; x++) {
+        let r = zRecs[x];
         zc++;
         let k = r[kprop];
         if (k) {
@@ -423,9 +432,11 @@ try {
           if (!z[type][k]) z[type][k] = [];
           z[type][k].push(r);
         }
-        if (zc%10000 === 0) console.log(`  ${zc} lines processed`);
-      });
-      console.log(`  ${zc} "${f}" lines processed`);
+        if (zc%10000 === 0) {
+          console.log('Lines processed', zc);
+        }
+      }
+      console.log(`${zc} "${f}" lines processed`);
     }
   }
   // throw(JSON.stringify(z, null, 2));
