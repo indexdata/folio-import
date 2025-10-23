@@ -428,7 +428,7 @@ try {
           if (!z[type][k][idType]) z[type][k][idType] = [];
           z[type][k][idType].push(data); 
         } else {
-          if (type === 'loc') k = k.substring(0, 12);
+          if (type === 'loc' || type === 'add') k = k.substring(0, 12);
           if (!z[type][k]) z[type][k] = [];
           z[type][k].push(r);
         }
@@ -439,7 +439,7 @@ try {
       console.log(`${zc} "${f}" lines processed`);
     }
   }
-  // throw(JSON.stringify(z, null, 2));
+  // throw(JSON.stringify(z.add, null, 2));
   
   let count = 0;
   let success = 0;
