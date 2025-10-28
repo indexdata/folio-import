@@ -1,64 +1,79 @@
-Aleph z30_sub_library	Aleph z30_item_status	Aleph z30_item_process_status	Aleph z30_collection	marc	Folio perm loan type	Folio temp loantype	Notes to Index Data	Internal notes NLS	Examples	
-RRLEX	1				Läsesalslån				https://folio-dev-02.kb.se/inventory/view/c3c1c9c4-5d97-5429-a817-191d2b24e9e1?filters=effectiveLocation.57246b20-76a7-4725-91c7-dea9f336de4f&segment=items&sort=title	
-RRLEX	1	DB			Läsesalslån	Digital beställning			Inventory - 100 potatis-rätter; jemte bihang: fiskanrättningar, inläggning och förvaring af grönsaker och kött, samt andra hushållsråd; samlade af en husmoder. - FOLIO	
-RRLEX	1	LA			Läsesalslån	Lagas före lån				
-RRLEX	1	LL			Läsesalslån	L-samling - kollas före lån			Inventory - Aktuell rapport - FOLIO	
-RRLEX	1	UL			Läsesalslån		Status: On order	temp loantype removed 23/6	Inventory - Heraldry in urban society : visual culture and communication in late medieval England and Germany / Marcus Meer. - FOLIO	
-RRLEX	2				Hemlån				Inventory - Anglo-russkij geologičeskij slovarʹ : okolo 52 000 terminov = English-Russian dictionary of geology : approx. 52 000 terms / P.P. Timofeev, M.N. Alekseev, T.A. Sofiano ; pod redakciej P.P. Timofeeva i M.N. Alekseeva - FOLIO	
-RRLEX	2	LA			Hemlån	Lagas före lån			Inventory - FOLIO	
-RRLEX	2	UL			Hemlån		Status: On order	temp loantype removed 23/6	Inventory - FOLIO	
-RRLEX	3				Bokskåp					
-RRLEX	2	DB			Hemlån	Digital beställning		Behöver ej mappas, bara på testpost ((Räksmörgås)		
-RRLEX	5				Framtages ej/spärrat		Suppressed from Discovery			
-RRLEX	6				Läsesalslån				https://folio-dev-02.kb.se/inventory/view/097c8eb4-e5c2-5279-8d4a-662cc2ede4c5/fa19cdd8-970d-57ea-ab0c-2e81c0246f15/819e71b3-fcfd-5c66-a78a-ff73e0226b32?qindex=advancedSearch&query=r%C3%A4ksm%C3%B6rg%C3%A5s&segment=items&sort=title	
-RRLEX	6	DB			Läsesalslån	Digital beställning				
-RRLEX	71				Läsesalslån				Inventory - FOLIO	
-RRLEX	71	DB			Läsesalslån	Digital beställning				
-RRLEX	71	SN			Hemlån					
-RRLEX	72				Läsesalslån	Saknas i KB			Inventory - FOLIO	
-RRLEX	73							Något vi testar? 40001000110999		
-RRLEX	32				Hemlån					
-RRLEX	31				Läsesalslån					
-RRLEX	42				Läsesalslån					
-RRSPE	21				Specialläsesalslån				Inventory - Kongl. Numer-Lotterie-Directionens Kungörelse, Huru de wid Kongl. Numer-Lotteriet antagne Collecteurers brott i tiensten bör anses. Stockholm den 17 April 1776 - FOLIO	
-RRSPE	21	DB			Specialläsesalslån	Digital beställning			Inventory - FOLIO	
-RRSPE	21	DS			Specialläsesalslån		Add item note:  Läses digitalt på läsplatta (Public note)		Inventory - FOLIO	
-RRSPE	21	LA			Specialläsesalslån	Lagas före lån			Inventory - FOLIO	
-RRSPE	21	LL			Specialläsesalslån	L-samling - kollas före lån				
-RRSPE	27				Manuell beställning				Inventory - [Generalskan af Kleen] [Bild] - FOLIO	
-RRSPE	71				Specialläsesalslån				Inventory - FOLIO	
-RRSPE	72				Specialläsesalslån	Saknas i KB				
-RRSPE	26				Specialläsesalslån				Inventory - FOLIO	
-RRSPE	26	DB			Specialläsesalslån	Digital beställning				
-RRSPE	26	LA			Specialläsesalslån	Lagas före lån			Inventory - FOLIO	
-RRSPE	26	LL			Specialläsesalslån	L-samling - kollas före lån				
-RRSPE	23				Specialläsesalslån			Kollas före lån. Rutin? Behövs statusen? Check-in note?	Inventory - FOLIO	
-RRSPE	23	LA			Specialläsesalslån	Lagas före lån		Kollas före lån. Rutin? Behövs statusen? Check-in note?	Inventory - FOLIO	
-RRSPE	23	LL			Specialläsesalslån	L-samling - kollas före lån		Kollas före lån. Rutin? Behövs statusen? Check-in note?	Inventory - FOLIO	
-RRSPE	28				Specialläsesalslån				Inventory - FOLIO	
-RRSPE	28	DB			Specialläsesalslån	Digital beställning			Inventory - FOLIO	
-RRSPE	28	LA			Specialläsesalslån	Lagas före lån			Inventory - FOLIO	
-RRSPE	28	RP			Framtages ej/spärrat		Add item note: Spärrad av bevarandeskäl (Public note)			Ej i första testposterna
-RRSPE	31				Specialläsesalslån					
-RRSPE	32				Specialläsesalslån					
-MFL	4				Referens				Inventory - FOLIO	
-MFL	5				Framtages ej/spärrat					
-REF	4				Referens				Inventory - Nationalencyklopedin : ett uppslagsverk på vetenskaplig grund utarbetat på initiativ av Statens kulturråd / [divisionschef och chefredaktör: Kari Marklund]. - FOLIO	
-REF	71				Referens					
-REF	72				Referens	Saknas i KB		Saknas i KB		
-PRUMS	1				Läsesalslån				Inventory - Kamratposten : Folkskolans barntidning - FOLIO	
-PRUMS	21				Specialläsesalslån					
-PRUMS	5				Framtages ej/spärrat		Suppressed from Discovery			
-TLKB	4				Referens				Inventory - Der Spiegel : das deutsche Nachrichten-Magazin - FOLIO	
-TLKB	72				Referens					
-TLKB	71				Referens					
-ENHET	3				Framtages ej/spärrat					
-ENHET	22				Framtages ej/spärrat					
-ENHET	73				Bokskåp		Suppressed from Discovery		Inventory - BOKSKÅP - FOLIO	
-RESTR	3				Framtages ej/spärrat				Inventory - Vattenförsörjningsplan - Search - FOLIO	
-RESTR	3	RP			Framtages ej/spärrat		Add item note: Spärrad av bevarandeskäl (Public note)			
-RESTR	5				Framtages ej/spärrat					
-RESTR	22				Framtages ej/spärrat		Add item note: Annat ex finns (Public note)		Inventory - FOLIO	
-RESTR	23				Framtages ej/spärrat					
-RESTR	22	RP			Framtages ej/spärrat		Add item note: Spärrad av bevarandeskäl (Public note)			
-REPRO	1				Läsesalslån					
+								
+RRLEX	1				Läsesalslån			
+RRLEX	1	DB			Läsesalslån	Digital beställning		
+RRLEX	1	LA			Läsesalslån	Lagas före lån		
+RRLEX	1	LL			Läsesalslån	L-samling - kollas före lån		
+RRLEX	1	UL			Läsesalslån		Status: On order	temp loantype removed 23/6
+RRLEX	2				Hemlån			
+RRLEX	2	LA			Hemlån	Lagas före lån		
+RRLEX	2	UL			Hemlån		Status: On order	temp loantype removed 23/6
+RRLEX	3				Bokskåp			
+RRLEX	2	DB			Hemlån	Digital beställning		Behöver ej mappas, bara på testpost ((Räksmörgås)
+								
+RRLEX	5				Framtages ej/spärrat		Suppressed from Discovery	
+RRLEX	6				Läsesalslån			
+RRLEX	6	DB			Läsesalslån	Digital beställning		
+								
+RRLEX	71				Läsesalslån			
+RRLEX	71	DB			Läsesalslån	Digital beställning		
+RRLEX	71	SN			Hemlån			
+RRLEX	72				Läsesalslån			
+RRLEX	73							Något vi testar? 40001000110999
+								
+RRLEX	32				Hemlån			
+RRLEX	31				Läsesalslån			
+RRLEX	42				Läsesalslån			
+								
+								
+RRSPE	21				Specialläsesalslån			
+RRSPE	21	DB			Specialläsesalslån	Digital beställning		
+RRSPE	21	DS			Specialläsesalslån		Add item note:  Läses digitalt på läsplatta (Public note)	
+RRSPE	21	LA			Specialläsesalslån	Lagas före lån		
+RRSPE	21	LL			Specialläsesalslån	L-samling - kollas före lån		
+RRSPE	27			MARC 042=HARK	Beställ i Arken			
+RRSPE	27				Begränsad åtkomst 			
+RRSPE	71				Specialläsesalslån			
+RRSPE	72				Specialläsesalslån			
+RRSPE	26				Specialläsesalslån			
+RRSPE	26	DB			Specialläsesalslån	Digital beställning		
+RRSPE	26	LA			Specialläsesalslån	Lagas före lån		
+RRSPE	26	LL			Specialläsesalslån	L-samling - kollas före lån		
+RRSPE	23				Specialläsesalslån			Kollas före lån. Rutin? Behövs statusen? Check-in note?
+RRSPE	23	LA			Specialläsesalslån	Lagas före lån		Kollas före lån. Rutin? Behövs statusen? Check-in note?
+RRSPE	23	LL			Specialläsesalslån	L-samling - kollas före lån		Kollas före lån. Rutin? Behövs statusen? Check-in note?
+								
+RRSPE	28				Specialläsesalslån			
+RRSPE	28	DB			Specialläsesalslån	Digital beställning		
+RRSPE	28	LA			Specialläsesalslån	Lagas före lån		
+RRSPE	28	RP			Framtages ej/spärrat		Add item note: Spärrad av bevarandeskäl (Public note)	
+RRSPE	31				Specialläsesalslån			
+RRSPE	32				Specialläsesalslån			
+								
+MFL	4				Referens			
+MFL	5				Framtages ej/spärrat			
+								
+REF	4				Referens			
+REF	71				Referens			
+REF	72				Referens			Saknas i KB
+								
+PRUMS	1				Läsesalslån			
+PRUMS	21				Specialläsesalslån			
+PRUMS	5				Framtages ej/spärrat		Suppressed from Discovery	
+								
+TLKB	4				Referens			
+TLKB	72				Referens			
+TLKB	71				Referens			
+								
+ENHET	3				Framtages ej/spärrat			
+ENHET	22				Framtages ej/spärrat			
+ENHET	73				Bokskåp		Suppressed from Discovery	
+								
+RESTR	3		86		Begränsad åtkomst 			Affischer 
+RESTR	3	RP			Framtages ej/spärrat		Add item note: Spärrad av bevarandeskäl (Public note)	
+RESTR	3				Framtages ej/spärrat			
+RESTR	5				Framtages ej/spärrat			
+RESTR	22				Framtages ej/spärrat		Add item note: Annat ex finns (Public note)	
+RESTR	23				Framtages ej/spärrat			
+RESTR	22	RP			Framtages ej/spärrat		Add item note: Spärrad av bevarandeskäl (Public note)	
+								
+REPRO	1				Läsesalslån			
