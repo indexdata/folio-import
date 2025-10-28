@@ -293,7 +293,6 @@ try {
     let iid = r.Z30_REC_KEY;
     let bid =  linkMap[aid];
     let inst = instMap[bid];
-    console.log(inst);
     let bc = r.Z30_BARCODE;
     let mt = r.Z30_MATERIAL;
     let st = r.Z30_ITEM_STATUS;

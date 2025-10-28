@@ -812,15 +812,23 @@ const makeAleph = (fields) => {
       sourceId: refData.holdingsRecordsSources.FOLIO
     }
     out.holdings = h;
+
+    /* do not make dummy items for MINIPOST (FOLIO-291)
+
     if (mti === 'MINIPOST') {
       let res = makeItem(h.id, h.hrid, 'Monografi', 'Läsesalslån');
-      if (!res) console.log(`WARN could not create MITIPOST item from ${i.hrid}`);
+      if (!res) console.log(`WARN could not create MINIPOST item from ${i.hrid}`);
     }
-  }
 
-  
+    */
+  }
   return out;
 }
+
+const makeInstMap = (inst, bibCallNum, blvl, ea, itypeCode, af) => {
+  let instMap = `${inst.hrid}\x1E${inst.id}\x1E${bibCallNum.value}\x1E${bibCallNum.type}\x1E${blvl}\x1E${ea}\x1E${itypeCode}\x1E${af}`;
+  return instMap;
+} 
 
 try {
   if (!rawFile) { throw "Usage: node marc2inst.js <conf_file> <raw_marc_file>" }
@@ -1010,7 +1018,10 @@ try {
       if (!marc.fields['245'] && marc.fields.MTI) {
         let o = makeAleph(marc.fields);
         writeOut(outs.instances, o.instances);
+        let instMap = makeInstMap(o.instances, {}, '', '', '', '{}');
+        writeOut(outs.idmap, instMap, true, '\n');
         ttl.instances++;
+        
         if (o.holdings) {
           writeOut(outs.xholdings, o.holdings);
           ttl.xholdings++;
