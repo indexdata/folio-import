@@ -6,6 +6,7 @@ import { parse } from 'csv-parse';
 
 let confFile = process.argv[2];
 let mapFile = process.argv[3];
+
 let args = process.argv.slice(4);
 let filters = {};
 let hasFilters = false;
@@ -120,6 +121,7 @@ try {
   let iprefix = prefix + 'i';
   let wdir = path.dirname(mapFile);
   let fn = path.basename(mapFile, '.map');
+  let xfile = `${wdir}/${fn}-xholdings.jsonl`;
   let outBase = wdir + '/' + fn;
   for (let f in files) {
     let p = (f === 'err') ? outBase + '-' + f + '.mrc' : (f === 'idmap') ? outBase + '.map' : outBase + '-' + f + '.jsonl';
@@ -226,6 +228,22 @@ try {
     console.log('Instances mapped:', mc);
   }
   // throw(instMap['000694902']);
+
+  // map xholdings made by marc2inst script
+  const xholdings = {};
+  if (xfile) {
+    let fileStream = fs.createReadStream(xfile);
+    let rl = readline.createInterface({
+      input: fileStream,
+      crlfDelay: Infinity
+    });
+    let mc = 0;
+    for await (let line of rl) {
+      let j = JSON.parse(line);
+      xholdings[j.instanceId] = j;
+    }
+  }
+  // throw(xholdings);
 
   // map link files;
   console.log(`INFO Reading linker data from ${itemFiles.links}`);
@@ -353,7 +371,8 @@ try {
         }
       });
 
-      if (!hseen[hkey]) {
+      let xholding = xholdings[inst.id];
+      if (!hseen[hkey] && !xholding) {
         occ[bid] = (!occ[bid]) ? 1 : occ[bid] + 1;
         let occStr = occ[bid].toString().padStart(3, '0');
         let hhrid = bid + '-' + occStr;
@@ -413,7 +432,7 @@ try {
         }
       }
 
-      let hr = hseen[hkey];
+      let hr = xholding || hseen[hkey];
       if (hr) {
         let nt = { p: [], s: []};
         if (inotes[0]) nt.p = inotes;
