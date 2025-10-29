@@ -722,6 +722,17 @@ const makeItem = (holdingsId, holdingsHrid, mtype, ltype, status, callNumber) =>
 const makeAleph = (fields) => {
   let mti = (fields.MTI) ? getSubs(fields.MTI[0], 'a') : '';
   let hrid = (fields.SYS) ? getSubs(fields.SYS[0], 'a') : '';
+  let dates = {};
+  let f008 = (fields['008']) ? fields['008'][0] : '';
+  if (f008) {
+    let t = f008.substring(6, 7);
+    let d1 = f008.substring(7, 11);
+    let d2 = f008.substring(11, 15);
+    dates.dateTypeId = refData.instanceDateTypes[t];
+    dates.date1 = d1 || '';
+    if (d2 && d2.match(/\w/)) dates.date2 = d2;
+  }
+  console.log(dates);
   let anotes = [];
   if (fields.ENH) {
     fields.ENH.forEach(f => {
@@ -787,7 +798,8 @@ const makeAleph = (fields) => {
     instanceTypeId: refData.instanceTypes.other,
     statusId: istat,
     discoverySuppress: true,
-    title: ti
+    title: ti,
+    dates: dates
   };
   if (statCode) i.statisticalCodeIds = [ statCode ];
   if (anotes[0]) i.administrativeNotes = anotes;
@@ -797,7 +809,7 @@ const makeAleph = (fields) => {
   }
   if (ed) i.editions = [ ed ];
   if (au) i.contributors = [ { name: au, contributorNameTypeId: refData.contributorNameTypes['Personal name'] } ];
-  if (dt) i.publication = [ { dateOfPublication: dt } ];
+  if (dt) i.publication = [ { dateOfPublication: dt, publisher: '' } ];
   if (desc) i.physicalDescriptions = [ desc ];
   out.instances = i;
 
