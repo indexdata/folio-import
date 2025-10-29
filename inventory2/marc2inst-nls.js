@@ -732,7 +732,6 @@ const makeAleph = (fields) => {
     dates.date1 = d1 || '';
     if (d2 && d2.match(/\w/)) dates.date2 = d2;
   }
-  console.log(dates);
   let anotes = [];
   if (fields.ENH) {
     fields.ENH.forEach(f => {
