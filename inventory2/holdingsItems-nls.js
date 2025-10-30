@@ -207,7 +207,7 @@ try {
       }
     });
   }
-  // throw(JSON.stringify(tsvMap.locations, null, 2));
+  // throw(JSON.stringify(tsvMap.loantypes.RRSPE, null, 2));
 
   console.log(`INFO Parsing instance map at ${mapFile}`);
   const instMap = {};
@@ -231,7 +231,7 @@ try {
 
   // map xholdings made by marc2inst script
   const xholdings = {};
-  if (xfile) {
+  if (fs.existsSync(xfile)) {
     let fileStream = fs.createReadStream(xfile);
     let rl = readline.createInterface({
       input: fileStream,
@@ -349,6 +349,7 @@ try {
       // item administrativeNotes from the bib 852 field
       let af = (inst.af) ? JSON.parse(inst.af) : {};
       let anf = af['852'] || [];
+      let f042 = (af['042']) ? af['042'][0] : '';
       let adminNotes = {};
       let inotes = [];
       anf.forEach(f => {
@@ -562,7 +563,7 @@ try {
         }
 
         let ltypes = (tsvMap.loantypes[loc] && tsvMap.loantypes[loc][st]) ? tsvMap.loantypes[loc][st][ips] || tsvMap.loantypes[loc][st]._ : '';
-        let pl = ltypes.p;
+        let pl = (f042 === 'HARK') ? 'Beställ i Arken' : ltypes.p;
         let tl = ltypes.t;
         i.permanentLoanTypeId = refData.loantypes[pl];
         if (tl) { 
