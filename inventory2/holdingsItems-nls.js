@@ -565,6 +565,11 @@ try {
         let ltypes = (tsvMap.loantypes[loc] && tsvMap.loantypes[loc][st]) ? tsvMap.loantypes[loc][st][ips] || tsvMap.loantypes[loc][st]._ : '';
         let pl = (f042 === 'HARK') ? 'Beställ i Arken' : ltypes.p;
         let tl = ltypes.t;
+        // The following block -- FOLIO-302
+        if (loc === 'RESTR' && col === '86') {
+          pl = 'Begränsad åtkomst';
+          i.status.name = 'Available';
+        }
         i.permanentLoanTypeId = refData.loantypes[pl];
         if (tl) { 
           i.temporaryLoanTypeId = refData.loantypes[tl];
