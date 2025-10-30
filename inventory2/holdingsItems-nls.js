@@ -432,7 +432,12 @@ try {
         }
       }
 
-      let hr = xholding || hseen[hkey];
+      let hr = hseen[hkey];
+      if (xholding) {
+        hr = xholding;
+        ttl.holdings++;
+        delete xholdings[xholding.instanceId];
+      }
       if (hr) {
         let nt = { p: [], s: []};
         if (inotes[0]) nt.p = inotes;
@@ -613,6 +618,13 @@ try {
     if (ttl.linesRead % 100000 === 0) console.log(`(Z30 lines read: ${ttl.linesRead})`);
   });
   parser.on('end', () => {
+    // write unused xholdings to holdings file
+    for (let k in xholdings) {
+      let r = xholdings[k];
+      r.__ = 'xholdings';
+      writeOut(outs.holdings, r);
+      ttl.holdings++;
+    }
     if (!hasFilters) {
       for (let bhrid in instMap) {
         let inst = instMap[bhrid];
