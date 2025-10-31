@@ -458,7 +458,7 @@ try {
     let aid = p.Z303_PRIMARY_ID;
     let id = p.Z303_REC_KEY;
     let dels = [ p.Z303_DELINQ_1, p.Z303_DELINQ_2, p.Z303_DELINQ_3 ];
-    let blockStaff = p.Z303_DELINQ_N_1
+    let delNotes = [ p.Z303_DELINQ_N_1, p.Z303_DELINQ_N_2, p.Z303_DELINQ_N_3];
     let ads = z.add[id];
     let ids = z.id[id];
     let locs = z.loc[id] || [];
@@ -534,7 +534,11 @@ try {
     */
 
     if (bc) u.barcode = bc;
-    if (u.barcode && bcPre && (borStat === '10' || borStat === '12')) u.barcode = bcPre + u.barcode;
+
+    /* see FOLIO-307
+    // if (u.barcode && bcPre && (borStat === '10' || borStat === '12')) u.barcode = bcPre + u.barcode;
+    */
+
     if (u.barcode && bcseen[u.barcode]) {
       console.log(`WARN barcode "${u.barcode}" already taken for userId ${u.id}`)
       delete u.barcode;
@@ -613,8 +617,8 @@ try {
             requests: t.blockTemplate.requests,
             userId: u.id
           }
-          if (blockStaff) {
-            o.staffInformation = blockStaff;
+          if (delNotes[x]) {
+            o.staffInformation = delNotes[x];
           }
           if (!blseen[o.id]) {
             writeOut(files.b, o);
