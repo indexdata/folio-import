@@ -264,7 +264,7 @@ const spTran = {
               ttl.rerr++;
             }
           } else {
-            console.log(`ERROR Request user not found with alephid "${aid}"!`);
+            console.log(`ERROR Request user not found with alephid "${uid}"!`);
             ttl.rerr++;
           }
         } else {
