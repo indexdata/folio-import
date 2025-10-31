@@ -40,6 +40,9 @@ const spTran = {
     let circDir = path.dirname(circFile);
     const start = new Date().valueOf();
 
+    if (!fs.existsSync(circFile)) throw(`Can't open z36 table at ${circFile}`);
+    if (reqFile && !fs.existsSync(reqFile)) throw(`Can't open z37 table at ${reqFile}`);
+
     for (let k in outFiles) {
       outFiles[k] = circDir + '/' + outFiles[k];
       if (fs.existsSync(outFiles[k])) fs.unlinkSync(outFiles[k]);
@@ -139,6 +142,7 @@ const spTran = {
       columns: true,
       skip_empty_lines: true,
       delimiter: '\t',
+      relax_column_count: true,
       bom: true
     });
 
@@ -199,6 +203,7 @@ const spTran = {
         columns: true,
         skip_empty_lines: true,
         delimiter: '\t',
+        relax_column_count: true,
         bom: true
       });
 
