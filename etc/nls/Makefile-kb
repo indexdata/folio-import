@@ -20,7 +20,7 @@ setup:
 	cd $(iref); rm *.tsv; ln -s $(etc)/*.tsv .
 
 instances:
-	cd $(inv2); node marc2inst-nls.js $(con) $(idir)/bibs.mrc > $(ldir)/makeInst.log 2>$(ldir)/makeInst.err &
+	cd $(inv2); snapshotId=98195f69-ee1e-5cb8-bd28-a9f8f0942c89 node marc2inst-nls.js $(con) $(idir)/bibs.mrc > $(ldir)/makeInst.log 2>$(ldir)/makeInst.err &
 
 items:
 	cd $(inv2); node --max-old-space-size=4096 holdingsItems-nls.js $(con) $(idir)/bibs.map > $(ldir)/makeHoldingsItems.log 2>$(ldir)/makeHoldingsItems.err &
@@ -37,13 +37,23 @@ inventory-prep:
 	cd $(idir); split -n l/2 bibs-items.jsonl it
 
 users:
-	cd $(wd)/patrons; node nlsUsers.js $(uref) $(udir) > $(ldir)/makeUsers.log 2>$(ldir)/makeUsers.err
-	cat $(ldir)/makeUsers.log
+	cd $(wd)/patrons; node nlsUsers.js $(uref) $(udir) > $(ldir)/makeUsers.log 2>$(ldir)/makeUsers.err &
+	tail -f $(ldir)/makeUsers.log 
+
+split-users: $(udir)/users-users.jsonl
+	cd $(udir); rm -f *-a?
+	cd $(udir); split -l 15000 users-users.jsonl users-
+	cd $(udir); split -l 15000 users-perms.jsonl perms-
+	cd $(udir); split -l 15000 users-request-prefs.jsonl prefs-
+	cd $(udir); split -l 10000 users-notes.jsonl notes-
+	ls -l $(udir)
 
 orders:
 	cd $(acq); node --max-old-space-size=4096 nlsOrders $(oref) $(z103) $(idir)/bibs-instances.jsonl $(odir) > $(ldir)/makeOrders.log 2>$(ldir)/makeOrders.err &
 	tail -f $(ldir)/makeOrders.log
 
 circ:
-	cd $(wd)/patrons; node --max-old-space-size=5120 nlsCirc $(iref)/service-points.json $(udir)/users-users.jsonl $(idir)/bibs-items.jsonl $(cdir)/z36.dsv $(cdir)/z37.dsv > $(ldir)/makeCirc.log 2>$(ldir)/makeCirc.err &
+	cd $(cdir); mv -f z36.seqaa z36.dsv; true; mv -f z37.seqaa z37.dsv; true
+	cd $(wd); [ -f $(cdir)/users.jsonl ] || node downloadJSONL 'users?limit=5000&query=barcode==* sortBy id' $(cdir)/users.jsonl
+	cd $(wd)/patrons; node --max-old-space-size=5120 nlsCirc $(iref)/service-points.json $(cdir)/users.jsonl $(idir)/bibs-items.jsonl $(cdir)/z36.dsv $(cdir)/z37.dsv > $(ldir)/makeCirc.log 2>$(ldir)/makeCirc.err &
 	tail -f $(ldir)/makeCirc.log
