@@ -248,8 +248,22 @@ const spTran = {
             }
             let pc = (nt & nt2) ? `${nt}; ${nt2}` : nt;
             if (pc) o.patronComments = pc;
-            if (edate && edate > rdate) o.requestExpirationDate = parseDate(edate);
-            if (hdate && hdate !== '0') o.holdShelfExpirationDate = parseDate(hdate);
+            if (edate && edate > rdate) {
+              let dval = parseDate(edate);
+              if (dval !== 'ERR') {
+                o.requestExpirationDate = dval;
+              } else {
+                console.log(JSON.stringify(r));
+              }
+            }
+            if (hdate && hdate !== '0') {
+              let dval = parseDate(hdate);
+              if (dval !== 'ERR') {
+                o.holdShelfExpirationDate = dval;
+              } else {
+                console.log(JSON.stringify(r));
+              }
+            }
             if (spId) o.pickupServicePointId = spId;
             if (spId) {
               if (dbug) o.__ = r;
