@@ -116,6 +116,7 @@ const spTran = {
         dt = (type === 'due') ? dt.replace(/T.+/, `T23:59:59.000${pto}`) : dt.replace(/T.+/, `T12:00:00.000${pto}`);
       } catch (e) {
         console.log(`${e} : ${dstr}`);
+        dt = 'ERR';
       }
       return(dt);
     }
@@ -203,6 +204,7 @@ const spTran = {
         columns: true,
         skip_empty_lines: true,
         delimiter: '\t',
+        relax_column_count: true,
         bom: true
       });
 
@@ -220,6 +222,9 @@ const spTran = {
             let hr = r.Z37_OPEN_HOUR.replace(/^(..)(..)/, 'T$1:$2:00');
             let rdate = r.Z37_OPEN_DATE;
             let rdateStr = parseDate(rdate);
+            if (rdateStr === 'ERR') {
+              console.log(JSON.stringify(r));
+            }
             let nt = r.Z37_NOTE_1;
             let nt2 = r.Z37_NOTE_2;
             let t = (item.st === 'Available') ? 'Page' : 'Hold';
