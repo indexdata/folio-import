@@ -57,3 +57,6 @@ circ:
 	cd $(wd); [ -f $(cdir)/users.jsonl ] || node downloadJSONL 'users?limit=5000&query=barcode==* sortBy id' $(cdir)/users.jsonl
 	cd $(wd)/patrons; node --max-old-space-size=5120 nlsCirc $(iref)/service-points.json $(cdir)/users.jsonl $(idir)/bibs-items.jsonl $(cdir)/z36.dsv $(cdir)/z37.dsv > $(ldir)/makeCirc.log 2>$(ldir)/makeCirc.err &
 	tail -f $(ldir)/makeCirc.log
+
+split-circ: $(cdir)/checkouts.jsonl
+	cd $(cdir); split -l 2500 checkouts.jsonl chk

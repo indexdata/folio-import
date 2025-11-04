@@ -11,6 +11,7 @@ const parseDate = (dstr, type) => {
     let dzo = dto.getTimezoneOffset()/60;
     // console.log('Timezone Offset:', dzo);
     let pto = (dzo > 0) ? `-0${dzo}:00` : (dzo < 0) ? `+0${dzo}:00` : 'Z'
+    pto = pto.replace(/\+0-/, '+0');	    
     dt = dto.toISOString();
     dt = (type === 'due') ? dt.replace(/T.+/, `T23:59:59.000${pto}`) : dt.replace(/T.+/, `T12:00:00.000${pto}`);
     } catch (e) {
