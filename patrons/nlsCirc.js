@@ -108,19 +108,18 @@ const spTran = {
       dstr = dstr.replace(/^(....)(..)(..)/, '$1-$2-$3');
       let dto = new Date(dstr)
       try {
-        // let dzo = (dto.getTimezoneOffset() - 60)/60;
-	      // if (dzo < 0) dzo = 6 + dzo
-        // let pto = `-0${dzo}:00`;
-        let pto = 'Z';
+        let dzo = dto.getTimezoneOffset()/60;
+        // console.log('Timezone Offset:', dzo);
+        let pto = (dzo > 0) ? `-0${dzo}:00` : (dzo < 0) ? `+0${dzo}:00` : 'Z'
+        pto = pto.replace(/\+0-/, '+0');	    
         dt = dto.toISOString();
         dt = (type === 'due') ? dt.replace(/T.+/, `T23:59:59.000${pto}`) : dt.replace(/T.+/, `T12:00:00.000${pto}`);
       } catch (e) {
         console.log(`${e} : ${dstr}`);
         dt = 'ERR';
       }
-      return(dt);
-    }
-
+    return(dt);
+}
     const writeOut = (file, obj) => {
       fs.writeFileSync(file, JSON.stringify(obj) + '\n', { flag: 'a'});
     };
