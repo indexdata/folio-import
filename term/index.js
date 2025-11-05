@@ -452,8 +452,9 @@ async function iquery(type, term) {
   let list = [];
   for (let x = 0; x < res[type].length; x++) {
     let r = res[type][x];
+    console.log(r);
     let ti = r.title.substring(0, 35).padEnd(40, ' ');
-    let dt = (r.publication) ? r.publication[0].dateOfPublication : 'uuuu';
+    let dt = (r.publication && r.publication[0]) ? r.publication[0].dateOfPublication : 'uuuu';
     let o = {
       name: ti + dt,
       value: r.id
