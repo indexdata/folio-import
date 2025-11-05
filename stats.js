@@ -21,6 +21,14 @@ const mods = {
     'patron groups': 'groups',
     'notes': 'notes?query=domain==users'
   },
+  circ: {
+    loans: 'loan-storage/loans',
+    '-open loans': 'loan-storage/loans?query=status.name==open',
+    '-closed loans': 'loan-storage/loans?query=status.name==closed',
+    requests: 'circulation/requests',
+    '-open requests': 'circulation/requests?query=status=open',
+    '-closed requests': 'circulation/requests?query=status=closed'
+  },
   auth: {
 	  authorities: 'authority-storage/authorities?limit=1',
 	  srs: 'source-storage/records?recordType=MARC_AUTHORITY&state=ACTUAL&limit=1'
