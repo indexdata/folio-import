@@ -457,6 +457,9 @@ try {
     let snum = hyllnr(nkey);
     let aid = p.Z303_PRIMARY_ID;
     let id = p.Z303_REC_KEY;
+    p.Z303_DELINQ_1 = p.Z303_DELINQ_1.padStart(2, '0');
+    p.Z303_DELINQ_2 = p.Z303_DELINQ_2.padStart(2, '0');
+    p.Z303_DELINQ_3 = p.Z303_DELINQ_3.padStart(2, '0');
     let dels = [ p.Z303_DELINQ_1, p.Z303_DELINQ_2, p.Z303_DELINQ_3 ];
     let delNotes = [ p.Z303_DELINQ_N_1, p.Z303_DELINQ_N_2, p.Z303_DELINQ_N_3];
     let ads = z.add[id];
