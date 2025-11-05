@@ -525,7 +525,7 @@ try {
       },
       customFields: {}
     };
-    if (snum) u.personal.middleName = `(${snum})`;
+    if (snum && !(gnum === '4' || gnum === '5')) u.personal.middleName = `(${snum})`;
 
     /* do not map anything to username (FOLIO-293)
     if (un && !unseen[un]) {
