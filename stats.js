@@ -19,7 +19,8 @@ const mods = {
     'perms/users': 'perms/users',
     'request prefs': 'request-preference-storage/request-preference',
     'patron groups': 'groups',
-    'notes': 'notes?query=domain==users'
+    'notes': 'notes?query=domain==users',
+    'blocks': 'manualblocks'
   },
   circ: {
     loans: 'loan-storage/loans',
