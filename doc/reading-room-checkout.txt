@@ -1,0 +1,45 @@
+
+
+checkin endpoint: 
+circulation/hold-by-barcode-for-use-at-location
+
+payload:
+{
+  "sessionId": "21e699ad-fff8-4e9e-93a0-cd95afaadacc",
+  "servicePointId": "40b88b74-655d-47b3-b7c5-f1698f95872d",
+  "checkInDate": "2025-11-06T15:51:31.532Z",
+  "itemBarcode": "50001000393369X",
+  "id": "49a90147-d3e7-4e04-b35d-d25afb500304"
+}
+
+loan:
+{
+  "id": "354022b2-46df-4156-b308-979aad19892f",
+  "userId": "0e505354-01eb-4899-98f6-ba4731031c0d",
+  "itemId": "b1b455ef-b2cc-5640-bb5e-5e045d63ba54",
+  "itemEffectiveLocationIdAtCheckOut": "57246b20-76a7-4725-91c7-dea9f336de4f",
+  "status": {
+    "name": "Open"
+  },
+  "forUseAtLocation": {
+    "status": "Held",
+    "statusDate": "2025-11-06T15:51:32.230+00:00",
+    "holdShelfExpirationDate": "2025-11-13T23:59:59.000+00:00"
+  },
+  "loanDate": "2025-11-06T15:34:34.611Z",
+  "dueDate": "2026-11-07T23:59:59.000+00:00",
+  "action": "heldForUseAtLocation",
+  "itemStatus": "Checked out",
+  "loanPolicyId": "16011292-75f8-4f0a-a957-4699a3321428",
+  "checkoutServicePointId": "40b88b74-655d-47b3-b7c5-f1698f95872d",
+  "patronGroupIdAtCheckout": "2467cdda-d950-4c25-b59d-d0786cbd7b1b",
+  "isDcb": false,
+  "overdueFinePolicyId": "8014253f-d620-4038-bd25-12347290bc45",
+  "lostItemPolicyId": "9f8fea9a-bcb8-4c8b-bfae-f3e66d8fff0b",
+  "metadata": {
+    "createdDate": "2025-11-06T15:34:35.353+00:00",
+    "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+    "updatedDate": "2025-11-06T15:51:32.248+00:00",
+    "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+  }
+}
