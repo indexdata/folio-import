@@ -155,6 +155,8 @@ const post_put = async (authToken, url, checkout, r, username) => {
       let claimedReturnedDate = '';
       let renewalCount = 0;
       let username = '';
+      let held = data.held;
+      delete data.held;
       if (checkIn === 'checkin') {
         delete data.loanDate;
         delete data.userBarcode;
@@ -192,7 +194,12 @@ const post_put = async (authToken, url, checkout, r, username) => {
           try {
             loanObj.dueDate = dueDate;
             loanObj.loanDate = data.loanDate;
-            loanObj.action = 'dueDateChanged';
+            if (held) {
+              loanObj.action = 'heldForUseAtLocation';
+              loanObj.forUseAtLocation = { status: "Held", holdShelfExpirationDate: held };
+            } else {
+              loanObj.action = 'dueDateChanged';
+            }
             loanObj.renewalCount = renewalCount;
             delete loanObj.dueDateChangedByNearExpireUser;
             if (process.env.DEBUG) console.log(loanObj);
