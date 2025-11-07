@@ -13,6 +13,9 @@ const okapi = '.okapi';
   if (config.expiry) {
     out.expiry = config.expiry;
   }
+  if (config.cookie) {
+    out.cookie = config.cookie;
+  }
   fs.writeFileSync(okapi, JSON.stringify(out));
   console.log(out);
 })();
