@@ -27,8 +27,9 @@ const post_put = async (authToken, url, checkout, r, username) => {
         .put(url)
         .timeout(tout)
         .set('User-Agent', config.agent)
-        .set('accept', 'application/json', 'text/plain')
-        .set('x-okapi-token', authToken)
+        .set('cookie', config.cookie)
+        .set('x-okapi-tenant', config.tenant)
+        .set('x-okapi-token', config.token)
         .set('content-type', 'application/json')
         .send(checkout);
       return;
@@ -37,8 +38,10 @@ const post_put = async (authToken, url, checkout, r, username) => {
         .post(url)
         .timeout(tout)
         .set('User-Agent', config.agent)
+        .set('cookie', config.cookie)
+        .set('x-okapi-tenant', config.tenant)
+        .set('x-okapi-token', config.token)
         .set('accept', 'application/json', 'text/plain')
-        .set('x-okapi-token', authToken)
         .set('content-type', 'application/json')
         .send(checkout);
       return res.body;
@@ -81,7 +84,9 @@ const post_put = async (authToken, url, checkout, r, username) => {
           let res = await superagent
             .get(`${config.okapi}/users?query=username==${username}`)
             .set('User-Agent', config.agent)
-            .set('x-okapi-token', config.token);
+            .set('cookie', config.cookie)
+            .set('x-okapi-tenant', config.tenant)
+            .set('x-okapi-token', config.token)
           let u = res.body.users[0];
           if (u.barcode) {
             checkout.userBarcode = u.barcode;

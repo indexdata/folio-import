@@ -40,6 +40,9 @@ const tf = process.argv[3];
             .get(url)
             .timeout({ response: 5000 })
             .set('accept', 'application/json')
+            .set('User-Agent', config.agent)
+            .set('cookie', config.cookie)
+            .set('x-okapi-tenant', config.tenant)
             .set('x-okapi-token', config.token)
           let userRecs = res.body;
           if (userRecs.resultInfo.totalRecords !== 1) throw new Error(`Did not fetch a single record for barcode ${bc}`);
@@ -64,8 +67,11 @@ const tf = process.argv[3];
             await superagent
               .put(purl)
               .timeout({ response: 5000 })
-              .set('accept', 'text/plain')
+              .set('User-Agent', config.agent)
+              .set('cookie', config.cookie)
+              .set('x-okapi-tenant', config.tenant)
               .set('x-okapi-token', config.token)
+              .set('accept', 'text/plain')
               .set('content-type', 'application/json')
               .send(user);
           } catch (e) {

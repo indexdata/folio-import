@@ -61,6 +61,8 @@ const wait = (ms) => {
       let res = await superagent
         .get(actionUrl + '?limit=10000')
         .set('User-Agent', config.agent)
+        .set('cookie', config.cookie)
+        .set('x-okapi-tenant', config.tenant)
         .set('x-okapi-token', config.token)
         .set('accept', 'application/json');
       res.body.permissions.forEach(p => {
@@ -92,6 +94,8 @@ const wait = (ms) => {
             .post(actionUrl)
             .send(inData[x])
             .set('User-Agent', config.agent)
+            .set('cookie', config.cookie)
+            .set('x-okapi-tenant', config.tenant)
             .set('x-okapi-token', config.token)
             .set('content-type', 'application/json')
             .set('accept', 'application/json');

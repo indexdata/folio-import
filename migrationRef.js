@@ -51,6 +51,8 @@ let modId = '';
         const res = await superagent
         .get(url)
         .set('User-Agent', config.agent)
+        .set('cookie', config.cookie)
+        .set('x-okapi-tenant', config.tenant)
         .set('x-okapi-token', config.token)
         .set('accept', 'application/json')
         .set(h, v);

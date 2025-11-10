@@ -213,7 +213,9 @@ let modName = process.argv[3];
       let res = await superagent
         .get(`${config.okapi}/_/proxy/tenants/${config.tenant}/modules`)
         .set('User-Agent', config.agent)
-        .set('x-okapi-token', authToken);
+        .set('cookie', config.cookie)
+        .set('x-okapi-tenant', config.tenant)
+        .set('x-okapi-token', config.token)
         for (let x = 0; x < res.body.length; x++) {
           let m = res.body[x];
           if (m.id.match(/mod-users-\d/)) custMods.users= m.id;
@@ -311,16 +313,18 @@ let modName = process.argv[3];
             .get(url)
             .timeout({ response: 5000 })
             .set('User-Agent', config.agent)
-            .set('accept', 'application/json')
-            .set('x-okapi-token', authToken)
+            .set('cookie', config.cookie)
+            .set('x-okapi-tenant', config.tenant)
+            .set('x-okapi-token', config.token)
             .set('x-okapi-module-id', custMods[mkey]);
         } else {
           res = await superagent
             .get(url)
             .timeout({response: 9000})
             .set('User-Agent', config.agent)
-            .set('accept', 'application/json')
-            .set('x-okapi-token', authToken)
+            .set('cookie', config.cookie)
+            .set('x-okapi-tenant', config.tenant)
+            .set('x-okapi-token', config.token);
         }
         let save = true;
         if (res.body.totalRecords !== undefined && res.body.totalRecords === 0) { 

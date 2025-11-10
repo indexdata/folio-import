@@ -112,6 +112,8 @@ const wait = (ms) => {
           ep = 'perms/users';
       } else if (rec.patronGroup && rec.personal) {
           ep = 'users';
+      } else if (rec.group) {
+          ep = 'groups';
       } else if (rec.succeedingInstanceId || rec.precedingInstanceId) {
           ep = 'preceding-succeeding-titles';
       } else if (rec.superInstanceId) {
@@ -151,6 +153,9 @@ const wait = (ms) => {
         await superagent
           .post(actionUrl)
           .send(rec)
+          .set('User-Agent', config.agent)
+          .set('cookie', config.cookie)
+          .set('x-okapi-tenant', config.tenant)
           .set('x-okapi-token', config.token)
           .set('content-type', 'application/json')
           .set('accept', 'application/json');
@@ -164,6 +169,9 @@ const wait = (ms) => {
           await superagent
             .put(recUrl)
             .send(rec)
+            .set('User-Agent', config.agent)
+            .set('cookie', config.cookie)
+            .set('x-okapi-tenant', config.tenant)
             .set('x-okapi-token', config.token)
             .set('content-type', 'application/json')
             .set('accept', 'text/plain');

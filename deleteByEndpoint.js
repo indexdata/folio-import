@@ -60,9 +60,9 @@ const wait = (ms) => {
         const res = await superagent
           .get(getUrl)
           .set('User-Agent', config.agent)
-          .set('accept', 'application/json')
+          .set('cookie', config.cookie)
           .set('x-okapi-tenant', config.tenant)
-          .set('x-okapi-token', config.token);
+          .set('x-okapi-token', config.token)
         refData = res.body;
       } catch (e) {
         console.log(e);
@@ -91,8 +91,9 @@ const wait = (ms) => {
           .delete(`${deleteUrl}/${id}`)
           .set('User-Agent', config.agent)
           .set('accept', '*/*')
+          .set('cookie', config.cookie)
           .set('x-okapi-tenant', config.tenant)
-          .set('x-okapi-token', config.token);
+          .set('x-okapi-token', config.token)
       } catch (e) {
         console.log(`${e}`);
       }
