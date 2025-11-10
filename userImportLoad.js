@@ -42,6 +42,9 @@ const wait = (ms) => {
         let res = await superagent
           .post(url)
           .send(batches[x])
+          .set('User-Agent', config.agent)
+          .set('cookie', config.cookie)
+          .set('x-okapi-tenant', config.tenant)
           .set('x-okapi-token', config.token)
           .set('content-type', 'application/json');
         console.log(res.body);

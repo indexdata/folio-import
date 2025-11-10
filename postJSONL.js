@@ -91,6 +91,8 @@ const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
           .post(actionUrl)
           .send(rec)
           .set('User-Agent', config.agent)
+          .set('cookie', config.cookie)
+          .set('x-okapi-tenant', config.tenant)
           .set('x-okapi-token', config.token)
           .set('content-type', 'application/json')
           .set('accept', 'application/json');

@@ -107,6 +107,9 @@ const wait = (ms) => {
           await superagent
             .post(actionUrl)
             .send(data)
+            .set('User-Agent', config.agent)
+            .set('cookie', config.cookie)
+            .set('x-okapi-tenant', config.tenant)
             .set('x-okapi-token', config.token)
             .set('content-type', 'application/json')
             .set('accept', 'text/plain')
@@ -158,8 +161,9 @@ const wait = (ms) => {
             .post(url)
             .send(json)
             .set('User-Agent', config.agent)
+            .set('cookie', config.cookie)
+            .set('x-okapi-tenant', config.tenant)
             .set('x-okapi-token', config.token)
-            .set('content-type', 'application/json')
             .set('accept', 'text/plain')
             .set('connection', 'keep-alive');
           console.log(`INFO Successfully loaded ${xid}`);

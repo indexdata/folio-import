@@ -33,6 +33,9 @@ const objFile = process.argv[2];
       try {
         let res = await superagent
           .get(url)
+          .set('User-Agent', config.agent)
+          .set('cookie', config.cookie)
+          .set('x-okapi-tenant', config.tenant)
           .set('x-okapi-token', config.token);
         let j = res.body;
         let runPut = false;
@@ -53,6 +56,9 @@ const objFile = process.argv[2];
           let pres = await superagent
             .put(url)
             .send(j)
+            .set('User-Agent', config.agent)
+            .set('cookie', config.cookie)
+            .set('x-okapi-tenant', config.tenant)
             .set('x-okapi-token', config.token);
           if (pres.outwardRelationships) console.log('Outward relationships deleted:', pres.outwardRelationships.length);
           if (pres.linkedLicenses) console.log('Linked Licenses deleted:', pres.linkedLicenses.length);

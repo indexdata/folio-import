@@ -66,8 +66,10 @@ let dbug = process.env.DEBUG;
           .get(url)
           .timeout({response: 10000})
           .set('User-Agent', config.agent)
+          .set('cookie', config.cookie)
+          .set('x-okapi-tenant', config.tenant)
+          .set('x-okapi-token', config.token)
           .set('accept', 'application/json')
-          .set('x-okapi-token', config.token);
         for (let x in res.body) {
           if (Array.isArray(res.body[x])) {
             prop = x;

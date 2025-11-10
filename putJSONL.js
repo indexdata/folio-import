@@ -95,6 +95,8 @@ const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
           let res = await superagent
             .get(recUrl)
             .set('User-Agent', config.agent)
+            .set('cookie', config.cookie)
+            .set('x-okapi-tenant', config.tenant)
             .set('x-okapi-token', config.token)
             .set('content-type', 'application/json');
           logger.info(`  Setting version number to ${res.body._version}`);

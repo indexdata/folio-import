@@ -42,9 +42,10 @@ const wait = (ms) => {
         const res = await superagent
           .get(getUrl)
           .set('User-Agent', config.agent)
-          .set('accept', 'application/json')
+          .set('cookie', config.cookie)
           .set('x-okapi-tenant', config.tenant)
-          .set('x-okapi-token', config.token); 
+          .set('x-okapi-token', config.token)
+          .set('accept', 'application/json');
         refData = res.body;
       } catch (e) {
         console.log(e);
@@ -61,9 +62,9 @@ const wait = (ms) => {
         let res = await superagent
           .get(turl)
           .set('User-Agent', config.agent)
-          .set('accept', 'application/json')
+          .set('cookie', config.cookie)
           .set('x-okapi-tenant', config.tenant)
-          .set('x-okapi-token', config.token);
+          .set('x-okapi-token', config.token)
         if (res && res.body) {
           if (res.body.totalRecords > 0) {
             delFlag = true;
@@ -77,9 +78,10 @@ const wait = (ms) => {
           await superagent
             .delete(`${config.okapi}/source-storage/snapshots/${id}`)
             .set('User-Agent', config.agent)
-            .set('accept', 'text/plain')
+            .set('cookie', config.cookie)
             .set('x-okapi-tenant', config.tenant)
-            .set('x-okapi-token', config.token);
+            .set('x-okapi-token', config.token)
+            .set('accept', 'text/plain');
             ttl++;
         } catch (e) {
           let msg = (e.response) ? e.response.text : e;

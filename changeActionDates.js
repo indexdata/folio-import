@@ -39,6 +39,9 @@ const getQuery = async (config, query, ep) => {
   try {
     let res = await superagent
       .get(url)
+      .set('User-Agent', config.agent)
+      .set('cookie', config.cookie)
+      .set('x-okapi-tenant', config.tenant)
       .set('x-okapi-token', config.token);
     recs = res.body;
   } catch (e) {
@@ -55,8 +58,10 @@ const putId = async (config, id, ep, payload) => {
       .put(url)
       .send(payload)
       .set('User-Agent', config.agent)
-      .set('content-type', 'application/json')
-      .set('x-okapi-token', config.token);
+      .set('cookie', config.cookie)
+      .set('x-okapi-tenant', config.tenant)
+      .set('x-okapi-token', config.token)
+      .set('content-type', 'application/json');
   } catch (e) {
     console.log(e);
   }

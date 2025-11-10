@@ -116,9 +116,11 @@ console.log = (msg, path) => {
             .post(url)
             .timeout({ response: 5000 })
             .set('User-Agent', config.agent)
-            .set('accept', 'application/json', 'text/plain')
+            .set('cookie', config.cookie)
+            .set('x-okapi-tenant', config.tenant)
             .set('x-okapi-token', config.token)
             .set('content-type', 'application/json')
+            .set('accept', 'application/json', 'text/plain')
             .send(data[d]);
           added++;
         } catch (e) {
@@ -138,8 +140,10 @@ console.log = (msg, path) => {
               .put(purl)
               .timeout({ response: 5000 })
               .set('User-Agent', config.agent)
-              .set('accept', 'text/plain')
+              .set('cookie', config.cookie)
+              .set('x-okapi-tenant', config.tenant)
               .set('x-okapi-token', config.token)
+              .set('accept', 'text/plain')
               .set('content-type', 'application/json')
               .send(data[d]);
             updated++;

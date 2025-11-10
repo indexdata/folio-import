@@ -25,10 +25,13 @@ const mod = process.argv[2];
     try {
       let res = await superagent
         .put(url)
-        .set('accept', 'text/plain')
+        .set('User-Agent', config.agent)
+        .set('cookie', config.cookie)
+        .set('x-okapi-tenant', config.tenant)
         .set('x-okapi-token', config.token)
         .set('content-type', 'application/json')
-	.set('x-okapi-module-id', mod)
+        .set('accept', 'text/plain')
+	      .set('x-okapi-module-id', mod)
         .send(coll);
       updated++;
     } catch (e) {
@@ -39,7 +42,11 @@ const mod = process.argv[2];
       } catch (e) {
         msg = err1.message;
       }
-      console.log(`ERROR: ${msg}`);
+      if (process.env.DEBUG) {
+        console.log(e);
+      } else {
+        console.log(`ERROR: ${msg}`);
+      }
       errors++;
     }
     console.log(`Added:   ${added}`);

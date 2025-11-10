@@ -31,8 +31,10 @@ let ty = process.argv[2];
     try {
       const res = await superagent
       .post(url)
-      .set('x-okapi-token', config.token)
+      .set('User-Agent', config.agent)
+      .set('cookie', config.cookie)
       .set('x-okapi-tenant', config.tenant)
+      .set('x-okapi-token', config.token)
       .set('Content-type', 'application/json')
       .send(pl);
       console.log(JSON.stringify(res.body, null, 2));
