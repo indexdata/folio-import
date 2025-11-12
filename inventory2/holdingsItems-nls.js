@@ -165,6 +165,14 @@ try {
       });
     } catch {}
   });
+  if (process.env.NAMES) {
+    for (let prop in refData) {
+      for (let k in refData[prop]) {
+        refData[prop][k] = k;
+      }
+    }
+  }
+  // throw(refData);
   const refLoc = refData.locations;
   // throw(refLoc);
 
