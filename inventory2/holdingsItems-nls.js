@@ -381,7 +381,7 @@ try {
       });
 
       let xholding = xholdings[inst.id];
-      if (!hseen[hkey] && !xholding) {
+      if (!hseen[hkey]) {
         occ[bid] = (!occ[bid]) ? 1 : occ[bid] + 1;
         let occStr = occ[bid].toString().padStart(3, '0');
         let hhrid = bid + '-' + occStr;
@@ -403,10 +403,14 @@ try {
         if (hsf[0]) h.holdingsStatements = [];
         hsf.forEach(f => {
           let o = {};
-          if (f.a) o.statement = f.a;
-          if (f.z) o.note = f.z;
-          if (f.x) o.staffNote = f.x;
-          if (o.statement || o.note) h.holdingsStatements.push(o);
+          let l = f['5'];
+          if (l !== 'SRo') {
+            if (f.a) o.statement = f.a;
+            if (f.z) o.note = f.z;
+            if (f.x) o.staffNote = f.x;
+            if (o.statement || o.note) h.holdingsStatements.push(o);
+            if (xholdings) h.__ = 'not_SRo'
+          }
         });
 
         let pnf = af['561'] || [];
@@ -442,11 +446,15 @@ try {
       }
 
       let hr = hseen[hkey];
+
+      /* 
       if (xholding) {
         hr = xholding;
         ttl.holdings++;
         delete xholdings[xholding.instanceId];
       }
+      */
+
       if (hr) {
         let nt = { p: [], s: []};
         if (inotes[0]) nt.p = inotes;
