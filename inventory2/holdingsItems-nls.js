@@ -400,18 +400,19 @@ try {
         if (dbug) h.__ = r;
 
         let hsf = af['866'] || [];
-        if (hsf[0]) h.holdingsStatements = [];
-        hsf.forEach(f => {
-          let o = {};
-          let l = f['5'];
-          if (l !== 'SRo') {
-            if (f.a) o.statement = f.a;
-            if (f.z) o.note = f.z;
-            if (f.x) o.staffNote = f.x;
-            if (o.statement || o.note) h.holdingsStatements.push(o);
-            if (xholdings) h.__ = 'not_SRo'
-          }
-        });
+        if (locId === refLoc['loc-ts'] || locId === refLoc['loc-vt'] || locId === refLoc['loc-tls' || locId === refLoc['loc-ref']]) {
+          if (hsf[0]) h.holdingsStatements = [];
+          hsf.forEach(f => {
+            let o = {};
+            let l = f['5'];
+            if (l !== 'SRo') {
+              if (f.a) o.statement = f.a;
+              if (f.z) o.note = f.z;
+              if (f.x) o.staffNote = f.x;
+              if (o.statement || o.note) h.holdingsStatements.push(o);
+            }
+          });
+        }
 
         let pnf = af['561'] || [];
         pnf.forEach(f => {
