@@ -608,6 +608,7 @@ try {
       for (let x = 0; x < dels.length; x++) {
         d = dels[x];
         let t = refData.manualBlockTemplates[d];
+        if (t && t.code === "40") continue;
         if (t) {
           let o = {
             id: uuid(t.id, u.id),
