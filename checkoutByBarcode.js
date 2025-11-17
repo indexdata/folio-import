@@ -192,19 +192,19 @@ const post_put = async (authToken, url, checkout, r, username) => {
 
         console.log(`[${d}] POST ${url} (${data.itemBarcode}${uc})`);
         let loanObj = await post_put(config.token, url, postData, 0, username, config);
-        if (checkIn === 'checkin') added++;
-        if (loanObj && checkIn !== 'checkin') {
+        if (checkIn === 'checkin') {
+          added++;
+        } else if (held) {
+          let url = `${config.okapi}/circulation/hold-by-barcode-for-use-at-location`;
+          console.log(`[${d}] POST ${url} (${data.itemBarcode})`);
+          await post_put(config.token, url, data);
+        } else if (loanObj && dueDate) {
           let loanStr = JSON.stringify(loanObj) + '\n';
           fs.writeFileSync(saveFile, loanStr, { flag: 'a' });
           try {
             loanObj.dueDate = dueDate;
             loanObj.loanDate = data.loanDate;
-            if (held) {
-              loanObj.action = 'heldForUseAtLocation';
-              loanObj.forUseAtLocation = { status: "Held", holdShelfExpirationDate: held };
-            } else {
-              loanObj.action = 'dueDateChanged';
-            }
+            loanObj.action = 'dueDateChanged';
             loanObj.renewalCount = renewalCount;
             delete loanObj.dueDateChangedByNearExpireUser;
             if (process.env.DEBUG) console.log(loanObj);
@@ -236,6 +236,8 @@ const post_put = async (authToken, url, checkout, r, username) => {
             console.log(m);
             errors++;
           }
+        } else if (loanObj && !dueDate) {
+          added++;
         }
       } catch (e) {
         let m;
@@ -251,6 +253,7 @@ const post_put = async (authToken, url, checkout, r, username) => {
         if (!checkIn) fs.writeFileSync(errPath, JSON.stringify(errData) + '\n', { flag: 'a' });
       }
       if (config.delay) await wait(config.delay);
+      console.log('----------------------');
     } 
     console.log('Added:', added);
     console.log('Claimed:', claimed);

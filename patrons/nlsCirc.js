@@ -330,6 +330,8 @@ const spTran = {
               loanDate: loanDate,
               held: (od === '0') ? true : false
             };
+            // all items will be on holdshelf
+            o.held = true;
             // console.log(o);
             writeOut(outFiles.rr, o);
             ttl.rr++;
