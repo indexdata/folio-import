@@ -31,7 +31,8 @@ const zfiles = {
   z68: 'z68.dsv',
   z16: 'z16.dsv',
   z104: 'z104.dsv',
-  z78: 'z78.dsv'
+  z78: 'z78.dsv',
+  z08: 'z08.dsv'
 };
 
 const cost = {
@@ -64,7 +65,7 @@ const checkPo = (po, raw) => {
 const checkPol = (pol, raw) => {
   if (!pol.titleOrPackage) {
     let rawStr = JSON.stringify(raw);
-    console.log(`ERROR titleOrPackage not found for ${rawStr}`);
+    // console.log(`ERROR titleOrPackage not found for ${rawStr}`);
     return false;
   } else {
     return true;
@@ -182,8 +183,21 @@ const parseInst = (pol, inst, refData) => {
     const linkMap = {};
     const linkMapRev = {};
     const d = {};
+    const adminMap = {};
     for (let f in zfiles) {
       let path = ordDir + '/' + zfiles[f];
+      if (!fs.existsSync(path)) {
+        let flist = fs.readdirSync(ordDir);
+        let fn = '';
+        for (let x = 0; x < flist.length; x++) {
+          fn = flist[x];
+          let r = new RegExp(`^${f}.*`);
+          if (fn.match(r)) {
+            break;
+          }
+        }
+        if (fn) path = ordDir + '/' + fn;
+      }
       console.log(`Reading ${path}`);
       d[f] = {};
       let csv = fs.readFileSync(path, {encoding: 'utf8'});
@@ -226,16 +240,18 @@ const parseInst = (pol, inst, refData) => {
               k = l.Z104_REC_KEY.substring(0, 9);
             } else if (f === 'z78') {
               k = l.Z78_REC_KEY.substring(2, 9);
-            } 
+            } else if (f === 'z08') {
+              k = l.Z08_REC_KEY;
+              adminMap[k] = 1;
+            }
             if (!d[f][k]) d[f][k] = [];
             d[f][k].push(l);
           }
         });
       }
     }
-    // throw(d.so);
+    // throw(d.z08);
 
-    adminMap = {};
     d.z68.forEach(r => {
       let k = r.Z68_REC_KEY.substring(0, 9);
       adminMap[k] = 1;
@@ -604,6 +620,14 @@ const parseInst = (pol, inst, refData) => {
         delete o.poLines;
         o.workflowStatus = 'Pending';
         writeOut(files.c, o)
+      }
+    }
+
+    for (let k in d.z08) {
+      let bid = linkMap[k];
+      let inst = linkMapRev[bid];
+      if (inst) {
+        // console.log(inst)
       }
     }
 
