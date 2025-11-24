@@ -31,7 +31,7 @@ const wait = (ms) => {
     }
     let getUrl = config.okapi + '/' + endpoint + '?limit=1000';
     if (endpoint.match(/\?/)) getUrl = config.okapi + '/' + endpoint;
-    if (endpoint.match(/^(erm|licenses)\//)) {
+    if (endpoint.match(/^(erm|licenses|serials-management)\//)) {
       getUrl = config.okapi + '/' + endpoint + '?perPage=100&stats=true';
     }
     endpoint = endpoint.replace(/\?.+/, '');
@@ -77,7 +77,7 @@ const wait = (ms) => {
       }
     });
 
-    if (endpoint.match(/^(erm|licenses)\//) && !objFile) root = 'results';
+    if (endpoint.match(/^(erm|licenses|serials-management)\//) && !objFile) root = 'results';
     console.log(`Deleting ${refData.totalRecords} ${root}...`);
     for (let x = 0; x < refData[root].length; x++) {
       let id = refData[root][x].id || refData[root][x].jobExecutionId;
