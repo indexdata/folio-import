@@ -22,7 +22,8 @@ const files = {
   p: 'purchase-orders',
   c: 'purchase-orders-pending',
   l: 'po-lines',
-  n: 'pol-notes'
+  n: 'pol-notes',
+  s: 'adm2pol'
 };
 
 const zfiles = {
@@ -31,8 +32,7 @@ const zfiles = {
   z68: 'z68.dsv',
   z16: 'z16.dsv',
   z104: 'z104.dsv',
-  z78: 'z78.dsv',
-  z08: 'z08.dsv'
+  z78: 'z78.dsv'
 };
 
 const cost = {
@@ -184,6 +184,7 @@ const parseInst = (pol, inst, refData) => {
     const linkMapRev = {};
     const d = {};
     const adminMap = {};
+    const adm2pol = {};
     for (let f in zfiles) {
       let path = ordDir + '/' + zfiles[f];
       if (!fs.existsSync(path)) {
@@ -250,7 +251,7 @@ const parseInst = (pol, inst, refData) => {
         });
       }
     }
-    // throw(d.z08);
+    // throw(d.oo);
 
     d.z68.forEach(r => {
       let k = r.Z68_REC_KEY.substring(0, 9);
@@ -312,6 +313,7 @@ const parseInst = (pol, inst, refData) => {
       if (lc % 100000 === 0) console.log('Instance lines read:', lc);
     }
     console.log('Instance lines read:', lc);
+    console.log('Instances mapped:', Object.keys(instMap).length);
     // throw(instMap['004351406']);
 
     const ttl = {
@@ -320,7 +322,8 @@ const parseInst = (pol, inst, refData) => {
       l: 0,
       n: 0,
       pe: 0,
-      le: 0
+      le: 0,
+      a: 0
     }
     const tid = refData.orderTemplates[tstr];
     const hridSeen = {};
@@ -367,7 +370,6 @@ const parseInst = (pol, inst, refData) => {
         o.workflowStatus = 'Pending';
         writeOut(files.c, o);
         o.workflowStatus = 'Open';
-        ttl.p++;
       }
 
       let amStr = 'KB: Stående order köp (tryckt material)';
@@ -383,6 +385,8 @@ const parseInst = (pol, inst, refData) => {
         poLineNumber: o.poNumber + '-1'
       };
 
+      
+
       pol.physical = {
         createInventory: 'None',
         materialType: refData.mtypes['Häfte/Volym Standing order'] || refData.mtypes.unspecified || refData.mtypes._unspecified,
@@ -395,7 +399,6 @@ const parseInst = (pol, inst, refData) => {
       }
 
       pol.orderFormat = 'Physical Resource';
-      // console.log(pol);
 
       if (checkPol(pol, r)) {
         writeOut(files.l, pol);
@@ -404,6 +407,7 @@ const parseInst = (pol, inst, refData) => {
         o.poLines = [ pol ]
         writeOut(files.o, o);
         ttl.o++;
+
       } else {
         ttl.le++;
       }
@@ -427,7 +431,6 @@ const parseInst = (pol, inst, refData) => {
       let tid = refData.orderTemplates[tstr];
       let vstr = 'SREBSCO';
       let vid = refData.organizations[vstr];
-      // console.log(r);
       let oo = d.oo[akey];
       let wfs = (oo) ? 'Open' : 'Closed';
       let vrf = oo['POL Vendor reference number'];
@@ -524,11 +527,20 @@ const parseInst = (pol, inst, refData) => {
       }
       
       writeOut(files.l, pol);
+      adm2pol[akey] = pol.id;      
+      
       ttl.l++;
 
       o.poLines = [ pol ];
       writeOut(files.o, o);
       ttl.o++;
+
+      adm2pol[akey] = pol.id;      
+      let apMap = {
+        adm: akey,
+        polId: pol.id
+      }
+      writeOut(files.s, apMap);
     }
 
     // standing orders??
@@ -590,6 +602,7 @@ const parseInst = (pol, inst, refData) => {
           materialType: refData.mtypes[mt] || refData.mtypes.unspecified,
           volumes: []
         };
+
         if (inst) {
           parseInst(pol, inst, refData);
         } else {
@@ -613,6 +626,7 @@ const parseInst = (pol, inst, refData) => {
 
           writeOut(files.l, pol);
           ttl.l++;
+
         } else {
           ttl.le++;  
         }
@@ -620,14 +634,6 @@ const parseInst = (pol, inst, refData) => {
         delete o.poLines;
         o.workflowStatus = 'Pending';
         writeOut(files.c, o)
-      }
-    }
-
-    for (let k in d.z08) {
-      let bid = linkMap[k];
-      let inst = linkMapRev[bid];
-      if (inst) {
-        // console.log(inst)
       }
     }
 
