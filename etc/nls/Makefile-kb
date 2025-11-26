@@ -16,6 +16,7 @@ etc=$(wd)/etc/nls
 z103=$(data)/z103.seqaa
 
 setup:
+	cd $(wd); git pull
 	cd $(wd); node migrationRef.js $(ref)
 	cd $(iref); rm *.tsv; ln -s $(etc)/*.tsv .
 
@@ -51,6 +52,10 @@ split-users: $(udir)/users-users.jsonl
 orders:
 	cd $(acq); node --max-old-space-size=4096 nlsOrders $(oref) $(z103) $(idir)/bibs-instances.jsonl $(odir) > $(ldir)/makeOrders.log 2>$(ldir)/makeOrders.err &
 	tail -f $(ldir)/makeOrders.log
+
+serials:
+	cd $(wd); node downloadJSONL orders-storage/titles $(odir)/titles.jsonl
+	cd $(acq); node nlsSerials $(odir)/z08.dsv
 
 circ:
 	cd $(cdir); mv -f z36.seqaa z36.dsv; true; mv -f z37.seqaa z37.dsv; true
