@@ -65,7 +65,7 @@ const checkPo = (po, raw) => {
 const checkPol = (pol, raw) => {
   if (!pol.titleOrPackage) {
     let rawStr = JSON.stringify(raw);
-    // console.log(`ERROR titleOrPackage not found for ${rawStr}`);
+    if (process.env.DEBUG) console.log(`ERROR titleOrPackage not found for ${rawStr}`);
     return false;
   } else {
     return true;
@@ -183,6 +183,7 @@ const parseInst = (pol, inst, refData) => {
     const linkMap = {};
     const linkMapRev = {};
     const d = {};
+    const dcount = {};
     const adminMap = {};
     const adm2pol = {};
     for (let f in zfiles) {
@@ -201,6 +202,7 @@ const parseInst = (pol, inst, refData) => {
       }
       console.log(`Reading ${path}`);
       d[f] = {};
+      dcount[f] = 0;
       let csv = fs.readFileSync(path, {encoding: 'utf8'});
       let lines = parse(csv, {
         columns: true,
@@ -217,6 +219,7 @@ const parseInst = (pol, inst, refData) => {
       } else {
         let dx = {}
         lines.forEach(l => {
+          dcount[f]++;
           if (f === 'z16') {
             let id = l.Z16_REC_KEY;
             let k = id.substring(0, 13);
@@ -251,7 +254,8 @@ const parseInst = (pol, inst, refData) => {
         });
       }
     }
-    // throw(d.oo);
+    console.log(dcount);
+    // throw(d.z16);
 
     d.z68.forEach(r => {
       let k = r.Z68_REC_KEY.substring(0, 9);
@@ -386,8 +390,6 @@ const parseInst = (pol, inst, refData) => {
         poLineNumber: o.poNumber + '-1'
       };
 
-      
-
       pol.physical = {
         createInventory: 'None',
         materialType: refData.mtypes['Häfte/Volym Standing order'] || refData.mtypes.unspecified || refData.mtypes._unspecified,
@@ -423,6 +425,144 @@ const parseInst = (pol, inst, refData) => {
       }
     });
 
+    for (let k in d.oo) {
+      let akey = k;
+      let oo = d.oo[k];
+      let mkey = akey + '0000';
+      let r = d.z16[mkey];
+      let odate = (r) ? r.Z16_COPY_FROM_DATE.replace(/^(....)(..)(..)/, '$1-$2-$3') : '2000-01-01';
+      let cnote = (r) ? r.Z16_CHECK_IN_NOTE : '';
+      let tstr = 'KB prenumeration';
+      let tid = refData.orderTemplates[tstr];
+      let vstr = 'SREBSCO';
+      let vid = refData.organizations[vstr];
+      let wfs = (oo) ? 'Open' : 'Closed';
+      let vrf = oo['POL Vendor reference number'];
+      let kos = oo['Kostnadsställe'];
+      let puNum;
+      if (vrf) {
+        puNum = vrf;
+      } else {
+        puNum = 'SU' + k.replace(/^00/, '');
+        puNum = puNum.replace(/0000(.)$/, '$1');
+      }
+      let instId = linkMap[akey];
+      let inst = instMap[instId];
+      let id = uuid(puNum, ns);
+
+      let o = {
+        id: id,
+        dateOrdered: odate,
+        manualPo: true,
+        poNumber: puNum,
+        orderType: 'Ongoing',
+        reEncumber: true,
+        template: tid,
+        vendor: vid,
+        workflowStatus: wfs,
+        tags: { tagList: [ "Aleph" ] }
+      }
+      if (cnote) o.notes = [ cnote ];
+      if (o.orderType === 'Ongoing') {
+        o.ongoing = {
+          isSubscription: true,
+          manualRenewal: true,
+          renewalDate: curYear + '-11-30',
+          reviewPeriod: 90
+        };
+      }
+      // console.log(o);
+      writeOut(files.p, o);
+      o.workflowStatus = 'Pending';
+      writeOut(files.c, o);
+      o.workflowStatus = 'Open';
+      ttl.p++;
+
+      let amStr = 'KB: Inköp av utländsk tidskrift (prenumerationer, inkl. e-resurs)';
+      let am = refData.acquisitionMethods[amStr];
+      if (!am) throw new Error(`AquisitionMethodId not found for "${amStr}"`);
+
+      let pol = {
+        id: uuid(o.id, ns),
+        purchaseOrderId: o.id,
+        acquisitionMethod: am,
+        orderFormat: 'Physical Resource',
+        source: 'User',
+        cost: cost,
+        poLineNumber: o.poNumber + '-1',
+        customFields: {}
+      }
+
+      if (inst) {
+        pol.details = {};
+        parseInst(pol, inst, refData);
+      } else {
+        pol.titleOrPackage = oo.Title;
+        let issn = oo['ISSN or other identifier'];
+        if (issn) {
+          pol.details = {};
+          let t = '';
+          if (issn.match(/^....-....$/)) {
+            t = 'ISSN'
+          } else if (issn.match(/^97[89]/)) {
+            t = 'ISBN';
+          } else {
+            t = 'Other standard identifier';
+          }
+          let typeId = refData.identifierTypes[t];
+          pol.details.productIds = [{ productId: issn, productIdType: typeId }];
+        }
+      }
+
+      if (oo) {
+        let fmt = oo.Format;
+        if (fmt === 'Online') pol.orderFormat = 'Electronic Resource';
+        if (vrf) pol.vendorDetail = {
+          referenceNumbers: [
+            {
+              refNumber: vrf,
+              refNumberType: 'Vendor order reference number',
+              vendorDetailsSource: 'OrderLine'
+            }
+          ]
+        };
+        if (kos) pol.customFields.kostnadsstalle = kos;
+      }
+
+      if (pol.orderFormat === 'Physical Resource') {
+        pol.physical = {
+          createInventory: 'None',
+          materialType: refData.mtypes['Häfte/Volym Standing order'] || refData.mtypes.unspecified || refData.mtypes._unspecified,
+          volumes: []
+        };
+      }
+
+      let z104 = d.z104[akey];
+      if (z104) {
+        z104.forEach(n => {
+          let o = makePolNote(n.Z104_TEXT, n.Z104_TRIGGER_DATE, 'Förvärvsanteckning', pol.id, refData);
+          writeOut(files.n, o);
+          ttl.n++
+        });
+      }
+      
+      writeOut(files.l, pol);
+      
+      ttl.l++;
+
+      o.poLines = [ pol ];
+      writeOut(files.o, o);
+      ttl.o++;
+
+      adm2pol[akey] = pol.id;      
+      let apMap = {
+        adm: akey,
+        polId: pol.id
+      }
+      writeOut(files.s, apMap);
+    }
+
+    /*
     for (let k in d.z16) {
       let akey = k.substring(0, 9);
       let r = d.z16[k];
@@ -528,7 +668,6 @@ const parseInst = (pol, inst, refData) => {
       }
       
       writeOut(files.l, pol);
-      adm2pol[akey] = pol.id;      
       
       ttl.l++;
 
@@ -543,6 +682,7 @@ const parseInst = (pol, inst, refData) => {
       }
       writeOut(files.s, apMap);
     }
+    */
 
     // standing orders??
     if (d.so) {
