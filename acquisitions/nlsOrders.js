@@ -370,6 +370,7 @@ const parseInst = (pol, inst, refData) => {
         o.workflowStatus = 'Pending';
         writeOut(files.c, o);
         o.workflowStatus = 'Open';
+        ttl.p++;
       }
 
       let amStr = 'KB: Stående order köp (tryckt material)';
