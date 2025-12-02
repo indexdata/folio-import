@@ -1,5 +1,5 @@
 /*
-  This script requires to jsonl files:
+  This script requires the following jsonl files:
   1) adm2pol.jsonl -- admin number to FOLIO po-line ID map
   2) titles.jsonl -- FOLIO orders titles from orders-storage/titles (run node downloadJSON.js orders-storage/titles <orders_dir>/titles.jsonl)
 */
@@ -138,17 +138,19 @@ const makeRules = (ptype, idate, interval) => {
 
         let rs = {
           owner: { id: so.id },
+          rulesetStatus: { value: 'active' },
           recurrence: {
-            timeUnit: { value: tu }
+            timeUnit: { value: tu },
+            period: per,
+            issues: ipv,
           },
-          period: per,
-          issues: ipv,
+          
         }
 
-        rs.rules = makeRules(ptype, idate, interval);
+        rs.recurrence.rules = makeRules(ptype, idate, interval);
 
         writeOut(files.r, rs);
-        console.log(JSON.stringify(rs, null, 2))
+        // console.log(JSON.stringify(rs, null, 2))
       }
       else {
         console.log(`ERROR PO-line not found for ${rk}`);

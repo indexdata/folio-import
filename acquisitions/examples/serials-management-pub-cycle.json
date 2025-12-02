@@ -1,0 +1,63 @@
+{
+  "description": "description",
+  "templateConfig": {
+    "templateString": "test template"
+  },
+  "rulesetNumber": "pattern-000000001",
+  "rulesetStatus": {
+    "value": "active"
+  },
+  "recurrence": {
+    "timeUnit": {
+      "value": "year"
+    },
+    "period": "1",
+    "issues": "4",
+    "rules": [
+      {
+        "pattern": {
+          "day": "24",
+          "month": {
+            "value": "march"
+          }
+        },
+        "ordinal": 1,
+        "patternType": "year_date"
+      },
+      {
+        "pattern": {
+          "day": "24",
+          "month": {
+            "value": "june"
+          }
+        },
+        "ordinal": 1,
+        "patternType": "year_date"
+      },
+      {
+        "pattern": {
+          "day": "24",
+          "month": {
+            "value": "september"
+          }
+        },
+        "ordinal": 1,
+        "patternType": "year_date"
+      },
+      {
+        "pattern": {
+          "day": "24",
+          "month": {
+            "value": "december"
+          }
+        },
+        "ordinal": 1,
+        "patternType": "year_date"
+      }
+    ]
+  },
+  "patternType": "year_date",
+  "owner": {
+    "id": "066e1703-7148-4a36-a33f-56d31b2c37a7"
+  }
+}
