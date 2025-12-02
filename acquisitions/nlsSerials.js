@@ -102,7 +102,10 @@ const makeRules = (ptype, idate, interval) => {
       trim: true,
       bom: true
     });
+    let count = 0;
     lines.forEach(r => {
+      count++;
+      countStr = count.toString().padStart(9, '0');
       // console.log(r);
       let rk = r.Z08_REC_KEY;
       let tu = (r.Z08_VOLUME_PERIOD_TYPE === 'Y') ? 'year' : 'month';
@@ -137,6 +140,7 @@ const makeRules = (ptype, idate, interval) => {
         ttl.serials++;
 
         let rs = {
+          id: so.id,
           owner: { id: so.id },
           rulesetStatus: { value: 'active' },
           recurrence: {
@@ -144,13 +148,25 @@ const makeRules = (ptype, idate, interval) => {
             period: per,
             issues: ipv,
           },
-          
+          rulesetNumber: `pattern-` + countStr
         }
 
         rs.recurrence.rules = makeRules(ptype, idate, interval);
 
+        rs.templateConfig = {
+          chronologyRules: [
+            {
+              ruleLocale: 'sv',
+              templateMetadataRuleFormat: 'chronology_year',
+              ruleFormat: { yearFormat: { value: 'full' } },
+              index: 0
+            }
+          ],
+          templateString: '{{chronology1.year}}'
+        }
+
         writeOut(files.r, rs);
-        // console.log(JSON.stringify(rs, null, 2))
+        console.log(JSON.stringify(rs, null, 2))
       }
       else {
         console.log(`ERROR PO-line not found for ${rk}`);
