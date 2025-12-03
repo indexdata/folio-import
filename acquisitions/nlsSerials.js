@@ -48,7 +48,7 @@ const writeOut = (fileName, data) => {
 }
 
 const makeRules = (ptype, idate, interval) => {
-  let reps = interval.iov;
+  let reps = interval.ipv;
   let out = [];
   for (let x = 0; x < reps; x++) {
     let o = { pattern: {}, patternType: ptype };
@@ -121,7 +121,7 @@ const makeRules = (ptype, idate, interval) => {
       let ipv = r.Z08_NO_ISSUE_PER_VOLUME;
       let iov = r.Z08_NO_ISSUE_OVER_VOLUME;
       let seq = (iov === '999') ? 'continuous' : 'reset';
-      let interval = { type: r.Z08_INTERVAL_TYPE, count: parseInt(r.Z08_INTERVAL_COUNT, 10), iov: parseInt(iov) };
+      let interval = { type: r.Z08_INTERVAL_TYPE, count: parseInt(r.Z08_INTERVAL_COUNT, 10), ipv: parseInt(ipv), iov: parseInt(iov) };
       let idate = {};
       let dateStr = r.Z08_ISSUE_DATE;
       if (dateStr) {
@@ -183,23 +183,26 @@ const makeRules = (ptype, idate, interval) => {
                     sequence: { value: 'continuous' },
                     index: 0
                   },
-                  {
-                    units: ipv,
-                    format: { value: 'number' },
-                    sequence: { value: seq },
-                    index: 1
-                  },
+                  
                 ]
               },
               index: 0
             }
           ],
           templateString: tempMap[txt]
-          // templateString: '{{chronology1.year}}'
         };
+        if (txt === '$Y ($V): $I') {
+          let lvl2 = {
+            units: ipv,
+            format: { value: 'number' },
+            sequence: { value: seq },
+            index: 1
+          };
+          rs.templateConfig.enumerationRules[0].ruleFormat.levels.push(lvl2);
+        }
 
         writeOut(files.r, rs);
-        console.log(JSON.stringify(rs, null, 2))
+        // console.log(JSON.stringify(rs, null, 2))
       }
       else {
         console.log(`ERROR PO-line not found for ${rk}`);
