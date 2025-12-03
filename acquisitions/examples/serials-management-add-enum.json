@@ -1,0 +1,104 @@
+{
+  "patternType": "year_date",
+  "templateConfig": {
+    "enumerationRules": [
+      {
+        "templateMetadataRuleFormat": "enumeration_numeric",
+        "ruleFormat": {
+          "levels": [
+            {
+              "units": "1",
+              "format": {
+                "value": "number"
+              },
+              "sequence": {
+                "value": "continuous"
+              },
+              "index": 0
+            },
+            {
+              "units": "1",
+              "format": {
+                "value": "number"
+              },
+              "sequence": {
+                "value": "reset"
+              },
+              "index": 1
+            }
+          ]
+        },
+        "index": 0
+      }
+    ],
+    "chronologyRules": [
+      {
+        "ruleFormat": {
+          "yearFormat": {
+            "value": "full"
+          }
+        },
+        "templateMetadataRuleFormat": "chronology_year",
+        "ruleLocale": "sv",
+        "index": 0
+      }
+    ],
+    "templateString": "{{chronology1.year}}"
+  },
+  "rulesetNumber": "pattern-000000001",
+  "rulesetStatus": {
+    "value": "active"
+  },
+  "recurrence": {
+    "issues": 4,
+    "period": 1,
+    "timeUnit": {
+      "value": "year"
+    },
+    "rules": [
+      {
+        "pattern": {
+          "day": 24,
+          "month": {
+            "value": "june"
+          }
+        },
+        "patternType": "year_date",
+        "ordinal": 1
+      },
+      {
+        "pattern": {
+          "day": 24,
+          "month": {
+            "value": "december"
+          }
+        },
+        "patternType": "year_date",
+        "ordinal": 1
+      },
+      {
+        "pattern": {
+          "day": 24,
+          "month": {
+            "value": "september"
+          }
+        },
+        "patternType": "year_date",
+        "ordinal": 1
+      },
+      {
+        "pattern": {
+          "day": 24,
+          "month": {
+            "value": "march"
+          }
+        },
+        "patternType": "year_date",
+        "ordinal": 1
+      }
+    ]
+  },
+  "owner": {
+    "id": "9fb5671e-5760-42a5-883f-36306d8c2540"
+  }
+}

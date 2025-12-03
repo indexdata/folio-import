@@ -20,6 +20,13 @@ const ns = '3eb5d7ac-7f51-4922-bd58-512a1f9710ac';
 const tstr = 'KB Stående order';
 let inFile = process.argv[2];
 
+const tempMap = {
+  '$Y ($V): $I': '{{chronology1.year}} ({{enumeration1.level1}}): {{enumeration1.level2}}',
+  '$Y ($V)': '{{chronology1.year}} ({{enumeration1.level1}})',
+  '$Y: $I': '{{chronology1.year}}: {{enumeration1.level1}}',
+  '$Y': '{{chronology1.year}}'
+};
+
 const files = {
   s: 'serials',
   r: 'ruleSetRaw'
@@ -108,10 +115,13 @@ const makeRules = (ptype, idate, interval) => {
       countStr = count.toString().padStart(9, '0');
       // console.log(r);
       let rk = r.Z08_REC_KEY;
+      let txt = r.Z08_TEXT;
       let tu = (r.Z08_VOLUME_PERIOD_TYPE === 'Y') ? 'year' : 'month';
       let per = r.Z08_VOLUME_PERIOD;
       let ipv = r.Z08_NO_ISSUE_PER_VOLUME;
-      let interval = { type: r.Z08_INTERVAL_TYPE, count: parseInt(r.Z08_INTERVAL_COUNT, 10), iov: parseInt(r.Z08_NO_ISSUE_OVER_VOLUME) };
+      let iov = r.Z08_NO_ISSUE_OVER_VOLUME;
+      let seq = (iov === '999') ? 'continuous' : 'reset';
+      let interval = { type: r.Z08_INTERVAL_TYPE, count: parseInt(r.Z08_INTERVAL_COUNT, 10), iov: parseInt(iov) };
       let idate = {};
       let dateStr = r.Z08_ISSUE_DATE;
       if (dateStr) {
@@ -160,10 +170,33 @@ const makeRules = (ptype, idate, interval) => {
               templateMetadataRuleFormat: 'chronology_year',
               ruleFormat: { yearFormat: { value: 'full' } },
               index: 0
+            },
+          ],
+          enumerationRules: [
+            {
+              templateMetadataRuleFormat: 'enumeration_numeric',
+              ruleFormat: {
+                levels: [
+                  {
+                    units: '1',
+                    format: { value: 'number' },
+                    sequence: { value: 'continuous' },
+                    index: 0
+                  },
+                  {
+                    units: ipv,
+                    format: { value: 'number' },
+                    sequence: { value: seq },
+                    index: 1
+                  },
+                ]
+              },
+              index: 0
             }
           ],
-          templateString: '{{chronology1.year}}'
-        }
+          templateString: tempMap[txt]
+          // templateString: '{{chronology1.year}}'
+        };
 
         writeOut(files.r, rs);
         console.log(JSON.stringify(rs, null, 2))

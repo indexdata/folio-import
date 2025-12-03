@@ -1,0 +1,74 @@
+{
+  "templateConfig": {
+    "chronologyRules": [
+      {
+        "ruleLocale": "sv",
+        "templateMetadataRuleFormat": "chronology_year",
+        "ruleFormat": {
+          "yearFormat": {
+            "value": "full"
+          }
+        },
+        "index": 0
+      }
+    ],
+    "templateString": "fdaf"
+  },
+  "patternType": "year_date",
+  "rulesetNumber": "pattern-000000001",
+  "rulesetStatus": {
+    "value": "active"
+  },
+  "recurrence": {
+    "issues": 4,
+    "period": 1,
+    "timeUnit": {
+      "value": "year"
+    },
+    "rules": [
+      {
+        "pattern": {
+          "day": 24,
+          "month": {
+            "value": "june"
+          }
+        },
+        "patternType": "year_date",
+        "ordinal": 1
+      },
+      {
+        "pattern": {
+          "day": 24,
+          "month": {
+            "value": "december"
+          }
+        },
+        "patternType": "year_date",
+        "ordinal": 1
+      },
+      {
+        "pattern": {
+          "day": 24,
+          "month": {
+            "value": "march"
+          }
+        },
+        "patternType": "year_date",
+        "ordinal": 1
+      },
+      {
+        "pattern": {
+          "day": 24,
+          "month": {
+            "value": "september"
+          }
+        },
+        "patternType": "year_date",
+        "ordinal": 1
+      }
+    ]
+  },
+  "owner": {
+    "id": "9fb5671e-5760-42a5-883f-36306d8c2540"
+  }
+}

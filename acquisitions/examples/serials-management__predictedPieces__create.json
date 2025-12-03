@@ -1,108 +1,125 @@
 {
-  "id": "aaa0c6c0-c6b5-4add-b575-69daf304bb4a",
-  "dateCreated": "2025-09-11T16:23:05Z",
+  "id": "595c69e7-d0e6-415c-bcf7-173a9d3f46be",
+  "dateCreated": "2025-12-03T20:31:26Z",
   "recurrence": {
-    "id": "6781e61f-a077-4ade-bd79-04813a2ae7b7",
+    "id": "9d7bdd2e-622f-43d5-b646-3cc71a7e1fbe",
     "rules": [
       {
-        "id": "a585a084-85a1-49cb-8aae-959741a2777b",
+        "id": "5a4df329-f433-4ccc-aead-4b54444efd5a",
         "ordinal": 1,
         "patternType": {
-          "id": "2c912bea94808c2a0194809ce50500af",
-          "value": "month_date",
-          "label": "Month Date"
+          "id": "2c912bea94808c2a0194809ce50b00b1",
+          "value": "year_date",
+          "label": "Year Date"
         },
         "pattern": {
-          "id": "3e4e7c68-c5cb-478c-84a1-f3c74f9b4623",
-          "day": 1
+          "id": "4cc70b04-6f48-4d28-9266-01ca784bed29",
+          "month": {
+            "id": "2c912bea94808c2a0194809ce2f2006b",
+            "value": "march",
+            "label": "March"
+          },
+          "day": 24
+        }
+      },
+      {
+        "id": "8562c3ae-af73-4b0b-921d-2e207d968deb",
+        "ordinal": 1,
+        "patternType": {
+          "id": "2c912bea94808c2a0194809ce50b00b1",
+          "value": "year_date",
+          "label": "Year Date"
+        },
+        "pattern": {
+          "id": "b3a9a0f4-69ea-4e04-92fa-c4d89b253a99",
+          "month": {
+            "id": "2c912bea94808c2a0194809ce3070071",
+            "value": "september",
+            "label": "September"
+          },
+          "day": 24
+        }
+      },
+      {
+        "id": "63865bd0-dbc9-494d-a510-99d502ba8a3b",
+        "ordinal": 1,
+        "patternType": {
+          "id": "2c912bea94808c2a0194809ce50b00b1",
+          "value": "year_date",
+          "label": "Year Date"
+        },
+        "pattern": {
+          "id": "4c7e4059-441d-4888-bf6a-0876d7b5fedd",
+          "month": {
+            "id": "2c912bea94808c2a0194809ce3120074",
+            "value": "december",
+            "label": "December"
+          },
+          "day": 24
+        }
+      },
+      {
+        "id": "31b9cc27-552e-4e58-954b-ba83a2298150",
+        "ordinal": 1,
+        "patternType": {
+          "id": "2c912bea94808c2a0194809ce50b00b1",
+          "value": "year_date",
+          "label": "Year Date"
+        },
+        "pattern": {
+          "id": "9bf4caab-736a-4b1d-aaf6-08f26adbaa7a",
+          "month": {
+            "id": "2c912bea94808c2a0194809ce2fd006e",
+            "value": "june",
+            "label": "June"
+          },
+          "day": 24
         }
       }
     ],
     "timeUnit": {
-      "id": "2c912bea94808c2a0194809ce48100a3",
-      "value": "month",
-      "label": "Month"
+      "id": "2c912bea94808c2a0194809ce48400a4",
+      "value": "year",
+      "label": "Year"
     },
-    "period": 12,
-    "issues": 1
+    "period": 1,
+    "issues": 4
   },
-  "lastUpdated": "2025-09-11T16:23:05Z",
+  "lastUpdated": "2025-12-03T20:31:26Z",
   "rulesetStatus": {
     "id": "2c912bea94808c2a0194809ce3ac0088",
     "value": "active",
     "label": "Active"
   },
   "owner": {
-    "id": "3f8a6736-9ccc-4b82-955d-e54cc1e7459c"
+    "id": "9fb5671e-5760-42a5-883f-36306d8c2540"
   },
   "rulesetNumber": "pattern-000000001",
-  "omission": {
-    "id": "c8683b29-aa51-4887-921e-66a6bc949811",
-    "rules": [
-      {
-        "id": "5ec2773f-ca17-49d2-a637-9970bb199eab",
-        "timeUnit": {
-          "id": "2c912bea94808c2a0194809ce3d8008c",
-          "value": "day",
-          "label": "Day"
-        },
-        "patternType": {
-          "id": "2c912bea94808c2a0194809ce3e90092",
-          "value": "day_month",
-          "label": "Day Month"
-        },
-        "pattern": {
-          "id": "7233be66-5e9f-4aa1-affd-f01ac9c31a89",
-          "month": {
-            "id": "2c912bea94808c2a0194809ce2ea0069",
-            "value": "january",
-            "label": "January"
-          },
-          "day": 1
-        }
-      }
-    ]
-  },
   "templateConfig": {
-    "id": "c97f981a-cd1b-4ce7-aaf4-92056da41967",
+    "id": "b803e477-c6a0-4e4a-8db4-bcc3f93927bf",
     "chronologyRules": [
       {
-        "id": "59a55f62-a427-4b19-bbd9-fd7adc05a454",
+        "id": "63c93ca0-0f8d-4395-af36-8d29296e912a",
         "index": 0,
-        "ruleLocale": "en",
+        "ruleLocale": "sv",
         "templateMetadataRuleFormat": {
-          "id": "2c912bea94808c2a0194809ce5ba00cd",
-          "value": "chronology_date",
-          "label": "Date"
+          "id": "2c912bea94808c2a0194809ce5bc00cf",
+          "value": "chronology_year",
+          "label": "Year"
         },
         "ruleFormat": {
-          "id": "9b642508-bc79-4e30-a61c-a34483882732",
+          "id": "60787590-b7e4-4eca-84b0-cc0e028c4702",
           "yearFormat": {
             "id": "2c912bea94808c2a0194809ce4cb00a6",
             "value": "full",
             "label": "Full"
-          },
-          "monthFormat": {
-            "id": "2c912bea94808c2a0194809ce4d600aa",
-            "value": "slice",
-            "label": "Slice"
-          },
-          "weekdayFormat": {
-            "id": "2c912bea94808c2a0194809ce59500c2",
-            "value": "slice_lower",
-            "label": "Slice Lower"
-          },
-          "monthDayFormat": {
-            "id": "2c912bea94808c2a0194809ce5a500c8",
-            "value": "number",
-            "label": "Number"
           }
         }
       }
     ],
     "enumerationRules": [
       {
-        "id": "e27924a2-b907-47a1-9fdb-dc8db887df62",
+        "id": "6d7320f1-19ce-416a-8f76-cb9338f4376c",
         "index": 0,
         "templateMetadataRuleFormat": {
           "id": "2c912bea94808c2a0194809ce5b800cb",
@@ -110,12 +127,11 @@
           "label": "Numeric"
         },
         "ruleFormat": {
-          "id": "4cf258e1-cb0b-4b9a-9bec-94a1021d8270",
+          "id": "83cc4cea-18ff-4de6-9ddb-00a83d0e8325",
           "levels": [
             {
-              "id": "8d2fa624-9110-4328-af2e-adc6ccf55c83",
+              "id": "a32086ab-49ee-44af-bbd6-7a07a49e26a9",
               "index": 0,
-              "internalNote": "internal note",
               "units": 1,
               "sequence": {
                 "id": "2c912bea94808c2a0194809ce52d00b6",
@@ -127,16 +143,29 @@
                 "value": "number",
                 "label": "Number"
               }
+            },
+            {
+              "id": "6dcc2e26-72b3-442b-9456-8af2194f724f",
+              "index": 1,
+              "units": 4,
+              "sequence": {
+                "id": "2c912bea94808c2a0194809ce52a00b5",
+                "value": "reset",
+                "label": "Reset"
+              },
+              "format": {
+                "id": "2c912bea94808c2a0194809ce53400b9",
+                "value": "number",
+                "label": "Number"
+              }
             }
           ]
         }
       }
     ],
-    "templateString": "test template"
+    "templateString": "{{chronology1.year}} ({{enumeration1.level1}}): {{enumeration1.level2}}"
   },
-  "description": "description",
-  "startDate": "2025-09-11",
-  "note": "note",
+  "startDate": "2026-03-24",
   "startingValues": [
     {
       "userConfiguredTemplateMetadataType": "chronology",
@@ -149,8 +178,12 @@
       "metadataType": {
         "levels": [
           {
-            "rawValue": "one",
+            "rawValue": "140",
             "index": 0
+          },
+          {
+            "rawValue": "1",
+            "index": 1
           }
         ]
       }
