@@ -9,6 +9,7 @@ const readline = require('readline');
 const { getAuthToken } = require('./lib/login');
 let endpoint = process.argv[2];
 const objFile = process.argv[3];
+const dbug = process.env.DEBUG;
 
 const wait = (ms) => {
   console.log(`(Waiting ${ms} ms...)`);
@@ -95,7 +96,11 @@ const wait = (ms) => {
           .set('x-okapi-tenant', config.tenant)
           .set('x-okapi-token', config.token)
       } catch (e) {
-        console.log(`${e}`);
+        if (dbug) {
+          console.log(e);
+        } else {
+          console.log(`${e}`);
+        }
       }
       if (config.delay) await wait(config.delay);
     }
