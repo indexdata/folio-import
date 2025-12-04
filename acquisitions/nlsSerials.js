@@ -56,6 +56,7 @@ const makeRules = (ptype, idate, interval) => {
     o.pattern.day = idate.d;
     if (ptype === 'year_date') {
       if (x > 0) idate.mv += interval.count;
+      if (idate.mv > 12) idate.mv -= 12;
       o.pattern.month = { value: months[idate.mv] };
     }
     out.push(o);
