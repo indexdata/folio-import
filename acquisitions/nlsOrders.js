@@ -728,6 +728,7 @@ const parseInst = (pol, inst, refData) => {
         let mt = r['Material type'];
         let pol = {
           id: uuid(polNum, ns),
+          poLineNumber: o.poNumber + '-1',
           purchaseOrderId: o.id,
           acquisitionMethod: amId,
           orderFormat: oform,
