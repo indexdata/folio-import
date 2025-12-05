@@ -374,6 +374,7 @@ try {
           } else if (locId === refLoc['loc-des'] || locId === refLoc['loc-hs'] || locId === refLoc['loc-ts'] || locId === refLoc['loc-vt'] || locId === refLoc['loc-prum'] || locId === refLoc['loc-tls'] || locId === refLoc['loc-tlkb'] || locId === refLoc['ldc-hem']) {
             str = f.string;
           }
+          
         }
         if (str) {
             if (!adminNotes[locId]) adminNotes[locId] = [];
@@ -381,7 +382,17 @@ try {
         }
       });
 
-      let xholding = xholdings[inst.id];
+      let hadminNotes = [];
+      let f866 = af['866'];
+      if (f866) {
+        f866.forEach(f => {
+          if (f['5'] === 'S' && f.a && f.z) {
+            hadminNotes.push(`${f.a} (${f.z})`);
+          }
+        });
+      }
+
+      // let xholding = xholdings[inst.id];
       if (!hseen[hkey]) {
         occ[bid] = (!occ[bid]) ? 1 : occ[bid] + 1;
         let occStr = occ[bid].toString().padStart(3, '0');
@@ -400,6 +411,7 @@ try {
         }
         if (dbug) h.__ = r;
 
+        /* see FOLIO-321
         let hsf = af['866'] || [];
         if (locId === refLoc['loc-ts'] || locId === refLoc['loc-vt'] || locId === refLoc['loc-tls' || locId === refLoc['loc-ref']]) {
           if (hsf[0]) h.holdingsStatements = [];
@@ -414,6 +426,7 @@ try {
             }
           });
         }
+        */
 
         let pnf = af['561'] || [];
         pnf.forEach(f => {
@@ -433,6 +446,8 @@ try {
           let ea = JSON.parse(inst.ea);
           h.electronicAccess = ea;
         }
+
+        if (hadminNotes[0]) h.administrativeNotes = hadminNotes;
 
         if (h.permanentLocationId) {
           writeOut(outs.holdings, h);
