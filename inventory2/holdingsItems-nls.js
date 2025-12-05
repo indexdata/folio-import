@@ -470,7 +470,6 @@ try {
         };
         if (inotes[0]) i.__ = 'znote';
         let istat = r.Z30_ITEM_STATISTIC || '';
-        let bc = r.Z30_BARCODE;
         let desc = r.Z30_DESCRIPTION || '';
         let en = r.Z30_ENUMERATION_A || '';
         if (r.Z30_NOTE_OPAC) nt.p.push(r.Z30_NOTE_OPAC);
@@ -486,6 +485,9 @@ try {
         if (istat === 'TG') i.accessionNumber = 'RFID';
         if (bc && !bcseen[bc]) {
           i.barcode = bc;
+          if (bc.match(/^(60001|10000)/)) {
+            i.accessionNumber = 'RFID';
+          }
           bcseen[bc] = 1;
         } else if (bc) {
           console.log(`WARN ITEM barcode "${bc}" already used!`);
