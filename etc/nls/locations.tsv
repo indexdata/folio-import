@@ -8,7 +8,8 @@ RRLEX	06					z30_sub_library=RRLEX, z30_item_status=06	Humlegården	loc-ts	Tryck
 RRLEX	05					z30_sub_library=RRLEX, z30_item_status=05	Humlegården	loc-ts	Tryckt samling
 RRLEX	71					z30_sub_library=RRLEX, z30_item_status=71	Humlegården	loc-ts	Tryckt samling
 RRLEX	72			BOOK		z30_sub_library=RRLEX, z30_item_status=72	Humlegården	loc-des	Desiderata
-RRLEX	72			ISSUE		z30_sub_library=RRLEX, z30_item_status=72	Humlegården	loc-ts	Tryckt samling
+RRLEX	72			ISSUE 		z30_sub_library=RRLEX, z30_item_status=72	Humlegården	loc-ts	Tryckt samling
+RRLEX	72			ISSBD		z30_sub_library=RRLEX, z30_item_status=72	Humlegården	loc-ts	Tryckt samling
 RRLEX	02	SN				z30_sub_library=RRLEX, z30_item_status=02, z30_item_process_status=SN	Humlegården	loc-hem	Står framme - Hemlån
 RRLEX	31					z30_sub_library=RRLEX, z30_item_status=31	Fjärrlån	loc-ill	Fjärrlån
 RRLEX	32					z30_sub_library=RRLEX, z30_item_status=32	Fjärrlån	loc-ill	Fjärrlån
@@ -36,3 +37,7 @@ RESTR	03		Astrid Lindgrensamlingen*			z30_sub_library=RESTR, z30_item_status=03,
 RESTR	03					z30_sub_library=RESTR, z30_item_status=03	Humlegården	loc-ts	Tryckt samling
 RESTR	22					z30_sub_library=RESTR, z30_item_status=22	Humlegården	loc-ts	Tryckt samling
 RESTR	23					z30_sub_library=RESTR, z30_item_status=23	Humlegården	loc-ts	Tryckt samling
+RESTR	05								
+									
+									
+Items that does not match the above							Humlegården	datamigration	Omappat vid datamigration
