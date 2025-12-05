@@ -1,6 +1,11 @@
 {
   "jobExecutionUsersInfo": [
     {
+      "userId": "c25b5999-4ba5-4272-9443-f4c10a58f9d8",
+      "jobUserFirstName": "Elisabet",
+      "jobUserLastName": "Sandström"
+    },
+    {
       "userId": "ccd9c2a1-5455-4512-bf54-956fe923a8ab",
       "jobUserFirstName": "Göran",
       "jobUserLastName": "Lundberg"
@@ -36,5 +41,5 @@
       "jobUserLastName": "Mace"
     }
   ],
-  "totalRecords": 7
+  "totalRecords": 8
 }

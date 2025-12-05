@@ -202,97 +202,6 @@
       ]
     },
     {
-      "id": "d606dec0-bf42-4ab7-a929-c29b1c452cf7",
-      "name": "Hemlån",
-      "description": "Meddelande som skickas vid hemlån.",
-      "active": true,
-      "metadata": {
-        "createdDate": "2023-11-16T13:34:56.374+00:00",
-        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
-        "updatedDate": "2025-03-07T11:55:37.443+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      },
-      "loanNotices": [
-        {
-          "templateId": "a2beed4e-0213-4c6b-bbe1-b5652994f36f",
-          "format": "Email",
-          "realTime": false,
-          "sendOptions": {
-            "sendWhen": "Check out"
-          }
-        },
-        {
-          "templateId": "e74046d8-fd8e-43c6-ac40-72ff0e2ea08d",
-          "format": "Email",
-          "realTime": false,
-          "sendOptions": {
-            "sendWhen": "Item recalled"
-          }
-        },
-        {
-          "templateId": "29cd3c41-53f8-4294-8b83-22385eceac1a",
-          "format": "Email",
-          "frequency": "One time",
-          "realTime": false,
-          "sendOptions": {
-            "sendHow": "Before",
-            "sendWhen": "Due date",
-            "sendBy": {
-              "duration": 7,
-              "intervalId": "Days"
-            }
-          }
-        },
-        {
-          "templateId": "157f036b-a832-4038-98ee-c0877f0a7b05",
-          "format": "Email",
-          "frequency": "One time",
-          "realTime": false,
-          "sendOptions": {
-            "sendHow": "Before",
-            "sendWhen": "Due date",
-            "sendBy": {
-              "duration": 1,
-              "intervalId": "Days"
-            }
-          }
-        },
-        {
-          "templateId": "8a9db65c-80b9-41c4-9a16-51d64ca28eeb",
-          "format": "Email",
-          "frequency": "One time",
-          "realTime": false,
-          "sendOptions": {
-            "sendHow": "After",
-            "sendWhen": "Due date",
-            "sendBy": {
-              "duration": 7,
-              "intervalId": "Days"
-            }
-          }
-        },
-        {
-          "templateId": "4d720121-a97e-4ad4-b35b-35f37cd5902a",
-          "format": "Email",
-          "realTime": false,
-          "sendOptions": {
-            "sendWhen": "Check in"
-          }
-        }
-      ],
-      "feeFineNotices": [],
-      "requestNotices": [
-        {
-          "templateId": "d8414e6b-672b-4a43-b9db-81850afbb672",
-          "format": "Email",
-          "realTime": false,
-          "sendOptions": {
-            "sendWhen": "Available"
-          }
-        }
-      ]
-    },
-    {
       "id": "a56e1800-db2b-4ab5-9efc-cd26739ac481",
       "name": "Bokskåp",
       "description": "Meddelanden som skickas vid lån av bokskåp",
@@ -300,8 +209,8 @@
       "metadata": {
         "createdDate": "2025-06-30T07:06:32.314+00:00",
         "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-06-30T07:06:32.314+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+        "updatedDate": "2025-11-18T14:12:00.707+00:00",
+        "updatedByUserId": "b9830a1c-82eb-4c53-9278-e96815826061"
       },
       "loanNotices": [
         {
@@ -313,7 +222,7 @@
             "sendHow": "Before",
             "sendWhen": "Due date",
             "sendBy": {
-              "duration": 7,
+              "duration": 10,
               "intervalId": "Days"
             }
           }
@@ -426,7 +335,180 @@
           }
         }
       ]
+    },
+    {
+      "id": "d606dec0-bf42-4ab7-a929-c29b1c452cf7",
+      "name": "Hemlån",
+      "description": "Meddelande som skickas vid hemlån.",
+      "active": true,
+      "metadata": {
+        "createdDate": "2023-11-16T13:34:56.374+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2025-11-20T08:46:04.985+00:00",
+        "updatedByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08"
+      },
+      "loanNotices": [
+        {
+          "templateId": "a2beed4e-0213-4c6b-bbe1-b5652994f36f",
+          "format": "Email",
+          "realTime": false,
+          "sendOptions": {
+            "sendWhen": "Check out"
+          }
+        },
+        {
+          "templateId": "e74046d8-fd8e-43c6-ac40-72ff0e2ea08d",
+          "format": "Email",
+          "realTime": false,
+          "sendOptions": {
+            "sendWhen": "Item recalled"
+          }
+        },
+        {
+          "templateId": "29cd3c41-53f8-4294-8b83-22385eceac1a",
+          "format": "Email",
+          "frequency": "One time",
+          "realTime": false,
+          "sendOptions": {
+            "sendHow": "Before",
+            "sendWhen": "Due date",
+            "sendBy": {
+              "duration": 7,
+              "intervalId": "Days"
+            }
+          }
+        },
+        {
+          "templateId": "157f036b-a832-4038-98ee-c0877f0a7b05",
+          "format": "Email",
+          "frequency": "One time",
+          "realTime": false,
+          "sendOptions": {
+            "sendHow": "Before",
+            "sendWhen": "Due date",
+            "sendBy": {
+              "duration": 1,
+              "intervalId": "Days"
+            }
+          }
+        },
+        {
+          "templateId": "8a9db65c-80b9-41c4-9a16-51d64ca28eeb",
+          "format": "Email",
+          "frequency": "One time",
+          "realTime": false,
+          "sendOptions": {
+            "sendHow": "After",
+            "sendWhen": "Due date",
+            "sendBy": {
+              "duration": 7,
+              "intervalId": "Days"
+            }
+          }
+        },
+        {
+          "templateId": "4d720121-a97e-4ad4-b35b-35f37cd5902a",
+          "format": "Email",
+          "realTime": false,
+          "sendOptions": {
+            "sendWhen": "Check in"
+          }
+        }
+      ],
+      "feeFineNotices": [],
+      "requestNotices": [
+        {
+          "templateId": "d8414e6b-672b-4a43-b9db-81850afbb672",
+          "format": "Email",
+          "realTime": false,
+          "sendOptions": {
+            "sendWhen": "Available"
+          }
+        }
+      ]
+    },
+    {
+      "id": "410311fe-eb7b-4879-956e-76ebeaf8cf71",
+      "name": "Fjärrlån",
+      "description": "Meddelande som skickas vid fjärrlån.",
+      "active": true,
+      "metadata": {
+        "createdDate": "2025-11-20T08:55:02.856+00:00",
+        "createdByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08",
+        "updatedDate": "2025-11-27T08:03:37.751+00:00",
+        "updatedByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08"
+      },
+      "loanNotices": [
+        {
+          "templateId": "d83127ff-b176-4335-b2e1-80c6357cd83b",
+          "format": "Email",
+          "realTime": false,
+          "sendOptions": {
+            "sendWhen": "Item recalled"
+          }
+        },
+        {
+          "templateId": "924edc98-719e-4487-b3e4-1055ef552476",
+          "format": "Email",
+          "frequency": "One time",
+          "realTime": false,
+          "sendOptions": {
+            "sendHow": "Before",
+            "sendWhen": "Due date",
+            "sendBy": {
+              "duration": 7,
+              "intervalId": "Days"
+            }
+          }
+        },
+        {
+          "templateId": "ba902e9b-c0ae-45f4-a375-1f1b3742b69c",
+          "format": "Email",
+          "frequency": "One time",
+          "realTime": false,
+          "sendOptions": {
+            "sendHow": "Before",
+            "sendWhen": "Due date",
+            "sendBy": {
+              "duration": 1,
+              "intervalId": "Days"
+            }
+          }
+        },
+        {
+          "templateId": "ad1f4f3f-9677-4bb1-8252-3eac3a485b3f",
+          "format": "Email",
+          "frequency": "One time",
+          "realTime": false,
+          "sendOptions": {
+            "sendHow": "After",
+            "sendWhen": "Due date",
+            "sendBy": {
+              "duration": 7,
+              "intervalId": "Days"
+            }
+          }
+        },
+        {
+          "templateId": "75066aa5-b154-41df-9608-6f5d54a2b5b8",
+          "format": "Email",
+          "realTime": false,
+          "sendOptions": {
+            "sendWhen": "Check in"
+          }
+        },
+        {
+          "templateId": "c7c4c6dd-20e0-42a8-9500-91f1a2309b9a",
+          "format": "Email",
+          "realTime": false,
+          "sendOptions": {
+            "sendWhen": "Check out"
+          }
+        }
+      ],
+      "feeFineNotices": [],
+      "requestNotices": []
     }
   ],
-  "totalRecords": 9
+  "totalRecords": 10
 }

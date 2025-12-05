@@ -223,7 +223,7 @@
       "id": "e6ec10ba-cfdb-4df8-987b-5bc63255ff40",
       "name": "Repro",
       "code": "SP-REPRO",
-      "discoveryDisplayName": "Repro",
+      "discoveryDisplayName": "Levereras digitalt om upphovsrätten tillåter",
       "pickupLocation": true,
       "holdShelfExpiryPeriod": {
         "duration": 7,
@@ -264,7 +264,7 @@
       "metadata": {
         "createdDate": "2025-08-20T12:06:12.145+00:00",
         "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-08-20T12:34:59.141+00:00",
+        "updatedDate": "2025-09-16T07:43:35.589+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     },

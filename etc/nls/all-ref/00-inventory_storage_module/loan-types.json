@@ -1,16 +1,6 @@
 {
   "loantypes": [
     {
-      "id": "5fe8b93d-5a99-44d2-aa4e-fe6c423bab9d",
-      "name": "Vardagstryck",
-      "metadata": {
-        "createdDate": "2024-10-11T13:23:34.388+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2024-10-11T13:23:34.388+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
       "id": "e7afa435-a4c8-4e9f-b2c6-9921ea4e027f",
       "name": "Hemlån",
       "metadata": {
@@ -71,32 +61,12 @@
       }
     },
     {
-      "id": "c66ae595-953b-45e7-b613-8dd28b206240",
-      "name": "Under leverans (ABON)",
-      "metadata": {
-        "createdDate": "2025-02-04T16:22:40.171+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-02-04T16:22:40.171+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
       "id": "d416a50c-d2a3-4a79-8cd7-394ec0342a7a",
       "name": "Referens",
       "metadata": {
         "createdDate": "2025-02-05T15:24:06.119+00:00",
         "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
         "updatedDate": "2025-02-05T15:24:06.119+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
-      "id": "8c6cd6a0-914c-4fc6-98bc-8ea8f4994d09",
-      "name": "Manuell beställning",
-      "metadata": {
-        "createdDate": "2025-02-14T08:37:02.117+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-02-14T08:37:02.117+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     },
@@ -117,16 +87,6 @@
         "createdDate": "2023-11-01T13:07:45.268+00:00",
         "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
         "updatedDate": "2025-03-17T14:34:11.963+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
-      "id": "f7f3036e-aec4-4104-8de1-83dd207b16d6",
-      "name": "DCB Can circulate",
-      "metadata": {
-        "createdDate": "2025-05-28T08:26:26.075+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-05-28T08:26:26.075+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     },
@@ -159,7 +119,67 @@
         "updatedDate": "2025-06-30T07:29:44.430+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
+    },
+    {
+      "id": "543b9d76-e65d-42f2-b656-fd5e502c36b6",
+      "name": "Preliminär post",
+      "metadata": {
+        "createdDate": "2025-10-07T07:50:51.342+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-10-07T07:50:51.342+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "bbf71915-d716-49f6-898d-2cb0b6e3e1c6",
+      "name": "Begränsad åtkomst - Kontakta biblioteket",
+      "metadata": {
+        "createdDate": "2025-10-07T11:48:08.449+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-10-07T11:48:08.449+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "8c6cd6a0-914c-4fc6-98bc-8ea8f4994d09",
+      "name": "Begränsad åtkomst",
+      "metadata": {
+        "createdDate": "2025-02-14T08:37:02.117+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-10-15T11:49:48.739+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "8c84fe08-8bf3-4507-a598-f82afac00da2",
+      "name": "Beställ i Arken",
+      "metadata": {
+        "createdDate": "2025-10-16T06:12:18.908+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-10-16T06:12:18.908+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "9ab2b57a-2dd5-473a-88ae-c851a8d0b781",
+      "name": "Beställ via formulär",
+      "metadata": {
+        "createdDate": "2025-11-10T07:40:14.737+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-11-10T07:40:14.737+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "fd791d87-fb62-4af7-a2ba-3db577c11cfa",
+      "name": "Prum",
+      "metadata": {
+        "createdDate": "2025-11-17T07:39:15.597+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-11-17T07:39:15.597+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
     }
   ],
-  "totalRecords": 16
+  "totalRecords": 18
 }

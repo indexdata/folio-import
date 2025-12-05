@@ -119,7 +119,115 @@
         "updatedDate": "2024-09-17T09:39:22.914+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
+    },
+    {
+      "id": "722ee43e-5d82-440e-9409-90872e7440cc",
+      "patronGroupId": "bbb4e6d1-8c05-45c8-9a0a-14935f33decb",
+      "conditionId": "08530ac4-07f2-48e6-9dda-a97bc2bf7053",
+      "value": 7,
+      "metadata": {
+        "createdDate": "2025-11-07T10:29:21.305+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-11-07T10:29:21.305+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "9fd6d33a-ea51-4132-ac35-9992899d88e9",
+      "patronGroupId": "bc413944-f892-4d15-b550-59961e8a813d",
+      "conditionId": "08530ac4-07f2-48e6-9dda-a97bc2bf7053",
+      "value": 7,
+      "metadata": {
+        "createdDate": "2025-11-07T10:29:34.405+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-11-07T10:29:34.405+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "47fa0bd5-bd69-48d2-b5ad-3d08d9c4fee4",
+      "patronGroupId": "be0d7b03-99dd-4eb1-8dc2-9b7f883b2664",
+      "conditionId": "08530ac4-07f2-48e6-9dda-a97bc2bf7053",
+      "value": 7,
+      "metadata": {
+        "createdDate": "2025-11-07T10:29:39.890+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-11-07T10:29:39.890+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "a26ddbd4-6a69-4068-9655-c47a4a2f5a25",
+      "patronGroupId": "bc413944-f892-4d15-b550-59961e8a813d",
+      "conditionId": "584fbd4f-6a34-4730-a6ca-73a6a6a9d845",
+      "value": 1,
+      "metadata": {
+        "createdDate": "2025-11-11T15:34:28.855+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-11-11T15:34:28.855+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "ddf3ffa5-fff4-4837-8e8c-55d94092290c",
+      "patronGroupId": "bc413944-f892-4d15-b550-59961e8a813d",
+      "conditionId": "e5b45031-a202-4abb-917b-e1df9346fe2c",
+      "value": 1,
+      "metadata": {
+        "createdDate": "2025-11-11T15:34:28.894+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-11-11T15:34:28.894+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "0e7493e8-5f24-4400-a89e-c00635de1cf9",
+      "patronGroupId": "be0d7b03-99dd-4eb1-8dc2-9b7f883b2664",
+      "conditionId": "584fbd4f-6a34-4730-a6ca-73a6a6a9d845",
+      "value": 1,
+      "metadata": {
+        "createdDate": "2025-11-11T15:34:48.000+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-11-11T15:34:48.000+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "7bdd5245-6ddb-49d6-943f-06e749582aac",
+      "patronGroupId": "be0d7b03-99dd-4eb1-8dc2-9b7f883b2664",
+      "conditionId": "e5b45031-a202-4abb-917b-e1df9346fe2c",
+      "value": 1,
+      "metadata": {
+        "createdDate": "2025-11-11T15:34:48.001+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-11-11T15:34:48.001+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "ed982f40-a87c-405f-a9cf-5645eec9bc60",
+      "patronGroupId": "bbb4e6d1-8c05-45c8-9a0a-14935f33decb",
+      "conditionId": "584fbd4f-6a34-4730-a6ca-73a6a6a9d845",
+      "value": 0,
+      "metadata": {
+        "createdDate": "2025-11-11T15:34:43.166+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-11-11T15:57:20.348+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "9f9554fb-b3de-4cd3-99f9-be8514403ad7",
+      "patronGroupId": "bbb4e6d1-8c05-45c8-9a0a-14935f33decb",
+      "conditionId": "e5b45031-a202-4abb-917b-e1df9346fe2c",
+      "value": 0,
+      "metadata": {
+        "createdDate": "2025-11-11T15:34:43.167+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-11-11T15:57:20.383+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
     }
   ],
-  "totalRecords": 10
+  "totalRecords": 19
 }

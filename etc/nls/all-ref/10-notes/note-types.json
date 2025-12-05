@@ -27,7 +27,7 @@
       "id": "215b2626-2d38-4052-a917-1dbe43829cf1",
       "name": "Förvärvsanteckning",
       "usage": {
-        "isAssigned": false
+        "isAssigned": true
       },
       "metadata": {
         "createdDate": "2025-07-02T09:23:50.054289Z",
@@ -40,7 +40,7 @@
       "id": "11450eee-58da-442c-8e07-9cd88cbbba34",
       "name": "Mottagning",
       "usage": {
-        "isAssigned": false
+        "isAssigned": true
       },
       "metadata": {
         "createdDate": "2025-07-24T06:52:46.812593Z",
@@ -48,7 +48,20 @@
         "updatedDate": "2025-07-24T06:52:46.812593Z",
         "updatedByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d"
       }
+    },
+    {
+      "id": "f6de6441-80bd-4cf2-97a6-06c4cd43b965",
+      "name": "User note",
+      "usage": {
+        "isAssigned": true
+      },
+      "metadata": {
+        "createdDate": "2025-10-02T14:36:23.034Z",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-10-02T14:36:23.034Z",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
     }
   ],
-  "totalRecords": 4
+  "totalRecords": 5
 }

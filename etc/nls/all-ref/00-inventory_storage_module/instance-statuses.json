@@ -107,7 +107,19 @@
         "updatedDate": "2025-07-01T12:49:04.614+00:00",
         "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
       }
+    },
+    {
+      "id": "7f7095da-aa98-4c49-a64b-eb6cc5d698e5",
+      "code": "rth",
+      "name": "Riksdagstryck huvudpost",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-10-14T20:20:51.996+00:00",
+        "createdByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487",
+        "updatedDate": "2025-10-14T20:54:31.031+00:00",
+        "updatedByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487"
+      }
     }
   ],
-  "totalRecords": 10
+  "totalRecords": 11
 }

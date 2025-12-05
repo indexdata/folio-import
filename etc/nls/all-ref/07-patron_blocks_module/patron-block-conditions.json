@@ -1,21 +1,6 @@
 {
   "patronBlockConditions": [
     {
-      "id": "08530ac4-07f2-48e6-9dda-a97bc2bf7053",
-      "name": "Recall overdue by maximum number of days",
-      "blockBorrowing": true,
-      "blockRenewals": true,
-      "blockRequests": true,
-      "valueType": "Integer",
-      "message": "Kontot är låst på grund av ej återlämnat lån",
-      "metadata": {
-        "createdDate": "2025-02-14T16:37:02.253+00:00",
-        "createdByUserId": "39a1ef78-5c0d-426c-b997-cb65c4f44ebd",
-        "updatedDate": "2025-02-14T16:37:02.253+00:00",
-        "updatedByUserId": "39a1ef78-5c0d-426c-b997-cb65c4f44ebd"
-      }
-    },
-    {
       "id": "72b67965-5b73-4840-bc0b-be8f3f6e047e",
       "name": "Maximum number of lost items",
       "blockBorrowing": true,
@@ -42,6 +27,21 @@
         "createdDate": "2025-03-07T14:47:38.583+00:00",
         "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
         "updatedDate": "2025-03-07T14:47:38.583+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "08530ac4-07f2-48e6-9dda-a97bc2bf7053",
+      "name": "Recall overdue by maximum number of days",
+      "blockBorrowing": true,
+      "blockRenewals": true,
+      "blockRequests": false,
+      "valueType": "Integer",
+      "message": "Kontot är låst på grund av ej återlämnat lån",
+      "metadata": {
+        "createdDate": "2025-11-07T10:28:55.212+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-11-07T10:28:55.212+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     },

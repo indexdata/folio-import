@@ -12,6 +12,17 @@
       }
     },
     {
+      "id": "d4fa4c9d-b0fe-43fb-8ff6-170236d014ac",
+      "name": "Musiktryck",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-12-03T07:06:06.783+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-12-03T07:06:06.783+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
       "id": "51520bb0-5748-4b00-94e4-9a5c2b708451",
       "name": "Bunden volym",
       "source": "local",
@@ -202,5 +213,5 @@
       }
     }
   ],
-  "totalRecords": 19
+  "totalRecords": 20
 }

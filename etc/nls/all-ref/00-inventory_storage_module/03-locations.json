@@ -40,50 +40,6 @@
       }
     },
     {
-      "id": "194e43a2-3781-4928-a035-fb5a7260bf65",
-      "name": "Tidskriftsläsesalen",
-      "code": "LOC-TLKB",
-      "discoveryDisplayName": "Tidskriftsläsesalen",
-      "isActive": true,
-      "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
-      "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
-      "libraryId": "1aae945c-bdf7-4e53-a236-477b7dfc77bf",
-      "details": {},
-      "primaryServicePoint": "1876697c-c60a-42cf-8e6c-82776e7a7076",
-      "servicePointIds": [
-        "1876697c-c60a-42cf-8e6c-82776e7a7076"
-      ],
-      "servicePoints": [],
-      "metadata": {
-        "createdDate": "2025-01-17T13:44:38.848+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-06-02T06:58:23.359+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
-      "id": "ed5b2b8f-81e1-41a6-8cdc-cd4c9df189f6",
-      "name": "Desiderata",
-      "code": "LOC-DES",
-      "discoveryDisplayName": "Saknas i KB",
-      "isActive": true,
-      "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
-      "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
-      "libraryId": "1aae945c-bdf7-4e53-a236-477b7dfc77bf",
-      "details": {},
-      "primaryServicePoint": "996760f7-e64b-4c8e-b228-41f52fb9fade",
-      "servicePointIds": [
-        "996760f7-e64b-4c8e-b228-41f52fb9fade"
-      ],
-      "servicePoints": [],
-      "metadata": {
-        "createdDate": "2025-02-04T15:22:27.539+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-07-01T09:54:26.800+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
       "id": "92af099e-af7d-4e41-881b-5cccd299ad6a",
       "name": "Fjärrlån",
       "code": "LOC-ILL",
@@ -153,10 +109,32 @@
       }
     },
     {
+      "id": "ed5b2b8f-81e1-41a6-8cdc-cd4c9df189f6",
+      "name": "Saknas i KB",
+      "code": "LOC-DES",
+      "discoveryDisplayName": "Saknas i KB",
+      "isActive": true,
+      "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
+      "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
+      "libraryId": "1aae945c-bdf7-4e53-a236-477b7dfc77bf",
+      "details": {},
+      "primaryServicePoint": "996760f7-e64b-4c8e-b228-41f52fb9fade",
+      "servicePointIds": [
+        "996760f7-e64b-4c8e-b228-41f52fb9fade"
+      ],
+      "servicePoints": [],
+      "metadata": {
+        "createdDate": "2025-02-04T15:22:27.539+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-10-01T09:25:58.673+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
       "id": "57246b20-76a7-4725-91c7-dea9f336de4f",
       "name": "Magasin - Tryckt samling",
       "code": "LOC-TS",
-      "discoveryDisplayName": "Magasin  (måste beställas i förväg)",
+      "discoveryDisplayName": "Magasin ",
       "isActive": true,
       "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
       "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
@@ -174,7 +152,29 @@
       "metadata": {
         "createdDate": "2024-10-07T09:24:16.297+00:00",
         "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-09-02T09:13:36.300+00:00",
+        "updatedDate": "2025-11-17T07:48:26.567+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "194e43a2-3781-4928-a035-fb5a7260bf65",
+      "name": "Tidskriftsläsesalen",
+      "code": "LOC-TLKB",
+      "discoveryDisplayName": "Annexet plan 2",
+      "isActive": true,
+      "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
+      "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
+      "libraryId": "1aae945c-bdf7-4e53-a236-477b7dfc77bf",
+      "details": {},
+      "primaryServicePoint": "1876697c-c60a-42cf-8e6c-82776e7a7076",
+      "servicePointIds": [
+        "1876697c-c60a-42cf-8e6c-82776e7a7076"
+      ],
+      "servicePoints": [],
+      "metadata": {
+        "createdDate": "2025-01-17T13:44:38.848+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-11-17T07:49:28.597+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     },
@@ -247,6 +247,28 @@
         "createdDate": "2023-11-16T10:31:59.932+00:00",
         "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
         "updatedDate": "2025-08-20T12:07:30.791+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "f52cc5ca-eeb9-46ae-a4e8-73131188f248",
+      "name": "Exemplarinformation saknas",
+      "code": "EX",
+      "discoveryDisplayName": "Exemplarinformation saknas",
+      "isActive": true,
+      "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
+      "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
+      "libraryId": "1aae945c-bdf7-4e53-a236-477b7dfc77bf",
+      "details": {},
+      "primaryServicePoint": "996760f7-e64b-4c8e-b228-41f52fb9fade",
+      "servicePointIds": [
+        "996760f7-e64b-4c8e-b228-41f52fb9fade"
+      ],
+      "servicePoints": [],
+      "metadata": {
+        "createdDate": "2025-11-26T10:57:52.093+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-11-26T10:57:52.093+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     },
@@ -430,5 +452,5 @@
       }
     }
   ],
-  "totalRecords": 19
+  "totalRecords": 20
 }

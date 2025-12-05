@@ -179,7 +179,59 @@
         "updatedDate": "2025-08-20T12:08:52.124+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
+    },
+    {
+      "id": "4931889d-b042-4ac7-9cf3-20472138d6e1",
+      "name": "Prum",
+      "requestTypes": [
+        "Hold",
+        "Page",
+        "Recall"
+      ],
+      "allowedServicePoints": {
+        "Page": [
+          "996760f7-e64b-4c8e-b228-41f52fb9fade"
+        ],
+        "Hold": [
+          "996760f7-e64b-4c8e-b228-41f52fb9fade"
+        ],
+        "Recall": [
+          "996760f7-e64b-4c8e-b228-41f52fb9fade"
+        ]
+      },
+      "metadata": {
+        "createdDate": "2025-11-17T07:37:21.565+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-11-17T07:37:21.565+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "83ffde1b-064c-41e9-8932-4c637bef340b",
+      "name": "Fjärrlån",
+      "requestTypes": [
+        "Hold",
+        "Page",
+        "Recall"
+      ],
+      "allowedServicePoints": {
+        "Page": [
+          "f5e36187-86f3-4fe0-9076-9f5daf849d3e"
+        ],
+        "Hold": [
+          "f5e36187-86f3-4fe0-9076-9f5daf849d3e"
+        ],
+        "Recall": [
+          "f5e36187-86f3-4fe0-9076-9f5daf849d3e"
+        ]
+      },
+      "metadata": {
+        "createdDate": "2025-11-27T08:37:55.565+00:00",
+        "createdByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08",
+        "updatedDate": "2025-11-27T08:37:55.565+00:00",
+        "updatedByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08"
+      }
     }
   ],
-  "totalRecords": 8
+  "totalRecords": 10
 }

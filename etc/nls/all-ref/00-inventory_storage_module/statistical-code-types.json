@@ -10,18 +10,7 @@
         "updatedDate": "2023-11-30T11:00:16.734+00:00",
         "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
       }
-    },
-    {
-      "id": "4413d64b-22a2-438f-8fce-2c6805c8d2db",
-      "name": "RFID",
-      "source": "local",
-      "metadata": {
-        "createdDate": "2024-06-03T15:11:15.437+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2024-06-03T15:11:15.437+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
     }
   ],
-  "totalRecords": 2
+  "totalRecords": 1
 }

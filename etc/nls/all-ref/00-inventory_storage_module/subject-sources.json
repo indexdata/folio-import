@@ -151,13 +151,13 @@
     {
       "id": "af636034-403c-474a-96bb-0440021c20c1",
       "name": "SAOGF Genre och form",
-      "code": "SAOGF",
+      "code": "saogf",
       "source": "local",
       "metadata": {
         "createdDate": "2025-04-23T13:48:37.384+00:00",
         "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-04-23T14:09:42.374+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+        "updatedDate": "2025-10-15T19:59:46.192+00:00",
+        "updatedByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487"
       }
     }
   ],

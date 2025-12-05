@@ -10,39 +10,12 @@
       }
     },
     {
-      "addressType": "Payment",
-      "desc": "Payment Address",
-      "id": "a3c3d60b-df9e-41d9-b7f5-983008bc1a45",
-      "metadata": {
-        "createdDate": "2023-03-13T12:09:42.259+00:00",
-        "updatedDate": "2023-03-13T12:09:42.259+00:00"
-      }
-    },
-    {
-      "addressType": "Returns",
-      "desc": "Returns Address",
-      "id": "c42be2ab-c3fd-486c-a1fe-9e5ea0f16198",
-      "metadata": {
-        "createdDate": "2023-03-13T12:09:42.261+00:00",
-        "updatedDate": "2023-03-13T12:09:42.261+00:00"
-      }
-    },
-    {
       "addressType": "Home",
       "desc": "Home Address",
       "id": "93d3d88d-499b-45d0-9bc7-ac73c3a19880",
       "metadata": {
         "createdDate": "2023-03-13T12:09:42.279+00:00",
         "updatedDate": "2023-03-13T12:09:42.279+00:00"
-      }
-    },
-    {
-      "addressType": "Claim",
-      "desc": "Claim Address",
-      "id": "b6f4d1c6-0dfa-463c-9534-f49c4f0ae090",
-      "metadata": {
-        "createdDate": "2023-03-13T12:09:42.274+00:00",
-        "updatedDate": "2023-03-13T12:09:42.274+00:00"
       }
     },
     {
@@ -73,7 +46,18 @@
         "updatedDate": "2025-03-26T12:41:44.977+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
+    },
+    {
+      "addressType": "Fjarrlan",
+      "desc": "Fjärrlån",
+      "id": "9bc3ce80-a7a1-4a30-93bc-73a0bf01f0d6",
+      "metadata": {
+        "createdDate": "2025-12-04T12:48:51.746+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-12-04T12:48:51.746+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
     }
   ],
-  "totalRecords": 8
+  "totalRecords": 6
 }

@@ -211,6 +211,51 @@
       ]
     },
     {
+      "id": "69fe6f1c-20f3-4a7d-a010-edf1b04dc459",
+      "templateName": "Pliktlevererade monografier",
+      "templateCode": "plm",
+      "hiddenFields": {
+        "reEncumber": false
+      },
+      "cost": {
+        "listUnitPrice": 0,
+        "quantityPhysical": 1,
+        "quantityElectronic": null,
+        "listUnitPriceElectronic": null
+      },
+      "vendor": "5e4ed340-2c2a-4cd7-bcca-fbf6167f7c39",
+      "customFields": {
+        "flerbandsverk": "opt_1"
+      },
+      "poTags": {
+        "tagList": [
+          "plikt"
+        ]
+      },
+      "details": {
+        "isBinderyActive": false
+      },
+      "isPackage": false,
+      "locations": [
+        {
+          "__key__": "__key__1645",
+          "locationId": "57246b20-76a7-4725-91c7-dea9f336de4f"
+        }
+      ],
+      "polTags": {
+        "tagList": [
+          "plikt"
+        ]
+      },
+      "collection": false,
+      "checkinItems": true,
+      "physical": {
+        "materialType": "1a54b431-2e4f-452d-9cae-9cee66c9a892",
+        "createInventory": "Instance, Holding, Item"
+      },
+      "orderFormat": "Physical Resource"
+    },
+    {
       "id": "66a29252-1456-471f-9335-e6931d0d9945",
       "templateName": "KB Pliktleveranser seriellt",
       "hiddenFields": {
@@ -276,6 +321,54 @@
       "isPackage": false
     },
     {
+      "id": "1f49b0be-f040-4e35-ab7d-b47131a98933",
+      "templateName": "Test",
+      "hiddenFields": {
+        "reEncumber": false
+      },
+      "orderType": "One-Time",
+      "cost": {
+        "currency": null,
+        "exchangeRate": null,
+        "listUnitPrice": null,
+        "quantityPhysical": null,
+        "quantityElectronic": null,
+        "listUnitPriceElectronic": null
+      },
+      "notes": [
+        ""
+      ],
+      "acquisitionMethod": "06627d0e-e4e5-4234-9420-c6a350f7059b",
+      "isPackage": false,
+      "assignedTo": null,
+      "vendor": "74f93a5c-9a3d-404a-bef4-791260103743",
+      "poTags": {
+        "tagList": []
+      },
+      "locations": [
+        {
+          "__key__": "__key__2084",
+          "locationId": "57246b20-76a7-4725-91c7-dea9f336de4f"
+        }
+      ],
+      "checkinItems": false,
+      "physical": {
+        "materialType": "1a54b431-2e4f-452d-9cae-9cee66c9a892",
+        "createInventory": "Instance, Holding, Item"
+      },
+      "fundDistribution": [
+        {
+          "code": "ES 2025",
+          "value": 100,
+          "fundId": "4f78525a-8635-4653-9637-86705d47f6f0",
+          "encumbrance": null,
+          "expenseClassId": null,
+          "distributionType": "percentage"
+        }
+      ],
+      "orderFormat": "Physical Resource"
+    },
+    {
       "id": "acbe4943-3841-400c-97c8-8fcca4d904ff",
       "templateName": "Monografi Adlibris",
       "hiddenFields": {
@@ -330,7 +423,7 @@
       "cost": {
         "currency": "SEK",
         "exchangeRate": null,
-        "listUnitPrice": 0,
+        "listUnitPrice": null,
         "quantityPhysical": 1,
         "quantityElectronic": null,
         "listUnitPriceElectronic": null
@@ -354,5 +447,5 @@
       "paymentStatus": "Payment Not Required"
     }
   ],
-  "totalRecords": 9
+  "totalRecords": 11
 }
