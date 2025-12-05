@@ -55,7 +55,11 @@ orders:
 
 serials:
 	cd $(wd); node downloadJSONL orders-storage/titles $(odir)/titles.jsonl
-	cd $(acq); node nlsSerials $(odir)/z08.dsv
+	cd $(acq); node nlsSerials $(odir)/z08.dsv > $(ldir)/makeSerials.log 2>$(ldir)/makeSerials.err
+	cat $(ldir)/makeSerials.log
+
+rulesets:
+	cd $(acq); node nlsRuleSets $(odir)
 
 circ:
 	cd $(cdir); mv -f z36.seqaa z36.dsv; true; mv -f z37.seqaa z37.dsv; true
