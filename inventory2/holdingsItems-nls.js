@@ -187,6 +187,7 @@ try {
         let tpath = tsvDir + '/' + f;
         let dat = fs.readFileSync(tpath, { encoding: 'utf8' });
         dat.split(/\n/).forEach(l => {
+          l = l.replace(/\r$/, '');
           let c = l.split(/\t/);
           let k = c[0].trim();
           let v = '';
@@ -194,7 +195,7 @@ try {
             if (c[1] === 'all') c[1] = '';
             k += `:${c[1]}:${c[2]}:${c[3]}:${c[4]}`;
             k = k.replace(/:+$/, '');
-            v = c[8].toLowerCase().trim();
+            v = (c[8]) ? c[8].toLowerCase().trim() : '';
           } else if (k && prop === 'loantypes') {
             let cb = (c[1] && c[1].match(/\w/)) ? c[1].padStart(2, '0') : '_';
             let cc = c[2] || '_';

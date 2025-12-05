@@ -38,6 +38,3 @@ RESTR	03					z30_sub_library=RESTR, z30_item_status=03	Humlegården	loc-ts	Tryck
 RESTR	22					z30_sub_library=RESTR, z30_item_status=22	Humlegården	loc-ts	Tryckt samling
 RESTR	23					z30_sub_library=RESTR, z30_item_status=23	Humlegården	loc-ts	Tryckt samling
 RESTR	05								
-									
-									
-Items that does not match the above							Humlegården	datamigration	Omappat vid datamigration
