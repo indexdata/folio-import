@@ -453,6 +453,7 @@ try {
     count++;
     let p = main[x];
     if (process.env.DEBUG) console.log(p);
+    let misc = '';
     let nkey = p.Z303_NAME_KEY;
     let snum = hyllnr(nkey);
     let aid = p.Z303_PRIMARY_ID;
@@ -469,6 +470,7 @@ try {
     let ln = name.replace(/,.+/, '');
     let fn = (name.match(/,/)) ? name.replace(/^.+?, */, '') : '';
     let bc = (ids && ids['02']) ? ids['02'][0] : (ids && ids['01']) ? ids['01'][0] : '';
+    if (ids && ids['02']) misc = '__UPDATE__';
     let bcPre = id.replace(/\d+/, '');
     let pid = (ids && ids['03']) ? ids['03'][0] : '';
     let notes = [];
@@ -569,6 +571,7 @@ try {
     }
 
     if (u.patronGroup && u.personal.lastName) {
+      if (misc) u.__ = misc;
       writeOut(files.u, u);
       if (process.env.DEBUG) console.log(JSON.stringify(u, null, 2));
       success++
