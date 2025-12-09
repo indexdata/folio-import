@@ -470,7 +470,6 @@ try {
     let ln = name.replace(/,.+/, '');
     let fn = (name.match(/,/)) ? name.replace(/^.+?, */, '') : '';
     let bc = (ids && ids['02']) ? ids['02'][0] : (ids && ids['01']) ? ids['01'][0] : '';
-    if (ids && ids['02']) misc = '__UPDATE__';
     let bcPre = id.replace(/\d+/, '');
     let pid = (ids && ids['03']) ? ids['03'][0] : '';
     let notes = [];
@@ -570,6 +569,15 @@ try {
       u.personal.preferredContactTypeId = '001'
     }
 
+    if (gnum === '5') {
+      u.personal.addresses = [
+          {
+            addressLine1: 'Fjärrlån',
+            addressTypeId: refData.addressTypes.Fjarrlan
+          }
+        ]
+    }
+
     if (u.patronGroup && u.personal.lastName) {
       if (misc) u.__ = misc;
       writeOut(files.u, u);
@@ -581,13 +589,22 @@ try {
         permissions: []
       }
       writeOut(files.p, perm);
+
       let pref = {
         id: uuid(u.id + 'pref', ns),
         userId: u.id,
         holdShelf: true,
         delivery: false,
+        fulfillment: 'Hold Shelf',
         defaultServicePointId: refData.servicepoints['SP-INFO']
       };
+      if (gnum === '5') {
+        pref.holdShelf = false;
+        pref.delivery = true;
+        pref.fulfillment = 'Delivery';
+        pref.defaultDeliveryAddressTypeId = refData.addressTypes.Fjarrlan;
+        delete pref.defaultServicePointId;
+      }
       writeOut(files.r, pref);
 
       notes.forEach((n, i) => {
