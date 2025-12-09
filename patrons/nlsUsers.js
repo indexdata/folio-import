@@ -439,7 +439,7 @@ try {
       console.log(`${zc} "${f}" lines processed`);
     }
   }
-  // throw(JSON.stringify(z.add, null, 2));
+  // throw(JSON.stringify(z.id, null, 2));
   
   let count = 0;
   let success = 0;
@@ -468,7 +468,7 @@ try {
     let name = p.Z303_NAME.replace(/ \(.+$/, '');
     let ln = name.replace(/,.+/, '');
     let fn = (name.match(/,/)) ? name.replace(/^.+?, */, '') : '';
-    let bc = (ids && ids['01']) ? ids['01'][0] : '';
+    let bc = (ids && ids['02']) ? ids['02'][0] : (ids && ids['01']) ? ids['01'][0] : '';
     let bcPre = id.replace(/\d+/, '');
     let pid = (ids && ids['03']) ? ids['03'][0] : '';
     let notes = [];
