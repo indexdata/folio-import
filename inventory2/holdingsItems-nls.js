@@ -316,6 +316,7 @@ try {
         return;
       }
     }
+    let misc = '';
     let aid = r.Z30_REC_KEY.substring(0, 9);
     let iid = r.Z30_REC_KEY;
     let bid =  linkMap[aid];
@@ -386,8 +387,10 @@ try {
       let f866 = af['866'];
       if (f866) {
         f866.forEach(f => {
-          if (f['5'] === 'S' && f.a && f.z) {
-            hadminNotes.push(`${f.a} (${f.z})`);
+          if (f['5'] === 'S' && f.a) {
+            let n = (f.z) ? `${f.a} (${f.z})` : f.a;
+            hadminNotes.push(n);
+            if (!f.z) misc = '__UPDATE__';
           }
         });
       }
@@ -450,6 +453,7 @@ try {
         if (hadminNotes[0]) h.administrativeNotes = hadminNotes;
 
         if (h.permanentLocationId) {
+          if (misc) h.__ = misc;
           writeOut(outs.holdings, h);
           ttl.holdings++;
           hseen[hkey] = { id: hid, cn: cn };
