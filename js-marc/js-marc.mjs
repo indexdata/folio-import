@@ -187,10 +187,11 @@ export function mij2raw(mij, sortFieldsByTag) {
     let data = '';
     if (f[tag].subfields) {
       let d = f[tag];
+      data = d.ind1 + d.ind2;
       d.subfields.forEach(s => {
         let code = Object.keys(s)[0];
         let sd = s[code];
-        data += d.ind1 + d.ind2 + '\x1F' + code + sd;
+        data += '\x1F' + code + sd;
       });
     } else {
       data = f[tag];
@@ -210,7 +211,7 @@ export function mij2raw(mij, sortFieldsByTag) {
   let baseStr = base.toString().padStart(5, '0');
   ldr = ldr.replace(/^\d{5}(.{7})\d{5}(.+)/, '$1' + baseStr + '$2');
   let rec = ldr + dir + varFields + '\x1D';
-  let rlen = rec.length + 5;
+  let rlen = Buffer.byteLength(rec, 'utf8') + 5;
   let rlinStr = rlen.toString().padStart(5, '0');
   rec = rlinStr + rec;
   return { rec: rec, mij: mij };
