@@ -9,6 +9,7 @@ const { ok } = require('assert');
 let inFile = process.argv[3];
 let ep = process.argv[2];
 let ver = process.env.version;
+let dbug = process.env.DEBUG;
 
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -39,7 +40,7 @@ const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 
     var logger;
 
-    if (config.logpath) {
+    if (config.logpath && !dbug) {
       const lpath = config.logpath;
       const lname = inFile.replace(/.+\//, '');
       const logFileName = `${lpath}/${lname}.log`;
@@ -122,7 +123,8 @@ const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
             };
         } catch (e) {
           writeErr(errPath, rec, e);
-          logger.error(`${e}`);
+	  let msg = (dbug) ? e : `${e}`;
+          logger.error(msg);
           continue;
         }
       }
@@ -139,8 +141,8 @@ const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
         success++;
       } catch (e) {
         writeErr(errPath, rec, e);
-	      let errMsg = (e.response) ? e.response.text : e;
-        logger.error(errMsg);
+        let msg = (dbug) ? e : `${e}`;
+        logger.error(msg);
         fail++;
       }
       if (config.delay) {
