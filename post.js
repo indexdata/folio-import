@@ -2,6 +2,7 @@ const fs = require('fs');
 const superagent = require('superagent');
 const { getAuthToken } = require('./lib/login');
 let ep = process.argv[2];
+let dbug = process.env.DEBUG;
 
 (async () => {
   try {
@@ -23,9 +24,11 @@ let ep = process.argv[2];
       .set('accept', 'application/json');
       console.log(JSON.stringify(res.body, null, 2));
     } catch (e) {
-      console.log(`${e}`);
+      let msg = (dbug) ? e : `${e}`;
+      console.log(msg);
     }
   } catch(e) {
-      console.log(`${e}`);
+      let msg = (dbug) ? e : `${e}`;
+      console.log(msg);
   }
 })();

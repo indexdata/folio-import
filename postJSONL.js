@@ -44,7 +44,7 @@ const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 
     var logger;
 
-    if (config.logpath || dolog) {
+    if ((config.logpath || dolog) && !debug) {
       const lpath = config.logpath;
       const lname = inFile.replace(/.+\//, '');
       const logFileName = (dolog) ? logPath : `${lpath}/${lname}.log`;
