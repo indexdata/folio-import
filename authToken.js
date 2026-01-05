@@ -4,8 +4,8 @@ const { getAuthToken } = require('./lib/login');
 const okapi = '.okapi';
 
 (async () => {
-  const config = await getAuthToken(superagent);
-  const out = {
+  const config = await getAuthToken(superagent, process.env.DEBUG);
+  let out = {
     url: config.okapi,
     tenant: config.tenant,
     token: config.token
@@ -17,5 +17,6 @@ const okapi = '.okapi';
     out.cookie = config.cookie;
   }
   fs.writeFileSync(okapi, JSON.stringify(out));
+  if (process.env.DEBUG) out = JSON.stringify(config, null, 2);
   console.log(out);
 })();
