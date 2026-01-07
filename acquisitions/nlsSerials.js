@@ -19,6 +19,7 @@ try {
 const ns = '3eb5d7ac-7f51-4922-bd58-512a1f9710ac';
 const tstr = 'KB Stående order';
 let inFile = process.argv[2];
+let ver = process.argv[3];
 
 const tempMap = {
   '$Y ($V): $I': '{{chronology1.year}} ({{enumeration1.level1}}): {{enumeration1.level2}}',
@@ -67,7 +68,7 @@ const makeRules = (ptype, idate, interval) => {
 
 (async () => {
   try {
-    if (!inFile) throw 'Usage: node nlsSerials <z08_table>';
+    if (!inFile) throw 'Usage: node nlsSerials <z08_table> [<mod-serials-managament version>]';
     ordDir = path.dirname(inFile);
     console.log(`Start: ${newDate}`);
 
@@ -201,9 +202,28 @@ const makeRules = (ptype, idate, interval) => {
           };
           rs.templateConfig.enumerationRules[0].ruleFormat.levels.push(lvl2);
         }
+        if (ver && ver < '2') {
+          rs.templateConfig.rules = [];
+          let i = 0;
+          rs.templateConfig.chronologyRules.forEach(r => {
+            let o = { templateMetadataRuleType: 'chronology', ruleType: r, index: i };
+            delete o.ruleType.index;
+            rs.templateConfig.rules.push(o);
+            i++;
+          });
+          rs.templateConfig.enumerationRules.forEach(r => {
+            let o = { templateMetadataRuleType: 'enumeration', ruleType: r, index: i };
+            delete o.ruleType.index;
+            rs.templateConfig.rules.push(o);
+            i++;
+          });
+          delete rs.templateConfig.chronologyRules;
+          delete rs.templateConfig.enumerationRules;
+          // console.log(JSON.stringify(rs, null, 2));
+        }
 
         writeOut(files.r, rs);
-        // console.log(JSON.stringify(rs, null, 2))
+        console.log(JSON.stringify(rs, null, 2))
       }
       else {
         console.log(`ERROR PO-line not found for ${rk}`);
