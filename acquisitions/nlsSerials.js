@@ -223,7 +223,7 @@ const makeRules = (ptype, idate, interval) => {
         }
 
         writeOut(files.r, rs);
-        console.log(JSON.stringify(rs, null, 2))
+        // console.log(JSON.stringify(rs, null, 2))
       }
       else {
         console.log(`ERROR PO-line not found for ${rk}`);
