@@ -35,7 +35,9 @@ let ch = {
     name: base,
     tag: base,
     type: 'XML',
-    transformationId: tr.id
+    transformationId: tr.id,
+    enabled: true,
+    listening: true
 };
 console.log(`Saving channel to ${chFile}`);
 fs.writeFileSync(chFile, JSON.stringify(ch));
