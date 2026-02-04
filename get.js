@@ -1,7 +1,9 @@
 const fs = require('fs');
 const superagent = require('superagent');
 const { getAuthToken } = require('./lib/login');
-let ep = process.argv[2];
+const argv = require('minimist')(process.argv.slice(2));
+let ep = argv._[0];
+delete argv._;
 let dbug = process.env.DEBUG;
 
 (async () => {
@@ -12,15 +14,23 @@ let dbug = process.env.DEBUG;
     ep = ep.replace(/^_\//, '');
     ep = ep.replace(/__/g, '/');
     let url = `${config.okapi}/${ep}`;
+    let headers = {
+      'User-Agent': config.agent,
+      'cookie': config.cookie,
+      'x-okapi-tenant': config.tenant,
+      'x-okapi-token': config.token,
+      'accept': 'application/json' 
+    };
+    for (let k in argv) {
+      let v = argv[k];
+      headers[k] = v;
+    }
     console.warn('GET', url);
     try {
       const res = await superagent
       .get(url)
-      .set('User-Agent', config.agent)
-      .set('cookie', config.cookie)
-      .set('x-okapi-tenant', config.tenant)
-      .set('x-okapi-token', config.token)
-      .set('accept', 'application/json');
+      .set(headers);
+      if (dbug) console.log(res);
       console.log(JSON.stringify(res.body, null, 2));
     } catch (e) {
       let msg = (dbug) ? e : `${e}`;
