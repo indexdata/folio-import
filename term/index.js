@@ -7,7 +7,7 @@ let pageSize = 24;
 const indent = '          ';
 const schemaDir = './schemas';
 
-const mods = ['Users', 'Inventory'];
+const mods = ['Users', 'Inventory', 'Inventory-Import'];
 const userSettings = {
   'Permission sets': { ep: 'perms/permissions?query=mutable==true' },
   'Patron groups': { ep: 'groups' },
@@ -24,6 +24,12 @@ const invSettings = {
       campusId: 'location-units/campuses'
     }
   }
+};
+const impSettings = {
+  Steps: { ep: 'inventory-import/steps' },
+  Transformations: { ep: 'inventory-import/transformations' },
+  'Transformation associations': { ep: 'inventory-import/tsas' },
+  Channels: { ep: 'inventory-import/channels'}
 };
 const temp = {
   instances: {
@@ -244,8 +250,18 @@ function newCrud(ep, func) {
 
 async function viewCrud(ep, back, func) {
   clear();
-  console.log(ep);
   let rec = await get(ep);
+  if (back && back.lookups) {
+    for (let k in back.lookups) {
+      let id = rec[k];
+      let lep = back.lookups[k] + '/' + id;
+      let lrec = await get(lep);
+      if (lrec) { 
+        let val = lrec.name || lrec.code;
+        rec[k] = val;
+      }
+    }
+  }
   let recStr = JSON.stringify(rec, null, 2);
   console.log(recStr);
 
@@ -346,6 +362,31 @@ function invSet() {
   }); 
 }
 
+function impSet() {
+  clear();
+  let menu = [];
+  for (let k in impSettings) {
+    menu.push(k);
+  }
+  menu.push(new inquirer.Separator());
+  menu.push(goBack);
+  inquirer
+  .prompt([
+    {type: 'list', name: 'set', message: 'Inventory settings', choices: menu, pageSize: pageSize},
+  ])
+  .then(async (a) => {
+    if (a.set === goBack) {
+      settings();
+    } else {
+      let ep = impSettings[a.set];
+      listCrud(ep, impSet);
+    }
+  })
+  .catch((e) => {
+    let msg = e.message || e;
+    console.log(msg);
+  }); 
+}
 
 function userSet() {
   clear();
@@ -545,6 +586,8 @@ function settings() {
         userSet();
       } else if (a.mod === 'Inventory') {
         invSet();
+      } else if (a.mod === 'Inventory-Import') {
+        impSet();
       }
     }
   })
