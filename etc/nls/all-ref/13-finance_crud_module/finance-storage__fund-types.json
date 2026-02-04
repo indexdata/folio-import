@@ -1,0 +1,135 @@
+{
+  "fundTypes": [
+    {
+      "id": "8b03b70a-a3e6-459c-9e8f-b7e9a7087052",
+      "_version": 3,
+      "name": "Other"
+    },
+    {
+      "id": "0f5f819e-0690-4c20-ad8d-cc23a6ecc585",
+      "_version": 3,
+      "name": "Faculty"
+    },
+    {
+      "id": "4fdf4bf7-0508-4159-89f4-0d64b2d7e0e4",
+      "_version": 3,
+      "name": "Serials"
+    },
+    {
+      "id": "99595e88-954b-4f23-ae7e-afb063aae458",
+      "_version": 3,
+      "name": "Books"
+    },
+    {
+      "id": "a5060e05-47db-4ba5-8d16-760f9578aaa9",
+      "_version": 3,
+      "name": "Subscriptions"
+    },
+    {
+      "id": "509775e4-3682-4c72-92ac-ab2d2fb3575f",
+      "_version": 3,
+      "name": "Grants"
+    },
+    {
+      "id": "a7da939e-799b-4c0b-9b94-a06df51a4b90",
+      "_version": 3,
+      "name": "Unrestricted"
+    },
+    {
+      "id": "d28c844a-bead-489e-a889-e3951b884f3f",
+      "_version": 3,
+      "name": "Standing orders"
+    },
+    {
+      "id": "45dce82a-68fa-4ab8-aa50-f51ba6ecb613",
+      "_version": 3,
+      "name": "Electronic"
+    },
+    {
+      "id": "d49c4392-5a02-4b15-ba9d-5ae7315f44cf",
+      "_version": 3,
+      "name": "EBA"
+    },
+    {
+      "id": "c93373df-e7ec-4d31-b200-719736610d89",
+      "_version": 3,
+      "name": "Approvals"
+    },
+    {
+      "id": "aea28ac6-f085-4833-bd54-d8f605d28d48",
+      "_version": 3,
+      "name": "One-time"
+    },
+    {
+      "id": "83ccb063-b6d8-467c-b3dc-02e49fdf7c96",
+      "_version": 3,
+      "name": "Endowments"
+    },
+    {
+      "id": "a1c94be4-d004-4f1a-ab21-343c33e48efa",
+      "_version": 3,
+      "name": "DDA/PDA"
+    },
+    {
+      "id": "6d73d226-f56f-4338-9584-e91a83d5ecec",
+      "_version": 3,
+      "name": "College/University funds"
+    },
+    {
+      "id": "5604ee8b-d241-49b8-8baf-66b6c46bf14f",
+      "_version": 3,
+      "name": "Physical"
+    },
+    {
+      "id": "13d8beb0-56b6-4435-9934-09305c2d6c88",
+      "_version": 3,
+      "name": "Technical"
+    },
+    {
+      "id": "826dfc35-b247-4553-a4d7-53eb0e1eadbc",
+      "_version": 3,
+      "name": "Audio"
+    },
+    {
+      "id": "b61c08df-67b7-4e14-93f7-2d228dba6724",
+      "_version": 3,
+      "name": "State funds"
+    },
+    {
+      "id": "1db71218-f3e5-4514-b0bd-28f28f6b3fb2",
+      "_version": 3,
+      "name": "Exchange"
+    },
+    {
+      "id": "addac225-947b-41b6-b80a-4c0b79261747",
+      "_version": 3,
+      "name": "Gifts"
+    },
+    {
+      "id": "d87b3e95-be8a-4800-9733-3fa16f0c4266",
+      "_version": 3,
+      "name": "Video"
+    },
+    {
+      "id": "9d4e8e26-99e4-4134-9b7e-9f59da72380e",
+      "_version": 3,
+      "name": "Restricted"
+    },
+    {
+      "id": "a6cffa87-7a64-4419-83d6-fa7af9d120e2",
+      "_version": 3,
+      "name": "Monographs"
+    },
+    {
+      "id": "ace38b12-e6fc-49f2-bbd4-f3e2960d9b3d",
+      "_version": 3,
+      "name": "Firm orders"
+    },
+    {
+      "id": "d1a84034-ca42-4815-9f8a-4efddbfc7db6",
+      "_version": 3,
+      "name": "Ongoing"
+    }
+  ],
+  "totalRecords": 26
+}

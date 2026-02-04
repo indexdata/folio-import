@@ -31,28 +31,27 @@
       }
     },
     {
-      "id": "4d720121-a97e-4ad4-b35b-35f37cd5902a",
-      "description": "Återlämningskvitto, enbart för hemlån.",
+      "id": "7ebc0767-1ddd-4239-b5c0-f615addbe3f2",
       "outputFormats": [
         "text/html"
       ],
       "templateResolver": "mustache",
       "localizedTemplates": {
         "en": {
-          "header": "Kvitto på återlämning - Kungliga biblioteket",
-          "body": "<div><strong>Återlämnat material/ Returned item(s)</strong></div><div><br></div><div>{{#loans}}</div><div>{{item.title}}</div><div>{{item.barcode}}</div><div><br></div><div>─────────────────────</div><div><br></div><div>{{/loans}}</div><div><br></div><div><br></div><div><strong>Kungliga biblioteket</strong></div><div>Telefon: 010-709 30 30 (vardagar kl. 12-16)</div><div>E-post: <a href=\"mailto:info@kb.se\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(47, 96, 159);\">info@kb.se</a></div><div>Webb: <a href=\"https://www.kb.se/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(47, 96, 159);\">https://www.kb.se</a></div>",
+          "header": "Din beställning är klar - specialläsesalslån - Kungliga biblioteket",
+          "body": "<div><span style=\"font-size: 10px;\">Information in English below</span></div><div><br></div><div><strong style=\"font-size: 18px;\">Din beställning är klar - specialläsesalslån</strong></div><div><br></div><div>Följande material finns nu att hämta i <strong>Specialläsesalen</strong>:</div><div><br></div><div>{{item.title}}</div><div>{{item.volume}} {{item.enumeration}}</div><div>{{item.barcode}}</div><div>Hämta senast:<strong> {{request.holdShelfExpirationDate}}</strong></div><div><br></div><div>Tänk på att detta material måste läsas i Specialläsesalen på Kungliga biblioteket. <strong>Det får inte tas med hem. </strong>Medtag legitimation.</div><div><br></div><div>Observera att det finns <a href=\"https://www.kb.se/besok-oss/hitta-i-huset/lasesalar-och-studieplatser/speciallasesalen.html\" rel=\"noopener noreferrer\" target=\"_blank\">särskilda regler för läsning i Specialläsesalen</a>. Specialläsesalen har också <a href=\"https://www.kb.se/besok-oss/oppettider.html#:~:text=KB%3As%20l%C3%A4sesalar%20och%20bemanning\" rel=\"noopener noreferrer\" target=\"_blank\">andra öppettider</a>.</div><div><br></div><div>─────────────</div><div><br></div><div><strong style=\"font-size: 18px;\">Your request is ready for pick up - Special Reading Room loan</strong></div><div><br></div><div>The following Special Reading Room loan is now ready for pick up at the <strong>Special Reading Room</strong>:</div><div><br></div><div>{{item.title}}</div><div>{{item.volume}} {{item.enumeration}}</div><div>{{item.barcode}}</div><div>Pick up by: <strong>{{request.holdShelfExpirationDate}}</strong></div><div><br></div><div>This item may only be studied in the Special Reading Room at the National Library of Sweden. <strong>It may not be taken home</strong>. Please bring identification.</div><div><br></div><div>Please note that <a href=\"https://www.kb.se/eng/planning-a-visit/find-your-way-around-the-library/reading-rooms-and-study-areas/the-special-reading-room.html\" rel=\"noopener noreferrer\" target=\"_blank\">certain rules apply to reading in the Special Reading Room</a>.&nbsp;The Special Reading Room also has <a href=\"https://www.kb.se/eng/planning-a-visit/opening-hours.html\" rel=\"noopener noreferrer\" target=\"_blank\">different opening hours</a>.</div><div><br></div><div>─────────────</div><div><strong>Kungliga biblioteket</strong></div><div>Telefon: 010-709 30 30 (vardagar kl. 12-16)</div><div>E-post: <a href=\"mailto:info@kb.se\" rel=\"noopener noreferrer\" target=\"_blank\">info@kb.se</a></div><div>Webb: <a href=\"https://www.kb.se/\" rel=\"noopener noreferrer\" target=\"_blank\">https://www.kb.se</a></div>",
           "attachments": []
         }
       },
       "metadata": {
-        "createdDate": "2023-11-16T13:37:47.511+00:00",
-        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
-        "updatedDate": "2025-11-18T16:00:10.983+00:00",
-        "updatedByUserId": "b9830a1c-82eb-4c53-9278-e96815826061"
+        "createdDate": "2025-12-08T13:59:17.001+00:00",
+        "createdByUserId": "58ad3ef6-4855-466e-bcfb-004e0eace875",
+        "updatedDate": "2025-12-08T13:59:17.001+00:00",
+        "updatedByUserId": "58ad3ef6-4855-466e-bcfb-004e0eace875"
       },
-      "name": "Återlämningskvitto",
+      "name": "Specialläsesalslån - avisering",
       "active": true,
-      "category": "Loan"
+      "category": "Request"
     },
     {
       "id": "263d4e33-db8d-4e07-9060-11f442320c05",
@@ -68,6 +67,32 @@
           "attachments": []
         }
       }
+    },
+    {
+      "id": "b375cd15-8057-4d15-9e89-d59259f0f579",
+      "outputFormats": [
+        "text/html"
+      ],
+      "templateResolver": "mustache",
+      "localizedTemplates": {
+        "en": {
+          "header": "Inte längre kö på ditt hemlån - Kungliga biblioteket",
+          "body": "<div><span style=\"font-size: 10px;\">Information in English below</span></div><div><br></div><div><strong style=\"font-size: 18px;\">Inte längre kö på ditt hemlån</strong></div><div><br></div><div>Du har tidigare fått ett meddelande om att en annan låntagare har beställt nedanstående hemlån. Beställningen har nu tagits bort och lånetiden har återställts.</div><div><br></div><div>{{item.title}}</div><div>{{item.barcode}}</div><div>Återlämna senast: <strong>{{loan.dueDate}}</strong></div><div><br></div><div>─────────────</div><div><br></div><div><strong style=\"font-size: 18px;\">Your loan period has been resumed</strong></div><div><br></div><div>Previously, you received a message that another user had requested the following home loan. The request has now been cancelled and your loan period has been resumed.</div><div><br></div><div>{{item.title}}</div><div>{{item.barcode}}</div><div>Due: <strong>{{loan.dueDate}}</strong></div><div><br></div><div>─────────────</div><div><strong>Kungliga biblioteket</strong></div><div>Telefon: 010-709 30 30 (vardagar kl. 12-16)</div><div>E-post: <a href=\"mailto:info@kb.se\" rel=\"noopener noreferrer\" target=\"_blank\">info@kb.se</a></div><div>Webb: <a href=\"https://www.kb.se/\" rel=\"noopener noreferrer\" target=\"_blank\">https://www.kb.se</a></div>",
+          "attachments": []
+        }
+      },
+      "metadata": {
+        "createdDate": "2025-12-08T14:11:09.560+00:00",
+        "createdByUserId": "58ad3ef6-4855-466e-bcfb-004e0eace875",
+        "updatedDate": "2025-12-08T14:11:09.560+00:00",
+        "updatedByUserId": "58ad3ef6-4855-466e-bcfb-004e0eace875"
+      },
+      "name": "Hemlån - inte längre recall pga. ingen kö",
+      "active": true,
+      "additionalProperties": {
+        "printOnly": false
+      },
+      "category": "Loan"
     },
     {
       "id": "0ff6678f-53cd-4a32-9937-504c28f14077",
@@ -98,6 +123,30 @@
           "attachments": []
         }
       }
+    },
+    {
+      "id": "4d720121-a97e-4ad4-b35b-35f37cd5902a",
+      "description": "Återlämningskvitto, enbart för hemlån.",
+      "outputFormats": [
+        "text/html"
+      ],
+      "templateResolver": "mustache",
+      "localizedTemplates": {
+        "en": {
+          "header": "Kvitto på återlämning - Kungliga biblioteket",
+          "body": "<div><strong>Återlämnat material/ Returned item(s)</strong></div><div><br></div><div>{{#loans}}</div><div>{{item.title}}</div><div>{{item.barcode}}</div><div><br></div><div>─────────────────────</div><div><br></div><div>{{/loans}}</div><div><br></div><div><br></div><div><strong>Kungliga biblioteket</strong></div><div>Telefon: 010-709 30 30 (vardagar kl. 12-16)</div><div>E-post: <a href=\"mailto:info@kb.se\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(47, 96, 159);\">info@kb.se</a></div><div>Webb: <a href=\"https://www.kb.se/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(47, 96, 159);\">https://www.kb.se</a></div>",
+          "attachments": []
+        }
+      },
+      "metadata": {
+        "createdDate": "2023-11-16T13:37:47.511+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2025-12-09T15:31:19.742+00:00",
+        "updatedByUserId": "58ad3ef6-4855-466e-bcfb-004e0eace875"
+      },
+      "name": "Hemlån - återlämningskvitto",
+      "active": true,
+      "category": "Loan"
     },
     {
       "id": "ed7c41bb-9fb4-452e-bff1-acb62e573406",
@@ -250,6 +299,30 @@
       "category": "Loan"
     },
     {
+      "id": "ba902e9b-c0ae-45f4-a375-1f1b3742b69c",
+      "description": "Skickas dagen efter att lånettiden gått ut. Enbart till fjärrlånbibliotek.",
+      "outputFormats": [
+        "text/html"
+      ],
+      "templateResolver": "mustache",
+      "localizedTemplates": {
+        "en": {
+          "header": "Påminnelse 1: fjärrlån  - Kungliga biblioteket",
+          "body": "<div><span style=\"font-size: 10px;\">Information in English below</span></div><div><br></div><div><strong>Påminnelse 1: fjärrlån</strong></div><div><br></div><div>Lånetiden är slut för nedanstående fjärrlån. Vänligen återlämna materialet. Lånet kan inte förnyas. </div><div><br></div><div>{{#loans}}</div><div>{{item.title}}</div><div>{{item.barcode}}</div><div><br></div><div>─────────────────────</div><div><br></div><div>{{/loans}}</div><div><br></div><div><br></div><div><br></div><div><br></div><div><a href=\"https://www.kb.se/besok-oss/oppettider.html\" rel=\"noopener noreferrer\" target=\"_blank\">Aktuella öppettider på Kungliga biblioteket</a></div><div><br></div><div>─────────────────────</div><div><br></div><div><strong>Notice 1: Interlibrary loan period has expired</strong></div><div><br></div><div>Your loan period has expired. Please return the interlibrary loan(s) above. The loan cannot be renewed.</div><div><br></div><div><br></div><div><br></div><div><a href=\"https://www.kb.se/eng/planning-a-visit/opening-hours.html\" rel=\"noopener noreferrer\" target=\"_blank\">Opening hours for the National Library</a></div><div><br></div><div>─────────────────────</div><div><br></div><div><strong>Kungliga biblioteket</strong></div><div>Telefon: 010-709 30 30 (vardagar kl. 12-16)</div><div>E-post: <a href=\"mailto:info@kb.se\" rel=\"noopener noreferrer\" target=\"_blank\">info@kb.se</a></div><div>Webb: <a href=\"https://www.kb.se/\" rel=\"noopener noreferrer\" target=\"_blank\">https://www.kb.se</a></div>",
+          "attachments": []
+        }
+      },
+      "metadata": {
+        "createdDate": "2025-11-20T08:22:59.627+00:00",
+        "createdByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08",
+        "updatedDate": "2026-01-30T12:13:30.451+00:00",
+        "updatedByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08"
+      },
+      "name": "Fjärrlån - påminnelse 1",
+      "active": true,
+      "category": "Loan"
+    },
+    {
       "id": "d8414e6b-672b-4a43-b9db-81850afbb672",
       "outputFormats": [
         "text/html"
@@ -317,30 +390,6 @@
         "updatedByUserId": "d9380ffd-96b1-4502-b7d1-91f72e3d7f9d"
       },
       "name": "Fjärrlån - Återlämningskvitto",
-      "active": true,
-      "category": "Loan"
-    },
-    {
-      "id": "ba902e9b-c0ae-45f4-a375-1f1b3742b69c",
-      "description": "Skickas dagen efter att lånettiden gått ut. Enbart till fjärrlånbibliotek.",
-      "outputFormats": [
-        "text/html"
-      ],
-      "templateResolver": "mustache",
-      "localizedTemplates": {
-        "en": {
-          "header": "Påminnelse 1: fjärrlån  - Kungliga biblioteket",
-          "body": "<div><span style=\"font-size: 10px;\">Information in English below</span></div><div><br></div><div><strong>Påminnelse 1: fjärrlån</strong></div><div><br></div><div>Lånetiden är slut för följande hemlån. Vänligen återlämna materialet.</div><div><br></div><div>{{#loans}}</div><div>{{item.title}}</div><div>{{item.barcode}}</div><div><br></div><div>─────────────────────</div><div><br></div><div>{{/loans}}</div><div><br></div><div><br></div><div>Förfrågningar om omlån skickas till <a href=\"mailto:info@kb.se\" rel=\"noopener noreferrer\" target=\"_blank\">info@kb.se</a>.</div><div><br></div><div><a href=\"https://www.kb.se/besok-oss/oppettider.html\" rel=\"noopener noreferrer\" target=\"_blank\">Aktuella öppettider på Kungliga biblioteket</a></div><div><br></div><div>─────────────────────</div><div><br></div><div><strong>Notice 1: Interlibrary loan period has expired</strong></div><div><br></div><div>Your loan period has expired. Please return the interlibrary loan(s) above.</div><div><br></div><div>Requests for renewal should be sent to <a href=\"mailto:info@kb.se\" rel=\"noopener noreferrer\" target=\"_blank\">info@kb.se</a>.</div><div><br></div><div><a href=\"https://www.kb.se/eng/planning-a-visit/opening-hours.html\" rel=\"noopener noreferrer\" target=\"_blank\">Opening hours for the National Library</a></div><div><br></div><div>─────────────────────</div><div><br></div><div><strong>Kungliga biblioteket</strong></div><div>Telefon: 010-709 30 30 (vardagar kl. 12-16)</div><div>E-post: <a href=\"mailto:info@kb.se\" rel=\"noopener noreferrer\" target=\"_blank\">info@kb.se</a></div><div>Webb: <a href=\"https://www.kb.se/\" rel=\"noopener noreferrer\" target=\"_blank\">https://www.kb.se</a></div>",
-          "attachments": []
-        }
-      },
-      "metadata": {
-        "createdDate": "2025-11-20T08:22:59.627+00:00",
-        "createdByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08",
-        "updatedDate": "2025-12-03T11:51:07.278+00:00",
-        "updatedByUserId": "d9380ffd-96b1-4502-b7d1-91f72e3d7f9d"
-      },
-      "name": "Fjärrlån - påminnelse 1",
       "active": true,
       "category": "Loan"
     },
@@ -473,15 +522,15 @@
       "localizedTemplates": {
         "en": {
           "header": "Din beställning är klar - läsesalslån - Kungliga biblioteket",
-          "body": "<div><span style=\"font-size: 10px;\">Information in English below</span></div><div><br></div><div><strong>Din beställning är klar - läsesalslån</strong></div><div><br></div><div>Följande <strong>läsesalslån </strong>finns nu att hämta i expeditionen för information och lån:</div><div><br></div><div>{{item.title}}</div><div>{{item.volume}} {{item.enumeration}}</div><div>{{item.barcode}}</div><div>Hämta senast:<strong> </strong>{{request.holdShelfExpirationDate}}</div><div><br></div><div>Tänk på att detta material måste läsas i Stora läsesalen på Kungliga biblioteket. <strong>Det får inte tas med hem. </strong></div><div><br></div><div><a href=\"https://www.kb.se/sok-och-bestall/bestall-och-hamta-ut.html\" rel=\"noopener noreferrer\" target=\"_blank\">Läs mer om hur du lånar på KB</a></div><div><br></div><div><a href=\"https://www.kb.se/besok-oss/oppettider.html\" rel=\"noopener noreferrer\" target=\"_blank\">Aktuella öppettider på Kungliga biblioteket</a></div><div><br></div><div>─────────────────────</div><div><br></div><div><strong>Your request is ready for pick up - Reading Room loan </strong></div><div><br></div><div>The following <strong>Reading Room loan</strong> is now ready for pick up at the Information and Loans Desk:</div><div><br></div><div>{{item.title}}</div><div>{{item.volume}} {{item.enumeration}}</div><div>{{item.barcode}}</div><div>Pick up by: {{request.holdShelfExpirationDate}}</div><div><br></div><div>This item may only be studied in the Main Reading Room at the National Library of Sweden. <strong>It may not be taken home</strong>.</div><div><br></div><div><a href=\"https://www.kb.se/eng/loans-and-services/accessing-the-collections.html\" rel=\"noopener noreferrer\" target=\"_blank\">Read more about the borrowing policies at the National Library of Sweden</a></div><div><br></div><div><a href=\"https://www.kb.se/eng/planning-a-visit/opening-hours.html\" rel=\"noopener noreferrer\" target=\"_blank\">Opening hours for the National Library</a></div><div><br></div><div>─────────────────────</div><div><br></div><div><strong>Kungliga biblioteket</strong></div><div>Telefon: 010-709 30 30 (vardagar kl. 12-16)</div><div>E-post: <a href=\"mailto:info@kb.se\" rel=\"noopener noreferrer\" target=\"_blank\">info@kb.se</a></div><div>Webb: <a href=\"https://www.kb.se/\" rel=\"noopener noreferrer\" target=\"_blank\">https://www.kb.se</a></div>",
+          "body": "<div><span style=\"font-size: 10px;\">Information in English below</span></div><div><br></div><div><strong style=\"font-size: 18px;\">Din beställning är klar - läsesalslån</strong></div><div><br></div><div>Följande <strong>läsesalslån </strong>finns nu att hämta i expeditionen för information och lån:</div><div><br></div><div>{{item.title}}</div><div>{{item.volume}} {{item.enumeration}}</div><div>{{item.barcode}}</div><div>Hämta senast:<strong> {{request.holdShelfExpirationDate}}</strong></div><div><br></div><div>Tänk på att detta material måste läsas i Stora läsesalen på Kungliga biblioteket. <strong>Det får inte tas med hem. </strong></div><div><br></div><div><a href=\"https://www.kb.se/sok-och-bestall/bestall-och-hamta-ut.html\" rel=\"noopener noreferrer\" target=\"_blank\">Läs mer om hur du lånar på KB</a></div><div><a href=\"https://www.kb.se/besok-oss/oppettider.html\" rel=\"noopener noreferrer\" target=\"_blank\">Aktuella öppettider på Kungliga biblioteket</a></div><div><br></div><div>─────────────</div><div><br></div><div><strong style=\"font-size: 18px;\">Your request is ready for pick up - Reading Room loan </strong></div><div><br></div><div>The following <strong>Reading Room loan</strong> is now ready for pick up at the Information and Loans Desk:</div><div><br></div><div>{{item.title}}</div><div>{{item.volume}} {{item.enumeration}}</div><div>{{item.barcode}}</div><div>Pick up by: <strong>{{request.holdShelfExpirationDate}}</strong></div><div><br></div><div>This item may only be studied in the Main Reading Room at the National Library of Sweden. <strong>It may not be taken home</strong>.</div><div><br></div><div><a href=\"https://www.kb.se/eng/loans-and-services/accessing-the-collections.html\" rel=\"noopener noreferrer\" target=\"_blank\">Read more about the borrowing policies at the National Library of Sweden</a></div><div><a href=\"https://www.kb.se/eng/planning-a-visit/opening-hours.html\" rel=\"noopener noreferrer\" target=\"_blank\">Opening hours for the National Library</a></div><div><br></div><div>─────────────</div><div><strong>Kungliga biblioteket</strong></div><div>Telefon: 010-709 30 30 (vardagar kl. 12-16)</div><div>E-post: <a href=\"mailto:info@kb.se\" rel=\"noopener noreferrer\" target=\"_blank\">info@kb.se</a></div><div>Webb: <a href=\"https://www.kb.se/\" rel=\"noopener noreferrer\" target=\"_blank\">https://www.kb.se</a></div>",
           "attachments": []
         }
       },
       "metadata": {
         "createdDate": "2024-04-22T13:36:59.684+00:00",
         "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-11-18T15:31:48.209+00:00",
-        "updatedByUserId": "b9830a1c-82eb-4c53-9278-e96815826061"
+        "updatedDate": "2026-01-19T13:12:20.286+00:00",
+        "updatedByUserId": "58ad3ef6-4855-466e-bcfb-004e0eace875"
       },
       "name": "Läsesalslån - avisering",
       "active": true,
@@ -560,30 +609,6 @@
       "category": "Loan"
     },
     {
-      "id": "c7c4c6dd-20e0-42a8-9500-91f1a2309b9a",
-      "description": "Mail som skickas vid utlån av material för fjärrlån.",
-      "outputFormats": [
-        "text/html"
-      ],
-      "templateResolver": "mustache",
-      "localizedTemplates": {
-        "en": {
-          "header": "Kvitto på utlån  - Kungliga biblioteket",
-          "body": "<div><strong>Utlånat material/ Checked out item(s):</strong></div><div><br></div><div>{{#loans}}</div><div>{{item.title}}</div><div>{{item.barcode}}</div><div><br></div><div>─────────────────────</div><div><br></div><div>{{/loans}}</div><div><br></div><div>Garanterad lånetid är 30 dagar. Därefter kan materialet krävas in om det beställs av annan låntagare. Maximal lånetid är 730 dagar.</div><div><br></div><div><br></div><div>Guaranteed loan period is 30 days. After this period, the item(s) may be recalled if requested by another user. The maximum loan period is 730 days.</div><div><br></div><div>─────────────────────</div><div><br></div><div><strong>Kungliga biblioteket</strong></div><div>Telefon: 010-709 30 30 (vardagar kl. 12-16)</div><div>E-post: <a href=\"mailto:info@kb.se\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(47, 96, 159);\">info@kb.se</a></div><div>Webb: <a href=\"https://www.kb.se/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(47, 96, 159);\">https://www.kb.se</a></div>",
-          "attachments": []
-        }
-      },
-      "metadata": {
-        "createdDate": "2025-11-20T08:10:16.819+00:00",
-        "createdByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08",
-        "updatedDate": "2025-12-03T11:43:40.173+00:00",
-        "updatedByUserId": "d9380ffd-96b1-4502-b7d1-91f72e3d7f9d"
-      },
-      "name": "Fjärrlån - utlåningskvitto",
-      "active": true,
-      "category": "Loan"
-    },
-    {
       "id": "924edc98-719e-4487-b3e4-1055ef552476",
       "description": "Förvarning att lånetiden snart går ut för fjärrlån . ",
       "outputFormats": [
@@ -593,17 +618,41 @@
       "localizedTemplates": {
         "en": {
           "header": "Lånetiden för fjärrlån är snart slut - Kungliga biblioteket",
-          "body": "<div><span style=\"font-size: 10px;\">Information in English below</span></div><div><br></div><div><strong>Lånetiden för fjärrlån är snart slut </strong></div><div><br></div><div>Lånetiden är snart slut för följande fjärrlån. Förfrågningar om omlån skickas till <a href=\"mailto:info@kb.se\" rel=\"noopener noreferrer\" target=\"_blank\">info@kb.se</a>.</div><div><br></div><div>{{#loans}}</div><div>{{item.title}}</div><div>{{item.barcode}}</div><div>Återlämna senast/ Due: {{loan.dueDate}}</div><div><br></div><div>─────────────────────</div><div><br></div><div>{{/loans}}</div><div><a href=\"https://www.kb.se/besok-oss/oppettider.html\" rel=\"noopener noreferrer\" target=\"_blank\">Aktuella öppettider på Kungliga biblioteket</a></div><div><br></div><div>─────────────────────</div><div><br></div><div><strong>Your loan period is about to expire</strong></div><div><br></div><div>Your loan period for the Interlibrary loan(s) above will soon expire. Requests for renewal should be sent to <a href=\"mailto:info@kb.se\" rel=\"noopener noreferrer\" target=\"_blank\">info@kb.se</a>.</div><div><br></div><div><a href=\"https://www.kb.se/eng/planning-a-visit/opening-hours.html\" rel=\"noopener noreferrer\" target=\"_blank\">Opening hours for the National Library</a></div><div><br></div><div>─────────────────────</div><div><br></div><div><strong>Kungliga biblioteket</strong></div><div>Telefon: 010-709 30 30 (vardagar kl. 12-16)</div><div>E-post: <a href=\"mailto:info@kb.se\" rel=\"noopener noreferrer\" target=\"_blank\">info@kb.se</a></div><div>Webb: <a href=\"https://www.kb.se/\" rel=\"noopener noreferrer\" target=\"_blank\">https://www.kb.se</a></div>",
+          "body": "<div><span style=\"font-size: 10px;\">Information in English below</span></div><div><br></div><div><strong>Lånetiden för fjärrlån är snart slut </strong></div><div><br></div><div>Lånetiden är snart slut för nedanstående fjärrlån. Lånet kan inte förnyas. </div><div><br></div><div>{{#loans}}</div><div>{{item.title}}</div><div>{{item.barcode}}</div><div>Återlämna senast/ Due: {{loan.dueDate}}</div><div><br></div><div>─────────────────────</div><div><br></div><div>{{/loans}}</div><div><a href=\"https://www.kb.se/besok-oss/oppettider.html\" rel=\"noopener noreferrer\" target=\"_blank\">Aktuella öppettider på Kungliga biblioteket</a></div><div><br></div><div>─────────────────────</div><div><br></div><div><strong>Your loan period is about to expire</strong></div><div><br></div><div>Your loan period for the Interlibrary loan(s) above will soon expire. The loan cannot be renewed. </div><div><br></div><div><a href=\"https://www.kb.se/eng/planning-a-visit/opening-hours.html\" rel=\"noopener noreferrer\" target=\"_blank\">Opening hours for the National Library</a></div><div><br></div><div>─────────────────────</div><div><br></div><div><strong>Kungliga biblioteket</strong></div><div>Telefon: 010-709 30 30 (vardagar kl. 12-16)</div><div>E-post: <a href=\"mailto:info@kb.se\" rel=\"noopener noreferrer\" target=\"_blank\">info@kb.se</a></div><div>Webb: <a href=\"https://www.kb.se/\" rel=\"noopener noreferrer\" target=\"_blank\">https://www.kb.se</a></div>",
           "attachments": []
         }
       },
       "metadata": {
         "createdDate": "2025-11-20T08:15:51.077+00:00",
         "createdByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08",
-        "updatedDate": "2025-12-03T11:42:33.707+00:00",
-        "updatedByUserId": "d9380ffd-96b1-4502-b7d1-91f72e3d7f9d"
+        "updatedDate": "2026-01-30T12:11:46.628+00:00",
+        "updatedByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08"
       },
       "name": "Fjärrlån - förvarning",
+      "active": true,
+      "category": "Loan"
+    },
+    {
+      "id": "c7c4c6dd-20e0-42a8-9500-91f1a2309b9a",
+      "description": "Mail som skickas vid utlån av material för fjärrlån.",
+      "outputFormats": [
+        "text/html"
+      ],
+      "templateResolver": "mustache",
+      "localizedTemplates": {
+        "en": {
+          "header": "Kvitto på utlån  - Kungliga biblioteket",
+          "body": "<div>{{loan.checkedInDate}}</div><div style=\"text-align: center;\"><br></div><div>Fjärrlån från Kungliga biblioteket till {{requester.firstName}} {{requester.lastName}}</div><div><br></div><div>Lånetid 30-730 dagar.</div><div>Den garanterade lånetiden är 30 dagar.</div><div>Om materialet inte reserveras av annan låntagare förnyas lånet automatiskt upp till två år.</div><div>Inga omlån görs efter två år.</div><div><br></div><div>{{item.title}}</div><div><br></div><div>Hyllsignum: {{item.callNumber}}</div><div>Streckkod: {{item.barcode}}</div><div>Beställningsnummer: {{request.patronComments}}</div><div><br></div><div>----------------------------------------------------</div><div><br></div><div>ILL from the National Library of Sweden to {{requester.firstName}} {{requester.lastName}}</div><div><br></div><div>Lending period 30-730 days. No renewals are allowed.</div><div>The book may be recalled after 30 days.</div><div><br></div><div>{{item.title}}</div><div><br></div><div>Call number: {{item.callNumber}}</div><div>Barcode: {{item.barcode}}</div><div>Order number: {{request.patronComments}}</div><div><br></div><div>Return to:</div><div>National Library of Sweden</div><div>ILL-Department</div><div>P.O Box 5039</div><div>SE-102 41 Stockholm</div><div><br></div><div>For parcels over 2 kilo:</div><div>National Library of Sweden</div><div>ILL-Department</div><div>Humlegårdsgatan 26</div><div>SE-114 46 Stockholm</div><div><br></div><div>Email: info@kb.se</div><div>Phone: +46 107093030</div>",
+          "attachments": []
+        }
+      },
+      "metadata": {
+        "createdDate": "2025-11-20T08:10:16.819+00:00",
+        "createdByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08",
+        "updatedDate": "2026-01-30T12:18:38.200+00:00",
+        "updatedByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08"
+      },
+      "name": "Fjärrlån - utlåningskvitto",
       "active": true,
       "category": "Loan"
     },
@@ -683,33 +732,6 @@
       "category": "Loan"
     },
     {
-      "id": "7441fdc7-e386-412d-bb79-1d5756860954",
-      "description": "Utskrift av följesedel till fjärrlånebibliotek, med låneregler etc. ",
-      "outputFormats": [
-        "text/html"
-      ],
-      "templateResolver": "mustache",
-      "localizedTemplates": {
-        "en": {
-          "header": "Fjärrlån från Kungliga biblioteket till",
-          "body": "<div style=\"text-align: center;\">{{user.barcode}} [Bibliotekssigel i barcode]</div><div style=\"text-align: center;\"><br></div><div><br></div><div style=\"text-align: center;\"><strong>Fjärrlån från Kungliga biblioteket till:</strong></div><div>{{user.lastName}} {{user.firstName}}</div><div>{{user.primaryAddressLine1}}</div><div>{{user.primaryCity}}</div><div>{{user.primaryZipPostalCode}}</div><div>{{user.primaryCountry}}</div><div><br></div><div>Lånetid 30-730 dagar.</div><div>{{loan.dueDate}}</div><div>Den garanterade lånetiden är 30 dagar men om materialet inte reserveras av annan låntagare förnyas lånet automatiskt upp till två år.</div><div>Inga omlån görs efter två år.</div><div><br></div><div>{{item.title}}</div><div>{{item.volume}} {{item.enumeration}}</div><div>{{item.barcode}}</div><div><br></div><div>Hyllsignum: {{item.callNumber}}</div><div>Streckkod: {{item.barcode}}</div><div>Anm. 1: [LIBRISBESTÄLLNINGSNUMMER] {{loan.additionalInfo}}</div><div>{{request.patronComments}}</div><div><br></div><div>DET ÄR INTE TILLÅTET ATT: • anteckna eller göra understrykningar i boken. • använda gem, självhäftande lappar, tejp eller göra annat som kan skada materialet.</div><div><br></div><div>Med vänlig hälsning,</div><div>Fjärrlån, Kungliga biblioteket.</div><div>Box 5039</div><div>102 41 Stockholm</div><div>(För paket över 2 kilo: Humlegårdsgatan 26, 114 46 Stockholm).</div><div><br></div><div>E-post: info@kb.se</div><div>Tel.: 010-7093030</div>",
-          "attachments": []
-        }
-      },
-      "metadata": {
-        "createdDate": "2025-11-26T12:45:16.924+00:00",
-        "createdByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08",
-        "updatedDate": "2025-11-27T08:01:26.476+00:00",
-        "updatedByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08"
-      },
-      "name": "Fjärrlån - följesedel [Under arbete]",
-      "active": true,
-      "additionalProperties": {
-        "printOnly": false
-      },
-      "category": "Loan"
-    },
-    {
       "id": "609302e8-51ee-49a7-ba9a-b9ae7366321d",
       "description": "Mail som skickas vid beställning av material som tar längre tid att ta fram, behöver åtgärd eller är under arbete.",
       "outputFormats": [
@@ -743,15 +765,15 @@
       "localizedTemplates": {
         "en": {
           "header": "Påminnelse 2: fjärrlån - Kungliga bibliotektet",
-          "body": "<div><span style=\"font-size: 10px;\">Information in English below</span></div><div><br></div><div><strong>Påminnelse 2: fjärrlån</strong></div><div><br></div><div>Du har tidigare fått en påminnelse om att lånetiden för följande fjärrlån är slut, men du har inte återlämnat materialet. Vänligen återlämna materialet.</div><div><br></div><div>Om materialet inte återlämnas skickas en faktura på materialets värde samt administrativ avgift.</div><div><br></div><div>{{#loans}}</div><div>{{item.title}}</div><div>{{item.barcode}}</div><div><br></div><div>─────────────────────</div><div><br></div><div>{{/loans}}</div><div><br></div><div><br></div><div><a href=\"https://www.kb.se/besok-oss/oppettider.html\" rel=\"noopener noreferrer\" target=\"_blank\">Aktuella öppettider på Kungliga biblioteket</a></div><div><br></div><div>─────────────────────</div><div><br></div><div><strong>Notice 2: Interlibrary loan period has expired</strong></div><div><strong> </strong></div><div>You have previously received an email informing you that the loan period for your interlibrary loan(s) has expired, but you have not yet returned the item(s). Please return the item(s) above.</div><div><br></div><div>If you do not return the item(s), you will be charged via invoice for the value of the item as well as an administrative fee.</div><div><br></div><div><a href=\"https://www.kb.se/eng/planning-a-visit/opening-hours.html\" rel=\"noopener noreferrer\" target=\"_blank\">Opening hours for the National Library</a></div><div><br></div><div>─────────────────────</div><div><br></div><div><strong>Kungliga biblioteket</strong></div><div>Telefon: 010-709 30 30 (vardagar kl. 12-16)</div><div>E-post: <a href=\"mailto:info@kb.se\" rel=\"noopener noreferrer\" target=\"_blank\">info@kb.se</a></div><div>Webb: <a href=\"https://www.kb.se/\" rel=\"noopener noreferrer\" target=\"_blank\">https://www.kb.se</a></div>",
+          "body": "<div><span style=\"font-size: 10px;\">Information in English below</span></div><div><br></div><div><strong>Påminnelse 2: fjärrlån</strong></div><div><br></div><div>Du har tidigare fått en påminnelse om att lånetiden för följande fjärrlån är slut, men du har inte återlämnat materialet. Vänligen återlämna materialet. Lånet kan inte förnyas.</div><div><br></div><div>Om materialet inte återlämnas skickas en faktura på materialets värde samt administrativ avgift.</div><div><br></div><div>{{#loans}}</div><div>{{item.title}}</div><div>{{item.barcode}}</div><div><br></div><div>─────────────────────</div><div><br></div><div>{{/loans}}</div><div><br></div><div><br></div><div><a href=\"https://www.kb.se/besok-oss/oppettider.html\" rel=\"noopener noreferrer\" target=\"_blank\">Aktuella öppettider på Kungliga biblioteket</a></div><div><br></div><div>─────────────────────</div><div><br></div><div><strong>Notice 2: Interlibrary loan period has expired</strong></div><div><strong> </strong></div><div>You have previously received an email informing you that the loan period for your interlibrary loan(s) has expired, but you have not yet returned the item(s). Please return the item(s) above. The loan cannot be renewed. </div><div><br></div><div>If you do not return the item(s), you will be charged via invoice for the value of the item as well as an administrative fee.</div><div><br></div><div><a href=\"https://www.kb.se/eng/planning-a-visit/opening-hours.html\" rel=\"noopener noreferrer\" target=\"_blank\">Opening hours for the National Library</a></div><div><br></div><div>─────────────────────</div><div><br></div><div><strong>Kungliga biblioteket</strong></div><div>Telefon: 010-709 30 30 (vardagar kl. 12-16)</div><div>E-post: <a href=\"mailto:info@kb.se\" rel=\"noopener noreferrer\" target=\"_blank\">info@kb.se</a></div><div>Webb: <a href=\"https://www.kb.se/\" rel=\"noopener noreferrer\" target=\"_blank\">https://www.kb.se</a></div>",
           "attachments": []
         }
       },
       "metadata": {
         "createdDate": "2025-11-20T08:26:05.604+00:00",
         "createdByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08",
-        "updatedDate": "2025-12-03T11:51:45.520+00:00",
-        "updatedByUserId": "d9380ffd-96b1-4502-b7d1-91f72e3d7f9d"
+        "updatedDate": "2026-01-30T12:14:32.247+00:00",
+        "updatedByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08"
       },
       "name": "Fjärrlån - påminnelse 2",
       "active": true,
@@ -782,5 +804,5 @@
       "category": "Loan"
     }
   ],
-  "totalRecords": 34
+  "totalRecords": 35
 }

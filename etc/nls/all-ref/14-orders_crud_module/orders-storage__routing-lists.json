@@ -1,0 +1,35 @@
+{
+  "routingLists": [
+    {
+      "id": "59cd5781-d370-4f9b-b177-36f4965323fc",
+      "_version": 1,
+      "name": "Rogge",
+      "userIds": [
+        "8a2ab887-535b-51b5-9ffb-1afdbbcdbe2e"
+      ],
+      "poLineId": "152c434e-4382-46e2-8291-28aa414e68a4",
+      "metadata": {
+        "createdDate": "2026-01-16T07:56:29.175+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2026-01-16T07:56:29.175+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "e519ca82-baab-44c8-9842-34204aa0ece8",
+      "_version": 1,
+      "name": "Till Rogge",
+      "userIds": [
+        "8a2ab887-535b-51b5-9ffb-1afdbbcdbe2e"
+      ],
+      "poLineId": "d16fcfd5-336f-4b70-a029-881175d03ec9",
+      "metadata": {
+        "createdDate": "2026-01-19T15:40:13.648+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2026-01-19T15:40:13.648+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    }
+  ],
+  "totalRecords": 2
+}

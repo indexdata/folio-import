@@ -1,0 +1,25 @@
+{
+  "smtpConfigurations": [
+    {
+      "id": "3e4b09c0-4acc-4af5-a085-72457e505ba0",
+      "host": "smtp.kb.se",
+      "port": 25,
+      "username": "foliosmtp",
+      "password": "skickaMail",
+      "ssl": false,
+      "trustAll": true,
+      "loginOption": "DISABLED",
+      "startTlsOptions": "OPTIONAL",
+      "authMethods": "",
+      "from": "noreply-folio-dev-02@kb.se",
+      "emailHeaders": [],
+      "metadata": {
+        "createdDate": "2025-04-04T14:51:16.442+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2025-04-04T14:51:16.442+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    }
+  ],
+  "totalRecords": 1
+}

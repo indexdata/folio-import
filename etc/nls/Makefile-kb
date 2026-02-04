@@ -55,7 +55,7 @@ orders:
 
 serials:
 	cd $(wd); node downloadJSONL orders-storage/titles $(odir)/titles.jsonl
-	cd $(acq); node nlsSerials $(odir)/z08.dsv > $(ldir)/makeSerials.log 2>$(ldir)/makeSerials.err
+	cd $(acq); node nlsSerials $(odir)/z08.dsv 1 > $(ldir)/makeSerials.log 2>$(ldir)/makeSerials.err
 	cat $(ldir)/makeSerials.log
 
 rulesets:

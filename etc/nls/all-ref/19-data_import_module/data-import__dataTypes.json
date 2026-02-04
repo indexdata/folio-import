@@ -1,0 +1,8 @@
+{
+  "dataTypes": [
+    "Delimited",
+    "EDIFACT",
+    "MARC"
+  ],
+  "totalRecords": 3
+}

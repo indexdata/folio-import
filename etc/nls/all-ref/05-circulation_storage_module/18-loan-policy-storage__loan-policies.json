@@ -63,6 +63,43 @@
       }
     },
     {
+      "id": "3ed4edac-040d-4cc4-bef5-5057fd58ce30",
+      "name": "P-rum",
+      "loanable": true,
+      "loansPolicy": {
+        "profileId": "Rolling",
+        "period": {
+          "duration": 14,
+          "intervalId": "Days"
+        },
+        "closedLibraryDueDateManagementId": "END_OF_THE_NEXT_OPEN_DAY",
+        "gracePeriod": {
+          "duration": 10,
+          "intervalId": "Days"
+        }
+      },
+      "renewable": false,
+      "requestManagement": {
+        "recalls": {
+          "minimumGuaranteedLoanPeriod": {
+            "duration": 14,
+            "intervalId": "Days"
+          },
+          "recallReturnInterval": {
+            "duration": 1,
+            "intervalId": "Days"
+          },
+          "allowRecallsToExtendOverdueLoans": false
+        }
+      },
+      "metadata": {
+        "createdDate": "2025-12-08T11:11:10.420+00:00",
+        "createdByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08",
+        "updatedDate": "2025-12-08T11:11:58.164+00:00",
+        "updatedByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08"
+      }
+    },
+    {
       "id": "d97baae2-5732-47e5-bf2e-f07aba0c8aa6",
       "name": "Fjärrlån",
       "loanable": true,
@@ -149,5 +186,5 @@
       }
     }
   ],
-  "totalRecords": 5
+  "totalRecords": 6
 }

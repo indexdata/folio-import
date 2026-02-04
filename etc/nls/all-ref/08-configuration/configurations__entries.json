@@ -40,19 +40,6 @@
       }
     },
     {
-      "id": "52801d6a-669e-4093-a83e-ce75e113124e",
-      "module": "ORDERS CRUD MODULE",
-      "configName": "custom_fields_label",
-      "enabled": true,
-      "value": "KB-information",
-      "metadata": {
-        "createdDate": "2025-05-27T10:40:56.928+00:00",
-        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-09-11T14:27:50.058+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
-      }
-    },
-    {
       "id": "21034824-1cec-41cd-a6cd-c1acce87e217",
       "module": "OAIPMH",
       "configName": "general",
@@ -104,6 +91,19 @@
       }
     },
     {
+      "id": "52801d6a-669e-4093-a83e-ce75e113124e",
+      "module": "ORDERS CRUD MODULE",
+      "configName": "custom_fields_label",
+      "enabled": true,
+      "value": "KB-information",
+      "metadata": {
+        "createdDate": "2025-05-27T10:40:56.928+00:00",
+        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
+        "updatedDate": "2026-01-23T14:29:49.740+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
       "id": "162f218e-e86a-4a41-b1b0-972895c12b1c",
       "module": "LOAN_HISTORY",
       "configName": "loan_history",
@@ -130,6 +130,19 @@
       }
     },
     {
+      "id": "77cc9c6d-bb1c-4975-8810-6fef2d93d895",
+      "module": "ORDERS",
+      "configName": "inventory-loanTypeName",
+      "enabled": true,
+      "value": "Hemlån",
+      "metadata": {
+        "createdDate": "2023-11-22T10:35:49.770+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2026-01-12T11:50:44.931+00:00",
+        "updatedByUserId": "c25b5999-4ba5-4272-9443-f4c10a58f9d8"
+      }
+    },
+    {
       "id": "90a6e44a-2d9e-4fc3-8955-d84a8c982752",
       "module": "SETTINGS",
       "configName": "TLR",
@@ -138,8 +151,8 @@
       "metadata": {
         "createdDate": "2024-03-21T16:07:17.641+00:00",
         "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-11-12T09:14:00.370+00:00",
-        "updatedByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d"
+        "updatedDate": "2026-01-16T10:06:14.443+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     },
     {
@@ -193,19 +206,6 @@
       }
     },
     {
-      "id": "77cc9c6d-bb1c-4975-8810-6fef2d93d895",
-      "module": "ORDERS",
-      "configName": "inventory-loanTypeName",
-      "enabled": true,
-      "value": "Läsesalslån",
-      "metadata": {
-        "createdDate": "2023-11-22T10:35:49.770+00:00",
-        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
-        "updatedDate": "2025-06-16T07:48:32.698+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
-      }
-    },
-    {
       "id": "a1780e58-236b-43be-b1cc-fd9d6cac8cb1",
       "module": "USERS",
       "configName": "custom_fields_label",
@@ -214,8 +214,8 @@
       "metadata": {
         "createdDate": "2023-03-16T11:11:05.891+00:00",
         "createdByUserId": "39a1ef78-5c0d-426c-b997-cb65c4f44ebd",
-        "updatedDate": "2025-07-03T08:32:43.778+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+        "updatedDate": "2026-02-04T18:54:33.385+00:00",
+        "updatedByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487"
       }
     },
     {

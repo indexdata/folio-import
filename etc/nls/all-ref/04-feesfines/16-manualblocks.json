@@ -5799,7 +5799,24 @@
         "updatedByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487"
       },
       "id": "b855054b-bffb-509b-8e40-9fb4a05ebc41"
+    },
+    {
+      "type": "Manual",
+      "desc": "Förlorat lånekort",
+      "code": "02",
+      "patronMessage": "Det går inte att låna när lånekortet är anmält försvunnet. Du kan köpa ett nytt lånekort i Information och lån.",
+      "borrowing": true,
+      "renewals": true,
+      "requests": false,
+      "userId": "550c31d3-1d62-532c-b0ae-51e27356b3e3",
+      "metadata": {
+        "createdDate": "2026-01-20T10:21:19.101+00:00",
+        "createdByUserId": "b9830a1c-82eb-4c53-9278-e96815826061",
+        "updatedDate": "2026-01-20T10:21:19.101+00:00",
+        "updatedByUserId": "b9830a1c-82eb-4c53-9278-e96815826061"
+      },
+      "id": "bb5ff65c-e4de-4388-83f6-ca598e30e954"
     }
   ],
-  "totalRecords": 336
+  "totalRecords": 337
 }

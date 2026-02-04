@@ -1,0 +1,41 @@
+{
+  "expenseClasses": [
+    {
+      "id": "ae12da3e-8a13-4e74-9894-2153e9d34449",
+      "_version": 1,
+      "code": "ink",
+      "name": "Inköpsförslag",
+      "metadata": {
+        "createdDate": "2025-12-12T09:27:05.532+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-12-12T09:27:05.532+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "f744344e-fc6f-4861-a5bb-71a6174a8796",
+      "_version": 1,
+      "code": "tj",
+      "name": "Tjänsteexemplar",
+      "metadata": {
+        "createdDate": "2025-12-17T11:46:44.057+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-12-17T11:46:44.057+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "e6374482-f137-4a09-b33d-b8e12ffcbe9e",
+      "_version": 2,
+      "code": "forv",
+      "name": "Förvärv",
+      "metadata": {
+        "createdDate": "2025-12-18T12:44:33.875+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-12-18T12:44:33.875+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    }
+  ],
+  "totalRecords": 3
+}

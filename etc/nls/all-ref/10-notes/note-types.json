@@ -61,7 +61,20 @@
         "updatedDate": "2025-10-02T14:36:23.034Z",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
+    },
+    {
+      "id": "3c0efa6b-63d1-469f-b9a4-3d46c52d4b55",
+      "name": "Utökat antal beställningar",
+      "usage": {
+        "isAssigned": true
+      },
+      "metadata": {
+        "createdDate": "2026-02-03T11:06:15.244927Z",
+        "createdByUserId": "ebc72151-fb94-444f-b1d1-e6831b6bf2c0",
+        "updatedDate": "2026-02-03T11:06:15.244927Z",
+        "updatedByUserId": "ebc72151-fb94-444f-b1d1-e6831b6bf2c0"
+      }
     }
   ],
-  "totalRecords": 5
+  "totalRecords": 6
 }

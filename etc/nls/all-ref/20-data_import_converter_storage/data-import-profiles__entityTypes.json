@@ -1,0 +1,14 @@
+{
+  "entityTypes": [
+    "INVENTORY_HOLDINGS",
+    "INVENTORY_INSTANCE",
+    "INVENTORY_ITEM",
+    "INVOICE",
+    "MARC_AUTHORITY_RECORD",
+    "MARC_BIB_RECORD",
+    "MARC_HOLDINGS_RECORD",
+    "ORDER",
+    "ERROR"
+  ],
+  "totalRecords": 9
+}

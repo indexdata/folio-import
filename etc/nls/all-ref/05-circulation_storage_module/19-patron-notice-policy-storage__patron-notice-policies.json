@@ -344,8 +344,8 @@
       "metadata": {
         "createdDate": "2023-11-16T13:34:56.374+00:00",
         "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
-        "updatedDate": "2025-11-20T08:46:04.985+00:00",
-        "updatedByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08"
+        "updatedDate": "2025-12-08T18:48:57.301+00:00",
+        "updatedByUserId": "58ad3ef6-4855-466e-bcfb-004e0eace875"
       },
       "loanNotices": [
         {
@@ -413,6 +413,14 @@
           "sendOptions": {
             "sendWhen": "Check in"
           }
+        },
+        {
+          "templateId": "b375cd15-8057-4d15-9e89-d59259f0f579",
+          "format": "Email",
+          "realTime": false,
+          "sendOptions": {
+            "sendWhen": "Manual due date change"
+          }
         }
       ],
       "feeFineNotices": [],
@@ -435,7 +443,7 @@
       "metadata": {
         "createdDate": "2025-11-20T08:55:02.856+00:00",
         "createdByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08",
-        "updatedDate": "2025-11-27T08:03:37.751+00:00",
+        "updatedDate": "2026-01-23T10:18:29.675+00:00",
         "updatedByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08"
       },
       "loanNotices": [
@@ -487,14 +495,6 @@
               "duration": 7,
               "intervalId": "Days"
             }
-          }
-        },
-        {
-          "templateId": "75066aa5-b154-41df-9608-6f5d54a2b5b8",
-          "format": "Email",
-          "realTime": false,
-          "sendOptions": {
-            "sendWhen": "Check in"
           }
         },
         {

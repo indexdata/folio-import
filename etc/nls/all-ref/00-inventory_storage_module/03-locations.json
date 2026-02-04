@@ -364,6 +364,28 @@
       }
     },
     {
+      "id": "5a6f32c7-716e-46ba-9208-bf565e006beb",
+      "name": "Tjänsteexemplar",
+      "code": "TJ",
+      "discoveryDisplayName": "Tjänsteexemplar",
+      "isActive": true,
+      "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
+      "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
+      "libraryId": "1aae945c-bdf7-4e53-a236-477b7dfc77bf",
+      "details": {},
+      "primaryServicePoint": "996760f7-e64b-4c8e-b228-41f52fb9fade",
+      "servicePointIds": [
+        "996760f7-e64b-4c8e-b228-41f52fb9fade"
+      ],
+      "servicePoints": [],
+      "metadata": {
+        "createdDate": "2026-02-04T14:48:10.712+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2026-02-04T14:48:10.712+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
       "id": "03a008da-7509-4b5a-8ec2-16a8a9ce8be2",
       "name": "Använd ej",
       "code": "vard",
@@ -452,5 +474,5 @@
       }
     }
   ],
-  "totalRecords": 20
+  "totalRecords": 21
 }

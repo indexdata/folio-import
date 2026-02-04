@@ -37,19 +37,6 @@
       }
     },
     {
-      "id": "1ed55c5c-64d9-40eb-8b80-7438a262288b",
-      "name": "Request delivery",
-      "description": "Fjärrlåneslips som skrivs ut och följer med lånet ",
-      "active": true,
-      "template": "<div style=\"text-align: center;\">{{request.patronComments}}</div><div>Fjärrlån från Kungliga biblioteket till {{requester.firstName}} {{requester.lastName}}</div><div><br></div><div>Lånetid 30-730 dagar.</div><div>{{request.requestDate}} {{loan.dueDate}}</div><div>Den garanterade lånetiden är 30 dagar men om materialet inte reserveras av annan låntagare förnyas lånet automatiskt upp till två år.</div><div>Inga omlån görs efter två år.</div><div><br></div><div>{{item.title}}</div><div><br></div><div>Hyllsignum: {{item.callNumber}}</div><div>Streckkod: {{item.barcode}}</div><div>Beställningsnummer: {{request.patronComments}}</div>",
-      "metadata": {
-        "createdDate": "2025-12-04T08:04:15.779+00:00",
-        "createdByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08",
-        "updatedDate": "2025-12-04T08:04:15.779+00:00",
-        "updatedByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08"
-      }
-    },
-    {
       "id": "6a6e72f0-69da-4b4c-8254-7154679e9d88",
       "name": "Hold",
       "active": true,
@@ -68,6 +55,19 @@
         "createdDate": "2025-11-27T10:03:39.908+00:00",
         "createdByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08",
         "updatedDate": "2025-11-27T10:03:39.908+00:00",
+        "updatedByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08"
+      }
+    },
+    {
+      "id": "1ed55c5c-64d9-40eb-8b80-7438a262288b",
+      "name": "Request delivery",
+      "description": "Fjärrlåneslips som skrivs ut och följer med lånet ",
+      "active": true,
+      "template": "<div style=\"text-align: center;\">{{request.patronComments}}</div><div style=\"text-align: center;\"><br></div><div>Fjärrlån från Kungliga biblioteket till {{requester.firstName}} {{requester.lastName}}</div><div><br></div><div>Lånetid 30-730 dagar.</div><div>Den garanterade lånetiden är 30 dagar.</div><div>Om materialet inte reserveras av annan låntagare förnyas lånet automatiskt upp till två år.</div><div>Inga omlån görs efter två år.</div><div><br></div><div>{{item.title}}</div><div><br></div><div>Hyllsignum: {{item.callNumber}}</div><div>Streckkod: {{item.barcode}}</div><div>Beställningsnummer: {{request.patronComments}}</div><div><br></div><div>----------------------------------------------------</div><div><br></div><div>ILL from the National Library of Sweden to {{requester.firstName}} {{requester.lastName}}</div><div><br></div><div>Lending period 30-730 days.</div><div>The book may be recalled after 30 days.</div><div><br></div><div>{{item.title}}</div><div><br></div><div>Call number: {{item.callNumber}}</div><div>Barcode: {{item.barcode}}</div><div>Order number: {{request.patronComments}}</div><div><br></div><div>Return to:</div><div>National Library of Sweden</div><div>ILL-Department</div><div>P.O Box 5039</div><div>SE-102 41 Stockholm</div><div><br></div><div>For parcels over 2 kilo:</div><div>National Library of Sweden</div><div>ILL-Department</div><div>Humlegårdsgatan 26</div><div>SE-114 46 Stockholm</div><div><br></div><div>Email: info@kb.se</div><div>Phone: +46 107093030</div>",
+      "metadata": {
+        "createdDate": "2026-01-23T10:23:40.448+00:00",
+        "createdByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08",
+        "updatedDate": "2026-01-23T10:23:40.448+00:00",
         "updatedByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08"
       }
     }

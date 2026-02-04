@@ -751,6 +751,32 @@
       }
     },
     {
+      "id": "a53e26df-1948-4ed7-b793-7b496323181b",
+      "metaJobExecutionId": "a13266ef-380d-4d65-a62a-4c9606a62bdf",
+      "status": "COMPLETED",
+      "createDate": "2026-02-04T18:00:28.471+00:00",
+      "fileDefinitions": [
+        {
+          "id": "237ef29b-43e5-42e6-af89-f0cddc750ca8",
+          "sourcePath": "./storage/upload/a53e26df-1948-4ed7-b793-7b496323181b/237ef29b-43e5-42e6-af89-f0cddc750ca8/dxq34sdq3pxgwsl.xml",
+          "name": "dxq34sdq3pxgwsl.xml",
+          "status": "UPLOADED",
+          "jobExecutionId": "a13266ef-380d-4d65-a62a-4c9606a62bdf",
+          "uploadDefinitionId": "a53e26df-1948-4ed7-b793-7b496323181b",
+          "createDate": "2026-02-04T18:00:28.472+00:00",
+          "uploadedDate": "2026-02-04T18:00:29.108+00:00",
+          "size": 3,
+          "uiKey": "dxq34sdq3pxgwsl.xml1770053426246"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2026-02-04T18:00:28.436+00:00",
+        "createdByUserId": "3c2fff57-5348-46cc-b823-b5f54b2be1d0",
+        "updatedDate": "2026-02-04T18:00:28.436+00:00",
+        "updatedByUserId": "3c2fff57-5348-46cc-b823-b5f54b2be1d0"
+      }
+    },
+    {
       "id": "e36962a4-6991-4383-bf98-aeab9f0e0f6a",
       "metaJobExecutionId": "b8d97580-25ba-445f-805d-bf344b442d61",
       "status": "COMPLETED",
@@ -985,5 +1011,5 @@
       }
     }
   ],
-  "totalRecords": 38
+  "totalRecords": 39
 }

@@ -119,7 +119,19 @@
         "updatedDate": "2025-10-14T20:54:31.031+00:00",
         "updatedByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487"
       }
+    },
+    {
+      "id": "b5f2af5b-eafa-4020-ae51-87b727018299",
+      "code": "ma",
+      "name": "Minipost - affisch",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-12-09T10:45:20.304+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-12-09T13:36:11.250+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
     }
   ],
-  "totalRecords": 11
+  "totalRecords": 12
 }

@@ -1,0 +1,68 @@
+{
+  "budgetExpenseClasses": [
+    {
+      "id": "4e91b601-578d-4a53-8214-6e60e48c63e0",
+      "_version": 1,
+      "budgetId": "ebf67abe-66db-4203-9e50-19aa65c9fa8f",
+      "expenseClassId": "e6374482-f137-4a09-b33d-b8e12ffcbe9e",
+      "status": "Active"
+    },
+    {
+      "id": "6d7d7c71-bb00-4c1a-84b9-f8f00d7a4857",
+      "_version": 1,
+      "budgetId": "ebf67abe-66db-4203-9e50-19aa65c9fa8f",
+      "expenseClassId": "ae12da3e-8a13-4e74-9894-2153e9d34449",
+      "status": "Active"
+    },
+    {
+      "id": "c8478e7f-f090-46e8-bdb8-d529ff9fefa2",
+      "_version": 1,
+      "budgetId": "ebf67abe-66db-4203-9e50-19aa65c9fa8f",
+      "expenseClassId": "f744344e-fc6f-4861-a5bb-71a6174a8796",
+      "status": "Active"
+    },
+    {
+      "id": "20181670-154b-451d-9799-bc8766e615a1",
+      "_version": 1,
+      "budgetId": "a1fba4ac-5fec-4ef5-969c-af3a7788f71a",
+      "expenseClassId": "e6374482-f137-4a09-b33d-b8e12ffcbe9e",
+      "status": "Active"
+    },
+    {
+      "id": "2af2d03f-016b-4b66-94a2-c0e0c64e6213",
+      "_version": 1,
+      "budgetId": "a1fba4ac-5fec-4ef5-969c-af3a7788f71a",
+      "expenseClassId": "ae12da3e-8a13-4e74-9894-2153e9d34449",
+      "status": "Active"
+    },
+    {
+      "id": "1ca06aef-865d-44cf-ab2e-a0cca83bb426",
+      "_version": 1,
+      "budgetId": "a1fba4ac-5fec-4ef5-969c-af3a7788f71a",
+      "expenseClassId": "f744344e-fc6f-4861-a5bb-71a6174a8796",
+      "status": "Active"
+    },
+    {
+      "id": "5a24ef1d-64a8-4910-a4e4-3ac0e7584c0d",
+      "_version": 2,
+      "budgetId": "5f38e1b0-b17d-447b-8073-17f3c38fb026",
+      "expenseClassId": "e6374482-f137-4a09-b33d-b8e12ffcbe9e",
+      "status": "Inactive"
+    },
+    {
+      "id": "b0ecc7bc-346c-4c36-ad12-1e199fe6fe23",
+      "_version": 2,
+      "budgetId": "5f38e1b0-b17d-447b-8073-17f3c38fb026",
+      "expenseClassId": "ae12da3e-8a13-4e74-9894-2153e9d34449",
+      "status": "Inactive"
+    },
+    {
+      "id": "4c25237d-08f3-49d6-b655-48a66003d436",
+      "_version": 2,
+      "budgetId": "5f38e1b0-b17d-447b-8073-17f3c38fb026",
+      "expenseClassId": "f744344e-fc6f-4861-a5bb-71a6174a8796",
+      "status": "Inactive"
+    }
+  ],
+  "totalRecords": 9
+}

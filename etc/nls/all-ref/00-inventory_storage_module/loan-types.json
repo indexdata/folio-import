@@ -81,16 +81,6 @@
       }
     },
     {
-      "id": "bcdc202b-5e05-4385-bbd6-1c41d7b1746f",
-      "name": "Framtages ej/spärrat",
-      "metadata": {
-        "createdDate": "2023-11-01T13:07:45.268+00:00",
-        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
-        "updatedDate": "2025-03-17T14:34:11.963+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
       "id": "7cfb34be-1797-4e68-a4dc-133102b111a8",
       "name": "Saknas i KB",
       "metadata": {
@@ -131,12 +121,12 @@
       }
     },
     {
-      "id": "bbf71915-d716-49f6-898d-2cb0b6e3e1c6",
-      "name": "Begränsad åtkomst - Kontakta biblioteket",
+      "id": "bcdc202b-5e05-4385-bbd6-1c41d7b1746f",
+      "name": "Ej utlån",
       "metadata": {
-        "createdDate": "2025-10-07T11:48:08.449+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-10-07T11:48:08.449+00:00",
+        "createdDate": "2023-11-01T13:07:45.268+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2026-01-15T12:50:29.993+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     },
@@ -161,22 +151,32 @@
       }
     },
     {
-      "id": "9ab2b57a-2dd5-473a-88ae-c851a8d0b781",
-      "name": "Beställ via formulär",
-      "metadata": {
-        "createdDate": "2025-11-10T07:40:14.737+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-11-10T07:40:14.737+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
       "id": "fd791d87-fb62-4af7-a2ba-3db577c11cfa",
       "name": "Prum",
       "metadata": {
         "createdDate": "2025-11-17T07:39:15.597+00:00",
         "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
         "updatedDate": "2025-11-17T07:39:15.597+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "a07ef751-094c-4b6a-b4a7-e070155abc17",
+      "name": "Ej utlån - digital version finns",
+      "metadata": {
+        "createdDate": "2026-01-15T12:51:10.443+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2026-01-15T12:51:10.443+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "9ab2b57a-2dd5-473a-88ae-c851a8d0b781",
+      "name": "Beställ manuellt",
+      "metadata": {
+        "createdDate": "2025-11-10T07:40:14.737+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2026-02-03T14:25:03.689+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     }

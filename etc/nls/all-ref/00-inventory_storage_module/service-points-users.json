@@ -1858,17 +1858,6 @@
       }
     },
     {
-      "id": "721c1946-a57f-4a60-b297-5404ba5c859e",
-      "userId": "26ca0445-2e31-5429-9815-e61caf4dead8",
-      "servicePointsIds": [],
-      "metadata": {
-        "createdDate": "2025-03-24T08:19:25.892+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-03-24T08:19:25.892+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
       "id": "2c2d294b-e0bb-4198-acba-1322ff1f3bc2",
       "userId": "2884afb0-5bec-45c4-b9f4-0bc525bc0322",
       "servicePointsIds": [
@@ -2259,6 +2248,20 @@
       }
     },
     {
+      "id": "51f2cfee-c215-4a84-8fb1-ee3c3cdcf8f3",
+      "userId": "5c91459a-daf0-4629-8e05-cfa7043dc147",
+      "servicePointsIds": [
+        "996760f7-e64b-4c8e-b228-41f52fb9fade"
+      ],
+      "defaultServicePointId": "996760f7-e64b-4c8e-b228-41f52fb9fade",
+      "metadata": {
+        "createdDate": "2026-01-27T07:40:41.368+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2026-01-27T07:45:10.254+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
       "id": "ad0869c6-6b5f-4847-8e00-a28ac31c4dd4",
       "userId": "be2e9bdb-9884-4fe9-87d0-ba91e8425412",
       "servicePointsIds": [
@@ -2451,6 +2454,17 @@
         "createdDate": "2023-03-13T12:10:48.686+00:00",
         "updatedDate": "2024-12-20T16:10:26.143+00:00",
         "updatedByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487"
+      }
+    },
+    {
+      "id": "56cfd377-42eb-4406-9021-f13f5258af14",
+      "userId": "bc43deec-8628-5ac8-8b66-53f56e6aca23",
+      "servicePointsIds": [],
+      "metadata": {
+        "createdDate": "2026-01-27T13:48:17.096+00:00",
+        "createdByUserId": "58ad3ef6-4855-466e-bcfb-004e0eace875",
+        "updatedDate": "2026-01-27T13:48:49.603+00:00",
+        "updatedByUserId": "58ad3ef6-4855-466e-bcfb-004e0eace875"
       }
     },
     {
@@ -2855,6 +2869,17 @@
       }
     },
     {
+      "id": "721c1946-a57f-4a60-b297-5404ba5c859e",
+      "userId": "26ca0445-2e31-5429-9815-e61caf4dead8",
+      "servicePointsIds": [],
+      "metadata": {
+        "createdDate": "2025-03-24T08:19:25.892+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2026-01-28T12:55:04.969+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
       "id": "c148700b-c4ba-4159-b055-b9187f74cb31",
       "userId": "4adf499e-c954-4bf9-9261-26720608e120",
       "servicePointsIds": [
@@ -3253,6 +3278,24 @@
         "createdDate": "2023-03-13T12:10:48.837+00:00",
         "updatedDate": "2024-12-20T16:10:26.682+00:00",
         "updatedByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487"
+      }
+    },
+    {
+      "id": "c075283d-9563-473a-8268-86a2496dccd7",
+      "userId": "120a62ea-3564-4b14-ad9f-e800bc6daeee",
+      "servicePointsIds": [
+        "996760f7-e64b-4c8e-b228-41f52fb9fade",
+        "e3b2dcde-069b-43ab-ba22-b5500cefc2f6",
+        "fa60af7f-b89f-4a73-87b1-7d123900eb2f",
+        "ec9ed36f-f5dd-4a32-9b02-64ace39c2699",
+        "d30b93ae-38ee-461f-865f-58cfe08f507a"
+      ],
+      "defaultServicePointId": "996760f7-e64b-4c8e-b228-41f52fb9fade",
+      "metadata": {
+        "createdDate": "2025-10-10T10:01:24.065+00:00",
+        "createdByUserId": "58ad3ef6-4855-466e-bcfb-004e0eace875",
+        "updatedDate": "2026-01-29T19:03:10.660+00:00",
+        "updatedByUserId": "58ad3ef6-4855-466e-bcfb-004e0eace875"
       }
     },
     {
@@ -4030,17 +4073,6 @@
       }
     },
     {
-      "id": "01e96888-f992-41e1-8cf2-da6e8d09d82a",
-      "userId": "3bd964f9-5fef-4048-95a3-b2d16004f407",
-      "servicePointsIds": [],
-      "metadata": {
-        "createdDate": "2025-05-16T12:14:31.860+00:00",
-        "createdByUserId": "b9830a1c-82eb-4c53-9278-e96815826061",
-        "updatedDate": "2025-05-20T09:45:12.561+00:00",
-        "updatedByUserId": "b9830a1c-82eb-4c53-9278-e96815826061"
-      }
-    },
-    {
       "id": "e2285429-4f20-4573-b1fa-4a1915252e98",
       "userId": "3a73a277-cafc-4b6c-8e25-7dea076df4b0",
       "servicePointsIds": [
@@ -4426,6 +4458,21 @@
       }
     },
     {
+      "id": "cd0da6b7-8993-4789-bf24-9562027c05af",
+      "userId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+      "servicePointsIds": [
+        "996760f7-e64b-4c8e-b228-41f52fb9fade",
+        "fa60af7f-b89f-4a73-87b1-7d123900eb2f"
+      ],
+      "defaultServicePointId": "996760f7-e64b-4c8e-b228-41f52fb9fade",
+      "metadata": {
+        "createdDate": "2023-03-16T12:44:37.909+00:00",
+        "createdByUserId": "39a1ef78-5c0d-426c-b997-cb65c4f44ebd",
+        "updatedDate": "2026-02-02T10:39:07.419+00:00",
+        "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+      }
+    },
+    {
       "id": "9c6502d2-4d5f-48af-8795-578e6ac0f503",
       "userId": "0867597f-79a2-49d3-8778-c629cfc060cc",
       "servicePointsIds": [
@@ -4453,21 +4500,6 @@
         "createdDate": "2023-03-13T12:49:45.259+00:00",
         "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
         "updatedDate": "2025-02-18T17:32:25.958+00:00",
-        "updatedByUserId": "0867597f-79a2-49d3-8778-c629cfc060cc"
-      }
-    },
-    {
-      "id": "cd0da6b7-8993-4789-bf24-9562027c05af",
-      "userId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
-      "servicePointsIds": [
-        "996760f7-e64b-4c8e-b228-41f52fb9fade",
-        "fa60af7f-b89f-4a73-87b1-7d123900eb2f"
-      ],
-      "defaultServicePointId": "996760f7-e64b-4c8e-b228-41f52fb9fade",
-      "metadata": {
-        "createdDate": "2023-03-16T12:44:37.909+00:00",
-        "createdByUserId": "39a1ef78-5c0d-426c-b997-cb65c4f44ebd",
-        "updatedDate": "2025-02-18T17:38:18.216+00:00",
         "updatedByUserId": "0867597f-79a2-49d3-8778-c629cfc060cc"
       }
     },
@@ -4517,23 +4549,6 @@
       }
     },
     {
-      "id": "b30ea480-222c-4543-8e52-a9a8c00a2f13",
-      "userId": "58ad3ef6-4855-466e-bcfb-004e0eace875",
-      "servicePointsIds": [
-        "1876697c-c60a-42cf-8e6c-82776e7a7076",
-        "996760f7-e64b-4c8e-b228-41f52fb9fade",
-        "fa60af7f-b89f-4a73-87b1-7d123900eb2f",
-        "ec9ed36f-f5dd-4a32-9b02-64ace39c2699"
-      ],
-      "defaultServicePointId": "996760f7-e64b-4c8e-b228-41f52fb9fade",
-      "metadata": {
-        "createdDate": "2023-03-27T08:59:15.844+00:00",
-        "createdByUserId": "39a1ef78-5c0d-426c-b997-cb65c4f44ebd",
-        "updatedDate": "2025-05-20T19:15:34.533+00:00",
-        "updatedByUserId": "58ad3ef6-4855-466e-bcfb-004e0eace875"
-      }
-    },
-    {
       "id": "50c67af9-fa3a-42a2-9aee-3e1501f7c3c3",
       "userId": "87497b7b-344c-5fbb-9131-d108b36c767c",
       "servicePointsIds": [
@@ -4556,6 +4571,27 @@
         "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
         "updatedDate": "2023-09-08T13:36:58.312+00:00",
         "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "b30ea480-222c-4543-8e52-a9a8c00a2f13",
+      "userId": "58ad3ef6-4855-466e-bcfb-004e0eace875",
+      "servicePointsIds": [
+        "54ff2ca8-8ad5-43c5-9979-b46830455fc2",
+        "1876697c-c60a-42cf-8e6c-82776e7a7076",
+        "996760f7-e64b-4c8e-b228-41f52fb9fade",
+        "c90ad361-e482-49a9-adde-a76a1b0ea615",
+        "e3b2dcde-069b-43ab-ba22-b5500cefc2f6",
+        "fa60af7f-b89f-4a73-87b1-7d123900eb2f",
+        "ec9ed36f-f5dd-4a32-9b02-64ace39c2699",
+        "d30b93ae-38ee-461f-865f-58cfe08f507a"
+      ],
+      "defaultServicePointId": "996760f7-e64b-4c8e-b228-41f52fb9fade",
+      "metadata": {
+        "createdDate": "2023-03-27T08:59:15.844+00:00",
+        "createdByUserId": "39a1ef78-5c0d-426c-b997-cb65c4f44ebd",
+        "updatedDate": "2026-01-19T18:59:28.411+00:00",
+        "updatedByUserId": "58ad3ef6-4855-466e-bcfb-004e0eace875"
       }
     },
     {
@@ -4953,22 +4989,6 @@
       }
     },
     {
-      "id": "f803c306-a1a0-456b-a93a-6bcd1a34a27f",
-      "userId": "384e5ba4-569c-429a-ae16-1d9f59864ee0",
-      "servicePointsIds": [
-        "f9d796f1-a5da-4a6e-a18b-379a734126f6",
-        "996760f7-e64b-4c8e-b228-41f52fb9fade",
-        "fa60af7f-b89f-4a73-87b1-7d123900eb2f"
-      ],
-      "defaultServicePointId": "996760f7-e64b-4c8e-b228-41f52fb9fade",
-      "metadata": {
-        "createdDate": "2024-03-08T07:11:21.522+00:00",
-        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
-        "updatedDate": "2024-09-10T11:27:27.149+00:00",
-        "updatedByUserId": "384e5ba4-569c-429a-ae16-1d9f59864ee0"
-      }
-    },
-    {
       "id": "ebe55d58-af7e-430b-98b3-17b1fd7258c1",
       "userId": "21c08ac3-c287-4a21-b966-e263504aa773",
       "servicePointsIds": [
@@ -5075,21 +5095,6 @@
       }
     },
     {
-      "id": "4e551af4-193f-4912-bc94-6b78a880e13c",
-      "userId": "3c7da0e3-9298-4286-b037-6b0035237d08",
-      "servicePointsIds": [
-        "996760f7-e64b-4c8e-b228-41f52fb9fade",
-        "fa60af7f-b89f-4a73-87b1-7d123900eb2f"
-      ],
-      "defaultServicePointId": "996760f7-e64b-4c8e-b228-41f52fb9fade",
-      "metadata": {
-        "createdDate": "2024-03-08T07:16:29.501+00:00",
-        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
-        "updatedDate": "2025-09-19T10:45:51.083+00:00",
-        "updatedByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08"
-      }
-    },
-    {
       "id": "e641ac72-6d70-4b5e-9123-cbd324df44c4",
       "userId": "3c2fff57-5348-46cc-b823-b5f54b2be1d0",
       "servicePointsIds": [
@@ -5132,6 +5137,36 @@
         "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
         "updatedDate": "2025-11-07T14:19:21.004+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "f803c306-a1a0-456b-a93a-6bcd1a34a27f",
+      "userId": "384e5ba4-569c-429a-ae16-1d9f59864ee0",
+      "servicePointsIds": [
+        "996760f7-e64b-4c8e-b228-41f52fb9fade",
+        "fa60af7f-b89f-4a73-87b1-7d123900eb2f"
+      ],
+      "defaultServicePointId": "996760f7-e64b-4c8e-b228-41f52fb9fade",
+      "metadata": {
+        "createdDate": "2024-03-08T07:11:21.522+00:00",
+        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+        "updatedDate": "2025-12-10T13:22:44.250+00:00",
+        "updatedByUserId": "384e5ba4-569c-429a-ae16-1d9f59864ee0"
+      }
+    },
+    {
+      "id": "4e551af4-193f-4912-bc94-6b78a880e13c",
+      "userId": "3c7da0e3-9298-4286-b037-6b0035237d08",
+      "servicePointsIds": [
+        "996760f7-e64b-4c8e-b228-41f52fb9fade",
+        "fa60af7f-b89f-4a73-87b1-7d123900eb2f"
+      ],
+      "defaultServicePointId": "996760f7-e64b-4c8e-b228-41f52fb9fade",
+      "metadata": {
+        "createdDate": "2024-03-08T07:16:29.501+00:00",
+        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+        "updatedDate": "2026-01-23T12:25:14.555+00:00",
+        "updatedByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08"
       }
     },
     {
@@ -5761,6 +5796,22 @@
       }
     },
     {
+      "id": "439c7df5-2ba3-4378-99d7-7c2dc1fc6e41",
+      "userId": "b9830a1c-82eb-4c53-9278-e96815826061",
+      "servicePointsIds": [
+        "996760f7-e64b-4c8e-b228-41f52fb9fade",
+        "fa60af7f-b89f-4a73-87b1-7d123900eb2f",
+        "ec9ed36f-f5dd-4a32-9b02-64ace39c2699"
+      ],
+      "defaultServicePointId": "996760f7-e64b-4c8e-b228-41f52fb9fade",
+      "metadata": {
+        "createdDate": "2024-09-16T09:33:22.060+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2026-01-28T12:58:56.046+00:00",
+        "updatedByUserId": "b9830a1c-82eb-4c53-9278-e96815826061"
+      }
+    },
+    {
       "id": "d8823f13-68df-4c66-b669-a8eb290d2df9",
       "userId": "ebc72151-fb94-444f-b1d1-e6831b6bf2c0",
       "servicePointsIds": [
@@ -5783,6 +5834,32 @@
         "createdDate": "2025-04-04T12:19:27.370+00:00",
         "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
         "updatedDate": "2025-04-04T12:19:27.370+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "cbf24872-2fdd-4c5a-8300-77de63fb1cae",
+      "userId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+      "servicePointsIds": [
+        "54ff2ca8-8ad5-43c5-9979-b46830455fc2",
+        "f7ce18a5-e9b0-47b2-8f94-a7ec1b954780",
+        "1876697c-c60a-42cf-8e6c-82776e7a7076",
+        "f5e36187-86f3-4fe0-9076-9f5daf849d3e",
+        "d5b51479-02ca-436f-91e0-6f8c328c7a5f",
+        "996760f7-e64b-4c8e-b228-41f52fb9fade",
+        "7c5abc9f-f3d7-4856-b8d7-6712462ca007",
+        "e3b2dcde-069b-43ab-ba22-b5500cefc2f6",
+        "ce8221d5-d05a-4341-9df8-702664d0d819",
+        "7880bc3a-41db-4355-ad61-eba55ca0ebe0",
+        "fa60af7f-b89f-4a73-87b1-7d123900eb2f",
+        "ec9ed36f-f5dd-4a32-9b02-64ace39c2699",
+        "d30b93ae-38ee-461f-865f-58cfe08f507a"
+      ],
+      "defaultServicePointId": "996760f7-e64b-4c8e-b228-41f52fb9fade",
+      "metadata": {
+        "createdDate": "2023-05-16T08:46:08.126+00:00",
+        "createdByUserId": "ccd9c2a1-5455-4512-bf54-956fe923a8ab",
+        "updatedDate": "2026-02-02T06:58:47.186+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     },
@@ -5815,59 +5892,6 @@
       }
     },
     {
-      "id": "cbf24872-2fdd-4c5a-8300-77de63fb1cae",
-      "userId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-      "servicePointsIds": [
-        "54ff2ca8-8ad5-43c5-9979-b46830455fc2",
-        "f7ce18a5-e9b0-47b2-8f94-a7ec1b954780",
-        "1876697c-c60a-42cf-8e6c-82776e7a7076",
-        "f5e36187-86f3-4fe0-9076-9f5daf849d3e",
-        "d5b51479-02ca-436f-91e0-6f8c328c7a5f",
-        "996760f7-e64b-4c8e-b228-41f52fb9fade",
-        "7c5abc9f-f3d7-4856-b8d7-6712462ca007",
-        "e3b2dcde-069b-43ab-ba22-b5500cefc2f6",
-        "ce8221d5-d05a-4341-9df8-702664d0d819",
-        "7880bc3a-41db-4355-ad61-eba55ca0ebe0",
-        "fa60af7f-b89f-4a73-87b1-7d123900eb2f",
-        "ec9ed36f-f5dd-4a32-9b02-64ace39c2699",
-        "d30b93ae-38ee-461f-865f-58cfe08f507a"
-      ],
-      "defaultServicePointId": "996760f7-e64b-4c8e-b228-41f52fb9fade",
-      "metadata": {
-        "createdDate": "2023-05-16T08:46:08.126+00:00",
-        "createdByUserId": "ccd9c2a1-5455-4512-bf54-956fe923a8ab",
-        "updatedDate": "2025-06-24T08:19:02.880+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
-      "id": "fea7f415-5a7b-4b77-90d5-2099fa4d0f06",
-      "userId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487",
-      "servicePointsIds": [
-        "54ff2ca8-8ad5-43c5-9979-b46830455fc2",
-        "f7ce18a5-e9b0-47b2-8f94-a7ec1b954780",
-        "9d1b77e8-f02e-4b7f-b296-3f2042ddac54",
-        "1876697c-c60a-42cf-8e6c-82776e7a7076",
-        "f5e36187-86f3-4fe0-9076-9f5daf849d3e",
-        "d5b51479-02ca-436f-91e0-6f8c328c7a5f",
-        "996760f7-e64b-4c8e-b228-41f52fb9fade",
-        "7c5abc9f-f3d7-4856-b8d7-6712462ca007",
-        "e3b2dcde-069b-43ab-ba22-b5500cefc2f6",
-        "ce8221d5-d05a-4341-9df8-702664d0d819",
-        "7880bc3a-41db-4355-ad61-eba55ca0ebe0",
-        "fa60af7f-b89f-4a73-87b1-7d123900eb2f",
-        "ec9ed36f-f5dd-4a32-9b02-64ace39c2699",
-        "d30b93ae-38ee-461f-865f-58cfe08f507a"
-      ],
-      "defaultServicePointId": "996760f7-e64b-4c8e-b228-41f52fb9fade",
-      "metadata": {
-        "createdDate": "2024-12-16T14:14:16.431+00:00",
-        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
-        "updatedDate": "2025-08-12T19:57:35.360+00:00",
-        "updatedByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487"
-      }
-    },
-    {
       "id": "89ffe886-3470-4a88-928e-077bfa9ae8a5",
       "userId": "8794a9ff-870c-5afa-b46e-8ac10c8220d5",
       "servicePointsIds": [
@@ -5890,22 +5914,6 @@
         "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
         "updatedDate": "2025-11-05T20:37:07.950+00:00",
         "updatedByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487"
-      }
-    },
-    {
-      "id": "439c7df5-2ba3-4378-99d7-7c2dc1fc6e41",
-      "userId": "b9830a1c-82eb-4c53-9278-e96815826061",
-      "servicePointsIds": [
-        "996760f7-e64b-4c8e-b228-41f52fb9fade",
-        "fa60af7f-b89f-4a73-87b1-7d123900eb2f",
-        "ec9ed36f-f5dd-4a32-9b02-64ace39c2699"
-      ],
-      "defaultServicePointId": "996760f7-e64b-4c8e-b228-41f52fb9fade",
-      "metadata": {
-        "createdDate": "2024-09-16T09:33:22.060+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-11-11T08:23:05.568+00:00",
-        "updatedByUserId": "b9830a1c-82eb-4c53-9278-e96815826061"
       }
     },
     {
@@ -6208,24 +6216,6 @@
       }
     },
     {
-      "id": "c075283d-9563-473a-8268-86a2496dccd7",
-      "userId": "120a62ea-3564-4b14-ad9f-e800bc6daeee",
-      "servicePointsIds": [
-        "996760f7-e64b-4c8e-b228-41f52fb9fade",
-        "e3b2dcde-069b-43ab-ba22-b5500cefc2f6",
-        "fa60af7f-b89f-4a73-87b1-7d123900eb2f",
-        "ec9ed36f-f5dd-4a32-9b02-64ace39c2699",
-        "d30b93ae-38ee-461f-865f-58cfe08f507a"
-      ],
-      "defaultServicePointId": "996760f7-e64b-4c8e-b228-41f52fb9fade",
-      "metadata": {
-        "createdDate": "2025-10-10T10:01:24.065+00:00",
-        "createdByUserId": "58ad3ef6-4855-466e-bcfb-004e0eace875",
-        "updatedDate": "2025-11-20T15:19:21.148+00:00",
-        "updatedByUserId": "58ad3ef6-4855-466e-bcfb-004e0eace875"
-      }
-    },
-    {
       "id": "870ed6d0-4ea9-45a7-87d8-d7882a64cd3c",
       "userId": "91761bdd-da19-5b59-b7aa-794451e5c507",
       "servicePointsIds": [],
@@ -6268,7 +6258,152 @@
         "updatedDate": "2025-12-04T08:02:27.113+00:00",
         "updatedByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08"
       }
+    },
+    {
+      "id": "2912b90b-7ae1-4244-9dee-47c92d42f16b",
+      "userId": "e56a2559-e389-459e-9dd3-7acb46674f81",
+      "servicePointsIds": [],
+      "metadata": {
+        "createdDate": "2025-12-10T10:15:01.827+00:00",
+        "createdByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39",
+        "updatedDate": "2025-12-10T10:15:01.827+00:00",
+        "updatedByUserId": "b4cf06b5-f7d6-4e2c-b031-f95ebdc93b39"
+      }
+    },
+    {
+      "id": "fea7f415-5a7b-4b77-90d5-2099fa4d0f06",
+      "userId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487",
+      "servicePointsIds": [
+        "f7ce18a5-e9b0-47b2-8f94-a7ec1b954780",
+        "54ff2ca8-8ad5-43c5-9979-b46830455fc2",
+        "9d1b77e8-f02e-4b7f-b296-3f2042ddac54",
+        "1876697c-c60a-42cf-8e6c-82776e7a7076",
+        "f5e36187-86f3-4fe0-9076-9f5daf849d3e",
+        "d5b51479-02ca-436f-91e0-6f8c328c7a5f",
+        "996760f7-e64b-4c8e-b228-41f52fb9fade",
+        "7c5abc9f-f3d7-4856-b8d7-6712462ca007",
+        "e3b2dcde-069b-43ab-ba22-b5500cefc2f6",
+        "ce8221d5-d05a-4341-9df8-702664d0d819",
+        "7880bc3a-41db-4355-ad61-eba55ca0ebe0",
+        "fa60af7f-b89f-4a73-87b1-7d123900eb2f",
+        "ec9ed36f-f5dd-4a32-9b02-64ace39c2699",
+        "d30b93ae-38ee-461f-865f-58cfe08f507a"
+      ],
+      "defaultServicePointId": "996760f7-e64b-4c8e-b228-41f52fb9fade",
+      "metadata": {
+        "createdDate": "2024-12-16T14:14:16.431+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2025-12-23T17:06:41.711+00:00",
+        "updatedByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487"
+      }
+    },
+    {
+      "id": "27399351-df96-4d6c-ac38-c135a452ec56",
+      "userId": "27a9cafe-03de-5744-b1a0-1d0f355b8d4a",
+      "servicePointsIds": [],
+      "metadata": {
+        "createdDate": "2026-01-16T14:38:34.726+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2026-01-16T14:38:34.726+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "f95f42bc-ecf1-4109-8f47-d2ecc51b7070",
+      "userId": "d06c6350-7b13-5912-b4b1-a0ed2a97a565",
+      "servicePointsIds": [],
+      "metadata": {
+        "createdDate": "2026-01-16T13:53:09.506+00:00",
+        "createdByUserId": "58ad3ef6-4855-466e-bcfb-004e0eace875",
+        "updatedDate": "2026-01-16T13:57:29.562+00:00",
+        "updatedByUserId": "58ad3ef6-4855-466e-bcfb-004e0eace875"
+      }
+    },
+    {
+      "id": "440918f2-9f78-49b8-aae3-98f78e689471",
+      "userId": "6149c6e8-9c9d-4ab1-b28b-f73730eda88a",
+      "servicePointsIds": [],
+      "metadata": {
+        "createdDate": "2026-01-23T10:38:58.440+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2026-01-23T14:38:55.084+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "a9416295-1c71-4846-9e72-b48521463497",
+      "userId": "46896568-562e-4876-99a5-73b655a8738f",
+      "servicePointsIds": [],
+      "metadata": {
+        "createdDate": "2026-01-23T10:38:44.651+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2026-01-23T14:39:55.562+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "4647e59c-39c4-4e23-b9fe-864287b387c3",
+      "userId": "20bef30b-e8d5-4a92-aa64-d1c53c4a6b04",
+      "servicePointsIds": [],
+      "metadata": {
+        "createdDate": "2026-01-23T10:38:25.063+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2026-01-29T14:44:47.521+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "3fe91f2e-a509-4eb9-a333-537126af8a5e",
+      "userId": "550c31d3-1d62-532c-b0ae-51e27356b3e3",
+      "servicePointsIds": [],
+      "metadata": {
+        "createdDate": "2026-01-20T10:04:37.330+00:00",
+        "createdByUserId": "b9830a1c-82eb-4c53-9278-e96815826061",
+        "updatedDate": "2026-01-20T10:04:37.330+00:00",
+        "updatedByUserId": "b9830a1c-82eb-4c53-9278-e96815826061"
+      }
+    },
+    {
+      "id": "01e96888-f992-41e1-8cf2-da6e8d09d82a",
+      "userId": "3bd964f9-5fef-4048-95a3-b2d16004f407",
+      "servicePointsIds": [
+        "996760f7-e64b-4c8e-b228-41f52fb9fade",
+        "fa60af7f-b89f-4a73-87b1-7d123900eb2f",
+        "ec9ed36f-f5dd-4a32-9b02-64ace39c2699"
+      ],
+      "defaultServicePointId": "996760f7-e64b-4c8e-b228-41f52fb9fade",
+      "metadata": {
+        "createdDate": "2025-05-16T12:14:31.860+00:00",
+        "createdByUserId": "b9830a1c-82eb-4c53-9278-e96815826061",
+        "updatedDate": "2026-01-28T12:59:49.124+00:00",
+        "updatedByUserId": "b9830a1c-82eb-4c53-9278-e96815826061"
+      }
+    },
+    {
+      "id": "73a8030a-ac77-4ee1-a664-e6f743dd845b",
+      "userId": "21d4bce7-aab0-4622-9877-895c47f7e36a",
+      "servicePointsIds": [
+        "996760f7-e64b-4c8e-b228-41f52fb9fade"
+      ],
+      "defaultServicePointId": "996760f7-e64b-4c8e-b228-41f52fb9fade",
+      "metadata": {
+        "createdDate": "2026-01-21T14:07:41.344+00:00",
+        "createdByUserId": "ccd9c2a1-5455-4512-bf54-956fe923a8ab",
+        "updatedDate": "2026-01-21T14:07:59.888+00:00",
+        "updatedByUserId": "ccd9c2a1-5455-4512-bf54-956fe923a8ab"
+      }
+    },
+    {
+      "id": "40c8fe26-701a-4a02-ac6d-9e51bfc5c27a",
+      "userId": "2d51c8d2-0df5-4bc4-bad6-349901271b5b",
+      "servicePointsIds": [],
+      "metadata": {
+        "createdDate": "2026-01-23T12:08:43.667+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2026-01-23T14:16:22.846+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
     }
   ],
-  "totalRecords": 422
+  "totalRecords": 433
 }
