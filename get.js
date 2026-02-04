@@ -8,7 +8,7 @@ let dbug = process.env.DEBUG;
 
 (async () => {
   try {
-    if (!ep) throw(`Usage node get.js <end_point>`);
+    if (!ep) throw(`Usage node get.js <end_point> [ --header-name header-value ]`);
     const config = await getAuthToken(superagent);
 
     ep = ep.replace(/^_\//, '');
