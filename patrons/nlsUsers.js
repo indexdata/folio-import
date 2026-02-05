@@ -554,10 +554,11 @@ try {
     if (cdate) u.enrollmentDate = cdate;
     if (pid && borStat.match(/^(01|04|51|54|40)$/)) {
       let pidStr = pid.replace(/-/g, ''); 
-      if (pidStr.length === 7) {
-        pidStr = pidStr.substring(0, 6);
+      if (pidStr.length === 10) {
+        u.customFields.personnummer = pidStr;
+      } else if (pidStr.length === 6 || pidStr.length === 7) {
+        u.customFields.fodelsedatum = pidStr.substring(0, 6);
       }
-      u.customFields.personnummer = pidStr;
     }
     if (id) {
       u.customFields.alephid = id;
