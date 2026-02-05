@@ -14,7 +14,7 @@ const wait = (ms) => {
 };
 
 const delSpId = async (config, sid) => {
-  let url = `${config.okapi}/service-points-users?query=servicePointsIds=${sid}&limit=5000`;
+  let url = `${config.okapi}/service-points-users?query=servicePointsIds=${sid}%20OR%20defaultServicePointId=${sid}&limit=5000`;
   console.log(`GET ${url}`);
   try {
     res = await superagent
@@ -35,6 +35,7 @@ const delSpId = async (config, sid) => {
             y++;
           }
         }
+        if (r.defaultServicePointId === sid) delete r.defaultServicePointId;
         await putSpu(config, r);
       }
     } else {
