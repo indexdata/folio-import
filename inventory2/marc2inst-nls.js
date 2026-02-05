@@ -691,6 +691,9 @@ const makeSroHoldings = (instId, instHrid, fields, str, f852, f866) => {
   ttl.xholdings++;
 
   // Don't make SRo items -- see FOLIO-229
+  // Changed mind: make items -- see FOLIO-149
+
+  makeItem(h.id, h.hrid, 'Monografi', 'Beställ manuellt')
   
 }
 
@@ -705,7 +708,7 @@ const makeItem = (holdingsId, holdingsHrid, mtype, ltype, status, callNumber) =>
       holdingsRecordId: holdingsId,
       permanentLoanTypeId: refData.loantypes[ltype],
       materialTypeId: refData.mtypes[mtype],
-      status: { name: status },
+      status: { name: status }
     };
     if (callNumber) {
       i.itemLevelCallNumber = callNumber;
