@@ -28,7 +28,8 @@ const wait = (ms) => {
         .set('x-okapi-token', config.token);
         console.log('HTTP status:', res.status);
     } catch (e) {
-      console.log(`${e}`);
+      let msg = (process.env.DEBUG) ? e : `${e}`;
+      console.log(msg);
     }
   } catch (e) {
     console.log(`${e}`);
