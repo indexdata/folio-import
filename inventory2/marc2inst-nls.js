@@ -5,10 +5,9 @@ import fs from 'fs';
 import path from 'path';
 import { v5 as uuid } from 'uuid';
 import readline from 'readline';
-import lib from 'pg';
 
 let confFile = process.argv[2];
-let instSource = 'MARC';
+let instSource = 'FOLIO';
 
 const customRules = {
   "042": [
@@ -278,7 +277,7 @@ const files = {
   rel: 1,
   xholdings: 1,
   xitems: 1,
-  snapshot: 1,
+  snapshots: 1,
   presuc: 1,
   err: 1
 };
@@ -1189,8 +1188,8 @@ try {
 
       seen[hrid] = 1;
       let instId = (hrid) ? uuid(hrid, ns) : '';
-      marc.mij = fields2mij(marc.fields);
-      let raw = mij2raw(marc.mij);
+      marc.mij = (instSource === 'MARC') ? fields2mij(marc.fields) : {};
+      let raw = (instSource === 'MARC') ? mij2raw(marc.mij) : '';
       ldr = marc.fields.leader || '';
       let itypeCode = ldr.substring(6, 7);
       let blvl = ldr.substring(7,8);
