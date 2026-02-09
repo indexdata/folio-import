@@ -3,6 +3,7 @@ const superagent = require('superagent');
 const { getAuthToken } = require('./lib/login');
 const fn = process.argv[3]; 
 const mod = process.argv[2];
+const ent = 'users';
 
 (async () => {
   let added = 0;
@@ -20,6 +21,7 @@ const mod = process.argv[2];
       throw new Error('Payload object must contain a "customFields" array property!');
     }
     let coll = JSON.parse(collStr);
+    coll.entityType = ent;
     delete coll.totalRecords;
     console.log(`PUT ${url}...`);
     try {
