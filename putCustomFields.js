@@ -3,7 +3,7 @@ const superagent = require('superagent');
 const { getAuthToken } = require('./lib/login');
 const fn = process.argv[3]; 
 const mod = process.argv[2];
-const ent = 'users';
+const ent = 'user';
 
 (async () => {
   let added = 0;
