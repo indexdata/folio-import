@@ -125,6 +125,7 @@ let modName = process.argv[3];
       '/links/stats/authority': true,
       '/loan-storage/loan-history': true,
       '/loan-storage/loans': true,
+      '/manualblocks': true,
       '/metadata-provider/logs': true,
       '/notes': true,
       '/notify': true,
