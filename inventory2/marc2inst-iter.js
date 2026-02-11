@@ -13,7 +13,7 @@ let ldr;
 let ns;
 let iprefix;
 let maxSub = 150;
-let snapId = 'a102a799-ec18-57ab-ac0a-1f41451aaa9a';
+let snapId = '';
 const refData = {};
 const tsvMap = {};
 const outs = {};
