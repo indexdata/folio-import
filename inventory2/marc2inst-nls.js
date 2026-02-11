@@ -938,6 +938,10 @@ try {
         } 
         if (p.name) {
           refData[prop][p.name] = p.id;
+          if (prop === 'contributorTypes') {
+            let lcname = p.name.toLowerCase();
+            refData[prop][lcname] = p.id;
+          }
         }
       });
     } catch {}
