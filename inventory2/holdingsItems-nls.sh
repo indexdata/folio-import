@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
-
-wd=../../nls
-node --max-old-space-size=4096 holdingsItems-nls conf/nls-dev.json $wd/big/bibs.map -s 72
+if [ ! $1 ] 
+then
+    echo "Usage: $0 <bib_map>"
+    exit
+fi
+node --max-old-space-size=4096 holdingsItems-nls conf/nls-dev.json $1

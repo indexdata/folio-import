@@ -969,25 +969,26 @@ try {
   }
 
   // create libris map
+  console.log(`INFO Reading aleph2libris map...`);
   const librisMap = {};
-  let fstream = fs.createReadStream(wdir + '/libris.tsv');
+  let fstream = fs.createReadStream(wdir + '/aleph2libris.tsv');
   let rl = readline.createInterface({
       input: fstream,
       crlfDelay: Infinity
   });
+  let lm = 0;
   for await (let l of rl) {
+    lm++;
     let c = l.split(/\t/);
     let k = c[0];
-    let v = (c[1].match(/^\w{14,17}/)) ? c[1] : '';
-    if (k && v) {
-      librisMap[k] = v;
-      librisMap[v] = k;
+    if (k) {
+      librisMap[k] = { n: c[1], u: c[2] };
     }
   }
-  // throw(librisMap);
+  console.log(`INFO Map lines parsed: ${lm}`);
+  // throw(librisMap['004826829']);
 
   let t;
-  
 
   let start = new Date().valueOf();
   let jobId = process.env.snapshotId || '';
@@ -1124,7 +1125,9 @@ try {
       if (prefix && marc.fields['001']) {
         marc.updateField('001', prefix + marc.fields['001']);
       }
-      let hrid = (marc.fields['001']) ? marc.fields['001'][0] : '';
+      let anum = (marc.fields['001']) ? marc.fields['001'][0] : '';
+      let lnum = (librisMap[anum]) ? librisMap[anum].n : '';
+      let hrid = lnum || anum;
       if (!hrid) {
         ttl.err++;
         console.log(`ERROR HRID not found at ${ttl.count}!`);
@@ -1134,7 +1137,7 @@ try {
       }
       if (seen[hrid]) {
         ttl.err++;
-        console.log(`ERROR Instance HRID (${hrid}) already found at ${ttl.count}`);
+        console.log(`ERROR Instance HRID ${hrid} (${anum}) already found at ${ttl.count}`);
         writeOut(outs.err, r, true);
         continue;
       }
@@ -1143,10 +1146,10 @@ try {
       if (!title) {
         if (conf.noTitle) {
           marc.fields['245'] = [ { ind1: '1', ind2: '0', subfields: [ { a: conf.noTitle } ] } ];
-          console.log(`WARN no title found for ${hrid}, setting 245$a to "${conf.noTitle}"`);
+          console.log(`WARN no title found for ${anum}, setting 245$a to "${conf.noTitle}"`);
         } else {
           ttl.err++;
-          console.log(`ERROR no title found (HRID ${hrid})!`);
+          console.log(`ERROR no title found for ${anum}!`);
           writeOut(outs.err, r, true);
           continue;
         }
@@ -1319,8 +1322,23 @@ try {
 
       // bespoke stuff here ....
       inst.source = instSource;
+      inst.hrid = hrid;
       if (inst.hrid) {
         inst.id = instId;
+        if (lnum) {
+          let o = {
+            identifierTypeId: refData.identifierTypes['Aleph system number'],
+            value: anum
+          };
+          if (!inst.identifiers) inst.identifiers = [];
+          inst.identifiers.push(o);
+          let eo = {
+            uri: librisMap[anum].u,
+            relationshipId: refData.electronicAccessRelationships['No information provided']
+          }
+          if (!inst.electronicAccess) inst.electronicAccess = [];
+          inst.electronicAccess.push(eo);
+        }
         if (inst.subjects) inst.subjects = dedupe(inst.subjects, [ 'value' ]);
         if (inst.identifiers) inst.identifiers = dedupe(inst.identifiers, [ 'value', 'identifierTypeId' ]);
         if (inst.languages) {
@@ -1333,6 +1351,8 @@ try {
           });
           inst.languages = langs;
         }
+
+        /*
         let librisNum = (librisMap[d001]) ? librisMap[d001] : (d001 && d001.match(/^\w{14,17}/)) ? d001 : '';
         if (librisNum) {
           let o = {
@@ -1342,6 +1362,7 @@ try {
           if (!inst.identifiers) inst.identifiers = [];
           inst.identifiers.push(o);
         }
+        */
         if (!inst.instanceTypeId) inst.instanceTypeId = '30fffe0e-e985-4144-b2e2-1e8179bdb41f';
         if (inst.electronicAccess) {
           for (let x = 0; x < inst.electronicAccess.length; x++) {
@@ -1394,7 +1415,7 @@ try {
         if (idmap) {
           let ea = (inst.electronicAccess) ? JSON.stringify(inst.electronicAccess) : '';
           let af = JSON.stringify(addFields);
-          let instMap = `${inst.hrid}\x1E${inst.id}\x1E${bibCallNum.value}\x1E${bibCallNum.type}\x1E${blvl}\x1E${ea}\x1E${itypeCode}\x1E${af}`;
+          let instMap = `${anum}\x1E${inst.id}\x1E${bibCallNum.value}\x1E${bibCallNum.type}\x1E${blvl}\x1E${ea}\x1E${itypeCode}\x1E${af}\x1E${inst.hrid}`;
           writeOut(outs.idmap, instMap, true, '\n');
         }
         let lkr = (marc && marc.fields && marc.fields['LKR']) ? marc.fields['LKR'] : [];
