@@ -30,11 +30,16 @@ TLKB	all					z30_sub_library=TLKB	Humlegården	loc-tlkb	Tidskriftsläsesal
 REF	all					z30_sub_library=REF	Humlegården	loc-ref	Referensbiblioteket
 									
 ENHET	73					z30_sub_library=ENHET, z30_item_status=73	Humlegården	loc-bok	Bokskåp
+ENHET	03						Humlegården	loc-tj	Tjänsteexemplar
+ENHET	22						Humlegården	loc-tj	Tjänsteexemplar
 									
 PRUMS						z30_sub_library=PRUMS	Humlegården	loc-prum	Periodikarum
 									
+									
 RESTR	03		Astrid Lindgrensamlingen*			z30_sub_library=RESTR, z30_item_status=03, z30_call_no=Astrid Lindgrensamlingen*	Astrid Lindgren-samlingen	loc-al	Astrid Lindgrens lgh
+RESTR	03				200		Humlegården	loc-tj	Tjänsteexemplar
+RESTR	03				TJNST		Humlegården	loc-tj	Tjänsteexemplar
 RESTR	03					z30_sub_library=RESTR, z30_item_status=03	Humlegården	loc-ts	Tryckt samling
+RESTR	22				200		Humlegården	loc-tj	Tjänsteexemplar
 RESTR	22					z30_sub_library=RESTR, z30_item_status=22	Humlegården	loc-ts	Tryckt samling
 RESTR	23					z30_sub_library=RESTR, z30_item_status=23	Humlegården	loc-ts	Tryckt samling
-RESTR	05								
