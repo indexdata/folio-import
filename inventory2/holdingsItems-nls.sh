@@ -4,4 +4,4 @@ then
     echo "Usage: $0 <bib_map>"
     exit
 fi
-node --max-old-space-size=4096 holdingsItems-nls conf/nls-dev.json $1
+node --max-old-space-size=4096 holdingsItems-nls conf/nls-dev.json $1 

@@ -216,7 +216,7 @@ try {
       }
     });
   }
-  // throw(JSON.stringify(tsvMap.loantypes.RRSPE, null, 2));
+  // throw(JSON.stringify(tsvMap.locations, null, 2));
 
   console.log(`INFO Parsing instance map at ${mapFile}`);
   const instMap = {};
@@ -279,7 +279,6 @@ try {
     }
   }
   console.log('Links mapped:', mc);
-  // throw(linkMap);
 
   let ttl = {
     linesRead: 0,
