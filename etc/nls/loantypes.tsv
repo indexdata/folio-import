@@ -11,7 +11,7 @@ RRLEX	2	UL			Hemlån
 RRLEX	3				Bokskåp	
 RRLEX	2	DB			Hemlån	Digital beställning
 						
-RRLEX	5				Framtages ej/spärrat	
+RRLEX	5				Ej utlån	
 RRLEX	6				Läsesalslån	
 RRLEX	6	DB			Läsesalslån	Digital beställning
 						
@@ -46,12 +46,12 @@ RRSPE	23	LL			Specialläsesalslån	L-samling - kollas före lån
 RRSPE	28				Specialläsesalslån	
 RRSPE	28	DB			Specialläsesalslån	Digital beställning
 RRSPE	28	LA			Specialläsesalslån	Lagas före lån
-RRSPE	28	RP			Framtages ej/spärrat	
+RRSPE	28	RP			Ej utlån	
 RRSPE	31				Specialläsesalslån	
 RRSPE	32				Specialläsesalslån	
 						
 MFL	4				Referens	
-MFL	5				Framtages ej/spärrat	
+MFL	5				Ej utlån	
 						
 REF	4				Referens	
 REF	71				Referens	
@@ -59,22 +59,22 @@ REF	72				Referens
 						
 PRUMS	1				Läsesalslån	
 PRUMS	21				Specialläsesalslån	
-PRUMS	5				Framtages ej/spärrat	
+PRUMS	5				Ej utlån	
 						
 TLKB	4				Referens	
 TLKB	72				Referens	
 TLKB	71				Referens	
 						
-ENHET	3				Framtages ej/spärrat	
-ENHET	22				Framtages ej/spärrat	
+ENHET	3				Ej utlån	
+ENHET	22				Ej utlån	
 ENHET	73				Bokskåp	
 						
 RESTR	3		86		Begränsad åtkomst 	
-RESTR	3	RP			Framtages ej/spärrat	
-RESTR	3				Framtages ej/spärrat	
-RESTR	5				Framtages ej/spärrat	
-RESTR	22				Framtages ej/spärrat	
-RESTR	23				Framtages ej/spärrat	
-RESTR	22	RP			Framtages ej/spärrat	
+RESTR	3	RP			Ej utlån	
+RESTR	3				Ej utlån	
+RESTR	5				Ej utlån	
+RESTR	22				Ej utlån	
+RESTR	23				Ej utlån	
+RESTR	22	RP			Ej utlån	
 						
 REPRO	1				Läsesalslån	
