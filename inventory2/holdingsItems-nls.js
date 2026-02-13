@@ -236,7 +236,7 @@ try {
     }
     console.log('Instances mapped:', mc);
   }
-  // throw(instMap['000694902']);
+  // throw(instMap);
 
   // map xholdings made by marc2inst script
   const xholdings = {};
@@ -289,7 +289,6 @@ try {
     itemErrors: 0
   }
 
-
   const showStats = () => {
     let now = new Date().valueOf();
     let t = (now - start) / 1000;
@@ -340,7 +339,9 @@ try {
     } else if (loc.match(/^(RRLEX|RRSPE)/) && st === '72') {
       locId = (mt === 'BOOK') ? refData.locations['loc-des'] : refData.locations['loc-ts'];
     } else if (loc === 'REF' && st === '72') {
-      locId = refData.locations['loc-ref']
+      locId = refData.locations['loc-ref'];
+    } else if (loc === 'RESTR' && (col === '200' || col === 'TJNST')) {
+      locId = refData.locations['loc-tj'];
     } else {
       locId = tsvMap.locations[locKey] || refData.locations.datamigration;
     }
@@ -518,7 +519,11 @@ try {
         if (desc || en) {
           i.enumeration = desc || en;
         }
-        if (adminNotes[locId]) i.administrativeNotes = adminNotes[locId];
+        i.administrativeNotes = []
+        if (adminNotes[locId]) i.administrativeNotes.push(adminNotes[locId]);
+        if (loc === 'RRLEX' && st === '23' && (ips === 'LA' || ips === '')) {
+          i.administrativeNotes.push('KOLLAS FÖRE LÅN');
+        }
 
         if (ips.match(/^(FK)$/)) {
           i.status.name = 'Missing';
