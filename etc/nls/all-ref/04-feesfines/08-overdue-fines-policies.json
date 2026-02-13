@@ -1,0 +1,34 @@
+{
+  "overdueFinePolicies": [
+    {
+      "name": "Ingen förseningsavgift",
+      "countClosed": true,
+      "maxOverdueFine": 0,
+      "forgiveOverdueFine": true,
+      "gracePeriodRecall": true,
+      "maxOverdueRecallFine": 0,
+      "metadata": {
+        "createdDate": "2023-10-19T07:52:20.871+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-10-19T07:52:20.871+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      },
+      "id": "8014253f-d620-4038-bd25-12347290bc45"
+    },
+    {
+      "name": "Overdue fine policy",
+      "description": "Test overdue fine policy",
+      "countClosed": true,
+      "maxOverdueFine": 0,
+      "forgiveOverdueFine": true,
+      "gracePeriodRecall": true,
+      "maxOverdueRecallFine": 0,
+      "metadata": {
+        "createdDate": "2023-03-13T12:11:30.824+00:00",
+        "updatedDate": "2025-04-22T13:20:29.657+00:00"
+      },
+      "id": "cd3f6cac-fa17-4079-9fae-2fb28e521412"
+    }
+  ],
+  "totalRecords": 2
+}

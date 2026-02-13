@@ -97,18 +97,6 @@
       }
     },
     {
-      "id": "c9ee35a5-3847-4172-9958-fa5fca46e749",
-      "code": "fe",
-      "name": "Förvärvas ej",
-      "source": "local",
-      "metadata": {
-        "createdDate": "2025-07-01T12:49:04.614+00:00",
-        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-07-01T12:49:04.614+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
-      }
-    },
-    {
       "id": "7f7095da-aa98-4c49-a64b-eb6cc5d698e5",
       "code": "rth",
       "name": "Riksdagstryck huvudpost",
@@ -133,5 +121,5 @@
       }
     }
   ],
-  "totalRecords": 12
+  "totalRecords": 11
 }

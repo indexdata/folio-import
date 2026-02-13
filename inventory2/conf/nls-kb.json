@@ -1,7 +1,7 @@
 {
     "nameSpace": "2040bbc9-10b2-400f-acc2-1a4848b42c00",
     "refDir": "/home/konchaled/data/ref/inv",
-    "tsvDir": "",
+    "tsvDir": "/home/konchaled/folio-import/etc/nls",
     "mapFile": "",
     "controlNum": "SYS",
     "hridPrefix": "",

@@ -179,7 +179,17 @@
         "updatedDate": "2026-02-03T14:25:03.689+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
+    },
+    {
+      "id": "d35a69dd-549a-47c7-b9fb-e1f2d40a97d2",
+      "name": "Specialläsesalslån (koll f lån)",
+      "metadata": {
+        "createdDate": "2026-02-10T10:24:16.286+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2026-02-10T10:24:16.286+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
     }
   ],
-  "totalRecords": 18
+  "totalRecords": 19
 }

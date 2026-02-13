@@ -1,30 +1,6 @@
 {
   "loclibs": [
     {
-      "id": "3f6ea8d2-c350-49bf-9748-16b300381a24",
-      "name": "Använd ej",
-      "code": "mag",
-      "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
-      "metadata": {
-        "createdDate": "2024-06-11T13:00:28.326+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2024-10-14T15:36:56.334+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
-      "id": "b60de2a8-8f0c-49fc-a39c-e64a271e53ff",
-      "name": "Fjärrlån",
-      "code": "LIB-ILL",
-      "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
-      "metadata": {
-        "createdDate": "2024-10-07T10:06:07.323+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2024-12-19T10:43:41.851+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
       "id": "1aae945c-bdf7-4e53-a236-477b7dfc77bf",
       "name": "Humlegården",
       "code": "LIB-HG",
@@ -49,18 +25,6 @@
       }
     },
     {
-      "id": "a8a90f32-dc82-4fd2-ad47-02682ae0fcaa",
-      "name": "Bålsta",
-      "code": "LIB-BAL",
-      "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
-      "metadata": {
-        "createdDate": "2024-06-17T15:26:52.916+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2024-12-19T10:44:16.729+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
       "id": "b6f4a7f0-5ae6-4322-aa5e-f73e777b70c6",
       "name": "Astrid Lindgren-samlingen",
       "code": "LIB-AL",
@@ -69,18 +33,6 @@
         "createdDate": "2025-01-17T13:50:29.093+00:00",
         "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
         "updatedDate": "2025-01-17T13:51:51.614+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
-      "id": "87cb1378-eea3-4cd1-915b-27034af24e8a",
-      "name": "Digitalt material",
-      "code": "LIB-SDIG",
-      "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
-      "metadata": {
-        "createdDate": "2024-10-07T10:06:32.744+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-01-17T13:56:09.504+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     },
@@ -95,5 +47,5 @@
       }
     }
   ],
-  "totalRecords": 8
+  "totalRecords": 4
 }

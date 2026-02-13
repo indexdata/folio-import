@@ -48,15 +48,27 @@
       }
     },
     {
-      "group": "5. Fjärrlånebibliotek",
-      "desc": "Fjärrlånebibliotek",
+      "group": "7. Fjärrlånebibliotek (utländska)",
+      "desc": "7. Fjärrlånebibliotek (utländska)",
+      "id": "17b33013-5a37-4be1-a8cb-3185ec5e710d",
+      "expirationOffsetInDays": 722,
+      "metadata": {
+        "createdDate": "2026-02-10T11:48:05.981+00:00",
+        "createdByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08",
+        "updatedDate": "2026-02-10T11:48:05.981+00:00",
+        "updatedByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08"
+      }
+    },
+    {
+      "group": "5. Fjärrlånebibliotek (svenska)",
+      "desc": "Fjärrlånebibliotek (svenska)",
       "id": "0a11b241-5356-435f-8c3a-0fe31e2f10a4",
       "expirationOffsetInDays": 722,
       "metadata": {
         "createdDate": "2024-12-19T08:39:55.583+00:00",
         "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-02-14T15:32:13.690+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+        "updatedDate": "2026-02-10T11:48:14.218+00:00",
+        "updatedByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08"
       }
     },
     {
@@ -72,5 +84,5 @@
       }
     }
   ],
-  "totalRecords": 6
+  "totalRecords": 7
 }

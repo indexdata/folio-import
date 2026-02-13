@@ -1,0 +1,79 @@
+{
+  "lostItemFeePolicies": [
+    {
+      "name": "Värdet på boken",
+      "chargeAmountItem": {
+        "chargeType": "actualCost",
+        "amount": 554
+      },
+      "lostItemProcessingFee": 0,
+      "chargeAmountItemPatron": false,
+      "chargeAmountItemSystem": false,
+      "lostItemChargeFeeFine": {
+        "duration": 1,
+        "intervalId": "Hours"
+      },
+      "returnedLostItemProcessingFee": false,
+      "replacedLostItemProcessingFee": false,
+      "replacementProcessingFee": 0,
+      "replacementAllowed": false,
+      "lostItemReturned": "Remove",
+      "metadata": {
+        "createdDate": "2023-10-19T07:54:27.204+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2024-09-11T14:03:44.669+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "id": "9f8fea9a-bcb8-4c8b-bfae-f3e66d8fff0b"
+    },
+    {
+      "name": "Lost item fee policy",
+      "description": "Test lost item fee policy",
+      "chargeAmountItem": {
+        "chargeType": "actualCost",
+        "amount": 0
+      },
+      "lostItemProcessingFee": 0,
+      "chargeAmountItemPatron": true,
+      "chargeAmountItemSystem": true,
+      "lostItemChargeFeeFine": {
+        "duration": 2,
+        "intervalId": "Days"
+      },
+      "returnedLostItemProcessingFee": true,
+      "replacedLostItemProcessingFee": true,
+      "replacementProcessingFee": 0,
+      "replacementAllowed": true,
+      "lostItemReturned": "Charge",
+      "metadata": {
+        "createdDate": "2023-03-13T12:11:30.753+00:00",
+        "updatedDate": "2025-04-22T13:20:29.581+00:00"
+      },
+      "id": "ed892c0e-52e0-4cd9-8133-c0ef07b4a709"
+    },
+    {
+      "name": "Bokskåp",
+      "description": "Ersättning bokskåpsnyckel",
+      "chargeAmountItem": {
+        "chargeType": "anotherCost",
+        "amount": 500
+      },
+      "lostItemProcessingFee": 0,
+      "chargeAmountItemPatron": false,
+      "chargeAmountItemSystem": false,
+      "returnedLostItemProcessingFee": false,
+      "replacedLostItemProcessingFee": false,
+      "replacementProcessingFee": 0,
+      "replacementAllowed": false,
+      "lostItemReturned": "Remove",
+      "metadata": {
+        "createdDate": "2025-06-30T07:09:43.727+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-06-30T07:09:43.727+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "id": "cc9b01a0-1a20-4985-af5d-f6f602c8e83d"
+    }
+  ],
+  "totalRecords": 3
+}

@@ -1,0 +1,16 @@
+{
+  "statisticalCodeTypes": [
+    {
+      "id": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "name": "Samling",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-11-30T11:00:16.734+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-11-30T11:00:16.734+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    }
+  ],
+  "totalRecords": 1
+}

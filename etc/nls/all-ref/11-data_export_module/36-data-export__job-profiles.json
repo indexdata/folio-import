@@ -1,0 +1,89 @@
+{
+  "jobProfiles": [
+    {
+      "default": true,
+      "id": "6f7f3cd7-9f24-42eb-ae91-91af1cd54d0a",
+      "name": "Default instances export job profile",
+      "destination": "fileSystem",
+      "description": "Default instances export job profile",
+      "userInfo": {
+        "firstName": "System",
+        "lastName": "Process",
+        "userName": "system_process"
+      },
+      "mappingProfileId": "25d81cbe-9686-11ea-bb37-0242ac130002",
+      "metadata": {
+        "createdDate": "2020-07-28T00:00:00.000+00:00",
+        "createdByUserId": "00000000-0000-0000-0000-000000000000",
+        "createdByUsername": "system_process",
+        "updatedDate": "2020-07-28T00:00:00.000+00:00",
+        "updatedByUserId": "00000000-0000-0000-0000-000000000000",
+        "updatedByUsername": "system_process"
+      }
+    },
+    {
+      "default": true,
+      "id": "2c9be114-6d35-4408-adac-9ead35f51a27",
+      "name": "Deleted authority export job profile",
+      "destination": "fileSystem",
+      "description": "Deleted authority export job profile",
+      "userInfo": {
+        "firstName": "System",
+        "lastName": "Process",
+        "userName": "system_process"
+      },
+      "mappingProfileId": "5d636597-a59d-4391-a270-4e79d5ba70e3",
+      "metadata": {
+        "createdDate": "2024-03-14T00:00:00.000+00:00",
+        "createdByUserId": "00000000-0000-0000-0000-000000000000",
+        "createdByUsername": "system_process",
+        "updatedDate": "2024-03-14T00:00:00.000+00:00",
+        "updatedByUserId": "00000000-0000-0000-0000-000000000000",
+        "updatedByUsername": "system_process"
+      }
+    },
+    {
+      "default": true,
+      "id": "56944b1c-f3f9-475b-bed0-7387c33620ce",
+      "name": "Default authority export job profile",
+      "destination": "fileSystem",
+      "description": "Default authority job profile",
+      "userInfo": {
+        "firstName": "System",
+        "lastName": "Process",
+        "userName": "system_process"
+      },
+      "mappingProfileId": "5d636597-a59d-4391-a270-4e79d5ba70e3",
+      "metadata": {
+        "createdDate": "2020-07-28T00:00:00.000+00:00",
+        "createdByUserId": "00000000-0000-0000-0000-000000000000",
+        "createdByUsername": "system_process",
+        "updatedDate": "2020-07-28T00:00:00.000+00:00",
+        "updatedByUserId": "00000000-0000-0000-0000-000000000000",
+        "updatedByUsername": "system_process"
+      }
+    },
+    {
+      "default": true,
+      "id": "5e9835fc-0e51-44c8-8a47-f7b8fce35da7",
+      "name": "Default holdings export job profile",
+      "destination": "fileSystem",
+      "description": "Default holdings job profile",
+      "userInfo": {
+        "firstName": "System",
+        "lastName": "Process",
+        "userName": "system_process"
+      },
+      "mappingProfileId": "1ef7d0ac-f0a8-42b5-bbbb-c7e249009c13",
+      "metadata": {
+        "createdDate": "2020-07-28T00:00:00.000+00:00",
+        "createdByUserId": "00000000-0000-0000-0000-000000000000",
+        "createdByUsername": "system_process",
+        "updatedDate": "2020-07-28T00:00:00.000+00:00",
+        "updatedByUserId": "00000000-0000-0000-0000-000000000000",
+        "updatedByUsername": "system_process"
+      }
+    }
+  ],
+  "totalRecords": 4
+}

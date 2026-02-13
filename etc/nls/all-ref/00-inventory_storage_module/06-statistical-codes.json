@@ -1,0 +1,1448 @@
+{
+  "statisticalCodes": [
+    {
+      "id": "1ff4c84c-de20-43a8-9896-26fe4298df08",
+      "code": "000",
+      "name": "Slasken",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-03-17T13:37:19.434+00:00",
+        "createdByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d",
+        "updatedDate": "2025-03-17T13:37:19.434+00:00",
+        "updatedByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d"
+      }
+    },
+    {
+      "id": "a2293290-3b3a-4e10-b7bc-26327451280f",
+      "code": "tjnst",
+      "name": "Tjänsteexemplar samling2",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-07-08T09:26:56.552+00:00",
+        "createdByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d",
+        "updatedDate": "2025-07-08T09:26:56.552+00:00",
+        "updatedByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d"
+      }
+    },
+    {
+      "id": "988d0bdb-ba9e-4f45-b839-624bce0a1236",
+      "code": "over",
+      "name": "Överförda till andra bibliotek",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-07-08T09:27:23.751+00:00",
+        "createdByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d",
+        "updatedDate": "2025-07-08T09:27:23.751+00:00",
+        "updatedByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d"
+      }
+    },
+    {
+      "id": "fb0dbe08-f831-4b4d-8eed-1c3afb14b255",
+      "code": "test",
+      "name": "test_name",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T20:48:18.496+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T20:48:18.496+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "ca21d929-a60f-4432-842b-7544e1a67b47",
+      "code": "test1",
+      "name": "test_name1",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T20:50:06.068+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T20:50:06.068+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "4e7f10b0-67b0-4919-877d-28b0310360d5",
+      "code": "ILL",
+      "name": "Fjärrinlån",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:18.775+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:18.775+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "2ac693e5-158a-45e1-8399-75646008e14a",
+      "code": "1A",
+      "name": "Svensk samling före 1700",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:18.849+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:18.849+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "33c088a5-c095-4d64-a4c2-02330729d36c",
+      "code": "1B",
+      "name": "Svensk samling 1700-1829",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:18.911+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:18.911+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "522e62c0-9d67-4c07-8780-5d70793d97e9",
+      "code": "2-81",
+      "name": "Svensk samling 1830-1955",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:18.973+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:18.973+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "72124f38-e0cc-4624-8fbf-8d8bd82a80a8",
+      "code": "11",
+      "name": "Svensk samling Disp - 1849",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:19.034+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:19.034+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "e808ef2f-9944-4318-ad91-05a1ff999229",
+      "code": "75A",
+      "name": "Svensk samling Dagstidningar 1700-1850",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:19.097+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:19.097+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "f04e7300-df87-4062-b141-13dd59e6e065",
+      "code": "75B",
+      "name": "Svensk samling Dagstidningar 1851-",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:19.227+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:19.227+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "c008f08b-c6c0-496a-a0b5-f506d733dd54",
+      "code": "75C",
+      "name": "Sv Saml Finl-Sv Dagstidningar -1850",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:19.298+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:19.298+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "f3281255-06da-4335-a32b-9d7b43fb5424",
+      "code": "75D",
+      "name": "Sv Saml Finl-Sv Dagstidningar 1851-",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:19.425+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:19.425+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "6979e865-a5a3-4ab1-8be8-77d95a2c15ab",
+      "code": "75E",
+      "name": "Sv Saml Svensk-Amerikanska Dagstidningar",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:19.491+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:19.491+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "3eb79f70-4594-4671-95ea-23e6eeb9e680",
+      "code": "77A",
+      "name": "Svensk samling Tidskrifter 1700-1829",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:19.557+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:19.557+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "1bb868d9-f595-4b8a-be56-0fc68d3eef8e",
+      "code": "77B",
+      "name": "Svensk samling Tidskrifter 1830-1955",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:19.630+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:19.630+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "83c8d98a-3cae-4a7d-8eaa-bdfc9d9afc83",
+      "code": "77C",
+      "name": "Svensk samling Tidskrifter 1830-1955 helg",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:19.697+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:19.697+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "b05798a9-d82b-4d7c-bbf5-7b617cc3dc68",
+      "code": "77D",
+      "name": "Svensk samling Tidskrifter 1830-1955 Tillf.",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:19.773+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:19.773+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "1bc0452b-fa0a-4da4-a221-aed522cc1143",
+      "code": "78H",
+      "name": "Svensk samling Barnböcker 1830-1955",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:19.846+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:19.846+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "a8c5b561-b5e3-46ae-8da1-baf45c493c57",
+      "code": "82",
+      "name": "Svensk samling Liggfolio -1955",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:19.914+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:19.914+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "6405deba-9f19-43b1-bb19-d0963a6eed30",
+      "code": "85B",
+      "name": "OKAT SLS",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:20.050+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:20.050+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "8127e37e-19d3-4e1f-9a2a-47c198eebbcd",
+      "code": "86",
+      "name": "Affischer",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:20.237+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:20.237+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "30eb99fe-df73-4cd2-97f7-2c9106dbf387",
+      "code": "87A",
+      "name": "Musiktryck",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:20.301+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:20.301+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "603d25a8-ffb9-494d-b1a2-1a01f313926c",
+      "code": "88A",
+      "name": "Förordningar -1829",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:20.363+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:20.363+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "06874a64-d6f4-49d0-8708-b54ba38a892d",
+      "code": "88B",
+      "name": "Förordningar 1830-",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:20.424+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:20.424+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "dd7e7a29-e1fc-48ff-87e9-fbff494f0239",
+      "code": "89A",
+      "name": "Riksdagstryck -1829",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:20.486+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:20.486+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "6ae1c51d-313a-4cd1-b113-f4412c7db2aa",
+      "code": "89B",
+      "name": "Riksdagstryck 1830-",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:20.550+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:20.550+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "708c74fb-25c1-4e7b-9104-b7d1670838d3",
+      "code": "90",
+      "name": "SOU fackex.",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:20.613+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:20.613+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "d643141f-c286-43e5-9d73-75143a1aaab1",
+      "code": "91A",
+      "name": "Svensk samling Spärrat tryck 1830-1955 1956- K-saml.",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:20.676+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:20.676+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "23a3630a-18e1-4938-87da-76e4d2a7a063",
+      "code": "91B",
+      "name": "Svensk samling Särskilt tryck 1830-1955 1956- L-saml.",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:20.740+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:20.740+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "a659d250-68d0-4999-b661-c9822bec478f",
+      "code": "92",
+      "name": "Svensk samling -1955 utan år",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:20.804+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:20.804+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "161611eb-259d-4028-a515-b41a997eeb87",
+      "code": "93",
+      "name": "Skillingtryck",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:20.870+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:20.870+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "be255d96-10aa-4a7e-b5d4-0ba9e61969a3",
+      "code": "99A",
+      "name": "Orig. som skyddsfilmats",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:20.952+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:20.952+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "784d65bd-4c48-4528-b5d3-b61a52ddadb8",
+      "code": "99B",
+      "name": "Dagstidning som mikrofilmats",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:21.027+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:21.027+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "0dfd7548-96b2-44a9-b8f5-f7e9ffec9c38",
+      "code": "U14",
+      "name": "Utländsk samling Inkunabler",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:21.089+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:21.089+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "77281000-6134-432b-a439-e073d48ca433",
+      "code": "U15",
+      "name": "Utländsk samling 1501-1599",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:21.167+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:21.167+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "718ac2e1-a982-42cb-9b02-4b6e305b6c0f",
+      "code": "U16",
+      "name": "Utländsk samling 1600-1699",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:21.241+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:21.241+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "55fc9875-2b4e-43de-a333-35aaaf803f53",
+      "code": "U17",
+      "name": "Utländsk samling 1700-1799",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:21.304+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:21.304+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "aed41995-247b-4663-926f-9387a9dae8e9",
+      "code": "U18A",
+      "name": "Utländsk samling 1800-1829",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:21.369+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:21.369+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "88accb76-2ee1-4933-97dd-3aec81b7b21e",
+      "code": "U18B",
+      "name": "Utländsk samling 1830-1899",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:21.439+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:21.439+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "3b8fb4c5-20a1-4238-9773-d63b38faabf0",
+      "code": "U19",
+      "name": "Utländsk samling 1900-1955",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:21.501+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:21.501+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "24ac4e11-14fc-4e59-95f9-a74ea41b4f0c",
+      "code": "U19B",
+      "name": "Utländsk samling Bibliografier 1900-1970 (signum 107)",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:21.561+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:21.561+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "f8a55089-4598-4895-8f41-ac843654931f",
+      "code": "100A",
+      "name": "Utländsk samling Parlamentstryck -1829",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:21.622+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:21.622+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "c0882dfb-e265-4aaf-a927-3644fb9f6381",
+      "code": "100B",
+      "name": "Utländsk samling Parlamentstryck 1830-1899",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:21.685+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:21.685+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "1425ba55-644c-4b85-ae8e-1daad7fc7558",
+      "code": "100C",
+      "name": "Utländsk samling Parlamentstryck 1900-1955",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:21.747+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:21.747+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "7e1bbace-8ea1-4134-b39b-1784575abf1c",
+      "code": "111A",
+      "name": "Utländsk samling Disp -1829",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:21.809+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:21.809+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "0a0d4bfa-696e-4b76-9884-bb92d33b10e0",
+      "code": "111B",
+      "name": "Utländsk samling Disp 1830-1899",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:21.871+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:21.871+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "3a42f16b-4e81-4232-a2d1-45cfa84cfd03",
+      "code": "111C",
+      "name": "Utländsk samling Disp 1900-",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:21.935+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:21.935+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "4e5650d7-a867-406c-998f-0720c8e25e8b",
+      "code": "175",
+      "name": "Utländsk samling Dagstidningar 1800-",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:22.006+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:22.006+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "124d6fae-6722-4544-bf1b-0861c916ddd0",
+      "code": "181",
+      "name": "Utländsk samling -1955 Stort format",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:22.072+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:22.072+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "95efa687-3db0-44ee-ad55-b917c7e63efa",
+      "code": "192A",
+      "name": "Utländsk samling 1501-1829 utan år",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:22.217+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:22.217+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "1424b586-6506-4147-8797-b3ca4ad63c62",
+      "code": "192B",
+      "name": "Utländsk samling 1830-1899 utan år",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:22.284+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:22.284+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "68e89f49-5bb0-4968-a325-3fadeb0b8b8e",
+      "code": "192C",
+      "name": "Utländsk samling 1900-1955 utan år",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:22.348+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:22.348+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "754425ce-e7f2-47bc-8e37-6da2c58f74da",
+      "code": "200",
+      "name": "Tjänsteexemplar",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:22.407+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:22.407+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "3d81a42d-6a90-43e5-bf64-049f5df5b47f",
+      "code": "288",
+      "name": "Specialsamlingar",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:22.469+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:22.469+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "827d3473-c953-4a81-a87b-34a6268d0673",
+      "code": "288C",
+      "name": "Specialsamlingar (Berghman)",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:22.531+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:22.531+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "f874a2fd-ef94-46a5-8bd0-35d0328ead1e",
+      "code": "289",
+      "name": "Specialsamlingar (RAR, Prakt)",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:22.593+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:22.593+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "0a0ca557-28fe-4b2a-becf-3c1dc8270ddd",
+      "code": "298",
+      "name": "Referenssamlingar",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:22.656+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:22.656+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "857297df-91d0-40ff-938e-fec5dbd94cd4",
+      "code": "300SA",
+      "name": "Svenska böcker 1956-",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:22.722+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:22.722+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "5094adf8-e021-452e-9bca-e2707c7934e1",
+      "code": "300SB",
+      "name": "Svenska böcker 1956- Stort format (LF)",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:22.786+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:22.786+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "f29c479e-6927-430a-9b2e-7665a3b564c2",
+      "code": "300SC",
+      "name": "Svenska tidskrifter 1956-",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:22.855+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:22.855+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "0b2a013e-166b-4c01-a7d7-41bed3967c38",
+      "code": "300SD",
+      "name": "Svenska tidskrifter 1956- Stort format (LF)",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:22.923+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:22.923+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "ddb306ca-1ca5-46a1-835f-d142f853c742",
+      "code": "300SE",
+      "name": "Svensk samling Kombinerat material",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:22.989+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:22.989+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "f6d4a1b9-0068-4815-8fad-a18add02ce42",
+      "code": "300SF",
+      "name": "Svensk samling EU böcker",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:23.054+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:23.054+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "507452a1-825f-4d0a-a455-b697539950ba",
+      "code": "300SG",
+      "name": "Svensk samling EU tidskrifter",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:23.121+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:23.121+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "31769ea3-96cc-4fc8-b90d-e7b8d464389d",
+      "code": "300SH",
+      "name": "Svensk samling Skolböcker",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:23.187+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:23.187+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "d02e3412-d103-467b-9b68-dfbdd71804d2",
+      "code": "300SI",
+      "name": "Svensk samling Skolböcker Stort format (LF)",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:23.249+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:23.249+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "1625d6e4-19c1-4d72-98a8-22cc9ca289b9",
+      "code": "300UA",
+      "name": "Utländska böcker 1956-",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:23.314+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:23.314+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "683b84c2-4901-446c-ac52-95922de57bc9",
+      "code": "300UB",
+      "name": "Utländska böcker 1956- Stort format",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:23.373+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:23.373+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "97fa75bb-6a00-4536-85d9-4dfa7f7ea60b",
+      "code": "300UC",
+      "name": "Utländska böcker 1956- Stort format (LF)",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:23.436+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:23.436+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "3adbeca7-fdcb-4be2-8308-74a442749ecb",
+      "code": "300UD",
+      "name": "Utländska tidskrifter 1956-",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:23.517+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:23.517+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "f2478cf5-9029-4ce9-b765-d4ee55efcb84",
+      "code": "300UE",
+      "name": "Utländska tidskrifter 1956- Stort format",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:23.588+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:23.588+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "b2002f58-8a71-4ac4-84d3-1cd2b6b3c296",
+      "code": "300UF",
+      "name": "Utländska tidskrifter 1956- Stort format (LF)",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:23.658+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:23.658+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "643056ba-813e-402f-b9bd-d50df71b66bc",
+      "code": "300UG",
+      "name": "Utländska bibliografier",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:23.724+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:23.724+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "4d4b3ac2-4727-4d65-ba74-44dae34c8338",
+      "code": "300UH",
+      "name": "Utländska bibliografier tidskrifter",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:23.791+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:23.791+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "a5ded719-26c6-49fb-81e5-b8c5031d51e2",
+      "code": "300UI",
+      "name": "Ryska böcker 1960-",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:23.856+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:23.856+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "46926513-8d77-47bc-8cbf-806577baba73",
+      "code": "300UJ",
+      "name": "Ryska böcker 1960- Stort format",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:23.922+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:23.922+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "435f8615-afbb-4034-b5c9-346b5c3a238f",
+      "code": "300UK",
+      "name": "Ryska böcker 1960- Stort format (LF)",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:23.988+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:23.988+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "3ec84e58-286d-4dd9-85c2-b85ec971bee2",
+      "code": "300UL",
+      "name": "Ryska tidskrifter 1960-",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:24.053+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:24.053+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "a12793eb-0ba4-4e8f-b104-9ff06ba414eb",
+      "code": "300UM",
+      "name": "Ryska tidskrifter 1960- Stort format",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:24.118+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:24.118+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "764d9492-a20f-4c97-93c1-77c12920f50e",
+      "code": "300UN",
+      "name": "Ryska tidskrifter 1960- Stort format (LF)",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:24.180+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:24.180+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "7ea0440d-8bd2-46c5-8d74-80609fd9e588",
+      "code": "300UO",
+      "name": "Utländsk samling kombinerat material",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:24.252+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:24.252+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "e2549611-c2a4-4217-b595-db06cb947f6e",
+      "code": "300UP",
+      "name": "Utländska böcker tom 1829 med nummersignum",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:24.317+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:24.317+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "96630ad3-00ae-441b-9297-7479fddbbe43",
+      "code": "300UQ",
+      "name": "Utländska böcker 1830-1899 med nummersignum",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:24.382+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:24.382+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "0c3d6a8a-ebb7-48fa-8497-fa073925226a",
+      "code": "300UR",
+      "name": "Utländska böcker 1900-1955 med nummersignum",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:24.443+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:24.443+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "17e12761-9659-4229-9954-05e238a9a2f3",
+      "code": "300US",
+      "name": "Utländska tidskrifter tom 1829 med nummersignum",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:24.531+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:24.531+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "0fe3d54a-b74a-4cc3-b596-c9ca66cb73eb",
+      "code": "300UT",
+      "name": "Utländska tidskrifter 1830-1955 med nummersignum",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:24.593+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:24.593+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "f00a072a-0135-4732-bdfb-8d85abff5128",
+      "code": "300UU",
+      "name": "Utl saml-1955 Tidskr/Mon m nummersign Stort format",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:24.654+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:24.654+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "d3feccd6-79e3-438f-8ad4-33a408e312b2",
+      "code": "400",
+      "name": "Handskrifter",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:24.718+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:24.718+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "7b6127ff-eea7-44c2-81a3-c50f61c08511",
+      "code": "500A",
+      "name": "Kart och bild Spec",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:24.780+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:24.780+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "8a202307-40a9-4110-890c-964855a4595b",
+      "code": "500B",
+      "name": "Kart och bild Lexp",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:24.841+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:24.841+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "64d99b3f-9ff7-4916-93fd-add15638922f",
+      "code": "500C",
+      "name": "Kart och bild Stort format",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:24.904+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:24.904+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "94ed815a-51ef-4abe-9bd9-bb07b28f60fe",
+      "code": "500D",
+      "name": "Kart och bild Bålsta Lexp",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:24.969+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:24.969+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "7b1f3385-2925-4055-a8b2-e7b3ace1bd69",
+      "code": "500E",
+      "name": "Kart och bild Bålsta Spec",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:25.031+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:25.031+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "3d7bec99-764a-45ff-9ca3-acede3cf4dd0",
+      "code": "701",
+      "name": "Mikrofilmade tidningar (i MF-läsesalen)",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:25.094+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:25.094+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "da3d1440-0595-4ae6-b2a3-95f862a2b218",
+      "code": "702",
+      "name": "Mikrofilmade tidningar (B-ex/dubbletter)",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:26.213+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:26.213+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "b881cf3f-c960-4027-b1e3-53524c83b4d0",
+      "code": "703",
+      "name": "Mikrofilmade tidningar (ej i MF-läsesalen)",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:26.280+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:26.280+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "653c2dae-1df8-47d6-a085-b1e53ab8dda0",
+      "code": "704",
+      "name": "Mikrofilmat svenskt tryck -1699",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:26.341+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:26.341+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "9decfbb3-0c48-4e97-af71-2432dfc9aeaf",
+      "code": "705",
+      "name": "Mikrofilmat svenskt tryck skyddsfilm",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:26.404+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:26.404+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "f02ad4ac-95f2-4b74-a5a8-4f9c074e0239",
+      "code": "706",
+      "name": "Mikrofilm",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:26.469+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:26.469+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "6f96c294-daea-4304-b930-b0a6fad7b573",
+      "code": "707",
+      "name": "Mikrofiche",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:26.532+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:26.532+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "9e8379d8-42f1-4ed4-83e4-82a1f65211f7",
+      "code": "801",
+      "name": "CD-ROM",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:26.595+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:26.595+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "b01d09cd-9844-45a2-8b63-73e2021406e2",
+      "code": "802",
+      "name": "Disketter",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:26.661+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:26.661+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "d94fe88c-f41b-4377-b5b6-789f363df342",
+      "code": "973",
+      "name": "Bokskåp",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:26.723+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:26.723+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "c2a5b34a-382d-43e9-a9a1-360ef84435cb",
+      "code": "996",
+      "name": "Gallras?",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:26.788+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:26.788+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "b56df86f-b546-47c0-aa76-4b462bb6c469",
+      "code": "997",
+      "name": "OKAT miniposter (ej utskrifter)",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:26.849+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:26.849+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "0564b865-4d80-44d0-9aa6-35fad7e691be",
+      "code": "998",
+      "name": "Lånes utbildningsböcker",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:26.911+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:26.911+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "359beabc-e922-493c-aee0-6a8e77bef3a5",
+      "code": "999",
+      "name": "Okänd",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-19T21:02:26.978+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-19T21:02:26.978+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "1b0bedf7-000c-41c5-bab1-4deea103504d",
+      "code": "182",
+      "name": "L Utländsk samling -1955 Stort format",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-20T08:10:35.286+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-20T08:10:35.286+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    },
+    {
+      "id": "e47a33a1-40a8-44d4-9001-b223b8807099",
+      "code": "unmapped",
+      "name": "Omappad vid datamigrering",
+      "statisticalCodeTypeId": "41c84876-dfb0-416b-a945-b6e18d578208",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2023-12-20T08:12:22.955+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2023-12-20T08:12:22.955+00:00",
+        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+      }
+    }
+  ],
+  "totalRecords": 111
+}

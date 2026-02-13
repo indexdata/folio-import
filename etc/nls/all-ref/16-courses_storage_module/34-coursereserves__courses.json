@@ -1,0 +1,273 @@
+{
+  "courses": [
+    {
+      "id": "83034b0a-bf71-4495-b642-2e998f721e5d",
+      "name": "Calculus 101",
+      "description": "Basic differentiation and integration",
+      "departmentId": "1fc91124-cd2a-4fae-9ae4-40368d80982d",
+      "departmentObject": {
+        "id": "1fc91124-cd2a-4fae-9ae4-40368d80982d",
+        "name": "Mathematics",
+        "description": "Including both pure and applied maths",
+        "metadata": {
+          "createdDate": "2023-03-13T12:12:14.268+00:00",
+          "updatedDate": "2023-03-13T12:12:14.268+00:00"
+        }
+      },
+      "courseListingId": "c03bcba3-a6a0-4251-b316-0631bb2e6f21",
+      "courseListingObject": {
+        "id": "c03bcba3-a6a0-4251-b316-0631bb2e6f21",
+        "registrarId": "external1",
+        "externalId": "external2",
+        "servicepointId": "3a40852d-49fd-4df2-a1f9-6e2641a6e91f",
+        "locationId": "53cf956f-c1df-410b-8bea-27f712cca7c0",
+        "termId": "cd1eb7ed-2704-4b6a-9037-d7f1a5351f6b",
+        "termObject": {
+          "id": "cd1eb7ed-2704-4b6a-9037-d7f1a5351f6b",
+          "name": "Michaelmas 2019",
+          "startDate": "2019-10-13",
+          "endDate": "2019-12-07"
+        },
+        "courseTypeId": "f5063ee8-b18c-402b-b0c9-1b0f93d8570b",
+        "courseTypeObject": {
+          "id": "f5063ee8-b18c-402b-b0c9-1b0f93d8570b",
+          "name": "Online",
+          "description": "No in-person component"
+        },
+        "instructorObjects": [
+          {
+            "id": "2e53ca2f-9bd9-424d-bcef-67f5f268edb0",
+            "userId": "3579811e-379f-4c09-8b2b-a0a08c94fe30",
+            "name": "Adams, Christa A",
+            "courseListingId": "c03bcba3-a6a0-4251-b316-0631bb2e6f21",
+            "metadata": {
+              "createdDate": "2023-03-13T12:12:14.484+00:00",
+              "updatedDate": "2023-03-13T12:12:14.484+00:00"
+            }
+          },
+          {
+            "id": "f61c6a9e-92b5-470c-8463-6494afd108e6",
+            "userId": "b7ad6a2b-73d3-41e0-ae10-8fc3db4e57ec",
+            "name": "Taylor, Mike",
+            "courseListingId": "c03bcba3-a6a0-4251-b316-0631bb2e6f21",
+            "metadata": {
+              "createdDate": "2023-03-13T12:12:14.495+00:00",
+              "updatedDate": "2023-03-13T12:12:14.495+00:00"
+            }
+          },
+          {
+            "id": "9cc888e5-f6d7-4709-b113-3040e8fbe648",
+            "userId": "b2aeb3de-a156-4a8b-a25b-72d7febe1674",
+            "name": "Aagard, Madgeline",
+            "courseListingId": "c03bcba3-a6a0-4251-b316-0631bb2e6f21",
+            "metadata": {
+              "createdDate": "2023-03-13T12:12:14.498+00:00",
+              "updatedDate": "2023-03-13T12:12:14.498+00:00"
+            }
+          }
+        ],
+        "metadata": {
+          "createdDate": "2023-03-13T12:12:14.393+00:00",
+          "updatedDate": "2023-03-13T12:12:14.393+00:00"
+        }
+      },
+      "courseNumber": "12345",
+      "sectionName": "Main",
+      "metadata": {
+        "createdDate": "2023-03-13T12:12:14.430+00:00",
+        "updatedDate": "2023-03-13T12:12:14.430+00:00"
+      }
+    },
+    {
+      "id": "3df7f087-281b-46c9-b6c3-8aeaaf44af97",
+      "name": "Intro to Palaeobiology",
+      "description": "Life in prehistoric times",
+      "departmentId": "1fc91124-cd2a-4fae-9ae4-40368d80982d",
+      "departmentObject": {
+        "id": "1fc91124-cd2a-4fae-9ae4-40368d80982d",
+        "name": "Mathematics",
+        "description": "Including both pure and applied maths",
+        "metadata": {
+          "createdDate": "2023-03-13T12:12:14.268+00:00",
+          "updatedDate": "2023-03-13T12:12:14.268+00:00"
+        }
+      },
+      "courseListingId": "1049e672-dcde-4c7c-b95b-edf9f60c6cbd",
+      "courseListingObject": {
+        "id": "1049e672-dcde-4c7c-b95b-edf9f60c6cbd",
+        "registrarId": "external1c",
+        "externalId": "external2c",
+        "servicepointId": "3a40852d-49fd-4df2-a1f9-6e2641a6e91f",
+        "locationId": "53cf956f-c1df-410b-8bea-27f712cca7c0",
+        "termId": "f9712294-2037-44f7-8066-216ae950c26c",
+        "termObject": {
+          "id": "f9712294-2037-44f7-8066-216ae950c26c",
+          "name": "Trinity 2020",
+          "startDate": "2020-04-26",
+          "endDate": "2020-06-20"
+        },
+        "courseTypeId": "0350e271-ddb8-4def-a6a8-a3cf4f01bbfd",
+        "courseTypeObject": {
+          "id": "0350e271-ddb8-4def-a6a8-a3cf4f01bbfd",
+          "name": "Online/In person",
+          "description": "Both online and in-person components"
+        },
+        "instructorObjects": [],
+        "metadata": {
+          "createdDate": "2023-03-13T12:12:14.389+00:00",
+          "updatedDate": "2023-03-13T12:12:14.389+00:00"
+        }
+      },
+      "courseNumber": "24601",
+      "sectionName": "1",
+      "numberOfStudents": 24,
+      "metadata": {
+        "createdDate": "2023-03-13T12:12:14.434+00:00",
+        "updatedDate": "2023-03-13T12:12:14.434+00:00"
+      }
+    },
+    {
+      "id": "04ea3db8-e42a-4e18-b98d-cc447e3f9a57",
+      "name": "Calculus 201",
+      "description": "Advanced differentiation and integration",
+      "departmentId": "1fc91124-cd2a-4fae-9ae4-40368d80982d",
+      "departmentObject": {
+        "id": "1fc91124-cd2a-4fae-9ae4-40368d80982d",
+        "name": "Mathematics",
+        "description": "Including both pure and applied maths",
+        "metadata": {
+          "createdDate": "2023-03-13T12:12:14.268+00:00",
+          "updatedDate": "2023-03-13T12:12:14.268+00:00"
+        }
+      },
+      "courseListingId": "cef52efb-b3fd-4450-9960-1745026a99d1",
+      "courseListingObject": {
+        "id": "cef52efb-b3fd-4450-9960-1745026a99d1",
+        "registrarId": "external1b",
+        "externalId": "external2b",
+        "servicepointId": "3a40852d-49fd-4df2-a1f9-6e2641a6e91f",
+        "locationId": "53cf956f-c1df-410b-8bea-27f712cca7c0",
+        "termId": "aa59adff-9e2b-473d-89ad-b2b506b475a2",
+        "termObject": {
+          "id": "aa59adff-9e2b-473d-89ad-b2b506b475a2",
+          "name": "Hilary 2020",
+          "startDate": "2020-01-19",
+          "endDate": "2020-03-14"
+        },
+        "courseTypeId": "9154048b-3698-42ec-a5ca-cfcebf04e094",
+        "courseTypeObject": {
+          "id": "9154048b-3698-42ec-a5ca-cfcebf04e094",
+          "name": "In person",
+          "description": "No online component"
+        },
+        "instructorObjects": [],
+        "metadata": {
+          "createdDate": "2023-03-13T12:12:14.383+00:00",
+          "updatedDate": "2023-03-13T12:12:14.383+00:00"
+        }
+      },
+      "courseNumber": "67890",
+      "sectionName": "Sole",
+      "metadata": {
+        "createdDate": "2023-03-13T12:12:14.437+00:00",
+        "updatedDate": "2023-03-13T12:12:14.437+00:00"
+      }
+    },
+    {
+      "id": "72435b5c-0495-4043-9b3a-5763b2f59eb9",
+      "name": "Calculus 301",
+      "description": "Wizard-level differentiation and integration",
+      "departmentId": "1fc91124-cd2a-4fae-9ae4-40368d80982d",
+      "departmentObject": {
+        "id": "1fc91124-cd2a-4fae-9ae4-40368d80982d",
+        "name": "Mathematics",
+        "description": "Including both pure and applied maths",
+        "metadata": {
+          "createdDate": "2023-03-13T12:12:14.268+00:00",
+          "updatedDate": "2023-03-13T12:12:14.268+00:00"
+        }
+      },
+      "courseListingId": "1049e672-dcde-4c7c-b95b-edf9f60c6cbd",
+      "courseListingObject": {
+        "id": "1049e672-dcde-4c7c-b95b-edf9f60c6cbd",
+        "registrarId": "external1c",
+        "externalId": "external2c",
+        "servicepointId": "3a40852d-49fd-4df2-a1f9-6e2641a6e91f",
+        "locationId": "53cf956f-c1df-410b-8bea-27f712cca7c0",
+        "termId": "f9712294-2037-44f7-8066-216ae950c26c",
+        "termObject": {
+          "id": "f9712294-2037-44f7-8066-216ae950c26c",
+          "name": "Trinity 2020",
+          "startDate": "2020-04-26",
+          "endDate": "2020-06-20"
+        },
+        "courseTypeId": "0350e271-ddb8-4def-a6a8-a3cf4f01bbfd",
+        "courseTypeObject": {
+          "id": "0350e271-ddb8-4def-a6a8-a3cf4f01bbfd",
+          "name": "Online/In person",
+          "description": "Both online and in-person components"
+        },
+        "instructorObjects": [],
+        "metadata": {
+          "createdDate": "2023-03-13T12:12:14.389+00:00",
+          "updatedDate": "2023-03-13T12:12:14.389+00:00"
+        }
+      },
+      "courseNumber": "13579",
+      "sectionName": "Sole",
+      "numberOfStudents": 42,
+      "metadata": {
+        "createdDate": "2023-03-13T12:12:14.442+00:00",
+        "updatedDate": "2023-03-13T12:12:14.442+00:00"
+      }
+    },
+    {
+      "id": "aabf7f46-9a38-4c72-b3b1-45a55077436a",
+      "name": "Intro to Palaeontology",
+      "description": "Study of ancient life",
+      "departmentId": "1566841c-51ce-4d4c-aa09-0ea21b00904a",
+      "departmentObject": {
+        "id": "1566841c-51ce-4d4c-aa09-0ea21b00904a",
+        "name": "Earth Sciences",
+        "description": "Including geology, petrology and palaeontology",
+        "metadata": {
+          "createdDate": "2023-03-13T12:12:14.262+00:00",
+          "updatedDate": "2023-03-13T12:12:14.262+00:00"
+        }
+      },
+      "courseListingId": "1049e672-dcde-4c7c-b95b-edf9f60c6cbd",
+      "courseListingObject": {
+        "id": "1049e672-dcde-4c7c-b95b-edf9f60c6cbd",
+        "registrarId": "external1c",
+        "externalId": "external2c",
+        "servicepointId": "3a40852d-49fd-4df2-a1f9-6e2641a6e91f",
+        "locationId": "53cf956f-c1df-410b-8bea-27f712cca7c0",
+        "termId": "f9712294-2037-44f7-8066-216ae950c26c",
+        "termObject": {
+          "id": "f9712294-2037-44f7-8066-216ae950c26c",
+          "name": "Trinity 2020",
+          "startDate": "2020-04-26",
+          "endDate": "2020-06-20"
+        },
+        "courseTypeId": "0350e271-ddb8-4def-a6a8-a3cf4f01bbfd",
+        "courseTypeObject": {
+          "id": "0350e271-ddb8-4def-a6a8-a3cf4f01bbfd",
+          "name": "Online/In person",
+          "description": "Both online and in-person components"
+        },
+        "instructorObjects": [],
+        "metadata": {
+          "createdDate": "2023-03-13T12:12:14.389+00:00",
+          "updatedDate": "2023-03-13T12:12:14.389+00:00"
+        }
+      },
+      "courseNumber": "24680",
+      "sectionName": "Sole",
+      "metadata": {
+        "createdDate": "2023-03-13T12:12:14.444+00:00",
+        "updatedDate": "2023-03-13T12:12:14.444+00:00"
+      }
+    }
+  ],
+  "totalRecords": 5
+}

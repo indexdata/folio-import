@@ -4415,6 +4415,68 @@
       "totalRecordsInFile": 0
     },
     {
+      "id": "80865c9f-57ee-49db-9124-329c8b6f051e",
+      "hrId": 203,
+      "parentJobId": "80865c9f-57ee-49db-9124-329c8b6f051e",
+      "subordinationType": "PARENT_SINGLE",
+      "jobProfileInfo": {
+        "id": "d0ebb7b0-2f0f-11eb-adc1-0242ac120002",
+        "name": "Inventory Single Record - Default Create Instance",
+        "dataType": "MARC",
+        "hidden": false
+      },
+      "sourcePath": "No file name",
+      "fileName": "No file name",
+      "runBy": {
+        "firstName": "Elisabet",
+        "lastName": "Sandström"
+      },
+      "progress": {
+        "jobExecutionId": "80865c9f-57ee-49db-9124-329c8b6f051e",
+        "current": 1,
+        "total": 1
+      },
+      "startedDate": "2026-02-06T09:36:06.032+00:00",
+      "completedDate": "2026-02-06T09:36:07.716+00:00",
+      "status": "COMMITTED",
+      "uiStatus": "RUNNING_COMPLETE",
+      "userId": "c25b5999-4ba5-4272-9443-f4c10a58f9d8",
+      "jobPartNumber": 1,
+      "totalJobParts": 1,
+      "totalRecordsInFile": 0
+    },
+    {
+      "id": "22334e2a-eb62-49aa-9579-b06c9b9cc09e",
+      "hrId": 204,
+      "parentJobId": "22334e2a-eb62-49aa-9579-b06c9b9cc09e",
+      "subordinationType": "PARENT_SINGLE",
+      "jobProfileInfo": {
+        "id": "d0ebb7b0-2f0f-11eb-adc1-0242ac120002",
+        "name": "Inventory Single Record - Default Create Instance",
+        "dataType": "MARC",
+        "hidden": false
+      },
+      "sourcePath": "No file name",
+      "fileName": "No file name",
+      "runBy": {
+        "firstName": "Elisabet",
+        "lastName": "Sandström"
+      },
+      "progress": {
+        "jobExecutionId": "22334e2a-eb62-49aa-9579-b06c9b9cc09e",
+        "current": 1,
+        "total": 1
+      },
+      "startedDate": "2026-02-06T09:40:32.613+00:00",
+      "completedDate": "2026-02-06T09:40:33.948+00:00",
+      "status": "COMMITTED",
+      "uiStatus": "RUNNING_COMPLETE",
+      "userId": "c25b5999-4ba5-4272-9443-f4c10a58f9d8",
+      "jobPartNumber": 1,
+      "totalJobParts": 1,
+      "totalRecordsInFile": 0
+    },
+    {
       "id": "5c3e980d-fda8-47de-a90c-94027d3a8cf8",
       "hrId": 159,
       "parentJobId": "5c3e980d-fda8-47de-a90c-94027d3a8cf8",
@@ -5679,5 +5741,5 @@
       "totalRecordsInFile": 0
     }
   ],
-  "totalRecords": 197
+  "totalRecords": 199
 }

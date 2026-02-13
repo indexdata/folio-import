@@ -18,50 +18,6 @@
       }
     },
     {
-      "id": "e84fd92d-a8b6-4745-a97f-a95b9ebcbc5e",
-      "name": "Tidningsläsesalen",
-      "code": "LOC-TLS",
-      "discoveryDisplayName": "Tidningsläsesalen",
-      "isActive": true,
-      "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
-      "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
-      "libraryId": "1aae945c-bdf7-4e53-a236-477b7dfc77bf",
-      "details": {},
-      "primaryServicePoint": "1876697c-c60a-42cf-8e6c-82776e7a7076",
-      "servicePointIds": [
-        "1876697c-c60a-42cf-8e6c-82776e7a7076"
-      ],
-      "servicePoints": [],
-      "metadata": {
-        "createdDate": "2025-01-17T13:47:18.074+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-06-02T06:54:06.565+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
-      "id": "92af099e-af7d-4e41-881b-5cccd299ad6a",
-      "name": "Fjärrlån",
-      "code": "LOC-ILL",
-      "discoveryDisplayName": "Fjärrlån",
-      "isActive": true,
-      "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
-      "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
-      "libraryId": "b60de2a8-8f0c-49fc-a39c-e64a271e53ff",
-      "details": {},
-      "primaryServicePoint": "f5e36187-86f3-4fe0-9076-9f5daf849d3e",
-      "servicePointIds": [
-        "f5e36187-86f3-4fe0-9076-9f5daf849d3e"
-      ],
-      "servicePoints": [],
-      "metadata": {
-        "createdDate": "2024-10-08T12:27:41.431+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-01-20T10:49:25.281+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
       "id": "c91234d9-107f-44de-a8d3-c2e6cbecee99",
       "name": "Förvärvas ej",
       "code": "LOC-EJ",
@@ -80,31 +36,6 @@
         "createdDate": "2025-07-03T14:23:34.311+00:00",
         "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
         "updatedDate": "2025-07-03T14:23:34.311+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
-      "id": "9dcf553b-3c3b-4b78-84f1-a2b2412c3911",
-      "name": "Hemlån (står framme)",
-      "code": "LOC-HEM",
-      "discoveryDisplayName": "Hemlånehylla - plan 5",
-      "isActive": true,
-      "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
-      "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
-      "libraryId": "1aae945c-bdf7-4e53-a236-477b7dfc77bf",
-      "details": {},
-      "primaryServicePoint": "ec9ed36f-f5dd-4a32-9b02-64ace39c2699",
-      "servicePointIds": [
-        "ec9ed36f-f5dd-4a32-9b02-64ace39c2699",
-        "996760f7-e64b-4c8e-b228-41f52fb9fade",
-        "e6ec10ba-cfdb-4df8-987b-5bc63255ff40",
-        "54ff2ca8-8ad5-43c5-9979-b46830455fc2"
-      ],
-      "servicePoints": [],
-      "metadata": {
-        "createdDate": "2025-01-17T13:14:45.592+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-08-20T12:06:54.317+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     },
@@ -131,10 +62,10 @@
       }
     },
     {
-      "id": "57246b20-76a7-4725-91c7-dea9f336de4f",
-      "name": "Magasin - Tryckt samling",
-      "code": "LOC-TS",
-      "discoveryDisplayName": "Magasin ",
+      "id": "9dcf553b-3c3b-4b78-84f1-a2b2412c3911",
+      "name": "Hemlån (står framme)",
+      "code": "LOC-HEM",
+      "discoveryDisplayName": "Står framme på hemlånehylla ",
       "isActive": true,
       "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
       "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
@@ -142,17 +73,38 @@
       "details": {},
       "primaryServicePoint": "ec9ed36f-f5dd-4a32-9b02-64ace39c2699",
       "servicePointIds": [
-        "996760f7-e64b-4c8e-b228-41f52fb9fade",
         "ec9ed36f-f5dd-4a32-9b02-64ace39c2699",
-        "fa60af7f-b89f-4a73-87b1-7d123900eb2f",
+        "996760f7-e64b-4c8e-b228-41f52fb9fade",
         "e6ec10ba-cfdb-4df8-987b-5bc63255ff40",
         "54ff2ca8-8ad5-43c5-9979-b46830455fc2"
       ],
       "servicePoints": [],
       "metadata": {
-        "createdDate": "2024-10-07T09:24:16.297+00:00",
+        "createdDate": "2025-01-17T13:14:45.592+00:00",
         "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-11-17T07:48:26.567+00:00",
+        "updatedDate": "2026-02-13T08:27:16.118+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "e84fd92d-a8b6-4745-a97f-a95b9ebcbc5e",
+      "name": "Tidningsläsesalen",
+      "code": "LOC-TLS",
+      "discoveryDisplayName": "Står framme i tidningsläsesalen (plan 1)",
+      "isActive": true,
+      "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
+      "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
+      "libraryId": "1aae945c-bdf7-4e53-a236-477b7dfc77bf",
+      "details": {},
+      "primaryServicePoint": "1876697c-c60a-42cf-8e6c-82776e7a7076",
+      "servicePointIds": [
+        "1876697c-c60a-42cf-8e6c-82776e7a7076"
+      ],
+      "servicePoints": [],
+      "metadata": {
+        "createdDate": "2025-01-17T13:47:18.074+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2026-02-13T08:28:05.509+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     },
@@ -160,7 +112,7 @@
       "id": "194e43a2-3781-4928-a035-fb5a7260bf65",
       "name": "Tidskriftsläsesalen",
       "code": "LOC-TLKB",
-      "discoveryDisplayName": "Annexet plan 2",
+      "discoveryDisplayName": "Står framme i tidskriftsläsesalen (plan 2)",
       "isActive": true,
       "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
       "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
@@ -174,7 +126,7 @@
       "metadata": {
         "createdDate": "2025-01-17T13:44:38.848+00:00",
         "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-11-17T07:49:28.597+00:00",
+        "updatedDate": "2026-02-13T08:28:38.870+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     },
@@ -197,56 +149,6 @@
         "createdDate": "2025-01-17T13:49:24.787+00:00",
         "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
         "updatedDate": "2025-01-24T15:37:43.685+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
-      "id": "6db63b69-bb85-4dfd-9e8e-d0bdc9046e2a",
-      "name": "Magasin - Handskrifter",
-      "code": "LOC-HS",
-      "discoveryDisplayName": "Magasin - Handskrifter",
-      "isActive": true,
-      "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
-      "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
-      "libraryId": "1aae945c-bdf7-4e53-a236-477b7dfc77bf",
-      "details": {},
-      "primaryServicePoint": "d5b51479-02ca-436f-91e0-6f8c328c7a5f",
-      "servicePointIds": [
-        "d5b51479-02ca-436f-91e0-6f8c328c7a5f",
-        "fa60af7f-b89f-4a73-87b1-7d123900eb2f",
-        "54ff2ca8-8ad5-43c5-9979-b46830455fc2",
-        "e6ec10ba-cfdb-4df8-987b-5bc63255ff40"
-      ],
-      "servicePoints": [],
-      "metadata": {
-        "createdDate": "2025-01-17T13:43:35.233+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-08-20T12:07:05.829+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
-      "id": "8b8c1458-9a3f-4a05-8832-db9131d6b103",
-      "name": "Periodikarum ",
-      "code": "LOC-PRUM",
-      "discoveryDisplayName": "Magasin - Tidskrifter under arbete",
-      "isActive": true,
-      "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
-      "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
-      "libraryId": "1aae945c-bdf7-4e53-a236-477b7dfc77bf",
-      "details": {},
-      "primaryServicePoint": "e3b2dcde-069b-43ab-ba22-b5500cefc2f6",
-      "servicePointIds": [
-        "e3b2dcde-069b-43ab-ba22-b5500cefc2f6",
-        "996760f7-e64b-4c8e-b228-41f52fb9fade",
-        "fa60af7f-b89f-4a73-87b1-7d123900eb2f",
-        "e6ec10ba-cfdb-4df8-987b-5bc63255ff40"
-      ],
-      "servicePoints": [],
-      "metadata": {
-        "createdDate": "2023-11-16T10:31:59.932+00:00",
-        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
-        "updatedDate": "2025-08-20T12:07:30.791+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     },
@@ -274,9 +176,9 @@
     },
     {
       "id": "56f66788-f415-44ed-8316-1afd5204b60d",
-      "name": "Astrid Lindgrens lgh",
+      "name": "Astrid Lindgrensamlingen",
       "code": "LOC-AL",
-      "discoveryDisplayName": "Astrid Lindgrens lägenhet",
+      "discoveryDisplayName": "Astrid Lindgrensamlingen",
       "isActive": true,
       "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
       "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
@@ -290,7 +192,7 @@
       "metadata": {
         "createdDate": "2025-01-17T13:52:56.574+00:00",
         "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-01-17T13:52:56.574+00:00",
+        "updatedDate": "2026-02-13T08:31:00.621+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     },
@@ -317,24 +219,53 @@
       }
     },
     {
-      "id": "64f9147c-e4f5-4fda-91ca-2df9163fdb36",
-      "name": "Referensbiblioteket",
-      "code": "LOC-REF",
-      "discoveryDisplayName": "Referensbiblioteket ",
+      "id": "8b8c1458-9a3f-4a05-8832-db9131d6b103",
+      "name": "Periodikarum ",
+      "code": "LOC-PRUM",
+      "discoveryDisplayName": "Magasin (beställ i förväg - lång framtagningstid)",
       "isActive": true,
       "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
       "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
       "libraryId": "1aae945c-bdf7-4e53-a236-477b7dfc77bf",
       "details": {},
-      "primaryServicePoint": "1876697c-c60a-42cf-8e6c-82776e7a7076",
+      "primaryServicePoint": "e3b2dcde-069b-43ab-ba22-b5500cefc2f6",
       "servicePointIds": [
-        "1876697c-c60a-42cf-8e6c-82776e7a7076"
+        "e3b2dcde-069b-43ab-ba22-b5500cefc2f6",
+        "996760f7-e64b-4c8e-b228-41f52fb9fade",
+        "fa60af7f-b89f-4a73-87b1-7d123900eb2f",
+        "e6ec10ba-cfdb-4df8-987b-5bc63255ff40"
       ],
       "servicePoints": [],
       "metadata": {
-        "createdDate": "2025-01-17T13:48:13.225+00:00",
+        "createdDate": "2023-11-16T10:31:59.932+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2026-02-13T10:13:51.850+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "57246b20-76a7-4725-91c7-dea9f336de4f",
+      "name": "Magasin - Tryckt samling",
+      "code": "LOC-TS",
+      "discoveryDisplayName": "Magasin (beställ i förväg)",
+      "isActive": true,
+      "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
+      "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
+      "libraryId": "1aae945c-bdf7-4e53-a236-477b7dfc77bf",
+      "details": {},
+      "primaryServicePoint": "ec9ed36f-f5dd-4a32-9b02-64ace39c2699",
+      "servicePointIds": [
+        "996760f7-e64b-4c8e-b228-41f52fb9fade",
+        "ec9ed36f-f5dd-4a32-9b02-64ace39c2699",
+        "fa60af7f-b89f-4a73-87b1-7d123900eb2f",
+        "e6ec10ba-cfdb-4df8-987b-5bc63255ff40",
+        "54ff2ca8-8ad5-43c5-9979-b46830455fc2"
+      ],
+      "servicePoints": [],
+      "metadata": {
+        "createdDate": "2024-10-07T09:24:16.297+00:00",
         "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-05-28T12:39:03.304+00:00",
+        "updatedDate": "2026-02-13T10:14:12.521+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     },
@@ -342,7 +273,7 @@
       "id": "ec0dbbbb-45fb-4622-bbee-6e82664c1a9d",
       "name": "Magasin - Vardagstryck",
       "code": "LOC-VT",
-      "discoveryDisplayName": "Magasin - Vardagstryck",
+      "discoveryDisplayName": "Magasin (beställ i förväg)",
       "isActive": true,
       "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
       "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
@@ -359,14 +290,80 @@
       "metadata": {
         "createdDate": "2024-08-30T09:39:04.048+00:00",
         "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-08-20T12:07:21.400+00:00",
+        "updatedDate": "2026-02-13T10:15:39.629+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "46d0e104-367a-4724-92e1-7feb4d7eb4e6",
+      "name": "Rogge",
+      "code": "LOC-SRO",
+      "discoveryDisplayName": "Roggebiblioteket",
+      "isActive": true,
+      "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
+      "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
+      "libraryId": "90a4a230-0302-40a3-924b-a7eece01d0a6",
+      "details": {},
+      "primaryServicePoint": "996760f7-e64b-4c8e-b228-41f52fb9fade",
+      "servicePointIds": [
+        "996760f7-e64b-4c8e-b228-41f52fb9fade"
+      ],
+      "servicePoints": [],
+      "metadata": {
+        "createdDate": "2024-06-18T09:32:58.455+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2026-02-05T10:03:19.835+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "38ea73bb-4e19-4aac-b532-8ffc2208a2f7",
+      "name": "Magasin - hemlån",
+      "code": "LOC-HEMMAG",
+      "discoveryDisplayName": "Hemlån i magasin",
+      "isActive": false,
+      "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
+      "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
+      "libraryId": "1aae945c-bdf7-4e53-a236-477b7dfc77bf",
+      "details": {},
+      "primaryServicePoint": "996760f7-e64b-4c8e-b228-41f52fb9fade",
+      "servicePointIds": [
+        "996760f7-e64b-4c8e-b228-41f52fb9fade"
+      ],
+      "servicePoints": [],
+      "metadata": {
+        "createdDate": "2026-02-10T09:09:10.461+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2026-02-12T16:57:04.102+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      }
+    },
+    {
+      "id": "64f9147c-e4f5-4fda-91ca-2df9163fdb36",
+      "name": "Referensbiblioteket",
+      "code": "LOC-REF",
+      "discoveryDisplayName": "Står framme i referensbiblioteket ",
+      "isActive": true,
+      "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
+      "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
+      "libraryId": "1aae945c-bdf7-4e53-a236-477b7dfc77bf",
+      "details": {},
+      "primaryServicePoint": "1876697c-c60a-42cf-8e6c-82776e7a7076",
+      "servicePointIds": [
+        "1876697c-c60a-42cf-8e6c-82776e7a7076"
+      ],
+      "servicePoints": [],
+      "metadata": {
+        "createdDate": "2025-01-17T13:48:13.225+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2026-02-13T08:27:46.995+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     },
     {
       "id": "5a6f32c7-716e-46ba-9208-bf565e006beb",
       "name": "Tjänsteexemplar",
-      "code": "TJ",
+      "code": "LOC-TJ",
       "discoveryDisplayName": "Tjänsteexemplar",
       "isActive": true,
       "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
@@ -381,98 +378,35 @@
       "metadata": {
         "createdDate": "2026-02-04T14:48:10.712+00:00",
         "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2026-02-04T14:48:10.712+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+        "updatedDate": "2026-02-13T18:27:38.680+00:00",
+        "updatedByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487"
       }
     },
     {
-      "id": "03a008da-7509-4b5a-8ec2-16a8a9ce8be2",
-      "name": "Använd ej",
-      "code": "vard",
-      "discoveryDisplayName": "Magasin - Vardagstryck",
+      "id": "6db63b69-bb85-4dfd-9e8e-d0bdc9046e2a",
+      "name": "Magasin - Handskrifter",
+      "code": "LOC-HS",
+      "discoveryDisplayName": "Magasin (beställ i förväg)",
       "isActive": true,
       "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
       "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
-      "libraryId": "3f6ea8d2-c350-49bf-9748-16b300381a24",
+      "libraryId": "1aae945c-bdf7-4e53-a236-477b7dfc77bf",
       "details": {},
-      "primaryServicePoint": "fa60af7f-b89f-4a73-87b1-7d123900eb2f",
+      "primaryServicePoint": "d5b51479-02ca-436f-91e0-6f8c328c7a5f",
       "servicePointIds": [
-        "fa60af7f-b89f-4a73-87b1-7d123900eb2f"
+        "d5b51479-02ca-436f-91e0-6f8c328c7a5f",
+        "fa60af7f-b89f-4a73-87b1-7d123900eb2f",
+        "54ff2ca8-8ad5-43c5-9979-b46830455fc2",
+        "e6ec10ba-cfdb-4df8-987b-5bc63255ff40"
       ],
       "servicePoints": [],
       "metadata": {
-        "createdDate": "2024-08-29T11:31:06.789+00:00",
+        "createdDate": "2025-01-17T13:43:35.233+00:00",
         "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2024-10-14T15:37:16.836+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
-      "id": "46d0e104-367a-4724-92e1-7feb4d7eb4e6",
-      "name": "Rogge",
-      "code": "LOC-SRO",
-      "discoveryDisplayName": "Roggebiblioteket",
-      "isActive": true,
-      "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
-      "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
-      "libraryId": "90a4a230-0302-40a3-924b-a7eece01d0a6",
-      "details": {},
-      "primaryServicePoint": "ce8221d5-d05a-4341-9df8-702664d0d819",
-      "servicePointIds": [
-        "ce8221d5-d05a-4341-9df8-702664d0d819"
-      ],
-      "servicePoints": [],
-      "metadata": {
-        "createdDate": "2024-06-18T09:32:58.455+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-01-17T13:53:58.915+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
-      "id": "fff2510e-db39-4f74-b106-985b567f2844",
-      "name": "Digitalt",
-      "code": "LOC-SDIG",
-      "discoveryDisplayName": "Digitalt",
-      "isActive": true,
-      "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
-      "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
-      "libraryId": "87cb1378-eea3-4cd1-915b-27034af24e8a",
-      "details": {},
-      "primaryServicePoint": "1876697c-c60a-42cf-8e6c-82776e7a7076",
-      "servicePointIds": [
-        "1876697c-c60a-42cf-8e6c-82776e7a7076"
-      ],
-      "servicePoints": [],
-      "metadata": {
-        "createdDate": "2025-01-17T13:55:53.690+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-01-17T13:55:53.690+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
-      "id": "93224f3d-4abb-4b24-a4cb-975bffdc0ff8",
-      "name": "Bålsta",
-      "code": "LOC-BAL",
-      "discoveryDisplayName": "Bålsta",
-      "isActive": true,
-      "institutionId": "85d18f8c-5da1-4e6a-a2c1-7cdcd78c2415",
-      "campusId": "73649cf1-9bb2-4f26-bbf7-32523a71ea9f",
-      "libraryId": "a8a90f32-dc82-4fd2-ad47-02682ae0fcaa",
-      "details": {},
-      "primaryServicePoint": "f7ce18a5-e9b0-47b2-8f94-a7ec1b954780",
-      "servicePointIds": [
-        "f7ce18a5-e9b0-47b2-8f94-a7ec1b954780"
-      ],
-      "servicePoints": [],
-      "metadata": {
-        "createdDate": "2024-07-02T08:50:23.624+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-01-20T10:48:43.690+00:00",
+        "updatedDate": "2026-02-13T10:14:28.934+00:00",
         "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     }
   ],
-  "totalRecords": 21
+  "totalRecords": 18
 }

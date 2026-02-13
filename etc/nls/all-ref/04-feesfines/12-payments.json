@@ -1,0 +1,22 @@
+{
+  "payments": [
+    {
+      "nameMethod": "Kort",
+      "allowedRefundMethod": false,
+      "metadata": {
+        "createdDate": "2025-09-02T13:22:56.706+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2025-09-02T13:22:56.706+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+      },
+      "ownerId": "9dd3b798-11d2-45b0-a939-b94c0440fb91",
+      "id": "fd89c3d0-4c75-4d67-b173-ccdd63e99c0c"
+    }
+  ],
+  "totalRecords": 1,
+  "resultInfo": {
+    "totalRecords": 1,
+    "facets": [],
+    "diagnostics": []
+  }
+}

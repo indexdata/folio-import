@@ -104,16 +104,16 @@
       }
     },
     {
-      "id": "162f218e-e86a-4a41-b1b0-972895c12b1c",
-      "module": "LOAN_HISTORY",
-      "configName": "loan_history",
+      "id": "d50c9c0d-4762-4521-85ba-68db8ae55c1d",
+      "module": "SETTINGS",
+      "configName": "PRINT_HOLD_REQUESTS",
       "enabled": true,
-      "value": "{\"closingType\":{\"loan\":\"interval\",\"feeFine\":null,\"loanExceptions\":[]},\"loan\":{\"duration\":6,\"intervalId\":\"Months\"},\"feeFine\":{},\"loanExceptions\":[],\"treatEnabled\":false}",
+      "value": "{\"printHoldRequestsEnabled\":true}",
       "metadata": {
-        "createdDate": "2023-11-16T13:41:21.891+00:00",
-        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
-        "updatedDate": "2025-09-19T11:04:38.938+00:00",
-        "updatedByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08"
+        "createdDate": "2026-02-12T16:21:46.361+00:00",
+        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
+        "updatedDate": "2026-02-12T16:21:46.361+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     },
     {
@@ -216,6 +216,19 @@
         "createdByUserId": "39a1ef78-5c0d-426c-b997-cb65c4f44ebd",
         "updatedDate": "2026-02-04T18:54:33.385+00:00",
         "updatedByUserId": "80c34dfc-fed7-40b1-94ea-62bfc3c4f487"
+      }
+    },
+    {
+      "id": "162f218e-e86a-4a41-b1b0-972895c12b1c",
+      "module": "LOAN_HISTORY",
+      "configName": "loan_history",
+      "enabled": true,
+      "value": "{\"closingType\":{\"loan\":\"immediately\",\"feeFine\":null,\"loanExceptions\":[]},\"loan\":{},\"feeFine\":{},\"loanExceptions\":[],\"treatEnabled\":false}",
+      "metadata": {
+        "createdDate": "2023-11-16T13:41:21.891+00:00",
+        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
+        "updatedDate": "2026-02-12T16:12:32.780+00:00",
+        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
       }
     },
     {
@@ -404,9 +417,9 @@
       }
     }
   ],
-  "totalRecords": 29,
+  "totalRecords": 30,
   "resultInfo": {
-    "totalRecords": 29,
+    "totalRecords": 30,
     "facets": [],
     "diagnostics": []
   }

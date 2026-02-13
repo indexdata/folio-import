@@ -28,16 +28,6 @@
       }
     },
     {
-      "addressType": "Pater Noster",
-      "id": "b3d92bff-70ff-40fe-b586-a9af0493c49c",
-      "metadata": {
-        "createdDate": "2025-03-26T12:41:38.507+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-03-26T12:41:38.507+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
       "addressType": "Bokskåp",
       "id": "635296fe-1fbc-43b8-8011-0c2e3808f1a3",
       "metadata": {
@@ -59,5 +49,5 @@
       }
     }
   ],
-  "totalRecords": 6
+  "totalRecords": 5
 }
