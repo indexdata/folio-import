@@ -508,9 +508,12 @@ try {
     } else if (borStat === '20') {
       gnum = '4';
       glab = 'Funktion';
-    } else if (borStat === '10' || borStat === '12') {
+    } else if (borStat === '10') {
       gnum = '5';
       glab = 'Fjärrlånebibliotek';
+    } else if (borStat === '12') {
+      gnum = '7';
+      glab = 'Fjärrlånebibliotek (utländska)';
     } else {
       gnum = '1';
       glab = 'Ordinarie';
