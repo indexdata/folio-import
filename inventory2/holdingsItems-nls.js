@@ -520,7 +520,11 @@ try {
           i.enumeration = desc || en;
         }
         i.administrativeNotes = []
-        if (adminNotes[locId]) i.administrativeNotes.push(adminNotes[locId]);
+        if (adminNotes[locId]) {
+          adminNotes[locId].forEach(n => {
+            i.administrativeNotes.push(n);
+          });
+        }
         if (loc === 'RRLEX' && st === '23' && (ips === 'LA' || ips === '')) {
           i.administrativeNotes.push('KOLLAS FÖRE LÅN');
         }
