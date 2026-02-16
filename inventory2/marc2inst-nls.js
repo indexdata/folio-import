@@ -1135,6 +1135,10 @@ try {
         writeOut(outs.err, r, true);
         continue;
       }
+      if (seen[lnum]) {
+        hrid = anum;
+        console.log(`WARN Libris num ${hrid} already used, using SYS num ${anum} instead`); 
+      }
       if (seen[hrid]) {
         ttl.err++;
         console.log(`ERROR Instance HRID ${hrid} (${anum}) already found at ${ttl.count}`);
