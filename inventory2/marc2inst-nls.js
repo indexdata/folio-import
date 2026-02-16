@@ -1137,7 +1137,7 @@ try {
       }
       if (seen[lnum]) {
         hrid = anum;
-        console.log(`WARN Libris num ${hrid} already used, using SYS num ${anum} instead`); 
+        console.log(`WARN Libris num ${lnum} already used, using SYS num ${anum} instead`); 
       }
       if (seen[hrid]) {
         ttl.err++;
