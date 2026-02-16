@@ -1332,12 +1332,7 @@ try {
           };
           if (!inst.identifiers) inst.identifiers = [];
           inst.identifiers.push(o);
-          let eo = {
-            uri: librisMap[anum].u,
-            relationshipId: refData.electronicAccessRelationships['No information provided']
-          }
-          if (!inst.electronicAccess) inst.electronicAccess = [];
-          inst.electronicAccess.push(eo);
+          inst.sourceUri = librisMap[anum].u;
         }
         if (inst.subjects) inst.subjects = dedupe(inst.subjects, [ 'value' ]);
         if (inst.identifiers) inst.identifiers = dedupe(inst.identifiers, [ 'value', 'identifierTypeId' ]);
