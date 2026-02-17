@@ -40,7 +40,8 @@ const spTran = {
       throw('Usage: node nlsCirc.js <servicepoints_file> <users_jsonl_file> <items_jsonl_file> <z36_table> [ <z310_table> <z37_table> ]');
     }
     let circDir = path.dirname(circFile);
-    const start = new Date().valueOf();
+    const start = new Date().valueOf(); 
+    const isoDate = new Date().toISOString().replace(/T.+/, '');
 
     if (!fs.existsSync(circFile)) throw(`Can't open z36 table at ${circFile}`);
     if (reqFile && !fs.existsSync(reqFile)) throw(`Can't open z37 table at ${reqFile}`);
@@ -110,6 +111,7 @@ const spTran = {
     const parseDate = (dstr, type) => {
       let dt = '';
       dstr = dstr.replace(/^(....)(..)(..)/, '$1-$2-$3');
+      if (dstr === '0000-00-00') dstr = isoDate;
       let dto = new Date(dstr)
       try {
         let dzo = dto.getTimezoneOffset()/60;
