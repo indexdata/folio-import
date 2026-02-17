@@ -37,6 +37,7 @@ const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
     for await (const line of rl) {
       x++;
       let rec = JSON.parse(line);
+      let lDate = new Date();
       if (config.expiry && config.expiry <= lDate.valueOf()) {
         config = await getAuthToken(superagent);
       }
