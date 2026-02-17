@@ -3,7 +3,7 @@ const superagent = require('superagent');
 const { getAuthToken } = require('./lib/login');
 
 let ten = process.argv[2];
-const ep = 'loan-storage/loans';
+const ep = 'loan-storage/loans?query=id==*';
 
 const wait = (ms) => {
   return new Promise((resolve) => {
