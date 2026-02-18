@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "ajv": "^6.12.6",
+    "ajv": "^8.18.0",
     "csv-parse": "^4.15.3",
     "jsonpath": "^1.2.1",
     "uuid": "^3.3.3",
