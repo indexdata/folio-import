@@ -24,8 +24,9 @@ const mods = {
   },
   circ: {
     loans: 'loan-storage/loans',
-    '-open loans': 'loan-storage/loans?query=status.name==open',
-    '-closed loans': 'loan-storage/loans?query=status.name==closed',
+    '-open loans': 'loan-storage/loans?query=status.name==open&limit=0',
+    '-closed loans': 'loan-storage/loans?query=status.name==closed&limit=0',
+    '-held loans': 'loan-storage/loans?query=forUseAtLocation.status==Held&limit=0',
     requests: 'circulation/requests',
     '-open requests': 'circulation/requests?query=status=open',
     '-closed requests': 'circulation/requests?query=status=closed'
