@@ -23,7 +23,8 @@ const files = {
   c: 'purchase-orders-pending',
   l: 'po-lines',
   n: 'pol-notes',
-  s: 'adm2pol'
+  s: 'adm2pol',
+  le: 'poline-errors'
 };
 
 const zfiles = {
@@ -65,7 +66,8 @@ const checkPo = (po, raw) => {
 const checkPol = (pol, raw) => {
   if (!pol.titleOrPackage) {
     let rawStr = JSON.stringify(raw);
-    if (process.env.DEBUG) console.log(`ERROR titleOrPackage not found for ${rawStr}`);
+    console.log(`ERROR titleOrPackage not found for ${pol.poLineNumber}`);
+    writeOut(files.le, raw);
     return false;
   } else {
     return true;
@@ -413,6 +415,7 @@ const parseInst = (pol, inst, refData) => {
 
       } else {
         ttl.le++;
+
       }
       
       let z78 = d.z78[key];
