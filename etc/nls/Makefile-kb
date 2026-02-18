@@ -21,7 +21,7 @@ setup:
 	cd $(iref); rm *.tsv; ln -s $(etc)/*.tsv .
 
 instances:
-	cd $(inv2); snapshotId=98195f69-ee1e-5cb8-bd28-a9f8f0942c89 node marc2inst-nls.js $(con) $(idir)/bibs.mrc > $(ldir)/makeInst.log 2>$(ldir)/makeInst.err &
+	cd $(inv2); node --max-old-space-size=4096 marc2inst-nls.js $(con) $(idir)/bibs.mrc > $(ldir)/makeInst.log 2>$(ldir)/makeInst.err &
 
 items:
 	cd $(inv2); node --max-old-space-size=4096 holdingsItems-nls.js $(con) $(idir)/bibs.map > $(ldir)/makeHoldingsItems.log 2>$(ldir)/makeHoldingsItems.err &
@@ -30,10 +30,10 @@ suppress:
 	cd $(inv2); node --max-old-space-size=4096 suppressInst-nls.js $(idir)/bibs-suppress.jsonl
 
 inventory-prep:
-	cd $(idir); cat bibs-xholdings.jsonl >> bibs-holdings.jsonl
-	cd $(inv2); node --max-old-space-size=4096 suppressInst-nls.js "$(idir)/bibs-suppress.jsonl"
+	cd $(idir); cat bibs-xitems.jsonl >> bibs-items.jsonl
+	# cd $(inv2); node --max-old-space-size=4096 suppressInst-nls.js "$(idir)/bibs-suppress.jsonl"
 	cd $(idir); split -n l/2 bibs-instances.jsonl in
-	cd $(idir); split -n l/2 bibs-srs.jsonl sr
+	# cd $(idir); split -n l/2 bibs-srs.jsonl sr
 	cd $(idir); split -n l/2 bibs-holdings.jsonl ho
 	cd $(idir); split -n l/2 bibs-items.jsonl it
 
@@ -62,10 +62,17 @@ rulesets:
 	cd $(acq); node nlsRuleSets $(odir)
 
 circ:
-	cd $(cdir); mv -f z36.seqaa z36.dsv; true; mv -f z37.seqaa z37.dsv; true
+	cd $(cdir); mv -f z36.seqaa z36.dsv; true; mv -f z37.seqaa z37.dsv; true; mv -f z310.seqaa z310.dsv
 	cd $(wd); [ -f $(cdir)/users.jsonl ] || node downloadJSONL 'users?limit=5000&query=barcode==* sortBy id' $(cdir)/users.jsonl
-	cd $(wd)/patrons; node --max-old-space-size=5120 nlsCirc $(iref)/service-points.json $(cdir)/users.jsonl $(idir)/bibs-items.jsonl $(cdir)/z36.dsv $(cdir)/z37.dsv > $(ldir)/makeCirc.log 2>$(ldir)/makeCirc.err &
+	cd $(wd)/patrons; node --max-old-space-size=5120 nlsCirc $(iref)/service-points.json $(cdir)/users.jsonl $(idir)/bibs-items.jsonl $(cdir)/z36.dsv $(cdir)/z310.dsv $(cdir)/z37.dsv > $(ldir)/makeCirc.log 2>$(ldir)/makeCirc.err &
 	tail -f $(ldir)/makeCirc.log
 
 split-circ: $(cdir)/checkouts.jsonl
-	cd $(cdir); split -l 2500 checkouts.jsonl chk
+	cd $(cdir); split -l 1500 checkouts.jsonl chk
+	cd $(cdir); split -l 1500 reading-room.jsonl rrchk
+
+clean-circ: $(cdir)/*.dsv
+	cd $(cdir); mv z36.dsv z36.seqaa
+	cd $(cdir); mv z37.dsv z37.seqaa
+	cd $(cdir); mv z310.dsv z310.seqaa
+
