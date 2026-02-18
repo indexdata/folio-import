@@ -145,6 +145,57 @@ const spTran = {
       rrerr: 0
     }
 
+    const rrMap = {};
+
+    if (rroomFile) {
+      console.log(`Reading reading room lines from ${rroomFile}`);
+      let csv = fs.readFileSync(rroomFile, {encoding: 'utf8'});
+      const inRecs = parse(csv, {
+        columns: true,
+        skip_empty_lines: true,
+        delimiter: '\t',
+        relax_column_count: true,
+        bom: true
+      });
+
+      console.log('Total rows in reading room file:', inRecs.length);
+
+      inRecs.forEach(r => {
+        let uid = r.Z310_ID;
+        let user = users[uid];
+        if (user) {
+          let ibcode = r.Z310_BARCODE;
+          rrMap[ibcode] = 1;
+          let item = bcodeMap[ibcode];
+          if (item) {
+            let sp = r.Z310_RR_ID;
+            let od = r.Z310_OUT_DATE;
+            let ld = r.Z310_OPEN_DATE;
+            let loanDate = parseDate(ld);
+            let spId = spTran[sp];
+            let o = {
+              servicePointId: spId,
+              itemBarcode: ibcode,
+              userBarcode: user.bc,
+              loanDate: loanDate,
+              held: (od === '0') ? true : false
+            };
+            // all items will be on holdshelf
+            o.held = true;
+            // console.log(o);
+            writeOut(outFiles.rr, o);
+            ttl.rr++;
+          } else {
+            console.log(`ERROR Reading room item ${ibcode} not found!`);
+            ttl.rrerr++;
+          }
+        } else {
+          console.log(`ERROR Reading room user ${uid} not found!`)
+          ttl.rrerr++;
+        }
+      });
+    }
+
     console.log(`Reading circ lines from ${circFile}`);
     let csv = fs.readFileSync(circFile, {encoding: 'utf8'});
     const inRecs = parse(csv, {
@@ -192,8 +243,10 @@ const spTran = {
         if (user.ex) loan.expirationDate = user.ex;
         if (loan.servicePointId) {
           if (dbug) loan.__ = r;
-          writeOut(outFiles.co, loan);
-          ttl.co++;
+          if (!rrMap[item.bc]) {
+            writeOut(outFiles.co, loan);
+            ttl.co++;
+          }
           if (!user.active) {
             writeOut(outFiles.ia, loan);
             ttl.ia++;
@@ -300,53 +353,7 @@ const spTran = {
       });
     }
 
-    if (rroomFile) {
-      console.log(`Reading reading room lines from ${rroomFile}`);
-      let csv = fs.readFileSync(rroomFile, {encoding: 'utf8'});
-      const inRecs = parse(csv, {
-        columns: true,
-        skip_empty_lines: true,
-        delimiter: '\t',
-        relax_column_count: true,
-        bom: true
-      });
-
-      console.log('Total rows in reading room file:', inRecs.length);
-
-      inRecs.forEach(r => {
-        let uid = r.Z310_ID;
-        let user = users[uid];
-        if (user) {
-          let ibcode = r.Z310_BARCODE;
-          let item = bcodeMap[ibcode];
-          if (item) {
-            let sp = r.Z310_RR_ID;
-            let od = r.Z310_OUT_DATE;
-            let ld = r.Z310_OPEN_DATE;
-            let loanDate = parseDate(ld);
-            let spId = spTran[sp];
-            let o = {
-              servicePointId: spId,
-              itemBarcode: ibcode,
-              userBarcode: user.bc,
-              loanDate: loanDate,
-              held: (od === '0') ? true : false
-            };
-            // all items will be on holdshelf
-            o.held = true;
-            // console.log(o);
-            writeOut(outFiles.rr, o);
-            ttl.rr++;
-          } else {
-            console.log(`ERROR Reading room item ${ibcode} not found!`);
-            ttl.rrerr++;
-          }
-        } else {
-          // console.log(`ERROR Reading room user ${uid} not found!`)
-          ttl.rrerr++;
-        }
-      });
-    }
+    
 
     const end = new Date().valueOf();
     const time = (end - start)/1000;
