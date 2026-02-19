@@ -1422,10 +1422,11 @@ try {
           let b = getSubs(f, 'b');
           if (b) {
             b = b.padStart(9, '0');
-            let key = b + '::' + inst.id;
+            let superHrid = (librisMap[b]) ? librisMap[b].n : b;
+            let key = superHrid + '::' + inst.id;
             let o = {
               id: uuid(key, ns),
-              superInstanceId: uuid(b, ns),
+              superInstanceId: uuid(superHrid, ns),
               subInstanceId: inst.id,
               instanceRelationshipTypeId: refData.instanceRelationshipTypes['multipart monograph']
             };
