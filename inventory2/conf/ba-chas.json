@@ -1,0 +1,14 @@
+{
+    "nameSpace": "073b7733-6f48-4a95-b244-1565ec084cf0",
+    "refDir": "/Users/charles/Folio/ba/ref/inv",
+    "tsvDir": "/Users/charles/Folio/folio-import/etc/ba",
+    "mapFile": "",
+    "controlNum": "",
+    "hridPrefix": "ba",
+    "makeInstMap": true,
+    "hasMfhd": true,
+    "noTitle": "[Unknown title]",
+    "catDate": { "tag": "008" },
+    "suppress": { "tag": "908", "subfield": "x", "value":"Y" },
+    "callNumbers": {}
+}

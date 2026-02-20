@@ -1,0 +1,86 @@
+Location Code	Location Name	Location Display	MFHD Perm Loc (Unsuppressed)	Item Perm Loc (Unsuppressed)	Item Temp Loc (Unsuppressed)	MFHD Perm Loc (Suppressed)	Item Perm Loc (Suppressed)	Item Temp Loc (Suppressed)	Unsuppressed	Suppressed	FOLIO Code	FOLIO Name	FOLIO Display
+Acq	Acquisition	Acquisitions Dept.	652	0	0	3182	0	0	Keep	Purge	Acquisition	Acquisitions	Acquisitions
+adams	adams	Adams (Appointment required)	809	806	0	0	0	0	Keep	Purge	Adams	Adams	Adams (Appointment Required)
+archives	Archives	Archives (Appointment required)	674	861	0	2	1	0	Keep	Purge	Archives	Archives	Archives (Appointment Required)
+artfile	art dept collection files	Art Dept. Files (Contact Curator of Paintings & Sculpture)	110	110	0	0	0	0	Keep	Purge	Curatorial Files	Curatorial Files	Curatorial Files (Appointment Required)
+atlas	atlas	LC Atlas	16	27	0	0	0	0	Keep	Purge	Atlas (LC)	Atlas (LC)	Atlas (LC)
+bind	bindery	Bindery	0	0	0	0	0	0	Keep	Purge	Bindery	Bindery	At Bindery
+bookplate	bookplate	Bookplate (Appointment required)	172	182	0	0	0	0	Keep	Purge	Bookplate	Bookplate	Bookplate Collection (Appointment Required)
+broadside	broadside	Broadside (Appointment required)	1579	1588	0	1	1	0	Keep	Purge	Broadside	Broadside	Broadside Colllection (Appointment Required)
+Cataloging	Cataloging	Processing	0	0	262	1	0	0	Keep	Purge	In Processing	In Processing	In Processing
+child	child	Children's Library	2046	2070	23	1567	10	0	Keep	Purge	Child	Child	Children's Library
+child-new	child-new	New Books (Children's Room)	0	0	92	0	0	3	Keep	Purge	Child-New	Child-New	New Books (Children's Library)
+childpix	childpix	Children Picture Book	2275	2282	3	1033	10	0	Keep	Purge	Childpix	Childpix	Children's Picture Books
+circ-desk	circulation desk	Circulation Desk	5	52	0	0	0	0	Keep	Purge	Circ. Desk	Circulation Desk	Circulation Desk
+conserv	Conservation Dept.	Conservation Dept.	0	0	5	0	0	0	Keep	Purge	Conservation Lab	Conservation Lab	Conservation Lab (Please Consult Reference Librarian)
+csa	csa	Confederate Collection (Appointment required)	3842	4325	0	0	0	0	Keep	Purge	Confederate	Confederate Imprints	Confederate Imprints Collection (Appointment Required)
+cutter	cutter	Cutter Classification	202134	289865	0	220	6137	0	Keep	Purge	Cutter	Cutter	Cutter Classification
+cutter-not	cutter-not	Cutter -- non circulating	2800	7124	0	3	92	0	Keep	Purge	Cutter-Not	Cutter-Not	Cutter Classification (Non-Circulating)
+cuttermap	cuttermap	Cutter Map - Non-circulating (Appointment required)	376	387	0	0	0	0	Keep	Purge	Cutter Rare Map	Cutter Rare Map	Cutter Rare Map (Appointment Required)
+cutterrare	cutterrare	Rare (Cutter) (Appointment required)	9912	16526	1	6	11	0	Keep	Keep	Cutter Rare	Cutter Rare	Cutter Rare (Appointment Required)
+dec-arts	decorative arts	Decorative Arts	2	2	0	0	0	0	Keep	Purge	Decorative Arts	Decorative Arts	Decorative Arts (Appointment Required)
+display	Featured Books	Featured Books	0	0	56	0	0	1	Keep	Purge	Featured Books	Featured Books	Featured Books
+imaging	Digital Studio	Digital Studio	2	2	28	0	0	0	Keep	Purge	Digital Studio	Digital Studio	Digital Studio (Please Consult Reference Librarian)
+knox	knox	Knox Collection (Appointment required)	324	552	0	1	13	0	Keep	Keep	Knox	Knox	Knox Collection (Appointment Required)
+main	main	Library of Congress Classification	115723	137636	208	695	108	1	Keep	Purge	Main (LC)	Main (LC)	Library of Congress Classification
+main-not	main-not	Library of Congress -- non circulating	128	346	0	0	0	0	Keep	Purge	Main (LC) (Non-Circ)	Main (LC) (Non-Circ)	Reference Confederate Imprints (Non-Circulating)
+map	map	LC Map	3	3	0	1	0	0	Keep	Keep	LC Map	LC Map	Library of Congress Classification Map
+mapflat	mapflat	LC Flat Map (Appointment required)	82	82	0	1	0	0	Keep	Purge	LC Flat Map	LC Flat Map	Library of Congress Classification Flat Map (Appointment Required)
+micro	micro	Microform - Please Consult Reference Librarian	75	182	0	1	0	0	Keep	Purge	Micro	Micro	Microform (Please Consult Reference Librarian)
+mss	Manuscripts	Mss. (Appointment required)	2061	2978	0	1	0	0	Keep	Purge	Manuscripts (Mss.)	Manuscripts (Mss.)	Manuscripts Collection (Mss.) (Appointment Required)
+newbook	newbook	New Book Shelves	0	0	1906	1	0	2	Keep	Purge	New Books	New Books	New Books Shelves
+news-rare	newspaper-rare	Rare Newspaper (Appointment required)	146	55	0	2	0	0	Keep	Purge	Cutter Rare-News	Cutter Rare-Newspaper	Cutter Rare Newspaper (Appointment Required)
+newspaper	newspaper	Rare Newspaper (Appointment required)	1023	75	1	0	0	0	Keep	Purge	Rare-News	Rare-Newspaper	Rare Newspaper (Appointment Required)
+offsite1	off-site storage	Off-site Storage	20609	49019	0	3	1	0	Keep	Purge	Off-Site Storage	Off-Site Storage	Off-Site Storage (Please Consult Reference Librarian)
+offsite2	off-site storage boxes	Off-site Storage Box	4846	5427	0	0	0	0	Keep	Purge	Off-Site Storage Boxes	Off-Site Storage Boxes	Off-Site Storage Boxes (Please Consult Reference Librarian)
+offsite3	off-site storage sc	Off-site Storage SC (Appointment required)	590	1586	0	0	0	0	Keep	Purge	Off-Site Storage SC	Off-Site Storage SC	Off-Site Storage Special Collections (Appointment Required)
+pckscanddb	Pick&Scan Corrections	In Process To Storage	0	0	2	0	0	0	Keep	Purge	Pick & Scan	Pick & Scan	Pick & Scan (In Processing)
+print	Print Room	Prints and Photographs Dept. (Appointment required)	12927	13044	2	1	1	0	Keep	Purge	Prints and Photos	Prints and Photos	Prints and Photographs Collections (Appointment Required)
+rare	rare	Rare Book (LC) (Appointment required)	18950	24844	0	234	8	0	Keep	Purge	Rare (LC)	Rare (LC)	Rare Book (LC) (Appointment Required)
+rareatlas	rareatlas	Rare Atlas (LC) (Appointment required)	104	124	0	0	0	0	Keep	Purge	Rare Atlas (LC)	Rare Atlas (LC)	Rare Atlas (LC) (Appointment Required)
+rareflatmp	Rare Flat Map (LC)	Rare Flat Map (LC) (Appointment required)	517	554	0	0	0	0	Keep	Purge	Rare Flat Map (LC)	Rare Flat Map (LC)	Rare Flat Map (LC) (Appointment Required)
+rareglobe	rareglobe	Rare Globe  (LC) (Appointment required)	2	2	0	0	0	0	Keep	Purge	Rare Globe (LC)	Rare Globe (LC)	Rare Globe  (LC) (Appointment Required)
+raremap	raremap	Rare Map (LC) (Appointment required)	114	114	0	0	0	0	Keep	Purge	Rare Map (LC)	Rare Map (LC)	Rare Map (LC) (Appointment Required)
+rarerollmp	Rare Rolled Map	Rare Rolled Map (Appointment required)	23	23	0	0	0	0	Keep	Purge	Rare Rolled Map	Rare Rolled Map	Rare Rolled Map (LC) (Appointment Required)
+ref	ref	Ref	2738	5958	27	35	3	0	Keep	Purge	Ref	Ref	Reference (Non-Circulating)
+ref3	ref3	Ref 3	724	1346	1	7	0	0	Keep	Purge	Ref 3 (Cataloging)	Ref 3 (Cataloging)	Reference Cataloging (Non-Circulating)
+ref5	ref5	Ref 5	5	5	0	1	0	0	Keep	Purge	Ref 5	Ref 5	Reference 5th Floor (Non-Circulating)
+refatlas	Ref Atlas	Ref Atlas	5	6	0	1	0	0	Keep	Purge	Ref Atlas	Ref Atlas	Reference Atlas (Non-Circulating)
+refb	refb	Ref B	392	431	2	7	2	0	Keep	Purge	Ref B (Conservation)	Ref B (Conservation)	Reference Conservation Lab (Non-Circulating)
+refcsa	refcsa	Ref CSA	125	145	0	0	0	0	Keep	Purge	Ref Confederate (CSA)	Ref Confederate (CSA)	Reference Confederate Imprints (Non-Circulating)
+refprint	refprint	Ref Print	796	1026	8	14	1	0	Keep	Purge	Ref Print	Ref Print	Reference Prints and Photographs Collection (Non-Circulating)
+refrare	Ref Rare	Rare Book Curator's Office	88	132	0	0	0	0	Keep	Purge	Ref Rare	Ref Rare 	Reference Rare Book Curator's Office (Non-Circulating)
+refT	Ref Travel	Ref Travel	483	475	1	110	1	0	Keep	Purge	Ref Travel	Ref Travel	Reference Travel (14 Days Circulation)
+tbmr	tbmr	TBMR (Appointment required)	18754	37012	1	1	1	0	Keep	Purge	TBMR	TBMR	TBMR Rare Materials (Appointment Required)
+tract	tract	Tract (Appointment required)	24339	24549	10	2	1	0	Keep	Purge	Tract	Tract	Tract (Appointment Required)
+vershbow	Vershbow Reading Room	Vershbow Reading Room (Appointment required)	41	65	0	0	0	0	Keep	Purge	Vershbow	Vershbow 	Vershbow Reading Room (Appointment Required)
+wash-iana	Washingtoniana	Washingtoniana Collection (Appointment required)	997	1128	0	0	0	0	Keep	Purge	Washingtoniana	Washingtoniana	Washingtoniana Collection (Appointment Required)
+washington	washington	Washington Collection (Appointment required)	751	964	0	0	0	0	Keep	Purge	Washington	Washington	Washington Collection (Appointment Required)
+y.a.	young adult	Young Adult (Children's Room)	484	489	5	345	4	0	Keep	Purge	YA	Young Adult	Young Adult Collection 
+Acq-ser	Serials Acquisitions		0	0	0	8	0	0	Purge	Purge	Cancel location 		
+archivdesk	Archivist's Desk	Archivist's Desk	0	0	0	0	0	0	Purge	Purge	Cancel location 		
+art-ref	Art Curator's Office	Art Curator's Office	0	0	0	0	0	0	Purge	Purge	Cancel location 		
+audio	audio book	Audio Book	0	0	0	431	0	0	Purge	Purge	Cancel location 		
+child-audi	child-audio	Children's Audio Book	0	0	0	139	0	0	Purge	Purge	Cancel location 		
+child-av	child-av	Children A/V	0	0	0	18	0	0	Purge	Purge	Cancel location 		
+child-hist	child-historical	Children's Room Display Cabinet (See Children's Librarian)	1	1	8	0	0	0	Purge	Purge	Cancel locaton 		
+child-libn	child-libn	Children's Librarian Reference	0	0	0	1	0	0	Purge	Purge	Cancel location 		
+child-ref	child-ref	Children's Reference	0	0	2	18	0	0	Purge	Purge	Cancel location 		
+Circ	Circulation Dept.	circulation	0	0	1	3	0	0	Purge	Purge	Cancel location 		
+diredoff	Director of Ed. Office	Director of Education Office	0	0	2	0	0	0	Purge	Purge			
+electronic	electronic resource	Online	276	276	0	0	0	0	Purge	Purge	Cancel location		
+exhibit	exhibition	In Exhibition: Framing Freedom: The Harriet Hayden Albums	0	1	0	0	0	0	Purge	Purge	Cancel location		
+loan	Exhibition (Loan)		0	0	0	0	0	0	Purge	Purge	Cancel location		
+media	media	Media - Please Consult Reference Librarian	0	0	0	4	0	0	Purge	Purge	Cancel location 		
+nedl	nedl	New England Deposit Library	0	0	18	0	0	0	Purge	Purge	Cancel location 		
+Personal	Personal		0	0	0	62	0	0	Purge	Purge	Cancel location 		
+pr-storage	Storage-Print Room	Storage-Print Room	4	1	1	0	0	0	Purge	Purge	Cancel location 		
+rarefltmap	VSCR Flat Map	VSCR Flat Map (LC) (Appointment required)	3	0	0	0	0	0	Purge	Purge	Cancel Location 		
+reading	reading room	Reading Room	0	0	0	0	0	0	Purge	Purge	Cancel Location 		
+ref1	ref1	Ref 1 (12 Beacon Street)	0	0	2	0	0	0	Purge	Purge	Cancel Location 		
+ref2	ref2	Art Reference	0	0	0	7	0	0	Purge	Purge	Cancel Location 		
+ref2g	ref2g	Ref 2G	0	0	0	1	0	0	Purge	Purge	Cancel Location 		
+ref4g	ref4g	Development Office	0	0	0	2	0	0	Purge	Purge	Cancel Location 		
+refdir	refdir	Director's Office	0	0	0	1	0	0	Purge	Purge	Cancel Location 		
+video	video	Video	0	0	0	1	0	0	Purge	Purge	Cancel Location 		
+		Totals:	456,659	636,865	2,678	8,175	6,406	7					

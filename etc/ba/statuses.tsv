@@ -1,0 +1,23 @@
+Legacy status code	Legacy item status	Item count	Action to take	FOLIO item status	Notes for Alexis						
+1	Not Charged	638,860	Keep	Available							
+2	Charged	1,348	Keep	Checked out	Status will migrate with circ data						FOLIO Statuses:
+3	Renewed	559	Merge	Checked out	Status will migrate with circ data						In process
+4	Overdue	253	Merge	Checked out	Status will migrate with circ data						In process (non-requestable)
+6	Hold Request	85	Keep	Paged/On hold							Aged to Lost
+7	On Hold	9	Keep	Paged/On hold							Available
+9	In Transit Discharged	78	Merge	Available							Intellectual item
+11	Discharged	30	Merge	Available							In transit
+12	Missing	411	Keep	Missing							Awaiting delivery 
+13	Lost--Library Applied	20	Keep	Declared Lost	Lost items in locations "cutter"; "cutter-not"; "off-site storage", "off-site storage boxes"; and "RefPrint' should be migrated.						Awaiting pickup
+14	Lost--System Applied	719	Keep	Aged to Lost	Lost items in locations "cutter"; "cutter-not"; "off-site storage boxes"; and "RefPrint" should be migratted. (Status will migrate with circ data)						Checked out
+16	Damaged	4	Keep	Available (w/ Damaged condition)	Damaged is a condition in FOLIO, not a status						Claimed Returned
+18	At Bindery	40	Merge	In process	Put items in bindery location if not already 						Lost and paid
+19	Cataloging Review	4	Merge	Available							Missing
+22	In Process	166	Keep	In process							Declared lost
+											On order
+											Order closed
+											Paged
+											Unavailable
+											Unknown
+											Restricted
+											Withdrawn 

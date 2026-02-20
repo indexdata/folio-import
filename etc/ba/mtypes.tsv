@@ -1,0 +1,51 @@
+Legacy Code	Legacy Name	Legacy Display	Count Perm (Unsuppressed)	Count Temp (Unsuppressed)	Count Perm (Suppressed)	Count Temp (Suppressed)	Perm Type (Unsuppressed)	Perm Type (Suppressed)	FOLIO Name	Notes
+print-pix	print-pix	Graphic	12846	1	1	0	Keep	Keep	Graphic	
+book-new14	book-new (14 days)	New Book (14 days)	375	2158	1	9	Keep	Keep	New Book (14 days)	Anything in the temp itype New Book (14 days) should go into the temp loc New Book (14 days)
+book-new28	book-new (28 days)	New Book (28 days)	0	102	1	0	Keep	Keep	New Book (28 days)	Anything in the temp itype New Book (28 days) should go into the temp loc New Book (28 days)
+special-m	special collections-mono	Special Collections - monograph 	72498	0	39	0	Keep	Keep	Special Collections - Monograph	
+audio-no	audio-no circ	Audio - Non-circulating	174	0	0	0	Keep	Keep	Audio - Non-circulating	Purge unless in "Archives (Appointment required)" location
+book-circ	book-circ	Book - Circulating	399814	85	209	0	Keep	Purge	Book - Circulating	
+book-nocir	book-no circ	Book - Non-circulating	15902	8	5	0	Keep	Purge	Book - Non-circulating	
+data-nocir	data-no circ	Data - No Circ	144	0	1	0	Keep	Purge	Data - No Circ	
+data-circ	data-circ	Data-Circ	23	0	1	0	Keep	Purge	Data-Circ	
+in BA 8hrs	in BA 8 hours	In Library Use (8 hours)	52	0	0	0	Keep	Purge	In Library Use (8 hours) "Lamps"	
+map-norare	map-not rare	Map - Non-circulating	441	0	0	0	Keep	Purge	Map - Non-circulating	
+ser-circ	serial-circ	Serial (Circulating)	791	0	94	0	Keep	Purge	Serial (Circulating)	
+ser-nocirc	serial-no circ	Serial (Non-circulating)	88337	0	6006	0	Keep	Purge	Serial (Non-circulating)	
+tract-ser	tract-ser	Serial (Non-circulating) 	268	1	0	0	Keep	Purge	Serial Tract	
+special-s	special collections-ser	Special Collections - serial	20760	0	14	0	Keep	Purge	Special Collections - Serial	
+tract-book	tract-book	Book	23939	0	1	0	Keep	Purge	Tract	
+video	video	Video	3	0	0	0	Keep	Purge	Video	3 items in rare and tract
+data-2hr	data-2 hours	data-2 hours	3	0	0	0	Purge	Purge		
+electronic	electronic resource	Electronic Resource	272	0	0	0	Purge	Purge		
+audio	audio	audio	252	0	4	0	Purge	Purge	Audio	Purge unless in "Archives (Appointment required)" location (delimiter archives in holdings record)
+		Totals	636,894	2,355	6,377	9				
+										
+Note: FOLIO does not have temporary item types										
+Note: item ID 609452 has the item type id "15" which does not correspond to anything in the item_type table										
+Note: the following item has temp item type id of "7" which does not correspond to any current item type: 547388 will be migrated with no temp item type if not updated										
+										
+										
+										
+										
+										
+										
+										
+										
+										
+										
+										
+										
+										
+										
+										
+										
+										
+										
+										
+										
+										
+										
+										
+										
+Total suppressed items										
