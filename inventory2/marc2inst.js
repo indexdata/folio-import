@@ -199,12 +199,15 @@ const funcs = {
     return r;
   },
   set_subject_source_id: function (data, param) {
-    return refData.subjectSources[data] || refData.subjectSources['Source not specified'];
+    let k = (param && param.name) ? param.name.toLowerCase() : 'source not specified';
+    return refData.subjectSources[k] || '';
   },
   set_subject_type_id: function (data, param) {
+    let k = (param && param.name) ? param.name.toLowerCase() : 'type of entity unspecified';
+    return refData.subjectTypes[k] || '';
   },
   set_subject_source_id_by_code: function (data, param) {
-    return refData.subjectSources[data] || refData.subjectSources['Source not specified'];
+    return refData.subjectSources[data] || refData.subjectSources['source not specified'];
   },
   trim: function (data) {
     data = data.trim();
@@ -502,13 +505,13 @@ try {
           refData[prop][p.code] = p.id;
         } 
         if (p.name) {
-          if (prop === 'contributorTypes') p.name = p.name.toLowerCase();
+          if (prop.match(/^(contributorTypes|subjectTypes|subjectSources)$/)) p.name = p.name.toLowerCase();
           refData[prop][p.name] = p.id;
         }
       });
     } catch {}
   });
-  // throw(refData);
+  // throw(refData.subjectSources);
 
   // create tsv map
   if (conf.tsvDir) {
