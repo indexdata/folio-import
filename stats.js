@@ -45,6 +45,12 @@ const mods = {
     agreements: 'erm/sas?stats=true',
     licenses: 'licenses/licenses?stats=true',
     notes: 'notes?query=domain==agreements&limit=1'
+  },
+  orders: {
+    purchaseOrders: 'orders-storage/purchase-orders',
+    poLines: 'orders-storage/po-lines',
+    compositeOrders: 'orders/composite-orders',
+    polNotes: 'notes?query=domain==orders'
   }
 };
 
