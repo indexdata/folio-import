@@ -269,12 +269,15 @@ try {
         nfields.forEach(f => {
           let d = p[f];
           if (d) {
-            d.split(/\$/).forEach(n => {
+            // d = d.replace(/\$(\d)/g, '%%$1');
+            d.split(/\*/).forEach(n => {
+              // n = n.replace(/%%/g, '$');
               let t = refData.noteTypes['General'];
               let popCo = (f === 'MESSAGE') ? true : false;
               let popUser = (f === 'WEB NOTE') ? true : false;
               let o = makeNote(n, u.id, t, popCo, popUser, f);
               writeOut(files.n, o);
+              ncount++;
             });
           }
         });
@@ -297,6 +300,7 @@ try {
   console.log('Users created:', success, '-->', files.u);
   console.log('Perms created:', success, '-->', files.p);
   console.log('Prefs created:', success, '-->', files.r);
+  console.log('Notes created:', ncount, '-->', files.n);
   console.log('Errors:', ecount, '-->', files.e);
   console.log('Time (secs):', t);
 } catch (e) {
