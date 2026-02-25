@@ -17,8 +17,8 @@ const dbug = process.env.DEBUG;
 const tsvCols = {
   locations: [0, 11],
   mtypes: [0, 9],
-  statuses: [0, 4],
-  statisticalCodes: [0, 4]
+  statuses: [1, 4],
+  statisticalCodes: [1, 4]
 };
 
 const typeMap = {
@@ -63,14 +63,20 @@ const cnTypeMap = {
   '8': '6caca63e-5651-4db6-9247-3205156e9699'
 }
 
-const inotes = [];
+const inotes = {
+  q: "Voyager Note",
+  f: "Voyager Historical Charges",
+  z: "Voyager Create Date",
+  m: "Voyager Modify Date",
+  e: "Voyager Create Operator",
+  p: "Voyager Modify Operator"
+};
 
 const writeOut = (outStream, data, notJson, newLineChar) => {
   let nl = newLineChar || '';
   let dataStr = (notJson !== undefined && notJson) ? data + nl: JSON.stringify(data) + '\n';
   outStream.write(dataStr, 'utf8');
 };
-
 
 const makeNote = function (text, type, staffOnly) {
   if (!type) throw new Error('Note type not found');
@@ -93,7 +99,7 @@ const makeItemNote = function (text, type, staffOnly) {
 }
 
 try {
-  if (!mfhdFile) { throw "Usage: node holdingsItems-massart.js <conf_file> <mfhd_jsonl_file>" }
+  if (!mfhdFile) { throw "Usage: node holdingsItems-ba.js <conf_file> <mfhd_jsonl_file>" }
   let confDir = path.dirname(confFile);
   let confData = fs.readFileSync(confFile, { encoding: 'utf8' });
   let conf = JSON.parse(confData);
@@ -211,7 +217,12 @@ try {
       let ih = {};
       r.subfields.forEach(s => {
         let code = Object.keys(s)[0]
-        ih[code] = s[code];
+        if (code.match(/[jqfzmep]/)) {
+          if (!ih[code]) ih[code] = [];
+          ih[code].push(s[code]);
+        } else {
+          ih[code] = s[code];
+        }
       });
       let iid = holdings.hrid.replace(/^[a-z]+/, iprefix);
       if (occ[iid] === undefined) {
@@ -229,7 +240,8 @@ try {
         holdingsRecordId: holdings.id,
         status: { name: 'Available' },
         notes: [],
-        circulationNotes: []
+        circulationNotes: [],
+        statisticalCodeIds: []
       }
       let stat = tsvMap.statuses[ih.s] || '';
       let statDate = '';
@@ -247,26 +259,25 @@ try {
           }
         }
       }
-      if (ih.s === 'Damaged') {
+      if (ih.s && ih.s.match(/Damaged/i)) {
         i.itemDamagedStatusId = refData.itemDamageStatuses.Damaged;
         if (statDate) i.itemDamagedStatusDate = statDate;
       }
-      if (ih.s && ih.s.match(/Review/)) {
-        let note = ih.s
-        let t = ['Check in', 'Check out'];
-        t.forEach(y => {
-          let o = {
-            note: note,
-            noteType: y, 
-            date: new Date().toISOString().replace(/T.+/, ''),
-            id: uuid(iid + note + y, ns)
-          };
-          i.circulationNotes.push(o);
-        });
-      }
-      if (ih.t === 'E-book') ih.t = 'E-Book';
+      
       let mt = tsvMap.mtypes[ih.t];
       i.materialTypeId = mt;
+
+      if (ih.j) {
+        ih.j.forEach(d => {
+          let sid = tsvMap.statisticalCodes[d];
+          if (sid) {
+            i.statisticalCodeIds.push(sid);
+          } else {
+            console.log(`WARN FOLIO statistical code not found for "${d}" (${i.hrid})`);
+          }
+        });
+      }
+
       let permLocId = tsvMap.locations[ih.l];
       if (permLocId !== holdings.permanentLocationId) {
         i.permanentLocationId = permLocId;
@@ -285,7 +296,8 @@ try {
           i.itemLevelCallNumberTypeId = refData.callNumberTypes['Other scheme'];
         }
       }
-      if (ih.x && ih.x !== holdings.callNumberPrefix) i.itemLevelCallNumberPrefix = ih.x; 
+      if (ih.x && ih.x !== holdings.callNumberPrefix) i.itemLevelCallNumberPrefix = ih.x;
+      if (ih.y && ih.y !== holdings.callNumberSuffix) i.itemLevelCallNumberSuffix = ih.y;
       if (ih.i && !bcseen[ih.i]) {
         i.barcode = ih.i;
         bcseen[ih.i] = i.id;
@@ -300,53 +312,40 @@ try {
         }
       }
       if (ih.k) i.chronology = ih.k;
-      if (ih.d || ih.o) {
+      if (ih.d) {
         i.yearCaption = [];
         if (ih.d) i.yearCaption.push(ih.d);
-        // if (ih.o) i.yearCaption.push(ih.o);
       }
-      if (ih.m) i.numberOfPieces = ih.m;
-      if (ih.n) i.descriptionOfPieces = ih.n;
+      let desc = [];
+      if (ih.n) desc.push(ih.n);
+      if (ih.o) desc.push(ih.o);
+      if (desc[0]) i.descriptionOfPieces = desc.join('; ');
+      for (let k in inotes) {
+        if (ih[k]) {
+          let tstr = inotes[k];
+          let t = refData.itemNoteTypes[tstr];
+          if (t) {
+            ih[k].forEach(d => {
+              let o = makeItemNote(d, t, true);
+              i.notes.push(o);
+            });
+          }
+        }
+      }
       if (ih.q) {
-        let t = refData.itemNoteTypes.General;
-        if (t) {
-          let o = makeItemNote(ih.q, t, true);
-          i.notes.push(o);
-        }
+        i.circulationNotes = [];
+        let t = (ih.r && ih.r.match(/discharge/)) ? 'Check in' : 'Check out';
+        ih.q.forEach(d => {
+          let o = {
+            note: d,
+            noteType: t,
+            date: new Date().toISOString().replace(/T.+/, ''),
+            id: uuid(iid + t + d, ns)
+          };
+          i.circulationNotes.push(o);
+        });
       }
-      if (ih.f) {
-        let t = refData.itemNoteTypes['Voyager Historical Charges'];
-        if (t) {
-          let o = makeItemNote(ih.f, t, true);
-          i.notes.push(o);
-        }
-      }
-      if (ih.e) {
-        let t = refData.itemNoteTypes['Voyager Historical Browses'];
-        if (t) {
-          let o = makeItemNote(ih.e, t, true);
-          i.notes.push(o);
-        }
-      }
-      if (ih.r || ih.u) i.circulationNotes = [];
-      if (ih.r) {
-        let o = {
-          note: ih.r,
-          noteType: 'Check in',
-          date: new Date().toISOString().replace(/T.+/, ''),
-          id: uuid(iid + 'in', ns)
-        };
-        i.circulationNotes.push(o);
-      }
-      if (ih.u) {
-        let o = {
-          note: ih.u,
-          noteType: 'Check out',
-          date: new Date().toISOString().replace(/T.+/, ''),
-          id: uuid(iid + 'out', ns)
-        };
-        i.circulationNotes.push(o);
-      }
+      
       if (i.materialTypeId) {
         if (i.permanentLoanTypeId) {
           writeOut(outs.items, i);
@@ -356,7 +355,7 @@ try {
           ttl.itemErr++;
         }
       } else {
-        console.log(`ERROR item material type not found for "${ih.t}"`);
+        console.log(`ERROR item material type not found for "${ih.t}" (${i.hrid})`);
         ttl.itemErr++;
       }
     });
@@ -374,7 +373,8 @@ try {
     ttl.count++;
     let m = JSON.parse(line);
     let ctrl = (m['001']) ? m['001'][0] : '';
-    let bhrid = (m['004']) ? prefix + m['004'][0] : '';
+    let bhrid = (m['004']) ? m['004'][0] : '';
+    bhrid = prefix + bhrid;
     let mh = {};
     let iid = '';
     if (m['852']) {
@@ -394,7 +394,7 @@ try {
     }
     if (mh.i) { 
       mh.i = mh.i.join(' ');
-    }
+    } 
     let loc = mh.b;
     let cn = (mh.i) ? mh.h + ' ' + mh.i : mh.h || '';
     if (cn.match(/No call number/)) cn = '';
@@ -469,8 +469,6 @@ try {
         f.subfields.forEach(s => {
           if (s.a) {
             o.statement = s.a;
-          } else if (s.x) {
-            o.staffNote = s.x;
           } else if (s.z) {
             o.note = s.z;
           }
@@ -485,6 +483,8 @@ try {
         f.subfields.forEach(s => {
           if (s.a) {
             o.statement = s.a;
+          } else if (s.z) {
+            o.note = s.z;
           }
         });
         h.holdingsStatementsForSupplements.push(o);
@@ -497,6 +497,8 @@ try {
         f.subfields.forEach(s => {
           if (s.a) {
             o.statement = s.a;
+          } else if (s.z) {
+            o.note = s.z;
           }
         });
         h.holdingsStatementsForIndexes.push(o);
@@ -509,6 +511,10 @@ try {
           }
         });
       }
+
+      let lchar = (m['008'] && m['008'][0]) ? m['008'][0].substring(20, 21) : 'u';
+      let lstr = illMap[lchar];
+      h.illPolicyId = refData.illPolicies[lstr];
 
       if (h.permanentLocationId) {
         if (!hseen[ctrl]) {
