@@ -1,0 +1,15 @@
+{
+    "nameSpace": "f6b37830-a2bd-4646-ae9a-777a837271fa",
+    "refDir": "/Users/charles/Folio/aas/ref/inv",
+    "tsvDir": "/Users/charles/Folio/folio-import/etc/aas",
+    "mapFile": "",
+    "controlNum": "",
+    "hridPrefix": "a",
+    "makeInstMap": true,
+    "hasMfhd": true,
+    "noTitle": "[Unknown title]",
+    "catDate": { "tag": "997", "subfield": "a" },
+    "deleteTags": [ "997" ],
+    "suppress": { "tag": "", "subfield": "", "value": "" },
+    "callNumbers": {}
+}

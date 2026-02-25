@@ -688,8 +688,19 @@ try {
 
       seen[hrid] = 1;
       let instId = (hrid) ? uuid(hrid, ns) : '';
+      let origFields;
+      if (conf.deleteTags) {
+        origFields = structuredClone(marc.fields);
+        conf.deleteTags.forEach(t => {
+          delete marc.fields[t];
+        });
+      }
       marc.mij = fields2mij(marc.fields);
       let raw = mij2raw(marc.mij);
+
+      if (origFields) {
+        marc.fields = origFields;
+      }
       ldr = marc.fields.leader || '';
       let itypeCode = ldr.substring(6, 7);
       let blvl = ldr.substring(7,8);
@@ -835,7 +846,7 @@ try {
           } else {
             v = f || '';
           }
-          let d = '';
+          let d = v;
           if (t === '008' || p === 'yymmdd') {
             d = v.replace(/^(..)(..)(..).*/, '$1-$2-$3');
             d = (d.match(/^[012]/)) ? '20' + d : '19' + d;
@@ -854,6 +865,7 @@ try {
         }
         writeOut(outs.instances, inst);
         ttl.instances++;
+        // console.log(raw.mij.fields);
         let srsObj = makeSrs(raw, jobId, inst.id, inst.hrid, inst.discoverySuppress);
         writeOut(outs.srs, srsObj);
         ttl.srs++;
