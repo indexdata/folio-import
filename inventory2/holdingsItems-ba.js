@@ -179,7 +179,8 @@ try {
     for await (let line of rl) {
       let c = line.split(/\|/);
       let k = c[0];
-      instMap[k] = { id: c[1], ea: c[5], blvl: c[4], type: c[6] };
+      let bid = k.substring(2);
+      instMap[k] = { id: c[1], ea: c[5], blvl: c[4], type: c[6], bibId: bid };
     }
   }
   // throw(instMap);
@@ -211,13 +212,15 @@ try {
   }
   const bcseen = {};
   const occ = {};
+  const instItemMap = {};
+
   const makeItems = (fields, holdings, inst, leader) => {
     let htype =  leader.substring(6, 7);
     fields.forEach(r => {
       let ih = {};
       r.subfields.forEach(s => {
         let code = Object.keys(s)[0]
-        if (code.match(/[jqfzmep]/)) {
+        if (code.match(/[jqfzmep_]/)) {
           if (!ih[code]) ih[code] = [];
           ih[code].push(s[code]);
         } else {
@@ -350,6 +353,12 @@ try {
         if (i.permanentLoanTypeId) {
           writeOut(outs.items, i);
           ttl.items++;
+          if (ih._) {
+            ih._.forEach(_ => {
+              if (!instItemMap[_]) instItemMap[_] = [];
+              instItemMap[_].push({ iid: i.id, hid: holdings.id });
+            });
+          }
         } else {
           console.log(`ERROR item loantype not found for "Can circulate"`);
           ttl.itemErr++;
@@ -363,6 +372,7 @@ try {
 
   const hseen = {};
   const bwseen = {};
+  const relMap = {};
 
   let fileStream = fs.createReadStream(mfhdFile);
   let rl = readline.createInterface({
@@ -521,8 +531,8 @@ try {
           ttl.holdings++;
           writeOut(outs.holdings, h);
           hseen[ctrl] = h.id;
+
           let lnk = m['014'];
-          lnk = false;
           if (lnk) {
             for (let x = 0; x < lnk.length; x++) {
               let sa = lnk[x].subfields[0].a;
@@ -531,42 +541,26 @@ try {
                 x--;
               }
             }
-            if (iid && lnk[0]) {
-              let o = {
-                itemId: uuid(iid, ns),
-                holdingsRecordId: h.id
-              };
-              o.id = uuid(o.holdingsRecordId, o.itemId);
-              writeOut(outs.bwp, o);
-              ttl.boundwiths++
-            }
-            let occ = 0;
             lnk.forEach(l => {
-              occ++;
               l.subfields.forEach(s => {
                 if (s.a) {
-                  let iid = bibItemMap[s.a];
-                  if (iid) {
-                    let hstr = JSON.stringify(h);
-                    let bwh = JSON.parse(hstr);
-                    bwh.instanceId = instMap[s.a];
-                    bwh.hrid = `${bwh.hrid}.${occ}`;
-                    bwh.id = uuid(bwh.hrid, ns);
-                    let o = {
-                      itemId: uuid(iid, ns),
-                      holdingsRecordId: bwh.id,
-                    };                
-                    o.id = uuid(o.holdingsRecordId, o.itemId);
+                  let bhrid = prefix + s.a;
+                  let inst = instMap[bhrid];
+                  if (inst) {
+                    let bwh = JSON.parse(JSON.stringify(h));
+                    bwh.instanceId = inst.id;
+                    // delete bwh.notes;
+                    // delete bwh.holdingsStatements;
+                    // delete bwh.holdingsStatementsForSupplements;
+                    // delete bwh.holdingsStatementsForIndexes;
+                    relMap[inst.bibId] = bwh;
                     let ro = {
                       superInstanceId: h.instanceId,
-                      subInstanceId: bwh.instanceId,
+                      subInstanceId: inst.id,
                       instanceRelationshipTypeId: refData.instanceRelationshipTypes['bound-with']
                     };
                     ro.id = uuid(ro.superInstanceId + ro.subInstanceId, ns);
-                    writeOut(outs.bwp, o);
-                    writeOut(outs.holdings, bwh);
                     writeOut(outs.rel, ro);
-                    ttl.boundwiths++;
                     ttl.relationships++;
                   }
                 }
@@ -574,9 +568,35 @@ try {
             });
             bwseen[h.id] = 1;
           }
+
+          let f14 = m['014'];
+          let subz = [];
+          if (f14) {
+            f14.forEach(f => {
+              f.subfields.forEach(s => {
+                if (s.a) subz.push({ _: s.a })
+              });
+            });
+          }
+          if (subz[0]) {
+            subz.push({ _: inst.bibId});
+            if (m['949']) {
+              let dum = JSON.parse(JSON.stringify(m['949'][0]));
+              let subs = [];
+              dum.subfields.forEach(s => {
+                if (s.t || s.s) subs.push(s);
+              });
+              if (subs[0]) dum.subfields = [...subs, ...subz];
+              if (!m['949']) m['949'] = [];
+              m['949'].unshift(dum);
+              // console.log(JSON.stringify(m['949'], null, 2));
+            }
+          }
+
           if (m['949']) {
             makeItems(m['949'], h, inst, m.leader);
           }
+
         } else {
           console.log(`ERROR hrid ${hhrid} already used!`);
           ttl.holdingsErr++;
@@ -671,6 +691,47 @@ try {
       }
       ttl.items++;
     }
+  }
+
+  let occur = {};
+  let bwhseen = {};
+  let bwpseen = {};
+
+  // console.log(instItemMap);
+  // console.log(relMap);
+  for (let bid in instItemMap) {
+    instItemMap[bid].forEach(info => {
+      let iid = info.iid;
+      let hid;
+      if (relMap[bid] && !bwhseen[bid]) {
+        let bwh = JSON.parse(JSON.stringify(relMap[bid]));
+        let hrid = bwh.hrid;
+        if (occur[hrid]) {
+          occur[hrid]++;
+        } else {
+          occur[hrid] = 1;
+        }
+        let occ = occur[hrid];
+        bwh.hrid = `${bwh.hrid}.${occ}`;
+        bwh.id = uuid(bwh.hrid, ns);
+        writeOut(outs.holdings, bwh);
+        ttl.holdings++;
+        hid = bwh.id;
+        bwhseen[bid] = hid;
+      } else {
+        hid = bwhseen[bid];
+      }
+      let o = {
+        itemId: iid,
+        holdingsRecordId: hid || info.hid,
+      };                
+      o.id = uuid(o.holdingsRecordId + o.itemId, ns);
+      if (!bwpseen[o.id]) {
+        writeOut(outs.bwp, o);
+        ttl.boundwiths++;
+        bwpseen[o.id] = 1;
+      }
+    });
   }
 
   showStats();

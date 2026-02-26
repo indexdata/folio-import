@@ -579,6 +579,7 @@ try {
           ttl.holdings++;
           writeOut(outs.holdings, h);
           hseen[ctrl] = h.id;
+          
           let lnk = m['014'];
           if (lnk) {
             for (let x = 0; x < lnk.length; x++) {
