@@ -179,6 +179,30 @@ try {
   }
   // throw(instMap);
 
+  const itemFile = wdir + '/items.csv';
+  let fileStream = fs.createReadStream(itemFile);
+  let rl = readline.createInterface({
+    input: fileStream,
+    crlfDelay: Infinity
+  });
+  const items = [];
+  let ic = 0;
+  let colNames;
+  for await (let line of rl) {
+    ic++;
+    let cols = line.split(/,/); 
+    if (ic === 1) {
+      colNames = cols;
+    } else {
+      let o = {};
+      cols.forEach((c, i) => {
+        o[colNames[i]] = c 
+      });
+      items.push(o);
+    }
+  }
+  throw(items);
+
   let ttl = {
     count: 0,
     holdings: 0,
@@ -368,8 +392,8 @@ try {
   const bwseen = {};
   const relMap = {};
 
-  let fileStream = fs.createReadStream(mfhdFile);
-  let rl = readline.createInterface({
+  fileStream = fs.createReadStream(mfhdFile);
+  rl = readline.createInterface({
     input: fileStream,
     crlfDelay: Infinity
   });
