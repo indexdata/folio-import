@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { v5 as uuid } from 'uuid';
 import readline from 'readline';
+import { parse } from 'csv-parse/sync';
 
 let confFile = process.argv[2];
 
@@ -12,7 +13,7 @@ const refData = {};
 const tsvMap = {};
 const suppMap = {};
 const outs = {};
-const dbug = process.env.DEBUG;
+const dbug = process.env.DEBUG || '';
 
 const tsvCols = {
   locations: [0, 2],
@@ -173,35 +174,27 @@ try {
     for await (let line of rl) {
       let c = line.split(/\|/);
       let k = c[0];
-      let bid = k.substring(2);
+      let bid = k.substring(1);
       instMap[k] = { id: c[1], ea: c[5], blvl: c[4], type: c[6], bibId: bid };
     }
   }
   // throw(instMap);
 
+  const items = {};
   const itemFile = wdir + '/items.csv';
-  let fileStream = fs.createReadStream(itemFile);
-  let rl = readline.createInterface({
-    input: fileStream,
-    crlfDelay: Infinity
+  let csv = fs.readFileSync(itemFile, { encoding: 'utf8' });
+  let rawItems = parse(csv, {
+    columns: true,
+    skip_empty_lines: true,
+    bom: true
   });
-  const items = [];
-  let ic = 0;
-  let colNames;
-  for await (let line of rl) {
-    ic++;
-    let cols = line.split(/,/); 
-    if (ic === 1) {
-      colNames = cols;
-    } else {
-      let o = {};
-      cols.forEach((c, i) => {
-        o[colNames[i]] = c 
-      });
-      items.push(o);
-    }
-  }
-  throw(items);
+  rawItems.forEach(r => {
+    let mid = r.MFHD_ID;
+    delete r.MFHD_ID;
+    if (!items[mid]) items[mid] = [];
+    items[mid].push(r);
+  });
+  // throw(items);
 
   let ttl = {
     count: 0,
@@ -232,168 +225,54 @@ try {
   const occ = {};
   const instItemMap = {};
 
-  const makeItems = (fields, holdings, inst, leader) => {
-    let htype =  leader.substring(6, 7);
-    fields.forEach(r => {
-      let ih = {};
-      r.subfields.forEach(s => {
-        let code = Object.keys(s)[0]
-        if (code.match(/[jqfzmep_]/)) {
-          if (!ih[code]) ih[code] = [];
-          ih[code].push(s[code]);
-        } else {
-          ih[code] = s[code];
-        }
-      });
-      let iid = holdings.hrid.replace(/^[a-z]+/, iprefix);
-      if (occ[iid] === undefined) {
-        occ[iid] = 0;
-      } else {
-        occ[iid]++;
-      }
-      let occStr = occ[iid].toString().padStart(3, 0);
-      let ihrid = iid + '-' + occStr;
+  const makeItems = (r, holdings, inst, leader) => {
+    let ihrid = iprefix + r.Item_ID;
+    if (ihrid) {
       let i = {
         _version: 1,
         id: uuid(ihrid, ns),
         hrid: ihrid,
         permanentLoanTypeId: refData.loantypes['Can circulate'],
         holdingsRecordId: holdings.id,
-        status: { name: 'Available' },
-        notes: [],
-        circulationNotes: [],
-        statisticalCodeIds: []
+        status: { name: 'Available' }
       }
-      let stat = tsvMap.statuses[ih.s] || '';
-      let statDate = '';
-      if (stat) {
-        i.status.name = stat;
-        if (ih.v) {
-          try {
-            let sd = new Date(ih.v).toISOString();
-            sd = sd.replace(/T00:/, 'T12:');
-            i.status.date = sd;
-            statDate = sd;
-          } catch (e) {
-            console.log(`WARN "${ih.v}" is not a valid status date`);
-            bwFlag = true;
-          }
-        }
-      }
-      if (ih.s && ih.s.match(/Damaged/i)) {
-        i.itemDamagedStatusId = refData.itemDamageStatuses.Damaged;
-        if (statDate) i.itemDamagedStatusDate = statDate;
-      }
-      
-      let mt = tsvMap.mtypes[ih.t];
-      i.materialTypeId = mt;
-
-      if (ih.j) {
-        ih.j.forEach(d => {
-          let sid = tsvMap.statisticalCodes[d];
-          if (sid) {
-            i.statisticalCodeIds.push(sid);
-          } else {
-            console.log(`WARN FOLIO statistical code not found for "${d}" (${i.hrid})`);
-          }
-        });
+      let mt = r.MatType;
+      i.materialTypeId = tsvMap.mtypes[mt];
+      let lt = r.PermLoan;
+      i.permanentLoanTypeId = refData.loantypes[lt];
+      if (r.Status !== 'Missing') i.status.name = 'Missing';
+      if (r.Volume) i.volume = r.Volume;
+      if (r.Copy) i.copyNumber = r.Copy;
+      let bc = r.Barcode;
+      if (bc && !bcseen[bc]) {
+        i.barcode = bc;
+        bcseen[bc] = i.hrid;
+      } else if (bc) {
+        console.log(`WARN barcode "${bc}" already used by ${i.hrid}`);
       }
 
-      let permLocId = tsvMap.locations[ih.l];
-      if (permLocId !== holdings.permanentLocationId) {
-        i.permanentLocationId = permLocId;
-      }
-      if (ih.h) {
-        let tempId = tsvMap.locations[ih.h];
-        if (tempId !== permLocId) {
-          i.temporaryLocationId = tempId;
-        }
-      }
-      if (ih.g) i.copyNumber = ih.g;
-      if (ih.a) {
-        let cn = (ih.b) ? ih.a + ' ' + ih.b : ih.a;
-        if (cn !== holdings.callNumber) {
-          i.itemLevelCallNumber = cn;
-          i.itemLevelCallNumberTypeId = refData.callNumberTypes['Other scheme'];
-        }
-      }
-      if (ih.x && ih.x !== holdings.callNumberPrefix) i.itemLevelCallNumberPrefix = ih.x;
-      if (ih.y && ih.y !== holdings.callNumberSuffix) i.itemLevelCallNumberSuffix = ih.y;
-      if (ih.i && !bcseen[ih.i]) {
-        i.barcode = ih.i;
-        bcseen[ih.i] = i.id;
-      } else if (ih.i) {
-        console.log(`WARN duplicate barcode found ${ih.i} (${i.hrid})`);
-      }
-      if (ih.c) {
-        if (htype === 'y') {
-          i.enumeration = ih.c;
-        } else {
-          i.volume = ih.c;
-        }
-      }
-      if (ih.k) i.chronology = ih.k;
-      if (ih.d) {
-        i.yearCaption = [];
-        if (ih.d) i.yearCaption.push(ih.d);
-      }
-      let desc = [];
-      if (ih.n) desc.push(ih.n);
-      if (ih.o) desc.push(ih.o);
-      if (desc[0]) i.descriptionOfPieces = desc.join('; ');
-      for (let k in inotes) {
-        if (ih[k]) {
-          let tstr = inotes[k];
-          let t = refData.itemNoteTypes[tstr];
-          if (t) {
-            ih[k].forEach(d => {
-              let o = makeItemNote(d, t, true);
-              i.notes.push(o);
-            });
-          }
-        }
-      }
-      if (ih.q) {
-        i.circulationNotes = [];
-        let t = (ih.r && ih.r.match(/discharge/)) ? 'Check in' : 'Check out';
-        ih.q.forEach(d => {
-          let o = {
-            note: d,
-            noteType: t,
-            date: new Date().toISOString().replace(/T.+/, ''),
-            id: uuid(iid + t + d, ns)
-          };
-          i.circulationNotes.push(o);
-        });
-      }
-      
       if (i.materialTypeId) {
         if (i.permanentLoanTypeId) {
           writeOut(outs.items, i);
           ttl.items++;
-          if (ih._) {
-            ih._.forEach(_ => {
-              if (!instItemMap[_]) instItemMap[_] = [];
-              instItemMap[_].push({ iid: i.id, hid: holdings.id });
-            });
-          }
+          instItemMap[inst.bibId] = i.id;
         } else {
           console.log(`ERROR item loantype not found for "Can circulate"`);
           ttl.itemErr++;
         }
       } else {
-        console.log(`ERROR item material type not found for "${ih.t}" (${i.hrid})`);
+        console.log(`ERROR item material type not found for "" (${i.hrid})`);
         ttl.itemErr++;
       }
-    });
+    }
   }
 
   const hseen = {};
   const bwseen = {};
   const relMap = {};
 
-  fileStream = fs.createReadStream(mfhdFile);
-  rl = readline.createInterface({
+  let fileStream = fs.createReadStream(mfhdFile);
+  let rl = readline.createInterface({
     input: fileStream,
     crlfDelay: Infinity
   });
@@ -409,12 +288,8 @@ try {
       m['852'].forEach(f => {
         f.subfields.forEach(s => {
           let k = Object.keys(s)[0];
-          if (k.match(/[zxi]/)) {
-            if (!mh[k]) mh[k] = [];
-            mh[k].push(s[k]);
-          } else {
-            mh[k] = s[k]; 
-          }
+          if (!mh[k]) mh[k] = [];
+          mh[k].push(s[k]);
         });
       });
       mh.ind1 = m['852'][0].ind1;
@@ -423,8 +298,9 @@ try {
     if (mh.i) { 
       mh.i = mh.i.join(' ');
     } 
-    let loc = mh.b;
-    let cn = (mh.i) ? mh.h + ' ' + mh.i : mh.h || '';
+    let loc = (mh.b) ? mh.b[0] : '';
+    let cpn = (mh.t) ? mh.t[0] : '';
+    let cn = (mh.i) ? mh.h[0] + ' ' + mh.i : mh.h[0] || '';
     if (cn.match(/No call number/)) cn = '';
     let tcode = (m.leader) ? m.leader.substring(6, 7) : '';
     let tcodeStr = typeMap[tcode] || 'Physical';
@@ -452,8 +328,9 @@ try {
         h.callNumber = cn;
         h.callNumberTypeId = cnTypeMap[mh.ind1] || cnTypeMap['8'];
       }
-      if (mh.m) h.callNumberSuffix = mh.m;
-      if (mh.k) h.callNumberPrefix = mh.k;
+      if (mh.k) h.callNumberPrefix = mh.k[0];
+      if (cpn) h.copyNumber = cpn;
+
       h.notes = [];
       let ntype = refData.holdingsNoteTypes.Note;
       if (mh.x) {
@@ -531,19 +408,11 @@ try {
         });
         h.holdingsStatementsForIndexes.push(o);
       });
-      
-      if (m['908']) {
-        m['908'][0].subfields.forEach(s => {
-          if (s.x && s.x === 'Y') {
-            h.discoverySuppress = true;
-          }
-        });
-      }
 
       let lchar = (m['008'] && m['008'][0]) ? m['008'][0].substring(20, 21) : 'u';
       let lstr = illMap[lchar];
       h.illPolicyId = refData.illPolicies[lstr];
-
+      
       if (h.permanentLocationId) {
         if (!hseen[ctrl]) {
           ttl.holdings++;
@@ -560,10 +429,16 @@ try {
                   if (inst) {
                     let bwh = JSON.parse(JSON.stringify(h));
                     bwh.instanceId = inst.id;
-                    // delete bwh.notes;
-                    // delete bwh.holdingsStatements;
-                    // delete bwh.holdingsStatementsForSupplements;
-                    // delete bwh.holdingsStatementsForIndexes;
+                    bwh.hrid = hprefix + s.a;
+                    delete bwh.formerIds;
+                    if (!occ[bwh.hrid]) {
+                      occ[bwh.hrid] = 1; 
+                    } else {
+                      occ[bwh.hrid]++;
+                    }
+                    let occStr = occ[bwh.hrid].toString().padStart(3, '0');
+                    bwh.hrid += '-' + occStr;
+                    bwh.id = uuid(bwh.hrid, ns);
                     relMap[inst.bibId] = bwh;
                     let ro = {
                       superInstanceId: h.instanceId,
@@ -573,15 +448,21 @@ try {
                     ro.id = uuid(ro.superInstanceId + ro.subInstanceId, ns);
                     writeOut(outs.rel, ro);
                     ttl.relationships++;
+                    writeOut(outs.holdings, bwh);
+                    ttl.holdings++;
                   }
                 }
               });
             });
             bwseen[h.id] = 1;
+            relMap[inst.bibId] = h;
           }
 
-          if (m['949']) {
-            makeItems(m['949'], h, inst, m.leader);
+          let itemRecs = items[ctrl];
+          if (itemRecs) {
+            itemRecs.forEach(item => {
+              makeItems(item, h, inst, m.leader);
+            });
           }
 
         } else {
@@ -592,7 +473,7 @@ try {
         console.log(`ERROR location not found for "${loc}" (${hhrid})`);
         ttl.holdingsErr++;
       }
-      if (dbug) console.log(h);
+      if (dbug.match(/h/)) console.log(h);
     } else {
       console.log(`ERROR instance "${bhrid}" not found for ${hhrid}`);
       ttl.holdingsErr++;
@@ -603,10 +484,24 @@ try {
   let bwhseen = {};
   let bwpseen = {};
 
-  console.log(instItemMap);
-  // console.log(relMap);
+  //console.log(instItemMap);
+  //console.log(relMap);
   for (let bid in relMap) {
-    // console.log(bid);
+    let hid = relMap[bid].id;
+    let iid = instItemMap[bid];
+    let bwpKey = hid + iid;
+    if (hid && iid && !bwpseen[bwpKey]) {
+      let o = {
+        id: uuid(bwpKey, ns),
+        holdingsRecordId: hid,
+        itemId: iid
+      }
+      writeOut(outs.bwp, o);
+      ttl.boundwiths++;
+      bwpseen[bwpKey] = 1;
+    } else {
+      // console.log(hid, iid);
+    }
   }
 
   showStats();
