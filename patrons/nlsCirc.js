@@ -172,7 +172,7 @@ const spTran = {
             let od = r.Z310_OUT_DATE;
             let ld = r.Z310_OPEN_DATE;
             let loanDate = parseDate(ld);
-            let spId = spTran[sp];
+            let spId = spTran[sp] || spMap['SP-INFO'];
             let o = {
               servicePointId: spId,
               itemBarcode: ibcode,
