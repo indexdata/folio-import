@@ -544,7 +544,7 @@ try {
           i.status.name = 'Long missing';
         } else if (st === '72' && loc === 'RRLEX') {
           i.status.name = 'Intellectual item';
-        } else if (st === '05' && loc === 'RRLEX') {
+        } else if ((st === '05' && loc === 'RRLEX') || (st.match(/03|22/) && loc === 'ENHET')) {
           i.status.name = 'Restricted';
         }
 
