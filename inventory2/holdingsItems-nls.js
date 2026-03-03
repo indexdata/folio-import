@@ -525,7 +525,7 @@ try {
             i.administrativeNotes.push(n);
           });
         }
-        if (loc === 'RRLEX' && st === '23' && (ips === 'LA' || ips === '')) {
+        if (st === '23') {
           i.administrativeNotes.push('KOLLAS FÖRE LÅN');
         }
 
