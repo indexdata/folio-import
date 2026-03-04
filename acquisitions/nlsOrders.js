@@ -269,7 +269,7 @@ const parseInst = (pol, inst, refData) => {
       let ak = d.z16[k].Z16_REC_KEY.substring(0, 9);
       adminMap[ak] = 1;
     };
-    // throw(adminMap);
+    // throw(adminMap['002241188']);
 
     // map link files;
     console.log(`INFO Reading linker data from ${z103file}`);
@@ -284,9 +284,10 @@ const parseInst = (pol, inst, refData) => {
     for await (let line of rl) {
       lc++;
       let c = line.split(/\t/);
-      let k = c[0].substring(5, 14);
+      let k = c[0].substring(5, 14); 
       let t = c[2];
       let bid = c[3];
+      if (k === '002241188') console.log(c);
       if (t === 'KBS01' && adminMap[k]) {
         linkMap[k] = bid;
         linkMapRev[bid] = k;
@@ -324,6 +325,8 @@ const parseInst = (pol, inst, refData) => {
             break;
           }
         }
+      } else if (inst) {
+        instMap[inst.hrid] = inst;
       }
       /*
       let m = line.match(/"hrid":"(\w+)"/);
