@@ -142,6 +142,7 @@ const parseInst = (pol, inst, refData) => {
     // throw(files);
 
     const refData = {};
+    let alephTypeId = '';
     let rfiles = fs.readdirSync(refDir);
     rfiles.forEach(f => {
       if (f.match(/\.json$/)) {
@@ -162,7 +163,8 @@ const parseInst = (pol, inst, refData) => {
           let c = d.code || d.templateCode;
 
           if (prop === 'identifierTypes') {
-            if (!d.name.match(/control|OCLC|LCCN|local|libris|LIBR|katalog/i)) refData.productIdentifiers[d.id] = d.name;
+            if (!d.name.match(/control|OCLC|LCCN|local|libris|LIBR|katalog|Aleph/i)) refData.productIdentifiers[d.id] = d.name;
+            if (d.name.match(/Aleph/)) alephTypeId = d.id;
           }
           if (prop === 'customFields') {
             let o = { refId: d.refId };
@@ -311,11 +313,25 @@ const parseInst = (pol, inst, refData) => {
     mc = 0;
     for await (let line of rl) {
       lc++
+      let inst = JSON.parse(line);
+      if (inst && inst.identifiers) {
+        for (let x = 0; x < inst.identifiers.length; x++) {
+          let p = inst.identifiers[x];
+          if (p.identifierTypeId === alephTypeId) {
+            if (linkMapRev[p.value]) {
+              instMap[p.value] = inst;
+            }
+            break;
+          }
+        }
+      }
+      /*
       let m = line.match(/"hrid":"(\w+)"/);
       if (m && linkMapRev[m[1]]) {
         let inst = JSON.parse(line);
         instMap[inst.hrid] = inst;
       }
+      */
       if (lc % 100000 === 0) console.log('Instance lines read:', lc);
     }
     console.log('Instance lines read:', lc);
