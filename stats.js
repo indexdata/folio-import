@@ -48,6 +48,9 @@ const mods = {
   },
   orders: {
     purchaseOrders: 'orders-storage/purchase-orders?limit=0',
+    '--open': 'orders-storage/purchase-orders?query=workflowStatus==Open&limit=0',
+    '--pending': 'orders-storage/purchase-orders?query=workflowStatus==Pending&limit=0',
+    '--closed': 'orders-storage/purchase-orders?query=workflowStatus==Closed&limit=0',
     poLines: 'orders-storage/po-lines?limit=0',
     compositeOrders: 'orders/composite-orders?limit=0',
     polNotes: 'notes?query=domain==orders&limit=1',
