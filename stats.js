@@ -50,7 +50,9 @@ const mods = {
     purchaseOrders: 'orders-storage/purchase-orders',
     poLines: 'orders-storage/po-lines',
     compositeOrders: 'orders/composite-orders',
-    polNotes: 'notes?query=domain==orders'
+    polNotes: 'notes?query=domain==orders',
+    serials: 'serials-management/serials?stats=true',
+    ruleSets: 'serials-management/rulesets?stats=true'
   }
 };
 
