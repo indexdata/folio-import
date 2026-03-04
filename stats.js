@@ -47,10 +47,12 @@ const mods = {
     notes: 'notes?query=domain==agreements&limit=1'
   },
   orders: {
-    purchaseOrders: 'orders-storage/purchase-orders',
-    poLines: 'orders-storage/po-lines',
-    compositeOrders: 'orders/composite-orders',
-    polNotes: 'notes?query=domain==orders',
+    purchaseOrders: 'orders-storage/purchase-orders?limit=0',
+    poLines: 'orders-storage/po-lines?limit=0',
+    compositeOrders: 'orders/composite-orders?limit=0',
+    polNotes: 'notes?query=domain==orders&limit=1',
+    titles: 'orders-storage/titles?limit=0',
+    pieces: 'orders-storage/pieces?limit=0',
     serials: 'serials-management/serials?stats=true',
     ruleSets: 'serials-management/rulesets?stats=true'
   }
