@@ -1,7 +1,7 @@
 Legacy statistical code	Legacy statistical code description	Item count	Action to take	FOLIO item statistical codes 	FOLIO item statistical code names	Notes
 ia	Architecture	11341	Keep	Arc	Architecture	
 ib	Biography	7174	Keep	Bio	Biography	
-ic	Children's (PZ&,&)	4497	Keep	Chi	Children's (PZ7s, &)	
+ic	Children's (PZ7, &)	4497	Keep	Chi	Children's (PZ7s, &)	
 if	Fiction	9280	Keep	Fic	Fiction	
 ihi	History	11760	Keep	His	History	
 il	Literature (Not Fiction)	3673	Keep	Lit	Literature (Essays, Lit. Crit., Drama, &)	
@@ -23,6 +23,6 @@ ir	Romance Fiction		New Type	Rom	Romance Fiction/ Novels of Manners
 iss	Social Science		New Type	Soc	Social Science (Poly Sci, Education, Geography, Law,&)	
 isp	Speculative Fiction		New Type	Spe	Spectulative/Science Fiction	
 iy	Young Adult		New Type	You	Young Adult	
-ie	Education, Govt, etc.	1260	Purge			
 iz	Audio Book	197	Purge			
 izc	Audio Book, Children's	28	Purge			
+ie	Education, Govt, etc.	1260	Purge			

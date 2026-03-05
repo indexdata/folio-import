@@ -139,7 +139,7 @@ try {
       });
     } catch {}
   });
-  // throw(refData);
+  // throw(refData.locations);
 
   // create tsv map
   let tsvDir = conf.tsvDir || conf.refDir;
@@ -268,7 +268,7 @@ try {
       }
       
       let mt = tsvMap.mtypes[ih.t];
-      i.materialTypeId = mt;
+      i.materialTypeId = mt || refData.mtypes.Unmapped;
 
       if (ih.j) {
         ih.j.forEach(d => {
@@ -525,7 +525,7 @@ try {
       let lchar = (m['008'] && m['008'][0]) ? m['008'][0].substring(20, 21) : 'u';
       let lstr = illMap[lchar];
       h.illPolicyId = refData.illPolicies[lstr];
-
+      if (!h.permanentLocationId) h.permanentLocationId = refData.locations.Unmapped;
       if (h.permanentLocationId) {
         if (!hseen[ctrl]) {
           ttl.holdings++;
