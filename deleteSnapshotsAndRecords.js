@@ -19,7 +19,6 @@ const wait = (ms) => {
 
 (async () => {
   try {
-    let inData;
     let single;
     let ttl = 0;
     let skipped = 0;
@@ -39,6 +38,7 @@ const wait = (ms) => {
       refData = { snapshots: [{ jobExecutionId: single }], totalRecords: 1 };
     } else {
       try {
+        console.log(`GET ${getUrl}`);
         const res = await superagent
           .get(getUrl)
           .set('User-Agent', config.agent)
