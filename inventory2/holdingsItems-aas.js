@@ -223,7 +223,6 @@ try {
   }
   const bcseen = {};
   const occ = {};
-  const instItemMap = {};
 
   const makeItems = (r, holdings, inst, leader) => {
     let ihrid = iprefix + r.Item_ID;
@@ -240,7 +239,7 @@ try {
       i.materialTypeId = tsvMap.mtypes[mt];
       let lt = r.PermLoan;
       i.permanentLoanTypeId = refData.loantypes[lt];
-      if (r.Status !== 'Missing') i.status.name = 'Missing';
+      if (r.Status === 'Missing') i.status.name = 'Missing';
       if (r.Volume) i.volume = r.Volume;
       if (r.Copy) i.copyNumber = r.Copy;
       let bc = r.Barcode;
@@ -255,7 +254,8 @@ try {
         if (i.permanentLoanTypeId) {
           writeOut(outs.items, i);
           ttl.items++;
-          instItemMap[inst.bibId] = i.id;
+          let hid = holdings.hrid.substring(2);
+          holdItemMap[hid] = i.id;
         } else {
           console.log(`ERROR item loantype not found for "Can circulate"`);
           ttl.itemErr++;
@@ -270,6 +270,7 @@ try {
   const hseen = {};
   const bwseen = {};
   const relMap = {};
+  const holdItemMap = {};
 
   let fileStream = fs.createReadStream(mfhdFile);
   let rl = readline.createInterface({
@@ -280,8 +281,8 @@ try {
     ttl.count++;
     let m = JSON.parse(line);
     let ctrl = (m['001']) ? m['001'][0] : '';
-    let bhrid = (m['004']) ? m['004'][0] : '';
-    bhrid = prefix + bhrid;
+    let f004 = (m['004']) ? m['004'][0] : '';
+    let bhrid = prefix + f004;
     let mh = {};
     let iid = '';
     if (m['852']) {
@@ -439,7 +440,6 @@ try {
                     let occStr = occ[bwh.hrid].toString().padStart(3, '0');
                     bwh.hrid += '-' + occStr;
                     bwh.id = uuid(bwh.hrid, ns);
-                    relMap[inst.bibId] = bwh;
                     let ro = {
                       superInstanceId: h.instanceId,
                       subInstanceId: inst.id,
@@ -450,12 +450,19 @@ try {
                     ttl.relationships++;
                     writeOut(outs.holdings, bwh);
                     ttl.holdings++;
+
+                    bwh.hlink = ctrl;
+                    if (!relMap[inst.bibId]) relMap[inst.bibId] = [];
+                    relMap[inst.bibId].push(bwh);
+
                   }
                 }
               });
             });
             bwseen[h.id] = 1;
-            relMap[inst.bibId] = h;
+            h.hlink = ctrl;
+            if (!relMap[inst.bibId]) relMap[inst.bibId] = [];
+            relMap[inst.bibId].push(h);
           }
 
           let itemRecs = items[ctrl];
@@ -463,6 +470,8 @@ try {
             itemRecs.forEach(item => {
               makeItems(item, h, inst, m.leader);
             });
+          } else {
+            // console.log(ctrl);
           }
 
         } else {
@@ -484,24 +493,28 @@ try {
   let bwhseen = {};
   let bwpseen = {};
 
-  //console.log(instItemMap);
-  //console.log(relMap);
+  // console.log(relMap);
+  // console.log(holdItemMap);
   for (let bid in relMap) {
-    let hid = relMap[bid].id;
-    let iid = instItemMap[bid];
-    let bwpKey = hid + iid;
-    if (hid && iid && !bwpseen[bwpKey]) {
-      let o = {
-        id: uuid(bwpKey, ns),
-        holdingsRecordId: hid,
-        itemId: iid
+    relMap[bid].forEach(h => {
+      let hid = h.id;
+      let hctrl = h.hlink;
+      let iid = holdItemMap[hctrl]
+      let bwpKey = hid + iid;
+      if (hid && iid && !bwpseen[bwpKey]) {
+        let o = {
+          id: uuid(bwpKey, ns),
+          holdingsRecordId: hid,
+          itemId: iid
+        }
+        // console.log(bid, hid, iid);
+        writeOut(outs.bwp, o);
+        ttl.boundwiths++;
+        bwpseen[bwpKey] = 1;
+      } else {
+        console.log(bid, hid, iid);
       }
-      writeOut(outs.bwp, o);
-      ttl.boundwiths++;
-      bwpseen[bwpKey] = 1;
-    } else {
-      // console.log(hid, iid);
-    }
+    });
   }
 
   showStats();
