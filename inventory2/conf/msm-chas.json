@@ -5,6 +5,10 @@
     "mapFile": "",
     "controlNum": "907a",
     "hridPrefix": "",
+    "items": {
+        "tag": "945",
+        "hridPrefix": "m"
+    },
     "makeInstMap": true,
     "catDate": { "tag": "998", "subfield": "c", "pattern": "yymmdd" },
     "suppress": { "tag": "907", "subfield": "c", "value":"n" },

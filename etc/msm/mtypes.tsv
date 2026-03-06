@@ -1,0 +1,35 @@
+Legacy material type code (from item record) 945$l	Folio material type name or ID
+aubks	Audiobook
+bks	Book
+sing	Book
+ovbks	Book
+cass	Audiocassette
+cd	CD
+cdbk	CD Booklet
+cdrom	CD-ROM
+clbks	Thesis
+dvd	DVD
+dvdbk	DVD Booklet
+ebook	Digital Book
+ediss	Digital Thesis
+escor	Digital Score
+esub	Digital Periodical
+lp	LP
+mdvd	MSM DVD
+mreel	MSM Reel
+msmcd	MSM CD
+msmvd	MSM Videocassette
+onlin	Online Resource
+per	Print Periodical
+rare	Rare Material
+score	Score
+ovsc	Score
+rfsco	Reference Score
+scost	Study Score
+strma	Streaming Audio
+strmv	Streaming Video
+tape	MSM Cassette
+video	Videocassette
+deskm	Equipment
+ill	Temporary Resource
+resvm	Course Material

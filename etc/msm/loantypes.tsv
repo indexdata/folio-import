@@ -1,0 +1,10 @@
+945$t value	Description	Loan value	Notes
+0	Semester loans	5/8/2026	This is a fixed date every semester
+11	Restricted media (R-rated)	28 days	We might need to change this to fixed date
+20	Non-circulating materials	1 day	
+30	Same-day circulation	1 day	
+40	Due next day	1 day	
+50	2-hour course reserve	2 hours	
+60	ILL In	42 days	ILL received from another institution
+70	Digital resources	N/A	Does not circulate
+230	ILL Out	42 days	ILL sent to another institution

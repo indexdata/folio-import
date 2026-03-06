@@ -1,0 +1,22 @@
+Legacy Status	Legacy Code (945$s)	FOLIO status (cannot be customized	
+		Aged to lost	
+Available	-	Available	
+On holds shelf	!	Awaiting pickup	
+		Awaiting delivery	
+		Checked out	
+Claims returned	z	Claimed returned	
+Lost and paid by patron	$	Declared lost	
+Arrived, in process	f	In process	
+Being repaired	q	In process (non-requestable)	
+Away at the bindery	b	In transit	
+Digital Resources	945$t 70	Intellectual item	Note this data is taken from a separate MARC field
+Stolen	d	Long missing	
+Lost and paid by patron	$	Lost and paid	
+Missing. On search	m	Missing	
+On order	o	On order	
+		Paged	
+RARE: Liv Dir's Office	a	Restricted	
+Arrived, in process	r	Order closed	
+Damaged, to be replaced	j	Unavailable	
+		Unknown	
+Withdrawn from collection	x	Withdrawn	
