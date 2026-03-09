@@ -162,16 +162,33 @@ const makeRec = function (map, field, allFields, tag) {
   for (let w = 0; w < ents.length; w++) {
     let e = ents[w];
     let ar = false;
+    let ex = false;
+    let inc = false;
     if (e.inds) {
       let mstr = field.ind1 + field.ind2;
       if (!mstr.match(e.inds)) continue;
     }
     if (e.subfield && e.subfield[0]) {
-      for (let x = 0; x < e.subfield.length; x++) {
-        let s = e.subfield[x];
-        if (subs[s]) {
+      if (e.exclusiveSubfield) {
+        for (let x = 0; x < e.exclusiveSubfield.length; x++) {
+          let c = e.exclusiveSubfield[x];
+          if (subs[c]) ex = true;
+        }
+      }
+      if (e.requiredSubfield) {
+        for (let x = 0; x < e.requiredSubfield.length; x++) {
+          let c = e.requiredSubfield[x];
+          if (subs[c]) inc = true;
           ar = true;
-          break;
+        }
+      }
+      if (!ex && !inc) {
+        for (let x = 0; x < e.subfield.length; x++) {
+          let s = e.subfield[x];
+          if (subs[s]) {
+            ar = true;
+            break;
+          }
         }
       }
     } else {
