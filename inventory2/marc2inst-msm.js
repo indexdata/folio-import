@@ -18,6 +18,7 @@ const outs = {};
 const bcseen = {};
 const iseen = {};
 const seen = {};
+const unmappedId = '00000000-0000-0000-0000-000000000000';
 
 const tsvCols = {
   locations: { k: 0, v: 2 },
@@ -410,10 +411,34 @@ const dedupe = function (arr, props) {
   return newArr;
 }
 
-const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
+const hseen = {};
+const occ = {};
+const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum) {
   let out = { h: [], i: []};
   fields.forEach(f => {
-    console.log(f);
+    let s = getSubsHash(f);
+    let loc = (s.l) ? s.l[0].trim() : '';
+    let cn = (bibCallNum) ? bibCallNum.value : '';
+    let locId = tsvMap[loc] || loc;
+    let hkey = locId + ':' + cn;
+    if (!hseen[hkey]) {
+      if (!occ[bhrid]) {
+        occ[bhrid] = 1;
+      } else { 
+        occ[bhrid]++;
+      }
+      let occStr = occ[bhrid].toString().padStart(3, '0');
+      let hrid = `${bhrid}-${occStr}`;
+      let h = {
+        id: uuid(hrid, ns),
+        hrid: hrid,
+        permanentLocationId: locId,
+        callNumber: cn,
+        callNumberTypeId: bibCallNum.type
+      };
+      console.log(h);
+      hseen[hkey] = h;
+    } 
   });
   return out;
 }
@@ -648,7 +673,8 @@ try {
             } else {
               let cn = getSubs(cf[0], 'ab');
               let pre = getSubs(cf[0], 'f');
-              bibCallNum.value = `${pre}^^${cn}`;
+              // bibCallNum.value = `${pre}^^${cn}`;
+              bibCallNum.value = cn;
             }
             bibCallNum.type = conf.callNumbers[t];
             break;
@@ -897,7 +923,7 @@ try {
           let ifields = marc.fields[itag];
           let suppress = false;
           if (ifields) {
-            let hi = makeHoldingsItems(ifields, instId, inst.hrid, suppress, inst.electronicAccess);
+            let hi = makeHoldingsItems(ifields, instId, inst.hrid, suppress, inst.electronicAccess, bibCallNum);
             hi.h.forEach(r => {
               writeOut(outs.holdings, r);
               ttl.holdings++;
