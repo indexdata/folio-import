@@ -23,7 +23,24 @@ const unmappedId = '00000000-0000-0000-0000-000000000000';
 const tsvCols = {
   locations: { k: 0, v: 2 },
   mtypes: { k: 0, v: 1 },
-  loantypes: { k: 0, v: 2 }
+  loantypes: { k: 0, v: 1 },
+  statisticalCodes: { k: 0, v: 1},
+  statuses: { k: 1, v: 2}
+};
+
+const tagMap = {
+  "1": "January New",
+  "2": "February New",
+  "3": "March New",
+  "4": "April New",
+  "5": "May New",
+  "6": "June New",
+  "7": "July New",
+  "8": "August New",
+  "9": "September New",
+  "o": "October New",
+  "v": "November New",
+  "d": "December New"
 };
 
 const typeMap = {
@@ -66,7 +83,9 @@ const files = {
   srs: 1,
   snapshot: 1,
   presuc: 1,
-  err: 1
+  err: 1,
+  'holdings-err': 1,
+  'items-err': 1
 };
 
 const repMap = {
@@ -97,6 +116,22 @@ const cnTypeMap = {
 }
 
 const tiSubs = 'anpbcfghks';
+
+const reqFields = {
+  holdings: {
+    permanentLocationId: 'uuid',
+    sourceId: 'uuid',
+    instanceId: 'uuid'
+  },
+  items: {
+    materialTypeId: 'uuid',
+    permanentLoanTypeId: 'uuid',
+    holdingsRecordId: 'uuid',
+    status: 1
+  }
+};
+
+const cnotes = [ 'Check in', 'Check out'];
 
 const inotes = [];
 
@@ -411,15 +446,31 @@ const dedupe = function (arr, props) {
   return newArr;
 }
 
+const checkRec = function (rec, type) {
+  let out = true;
+  for (let f in reqFields[type]) {
+    if (!rec[f]) {
+      console.log(`ERROR required ${type} field ${f} not present (${rec.hrid})`);
+      out = false;
+    } else if (reqFields[type][f] === 'uuid' && !rec[f].match(/^.{8}-....-....-....-.{12}$/)) {
+      console.log(`ERROR ${type} field ${f} value "${rec[f]}" is not valid (${rec.hrid})`);
+      out = false;
+    } 
+  }
+  return out;
+};
+
 const hseen = {};
 const occ = {};
+let herr = 0;
+let ierr = 0;
 const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum) {
-  let out = { h: [], i: []};
+  let out = { h: [], i: [], herr: [], ierr: []};
   fields.forEach(f => {
     let s = getSubsHash(f);
     let loc = (s.l) ? s.l[0].trim() : '';
     let cn = (bibCallNum) ? bibCallNum.value : '';
-    let locId = tsvMap[loc] || loc;
+    let locId = tsvMap.locations[loc] || loc;
     let hkey = locId + ':' + cn;
     if (!hseen[hkey]) {
       if (!occ[bhrid]) {
@@ -433,12 +484,111 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum
         id: uuid(hrid, ns),
         hrid: hrid,
         permanentLocationId: locId,
-        callNumber: cn,
-        callNumberTypeId: bibCallNum.type
+        sourceId: refData.holdingsRecordsSources.FOLIO,
+        instanceId: bid
       };
-      console.log(h);
-      hseen[hkey] = h;
-    } 
+      if (cn) {
+        h.callNumber = cn;
+        h.callNumberTypeId = bibCallNum.type;
+      }
+      if (process.env.DEBUG) console.log(h);
+      if (checkRec(h, 'holdings')) {
+        hseen[hkey] = h;
+        out.h.push(f);
+      } else {
+        out.herr.push(h);
+      }
+    }
+    let hr = hseen[hkey];
+
+    // make items here
+    if (hr) {
+      // console.log(s)
+      let hrid = (s['1']) ? s['1'][0].substring(1) : '';
+      let bc = (s.i) ? s.i[0] : '';
+      let sup = (s.o) ? s.o[0] : '';
+      let fid = (s.z) ? s.z[0] : '';
+      let stc = (s.y) ? s.y[0] : '';
+      let mt = (s.t) ? s.t[0] : '';
+      let nop = (s.m) ? s.m[0] : '';
+      let vol = (s.c) ? s.c[0] : '';
+      let st = (s.s) ? s.s[0].trim() : '';
+      let cidate = (s.h && s.h[0].match(/\d/)) ? s.h[0] : '';
+      let i = {
+        id: uuid(hrid, ns),
+        hrid: hrid,
+        holdingsRecordId: hr.id,
+        materialTypeId: tsvMap.mtypes[loc],
+        permanentLoanTypeId: tsvMap.loantypes[mt] || mt,
+        status: { name: 'Available' },
+        discoverySuppress: false,
+        tags: { tagList: [] }
+      }
+
+      if (bc && !bcseen[bc]) {
+        i.barcode = bc;
+        bcseen[bc] = i.hrid;
+      } else if (bc) {
+        console.log(`WARN barcode ${bc} already used by ${bcseen[bc]} ($i.hrid)`);
+      }
+
+      let stName = tsvMap.statuses[st];
+      if (stName) {
+        i.status.name = stName;
+      } else {
+        i.status.name = 'Unknown';
+        console.log(`WARN item status "${st}" not found in map-- using "${i.status.name}" instead (${i.hrid})`);
+      }
+      if (st === 'j') {
+        i.itemDamagedStatusId = refData.itemDamageStatuses.Damaged;
+      }
+
+      if (sup === 's') i.discoverySuppress = true
+      if (fid) i.formerIds = [ fid ];
+      if (nop) {
+        i.descriptionOfPieces = nop;
+        i.circulationNotes = [];
+        cnotes.forEach(t => {
+          let cnid = uuid(i.id + t + nop, ns);
+          let o = {
+            id: cnid,
+            note: nop,
+            noteType: t
+          };
+          i.circulationNotes.push(o);
+        });
+      }
+      if (vol) i.volume = vol;
+
+      let stcId = tsvMap.statisticalCodes[stc];
+      if (stcId) i.statisticalCodes = [ stcId ];
+
+      if (cidate) {
+        let dt = new Date(cidate).toISOString();
+        if (dt) {
+          dt = dt.replace(/\....Z$/, ' -500');
+          i.lastCheckIn = { dateTime: dt };
+        }
+      }
+
+      if (ea) {
+        i.electronicAccess = ea;
+      }
+
+      if (s.o) {
+        s.o.forEach(v => {
+          let tag = tagMap[v];
+          if (tag) i.tags.tagList.push(tag);
+        });
+      }
+
+      if (process.env.DEBUG) console.log(i);
+      if (checkRec(i, 'items')) {
+        out.i.push(i);
+      } else {
+        out.ierr.push(f);
+      }
+    }
   });
   return out;
 }
@@ -560,7 +710,12 @@ try {
             let c = l.split(/\t/);
             let k = c[cmap.k].trim();
             let v = c[cmap.v].trim();
-            if (k && v && refData[prop]) tsvMap[prop][k] = refData[prop][v];
+            if (k && v && refData[prop]) { 
+              tsvMap[prop][k] = refData[prop][v];
+            } else {
+              if (!k.match(/[!b]/)) v = 'Available';
+              tsvMap[prop][k] = v;
+            }
           });
         }
       }
@@ -575,11 +730,14 @@ try {
     snapshots: 0,
     srs: 0,
     presuc: 0,
-    errors: 0
+    errors: 0,
+    
   }
   if (iconf) {
     ttl.holdings = 0;
     ttl.items = 0;
+    ttl.holdingsErr = 0;
+    ttl.itemsErr = 0;
   }
   if (conf.hasMfhd) {
     ttl.mfhds = 0;
@@ -931,6 +1089,14 @@ try {
             hi.i.forEach(r => {
               writeOut(outs.items, r);
               ttl.items++;
+            });
+            hi.herr.forEach(r => {
+              writeOut(outs['holdings-err'], r)
+              ttl.holdingsErr++;
+            });
+            hi.ierr.forEach(r => {
+              writeOut(outs['items-err'], r)
+              ttl.itemsErr++;
             });
           }
         }
