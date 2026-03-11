@@ -494,9 +494,9 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum
       if (process.env.DEBUG) console.log(h);
       if (checkRec(h, 'holdings')) {
         hseen[hkey] = h;
-        out.h.push(f);
+        out.h.push(h);
       } else {
-        out.herr.push(h);
+        out.herr.push(f);
       }
     }
     let hr = hseen[hkey];
@@ -561,13 +561,15 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum
       if (vol) i.volume = vol;
 
       let stcId = tsvMap.statisticalCodes[stc];
-      if (stcId) i.statisticalCodes = [ stcId ];
+      if (stcId) i.statisticalCodeIds = [ stcId ];
 
       if (cidate) {
         let dt = new Date(cidate).toISOString();
         if (dt) {
-          dt = dt.replace(/\....Z$/, ' -500');
+          dt = dt.replace(/T.*/, 'T12:00:00.000Z');
           i.lastCheckIn = { dateTime: dt };
+          let spId = refData.servicepoints.CIRC;
+          if (spId) i.lastCheckIn.servicePointId = spId;
         }
       }
 
