@@ -376,7 +376,6 @@ try {
       ttl.count++
       let rec = {};
       let marc = {};
-      let bibCallNum = { value: '', type: ''};
       try { 
         marc = parseMarc(r);
       } catch(e) {
@@ -384,6 +383,24 @@ try {
         ttl.errors++;
         writeOut(outs.err, r, true);
         continue;
+      }
+
+      if (conf.controlNum) {
+        let tag = conf.controlNum.substring(0, 3);
+        let sub = conf.controlNum.substring(3, 4);
+        let cf = (marc.fields[tag]) ? marc.fields[tag][0] : '';
+        let cnum = (cf) ? getSubs(cf, sub) : '';
+        
+        if (cnum) {
+          if (conf.controlNum === '907a') {
+            cnum = cnum.replace(/^\.(.+)\w$/, '$1'); // strip leading . and check digit from Sierra bib numbers
+          }
+          let f001 = (marc.fields['001']) ? marc.fields['001'][0] : '';
+          if (!f001) {
+            marc.deleteField('001', 0);
+            marc.addField('001', cnum);
+          }
+        }
       }
 
       let f010 = (marc.fields['010']) ? getSubs(marc.fields['010'][0], 'a') : '';
