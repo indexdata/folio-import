@@ -285,10 +285,12 @@ try {
         useen[uid] = 1;
       } else {
         console.log(`ERROR No patronGroup found for ${group} (username: ${un})`);
+        writeOut(files.e, p);
         ecount++;
       }
     } else {
       console.log(`ERROR membership id "${un}" already used!`)
+      writeOut(files.e, p);
       ecount++;
     }
   } 
