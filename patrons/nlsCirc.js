@@ -161,7 +161,6 @@ const spTran = {
       console.log('Total rows in reading room file:', inRecs.length);
 
       inRecs.forEach(r => {
-        console.log(r);
         let uid = r.Z310_ID;
         let user = users[uid];
         if (user) {
@@ -169,9 +168,14 @@ const spTran = {
           rrMap[ibcode] = 1;
           let item = bcodeMap[ibcode];
           if (item) {
+            let held = true;
             let sp = r.Z310_RR_ID;
             let od = r.Z310_OUT_DATE;
             let ld = r.Z310_OPEN_DATE;
+            if (od && !od.match(/^0/)) {
+              ld = od;
+              held = false;
+            }
             let loanDate = parseDate(ld);
             let spId = spTran[sp] || spMap['SP-INFO'];
             let o = {
@@ -179,10 +183,10 @@ const spTran = {
               itemBarcode: ibcode,
               userBarcode: user.bc,
               loanDate: loanDate,
-              held: (od === '0') ? true : false
+              held: held
             };
             // all items will be on holdshelf
-            o.held = true;
+            // o.held = true;
             // console.log(o);
             writeOut(outFiles.rr, o);
             ttl.rr++;

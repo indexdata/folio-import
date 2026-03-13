@@ -3,4 +3,4 @@
 pd=/Users/charles/Folio/nls
 dir=circTest
 ext=seqaa
-DEBUG=1 node nlsCirc $pd/ref-dev/inv/service-points.json $pd/$dir/users.jsonl $pd/$dir/items.jsonl $pd/dr1/data/z36.$ext $pd/dr1/circ/z310.$ext $pd/$dir/z37.$ext
+DEBUG=1 node nlsCirc $pd/ref-dev/inv/service-points.json $pd/$dir/users.jsonl $pd/$dir/items.jsonl $pd/$dir/z36.$ext $pd/$dir/z310.$ext $pd/$dir/z37.$ext
