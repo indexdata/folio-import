@@ -161,6 +161,7 @@ const spTran = {
       console.log('Total rows in reading room file:', inRecs.length);
 
       inRecs.forEach(r => {
+        console.log(r);
         let uid = r.Z310_ID;
         let user = users[uid];
         if (user) {
