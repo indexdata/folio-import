@@ -90,7 +90,7 @@ const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
         config = await getAuthToken(superagent);
       }
       logger.info(`[${x}] ${lDate} PUT ${id} to ${actionUrl}`);
-      let recUrl = `${actionUrl}/${id}`;
+      let recUrl = (actionUrl.match(/mapping-rules/)) ? actionUrl : `${actionUrl}/${id}`;
       if (recUrl.match(/instances|holdings|items|authorities/)) {
         try {
           let res = await superagent
@@ -123,7 +123,7 @@ const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
             };
         } catch (e) {
           writeErr(errPath, rec, e);
-	  let msg = (dbug) ? e : `${e}`;
+	    let msg = (dbug) ? e : `${e}`;
           logger.error(msg);
           continue;
         }

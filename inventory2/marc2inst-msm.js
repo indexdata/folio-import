@@ -262,6 +262,7 @@ const funcs = {
 }
 
 const applyRules = function (ent, field, allFields, tag) {
+  
   let data = '';
   let aoc = ent.applyRulesOnConcatenatedData || false;
   let dls = ent.subFieldDelimiter || '';
@@ -342,8 +343,9 @@ const applyRules = function (ent, field, allFields, tag) {
   if (rule && rule.value) data = rule.value;
   const out = {
     prop: ent.target,
-    data: data
+    data: (data && ent.target.match(/Id$/)) ? data.replace(/ .+/, '') : data
   }
+  // if (tag === '382') console.log(out);
   return out;
 }
 
