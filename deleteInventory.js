@@ -79,6 +79,22 @@ const sep = '-------------------------------------------------------------------
       return c;
     }
 
+    const delPreSuc = async (url) => {
+      let id = url.replace(/.+\//, '');
+      let q = `succeedingInstanceId==${id} OR precedingInstanceid==${id}`;
+      let base = `${config.okapi}/preceding-succeeding-titles`;
+      let gurl = `${base}?query=${q}`; 
+      let res = await get(gurl);
+      let c = 0;
+      for (let x = 0; x < res.precedingSucceedingTitles.length; x++) {
+        let r = res.precedingSucceedingTitles[x];
+        let durl = `${base}/${r.id}`;
+        await del(durl);
+        c++;
+      }
+      return c;
+    }
+
     const get = async (url) => {
       try {
         console.log(`GET ${url}`);
@@ -112,6 +128,9 @@ const sep = '-------------------------------------------------------------------
           return c;
         } else if (!noRetry && msg && msg.match(/instance_relationship/)) {
           let c = await delRel(url);
+          return c;
+        } else if (!noRetry && msg && msg.match(/preceding_succeeding_title/)) {
+          let c = await delPreSuc(url);
           return c;
         } else {
           console.log(msg);
