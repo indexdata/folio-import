@@ -7,7 +7,9 @@ On holds shelf	!	Awaiting pickup
 Claims returned	z	Claimed returned	
 Lost and paid by patron	$	Declared lost	
 Arrived, in process	f	In process	
+Coming soon!	c	In process	
 Being repaired	q	In process (non-requestable)	
+On missing parts shelf	p	In process (non-requestable)	
 Away at the bindery	b	In transit	
 Digital Resources	945$t 70	Intellectual item	Note this data is taken from a separate MARC field
 Stolen	d	Long missing	
@@ -18,5 +20,7 @@ On order	o	On order
 RARE: Liv Dir's Office	a	Restricted	
 Arrived, in process	r	Order closed	
 Damaged, to be replaced	j	Unavailable	
+Contact Orto Center	@	Unavailable	
 		Unknown	
 Withdrawn from collection	x	Withdrawn	
+To be withdrawn	*	Withdrawn	

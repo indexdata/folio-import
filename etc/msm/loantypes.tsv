@@ -8,3 +8,4 @@
 60	ILL In	42 days	ILL received from another institution
 70	Digital resources	N/A	Does not circulate
 230	ILL Out	42 days	ILL sent to another institution
+240	Same-day circulation (equipment)	1 day	not sure why we had a separate value for this tbh

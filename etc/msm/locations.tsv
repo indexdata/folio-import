@@ -1,6 +1,7 @@
 Legacy location code (945$l)	Folio location code	Folio label (optional)	Folio service point
 bks	Book Stacks	bks	
 sing	Book Stacks	bks	
+rfbks	Book Stacks	bks	
 ovbks	Oversize Books	ovb	
 score	Score Stacks	sco	
 scost	Score Stacks	sco	
