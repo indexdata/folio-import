@@ -353,97 +353,99 @@ const parseInst = (pol, inst, refData) => {
     const tid = refData.orderTemplates[tstr];
     const hridSeen = {};
     d.z68.forEach(r => {
-      let key = r.Z68_REC_KEY.substring(2, 9);
-      let akey = r.Z68_REC_KEY.substring(0, 9);
-      hridSeen[akey] = 1;
-      let instId = linkMap[akey];
-      let inst = instMap[instId];
-      let nt = r.Z68_LIBRARY_NOTE;
-      let poNum = r.Z68_ORDER_NUMBER.replace(/^ORDER-/, '');
-      poNum = poNum.replace(/\W/g, 'X');
-      poNum = 'SO' + poNum;
-      let oType = (r.Z68_ORDER_TYPE === 'O') ? 'Ongoing' : 'One-Time';
-      let vstr = 'DELBANCO';
-      let vid = refData.organizations[vstr];
-      let tstr = 'KB Stående order';
-      let tid = refData.orderTemplates[tstr];
-      let odate = r.Z68_OPEN_DATE.replace(/^(....)(..)(..)/, '$1-$2-$3');
-      let id = uuid(poNum, ns);
-      let o = {
-        id: id,
-        poNumber: poNum,
-        poNumberPrefix: 'SO',
-        orderType: oType,
-        vendor: vid,
-        template: tid,
-        workflowStatus: 'Open',
-        dateOrdered: odate,
-        tags: { tagList: [ "Aleph" ] }
-      };
-      if (nt) o.notes = [ nt ];
-      if (o.orderType === 'Ongoing') {
-        o.ongoing = {
-          isSubscription: true,
-          manualRenewal: true,
-          renewalDate: curYear + '-11-30',
-          reviewPeriod: 90
+      if (r.Z68_ORDER_TYPE === 'O') {
+        let key = r.Z68_REC_KEY.substring(2, 9);
+        let akey = r.Z68_REC_KEY.substring(0, 9);
+        hridSeen[akey] = 1;
+        let instId = linkMap[akey];
+        let inst = instMap[instId];
+        let nt = r.Z68_LIBRARY_NOTE;
+        let poNum = r.Z68_ORDER_NUMBER.replace(/^ORDER-/, '');
+        poNum = poNum.replace(/\W/g, 'X');
+        poNum = 'SO' + poNum;
+        let oType = 'Ongoing'
+        let vstr = 'DELBANCO';
+        let vid = refData.organizations[vstr];
+        let tstr = 'KB Stående order';
+        let tid = refData.orderTemplates[tstr];
+        let odate = r.Z68_OPEN_DATE.replace(/^(....)(..)(..)/, '$1-$2-$3');
+        let id = uuid(poNum, ns);
+        let o = {
+          id: id,
+          poNumber: poNum,
+          poNumberPrefix: 'SO',
+          orderType: oType,
+          vendor: vid,
+          template: tid,
+          workflowStatus: 'Open',
+          dateOrdered: odate,
+          tags: { tagList: [ "Aleph" ] }
         };
-      }
-      // console.log(o);
-      if (checkPo(o)) {
-        writeOut(files.p, o);
-        o.workflowStatus = 'Pending';
-        writeOut(files.c, o);
-        o.workflowStatus = 'Open';
-        ttl.p++;
-      }
+        if (nt) o.notes = [ nt ];
+        if (o.orderType === 'Ongoing') {
+          o.ongoing = {
+            isSubscription: true,
+            manualRenewal: true,
+            renewalDate: curYear + '-11-30',
+            reviewPeriod: 90
+          };
+        }
+        // console.log(o);
+        if (checkPo(o)) {
+          writeOut(files.p, o);
+          o.workflowStatus = 'Pending';
+          writeOut(files.c, o);
+          o.workflowStatus = 'Open';
+          ttl.p++;
+        }
 
-      let amStr = 'KB: Stående order köp (tryckt material)';
-      let amId = refData.acquisitionMethods[amStr];
-      let pol = {
-        id: uuid(o.id, ns),
-        purchaseOrderId: o.id,
-        acquisitionMethod: amId,
-        source: 'User',
-        collection: true,
-        tags: { tagList: [ "Aleph" ] },
-        cost: cost,
-        poLineNumber: o.poNumber + '-1'
-      };
+        let amStr = 'KB: Stående order köp (tryckt material)';
+        let amId = refData.acquisitionMethods[amStr];
+        let pol = {
+          id: uuid(o.id, ns),
+          purchaseOrderId: o.id,
+          acquisitionMethod: amId,
+          source: 'User',
+          collection: true,
+          tags: { tagList: [ "Aleph" ] },
+          cost: cost,
+          poLineNumber: o.poNumber + '-1'
+        };
 
-      pol.physical = {
-        createInventory: 'None',
-        materialType: refData.mtypes['Häfte/Volym Standing order'] || refData.mtypes.unspecified || refData.mtypes._unspecified,
-        volumes: []
-      };
+        pol.physical = {
+          createInventory: 'None',
+          materialType: refData.mtypes['Häfte/Volym Standing order'] || refData.mtypes.unspecified || refData.mtypes._unspecified,
+          volumes: []
+        };
 
-      if (inst) {
-        pol.details = {};
-        parseInst(pol, inst, refData);
-      }
+        if (inst) {
+          pol.details = {};
+          parseInst(pol, inst, refData);
+        }
 
-      pol.orderFormat = 'Physical Resource';
+        pol.orderFormat = 'Physical Resource';
 
-      if (checkPol(pol, r)) {
-        writeOut(files.l, pol);
-        ttl.l++;
+        if (checkPol(pol, r)) {
+          writeOut(files.l, pol);
+          ttl.l++;
 
-        o.poLines = [ pol ]
-        writeOut(files.o, o);
-        ttl.o++;
+          o.poLines = [ pol ]
+          writeOut(files.o, o);
+          ttl.o++;
 
-      } else {
-        ttl.le++;
+        } else {
+          ttl.le++;
 
-      }
-      
-      let z78 = d.z78[key];
-      if (z78) {
-        z78.forEach(n => {
-          let o = makePolNote(n.Z78_ARRIVAL_NOTE, n.Z78_ARRIVAL_DATE, 'Mottagning', pol.id, refData);
-          writeOut(files.n, o);
-          ttl.n++
-        });
+        }
+        
+        let z78 = d.z78[key];
+        if (z78) {
+          z78.forEach(n => {
+            let o = makePolNote(n.Z78_ARRIVAL_NOTE, n.Z78_ARRIVAL_DATE, 'Mottagning', pol.id, refData);
+            writeOut(files.n, o);
+            ttl.n++
+          });
+        }
       }
     });
 
