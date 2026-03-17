@@ -220,6 +220,7 @@ const parseInst = (pol, inst, refData) => {
 
       if (f === 'z68') {
         d[f] = lines;
+        dcount[f] = d[f].length;
       } else {
         let dx = {}
         lines.forEach(l => {
