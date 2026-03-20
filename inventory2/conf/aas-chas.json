@@ -4,7 +4,7 @@
     "tsvDir": "/Users/charles/Folio/folio-import/etc/aas",
     "mapFile": "",
     "controlNum": "",
-    "hridPrefix": "a",
+    "hridPrefix": "",
     "makeInstMap": true,
     "hasMfhd": true,
     "noTitle": "[Unknown title]",

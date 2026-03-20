@@ -23,10 +23,8 @@ const tsvCols = {
 };
 
 const typeMap = {
-  u: 'Physical',
-  v: 'Multi-part monograph',
-  x: 'Monograph',
-  y: 'Serial'
+  DigiRes: 'Electronic',
+  NotAAS: 'Not at AAS'
 };
 
 const elRelMap = {
@@ -100,9 +98,9 @@ try {
   let conf = JSON.parse(confData);
   ns = conf.nameSpace;
   refDir = conf.refDir.replace(/^\./, confDir);
-  let prefix = conf.hridPrefix || '';
-  let hprefix = conf.hridPrefix + 'h';
-  let iprefix = conf.hridPrefix + 'i';
+  let prefix = '';
+  let hprefix = 'ho';
+  let iprefix = 'it';
   let wdir = path.dirname(mfhdFile);
   let fn = path.basename(mfhdFile, '.jsonl');
   let outBase = wdir + '/' + fn;
@@ -303,8 +301,7 @@ try {
     let cpn = (mh.t) ? mh.t[0] : '';
     let cn = (mh.i) ? mh.h[0] + ' ' + mh.i : mh.h[0] || '';
     if (cn.match(/No call number/)) cn = '';
-    let tcode = (m.leader) ? m.leader.substring(6, 7) : '';
-    let tcodeStr = typeMap[tcode] || 'Physical';
+    let tcodeStr = typeMap[loc] || 'Physical';
     let typeId = refData.holdingsTypes[tcodeStr];
     let inst = instMap[bhrid];
     let hhrid;
@@ -377,6 +374,8 @@ try {
             o.statement = s.a;
           } else if (s.z) {
             o.note = s.z;
+          } else if (s.x) {
+            o.staffNote = s.x;
           }
         });
         h.holdingsStatements.push(o);
@@ -391,6 +390,8 @@ try {
             o.statement = s.a;
           } else if (s.z) {
             o.note = s.z;
+          } else if (s.x) {
+            o.staffNote = s.x;
           }
         });
         h.holdingsStatementsForSupplements.push(o);
@@ -405,6 +406,8 @@ try {
             o.statement = s.a;
           } else if (s.z) {
             o.note = s.z;
+          } else if (s.x) {
+            o.staffNote = s.x;
           }
         });
         h.holdingsStatementsForIndexes.push(o);
@@ -512,7 +515,7 @@ try {
         ttl.boundwiths++;
         bwpseen[bwpKey] = 1;
       } else {
-        console.log(bid, hid, iid);
+       console.log(bid, hid, iid);
       }
     });
   }
