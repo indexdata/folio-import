@@ -29,8 +29,8 @@ mapflat	mapflat	LC Flat Map (Appointment required)	82	82	0	1	0	0	Keep	Purge	LC F
 micro	micro	Microform - Please Consult Reference Librarian	75	182	0	1	0	0	Keep	Purge	Micro	Micro	Microform (Please Consult Reference Librarian)
 mss	Manuscripts	Mss. (Appointment required)	2061	2978	0	1	0	0	Keep	Purge	Manuscripts (Mss.)	Manuscripts (Mss.)	Manuscripts Collection (Mss.) (Appointment Required)
 newbook	newbook	New Book Shelves	0	0	1906	1	0	2	Keep	Purge	New Books	New Books	New Books Shelves
-newbook-14	New Book (14 Days)	New Book (14 Days)							New Location	New Location			
-newbook-28	New Book (28 Days)	New Book (28 Days)							New Location	New Location			
+newbook-14	New Book (14 Days)	New Book (14 Days)							New Location	New Location	newbook-14	New Book (14 Days)	New Book (14 Days)
+newbook-28	New Book (28 Days)	New Book (28 Days)							New Location	New Location	newbook-28	New Book (28 Days)	New Book (28 Days)
 news-rare	newspaper-rare	Rare Newspaper (Appointment required)	146	55	0	2	0	0	Keep	Purge	Cutter Rare-News	Cutter Rare-Newspaper	Cutter Rare Newspaper (Appointment Required)
 newspaper	newspaper	Rare Newspaper (Appointment required)	1023	75	1	0	0	0	Keep	Purge	Rare-News	Rare-Newspaper	Rare Newspaper (Appointment Required)
 offsite1	off-site storage	Off-site Storage	20609	49019	0	3	1	0	Keep	Purge	Off-Site Storage	Off-Site Storage	Off-Site Storage (Please Consult Reference Librarian)
