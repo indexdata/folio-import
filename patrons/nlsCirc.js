@@ -188,6 +188,7 @@ const spTran = {
             // all items will be on holdshelf
             // o.held = true;
             // console.log(o);
+            bcodeMap[ibcode] = 'Checked out';
             writeOut(outFiles.rr, o);
             ttl.rr++;
           } else {
@@ -235,6 +236,7 @@ const spTran = {
         ttl.err++;
       } else {
         item.st = 'Checked out';
+        bcodeMap[item.bc] = 'Checked out';
         loan.itemBarcode = item.bc;
         loan.userBarcode = user.bc;
         let ld = r.Z36_LOAN_DATE;
