@@ -21,6 +21,8 @@ const tsvCols = {
   statisticalCodes: [1, 4]
 };
 
+const loanTypeStr = 'Standard';
+
 const typeMap = {
   u: 'Physical',
   v: 'Multi-part monograph',
@@ -239,7 +241,7 @@ try {
         _version: 1,
         id: uuid(ihrid, ns),
         hrid: ihrid,
-        permanentLoanTypeId: refData.loantypes['Can circulate'],
+        permanentLoanTypeId: refData.loantypes[loanTypeStr],
         holdingsRecordId: holdings.id,
         status: { name: 'Available' },
         notes: [],
@@ -360,7 +362,7 @@ try {
             });
           }
         } else {
-          console.log(`ERROR item loantype not found for "Can circulate"`);
+          console.log(`ERROR item loantype not found for "${loanTypeStr}"`);
           ttl.itemErr++;
         }
       } else {
