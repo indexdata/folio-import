@@ -275,7 +275,6 @@ const spTran = {
       });
 
       console.log('Total rows in request file:', inRecs.length);
-
       inRecs.forEach(r => {
         let key = r.Z37_REC_KEY.substring(0, 15);
         let p = parseInt(r.Z37_REC_KEY.substring(15), 10);
@@ -293,7 +292,13 @@ const spTran = {
             }
             let nt = r.Z37_NOTE_1;
             let nt2 = r.Z37_NOTE_2;
-            let t = (item.st === 'Available') ? 'Page' : 'Hold';
+            let t = '';
+            if (item.st === 'Available') {
+              t = 'Page';
+              items[key].st = 'Paged'
+            } else {
+              t = 'Hold';
+            }
             let stat = (r.Z37_STATUS === 'S') ? 'Open - Awaiting pickup' : 'Open - Not yet filled';
             let edate = r.Z37_END_REQUEST_DATE;
             let hdate = r.Z37_END_HOLD_DATE;
