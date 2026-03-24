@@ -538,7 +538,7 @@ try {
           }
         } else if (st === '72' || st === '71') {
           i.status.name = 'Long missing';
-        } else if (!(loc === 'TLKB' && st === '04') && ips === 'UA') {
+        } else if (!(loc === 'TLKB' && st === '04') && loc !== 'PRUMS' && ips === 'UA') {
           i.status.name = 'In process';
         } else if (st === '71' && loc.match(/^(RRLEX|RRSPE)$/)) {
           i.status.name = 'Long missing';

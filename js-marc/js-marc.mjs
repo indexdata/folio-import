@@ -23,7 +23,8 @@ export function parseMarc(raw, txt = false) {
   const lines = txt ? [leader] : [];
   const buf = Buffer.from(raw);
 
-  dirParts.forEach(d => {
+  let i = 0;
+  dirParts.forEach((d) => {
     const p = d.match(/^(.{3})(.{4})(.{5})/);
     const tag = p[1];
     const len = parseInt(p[2], 10) - 1;
@@ -44,7 +45,7 @@ export function parseMarc(raw, txt = false) {
         if (c && v) subfields.push({ [c]: v });
       });
 
-      const fieldObj = { ind1, ind2, subfields };
+      const fieldObj = { ind1, ind2, subfields, _: i };
       mij.fields.push({ [tag]: fieldObj });
       fields[tag].push(fieldObj);
 
@@ -55,6 +56,7 @@ export function parseMarc(raw, txt = false) {
         })];
         lines.push(sparts.join(' '));
       }
+      i++;
     } else {
       mij.fields.push({ [tag]: fieldData });
       fields[tag].push(fieldData);
@@ -159,6 +161,28 @@ export function fields2mij(fields) {
     }
   });
   mij.leader = fields.leader;
+  return mij;
+}
+
+export function fields2mijOrd(fields) {
+  const mij = { leader: fields.leader, fields: [] };
+  delete fields.leader;
+  let unNumbered = [];
+  for (let tag in fields) {
+    fields[tag].forEach((f) => {
+      let el = f._;
+      if (el !== undefined) {
+        delete f._;
+        mij.fields[el] = { [tag]: f };
+      } else {
+        unNumbered.push({ [tag] : f});
+      }
+    });
+  }
+  console.log(unNumbered);
+  mij.fields = [...unNumbered, ...mij.fields];
+  // console.log(JSON.stringify(mij, null, 2));
+  // console.log(mij);
   return mij;
 }
 
