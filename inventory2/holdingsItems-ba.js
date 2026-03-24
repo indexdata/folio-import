@@ -524,6 +524,22 @@ try {
         });
       }
 
+      if (m['909']) {
+        m['909'].forEach(f => {
+          f.subfields.forEach(s => {
+            if (s.x) {
+              let t = refData.holdingsNoteTypes['Fund Name'];
+              let o = makeNote(s.x, t, true);
+              h.notes.push(o);
+            } else if (s.z) {
+              let t = refData.holdingsNoteTypes['Fiscal Year'];
+              let o = makeNote(s.z, t, true);
+              h.notes.push(o); 
+            }
+          });
+        });
+      }
+
       let lchar = (m['008'] && m['008'][0]) ? m['008'][0].substring(20, 21) : 'u';
       let lstr = illMap[lchar];
       h.illPolicyId = refData.illPolicies[lstr];
