@@ -207,7 +207,10 @@ let modName = process.argv[3];
       'coursereserves__courselistings',
       'coursereserves__courses',
       'data-export__mapping-profiles',
-      'data-export__job-profiles'
+      'data-export__job-profiles',
+      'roles',
+      'roles__capabilities',
+      'roles__capability-sets'
     ]
 
     custMods = {};
