@@ -33,7 +33,6 @@ let modName = process.argv[3];
       'https://raw.githubusercontent.com/folio-org/mod-configuration/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-email/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-notes/master/descriptors/ModuleDescriptor-template.json',
-      // 'https://raw.githubusercontent.com/folio-org/mod-tags/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-data-export/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-organizations-storage/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-finance-storage/master/descriptors/ModuleDescriptor-template.json',
@@ -46,8 +45,7 @@ let modName = process.argv[3];
       'https://raw.githubusercontent.com/folio-org/mod-di-converter-storage/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-source-record-storage/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-source-record-manager/master/descriptors/ModuleDescriptor-template.json',
-      // 'https://raw.githubusercontent.com/folio-org/mod-agreements/master/service/src/main/okapi/ModuleDescriptor-template.json',
-      // 'https://raw.githubusercontent.com/folio-org/mod-licenses/master/service/src/main/okapi/ModuleDescriptor-template.json',
+      'https://raw.githubusercontent.com/folio-org/mod-roles-keycloak/refs/heads/master/descriptors/ModuleDescriptor-template.json'
     ];
 
     if (modName) {
@@ -152,6 +150,7 @@ let modName = process.argv[3];
       '/record-bulk/ids': true,
       '/request-preference-storage/request-preference': true,
       '/request-storage/requests': true,
+      '/roles/users': true,
       '/scheduled-notice-storage/scheduled-notices': true,
       '/shelf-locations': true,
       '/service-point-users': true,
@@ -287,7 +286,7 @@ let modName = process.argv[3];
       } else if (url.match(/\/authority/)) {
         url += '?limit=1000';
       } else if (!url.match(/\?/)) {
-        url += '?limit=2500';
+        url += '?limit=5000';
       } 
       if (url.match(/data-import-profiles\/\w+Profiles/)) {
         url += '&withRelations=true';

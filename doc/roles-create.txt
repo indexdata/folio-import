@@ -1,0 +1,44 @@
+To create a Eureka role
+
+1> POST to /roles
+
+    {
+        "id": "8b423928-1aba-4c2f-8fb9-3e9050c04ac1"
+        "name": "CL test",
+        "description": "This is a test role"
+    }
+
+2> POST to /capabilities
+
+    {
+        "roleId": "8b423928-1aba-4c2f-8fb9-3e9050c04ac1",
+        "capabilityIds": [
+            "f4b9d0bf-de42-43b2-8762-8d381337daa6"
+        ]
+    }
+
+3> POST to /capability-sets
+
+    {
+        "roleId": "8b423928-1aba-4c2f-8fb9-3e9050c04ac1",
+        "capabilitySetIds": [
+            "ec2abd04-7ff0-4750-9b5b-e2fb674d967a",
+            "9bf6b98e-699d-4df9-a8e1-39eb696c4582",
+            "20767b25-2e1d-4427-b949-163bc14d5442",
+            "ae15c589-8e82-41c5-b410-a8da600ca9f6",
+            ...
+        ]
+    }
+
+4> POST no payload to users-keycloak/auth-users/{userId}
+
+5> POST roles/users
+
+    {
+        "userId": "bec20636-fb68-41fd-84ea-2cf910673599",
+        "roleIds": [
+            "8b423928-1aba-4c2f-8fb9-3e9050c04ac1"
+        ]
+    }
+
+
