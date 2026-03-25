@@ -312,8 +312,8 @@ try {
           i.itemLevelCallNumberTypeId = refData.callNumberTypes['Other scheme'];
         }
       }
-      if (ih.x && ih.x !== holdings.callNumberPrefix) i.itemLevelCallNumberPrefix = ih.x;
-      if (ih.y && ih.y !== holdings.callNumberSuffix) i.itemLevelCallNumberSuffix = ih.y;
+      // if (ih.x && ih.x !== holdings.callNumberPrefix) i.itemLevelCallNumberPrefix = ih.x;
+      // if (ih.y && ih.y !== holdings.callNumberSuffix) i.itemLevelCallNumberSuffix = ih.y;
       if (ih.i && !bcseen[ih.i]) {
         i.barcode = ih.i;
         bcseen[ih.i] = i.id;
