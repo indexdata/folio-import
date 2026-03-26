@@ -552,9 +552,9 @@ try {
   if (conf.hasMfhd) {
     ttl.mfhds = 0;
   }
+  let jobId = '';
 
   let start = new Date().valueOf();
-  
 
   const fileStream = fs.createReadStream(rawFile, { encoding: 'utf8' });
   
@@ -863,7 +863,6 @@ try {
         writeOut(outs.instances, inst);
         ttl.instances++;
         // console.log(raw.mij.fields);
-        let jobId;
         if (ttl.srs % 10000 === 0) {
           let snap = makeSnap();
           writeOut(outs.snapshot, snap);

@@ -300,8 +300,7 @@ try {
             i.status.date = sd;
             statDate = sd;
           } catch (e) {
-            console.log(`WARN "${ih.v}" is not a valid status date`);
-            bwFlag = true;
+            console.log(`WARN "${ih.v}" is not a valid status date (${ihrid})`);
           }
         }
       }
@@ -424,6 +423,7 @@ try {
   });
   for await (let line of rl) {
     ttl.count++;
+    if (ttl.count % 100000 === 0) console.log(`INFO MFHD records processed: ${ttl.count}`);
     let m = JSON.parse(line);
     let ctrl = (m['001']) ? m['001'][0] : '';
     let bhrid = (m['004']) ? m['004'][0] : '';
