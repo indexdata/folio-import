@@ -2,11 +2,13 @@ import fs from 'fs';
 import path from 'path';
 import { v5 as uuid } from 'uuid';
 import readline from 'readline';
+import { parse } from 'csv-parse/sync';
 
 let confFile = process.argv[2];
 
 let refDir;
 let mfhdFile = process.argv[3];
+let csvFile = process.argv[4];
 let ns;
 const refData = {};
 const tsvMap = {};
@@ -112,7 +114,7 @@ const makeCircNote = function (text, type, itemId) {
 }
 
 try {
-  if (!mfhdFile) { throw "Usage: node holdingsItems-ba.js <conf_file> <mfhd_jsonl_file>" }
+  if (!mfhdFile) { throw "Usage: node holdingsItems-ba.js <conf_file> <mfhd_jsonl_file> [ <csv_item_file> ]" }
   let confDir = path.dirname(confFile);
   let confData = fs.readFileSync(confFile, { encoding: 'utf8' });
   let conf = JSON.parse(confData);
@@ -197,6 +199,34 @@ try {
     }
   }
   // throw(instMap);
+
+  let csvItems = {};
+  if (csvFile) {
+    console.log(`INFO Reading extra items from ${csvFile}`);
+    let csv = fs.readFileSync(csvFile, { encoding: 'utf8' });
+    let itemLines = parse(csv, {
+      columns: true,
+      skip_empty_lines: true
+    });
+    for (let x in itemLines) {
+      let d = itemLines[x];
+      let mid = d.mfhd_id;
+      if (!csvItems[mid]) csvItems[mid] = [];
+      let f = {
+        ind1: " ",
+        ind2: " ",
+        subfields: []
+      };
+      delete d.matchKey;
+      delete d.mfhd_id;
+      delete d.item_id;
+      for (let s in d) {
+        f.subfields.push( { [s]: d[s] } );
+      }
+      csvItems[mid].push(f);
+    }
+  }
+  // throw(JSON.stringify(csvItems, null, 2));
 
   let ttl = {
     count: 0,
@@ -397,6 +427,7 @@ try {
     let m = JSON.parse(line);
     let ctrl = (m['001']) ? m['001'][0] : '';
     let bhrid = (m['004']) ? m['004'][0] : '';
+    if (!m['949'] && csvItems[ctrl]) m['949'] = csvItems[ctrl];
     bhrid = prefix + bhrid;
     let mh = {};
     let iid = '';
