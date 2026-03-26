@@ -554,10 +554,7 @@ try {
   }
 
   let start = new Date().valueOf();
-  let snap = makeSnap();
-  writeOut(outs.snapshot, snap);
-  ttl.snapshots++;
-  let jobId = snap.jobExecutionId;
+  
 
   const fileStream = fs.createReadStream(rawFile, { encoding: 'utf8' });
   
@@ -866,6 +863,13 @@ try {
         writeOut(outs.instances, inst);
         ttl.instances++;
         // console.log(raw.mij.fields);
+        let jobId;
+        if (ttl.srs % 10000 === 0) {
+          let snap = makeSnap();
+          writeOut(outs.snapshot, snap);
+          ttl.snapshots++;
+          jobId = snap.jobExecutionId;
+        }
         let srsObj = makeSrs(raw, jobId, inst.id, inst.hrid, inst.discoverySuppress);
         writeOut(outs.srs, srsObj);
         ttl.srs++;
