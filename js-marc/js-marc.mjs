@@ -156,6 +156,7 @@ export function fields2mij(fields) {
   tags.forEach(t => {
     if (t.match(/\d{3}/)) {
       fields[t].forEach(f => {
+        delete f._;
         mij.fields.push({ [t]: f});
       });
     }
