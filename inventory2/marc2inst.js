@@ -310,6 +310,8 @@ const applyRules = function (ent, field, allFields, tag) {
     funcNames.forEach(c => {
       if (funcs[c]) {
         data = funcs[c](data, param, field.ind1, field.ind2, allFields);
+      } else {
+        throw new Error(`Function not found: "${c}`);
       }
     });
   }
