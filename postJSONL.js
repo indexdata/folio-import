@@ -80,7 +80,7 @@ const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
       let rec = JSON.parse(line);
       if (rec._errMessage) delete rec._errMessage;
       let orec = JSON.parse(JSON.stringify(rec));
-      if (rec.__) { delete rec.__; };
+      if (rec.__) delete rec.__; 
       let lDate = new Date();
       if (config.expiry && config.expiry <= lDate.valueOf()) {
         config = await getAuthToken(superagent);
