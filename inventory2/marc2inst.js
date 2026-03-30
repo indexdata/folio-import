@@ -216,6 +216,16 @@ const funcs = {
   trim_period: function (data) {
     data = data.replace(/\.$/, '');
     return data;
+  },
+  trim_punctuation: function (data) {
+    data = data.trim();
+    if (data.match(/.+\s\w[\.-]$/)) {
+      return data;
+    } else if (data.match(/.+\s\w,$/)) {
+      return data.replace(/,$/, '.');
+    } else {
+      return data.replace(/[\.,]$/, '');
+    }
   }
 }
 
@@ -254,6 +264,8 @@ const applyRules = function (ent, field, allFields, tag) {
       funcNames.forEach(c => {
         if (funcs[c]) {
           data = funcs[c](data, param, field.ind1, field.ind2, allFields);
+        } else {
+          throw new Error(`Function not found: "${c}`);
         }
       });
     } else {
@@ -268,6 +280,8 @@ const applyRules = function (ent, field, allFields, tag) {
                 funcNames.forEach(c => {
                   if (funcs[c]) {
                     p = funcs[c](p, param, field.ind1, field.ind2, allFields);
+                  } else {
+                    throw new Error(`Function not found: "${c}`);
                   }
                 });
                 if (dparts[0]) p = dl + p;
@@ -283,6 +297,8 @@ const applyRules = function (ent, field, allFields, tag) {
           funcNames.forEach((c) => {
             if (funcs[c]) {
               parts[x] = funcs[c](parts[x], param, field.ind1, field.ind2, allFields);
+            } else {
+              throw new Error(`Function not found: "${c}`);
             }
           });
         };

@@ -216,6 +216,16 @@ const funcs = {
   trim_period: function (data) {
     data = data.replace(/\.$/, '');
     return data;
+  },
+  trim_punctuation: function (data) {
+    data = data.trim();
+    if (data.match(/.+\s\w[\.-]$/)) {
+      return data;
+    } else if (data.match(/.+\s\w,$/)) {
+      return data.replace(/,$/, '.');
+    } else {
+      return data.replace(/[\.,]$/, '');
+    }
   }
 }
 
