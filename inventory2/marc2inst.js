@@ -130,6 +130,11 @@ const funcs = {
     if (!out.match(/\S/)) out = ''; 
     return out;
   },
+  set_deleted: function (data) {
+    let code = data.substring(5, 6);
+    let out = (code === 'd') ? true : false;
+    return out; 
+  },
   set_issuance_mode_id: function () {
     let c = ldr.substring(7,8);
     let cstr = modeMap[c] || 'unspecified';
@@ -311,7 +316,7 @@ const applyRules = function (ent, field, allFields, tag) {
       if (funcs[c]) {
         data = funcs[c](data, param, field.ind1, field.ind2, allFields);
       } else {
-        throw new Error(`Function not found: "${c}`);
+        throw new Error(`Function not found: "${c}"`);
       }
     });
   }
@@ -717,6 +722,7 @@ try {
         marc.fields = origFields;
       }
       ldr = marc.fields.leader || '';
+      marc.fields.LDR = [ ldr ];
       let itypeCode = ldr.substring(6, 7);
       let blvl = ldr.substring(7,8);
       if (marc.fields['880']) {
@@ -840,7 +846,7 @@ try {
           let itype = typeMap[itypeCode];
           if (itype) inst.instanceTypeId = refData.instanceTypes[itype] || refData.instanceTypes.unspecified;
         }
-        inst.discoverySuppress = false;
+        // inst.discoverySuppress = false;
         if (supp) {
           let sf = (marc.fields[supp.tag]) ? marc.fields[supp.tag][0] : '';
           if (sf) {
