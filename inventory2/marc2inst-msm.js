@@ -88,6 +88,13 @@ const files = {
   'items-err': 1
 };
 
+const countMap = {
+  snapshots: 'snapshot',
+  errors: 'err',
+  holdingsErr: 'holdings-err',
+  itemsErr: 'items-err'
+}
+
 const repMap = {
   '100': '700',
   '110': '710',
@@ -1158,8 +1165,10 @@ try {
     ttl['time (secs)'] = t;
     if (t > 60) ttl['time (mins)'] = t / 60;
     for (let x in ttl) {
+      let fn = files[x] || files[countMap[x]];
       let l = x.substring(0,1).toUpperCase() + x.substring(1);
       l = l.padEnd(12);
+      if (ttl[x] === 0 && fn) fs.unlinkSync(fn); 
       let n = ttl[x].toString().padStart(8);
       console.log(l, ':', n);
     }
