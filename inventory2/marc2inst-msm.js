@@ -616,6 +616,11 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum
         });
       }
 
+      if (st === '*') {
+        i.tags.tagList.push('to_be_withdrawn');
+      }
+
+
       if (process.env.DEBUG) console.log(i);
       if (checkRec(i, 'items')) {
         out.i.push(i);
