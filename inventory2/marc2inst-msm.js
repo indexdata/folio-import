@@ -503,7 +503,7 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum
     let loc = (s.l) ? s.l[0].trim() : '';
     let cn = (bibCallNum) ? bibCallNum.value : '';
     let locId = tsvMap.locations[loc] || loc;
-    let hkey = locId + ':' + cn;
+    let hkey = bhrid + ':' + locId + ':' + cn;
     if (!hseen[hkey]) {
       if (!occ[bhrid]) {
         occ[bhrid] = 1;
