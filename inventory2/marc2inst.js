@@ -637,7 +637,21 @@ try {
               marc.deleteField('003', 0);
               oldNum = `(${f003})${f001}`;
             }
-            marc.addField('035', { ind1: ' ', ind2: ' ', subfields: [{a: oldNum}] });
+            let f035 = marc.fields['035'] || [];
+            let dupe = false;
+            f035.forEach(f => {
+              let s = getSubsHash(f);
+              if (s.a) {
+                for (let x = 0; x < s.a.length; x++) {
+                  let d = s.a[x];
+                  if (d === oldNum) {
+                    dupe = true;
+                    break;
+                  }
+                }
+              }
+            });
+            if (!dupe) marc.addField('035', { ind1: ' ', ind2: ' ', subfields: [{a: oldNum}] });
           }
           if (f001) {
             marc.deleteField('001', 0);
