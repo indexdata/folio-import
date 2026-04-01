@@ -151,8 +151,8 @@ const wait = (ms) => {
       ttl++;
       let json = JSON.parse(line);
       if (json.__) delete json.__;
-      if (json.jobExecutionId || json.snapshotId) {
-        let ep = (json.jobExecutionId) ? 'source-storage/snapshots' : 'source-storage/records';
+      if (json.jobExecutionId || json.snapshotId || json.succeedingInstanceId) {
+        let ep = (json.jobExecutionId) ? 'source-storage/snapshots' : (json.snapshotId) ? 'source-storage/records' : 'preceding-succeeding-titles';
         let xid = (json.jobExecutionId) ? json.jobExecutionId : json.id;
         let url = `${config.okapi}/${ep}`;
         console.log(`POST ${url}`);
