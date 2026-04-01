@@ -249,7 +249,7 @@ export function txt2raw(data) {
       let tag = l.substring(0, 3);
       let data = l.substring(4);
       if (tag > '009') {
-        data = data.replace(/ \$(.) */g, '\x1F$1');
+        data = data.replace(/ \$(.) /g, '\x1F$1');
       }
       data += '\x1E';
       data = data.normalize('NFC');
