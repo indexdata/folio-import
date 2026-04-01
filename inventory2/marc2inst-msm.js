@@ -172,6 +172,11 @@ const funcs = {
     if (!out.match(/\S/)) out = ''; 
     return out;
   },
+  set_deleted: function (data) {
+    let code = data.substring(5, 6);
+    let out = (code === 'd') ? true : false;
+    return out; 
+  },
   set_issuance_mode_id: function () {
     let c = ldr.substring(7,8);
     let cstr = modeMap[c] || 'unspecified';
@@ -915,6 +920,7 @@ try {
         marc.fields = origFields;
       }
       ldr = marc.fields.leader || '';
+      marc.fields.LDR = [ ldr ];
       let itypeCode = ldr.substring(6, 7);
       let blvl = ldr.substring(7,8);
       if (marc.fields['880']) {
