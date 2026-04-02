@@ -1,0 +1,250 @@
+import { Buffer } from 'node:buffer';
+
+/**
+ * Parse raw a MARC record into JSON
+ * @param {binary} raw
+ * @param {boolean} txt
+ * @returns {Object} a record object with "mij", "fields" objects and optional text rendering
+ */
+export function parseMarc(raw, txt = false) {
+  if (typeof raw !== 'string') {
+    throw new TypeError('raw must be a string');
+  }
+  if (typeof txt !== 'boolean') {
+    throw new TypeError('txt must be a boolean');
+  }
+
+  const leader = raw.substring(0, 24);
+  const dirEnd = parseInt(leader.substring(12, 17), 10);
+  const dir = raw.substring(24, dirEnd);
+  const dirParts = dir.match(/.{12}/g) || [];
+  const fields = { leader };
+  const lines = txt ? [leader] : [];
+  const buf = Buffer.from(raw);
+
+  let i = 0;
+  dirParts.forEach((d) => {
+    const p = d.match(/^(.{3})(.{4})(.{5})/);
+    const tag = p[1];
+    const len = parseInt(p[2], 10) - 1;
+    const start = parseInt(p[3], 10) + dirEnd;
+    const end = start + len;
+    const fieldData = buf.subarray(start, end).toString();
+
+    if (!fields[tag]) fields[tag] = [];
+
+    if (fieldData.includes('\x1F')) {
+      const ind1 = fieldData.substring(0, 1).replace(/\W/, ' ');
+      const ind2 = fieldData.substring(1, 2).replace(/\W/, ' ');
+
+      let subfields = [];
+      fieldData.split(/\x1F/).slice(1).forEach(s => {
+        let c = s.substring(0, 1);
+        let v = s.substring(1);
+        if (c && v) subfields.push({ [c]: v });
+      });
+
+      const fieldObj = { ind1, ind2, subfields, _: i };
+      fields[tag].push(fieldObj);
+
+      if (txt) {
+        const sparts = [`${tag} ${ind1}${ind2}`, ...subfields.map(sf => {
+          const code = Object.keys(sf)[0];
+          return `$${code} ${sf[code]}`;
+        })];
+        lines.push(sparts.join(' '));
+      }
+    } else {
+      fields[tag].push({ data: fieldData, _: i });
+      if (txt) lines.push(`${tag} ${fieldData}`);
+    }
+    i++;
+  });
+
+  function deleteField(tag, occurrence) {
+    if (fields[tag]) fields[tag].splice(occurrence, 1);
+    if (!fields[tag][0]) delete fields[tag];
+  }
+
+  function addField(tag, data) {
+    let addr = 0;
+    if (!fields[tag]) {
+      let preTag = '000';
+      for (let k in fields) {
+        if (k < tag && k > preTag) {
+          preTag = k;
+        }
+      }
+      fields[tag] = [];
+      addr = (preTag === '000') ? .01 : fields[preTag][fields[preTag].length - 1]._ + .01;
+    } else {
+      addr = fields[tag][fields[tag].length - 1]._ + .01;
+    }
+    data._ = addr;
+    fields[tag].push(data);
+  }
+
+  function updateField(tag, data, occurrence = 0) {
+    if (fields[tag] && fields[tag][occurrence]) {
+      fields[tag][occurrence] = data;
+    }
+  }
+
+  return {
+    fields,
+    text: lines.join('\n'),
+    deleteField,
+    addField,
+    updateField
+  };
+}
+
+/**
+ * Get a string or array representation from a field object
+ * @param {Object} field - A field object as returned by parseMarc
+ * @param {string} codes - Subfield codes to return
+ * @param {string|number} [ delim= ] - An optional join character (default: " "), set to -1 to return an array
+ * @returns {string|array}
+ */
+
+export function getSubs(field, codes, delim) {
+  let dl = (delim) ? delim : ' ';
+  let out = [];
+  if (!field || !field.subfields) return;
+  field.subfields.forEach(s => {
+    let code = Object.keys(s)[0];
+    if (!codes) {
+      out.push(s[code]);
+    } else if (code.match(/\w/) && codes.match(code)) {
+      out.push(s[code]);
+    }
+  });
+  if (dl === -1) {
+    return out;
+  } else {
+    return out.join(dl);
+  }
+}
+
+export function getSubsHash(field, returnString) {
+  const out = {};
+  field.subfields.forEach(s => {
+    let code = Object.keys(s)[0];
+    if (code.match(/\w/)) {
+      if (returnString) {
+        if (!out[code]) out[code] = s[code];
+      } else {
+        if (!out[code]) out[code] = [];
+        out[code].push(s[code]);
+      }
+    }
+  });
+  return out;
+}
+
+export function fields2mij(fields) {
+  const mij = { leader: fields.leader, fields: [] };
+  delete fields.leader;
+  for (let tag in fields) {
+    fields[tag].forEach(f => {
+      let el = f._;
+      delete f._;
+      if (f.data) {
+        mij.fields.push({ [tag]: f.data, _:el});
+      } else {
+        mij.fields.push({ [tag]: f, _: el });
+      }
+    });
+  }
+  mij.fields.sort((a, b) => a._ - b._);
+  mij.fields.filter(a => delete a._ );
+  return mij;
+}
+
+/**
+ * Create a raw MARC record from MIJ
+ * @param {Object} mij - MARC in JSON record
+ * @param {Boolean} sortFieldsByTag - Sort fields by tag name
+ * @returns {binary}
+ */
+export function mij2raw(mij, sortFieldsByTag) {
+  let dir = '';
+  let pos = 0;
+  let varFields = '';
+  if (sortFieldsByTag) mij.fields.sort((a, b) => Object.keys(a)[0] - Object.keys(b)[0]);
+  mij.fields.forEach(f => {
+    let tag = Object.keys(f)[0];
+    let data = '';
+    if (f[tag].subfields) {
+      let d = f[tag];
+      data = d.ind1 + d.ind2;
+      d.subfields.forEach(s => {
+        let code = Object.keys(s)[0];
+        let sd = s[code];
+        data += '\x1F' + code + sd;
+      });
+    } else {
+      data = f[tag];
+    }
+    data += '\x1E';
+    varFields += data;
+    let len = Buffer.byteLength(data, 'utf8');
+    let lenStr = len.toString().padStart(4, '0');
+    let posStr = pos.toString().padStart(5, '0');
+    let dirPart = tag + lenStr + posStr;
+    dir += dirPart;
+    pos += len;
+  });
+  let ldr = mij.leader;
+  dir += '\x1E';
+  let base = dir.length + 24;
+  let baseStr = base.toString().padStart(5, '0');
+  ldr = ldr.replace(/^\d{5}(.{7})\d{5}(.+)/, '$1' + baseStr + '$2');
+  let rec = ldr + dir + varFields + '\x1D';
+  let rlen = Buffer.byteLength(rec, 'utf8') + 5;
+  let rlinStr = rlen.toString().padStart(5, '0');
+  rec = rlinStr + rec;
+  return { rec: rec, mij: mij };
+}
+
+/**
+ * Create a raw MARC record from text
+ * @param {string} mij - Yaz style text record
+ * @returns {binary}
+ */
+export function txt2raw(data) {
+  let line = data.split(/\n/);
+  let ldr = '';
+  let dir = '';
+  let pos = 0;
+  let varFields = '';
+  line.forEach(l => {
+    if (l.match(/^\d{3} /)) {
+      let tag = l.substring(0, 3);
+      let data = l.substring(4);
+      if (tag > '009') {
+        data = data.replace(/ \$(.) */g, '\x1F$1');
+      }
+      data += '\x1E';
+      data = data.normalize('NFC');
+      varFields += data;
+      let len = Buffer.byteLength(data, 'utf8');
+      let lenStr = len.toString().padStart(4, '0');
+      let posStr = pos.toString().padStart(5, '0');
+      let dirPart = tag + lenStr + posStr;
+      dir += dirPart;
+      pos += len;
+    } else if (l.match(/^\d{5}/)) {
+      ldr = l.substring(5);
+    }
+  });
+  dir += '\x1E';
+  let base = dir.length + 24;
+  let baseStr = base.toString().padStart(5, '0');
+  ldr = ldr.replace(/^(.{7}).{5}/, '$1' + baseStr);
+  let rec = ldr + dir + varFields + '\x1D';
+  let rlen = Buffer.byteLength(rec, 'utf8') + 5;
+  let rlinStr = rlen.toString().padStart(5, '0');
+  rec = rlinStr + rec;
+  return rec;
+}
