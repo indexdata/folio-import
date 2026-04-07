@@ -20,7 +20,7 @@ const wait = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
-const types = [ 'instances', 'srs' ];
+const types = [ 'instances' ];
 
 try {
   if (!inFile) { throw "Usage: node suppressInst.js <suppress_jsonl_file>" }
