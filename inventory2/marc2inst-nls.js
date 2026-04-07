@@ -350,6 +350,11 @@ const funcs = {
     if (!out.match(/\S/)) out = ''; 
     return out;
   },
+  set_deleted: function (data) {
+    let code = data.substring(5, 6);
+    let out = (code === 'd') ? true : false;
+    return out; 
+  },
   set_issuance_mode_id: function () {
     let c = ldr.substring(7,8);
     let cstr = modeMap[c] || 'unspecified';
