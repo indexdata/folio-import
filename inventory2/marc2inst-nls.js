@@ -235,6 +235,7 @@ const outs = {};
 const bcseen = {};
 const iseen = {};
 const seen = {};
+const rseen = {};
 
 const typeMap = {
   'a': 'text',
@@ -1444,8 +1445,11 @@ try {
               subInstanceId: inst.id,
               instanceRelationshipTypeId: refData.instanceRelationshipTypes['multipart monograph']
             };
-            writeOut(outs.rel, o);
-            ttl.relations++;
+            if (!rseen[o.id]) {
+              writeOut(outs.rel, o);
+              ttl.relations++;
+            }
+            rseen[o.id] = 1;
           }
         });
       }
