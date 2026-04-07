@@ -3,7 +3,7 @@ const superagent = require('superagent');
 const { getAuthToken } = require('./lib/login');
 const fn = process.argv[3]; 
 const mod = process.argv[2];
-const ent = 'user';
+const ent = process.argv[4] || 'user';
 
 (async () => {
   let added = 0;
@@ -11,7 +11,7 @@ const ent = 'user';
   let errors = 0;
   try {
     if (!fn) {
-      throw new Error('Usage: node putCustomFields.js <mod-users version> <file>\nNOTE: Module set to ' + mod);
+      throw new Error('Usage: node putCustomFields.js <mod-users version> <file> [ entityType: (user | order) ] \nNOTE: Module set to ' + mod);
     }
 
     let config = await getAuthToken(superagent);
