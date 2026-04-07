@@ -1207,6 +1207,7 @@ try {
       marc.mij = (instSource === 'MARC') ? fields2mij(marc.fields) : {};
       let raw = (instSource === 'MARC') ? mij2raw(marc.mij) : '';
       ldr = marc.fields.leader || '';
+      marc.fields.LDR = [ ldr ];
       let itypeCode = ldr.substring(6, 7);
       let blvl = ldr.substring(7,8);
       if (marc.fields['880']) {
