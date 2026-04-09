@@ -58,6 +58,15 @@ const mods = {
     pieces: 'orders-storage/pieces?limit=0',
     serials: 'serials-management/serials?stats=true',
     ruleSets: 'serials-management/rulesets?stats=true'
+  },
+  finance: {
+    fiscalYears: 'finance-storage/fiscal-years?limit=0',
+    ledgers: 'finance-storage/ledgers?limit=0',
+    funds: 'finance-storage/funds?limit=0',
+    budgets: 'finance-storage/budgets?limit=0',
+    groups: 'finance-storage/groups?limit=0',
+    groupFundFiscalYears: 'finance-storage/group-fund-fiscal-years?limit=0',
+    expenseClasses: 'finance-storage/expense-classes?limit=0',
   }
 };
 
@@ -95,7 +104,8 @@ mods.all = allMods;
         let ttl = res.body.totalRecords
         let ttlStr = ttl.toString().padStart(8, ' ');
         let tstr = t.padEnd(24, ' ');
-        console.log(`${tstr}`, ttlStr);
+        let path = (process.env.DEBUG) ? `  ${ep}` : ''
+        console.log(`${tstr}`, ttlStr, path);
       } catch (e) {
         console.log(`${e}`);
       }
