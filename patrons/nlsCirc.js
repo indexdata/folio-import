@@ -305,7 +305,7 @@ const spTran = {
             let edate = r.Z37_END_REQUEST_DATE;
             let hdate = r.Z37_END_HOLD_DATE;
             let pul = r.Z37_PICKUP_LOCATION.trim();
-            let spId = spTran[pul];
+            let spId = spTran[pul] || spMap['SP-INFO'];
             let fps = r.Z37_FILTER_PROCESS_STATUS;
             if (fps === 'DB') spId = spMap['SP-REPRO'];
             if (fps === 'LA') spId = spMap['SP-BE'];
