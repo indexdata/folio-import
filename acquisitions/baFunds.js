@@ -6,9 +6,11 @@ const { parse } = require('csv-parse/sync');
 let refDir = process.argv[2];
 const inFile = process.argv[3];
 const ns = '2f124984-d089-462a-bcfc-db7addcc43c5';
+let fy = 'FY2026';
 
 const files = {
-  funds: 'funds.jsonl'
+  funds: 'funds.jsonl',
+  budgets: 'budgets.jsonl'
 };
 
 const rfiles = {
@@ -61,7 +63,7 @@ try {
   // throw(inRecs); 
 
   const seen = {};
-  const ttl = { count: 0, funds: 0 };
+  const ttl = { count: 0, funds: 0, budgs: 0 };
   inRecs.forEach(r => {
     ttl.count++;
     if (process.env.DEBUG) console.log(r);
@@ -82,6 +84,20 @@ try {
     if (process.env.DEBUG) console.log(o);
     writeTo(files.funds, o);
     ttl.funds++;
+
+    let fyid = refData.fiscalYears[fy];
+    let bo = {
+      id: uuid(o.id, ns),
+      budgetStatus: 'Active',
+      name: o.name,
+      fundId: o.id,
+      fiscalYearId: fyid,
+      initialAllocation: 0,
+      allocated: 0
+    }
+    if (process.env.DEBUG) console.log(bo);
+    writeTo(files.budgets, bo);
+    ttl.budgs++
   });
 
   console.log('Finished!');
