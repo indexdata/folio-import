@@ -54,6 +54,18 @@ try {
     fs.writeFileSync(fileName, outStr, { flag: 'a' });
   }
 
+  const reqFields = (object, fieldList) => {
+    let out = true;
+    fieldList.forEach(k => {
+      if (out === true && !object[k]) {
+        out = false;
+        console.log(`ERROR missing required field: "${k}"`);
+      }
+    
+    });
+    return out;
+  }
+
   const csv = fs.readFileSync(`${inFile}`, 'utf8');
   const inRecs = parse(csv, {
     columns: true,
@@ -82,8 +94,11 @@ try {
       description: r.fund_description
     }
     if (process.env.DEBUG) console.log(o);
-    writeTo(files.funds, o);
-    ttl.funds++;
+    let valid = reqFields(o, ['name','code','ledgerId','fundStatus'])
+    if (valid) {
+      writeTo(files.funds, o);
+      ttl.funds++;
+    }
 
     let fyid = refData.fiscalYears[fy];
     let bo = {
@@ -96,8 +111,11 @@ try {
       allocated: 0
     }
     if (process.env.DEBUG) console.log(bo);
-    writeTo(files.budgets, bo);
-    ttl.budgs++
+    valid = reqFields(bo, ['name','budgetStatus','fundId','fiscalYearId'])
+    if (valid) {
+      writeTo(files.budgets, bo);
+      ttl.budgs++
+    }
   });
 
   console.log('Finished!');
