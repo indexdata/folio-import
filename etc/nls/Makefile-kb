@@ -31,11 +31,10 @@ suppress:
 
 inventory-prep:
 	cd $(idir); cat bibs-xitems.jsonl >> bibs-items.jsonl
-	# cd $(inv2); node --max-old-space-size=4096 suppressInst-nls.js "$(idir)/bibs-suppress.jsonl"
 	cd $(idir); split -n l/2 bibs-instances.jsonl in
-	# cd $(idir); split -n l/2 bibs-srs.jsonl sr
 	cd $(idir); split -n l/2 bibs-holdings.jsonl ho
 	cd $(idir); split -n l/2 bibs-items.jsonl it
+	cd $(idir); split -n l/5 bibs-presuc.jsonl pr
 
 users:
 	cd $(wd)/patrons; node nlsUsers.js $(uref) $(udir) > $(ldir)/makeUsers.log 2>$(ldir)/makeUsers.err &
@@ -49,18 +48,6 @@ split-users: $(udir)/users-users.jsonl
 	cd $(udir); split -l 10000 users-notes.jsonl notes-
 	ls -l $(udir)
 
-orders:
-	cd $(acq); node --max-old-space-size=4096 nlsOrders $(oref) $(z103) $(idir)/bibs-instances.jsonl $(odir) > $(ldir)/makeOrders.log 2>$(ldir)/makeOrders.err &
-	tail -f $(ldir)/makeOrders.log
-
-serials:
-	cd $(wd); node downloadJSONL orders-storage/titles $(odir)/titles.jsonl
-	cd $(acq); node nlsSerials $(odir)/z08.dsv 1 > $(ldir)/makeSerials.log 2>$(ldir)/makeSerials.err
-	cat $(ldir)/makeSerials.log
-
-rulesets:
-	cd $(acq); node nlsRuleSets $(odir)
-
 circ:
 	cd $(cdir); mv -f z36.seqaa z36.dsv; true; mv -f z37.seqaa z37.dsv; true; mv -f z310.seqaa z310.dsv
 	cd $(wd); [ -f $(cdir)/users.jsonl ] || node downloadJSONL 'users?limit=5000&query=barcode==* sortBy id' $(cdir)/users.jsonl
@@ -70,9 +57,23 @@ circ:
 split-circ: $(cdir)/checkouts.jsonl
 	cd $(cdir); split -l 1500 checkouts.jsonl chk
 	cd $(cdir); split -l 1500 reading-room.jsonl rrchk
+	ls -l $(cdir)
 
 clean-circ: $(cdir)/*.dsv
 	cd $(cdir); mv z36.dsv z36.seqaa
 	cd $(cdir); mv z37.dsv z37.seqaa
 	cd $(cdir); mv z310.dsv z310.seqaa
+
+orders:
+	cd $(acq); node --max-old-space-size=4096 nlsOrders $(oref) $(z103) $(idir)/bibs-instances.jsonl $(odir) > $(ldir)/makeOrders.log 2>$(ldir)/makeOrders.err &
+	tail -f $(ldir)/makeOrders.log
+
+serials:
+	cd $(wd); node downloadJSONL orders-storage/titles $(odir)/titles.jsonl
+	cd $(acq); node nlsSerials $(odir)/z08.dsv > $(ldir)/makeSerials.log 2>$(ldir)/makeSerials.err
+	cat $(ldir)/makeSerials.log
+
+rulesets:
+	cd $(acq); node nlsRuleSets $(odir) 
+
 
