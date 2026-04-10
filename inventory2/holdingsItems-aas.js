@@ -97,6 +97,7 @@ try {
   let confData = fs.readFileSync(confFile, { encoding: 'utf8' });
   let conf = JSON.parse(confData);
   ns = conf.nameSpace;
+  let holdingsStart = conf.holdingsStart;
   refDir = conf.refDir.replace(/^\./, confDir);
   let prefix = '';
   let hprefix = 'ho';
@@ -433,16 +434,10 @@ try {
                   if (inst) {
                     let bwh = JSON.parse(JSON.stringify(h));
                     bwh.instanceId = inst.id;
-                    bwh.hrid = hprefix + s.a;
-                    delete bwh.formerIds;
-                    if (!occ[bwh.hrid]) {
-                      occ[bwh.hrid] = 1; 
-                    } else {
-                      occ[bwh.hrid]++;
-                    }
-                    let occStr = occ[bwh.hrid].toString().padStart(3, '0');
-                    bwh.hrid += '-' + occStr;
+                    holdingsStart++;
+                    bwh.hrid = holdingsStart.toString();
                     bwh.id = uuid(bwh.hrid, ns);
+                    delete bwh.formerIds;
                     let ro = {
                       superInstanceId: h.instanceId,
                       subInstanceId: inst.id,
@@ -451,13 +446,13 @@ try {
                     ro.id = uuid(ro.superInstanceId + ro.subInstanceId, ns);
                     writeOut(outs.rel, ro);
                     ttl.relationships++;
+
                     writeOut(outs.holdings, bwh);
                     ttl.holdings++;
 
                     bwh.hlink = ctrl;
                     if (!relMap[inst.bibId]) relMap[inst.bibId] = [];
                     relMap[inst.bibId].push(bwh);
-
                   }
                 }
               });

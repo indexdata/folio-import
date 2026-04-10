@@ -7,6 +7,7 @@
     "hridPrefix": "",
     "makeInstMap": true,
     "hasMfhd": true,
+    "holdingsStart": 648716,
     "noTitle": "[Unknown title]",
     "catDate": { "tag": "997", "subfield": "a" },
     "deleteTags": [ "997" ],
