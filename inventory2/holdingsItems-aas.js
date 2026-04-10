@@ -435,7 +435,7 @@ try {
                     let bwh = JSON.parse(JSON.stringify(h));
                     bwh.instanceId = inst.id;
                     holdingsStart++;
-                    bwh.hrid = holdingsStart.toString();
+                    bwh.hrid = hprefix + holdingsStart;
                     bwh.id = uuid(bwh.hrid, ns);
                     delete bwh.formerIds;
                     let ro = {
