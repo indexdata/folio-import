@@ -416,7 +416,7 @@ try {
 
       let lchar = (m['008'] && m['008'][0]) ? m['008'][0].substring(20, 21) : 'u';
       let lstr = illMap[lchar];
-      h.illPolicyId = refData.illPolicies[lstr];
+      h.illPolicyId = refData.illPolicies['Will not lend'];
       
       if (h.permanentLocationId) {
         if (!hseen[ctrl]) {
