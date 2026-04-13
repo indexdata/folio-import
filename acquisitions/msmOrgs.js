@@ -73,7 +73,7 @@ try {
   // throw(inRecs); 
 
   const seen = {};
-  const ttl = { count: 0, orgs: 0, contacts: 0 };
+  const ttl = { count: 0, orgs: 0, contacts: 0, errs: 0 };
   for (let x = 0; x < inRecs.length; x++) {
     let r = inRecs[x];
     if (filter && !r[filter]) continue;
@@ -82,15 +82,21 @@ try {
     let addr = [];
     if (r.address1) addr.push(r.address1);
     if (r.address2) addr.push(r.address2);
+    let desc = [];
+    if (r.contact) desc.push(r.contact);
+    if (r.acctNum) desc.push(r.acctNum);
+
     let o = {
+      id: uuid(r.code, ns),
       name: r.vendorName,
       code: r.code,
       status: 'Active',
+      isVendor: true,
       addresses: []
     };
     addr.forEach((a, el) => {
       if (a.match(/^http/)) { 
-        o.url = [ { value: a } ];
+        o.urls = [ { value: a } ];
       } else {
         let l = a.split(/\$/);
         let ll = l.pop();
@@ -102,21 +108,42 @@ try {
           addressLine1: a1,
           addressLine2: a2,
           city: city,
-          state: state,
+          stateRegion: state
         };
         if (zip.match(/\d{5}/)) { 
-          ao.zip = zip;
+          ao.zipCode = zip;
         } else {
           ao.country = zip;
         }
         ao.isPrimary = (el === 0) ? true : false;
-
         o.addresses.push(ao);
       }
     });
 
-    if (process.env.DEBUG) console.log(o);
+    if (desc[0]) o.description = desc.join(/; /);
 
+    if (r.acctNum) {
+      let ac = { accountNo: r.acctNum, name: o.name, accountStatus: 'Active' };
+      o.accounts = [ ac ];
+    }
+
+    if (r.phone) {
+      let ph = { phoneNumber: r.phone, isPrimary: true };
+      o.phoneNumbers = [ ph ];
+    }
+
+    if (r.email) {
+      let em = { value: r.email, isPrimary: true };
+      o.emails = [ em ];
+    }
+    if (!seen[o.code]) {
+      if (process.env.DEBUG) console.log(o);
+      writeTo(files.orgs, o);
+      ttl.orgs++;
+    } else {
+      console.log(`ERROR vendor code "${o.code}" is already used!`);
+      ttl.errs++;
+    }
   }
 
   console.log('Finished!');
