@@ -500,7 +500,11 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum
   let out = { h: [], i: [], herr: [], ierr: []};
   fields.forEach(f => {
     let s = getSubsHash(f);
-    let loc = (s.l) ? s.l[0].trim() : '';
+    if (!s.l) {
+      console.log(`WARN no subfield "l" present. Skipping holdings creation (${bhrid})`);
+      return;
+    }
+    let loc = (s.l) ? s.l[0].trim() : ''; 
     let cn = (bibCallNum) ? bibCallNum.value : '';
     let locId = tsvMap.locations[loc] || loc;
     let hkey = bhrid + ':' + locId + ':' + cn;
@@ -561,7 +565,7 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum
         i.barcode = bc;
         bcseen[bc] = i.hrid;
       } else if (bc) {
-        console.log(`WARN barcode ${bc} already used by ${bcseen[bc]} ($i.hrid)`);
+        console.log(`WARN barcode ${bc} already used by ${bcseen[bc]} (${i.hrid})`);
       }
 
       let stName = tsvMap.statuses[st];
