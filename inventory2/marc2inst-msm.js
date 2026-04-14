@@ -83,6 +83,8 @@ const files = {
   srs: 1,
   snapshot: 1,
   presuc: 1,
+  relations: 1,
+  bwParts: 1,
   err: 1,
   'holdings-err': 1,
   'items-err': 1
@@ -492,144 +494,195 @@ const checkRec = function (rec, type) {
   return out;
 };
 
+const occurenceStr = function (occ, bhrid) {
+  if (!occ[bhrid]) {
+    occ[bhrid] = 1;
+  } else { 
+    occ[bhrid]++;
+  }
+  let occStr = occ[bhrid].toString().padStart(3, '0');
+  return occStr;
+}
+
 const hseen = {};
 const occ = {};
-let herr = 0;
-let ierr = 0;
+const rseen = {};
+const bwseen = {};
 const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum) {
-  let out = { h: [], i: [], herr: [], ierr: []};
+  let out = { h: [], i: [], rel: [], bwp: [], herr: [], ierr: []};
   fields.forEach(f => {
     let s = getSubsHash(f);
     if (!s.l) {
       console.log(`WARN no subfield "l" present. Skipping holdings creation (${bhrid})`);
       return;
     }
-    let loc = (s.l) ? s.l[0].trim() : ''; 
-    let cn = (bibCallNum) ? bibCallNum.value : '';
-    let locId = tsvMap.locations[loc] || loc;
-    let hkey = bhrid + ':' + locId + ':' + cn;
-    if (!hseen[hkey]) {
-      if (!occ[bhrid]) {
-        occ[bhrid] = 1;
-      } else { 
-        occ[bhrid]++;
-      }
-      let occStr = occ[bhrid].toString().padStart(3, '0');
-      let hrid = `${bhrid}-${occStr}`;
-      let h = {
-        id: uuid(hrid, ns),
-        hrid: hrid,
-        permanentLocationId: locId,
-        sourceId: refData.holdingsRecordsSources.FOLIO,
-        instanceId: bid
-      };
-      if (cn) {
-        h.callNumber = cn;
-        h.callNumberTypeId = bibCallNum.type;
-      }
-      if (process.env.DEBUG) console.log(h);
-      if (checkRec(h, 'holdings')) {
-        hseen[hkey] = h;
-        out.h.push(h);
-      } else {
-        out.herr.push(f);
-      }
-    }
-    let hr = hseen[hkey];
+    let bc = (s.i) ? s.i[0].trim() : '';
+    if (bcseen[bc]) {
+      let bwh = structuredClone(bcseen[bc].hr);
+      let parentId = bwh.instanceId;
+      let occStr = occurenceStr(occ, bhrid);
+      let hrid = bhrid + '-' + occStr;
+      bwh.hrid = hrid;
+      bwh.id = uuid(hrid, ns);
+      bwh.instanceId = bid;
+      out.h.push(bwh);
 
-    // make items here
-    if (hr) {
-      // console.log(s)
-      let hrid = (s['1']) ? s['1'][0].substring(1) : '';
-      let bc = (s.i) ? s.i[0] : '';
-      let sup = (s.o) ? s.o[0] : '';
-      let fid = (s.z) ? s.z[0] : '';
-      let stc = (s.y) ? s.y[0] : '';
-      let mt = (s.t) ? s.t[0] : '';
-      let nop = (s.m) ? s.m[0] : '';
-      let vol = (s.c) ? s.c[0] : '';
-      let st = (s.s) ? s.s[0].trim() : '';
-      let cidate = (s.h && s.h[0].match(/\d/)) ? s.h[0] : '';
-      let i = {
-        id: uuid(hrid, ns),
-        hrid: hrid,
-        holdingsRecordId: hr.id,
-        materialTypeId: tsvMap.mtypes[loc],
-        permanentLoanTypeId: tsvMap.loantypes[mt] || mt,
-        status: { name: 'Available' },
-        discoverySuppress: false,
-        tags: { tagList: [] }
+      let rkey = parentId + ':' + bid;
+      if (!rseen[rkey]) {
+        let rel = {
+          id: uuid(rkey, ns),
+          superInstanceId: parentId,
+          subInstanceId: bid,
+          instanceRelationshipTypeId: refData.instanceRelationshipTypes['bound-with']
+        };
+        out.rel.push(rel);
+        rseen[rkey] = 1;
       }
 
-      if (bc && !bcseen[bc]) {
-        i.barcode = bc;
-        bcseen[bc] = i.hrid;
-      } else if (bc) {
-        console.log(`WARN barcode ${bc} already used by ${bcseen[bc]} (${i.hrid})`);
+      let bkey = bcseen[bc].iid + ':' + bcseen[bc].hr.id;
+      if (!bwseen[bkey]) {
+        let bwo = {
+          id: uuid(bkey, ns),
+          holdingsRecordId: bcseen[bc].hr.id,
+          itemId: bcseen[bc].iid
+        }
+        out.bwp.push(bwo);
+        bwseen[bkey] = 1;
       }
 
-      let stName = tsvMap.statuses[st];
-      if (stName) {
-        i.status.name = stName;
-      } else {
-        i.status.name = 'Unknown';
-        console.log(`WARN item status "${st}" not found in map-- using "${i.status.name}" instead (${i.hrid})`);
-      }
-      if (st === 'j') {
-        i.itemDamagedStatusId = refData.itemDamageStatuses.Damaged;
+      bkey = bcseen[bc].iid + ':' + bwh.id;
+      if (!bwseen[bkey]) {
+        let bwo = {
+          id: uuid(bkey, ns),
+          holdingsRecordId: bwh.id,
+          itemId: bcseen[bc].iid
+        }
+        out.bwp.push(bwo);
+        bwseen[bkey] = 1;
       }
 
-      if (sup === 's') i.discoverySuppress = true
-      if (fid) i.formerIds = [ fid ];
-      if (nop) {
-        i.descriptionOfPieces = nop;
-        i.circulationNotes = [];
-        cnotes.forEach(t => {
-          let cnid = uuid(i.id + t + nop, ns);
-          let o = {
-            id: cnid,
-            note: nop,
-            noteType: t
-          };
-          i.circulationNotes.push(o);
-        });
-      }
-      if (vol) i.volume = vol;
 
-      let stcId = tsvMap.statisticalCodes[stc];
-      if (stcId) i.statisticalCodeIds = [ stcId ];
-
-      if (cidate) {
-        let dt = new Date(cidate).toISOString();
-        if (dt) {
-          dt = dt.replace(/T.*/, 'T12:00:00.000Z');
-          i.lastCheckIn = { dateTime: dt };
-          let spId = refData.servicepoints.CIRC;
-          if (spId) i.lastCheckIn.servicePointId = spId;
+    } else {
+      let loc = (s.l) ? s.l[0].trim() : ''; 
+      let cn = (bibCallNum) ? bibCallNum.value : '';
+      let locId = tsvMap.locations[loc] || loc;
+      let hkey = bhrid + ':' + locId + ':' + cn;
+      if (!hseen[hkey]) {
+        let occStr = occurenceStr(occ, bhrid);
+        let hrid = `${bhrid}-${occStr}`;
+        let h = {
+          id: uuid(hrid, ns),
+          hrid: hrid,
+          permanentLocationId: locId,
+          sourceId: refData.holdingsRecordsSources.FOLIO,
+          instanceId: bid
+        };
+        if (cn) {
+          h.callNumber = cn;
+          h.callNumberTypeId = bibCallNum.type;
+        }
+        if (process.env.DEBUG) console.log(h);
+        if (checkRec(h, 'holdings')) {
+          hseen[hkey] = h;
+          out.h.push(h);
+        } else {
+          out.herr.push(f);
         }
       }
+      let hr = hseen[hkey];
 
-      if (ea) {
-        i.electronicAccess = ea;
-      }
+      // make items here
+      if (hr) {
+        // console.log(s)
+        let hrid = (s['1']) ? s['1'][0].substring(1) : '';
+        let bc = (s.i) ? s.i[0] : '';
+        let sup = (s.o) ? s.o[0] : '';
+        let fid = (s.z) ? s.z[0] : '';
+        let stc = (s.y) ? s.y[0] : '';
+        let mt = (s.t) ? s.t[0] : '';
+        let nop = (s.m) ? s.m[0] : '';
+        let vol = (s.c) ? s.c[0] : '';
+        let st = (s.s) ? s.s[0].trim() : '';
+        let cidate = (s.h && s.h[0].match(/\d/)) ? s.h[0] : '';
+        let i = {
+          id: uuid(hrid, ns),
+          hrid: hrid,
+          holdingsRecordId: hr.id,
+          materialTypeId: tsvMap.mtypes[loc] || refData.mtypes.unspecified,
+          permanentLoanTypeId: tsvMap.loantypes[mt] || refData.loantypes.unspecified,
+          status: { name: 'Available' },
+          discoverySuppress: false,
+          tags: { tagList: [] }
+        }
 
-      if (s.o) {
-        s.o.forEach(v => {
-          let tag = tagMap[v];
-          if (tag) i.tags.tagList.push(tag);
-        });
-      }
+        if (bc) {
+          i.barcode = bc;
+          bcseen[bc] = { iid:i.id, hr: hr };
+        }
 
-      if (st === '*') {
-        i.tags.tagList.push('to_be_withdrawn');
-      }
+        let stName = tsvMap.statuses[st];
+        if (stName) {
+          i.status.name = stName;
+        } else {
+          i.status.name = 'Unknown';
+          console.log(`WARN item status "${st}" not found in map-- using "${i.status.name}" instead (${i.hrid})`);
+        }
+        if (st === 'j') {
+          i.itemDamagedStatusId = refData.itemDamageStatuses.Damaged;
+        }
+
+        if (sup === 's') i.discoverySuppress = true
+        if (fid) i.formerIds = [ fid ];
+        if (nop) {
+          i.descriptionOfPieces = nop;
+          i.circulationNotes = [];
+          cnotes.forEach(t => {
+            let cnid = uuid(i.id + t + nop, ns);
+            let o = {
+              id: cnid,
+              note: nop,
+              noteType: t
+            };
+            i.circulationNotes.push(o);
+          });
+        }
+        if (vol) i.volume = vol;
+
+        let stcId = tsvMap.statisticalCodes[stc];
+        if (stcId) i.statisticalCodeIds = [ stcId ];
+
+        if (cidate) {
+          let dt = new Date(cidate).toISOString();
+          if (dt) {
+            dt = dt.replace(/T.*/, 'T12:00:00.000Z');
+            i.lastCheckIn = { dateTime: dt };
+            let spId = refData.servicepoints.CIRC;
+            if (spId) i.lastCheckIn.servicePointId = spId;
+          }
+        }
+
+        if (ea) {
+          i.electronicAccess = ea;
+        }
+
+        if (s.o) {
+          s.o.forEach(v => {
+            let tag = tagMap[v];
+            if (tag) i.tags.tagList.push(tag);
+          });
+        }
+
+        if (st === '*') {
+          i.tags.tagList.push('to_be_withdrawn');
+        }
 
 
-      if (process.env.DEBUG) console.log(i);
-      if (checkRec(i, 'items')) {
-        out.i.push(i);
-      } else {
-        out.ierr.push(f);
+        if (process.env.DEBUG) console.log(i);
+        if (checkRec(i, 'items')) {
+          out.i.push(i);
+        } else {
+          out.ierr.push(f);
+        }
       }
     }
   });
@@ -779,6 +832,8 @@ try {
   if (iconf) {
     ttl.holdings = 0;
     ttl.items = 0;
+    ttl.relations = 0;
+    ttl.bwParts = 0;
     ttl.holdingsErr = 0;
     ttl.itemsErr = 0;
   }
@@ -1147,6 +1202,14 @@ try {
             hi.i.forEach(r => {
               writeOut(outs.items, r);
               ttl.items++;
+            });
+            hi.bwp.forEach(r => {
+              writeOut(outs.bwParts, r)
+              ttl.bwParts++;
+            });
+            hi.rel.forEach(r => {
+              writeOut(outs.relations, r)
+              ttl.relations++;
             });
             hi.herr.forEach(r => {
               writeOut(outs['holdings-err'], r)
