@@ -604,9 +604,7 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum
 
       // make items here
       if (hr) {
-        // console.log(s)
         let hrid = (s['1']) ? s['1'][0].substring(1) : '';
-        let bc = (s.i) ? s.i[0] : '';
         let sup = (s.o) ? s.o[0] : '';
         let fid = (s.z) ? s.z[0] : '';
         let stc = (s.y) ? s.y[0] : '';
