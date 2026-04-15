@@ -290,6 +290,17 @@ const applyRules = function (ent, field, allFields, tag) {
   let data = '';
   let aoc = ent.applyRulesOnConcatenatedData || false;
   let dls = ent.subFieldDelimiter || '';
+  if (ent.rules && ent.rules.length > 1) {
+    let ctypes = [];
+    ent.rules.forEach(r => {
+      if (r.conditions) {
+        r.conditions.forEach(c => {
+          if (c.type) ctypes.push(c.type);
+        });
+      }
+    });
+    ent.rules[0].conditions[0].type = ctypes.join(', ');
+  }
   let rule = (ent.rules) ? ent.rules[0] : ''; 
   let funcNames = [];
   let param = '';
