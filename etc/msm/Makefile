@@ -28,6 +28,12 @@ inventory: $(raw)
 	cd $(inv2); node marc2inst-msm $(conf) $(mfile) > $(log)/makeInst.log &
 	tail -f $(log)/makeInst.log
 
+split-inventory:
+	cd $(idir); split -l 25000 bibs-instances.jsonl in-
+	cd $(idir); split -l 25000 bibs-srs.jsonl sr-
+	cd $(idir); split -l 25000 bibs-holdings.jsonl ho-
+	cd $(idir); split -l 30000 bibs-items.jsonl it-
+
 setup:
 	cp $(login) $(wd)/config.json
 	jq '. | .logpath="$(log)"' $(wd)/config.json > tmp
