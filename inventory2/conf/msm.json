@@ -1,0 +1,19 @@
+{
+    "nameSpace": "f47e4b45-62df-4f4f-8fd6-acd68015913f",
+    "refDir": "/home/charles/msm/ref/inv",
+    "tsvDir": "/home/charles/folio-import/etc/msm",
+    "mapFile": "",
+    "controlNum": "907a",
+    "hridPrefix": "",
+    "items": {
+        "tag": "945",
+        "hridPrefix": "m"
+    },
+    "makeInstMap": true,
+    "catDate": { "tag": "998", "subfield": "c", "pattern": "yymmdd" },
+    "suppress": { "tag": "907", "subfield": "c", "value":"n" },
+    "callNumbers": {
+        "090": "95467209-6d7b-468b-94df-0f5d7ad2747d",
+        "099": "6caca63e-5651-4db6-9247-3205156e9699"
+    }
+}
