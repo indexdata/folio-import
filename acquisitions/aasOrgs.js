@@ -8,7 +8,8 @@ const ns = 'a139be33-8e2b-44ec-b744-0f75207b57a5';
 
 const files = {
   orgs: 'organizations.jsonl',
-  cons: 'contacts.jsonl'
+  cons: 'contacts.jsonl',
+  errs: 'errors.jsonl'
 };
 
 const rfiles = {
@@ -90,7 +91,7 @@ try {
   }
 
   // map main sheet
-  let ttl = { orgs: 0, contacts: 0 };
+  let ttl = { orgs: 0, contacts: 0, errors: 0 };
   const seen = {};
   const cseen = {};
   for (let id in data.main) {
@@ -202,6 +203,10 @@ try {
       ttl.orgs++;
       seen[o.id] = 1;
       seen[o.code] = 1;
+    } else {
+      console.log(`ERROR Duplicate code "${o.code}" found`);
+      writeTo(files.errs, o);
+      ttl.errors++;
     }
   }
 
