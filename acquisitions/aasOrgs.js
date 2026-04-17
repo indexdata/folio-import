@@ -200,6 +200,8 @@ try {
     if (!seen[o.id] && !seen[o.code]) {
       writeTo(files.orgs, o);
       ttl.orgs++;
+      seen[o.id] = 1;
+      seen[o.code] = 1;
     }
   }
 
