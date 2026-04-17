@@ -7,7 +7,8 @@ let dir = process.argv[3];
 const ns = 'a139be33-8e2b-44ec-b744-0f75207b57a5';
 
 const files = {
-  orgs: 'organizations.jsonl'
+  orgs: 'organizations.jsonl',
+  cons: 'contacts.jsonl'
 };
 
 const rfiles = {
@@ -89,8 +90,9 @@ try {
   }
 
   // map main sheet
-  let ttl = { orgs: 0 };
+  let ttl = { orgs: 0, contacts: 0 };
   const seen = {};
+  const cseen = {};
   for (let id in data.main) {
     let r = data.main[id][0];
     if (process.env.DEBUG) console.log(r);
@@ -99,6 +101,8 @@ try {
     let alt = data.alt[id];
     let addr = data.addr[id];
     let ph = data.phone[id];
+    let em = data.email[id];
+    let cons = [];
     let o = {
       id: uuid(id, ns),
       name: r.VENDOR_NAME,
@@ -109,6 +113,8 @@ try {
     }
     if (typeId) o.organizationTypes = [ typeId ];
     if (r.NOTE) o.description = r.NOTE;
+    if (r.CLAIM_INTERVAL) o.claimingInterval = parseInt(r.CLAIM_INTERVAL, 10);
+    if (r.FEDERAL_TAX_ID) o.taxId = r.FEDERAL_TAX_ID;
 
     if (alt) {
       o.aliases = [];
@@ -137,6 +143,22 @@ try {
         if (d.ZIP_POSTAL) ao.zipCode = d.ZIP_POSTAL;
         if (d.COUNTRY) ao.country = d.COUNTRY;
         o.addresses.push(ao);
+
+        let cname = d.CONTACT_NAME;
+        let cid = uuid(`${id}:${cname}`, ns);
+        if (cname && !cseen[cid]) {
+          let parts = cname.match(/^([A-z .]+) (.+)/);
+          if (parts && parts[1] && parts[2]) {
+            let co = {
+              id: cid,
+              firstName: parts[1],
+              lastName: parts[2]
+            }
+            cons.push(co);
+            cseen[cid] = 1;
+            o.contacts = [];
+          }
+        }
       });
     }
 
@@ -149,9 +171,30 @@ try {
         };
         if (d.PHONE_NUMBER) po.phoneNumber = d.PHONE_NUMBER;
         po.type = (d.PHONE_DESC === 'Mobile') ? 'Mobile' : (d.PHONE_DESC === 'Fax') ? 'Fax' : 'Other';
-        console.log(po);
+        o.phoneNumbers.push(po);
       });
     }
+
+    if (em) {
+      o.emails = [];
+      em.forEach((d, i) => {
+        let pr = (i > 0) ? false : true;
+        let eo = {
+          isPrimary: pr,
+          value: (d.ADDRESS_LINE1)
+        };
+        o.emails.push(eo);
+      });
+    }
+
+    cons.forEach(c => {
+      if (o.addresses) c.addresses = o.addresses;
+      if (o.phoneNumbers) c.phoneNumbers = o.phoneNumbers;
+      if (o.emails) c.emails = o.emails;
+      writeTo(files.cons, c);
+      ttl.contacts++;
+      o.contacts.push(c.id);
+    });
 
     if (process.env.DEBUG) console.log(o);
     if (!seen[o.id] && !seen[o.code]) {
