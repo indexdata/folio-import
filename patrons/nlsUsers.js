@@ -496,24 +496,29 @@ try {
     let borStat = (locs[0]) ? locs[0].Z305_BOR_STATUS : '';
     let gnum;
     let glab;
-    if (bcodes[1] === '50' || bcodes[2] === '50' || bcodes[3] === '50') {
-      gnum = '6';
-      glab = 'Ny låntagare';
-    } else if (borStat === '04' && name.match(/personal/i)) {
+    if (borStat === '01' && (bcodes[1] === '50' || bcodes[2] === '50' || bcodes[3] === '50')) {
       gnum = '3';
-      glab = 'Personal';
-    } else if (borStat === '04' || borStat === '54') {
+      glab = 'Ny låntagare';
+    } else if (borStat === '04') {
+      if (name.match(/\d\d\d/)) {
+        gnum = '2';
+        glab = 'Bokskåp';
+      } else {
+        gnum = '4';
+        glab = 'Personal';
+      }
+    } else if (borStat === '54') {
       gnum = '2';
       glab = 'Bokskåp';
     } else if (borStat === '20') {
-      gnum = '4';
+      gnum = '5';
       glab = 'Funktion';
     } else if (borStat === '10') {
-      gnum = '5';
-      glab = 'Fjärrlånebibliotek';
+      gnum = '6';
+      glab = 'Fjärrlånebibliotek (sv)';
     } else if (borStat === '12') {
       gnum = '7';
-      glab = 'Fjärrlånebibliotek (utländska)';
+      glab = 'Fjärrlånebibliotek (utl)';
     } else {
       gnum = '1';
       glab = 'Ordinarie';
@@ -602,7 +607,7 @@ try {
         fulfillment: 'Hold Shelf',
         defaultServicePointId: refData.servicepoints['SP-INFO']
       };
-      if (gnum === '5') {
+      if (gnum === '5' || gnum === '7') {
         pref.holdShelf = false;
         pref.delivery = true;
         pref.fulfillment = 'Delivery';
