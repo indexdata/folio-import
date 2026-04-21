@@ -13,7 +13,7 @@ const ns = 'eab3e237-5dc1-4a4b-b4da-5ab5acc3d0ee';
 const files = {
   ord: 'purchase-orders.jsonl',
   open: 'purchase-orders-open.jsonl',
-  pol: 'pol-lines.jsonl'
+  pol: 'po-lines.jsonl'
 };
 
 const rfiles = {
@@ -130,6 +130,8 @@ const otypeMap = {
       let copies = r.COPIES;
       let st = r.STATUS;
       let statStr = (st.match(/[1q]/)) ? 'Pending' : (st.match(/[az]/)) ? 'Closed' : 'Open';
+      let hrid = r.INSTANCE_HRID;
+      let inst = instMap[hrid];
 
       if (seen[poNum]) {
         console.log(`ERROR "${poNum}" already used`);
@@ -143,6 +145,11 @@ const otypeMap = {
       }
       if (!venId) {
         console.log(`ERROR vendor not found for "${ven}"`)
+        ttl.errors++;
+        continue;
+      }
+      if (!inst) {
+        console.log(`ERROR no instance found for hrid "${hrid}"`);
         ttl.errors++;
         continue;
       }
@@ -188,9 +195,39 @@ const otypeMap = {
       ttl.orders++;
 
       // make POL here...
-      let hrid = r.INSTANCE_HRID;
-      let inst = instMap[hrid];
-      // console.log(inst);
+      let pnum = o.poNumber + '-1';
+      let polId = uuid(pnum, ns);
+      let pol = {
+        id: polId,
+        purchaseOrderId: o.id,
+        poLineNumber: pnum,
+        titleOrPackage: inst.title,
+        source: 'User',
+        orderFormat: 'Physical'
+      }
+      pol.orderFormat = (r.LOCATION.match(/online/i)) ? 'Electronic Resource' : 'Physical Resource';
+      let price = (r.E_PRICE) ? parseInt(r.E_PRICE, 10)/100 : 0;
+      if (pol.orderFormat === 'Electronic Resource') {
+        let c = {
+          currency: 'USD',
+          listUnitPriceElectronic: price,
+          quantityElectronic: o.totalItems, 
+          poLineEstimatedPrice: price * o.totalItems
+        }
+        pol.cost = c;
+      } else {
+        let c = {
+          currency: 'USD',
+          listUnitPrice: price,
+          quantityPhysical: o.totalItems, 
+          poLineEstimatedPrice: price * o.totalItems
+        }
+        pol.cost = c; 
+      }
+      if (process.env.DEBUG === 'l') console.log(pol);
+      writeTo(files.pol, pol);
+      ttl.poLines++;
+        
     }
 
     console.log('Finished!');
