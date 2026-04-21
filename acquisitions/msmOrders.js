@@ -164,12 +164,17 @@ const otypeMap = {
         notes: []
       }
       if (odate) o.dateOrdered = odate;
-      // o.isSubscription = (r.ORD_TYPE === 's') ? true : false;
       nfields.forEach(f => {
         let n = r[f];
         if (n) o.notes.push(n);
       });
-      // if (copies) o.totalItems = parseInt(copies, 10);
+      if (copies) o.totalItems = parseInt(copies, 10);
+      if (otypeStr === 'Ongoing') {
+        {
+          o.ongoing = {}
+          o.ongoing.isSubscription = (r.ORD_TYPE === 's') ? true : false;
+        }
+      }
 
       if (process.env.DEBUG === 'o') console.log(o);
 
@@ -181,6 +186,11 @@ const otypeMap = {
       writeTo(files.ord, o); 
       seen[o.poNum] = 1;
       ttl.orders++;
+
+      // make POL here...
+      let hrid = r.INSTANCE_HRID;
+      let inst = instMap[hrid];
+      // console.log(inst);
     }
 
     console.log('Finished!');
