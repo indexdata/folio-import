@@ -197,16 +197,41 @@ const otypeMap = {
       // make POL here...
       let pnum = o.poNumber + '-1';
       let polId = uuid(pnum, ns);
+      let atype = (r.ACQ_TYPE === 'g') ? 'Gift' : 'Purchase';
+      let atypeId = refData.acquisitionMethods[atype];
       let pol = {
         id: polId,
         purchaseOrderId: o.id,
         poLineNumber: pnum,
         titleOrPackage: inst.title,
+        instanceId: inst.id,
         source: 'User',
-        orderFormat: 'Physical'
+        acquisitionMethod: atypeId
+      };
+      if (inst.contributors) {
+        pol.contributors = [];
+        inst.contributors.forEach(r => {
+          let o = {
+            name: r.name,
+            contributorNameTypeId: r.contributorNameTypeId
+          }
+          pol.contributors.push(o);
+        });
+
       }
-      pol.orderFormat = (r.LOCATION.match(/online/i)) ? 'Electronic Resource' : 'Physical Resource';
+
+      let loc = r.LOCATION;
+      pol.orderFormat = (loc.match(/^(online|audiobooks|digital|eboo|esco|stream|web)/i)) ? 'Electronic Resource' : (loc === 'none') ? 'Other' : 'Physical Resource';
       let price = (r.E_PRICE) ? parseInt(r.E_PRICE, 10)/100 : 0;
+      if (r.RDATE) {
+        try {
+          pol.receiptDate = new Date(r.RDATE).toISOString().substring(0, 10);
+        } catch (e) {
+          console.log(`${e}`);
+        }
+      }
+      pol.receiptStatus = (pol.receiptDate) ? 'Fully Received' : 'Pending';
+
       if (pol.orderFormat === 'Electronic Resource') {
         let c = {
           currency: 'USD',
