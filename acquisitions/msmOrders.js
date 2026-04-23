@@ -19,7 +19,8 @@ const files = {
 const rfiles = {
   organizations: 'organizations.json',
   funds: 'funds.json',
-  acquisitionMethods: 'acquisition-methods.json'
+  acquisitionMethods: 'acquisition-methods.json',
+  locations: 'locations.json'
 };
 
 const nfields = [
@@ -42,6 +43,27 @@ const otypeMap = {
 	"s": "Ongoing",
 	"t": "One-Time",
 	"v": "One-Time"
+};
+
+const locMap = {
+  "Audiobooks":"www",
+  "Books":"bks",
+  "CDs":"ask",
+  "Digital Periodicals":"www",
+  "DVDs":"ask",
+  "eBooks":"www",
+  "eScores":"www",
+  "MSM CDs":"ask",
+  "none":"ask",
+  "Online Resources":"www",
+  "Periodicals":"per",
+  "Printed Music":"sco",
+  "Reference Books":"ref",
+  "Reference Scores":"ref",
+  "Streaming Audio":"www",
+  "Streaming Video":"www",
+  "Study Scores":"sco",
+  "web":"www"
 };
 
 (async () => {
@@ -74,6 +96,12 @@ const otypeMap = {
       });
     }
     if (process.env.DEBUG === 'ref') throw(refData);
+
+    for (let k in locMap) {
+      let c = locMap[k];
+      locMap[k] = refData.locations[c];
+    }
+    if (process.env.DEBUG === 'loc') throw(locMap);
 
     console.log(`INFO Creating instance map...`);
     let instMap = {};
@@ -217,10 +245,25 @@ const otypeMap = {
           }
           pol.contributors.push(o);
         });
-
+      }
+      if (inst.publication && inst.publication[0]) {
+        let r = inst.publication[0]
+        if (r.dateOfPublication) pol.publicationDate = r.dateOfPublication;
+        if (r.publisher) pol.publisher = r.publisher;
+      }
+      if (inst.editions && inst.editions[0]) pol.edition = inst.editions[0];
+      if (inst.identifiers) {
+        pol.details = { productIds: [] };
+        inst.identifiers.forEach(r => {
+          let o = {
+            productId: r.value,
+            productIdType: r.itendifierTypeId
+          };
+          pol.details.productIds.push(o);
+        });
       }
 
-      let loc = r.LOCATION;
+      let loc = r.LOCATION.replace(/&nbsp;/g, ' ');
       pol.orderFormat = (loc.match(/^(online|audiobooks|digital|eboo|esco|stream|web)/i)) ? 'Electronic Resource' : (loc === 'none') ? 'Other' : 'Physical Resource';
       let price = (r.E_PRICE) ? parseInt(r.E_PRICE, 10)/100 : 0;
       if (r.RDATE) {
@@ -240,6 +283,9 @@ const otypeMap = {
           poLineEstimatedPrice: price * o.totalItems
         }
         pol.cost = c;
+        pol.eresource = {
+          createInventory: 'none'
+        };
       } else {
         let c = {
           currency: 'USD',
@@ -247,8 +293,28 @@ const otypeMap = {
           quantityPhysical: o.totalItems, 
           poLineEstimatedPrice: price * o.totalItems
         }
-        pol.cost = c; 
+        pol.cost = c;
+        pol.physical = {
+          createInventory: 'none',
+          volumes: []
+        };
       }
+
+      if (loc) {
+        let locId = locMap[loc];
+        if (locId) {
+          pol.locations = {
+            locationId: locId,
+            quantity: o.totalItems
+          }
+          if (pol.cost.quantityElectronic) {
+            pol.locations.quantityElectronic = pol.cost.quantityElectronic;
+          } else {
+            pol.locations.quantityPhysical = pol.cost.quantityPhysical;
+          }
+        }
+      }
+
       if (process.env.DEBUG === 'l') console.log(pol);
       writeTo(files.pol, pol);
       ttl.poLines++;
