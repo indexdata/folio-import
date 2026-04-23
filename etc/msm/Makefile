@@ -4,16 +4,20 @@ home=/home/$(user)
 wd=$(home)/folio-import
 etc=$(wd)/etc/$(lib)
 inv2=$(wd)/inventory2
+acq=$(wd)/acquisitions
 conf=$(inv2)/conf/msm.json
 login=$(wd)/configs/json/msmnyc-test.json
 data=$(home)/$(lib)
 ref=$(data)/ref
 iref=$(ref)/inv
 uref=$(ref)/usr
+aref=$(ref)/acq
 idir=$(data)/inv
 udir=$(data)/usr
 adir=$(data)/auth
 cdir=$(data)/circ
+odir=$(data)/ord
+vdir=$(data)/org
 in=$(data)/incoming
 raw=$(in)/All_bibs*
 mfile=$(idir)/bibs.mrc
@@ -34,6 +38,18 @@ split-inventory:
 	cd $(idir); split -l 25000 bibs-holdings.jsonl ho-
 	cd $(idir); split -l 30000 bibs-items.jsonl it-
 
+organizations:
+
+orders:
+	cd $(odir); rm -r orders.csv; ln -s $(in)/*orders*.csv orders.csv
+	cd $(acq); node msmOrders $(aref) $(idir)/bibs-instances.jsonl $(odir)/orders.csv > $(log)/makeOrders.log
+	cat $(log)/makeOrders.log
+
+load-orders:
+	cd $(wd); node postJSONL orders/composite-orders $(odir)/purchase-orders.jsonl
+	cd $(wd); node postJSONL orders-storage/po-lines $(odir)/po-lines.jsonl
+	cd $(wd); node putJSONL orders/composite-orders $(odir)/purchase-orders-open.jsonl
+
 setup:
 	cp $(login) $(wd)/config.json
 	jq '. | .logpath="$(log)"' $(wd)/config.json > tmp
@@ -45,6 +61,8 @@ setup:
 	mkdir -p $(adir)
 	mkdir -p $(cdir)
 	mkdir -p $(in)
+	mkdir -p $(odir)
+	mkdir -p $(vdir)
 	cd $(wd); node migrationRef.js $(ref)
 	cd $(etc); cp *.tsv $(iref);
 
@@ -59,4 +77,6 @@ really-clean:
 	rm -rf $(adir)
 	rm -rf $(cdir)
 	rm -rf $(in)
+	rm -rf $(odir)
+	rm -rf $(vdir)
 
