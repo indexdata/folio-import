@@ -66,6 +66,15 @@ const locMap = {
   "web":"www"
 };
 
+const fundMap = {
+  bks: "00005",
+  cd: "00008",
+  ebooks: "00013",
+  per: "00007",
+  score: "00001",
+  video: "00011"
+};
+
 (async () => {
   try {
     if (!inFile) throw(`Usage: node msmOrders.js <ref_dir> <instances_jsonl> <orders_csv_file> [ <filter_field> ]`);
@@ -102,6 +111,12 @@ const locMap = {
       locMap[k] = refData.locations[c];
     }
     if (process.env.DEBUG === 'loc') throw(locMap);
+
+    for (let k in fundMap) {
+      let c = fundMap[k];
+      fundMap[c] = refData.funds[k];
+    }
+    if (process.env.DEBUG === 'fun') throw(fundMap);
 
     console.log(`INFO Creating instance map...`);
     let instMap = {};
@@ -312,6 +327,19 @@ const locMap = {
           } else {
             pol.locations.quantityPhysical = pol.cost.quantityPhysical;
           }
+        }
+      }
+
+      if (r.FUND) {
+        let fundId = fundMap[r.FUND];
+        if (fundId) {
+          pol.fundDistribution = [
+            {
+              fundId: fundId,
+              distributionType: 'amount',
+              value: pol.cost.poLineEstimatedPrice
+            }
+          ]
         }
       }
 
