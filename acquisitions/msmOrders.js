@@ -255,7 +255,7 @@ const fundMap = {
         pol.contributors = [];
         inst.contributors.forEach(r => {
           let o = {
-            name: r.name,
+            contributor: r.name,
             contributorNameTypeId: r.contributorNameTypeId
           }
           pol.contributors.push(o);
@@ -272,7 +272,7 @@ const fundMap = {
         inst.identifiers.forEach(r => {
           let o = {
             productId: r.value,
-            productIdType: r.itendifierTypeId
+            productIdType: r.identifierTypeId
           };
           pol.details.productIds.push(o);
         });
@@ -299,7 +299,7 @@ const fundMap = {
         }
         pol.cost = c;
         pol.eresource = {
-          createInventory: 'none'
+          createInventory: 'None'
         };
       } else {
         let c = {
@@ -310,7 +310,7 @@ const fundMap = {
         }
         pol.cost = c;
         pol.physical = {
-          createInventory: 'none',
+          createInventory: 'None',
           volumes: []
         };
       }
@@ -318,14 +318,14 @@ const fundMap = {
       if (loc) {
         let locId = locMap[loc];
         if (locId) {
-          pol.locations = {
+          pol.locations = [ {
             locationId: locId,
             quantity: o.totalItems
-          }
+          } ];
           if (pol.cost.quantityElectronic) {
-            pol.locations.quantityElectronic = pol.cost.quantityElectronic;
+            pol.locations[0].quantityElectronic = pol.cost.quantityElectronic;
           } else {
-            pol.locations.quantityPhysical = pol.cost.quantityPhysical;
+            pol.locations[0].quantityPhysical = pol.cost.quantityPhysical;
           }
         }
       }
