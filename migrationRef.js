@@ -50,6 +50,7 @@ let modId = '';
         }
         const res = await superagent
         .get(url)
+        .timeout({response: 10000})
         .set('User-Agent', config.agent)
         .set('cookie', config.cookie)
         .set('x-okapi-tenant', config.tenant)
