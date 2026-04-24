@@ -4,7 +4,7 @@
 
 if [ ! $1 ] 
 then
-	echo "Usage: $0 <save_dir>"
+	echo "Usage: $0 <save_dir> [ <no_items> ]"
 	exit
 fi
 
@@ -13,8 +13,11 @@ DIR=`echo $1 | sed -E 's/\/$//'`
 
 echo $L
 node downloadJSONL users $DIR/users.jsonl 
-echo $L
-node downloadJSONL item-storage/items $DIR/items.jsonl 
+if [ ! $2 ]
+then
+	echo $L
+	node downloadJSONL item-storage/items $DIR/items.jsonl 
+fi
 echo $L
 node downloadJSONL service-points $DIR/service-points.jsonl 
 echo $L
