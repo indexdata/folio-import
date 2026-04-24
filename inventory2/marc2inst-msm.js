@@ -83,7 +83,7 @@ const files = {
   srs: 1,
   snapshot: 1,
   presuc: 1,
-  relations: 1,
+  relations: 0,
   bwParts: 1,
   err: 1,
   'holdings-err': 1,
@@ -538,6 +538,7 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum
       bwh.instanceId = bid;
       out.h.push(bwh);
 
+      /*
       let rkey = parentId + ':' + bid;
       if (!rseen[rkey]) {
         let rel = {
@@ -549,6 +550,7 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum
         out.rel.push(rel);
         rseen[rkey] = 1;
       }
+      */
 
       let bkey = bcseen[bc].iid + ':' + bcseen[bc].hr.id;
       if (!bwseen[bkey]) {
@@ -1216,10 +1218,12 @@ try {
               writeOut(outs.bwParts, r)
               ttl.bwParts++;
             });
+            /*
             hi.rel.forEach(r => {
               writeOut(outs.relations, r)
               ttl.relations++;
             });
+            */
             hi.herr.forEach(r => {
               writeOut(outs['holdings-err'], r)
               ttl.holdingsErr++;
