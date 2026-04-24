@@ -592,7 +592,7 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum
         };
         if (cn) {
           h.callNumber = cn;
-          h.callNumberTypeId = bibCallNum.type;
+          h.callNumberTypeId = bibCallNum.type || refData.callNumberTypes['Other scheme'];
         }
         if (process.env.DEBUG) console.log(h);
         if (checkRec(h, 'holdings')) {
