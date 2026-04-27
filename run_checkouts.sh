@@ -9,7 +9,7 @@ then
 fi
 if [ $CHECKIN ] 
 then
-	ctext=" 0 checkin"
+	ctext=" checkin"
 fi
 
 for f in ${@:1}

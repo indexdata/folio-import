@@ -6,9 +6,7 @@ const readline = require('readline');
 
 const tout = 60000;
 const fn = process.argv[2];
-const checkIn = process.argv[4];
-const offset = (process.argv[3]) ? parseInt(process.argv[3], 10) : 0;
-if (isNaN(offset)) throw new Error(`Limit must be a number!`);
+let checkIn = process.argv[3];
 
 let errs = { checkouts: [] };
 
@@ -112,7 +110,7 @@ const post_put = async (authToken, url, checkout, r, username) => {
   let claimedErrs = 0;
   try {
     if (!fn) {
-      throw new Error('Usage: node checkoutByBarcode.js <checkouts_jsonl> [offset] [checkin]');
+      throw new Error('Usage: node checkoutByBarcode.js <checkouts_jsonl> [checkin]');
     }
 
     const dir = path.dirname(fn);
