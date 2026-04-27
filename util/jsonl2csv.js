@@ -28,15 +28,14 @@ try {
       if (c === 1) {
         head = Object.keys(j);
         str = head.join(',') + '\n';
-      } else {
-        let cols = [];
-        head.forEach(h => {
-          let d = j[h] || '';
-          if (d.match(/,/)) d = `"${d}"`;
-          cols.push(d);
-        });
-        str += cols.join(',') + '\n';
       }
+      let cols = [];
+      head.forEach(h => {
+        let d = j[h] || '';
+        if (d.match(/,/)) d = `"${d}"`;
+        cols.push(d);
+      });
+      str += cols.join(',') + '\n';
     });
     rl.on('close', () => {
       fs.writeFileSync(csvFile, str);
