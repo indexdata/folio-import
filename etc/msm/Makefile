@@ -5,6 +5,7 @@ wd=$(home)/folio-import
 etc=$(wd)/etc/$(lib)
 inv2=$(wd)/inventory2
 acq=$(wd)/acquisitions
+pat=$(wd)/patrons
 conf=$(inv2)/conf/msm.json
 login=$(wd)/configs/json/msmnyc-test.json
 data=$(home)/$(lib)
@@ -37,6 +38,13 @@ split-inventory:
 	cd $(idir); split -l 25000 bibs-srs.jsonl sr-
 	cd $(idir); split -l 25000 bibs-holdings.jsonl ho-
 	cd $(idir); split -l 30000 bibs-items.jsonl it-
+
+circulation:
+	cd $(cdir); rm -r circ.csv; ln -s $(in)/circ*.csv circ.csv
+	cd $(wd); node downloadJSONL users $(cdir)/users.jsonl
+	cd $(wd); node downloadJSONL service-points $(cdir)/service-points.jsonl
+	cd $(pat); node msmCirc $(cdir)/circ.csv > $(log)/makeCirc.log
+	cat $(log)/makeCirc.log
 
 organizations:
 
