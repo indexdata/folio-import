@@ -15,7 +15,8 @@ let inFile = process.argv[2];
 
 const files = {
   co: 'checkouts',
-  ia: 'inactive-checkouts'
+  ia: 'inactive-checkouts',
+  er: 'errors'
 };
 
 const rfiles = {
@@ -90,7 +91,6 @@ const parseDate = (date) => {
     const today = new Date().valueOf();
 
     let spId = data.sp.CIRC;
-    // throw(spId);
 
     const ttl = { count: 0, checkouts: 0, inactives: 0, errors: 0}
     for (let x = 0; x < inRecs.length; x++) {
@@ -105,11 +105,13 @@ const parseDate = (date) => {
       if (!ubc) {
         console.log(`ERROR Patron barcode not found for ${pnum}`);
         ttl.errors++;
+        writeOut(files.er, r);
         continue;
       }
       if (!ibc) {
         console.log(`ERROR Item barcode not found in line ${ttl.count}`);
         ttl.errors++;
+        writeOut(files.er, r);
         continue;
       }
       let user = data.users[ubc];
@@ -120,6 +122,7 @@ const parseDate = (date) => {
         if (!ddStr) {
           console.log(`ERROR Invalid dueDate "${dd}"`);
           ttl.errors++;
+          writeOut(files.er, r);
           continue;
         } else {
           ddStr = ddStr.replace(/T.+/, 'T23:59:59.000Z');
@@ -127,6 +130,7 @@ const parseDate = (date) => {
         if (!ldStr) {
           console.log(`ERROR Invalid loanDate "${ld}"`);
           ttl.errors++;
+          writeOut(files.er, r);
           continue;
         }
         let co = {
@@ -147,6 +151,7 @@ const parseDate = (date) => {
       } else {
         console.log(`ERROR user not found with barcode "${ubc}" (${pnum})`);
         ttl.errors++;
+        writeOut(files.er, r);
       }
     } 
 
