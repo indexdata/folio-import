@@ -9,6 +9,7 @@ const readline = require('readline');
 
 const fn = process.argv[2];
 const tf = process.argv[3];
+const activeDate = '2030-12-31T00:00:00.000+0000';
 
 (async () => {
   try {
@@ -50,14 +51,14 @@ const tf = process.argv[3];
           try {
             let purl = `${config.okapi}/users/${user.id}`;
             if (tf === 'false') {
-		    user.active = false
-              	    user.expirationDate = (data.experationDate) ? data.expirationDate : null;
-	    } else if (tf === 'true') {
-		    user.active = true
-              	    user.expirationDate = '2025-12-31T00:00:00.000+0000'
-	    } else if (!user.active) {
+		          user.active = false
+               user.expirationDate = (data.experationDate) ? data.expirationDate : null;
+	          } else if (tf === 'true') {
+		          user.active = true
+              user.expirationDate = activeDate;
+	          } else if (!user.active) {
               user.active = true;
-              user.expirationDate = '2025-12-31T00:00:00.000+0000'
+              user.expirationDate = activeDate;
             } else {
               user.active = false;
               user.expirationDate = (data.experationDate) ? data.expirationDate : null;
