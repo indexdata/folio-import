@@ -230,10 +230,6 @@ const spTran = {
         console.log(`ERROR no item found with hrid "${iid}"`);
         ttl.inf++;
         ttl.err++;
-      } else if (item.st !== 'Available') {
-        console.log(`ERROR item status for "${iid}" is "${item.st}"`);
-        ttl.ina++;
-        ttl.err++;
       } else {
         item.st = 'Checked out';
         bcodeMap[item.bc] = 'Checked out';
