@@ -231,7 +231,12 @@ const spTran = {
         ttl.inf++;
         ttl.err++;
       } else {
-        if (item.st !== 'Available') console.log(item);
+        if (item.st !== 'Available') {
+          if (item.st !== 'In process') {
+            console.log(`INFO item barcode "${item.bc}" has a status of "${item.st}"`);
+            ttl.ina++;
+          }
+        }
         item.st = 'Checked out';
         bcodeMap[item.bc] = 'Checked out';
         loan.itemBarcode = item.bc;
@@ -368,9 +373,9 @@ const spTran = {
     const time = (end - start)/1000;
     console.log('Checkouts:', ttl.co);
     console.log('Inactives:', ttl.ia);
+    console.log('(Items not available):', ttl.ina);
     console.log('Users not found:', ttl.unf);
     console.log('Items not found:', ttl.inf);
-    console.log('Items not available:', ttl.ina);
     console.log('Items with no barcode:', ttl.ibc);
     console.log('Checkout errors:', ttl.err);
     console.log('Requests:', ttl.req);
