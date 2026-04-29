@@ -774,7 +774,7 @@ const makeAleph = (fields) => {
   let dt = (fields.AAR) ? getSubs(fields.AAR[0], 'a') : '';
   let desc = (fields.INN) ? getSubs(fields.INN[0], 'a') : '';
   let cnt = refData.callNumberTypes['Other scheme'];
-  let id = uuid(hrid + 'aleph', ns);
+  let id = uuid(hrid, ns);
   let ti;
   let statCode;
   let cdate;  
