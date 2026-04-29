@@ -1,50 +1,59 @@
 {
   "organizationTypes": [
     {
-      "id": "f04c7277-0019-43cf-84b3-02d894a9d81a",
-      "name": "Auction house",
-      "status": "Active",
-      "metadata": {
-        "createdDate": "2023-03-13T12:10:05.525+00:00",
-        "updatedDate": "2023-03-13T12:10:05.525+00:00"
-      }
-    },
-    {
       "id": "9805505e-6029-410e-ae5b-51bc4d59d1d0",
+      "_version": 2,
       "name": "Publisher",
       "status": "Active",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:05.530+00:00",
-        "updatedDate": "2023-03-13T12:10:05.530+00:00"
+        "createdDate": "2026-04-02T09:40:16.264+00:00",
+        "updatedDate": "2026-04-07T14:40:46.926+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
       "id": "e7e9af00-c12c-448f-8ad1-d15ff209605a",
+      "_version": 2,
       "name": "Book trade",
       "status": "Inactive",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:05.532+00:00",
-        "updatedDate": "2023-03-13T12:10:05.532+00:00"
+        "createdDate": "2026-04-02T09:40:16.265+00:00",
+        "updatedDate": "2026-04-07T14:40:46.952+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    },
+    {
+      "id": "f04c7277-0019-43cf-84b3-02d894a9d81a",
+      "_version": 2,
+      "name": "Auction house",
+      "status": "Active",
+      "metadata": {
+        "createdDate": "2026-04-02T09:40:16.263+00:00",
+        "updatedDate": "2026-04-07T14:40:46.900+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
       "id": "1e7692ea-5fc4-4618-9cdf-1918f11be585",
+      "_version": 2,
       "name": "Private person",
       "status": "Active",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:05.534+00:00",
-        "updatedDate": "2023-03-13T12:10:05.534+00:00"
+        "createdDate": "2026-04-02T09:40:16.258+00:00",
+        "updatedDate": "2026-04-07T14:40:46.861+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
       "id": "e42b2bbd-5ab3-485e-a8ed-b2185f70298b",
+      "_version": 1,
       "name": "KB: Ramavtalsleverantör",
       "status": "Active",
       "metadata": {
-        "createdDate": "2025-03-14T11:52:38.989+00:00",
-        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-03-14T11:52:38.989+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+        "createdDate": "2026-04-07T14:40:46.964+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:40:46.964+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -53,10 +62,10 @@
       "name": "Pliktleverantör",
       "status": "Active",
       "metadata": {
-        "createdDate": "2025-06-09T10:25:24.955+00:00",
-        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-06-09T10:25:24.955+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+        "createdDate": "2026-04-07T14:40:46.978+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:40:46.978+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     }
   ],

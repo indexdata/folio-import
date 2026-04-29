@@ -3,82 +3,178 @@
     {
       "id": "d6488f88-1e74-40ce-81b5-b19a928ff5b1",
       "name": "Personal name",
-      "source": "folio"
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-07T14:10:07.110+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:07.110+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
     },
     {
       "id": "d6488f88-1e74-40ce-81b5-b19a928ff5b2",
       "name": "Corporate name",
-      "source": "folio"
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-07T14:10:07.134+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:07.134+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
     },
     {
       "id": "d6488f88-1e74-40ce-81b5-b19a928ff5b3",
       "name": "Meeting name",
-      "source": "folio"
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-07T14:10:07.152+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:07.152+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
     },
     {
       "id": "d6488f88-1e74-40ce-81b5-b19a928ff5b4",
       "name": "Uniform title",
-      "source": "folio"
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-07T14:10:07.171+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:07.171+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
     },
     {
       "id": "d6488f88-1e74-40ce-81b5-b19a928ff5b5",
       "name": "Named event",
-      "source": "folio"
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-07T14:10:07.193+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:07.193+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
     },
     {
       "id": "d6488f88-1e74-40ce-81b5-b19a928ff5b6",
       "name": "Chronological term",
-      "source": "folio"
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-07T14:10:07.212+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:07.212+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
     },
     {
       "id": "d6488f88-1e74-40ce-81b5-b19a928ff5b7",
       "name": "Topical term",
-      "source": "folio"
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-07T14:10:07.233+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:07.233+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
     },
     {
       "id": "d6488f88-1e74-40ce-81b5-b19a928ff5b8",
       "name": "Geographic name",
-      "source": "folio"
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-07T14:10:07.252+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:07.252+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
     },
     {
       "id": "d6488f88-1e74-40ce-81b5-b19a928ff5b9",
       "name": "Uncontrolled",
-      "source": "folio"
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-07T14:10:07.270+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:07.270+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
     },
     {
       "id": "d6488f88-1e74-40ce-81b5-b19a928ff510",
       "name": "Faceted topical terms",
-      "source": "folio"
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-07T14:10:07.288+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:07.288+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
     },
     {
       "id": "d6488f88-1e74-40ce-81b5-b19a928ff511",
       "name": "Genre/form",
-      "source": "folio"
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-07T14:10:07.307+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:07.307+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
     },
     {
       "id": "d6488f88-1e74-40ce-81b5-b19a928ff512",
       "name": "Occupation",
-      "source": "folio"
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-07T14:10:07.325+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:07.325+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
     },
     {
       "id": "d6488f88-1e74-40ce-81b5-b19a928ff513",
       "name": "Function",
-      "source": "folio"
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-07T14:10:07.345+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:07.345+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
     },
     {
       "id": "d6488f88-1e74-40ce-81b5-b19a928ff514",
       "name": "Curriculum objective",
-      "source": "folio"
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-07T14:10:07.363+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:07.363+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
     },
     {
       "id": "d6488f88-1e74-40ce-81b5-b19a928ff515",
       "name": "Hierarchical place name",
-      "source": "folio"
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-07T14:10:07.383+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:07.383+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
     },
     {
       "id": "d6488f88-1e74-40ce-81b5-b19a928ff516",
       "name": "Type of entity unspecified",
-      "source": "folio"
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-07T14:10:07.404+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:07.404+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
     }
   ],
   "totalRecords": 16

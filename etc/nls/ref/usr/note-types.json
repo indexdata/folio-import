@@ -1,41 +1,80 @@
 {
   "noteTypes": [
     {
-      "id": "35945b24-f3ee-4fae-931c-6317d0306a2a",
+      "id": "27289cc4-1fe4-4b6f-bfad-e4091021a043",
       "name": "General note",
       "usage": {
         "isAssigned": true
       },
       "metadata": {
-        "createdDate": "2023-03-13T12:11:34.284963Z"
+        "createdDate": "2026-04-02T09:40:29.125131Z"
       }
     },
     {
-      "id": "337b6115-67d9-4ccd-8c4a-c3f02c2a1dea",
+      "id": "4baa69b5-7b5e-43d3-9649-ccdea08c57b0",
       "name": "Saknas på fack - fortsätter leta",
       "usage": {
-        "isAssigned": true
+        "isAssigned": false
       },
       "metadata": {
-        "createdDate": "2024-05-22T11:41:06.426019Z",
-        "createdByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08",
-        "updatedDate": "2024-05-22T11:41:26.907994Z",
-        "updatedByUserId": "3c7da0e3-9298-4286-b037-6b0035237d08"
+        "createdDate": "2026-04-07T14:40:11.457463Z",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:40:11.457463Z",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
-      "id": "215b2626-2d38-4052-a917-1dbe43829cf1",
+      "id": "7090cb91-d578-419b-b38a-6eee70407796",
       "name": "Förvärvsanteckning",
       "usage": {
         "isAssigned": true
       },
       "metadata": {
-        "createdDate": "2025-07-02T09:23:50.054289Z",
-        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-07-02T09:23:50.054289Z",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+        "createdDate": "2026-04-07T14:40:11.489594Z",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:40:11.489594Z",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    },
+    {
+      "id": "d6a06436-3f94-4833-8c3a-5f35b3a973cf",
+      "name": "Mottagning",
+      "usage": {
+        "isAssigned": true
+      },
+      "metadata": {
+        "createdDate": "2026-04-07T14:40:11.515392Z",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:40:11.515392Z",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    },
+    {
+      "id": "f3c8d65e-396b-43ac-b410-1a4963b39b01",
+      "name": "User note",
+      "usage": {
+        "isAssigned": true
+      },
+      "metadata": {
+        "createdDate": "2026-04-07T14:40:11.541217Z",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:40:11.541217Z",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    },
+    {
+      "id": "3cce3e33-2c65-4553-987e-830ed266c46b",
+      "name": "Utökat antal beställningar",
+      "usage": {
+        "isAssigned": false
+      },
+      "metadata": {
+        "createdDate": "2026-04-07T14:40:11.564192Z",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:40:11.564192Z",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     }
   ],
-  "totalRecords": 3
+  "totalRecords": 6
 }

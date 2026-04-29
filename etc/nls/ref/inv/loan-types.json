@@ -1,165 +1,241 @@
 {
   "loantypes": [
     {
-      "id": "5fe8b93d-5a99-44d2-aa4e-fe6c423bab9d",
-      "name": "Vardagstryck",
+      "id": "2b94c631-fca9-4892-a730-03ee529ffe27",
+      "name": "Can circulate",
       "metadata": {
-        "createdDate": "2024-10-11T13:23:34.388+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2024-10-11T13:23:34.388+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+        "createdDate": "2026-04-02T09:40:31.763+00:00",
+        "updatedDate": "2026-04-07T14:10:00.899+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    },
+    {
+      "id": "e8b311a6-3b21-43f2-a269-dd9310cb2d0e",
+      "name": "Course reserves",
+      "metadata": {
+        "createdDate": "2026-04-02T09:40:31.764+00:00",
+        "updatedDate": "2026-04-07T14:10:00.879+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    },
+    {
+      "id": "a1dc1ce3-d56f-4d8a-b498-d5d674ccc845",
+      "name": "Selected",
+      "metadata": {
+        "createdDate": "2026-04-02T09:40:31.765+00:00",
+        "updatedDate": "2026-04-07T14:10:00.918+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    },
+    {
+      "id": "2e48e713-17f3-4c13-a9f8-23845bb210a4",
+      "name": "Reading room",
+      "metadata": {
+        "createdDate": "2026-04-02T09:40:31.759+00:00",
+        "updatedDate": "2026-04-07T14:10:00.857+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    },
+    {
+      "id": "4dec5417-0765-4767-bed6-b363a2d7d4e2",
+      "name": "DCB Can circulate",
+      "metadata": {
+        "createdDate": "2026-04-02T09:41:03.036+00:00",
+        "createdByUserId": "d0238529-d688-48f9-9307-8713f6c21bcc",
+        "updatedDate": "2026-04-07T14:10:00.937+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
       "id": "e7afa435-a4c8-4e9f-b2c6-9921ea4e027f",
       "name": "Hemlån",
       "metadata": {
-        "createdDate": "2023-08-07T07:50:36.346+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2023-08-07T07:50:36.346+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+        "createdDate": "2026-04-07T14:10:00.946+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:00.946+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
       "id": "1c9f3c34-43be-44d7-b18f-f9e4ab891bbe",
       "name": "Läsesalslån",
       "metadata": {
-        "createdDate": "2023-08-07T07:50:47.771+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2023-08-07T07:50:47.771+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+        "createdDate": "2026-04-07T14:10:00.957+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:00.957+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
       "id": "603dd1de-f45a-44f2-adab-ab89aa7ff339",
       "name": "Specialläsesalslån",
       "metadata": {
-        "createdDate": "2023-11-01T13:01:44.457+00:00",
-        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
-        "updatedDate": "2023-11-01T13:01:44.457+00:00",
-        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+        "createdDate": "2026-04-07T14:10:00.967+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:00.967+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
       "id": "30520547-c7dd-4a8f-8d8a-4ae92c128dba",
       "name": "Bokskåp",
       "metadata": {
-        "createdDate": "2025-01-17T14:00:19.847+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-01-17T14:00:19.847+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+        "createdDate": "2026-04-07T14:10:00.976+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:00.976+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
       "id": "822e0700-cd2d-4ab9-87ec-8e8a69d92e8d",
       "name": "Lagas före lån",
       "metadata": {
-        "createdDate": "2024-06-03T14:40:36.217+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-02-04T16:10:29.589+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
-      "id": "4066b059-c081-4dbb-a0ee-cbac3950cc87",
-      "name": "Digital beställning ",
-      "metadata": {
-        "createdDate": "2024-04-19T14:28:12.419+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-02-04T16:11:15.323+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
-      "id": "c66ae595-953b-45e7-b613-8dd28b206240",
-      "name": "Under leverans (ABON)",
-      "metadata": {
-        "createdDate": "2025-02-04T16:22:40.171+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-02-04T16:22:40.171+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+        "createdDate": "2026-04-07T14:10:00.985+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:00.985+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
       "id": "d416a50c-d2a3-4a79-8cd7-394ec0342a7a",
       "name": "Referens",
       "metadata": {
-        "createdDate": "2025-02-05T15:24:06.119+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-02-05T15:24:06.119+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
-      "id": "8c6cd6a0-914c-4fc6-98bc-8ea8f4994d09",
-      "name": "Manuell beställning",
-      "metadata": {
-        "createdDate": "2025-02-14T08:37:02.117+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-02-14T08:37:02.117+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+        "createdDate": "2026-04-07T14:10:01.004+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:01.004+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
       "id": "cddf164f-8b0b-4f88-8451-d81bf61c3dd4",
       "name": "L-samling - kollas före lån",
       "metadata": {
-        "createdDate": "2025-02-04T16:10:39.437+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-02-17T11:14:28.376+00:00",
-        "updatedByUserId": "39a1ef78-5c0d-426c-b997-cb65c4f44ebd"
-      }
-    },
-    {
-      "id": "bcdc202b-5e05-4385-bbd6-1c41d7b1746f",
-      "name": "Framtages ej/spärrat",
-      "metadata": {
-        "createdDate": "2023-11-01T13:07:45.268+00:00",
-        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
-        "updatedDate": "2025-03-17T14:34:11.963+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      }
-    },
-    {
-      "id": "f7f3036e-aec4-4104-8de1-83dd207b16d6",
-      "name": "DCB Can circulate",
-      "metadata": {
-        "createdDate": "2025-05-28T08:26:26.075+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-05-28T08:26:26.075+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+        "createdDate": "2026-04-07T14:10:01.013+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:01.013+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
       "id": "7cfb34be-1797-4e68-a4dc-133102b111a8",
       "name": "Saknas i KB",
       "metadata": {
-        "createdDate": "2025-06-27T12:40:27.864+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-06-27T12:40:27.864+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+        "createdDate": "2026-04-07T14:10:01.022+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:01.022+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
       "id": "15119d3d-0279-46e9-b228-688eb708befb",
       "name": "Läsesalslån (L-samling)",
       "metadata": {
-        "createdDate": "2025-06-30T07:28:18.036+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-06-30T07:28:18.036+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+        "createdDate": "2026-04-07T14:10:01.031+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:01.031+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
       "id": "64d0817d-e7f3-4af8-b970-609d06405730",
       "name": "Läsesalslån (Lagas före lån)",
       "metadata": {
-        "createdDate": "2025-06-30T07:26:38.766+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-06-30T07:29:44.430+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+        "createdDate": "2026-04-07T14:10:01.040+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:01.040+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    },
+    {
+      "id": "4066b059-c081-4dbb-a0ee-cbac3950cc87",
+      "name": "Digital leverans",
+      "metadata": {
+        "createdDate": "2026-04-07T14:10:00.994+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-21T13:59:57.788+00:00",
+        "updatedByUserId": "c9a6b532-63b1-43a3-9858-5717661035c5"
+      }
+    },
+    {
+      "id": "543b9d76-e65d-42f2-b656-fd5e502c36b6",
+      "name": "Preliminär post",
+      "metadata": {
+        "createdDate": "2026-04-07T14:10:01.050+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:01.050+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    },
+    {
+      "id": "bcdc202b-5e05-4385-bbd6-1c41d7b1746f",
+      "name": "Ej utlån",
+      "metadata": {
+        "createdDate": "2026-04-07T14:10:01.060+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:01.060+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    },
+    {
+      "id": "8c6cd6a0-914c-4fc6-98bc-8ea8f4994d09",
+      "name": "Begränsad åtkomst",
+      "metadata": {
+        "createdDate": "2026-04-07T14:10:01.069+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:01.069+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    },
+    {
+      "id": "8c84fe08-8bf3-4507-a598-f82afac00da2",
+      "name": "Beställ i Arken",
+      "metadata": {
+        "createdDate": "2026-04-07T14:10:01.078+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:01.078+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    },
+    {
+      "id": "fd791d87-fb62-4af7-a2ba-3db577c11cfa",
+      "name": "Prum",
+      "metadata": {
+        "createdDate": "2026-04-07T14:10:01.087+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:01.087+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    },
+    {
+      "id": "a07ef751-094c-4b6a-b4a7-e070155abc17",
+      "name": "Ej utlån - digital version finns",
+      "metadata": {
+        "createdDate": "2026-04-07T14:10:01.096+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:01.096+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    },
+    {
+      "id": "9ab2b57a-2dd5-473a-88ae-c851a8d0b781",
+      "name": "Beställ manuellt",
+      "metadata": {
+        "createdDate": "2026-04-07T14:10:01.106+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:01.106+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    },
+    {
+      "id": "0012ef54-f68b-4635-b617-73e8f7f90e58",
+      "name": "Unmapped",
+      "metadata": {
+        "createdDate": "2026-04-22T14:33:43.559+00:00",
+        "createdByUserId": "c9a6b532-63b1-43a3-9858-5717661035c5",
+        "updatedDate": "2026-04-22T14:33:43.559+00:00",
+        "updatedByUserId": "c9a6b532-63b1-43a3-9858-5717661035c5"
       }
     }
   ],
-  "totalRecords": 16
+  "totalRecords": 24
 }

@@ -1,27 +1,30 @@
 {
   "instanceRelationshipTypes": [
     {
-      "id": "30773a27-b485-4dab-aeb6-b8c04fa3cb17",
-      "name": "monographic series",
+      "id": "a17daf0a-f057-43b3-9997-13d0724cdf51",
+      "name": "multipart monograph",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:44.478+00:00",
-        "updatedDate": "2023-03-13T12:10:44.478+00:00"
+        "createdDate": "2026-04-02T09:40:32.614+00:00",
+        "updatedDate": "2026-04-07T14:09:59.747+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
       "id": "758f13db-ffb4-440e-bb10-8a364aa6cb4a",
       "name": "bound-with",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:44.480+00:00",
-        "updatedDate": "2023-03-13T12:10:44.480+00:00"
+        "createdDate": "2026-04-02T09:40:32.616+00:00",
+        "updatedDate": "2026-04-07T14:09:59.722+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
-      "id": "a17daf0a-f057-43b3-9997-13d0724cdf51",
-      "name": "multipart monograph",
+      "id": "30773a27-b485-4dab-aeb6-b8c04fa3cb17",
+      "name": "monographic series",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:44.481+00:00",
-        "updatedDate": "2023-03-13T12:10:44.481+00:00"
+        "createdDate": "2026-04-02T09:40:32.616+00:00",
+        "updatedDate": "2026-04-07T14:09:59.766+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     }
   ],

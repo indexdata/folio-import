@@ -1,0 +1,1820 @@
+{
+  "orderTemplates": [
+    {
+      "id": "4dee318b-f5b3-40dc-be93-cc89b8c45b6f",
+      "templateName": "Amazon book orders",
+      "templateCode": "Amazon-B",
+      "templateDescription": "Use to create orders in FOLIO after they are placed on Amazon",
+      "orderType": "One-Time",
+      "cost": {
+        "currency": "USD",
+        "quantityPhysical": 1
+      },
+      "notes": [
+        "Check credit card statement to make sure payment shows up"
+      ],
+      "acquisitionMethod": "306489dd-0053-49ee-a068-c316444a8f55",
+      "cancellationRestriction": true,
+      "approved": true,
+      "vendor": "e0fb5df2-cdf1-11e8-a8d5-f2801f1b9fd1",
+      "billTo": "5f8a321e-6b38-4d90-92d4-bf08f91a2242",
+      "poTags": {
+        "tagList": [
+          "amazon"
+        ]
+      },
+      "locations": [
+        {
+          "locationId": "fcd64ce1-6995-48f0-840e-89ffa2288371",
+          "quantityPhysical": 1
+        }
+      ],
+      "physical": {
+        "materialType": "1a54b431-2e4f-452d-9cae-9cee66c9a892",
+        "createInventory": "Instance, Holding, Item",
+        "materialSupplier": "e0fb5df2-cdf1-11e8-a8d5-f2801f1b9fd1"
+      },
+      "orderFormat": "Physical Resource",
+      "shipTo": "f7c36792-05f7-4c8c-969d-103ac6763187"
+    },
+    {
+      "id": "69fe6f1c-20f3-4a7d-a010-edf1b04dc459",
+      "templateName": "Pliktlevererade monografier",
+      "templateCode": "plm",
+      "hiddenFields": {
+        "reEncumber": false
+      },
+      "cost": {
+        "listUnitPrice": 0,
+        "quantityPhysical": 1,
+        "quantityElectronic": null,
+        "listUnitPriceElectronic": null
+      },
+      "vendor": "5e4ed340-2c2a-4cd7-bcca-fbf6167f7c39",
+      "customFields": {},
+      "poTags": {
+        "tagList": [
+          "plikt"
+        ]
+      },
+      "details": {
+        "isBinderyActive": false
+      },
+      "isPackage": false,
+      "locations": [
+        {
+          "__key__": "__key__1645",
+          "locationId": "57246b20-76a7-4725-91c7-dea9f336de4f"
+        }
+      ],
+      "polTags": {
+        "tagList": [
+          "plikt"
+        ]
+      },
+      "collection": false,
+      "checkinItems": true,
+      "physical": {
+        "materialType": "1a54b431-2e4f-452d-9cae-9cee66c9a892",
+        "createInventory": "Instance, Holding, Item"
+      },
+      "orderFormat": "Physical Resource"
+    },
+    {
+      "id": "5c56e4f6-1296-4b5f-a6dc-8309d9983a16",
+      "templateName": "Our dissertations",
+      "templateCode": "Dissert",
+      "templateDescription": "Use to create orders for our dissertations going to the archives; change the pub year each year",
+      "orderType": "One-Time",
+      "cost": {
+        "listUnitPrice": 0,
+        "quantityPhysical": 1
+      },
+      "acquisitionMethod": "0a4163a5-d225-4007-ad90-2fb41b73efab",
+      "approved": true,
+      "instanceId": null,
+      "manualPo": true,
+      "publisher": "Important University",
+      "poTags": {
+        "tagList": [
+          "dissertation"
+        ]
+      },
+      "locations": [
+        {
+          "locationId": "53cf956f-c1df-410b-8bea-27f712cca7c0",
+          "quantityPhysical": 1
+        }
+      ],
+      "polTags": {
+        "tagList": [
+          "dissert-2020"
+        ]
+      },
+      "physical": {
+        "materialType": "d9acad2f-2aac-4b48-9097-e6ab85906b25",
+        "createInventory": "Instance, Holding, Item"
+      },
+      "publicationDate": "2020",
+      "orderFormat": "Physical Resource",
+      "paymentStatus": "Payment Not Required",
+      "shipTo": "a3a02de3-c31a-4c2b-a2ce-8db9590ea90c"
+    },
+    {
+      "id": "e59bfa30-8365-486b-b31f-fad9abe4b005",
+      "templateName": "KB Stående order",
+      "isPackage": false
+    },
+    {
+      "id": "2e1bbcf9-dbef-45d6-b496-cff85a0a6d80",
+      "templateName": "Mosaic eBooks Default",
+      "templateCode": "Individual eBooks",
+      "templateDescription": "There is no specific vendor account tied to this template",
+      "orderType": "One-Time",
+      "cost": {
+        "currency": "USD"
+      },
+      "notes": [
+        "Check for activation & discovery"
+      ],
+      "acquisitionMethod": "306489dd-0053-49ee-a068-c316444a8f55",
+      "cancellationRestriction": true,
+      "approved": true,
+      "categoryIds": [
+        "d4f980f4-317e-424d-93a3-cee413f7dad6"
+      ],
+      "vendor": "3b8c1fab-27f8-4b70-bb52-8fbab185e6a4",
+      "acqUnitIds": [],
+      "reEncumber": true,
+      "eresource": {
+        "materialType": "615b8413-82d5-4203-aa6e-e37984cb5ac3",
+        "createInventory": "Instance, Holding"
+      },
+      "locations": [
+        {
+          "locationId": "184aae84-a5bf-4c6a-85ba-4a7c73026cd5",
+          "quantityElectronic": 1
+        }
+      ],
+      "polTags": {
+        "tagList": [
+          "e-book"
+        ]
+      },
+      "checkinItems": true,
+      "orderFormat": "Electronic Resource",
+      "receiptStatus": "Receipt Not Required"
+    },
+    {
+      "id": "2cec3275-a5c7-4ba1-afab-905ada8c5b65",
+      "templateName": "eBooks",
+      "templateCode": "Individual eBooks",
+      "templateDescription": "Be sure to fill in the proper vendor",
+      "orderType": "One-Time",
+      "cost": {
+        "currency": "USD",
+        "listUnitPriceElectronic": 1
+      },
+      "notes": [
+        "Check for activation & discovery"
+      ],
+      "acquisitionMethod": "306489dd-0053-49ee-a068-c316444a8f55",
+      "cancellationRestriction": true,
+      "approved": true,
+      "acqUnitIds": [
+        "0ebb1f7d-983f-3026-8a4c-5318e0ebc041"
+      ],
+      "billTo": "103c7625-0142-42f9-896e-cb51dd94a322",
+      "eresource": {
+        "materialType": "615b8413-82d5-4203-aa6e-e37984cb5ac3",
+        "createInventory": "Instance, Holding"
+      },
+      "locations": [
+        {
+          "locationId": "184aae84-a5bf-4c6a-85ba-4a7c73026cd5",
+          "quantityElectronic": 1
+        }
+      ],
+      "polTags": {
+        "tagList": [
+          "e-book"
+        ]
+      },
+      "orderFormat": "Electronic Resource",
+      "receiptStatus": "Receipt Not Required"
+    },
+    {
+      "id": "f7c4a0b0-58fd-4ec7-a8ab-930cccc63be3",
+      "templateName": "FK Ferdosi suecana",
+      "hiddenFields": {
+        "poLineDescription": true,
+        "cancellationRestriction": true,
+        "poNumberSuffix": true,
+        "assignedTo": true,
+        "approved": true,
+        "donor": true,
+        "ongoing": {
+          "isSubscription": true
+        },
+        "manualPo": true,
+        "acqUnitIds": true,
+        "reEncumber": true,
+        "poNumberPrefix": true,
+        "billTo": true,
+        "details": {
+          "subscriptionTo": true,
+          "subscriptionFrom": true,
+          "subscriptionInterval": true
+        },
+        "selector": true,
+        "checkinItems": false,
+        "paymentStatus": true,
+        "requester": true,
+        "cost": {
+          "discount": true,
+          "discountType": true,
+          "additionalCost": true,
+          "quantityPhysical": false,
+          "quantityElectronic": true,
+          "currentExchangeRate": false,
+          "listUnitPriceElectronic": true
+        },
+        "receiptDate": true,
+        "isPackage": true,
+        "collection": true,
+        "rush": true,
+        "packagePoLineId": true,
+        "automaticExport": true,
+        "cancellationRestrictionNote": true,
+        "receiptStatus": true,
+        "shipTo": true
+      },
+      "orderType": "One-Time",
+      "cost": {
+        "currency": "SEK",
+        "exchangeRate": null,
+        "listUnitPrice": null,
+        "quantityPhysical": 1,
+        "quantityElectronic": null,
+        "listUnitPriceElectronic": null
+      },
+      "acquisitionMethod": "06627d0e-e4e5-4234-9420-c6a350f7059b",
+      "isPackage": false,
+      "assignedTo": null,
+      "vendor": "12b6d48b-0ed9-40f9-b2fe-ec829896505e",
+      "poTags": {
+        "tagList": []
+      },
+      "locations": [
+        {
+          "__key__": "__key__2084",
+          "locationId": "57246b20-76a7-4725-91c7-dea9f336de4f",
+          "quantityPhysical": 1
+        }
+      ],
+      "polTags": {
+        "tagList": []
+      },
+      "checkinItems": false,
+      "physical": {
+        "materialType": "1a54b431-2e4f-452d-9cae-9cee66c9a892",
+        "createInventory": "None"
+      },
+      "fundDistribution": [
+        {
+          "code": "FK-suec",
+          "value": 100,
+          "fundId": "f95a5b9e-63dd-445c-8d36-12065ee1fe26",
+          "encumbrance": null,
+          "expenseClassId": null,
+          "distributionType": "percentage"
+        }
+      ],
+      "orderFormat": "Physical Resource"
+    },
+    {
+      "id": "b050fff8-ea33-4b71-9045-f9cf11dbeb0a",
+      "templateName": "JN Adlibris utländsk litteratur",
+      "hiddenFields": {
+        "poLineDescription": true,
+        "cancellationRestriction": true,
+        "poNumberSuffix": true,
+        "assignedTo": true,
+        "approved": true,
+        "donor": true,
+        "ongoing": {
+          "isSubscription": true
+        },
+        "manualPo": true,
+        "acqUnitIds": true,
+        "reEncumber": true,
+        "poNumberPrefix": true,
+        "billTo": true,
+        "details": {
+          "subscriptionTo": true,
+          "subscriptionFrom": true,
+          "subscriptionInterval": true
+        },
+        "selector": true,
+        "checkinItems": false,
+        "paymentStatus": true,
+        "requester": true,
+        "cost": {
+          "discount": true,
+          "discountType": true,
+          "additionalCost": true,
+          "quantityPhysical": false,
+          "quantityElectronic": true,
+          "currentExchangeRate": false,
+          "listUnitPriceElectronic": true
+        },
+        "receiptDate": true,
+        "isPackage": true,
+        "collection": true,
+        "rush": true,
+        "packagePoLineId": true,
+        "automaticExport": true,
+        "cancellationRestrictionNote": true,
+        "receiptStatus": true,
+        "shipTo": true
+      },
+      "orderType": "One-Time",
+      "cost": {
+        "currency": "SEK",
+        "exchangeRate": null,
+        "listUnitPrice": null,
+        "quantityPhysical": 1,
+        "quantityElectronic": null,
+        "listUnitPriceElectronic": null
+      },
+      "acquisitionMethod": "06627d0e-e4e5-4234-9420-c6a350f7059b",
+      "isPackage": false,
+      "assignedTo": null,
+      "vendor": "74f93a5c-9a3d-404a-bef4-791260103743",
+      "poTags": {
+        "tagList": []
+      },
+      "locations": [
+        {
+          "__key__": "__key__2084",
+          "locationId": "9dcf553b-3c3b-4b78-84f1-a2b2412c3911",
+          "quantityPhysical": 1
+        }
+      ],
+      "polTags": {
+        "tagList": []
+      },
+      "checkinItems": false,
+      "physical": {
+        "materialType": "1a54b431-2e4f-452d-9cae-9cee66c9a892",
+        "createInventory": "Instance, Holding, Item"
+      },
+      "fundDistribution": [
+        {
+          "code": "JN-utl",
+          "value": 100,
+          "fundId": "5600bae0-dee0-4db1-9638-9e678f81767d",
+          "encumbrance": null,
+          "expenseClassId": null,
+          "distributionType": "percentage"
+        }
+      ],
+      "orderFormat": "Physical Resource"
+    },
+    {
+      "id": "6df38211-a220-4e79-bdc4-f23668a9e440",
+      "templateName": "Övriga leverantörer suecana",
+      "hiddenFields": {
+        "poLineDescription": true,
+        "cancellationRestriction": true,
+        "poNumberSuffix": true,
+        "assignedTo": true,
+        "approved": true,
+        "donor": true,
+        "ongoing": {
+          "isSubscription": true
+        },
+        "manualPo": true,
+        "acqUnitIds": true,
+        "reEncumber": true,
+        "poNumberPrefix": true,
+        "billTo": true,
+        "details": {
+          "subscriptionTo": true,
+          "subscriptionFrom": true,
+          "subscriptionInterval": true
+        },
+        "selector": true,
+        "checkinItems": false,
+        "paymentStatus": true,
+        "requester": true,
+        "cost": {
+          "discount": true,
+          "discountType": true,
+          "additionalCost": true,
+          "quantityPhysical": false,
+          "quantityElectronic": true,
+          "currentExchangeRate": false,
+          "listUnitPriceElectronic": true
+        },
+        "receiptDate": true,
+        "isPackage": true,
+        "collection": true,
+        "rush": true,
+        "packagePoLineId": true,
+        "automaticExport": true,
+        "cancellationRestrictionNote": true,
+        "receiptStatus": true,
+        "shipTo": true
+      },
+      "orderType": "One-Time",
+      "cost": {
+        "currency": "SEK",
+        "exchangeRate": null,
+        "listUnitPrice": null,
+        "quantityPhysical": 1,
+        "quantityElectronic": null,
+        "listUnitPriceElectronic": null
+      },
+      "acquisitionMethod": "06627d0e-e4e5-4234-9420-c6a350f7059b",
+      "isPackage": false,
+      "assignedTo": null,
+      "vendor": "74f93a5c-9a3d-404a-bef4-791260103743",
+      "poTags": {
+        "tagList": []
+      },
+      "locations": [
+        {
+          "__key__": "__key__2084",
+          "locationId": "57246b20-76a7-4725-91c7-dea9f336de4f",
+          "quantityPhysical": 1
+        }
+      ],
+      "polTags": {
+        "tagList": []
+      },
+      "checkinItems": false,
+      "physical": {
+        "materialType": "1a54b431-2e4f-452d-9cae-9cee66c9a892",
+        "createInventory": "None"
+      },
+      "fundDistribution": [
+        {
+          "value": 100,
+          "distributionType": "percentage"
+        }
+      ],
+      "orderFormat": "Physical Resource"
+    },
+    {
+      "id": "5f459fa2-790a-4b82-8036-4f2faa307ec4",
+      "templateName": "Delbanco Berghman",
+      "hiddenFields": {
+        "poLineDescription": true,
+        "cancellationRestriction": true,
+        "poNumberSuffix": true,
+        "assignedTo": true,
+        "approved": true,
+        "donor": true,
+        "ongoing": {
+          "isSubscription": true
+        },
+        "manualPo": true,
+        "acqUnitIds": true,
+        "reEncumber": true,
+        "poNumberPrefix": true,
+        "billTo": true,
+        "details": {
+          "subscriptionTo": true,
+          "subscriptionFrom": true,
+          "subscriptionInterval": true
+        },
+        "selector": true,
+        "checkinItems": false,
+        "paymentStatus": true,
+        "requester": true,
+        "cost": {
+          "discount": true,
+          "discountType": true,
+          "additionalCost": true,
+          "quantityPhysical": false,
+          "quantityElectronic": true,
+          "currentExchangeRate": false,
+          "listUnitPriceElectronic": true
+        },
+        "receiptDate": true,
+        "isPackage": true,
+        "collection": true,
+        "rush": true,
+        "packagePoLineId": true,
+        "automaticExport": true,
+        "cancellationRestrictionNote": true,
+        "receiptStatus": true,
+        "shipTo": true
+      },
+      "orderType": "One-Time",
+      "cost": {
+        "currency": "SEK",
+        "exchangeRate": null,
+        "listUnitPrice": null,
+        "quantityPhysical": 1,
+        "quantityElectronic": null,
+        "listUnitPriceElectronic": null
+      },
+      "acquisitionMethod": "06627d0e-e4e5-4234-9420-c6a350f7059b",
+      "isPackage": false,
+      "assignedTo": null,
+      "vendor": "6b6d0996-7955-4656-ac5b-c8afa4b56496",
+      "poTags": {
+        "tagList": []
+      },
+      "locations": [
+        {
+          "__key__": "__key__2084",
+          "locationId": "9dcf553b-3c3b-4b78-84f1-a2b2412c3911",
+          "quantityPhysical": 1
+        }
+      ],
+      "polTags": {
+        "tagList": []
+      },
+      "checkinItems": false,
+      "physical": {
+        "materialType": "1a54b431-2e4f-452d-9cae-9cee66c9a892",
+        "createInventory": "Instance, Holding, Item"
+      },
+      "fundDistribution": [
+        {
+          "code": "berg",
+          "value": 100,
+          "fundId": "c4084e3a-f3ec-4bf4-90df-153fdf29c75d",
+          "encumbrance": null,
+          "expenseClassId": null,
+          "distributionType": "percentage"
+        }
+      ],
+      "orderFormat": "Physical Resource"
+    },
+    {
+      "id": "2be35319-6dba-4e87-9fb6-d7fbb900b057",
+      "templateName": "Delbanco suecana",
+      "hiddenFields": {
+        "poLineDescription": true,
+        "cancellationRestriction": true,
+        "poNumberSuffix": true,
+        "assignedTo": true,
+        "approved": true,
+        "donor": true,
+        "ongoing": {
+          "isSubscription": true
+        },
+        "manualPo": true,
+        "acqUnitIds": true,
+        "reEncumber": true,
+        "poNumberPrefix": true,
+        "billTo": true,
+        "details": {
+          "subscriptionTo": true,
+          "subscriptionFrom": true,
+          "subscriptionInterval": true
+        },
+        "selector": true,
+        "checkinItems": false,
+        "paymentStatus": true,
+        "requester": true,
+        "cost": {
+          "discount": true,
+          "discountType": true,
+          "additionalCost": true,
+          "quantityPhysical": false,
+          "quantityElectronic": true,
+          "currentExchangeRate": false,
+          "listUnitPriceElectronic": true
+        },
+        "receiptDate": true,
+        "isPackage": true,
+        "collection": true,
+        "rush": true,
+        "packagePoLineId": true,
+        "automaticExport": true,
+        "cancellationRestrictionNote": true,
+        "receiptStatus": true,
+        "shipTo": true
+      },
+      "orderType": "One-Time",
+      "cost": {
+        "currency": "SEK",
+        "exchangeRate": null,
+        "listUnitPrice": null,
+        "quantityPhysical": 1,
+        "quantityElectronic": null,
+        "listUnitPriceElectronic": null
+      },
+      "acquisitionMethod": "06627d0e-e4e5-4234-9420-c6a350f7059b",
+      "isPackage": false,
+      "assignedTo": null,
+      "vendor": "6b6d0996-7955-4656-ac5b-c8afa4b56496",
+      "poTags": {
+        "tagList": []
+      },
+      "locations": [
+        {
+          "__key__": "__key__2084",
+          "locationId": "9dcf553b-3c3b-4b78-84f1-a2b2412c3911",
+          "quantityPhysical": 1
+        }
+      ],
+      "polTags": {
+        "tagList": []
+      },
+      "checkinItems": false,
+      "physical": {
+        "materialType": "1a54b431-2e4f-452d-9cae-9cee66c9a892",
+        "createInventory": "None"
+      },
+      "fundDistribution": [
+        {
+          "value": 100,
+          "distributionType": "percentage"
+        }
+      ],
+      "orderFormat": "Physical Resource"
+    },
+    {
+      "id": "d15091f6-9928-4a10-8110-72012d1a20fc",
+      "templateName": "KB prenumeration",
+      "templateCode": "PREN",
+      "templateDescription": "Förvärv av tidskrifter",
+      "vendor": "50fb6ae0-cdf1-11e8-a8d5-f2801f1b9fd1",
+      "isPackage": false
+    },
+    {
+      "id": "c0d96803-d9bd-47a5-9bb3-0bae34b59809",
+      "templateName": "Adlibris suecana",
+      "hiddenFields": {
+        "poLineDescription": true,
+        "cancellationRestriction": true,
+        "poNumberSuffix": true,
+        "assignedTo": true,
+        "approved": true,
+        "donor": true,
+        "ongoing": {
+          "isSubscription": true
+        },
+        "manualPo": true,
+        "acqUnitIds": true,
+        "reEncumber": true,
+        "poNumberPrefix": true,
+        "billTo": true,
+        "details": {
+          "subscriptionTo": true,
+          "subscriptionFrom": true,
+          "subscriptionInterval": true
+        },
+        "selector": true,
+        "checkinItems": false,
+        "paymentStatus": true,
+        "requester": true,
+        "cost": {
+          "discount": true,
+          "discountType": true,
+          "additionalCost": true,
+          "quantityPhysical": false,
+          "quantityElectronic": true,
+          "currentExchangeRate": false,
+          "listUnitPriceElectronic": true
+        },
+        "receiptDate": true,
+        "isPackage": true,
+        "collection": true,
+        "rush": true,
+        "packagePoLineId": true,
+        "automaticExport": true,
+        "cancellationRestrictionNote": true,
+        "receiptStatus": true,
+        "shipTo": true
+      },
+      "orderType": "One-Time",
+      "cost": {
+        "currency": "SEK",
+        "exchangeRate": null,
+        "listUnitPrice": null,
+        "quantityPhysical": 1,
+        "quantityElectronic": null,
+        "listUnitPriceElectronic": null
+      },
+      "acquisitionMethod": "06627d0e-e4e5-4234-9420-c6a350f7059b",
+      "isPackage": false,
+      "assignedTo": null,
+      "vendor": "74f93a5c-9a3d-404a-bef4-791260103743",
+      "poTags": {
+        "tagList": []
+      },
+      "locations": [
+        {
+          "__key__": "__key__2084",
+          "locationId": "57246b20-76a7-4725-91c7-dea9f336de4f",
+          "quantityPhysical": 1
+        }
+      ],
+      "polTags": {
+        "tagList": []
+      },
+      "checkinItems": false,
+      "physical": {
+        "materialType": "1a54b431-2e4f-452d-9cae-9cee66c9a892",
+        "createInventory": "None"
+      },
+      "fundDistribution": [
+        {
+          "value": 100,
+          "distributionType": "percentage"
+        }
+      ],
+      "orderFormat": "Physical Resource"
+    },
+    {
+      "id": "c49bca8a-f6ac-4c22-b620-92ee867045b0",
+      "templateName": "Delbanco utländsk litteratur",
+      "hiddenFields": {
+        "poLineDescription": true,
+        "cancellationRestriction": true,
+        "poNumberSuffix": true,
+        "assignedTo": true,
+        "approved": true,
+        "donor": true,
+        "ongoing": {
+          "isSubscription": true
+        },
+        "manualPo": true,
+        "acqUnitIds": true,
+        "reEncumber": true,
+        "poNumberPrefix": true,
+        "billTo": true,
+        "details": {
+          "subscriptionTo": true,
+          "subscriptionFrom": true,
+          "subscriptionInterval": true
+        },
+        "selector": true,
+        "checkinItems": false,
+        "paymentStatus": true,
+        "requester": true,
+        "cost": {
+          "discount": true,
+          "discountType": true,
+          "additionalCost": true,
+          "quantityPhysical": false,
+          "quantityElectronic": true,
+          "currentExchangeRate": false,
+          "listUnitPriceElectronic": true
+        },
+        "receiptDate": true,
+        "isPackage": true,
+        "collection": true,
+        "rush": true,
+        "packagePoLineId": true,
+        "automaticExport": true,
+        "cancellationRestrictionNote": true,
+        "receiptStatus": true,
+        "shipTo": true
+      },
+      "orderType": "One-Time",
+      "cost": {
+        "currency": "SEK",
+        "exchangeRate": null,
+        "listUnitPrice": null,
+        "quantityPhysical": 1,
+        "quantityElectronic": null,
+        "listUnitPriceElectronic": null
+      },
+      "acquisitionMethod": "06627d0e-e4e5-4234-9420-c6a350f7059b",
+      "isPackage": false,
+      "assignedTo": null,
+      "vendor": "6b6d0996-7955-4656-ac5b-c8afa4b56496",
+      "poTags": {
+        "tagList": []
+      },
+      "locations": [
+        {
+          "__key__": "__key__2084",
+          "locationId": "9dcf553b-3c3b-4b78-84f1-a2b2412c3911",
+          "quantityPhysical": 1
+        }
+      ],
+      "polTags": {
+        "tagList": []
+      },
+      "checkinItems": false,
+      "physical": {
+        "materialType": "1a54b431-2e4f-452d-9cae-9cee66c9a892",
+        "createInventory": "Instance, Holding, Item"
+      },
+      "fundDistribution": [
+        {
+          "code": "ES-utl",
+          "value": 100,
+          "fundId": "c970daaf-f2bb-49b1-b2f9-66ab2c980165",
+          "encumbrance": null,
+          "expenseClassId": null,
+          "distributionType": "percentage"
+        },
+        {
+          "code": "ET-utl",
+          "value": 100,
+          "fundId": "6c46f773-2820-4b77-a37e-3fc84118e045",
+          "encumbrance": null,
+          "expenseClassId": null,
+          "distributionType": "percentage"
+        },
+        {
+          "code": "JN-utl",
+          "value": 100,
+          "fundId": "5600bae0-dee0-4db1-9638-9e678f81767d",
+          "encumbrance": null,
+          "expenseClassId": null,
+          "distributionType": "percentage"
+        }
+      ],
+      "orderFormat": "Physical Resource"
+    },
+    {
+      "id": "96b2a15b-097b-4a84-9bc9-b6d2d09e3ae5",
+      "templateName": "KB Tidskriftsprenumerationer",
+      "hiddenFields": {
+        "cost": {
+          "currency": true,
+          "discount": true,
+          "discountType": true,
+          "exchangeRate": true,
+          "listUnitPrice": true,
+          "additionalCost": true,
+          "quantityPhysical": true,
+          "quantityElectronic": true,
+          "useSetExchangeRate": true,
+          "currentExchangeRate": true,
+          "listUnitPriceElectronic": true
+        },
+        "poNumberPrefix": false
+      },
+      "notes": [
+        ""
+      ],
+      "instanceId": null,
+      "acquisitionMethod": "06976e58-bcf3-438e-b0ea-280ed421d764",
+      "vendorDetail": {
+        "referenceNumbers": [
+          {
+            "refNumberType": null
+          }
+        ]
+      },
+      "details": {
+        "productIds": [
+          {
+            "productIdType": ""
+          }
+        ]
+      },
+      "isPackage": false,
+      "locations": [
+        {
+          "__key__": "__key__693"
+        }
+      ]
+    },
+    {
+      "id": "f8dbe247-087e-440e-95c7-e4a12fe12fe9",
+      "templateName": "FK Övriga leverantörer suecana",
+      "hiddenFields": {
+        "poLineDescription": true,
+        "cancellationRestriction": true,
+        "poNumberSuffix": true,
+        "assignedTo": true,
+        "approved": true,
+        "donor": true,
+        "ongoing": {
+          "isSubscription": true
+        },
+        "manualPo": true,
+        "acqUnitIds": true,
+        "reEncumber": true,
+        "poNumberPrefix": true,
+        "billTo": true,
+        "details": {
+          "subscriptionTo": true,
+          "subscriptionFrom": true,
+          "subscriptionInterval": true
+        },
+        "selector": true,
+        "checkinItems": false,
+        "paymentStatus": true,
+        "requester": true,
+        "cost": {
+          "discount": true,
+          "discountType": true,
+          "additionalCost": true,
+          "quantityPhysical": false,
+          "quantityElectronic": true,
+          "currentExchangeRate": false,
+          "listUnitPriceElectronic": true
+        },
+        "receiptDate": true,
+        "isPackage": true,
+        "collection": true,
+        "rush": true,
+        "packagePoLineId": true,
+        "automaticExport": true,
+        "cancellationRestrictionNote": true,
+        "receiptStatus": true,
+        "shipTo": true
+      },
+      "orderType": "One-Time",
+      "cost": {
+        "currency": "SEK",
+        "exchangeRate": null,
+        "listUnitPrice": null,
+        "quantityPhysical": 1,
+        "quantityElectronic": null,
+        "listUnitPriceElectronic": null
+      },
+      "acquisitionMethod": "06627d0e-e4e5-4234-9420-c6a350f7059b",
+      "isPackage": false,
+      "assignedTo": null,
+      "vendor": "74f93a5c-9a3d-404a-bef4-791260103743",
+      "poTags": {
+        "tagList": []
+      },
+      "locations": [
+        {
+          "__key__": "__key__2084",
+          "locationId": "57246b20-76a7-4725-91c7-dea9f336de4f",
+          "quantityPhysical": 1
+        }
+      ],
+      "polTags": {
+        "tagList": []
+      },
+      "checkinItems": false,
+      "physical": {
+        "materialType": "1a54b431-2e4f-452d-9cae-9cee66c9a892",
+        "createInventory": "None"
+      },
+      "fundDistribution": [
+        {
+          "code": "FK-suec",
+          "value": 100,
+          "fundId": "f95a5b9e-63dd-445c-8d36-12065ee1fe26",
+          "encumbrance": null,
+          "expenseClassId": null,
+          "distributionType": "percentage"
+        }
+      ],
+      "orderFormat": "Physical Resource"
+    },
+    {
+      "id": "fe8db0ac-a094-40f3-8329-fc1035e83260",
+      "templateName": "Adlibris utländsk litteratur",
+      "hiddenFields": {
+        "poLineDescription": true,
+        "cancellationRestriction": true,
+        "poNumberSuffix": true,
+        "assignedTo": true,
+        "approved": true,
+        "donor": true,
+        "ongoing": {
+          "isSubscription": true
+        },
+        "manualPo": true,
+        "acqUnitIds": true,
+        "reEncumber": true,
+        "poNumberPrefix": true,
+        "billTo": true,
+        "details": {
+          "subscriptionTo": true,
+          "subscriptionFrom": true,
+          "subscriptionInterval": true
+        },
+        "selector": true,
+        "checkinItems": false,
+        "paymentStatus": true,
+        "requester": true,
+        "cost": {
+          "discount": true,
+          "discountType": true,
+          "listUnitPrice": false,
+          "additionalCost": true,
+          "quantityPhysical": false,
+          "quantityElectronic": true,
+          "currentExchangeRate": false,
+          "listUnitPriceElectronic": true
+        },
+        "receiptDate": true,
+        "isPackage": true,
+        "collection": true,
+        "rush": true,
+        "packagePoLineId": true,
+        "automaticExport": true,
+        "cancellationRestrictionNote": true,
+        "receiptStatus": true,
+        "shipTo": true
+      },
+      "orderType": "One-Time",
+      "cost": {
+        "currency": "SEK",
+        "exchangeRate": null,
+        "listUnitPrice": null,
+        "quantityPhysical": 1,
+        "quantityElectronic": null,
+        "listUnitPriceElectronic": null
+      },
+      "acquisitionMethod": "06627d0e-e4e5-4234-9420-c6a350f7059b",
+      "isPackage": false,
+      "assignedTo": null,
+      "vendor": "74f93a5c-9a3d-404a-bef4-791260103743",
+      "poTags": {
+        "tagList": []
+      },
+      "locations": [
+        {
+          "__key__": "__key__2084",
+          "locationId": "9dcf553b-3c3b-4b78-84f1-a2b2412c3911",
+          "quantityPhysical": 1
+        }
+      ],
+      "polTags": {
+        "tagList": []
+      },
+      "checkinItems": false,
+      "physical": {
+        "materialType": "1a54b431-2e4f-452d-9cae-9cee66c9a892",
+        "createInventory": "Instance, Holding, Item"
+      },
+      "fundDistribution": [
+        {
+          "value": 100,
+          "distributionType": "percentage"
+        }
+      ],
+      "orderFormat": "Physical Resource"
+    },
+    {
+      "id": "43bb8a31-4e4b-463c-95c5-e163760f0092",
+      "templateName": "eJournal packages",
+      "templateCode": "Packages: eJournals",
+      "orderType": "Ongoing",
+      "cost": {
+        "currency": "USD",
+        "quantityElectronic": 1
+      },
+      "acquisitionMethod": "306489dd-0053-49ee-a068-c316444a8f55",
+      "collection": true,
+      "cancellationRestriction": true,
+      "approved": true,
+      "manualPo": true,
+      "acqUnitIds": [
+        "0ebb1f7d-983f-3026-8a4c-5318e0ebc041"
+      ],
+      "reEncumber": true,
+      "billTo": "103c7625-0142-42f9-896e-cb51dd94a322",
+      "eresource": {
+        "materialType": "615b8413-82d5-4203-aa6e-e37984cb5ac3",
+        "createInventory": "None"
+      },
+      "locations": [
+        {
+          "locationId": "184aae84-a5bf-4c6a-85ba-4a7c73026cd5",
+          "quantityElectronic": 1
+        }
+      ],
+      "polTags": {
+        "tagList": [
+          "e-journal"
+        ]
+      },
+      "orderFormat": "Electronic Resource",
+      "receiptStatus": "Receipt Not Required"
+    },
+    {
+      "id": "66a29252-1456-471f-9335-e6931d0d9945",
+      "templateName": "KB Pliktleveranser seriellt",
+      "hiddenFields": {
+        "poLineDescription": true,
+        "description": true,
+        "cancellationRestriction": true,
+        "poNumberSuffix": true,
+        "assignedTo": true,
+        "approved": true,
+        "donor": true,
+        "ongoing": {
+          "isSubscription": true
+        },
+        "manualPo": true,
+        "acqUnitIds": true,
+        "reEncumber": true,
+        "poNumberPrefix": true,
+        "billTo": true,
+        "details": {
+          "subscriptionTo": true,
+          "isBinderyActive": true,
+          "subscriptionFrom": true,
+          "subscriptionInterval": true
+        },
+        "selector": true,
+        "checkinItems": true,
+        "paymentStatus": true,
+        "requester": true,
+        "cost": {
+          "currency": true,
+          "discount": true,
+          "discountType": true,
+          "exchangeRate": true,
+          "listUnitPrice": true,
+          "additionalCost": true,
+          "quantityPhysical": true,
+          "quantityElectronic": true,
+          "useSetExchangeRate": true,
+          "currentExchangeRate": true,
+          "listUnitPriceElectronic": true
+        },
+        "vendorDetail": {
+          "instructions": true,
+          "vendorAccount": true
+        },
+        "receiptDate": true,
+        "isPackage": true,
+        "collection": true,
+        "rush": true,
+        "packagePoLineId": true,
+        "automaticExport": true,
+        "cancellationRestrictionNote": true,
+        "receiptStatus": true,
+        "shipTo": true
+      },
+      "vendor": "5e4ed340-2c2a-4cd7-bcca-fbf6167f7c39",
+      "acquisitionMethod": "113a14b8-060b-4aa6-ac26-e67a51477804",
+      "vendorDetail": {
+        "referenceNumbers": [
+          {}
+        ]
+      },
+      "isPackage": false
+    },
+    {
+      "id": "e018298e-67e3-40fd-8ca3-edf1bb93d609",
+      "templateName": "ES Adlibris utländsk litteratur",
+      "hiddenFields": {
+        "poLineDescription": true,
+        "cancellationRestriction": true,
+        "poNumberSuffix": true,
+        "assignedTo": true,
+        "approved": true,
+        "donor": true,
+        "ongoing": {
+          "isSubscription": true
+        },
+        "manualPo": true,
+        "acqUnitIds": true,
+        "reEncumber": true,
+        "poNumberPrefix": true,
+        "billTo": true,
+        "details": {
+          "subscriptionTo": true,
+          "subscriptionFrom": true,
+          "subscriptionInterval": true
+        },
+        "selector": true,
+        "checkinItems": false,
+        "paymentStatus": true,
+        "requester": true,
+        "cost": {
+          "discount": true,
+          "discountType": true,
+          "additionalCost": true,
+          "quantityPhysical": false,
+          "quantityElectronic": true,
+          "currentExchangeRate": false,
+          "listUnitPriceElectronic": true
+        },
+        "receiptDate": true,
+        "isPackage": true,
+        "collection": true,
+        "rush": true,
+        "packagePoLineId": true,
+        "automaticExport": true,
+        "cancellationRestrictionNote": true,
+        "receiptStatus": true,
+        "shipTo": true
+      },
+      "orderType": "One-Time",
+      "cost": {
+        "currency": "SEK",
+        "exchangeRate": null,
+        "listUnitPrice": null,
+        "quantityPhysical": 1,
+        "quantityElectronic": null,
+        "listUnitPriceElectronic": null
+      },
+      "acquisitionMethod": "06627d0e-e4e5-4234-9420-c6a350f7059b",
+      "isPackage": false,
+      "assignedTo": null,
+      "vendor": "74f93a5c-9a3d-404a-bef4-791260103743",
+      "poTags": {
+        "tagList": []
+      },
+      "locations": [
+        {
+          "__key__": "__key__2084",
+          "locationId": "9dcf553b-3c3b-4b78-84f1-a2b2412c3911",
+          "quantityPhysical": 1
+        }
+      ],
+      "polTags": {
+        "tagList": []
+      },
+      "checkinItems": false,
+      "physical": {
+        "materialType": "1a54b431-2e4f-452d-9cae-9cee66c9a892",
+        "createInventory": "Instance, Holding, Item"
+      },
+      "fundDistribution": [
+        {
+          "code": "ES-utl",
+          "value": 100,
+          "fundId": "c970daaf-f2bb-49b1-b2f9-66ab2c980165",
+          "encumbrance": null,
+          "expenseClassId": null,
+          "distributionType": "percentage"
+        }
+      ],
+      "orderFormat": "Physical Resource"
+    },
+    {
+      "id": "ffaf9a5c-5e27-49a6-b119-10ce79033c86",
+      "templateName": "ET Adlibris utländsk litteratur",
+      "hiddenFields": {
+        "poLineDescription": true,
+        "cancellationRestriction": true,
+        "poNumberSuffix": true,
+        "assignedTo": true,
+        "approved": true,
+        "donor": true,
+        "ongoing": {
+          "isSubscription": true
+        },
+        "manualPo": true,
+        "acqUnitIds": true,
+        "reEncumber": true,
+        "poNumberPrefix": true,
+        "billTo": true,
+        "details": {
+          "subscriptionTo": true,
+          "subscriptionFrom": true,
+          "subscriptionInterval": true
+        },
+        "selector": true,
+        "checkinItems": false,
+        "paymentStatus": true,
+        "requester": true,
+        "cost": {
+          "discount": true,
+          "discountType": true,
+          "additionalCost": true,
+          "quantityPhysical": false,
+          "quantityElectronic": true,
+          "currentExchangeRate": false,
+          "listUnitPriceElectronic": true
+        },
+        "receiptDate": true,
+        "isPackage": true,
+        "collection": true,
+        "rush": true,
+        "packagePoLineId": true,
+        "automaticExport": true,
+        "cancellationRestrictionNote": true,
+        "receiptStatus": true,
+        "shipTo": true
+      },
+      "orderType": "One-Time",
+      "cost": {
+        "currency": "SEK",
+        "exchangeRate": null,
+        "listUnitPrice": null,
+        "quantityPhysical": 1,
+        "quantityElectronic": null,
+        "listUnitPriceElectronic": null
+      },
+      "acquisitionMethod": "06627d0e-e4e5-4234-9420-c6a350f7059b",
+      "isPackage": false,
+      "assignedTo": null,
+      "vendor": "74f93a5c-9a3d-404a-bef4-791260103743",
+      "poTags": {
+        "tagList": []
+      },
+      "locations": [
+        {
+          "__key__": "__key__2084",
+          "locationId": "9dcf553b-3c3b-4b78-84f1-a2b2412c3911",
+          "quantityPhysical": 1
+        }
+      ],
+      "polTags": {
+        "tagList": []
+      },
+      "checkinItems": false,
+      "physical": {
+        "materialType": "1a54b431-2e4f-452d-9cae-9cee66c9a892",
+        "createInventory": "Instance, Holding, Item"
+      },
+      "fundDistribution": [
+        {
+          "code": "ES-utl",
+          "value": 100,
+          "fundId": "c970daaf-f2bb-49b1-b2f9-66ab2c980165",
+          "encumbrance": null,
+          "expenseClassId": null,
+          "distributionType": "percentage"
+        },
+        {
+          "code": "ET-utl",
+          "value": 100,
+          "fundId": "6c46f773-2820-4b77-a37e-3fc84118e045",
+          "encumbrance": null,
+          "expenseClassId": null,
+          "distributionType": "percentage"
+        },
+        {
+          "code": "JN-utl",
+          "value": 100,
+          "fundId": "5600bae0-dee0-4db1-9638-9e678f81767d",
+          "encumbrance": null,
+          "expenseClassId": null,
+          "distributionType": "percentage"
+        }
+      ],
+      "orderFormat": "Physical Resource"
+    },
+    {
+      "id": "5c0c7236-32b7-44cb-996a-77198e50fd52",
+      "templateName": "JN Adlibris suecana",
+      "hiddenFields": {
+        "poLineDescription": true,
+        "cancellationRestriction": true,
+        "poNumberSuffix": true,
+        "assignedTo": true,
+        "approved": true,
+        "donor": true,
+        "ongoing": {
+          "isSubscription": true
+        },
+        "manualPo": true,
+        "acqUnitIds": true,
+        "reEncumber": true,
+        "poNumberPrefix": true,
+        "billTo": true,
+        "details": {
+          "subscriptionTo": true,
+          "subscriptionFrom": true,
+          "subscriptionInterval": true
+        },
+        "selector": true,
+        "checkinItems": false,
+        "paymentStatus": true,
+        "requester": true,
+        "cost": {
+          "discount": true,
+          "discountType": true,
+          "additionalCost": true,
+          "quantityPhysical": false,
+          "quantityElectronic": true,
+          "currentExchangeRate": false,
+          "listUnitPriceElectronic": true
+        },
+        "receiptDate": true,
+        "isPackage": true,
+        "collection": true,
+        "rush": true,
+        "packagePoLineId": true,
+        "automaticExport": true,
+        "cancellationRestrictionNote": true,
+        "receiptStatus": true,
+        "shipTo": true
+      },
+      "orderType": "One-Time",
+      "cost": {
+        "currency": "SEK",
+        "exchangeRate": null,
+        "listUnitPrice": null,
+        "quantityPhysical": 1,
+        "quantityElectronic": null,
+        "listUnitPriceElectronic": null
+      },
+      "acquisitionMethod": "06627d0e-e4e5-4234-9420-c6a350f7059b",
+      "isPackage": false,
+      "assignedTo": null,
+      "vendor": "74f93a5c-9a3d-404a-bef4-791260103743",
+      "poTags": {
+        "tagList": []
+      },
+      "locations": [
+        {
+          "__key__": "__key__2084",
+          "locationId": "57246b20-76a7-4725-91c7-dea9f336de4f",
+          "quantityPhysical": 1
+        }
+      ],
+      "polTags": {
+        "tagList": []
+      },
+      "checkinItems": false,
+      "physical": {
+        "materialType": "1a54b431-2e4f-452d-9cae-9cee66c9a892",
+        "createInventory": "None"
+      },
+      "fundDistribution": [
+        {
+          "code": "JN-suec",
+          "value": 100,
+          "fundId": "4bf4aabc-0ec6-40cb-8419-2b4eeb13c3d1",
+          "encumbrance": null,
+          "expenseClassId": null,
+          "distributionType": "percentage"
+        }
+      ],
+      "orderFormat": "Physical Resource"
+    },
+    {
+      "id": "fcd665cd-c2e3-4e0a-8fe2-f92c95acfa4e",
+      "templateName": "Adlibris Berghman",
+      "hiddenFields": {
+        "poLineDescription": true,
+        "cancellationRestriction": true,
+        "poNumberSuffix": true,
+        "assignedTo": true,
+        "approved": true,
+        "donor": true,
+        "ongoing": {
+          "isSubscription": true
+        },
+        "manualPo": true,
+        "acqUnitIds": true,
+        "reEncumber": true,
+        "poNumberPrefix": true,
+        "billTo": true,
+        "details": {
+          "subscriptionTo": true,
+          "subscriptionFrom": true,
+          "subscriptionInterval": true
+        },
+        "selector": true,
+        "checkinItems": false,
+        "paymentStatus": true,
+        "requester": true,
+        "cost": {
+          "discount": true,
+          "discountType": true,
+          "additionalCost": true,
+          "quantityPhysical": false,
+          "quantityElectronic": true,
+          "currentExchangeRate": false,
+          "listUnitPriceElectronic": true
+        },
+        "receiptDate": true,
+        "isPackage": true,
+        "collection": true,
+        "rush": true,
+        "packagePoLineId": true,
+        "automaticExport": true,
+        "cancellationRestrictionNote": true,
+        "receiptStatus": true,
+        "shipTo": true
+      },
+      "orderType": "One-Time",
+      "cost": {
+        "currency": "SEK",
+        "exchangeRate": null,
+        "listUnitPrice": null,
+        "quantityPhysical": 1,
+        "quantityElectronic": null,
+        "listUnitPriceElectronic": null
+      },
+      "acquisitionMethod": "06627d0e-e4e5-4234-9420-c6a350f7059b",
+      "isPackage": false,
+      "assignedTo": null,
+      "vendor": "74f93a5c-9a3d-404a-bef4-791260103743",
+      "poTags": {
+        "tagList": []
+      },
+      "locations": [
+        {
+          "__key__": "__key__2084",
+          "locationId": "9dcf553b-3c3b-4b78-84f1-a2b2412c3911",
+          "quantityPhysical": 1
+        }
+      ],
+      "polTags": {
+        "tagList": []
+      },
+      "checkinItems": false,
+      "physical": {
+        "materialType": "1a54b431-2e4f-452d-9cae-9cee66c9a892",
+        "createInventory": "Instance, Holding, Item"
+      },
+      "fundDistribution": [
+        {
+          "code": "berg",
+          "value": 100,
+          "fundId": "c4084e3a-f3ec-4bf4-90df-153fdf29c75d",
+          "encumbrance": null,
+          "expenseClassId": null,
+          "distributionType": "percentage"
+        }
+      ],
+      "orderFormat": "Physical Resource"
+    },
+    {
+      "id": "1f49b0be-f040-4e35-ab7d-b47131a98933",
+      "templateName": "Övriga leverantörer utländsk litteratur",
+      "hiddenFields": {
+        "poLineDescription": true,
+        "cancellationRestriction": true,
+        "poNumberSuffix": true,
+        "assignedTo": true,
+        "approved": true,
+        "donor": true,
+        "ongoing": {
+          "isSubscription": true
+        },
+        "manualPo": true,
+        "acqUnitIds": true,
+        "reEncumber": true,
+        "poNumberPrefix": true,
+        "billTo": true,
+        "details": {
+          "subscriptionTo": true,
+          "subscriptionFrom": true,
+          "subscriptionInterval": true
+        },
+        "selector": true,
+        "checkinItems": false,
+        "paymentStatus": true,
+        "requester": true,
+        "cost": {
+          "discount": true,
+          "discountType": true,
+          "additionalCost": true,
+          "quantityPhysical": false,
+          "quantityElectronic": true,
+          "currentExchangeRate": false,
+          "listUnitPriceElectronic": true
+        },
+        "receiptDate": true,
+        "isPackage": true,
+        "collection": true,
+        "rush": true,
+        "packagePoLineId": true,
+        "automaticExport": true,
+        "cancellationRestrictionNote": true,
+        "receiptStatus": true,
+        "shipTo": true
+      },
+      "orderType": "One-Time",
+      "cost": {
+        "currency": "SEK",
+        "exchangeRate": null,
+        "listUnitPrice": null,
+        "quantityPhysical": 1,
+        "quantityElectronic": null,
+        "listUnitPriceElectronic": null
+      },
+      "acquisitionMethod": "06627d0e-e4e5-4234-9420-c6a350f7059b",
+      "isPackage": false,
+      "assignedTo": null,
+      "vendor": "97ea456f-f376-4334-aa7f-bb6c27747ae6",
+      "poTags": {
+        "tagList": []
+      },
+      "locations": [
+        {
+          "__key__": "__key__2084",
+          "locationId": "9dcf553b-3c3b-4b78-84f1-a2b2412c3911",
+          "quantityPhysical": 1
+        }
+      ],
+      "polTags": {
+        "tagList": []
+      },
+      "checkinItems": false,
+      "physical": {
+        "materialType": "1a54b431-2e4f-452d-9cae-9cee66c9a892",
+        "createInventory": "Instance, Holding, Item"
+      },
+      "fundDistribution": [
+        {
+          "code": "ES-utl",
+          "value": 100,
+          "fundId": "c970daaf-f2bb-49b1-b2f9-66ab2c980165",
+          "encumbrance": null,
+          "expenseClassId": null,
+          "distributionType": "percentage"
+        },
+        {
+          "code": "ET-utl",
+          "value": 100,
+          "fundId": "6c46f773-2820-4b77-a37e-3fc84118e045",
+          "encumbrance": null,
+          "expenseClassId": null,
+          "distributionType": "percentage"
+        },
+        {
+          "code": "JN-utl",
+          "value": 100,
+          "fundId": "5600bae0-dee0-4db1-9638-9e678f81767d",
+          "encumbrance": null,
+          "expenseClassId": null,
+          "distributionType": "percentage"
+        }
+      ],
+      "orderFormat": "Physical Resource"
+    },
+    {
+      "id": "bdfdcfc6-f3c6-4a45-a3f5-e2910ad2beea",
+      "templateName": "ES Adlibris suecana",
+      "hiddenFields": {
+        "poLineDescription": true,
+        "cancellationRestriction": true,
+        "poNumberSuffix": true,
+        "assignedTo": true,
+        "approved": true,
+        "donor": true,
+        "ongoing": {
+          "isSubscription": true
+        },
+        "manualPo": true,
+        "acqUnitIds": true,
+        "reEncumber": true,
+        "poNumberPrefix": true,
+        "billTo": true,
+        "details": {
+          "subscriptionTo": true,
+          "subscriptionFrom": true,
+          "subscriptionInterval": true
+        },
+        "selector": true,
+        "checkinItems": false,
+        "paymentStatus": true,
+        "requester": true,
+        "cost": {
+          "discount": true,
+          "discountType": true,
+          "additionalCost": true,
+          "quantityPhysical": false,
+          "quantityElectronic": true,
+          "currentExchangeRate": false,
+          "listUnitPriceElectronic": true
+        },
+        "receiptDate": true,
+        "isPackage": true,
+        "collection": true,
+        "rush": true,
+        "packagePoLineId": true,
+        "automaticExport": true,
+        "cancellationRestrictionNote": true,
+        "receiptStatus": true,
+        "shipTo": true
+      },
+      "orderType": "One-Time",
+      "cost": {
+        "currency": "SEK",
+        "exchangeRate": null,
+        "listUnitPrice": null,
+        "quantityPhysical": 1,
+        "quantityElectronic": null,
+        "listUnitPriceElectronic": null
+      },
+      "acquisitionMethod": "06627d0e-e4e5-4234-9420-c6a350f7059b",
+      "isPackage": false,
+      "assignedTo": null,
+      "vendor": "74f93a5c-9a3d-404a-bef4-791260103743",
+      "poTags": {
+        "tagList": []
+      },
+      "locations": [
+        {
+          "__key__": "__key__2084",
+          "locationId": "57246b20-76a7-4725-91c7-dea9f336de4f",
+          "quantityPhysical": 1
+        }
+      ],
+      "polTags": {
+        "tagList": []
+      },
+      "checkinItems": false,
+      "physical": {
+        "materialType": "1a54b431-2e4f-452d-9cae-9cee66c9a892",
+        "createInventory": "None"
+      },
+      "fundDistribution": [
+        {
+          "code": "ES-suec",
+          "value": 100,
+          "fundId": "4a42c361-0c25-48e4-84d4-bdd739754412",
+          "encumbrance": null,
+          "expenseClassId": null,
+          "distributionType": "percentage"
+        }
+      ],
+      "orderFormat": "Physical Resource"
+    },
+    {
+      "id": "098b851c-f11b-4027-8e31-4af72210061b",
+      "templateName": "SL Adlibris suecana",
+      "hiddenFields": {
+        "poLineDescription": true,
+        "cancellationRestriction": true,
+        "poNumberSuffix": true,
+        "assignedTo": true,
+        "approved": true,
+        "donor": true,
+        "ongoing": {
+          "isSubscription": true
+        },
+        "manualPo": true,
+        "acqUnitIds": true,
+        "reEncumber": true,
+        "poNumberPrefix": true,
+        "billTo": true,
+        "details": {
+          "subscriptionTo": true,
+          "subscriptionFrom": true,
+          "subscriptionInterval": true
+        },
+        "selector": true,
+        "checkinItems": false,
+        "paymentStatus": true,
+        "requester": true,
+        "cost": {
+          "discount": true,
+          "discountType": true,
+          "additionalCost": true,
+          "quantityPhysical": false,
+          "quantityElectronic": true,
+          "currentExchangeRate": false,
+          "listUnitPriceElectronic": true
+        },
+        "receiptDate": true,
+        "isPackage": true,
+        "collection": true,
+        "rush": true,
+        "packagePoLineId": true,
+        "automaticExport": true,
+        "cancellationRestrictionNote": true,
+        "receiptStatus": true,
+        "shipTo": true
+      },
+      "orderType": "One-Time",
+      "cost": {
+        "currency": "SEK",
+        "exchangeRate": null,
+        "listUnitPrice": null,
+        "quantityPhysical": 1,
+        "quantityElectronic": null,
+        "listUnitPriceElectronic": null
+      },
+      "acquisitionMethod": "06627d0e-e4e5-4234-9420-c6a350f7059b",
+      "isPackage": false,
+      "assignedTo": null,
+      "vendor": "74f93a5c-9a3d-404a-bef4-791260103743",
+      "poTags": {
+        "tagList": []
+      },
+      "locations": [
+        {
+          "__key__": "__key__2084",
+          "locationId": "57246b20-76a7-4725-91c7-dea9f336de4f",
+          "quantityPhysical": 1
+        }
+      ],
+      "polTags": {
+        "tagList": []
+      },
+      "checkinItems": false,
+      "physical": {
+        "materialType": "1a54b431-2e4f-452d-9cae-9cee66c9a892",
+        "createInventory": "None"
+      },
+      "fundDistribution": [
+        {
+          "code": "SL-suec",
+          "value": 100,
+          "fundId": "d861fa3b-2539-4a4e-a09f-b836d89027dd",
+          "encumbrance": null,
+          "expenseClassId": null,
+          "distributionType": "percentage"
+        }
+      ],
+      "orderFormat": "Physical Resource"
+    }
+  ],
+  "totalRecords": 26
+}

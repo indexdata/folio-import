@@ -26775,22 +26775,6 @@
       "target": "hrid",
       "subfield": [],
       "description": "The human readable ID"
-    },
-    {
-      "rules": [
-        {
-          "conditions": [
-            {
-              "LDR": true,
-              "type": "set_issuance_mode_id"
-            }
-          ],
-          "description": "Issuance mode based on 7 leader`s byte"
-        }
-      ],
-      "target": "modeOfIssuanceId",
-      "subfield": [],
-      "description": ""
     }
   ],
   "008": [
@@ -27968,6 +27952,68 @@
         }
       ],
       "entityPerRepeatedSubfield": true
+    }
+  ],
+  "LDR": [
+    {
+      "rules": [
+        {
+          "conditions": [
+            {
+              "type": "set_issuance_mode_id"
+            }
+          ],
+          "description": "Issuance mode based on 7 leader`s byte"
+        }
+      ],
+      "target": "modeOfIssuanceId",
+      "subfield": [],
+      "description": ""
+    },
+    {
+      "rules": [
+        {
+          "conditions": [
+            {
+              "type": "set_deleted"
+            }
+          ],
+          "description": "Discovery suppress flag based on whether 5 leader`s byte equals to 'd'"
+        }
+      ],
+      "target": "discoverySuppress",
+      "subfield": [],
+      "description": ""
+    },
+    {
+      "rules": [
+        {
+          "conditions": [
+            {
+              "type": "set_deleted"
+            }
+          ],
+          "description": "Staff suppress flag based on whether 5 leader`s byte equals to 'd'"
+        }
+      ],
+      "target": "staffSuppress",
+      "subfield": [],
+      "description": ""
+    },
+    {
+      "rules": [
+        {
+          "conditions": [
+            {
+              "type": "set_deleted"
+            }
+          ],
+          "description": "Deleted flag based on whether 5 leader`s byte equals to 'd'"
+        }
+      ],
+      "target": "deleted",
+      "subfield": [],
+      "description": ""
     }
   ]
 }

@@ -1,0 +1,16 @@
+{
+  "batchGroups": [
+    {
+      "id": "2a2cb998-1437-41d1-88ad-01930aaeadd5",
+      "name": "FOLIO",
+      "description": "System default",
+      "metadata": {
+        "createdDate": "2026-04-07T14:51:32.655+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:51:32.655+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    }
+  ],
+  "totalRecords": 1
+}

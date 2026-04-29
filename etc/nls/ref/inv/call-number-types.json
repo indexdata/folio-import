@@ -1,12 +1,12 @@
 {
   "callNumberTypes": [
     {
-      "id": "d644be8f-deb5-4c4d-8c9e-2291b7c0f46f",
-      "name": "UDC",
-      "source": "folio",
+      "id": "6caca63e-5651-4db6-9247-3205156e9699",
+      "name": "Other scheme",
+      "source": "system",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.676+00:00",
-        "updatedDate": "2023-03-13T12:10:45.676+00:00"
+        "createdDate": "2026-04-02T09:40:33.189+00:00",
+        "updatedDate": "2026-04-02T09:40:33.189+00:00"
       }
     },
     {
@@ -14,71 +14,9 @@
       "name": "Source specified in subfield $2",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.684+00:00",
-        "updatedDate": "2023-03-13T12:10:45.684+00:00"
-      }
-    },
-    {
-      "id": "5ba6b62e-6858-490a-8102-5b1369873835",
-      "name": "Title",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2023-03-13T12:10:45.686+00:00",
-        "updatedDate": "2023-03-13T12:10:45.686+00:00"
-      }
-    },
-    {
-      "id": "cd70562c-dd0b-42f6-aa80-ce803d24d4a1",
-      "name": "Shelved separately",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2023-03-13T12:10:45.691+00:00",
-        "updatedDate": "2023-03-13T12:10:45.691+00:00"
-      }
-    },
-    {
-      "id": "828ae637-dfa3-4265-a1af-5279c436edff",
-      "name": "MOYS",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2023-03-13T12:10:45.692+00:00",
-        "updatedDate": "2023-03-13T12:10:45.692+00:00"
-      }
-    },
-    {
-      "id": "28927d76-e097-4f63-8510-e56f2b7a3ad0",
-      "name": "Shelving control number",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2023-03-13T12:10:45.690+00:00",
-        "updatedDate": "2023-03-13T12:10:45.690+00:00"
-      }
-    },
-    {
-      "id": "512173a7-bd09-490e-b773-17d83f2b63fe",
-      "name": "LC Modified",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2023-03-13T12:10:45.700+00:00",
-        "updatedDate": "2023-03-13T12:10:45.700+00:00"
-      }
-    },
-    {
-      "id": "95467209-6d7b-468b-94df-0f5d7ad2747d",
-      "name": "Library of Congress classification",
-      "source": "system",
-      "metadata": {
-        "createdDate": "2023-03-13T12:10:45.671+00:00",
-        "updatedDate": "2023-03-13T12:10:45.671+00:00"
-      }
-    },
-    {
-      "id": "054d460d-d6b9-4469-9e37-7a78a2266655",
-      "name": "National Library of Medicine classification",
-      "source": "system",
-      "metadata": {
-        "createdDate": "2023-03-13T12:10:45.677+00:00",
-        "updatedDate": "2023-03-13T12:10:45.677+00:00"
+        "createdDate": "2026-04-02T09:40:33.178+00:00",
+        "updatedDate": "2026-04-07T14:09:50.114+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -86,17 +24,76 @@
       "name": "Dewey Decimal classification",
       "source": "system",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.682+00:00",
-        "updatedDate": "2023-03-13T12:10:45.682+00:00"
+        "createdDate": "2026-04-02T09:40:33.178+00:00",
+        "updatedDate": "2026-04-02T09:40:33.178+00:00"
       }
     },
     {
-      "id": "6caca63e-5651-4db6-9247-3205156e9699",
-      "name": "Other scheme",
+      "id": "cd70562c-dd0b-42f6-aa80-ce803d24d4a1",
+      "name": "Shelved separately",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-02T09:40:33.189+00:00",
+        "updatedDate": "2026-04-07T14:09:50.157+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    },
+    {
+      "id": "054d460d-d6b9-4469-9e37-7a78a2266655",
+      "name": "National Library of Medicine classification",
       "source": "system",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.694+00:00",
-        "updatedDate": "2023-03-13T12:10:45.694+00:00"
+        "createdDate": "2026-04-02T09:40:33.178+00:00",
+        "updatedDate": "2026-04-02T09:40:33.178+00:00"
+      }
+    },
+    {
+      "id": "512173a7-bd09-490e-b773-17d83f2b63fe",
+      "name": "LC Modified",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-02T09:40:33.195+00:00",
+        "updatedDate": "2026-04-07T14:09:50.180+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    },
+    {
+      "id": "d644be8f-deb5-4c4d-8c9e-2291b7c0f46f",
+      "name": "UDC",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-02T09:40:33.177+00:00",
+        "updatedDate": "2026-04-07T14:09:50.284+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    },
+    {
+      "id": "828ae637-dfa3-4265-a1af-5279c436edff",
+      "name": "MOYS",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-02T09:40:33.188+00:00",
+        "updatedDate": "2026-04-07T14:09:50.304+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    },
+    {
+      "id": "28927d76-e097-4f63-8510-e56f2b7a3ad0",
+      "name": "Shelving control number",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-02T09:40:33.190+00:00",
+        "updatedDate": "2026-04-07T14:09:50.323+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    },
+    {
+      "id": "95467209-6d7b-468b-94df-0f5d7ad2747d",
+      "name": "Library of Congress classification",
+      "source": "system",
+      "metadata": {
+        "createdDate": "2026-04-02T09:40:33.174+00:00",
+        "updatedDate": "2026-04-02T09:40:33.174+00:00"
       }
     },
     {
@@ -104,8 +101,18 @@
       "name": "Superintendent of Documents classification",
       "source": "system",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.695+00:00",
-        "updatedDate": "2023-03-13T12:10:45.695+00:00"
+        "createdDate": "2026-04-02T09:40:33.194+00:00",
+        "updatedDate": "2026-04-02T09:40:33.194+00:00"
+      }
+    },
+    {
+      "id": "5ba6b62e-6858-490a-8102-5b1369873835",
+      "name": "Title",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-02T09:40:33.188+00:00",
+        "updatedDate": "2026-04-07T14:09:50.137+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     }
   ],

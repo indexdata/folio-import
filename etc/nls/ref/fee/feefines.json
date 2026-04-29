@@ -35,10 +35,10 @@
       "feeFineType": "Fjärrlånekopia",
       "ownerId": "9dd3b798-11d2-45b0-a939-b94c0440fb91",
       "metadata": {
-        "createdDate": "2025-03-07T14:39:53.472+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-03-07T14:39:53.472+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+        "createdDate": "2026-04-07T14:30:43.501+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:30:49.803+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       },
       "id": "bd6c1de2-a196-43b4-95cc-9a3fff4532ad"
     },
@@ -47,29 +47,53 @@
       "feeFineType": "Fjärrlånekopia",
       "ownerId": "a83cc351-a6db-46ec-aa67-f0b9fb230399",
       "metadata": {
-        "createdDate": "2025-03-07T14:46:35.803+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-03-07T14:46:35.803+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+        "createdDate": "2026-04-07T14:30:43.521+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:30:49.836+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       },
       "id": "54695862-a465-41d9-82dc-8dbeb274e1f3"
     },
     {
       "automatic": false,
       "feeFineType": "Reprobeställning",
-      "ownerId": "a83cc351-a6db-46ec-aa67-f0b9fb230399",
+      "ownerId": "9dd3b798-11d2-45b0-a939-b94c0440fb91",
       "metadata": {
-        "createdDate": "2025-03-07T14:46:47.711+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-03-07T14:46:47.711+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+        "createdDate": "2026-04-07T14:30:43.535+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:30:49.861+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       },
-      "id": "39b86daa-05c7-449b-bfbc-e5b46b21f0ac"
+      "id": "ea8d9204-af0e-4144-8f06-d0c5579fc8eb"
+    },
+    {
+      "automatic": false,
+      "feeFineType": "Fjärrlånekopia",
+      "ownerId": "5cbf34cb-40a5-41e9-a3fb-ac07c2c98770",
+      "metadata": {
+        "createdDate": "2026-04-07T14:30:43.548+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:30:49.890+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      },
+      "id": "e5be8f17-a74d-40f0-8e9f-0a694ffe2a3d"
+    },
+    {
+      "automatic": false,
+      "feeFineType": "Reprobeställning",
+      "ownerId": "5cbf34cb-40a5-41e9-a3fb-ac07c2c98770",
+      "metadata": {
+        "createdDate": "2026-04-07T14:30:43.561+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:30:49.919+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      },
+      "id": "5fcc4f0a-ab39-49c0-86e0-316a797ca041"
     }
   ],
-  "totalRecords": 9,
+  "totalRecords": 11,
   "resultInfo": {
-    "totalRecords": 9,
+    "totalRecords": 11,
     "facets": [],
     "diagnostics": []
   }

@@ -4,41 +4,83 @@
       "id": "e894d0dc-621d-4b1d-98f6-6f7120eb0d40",
       "name": "Library of Congress Subject Headings",
       "code": "lcsh",
-      "source": "folio"
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-07T14:10:06.845+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:06.845+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
     },
     {
       "id": "e894d0dc-621d-4b1d-98f6-6f7120eb0d41",
       "name": "Library of Congress Children's and Young Adults' Subject Headings",
       "code": "cyac",
-      "source": "folio"
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-07T14:10:06.866+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:06.866+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
     },
     {
       "id": "e894d0dc-621d-4b1d-98f6-6f7120eb0d42",
       "name": "Medical Subject Headings",
       "code": "mesh",
-      "source": "folio"
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-07T14:10:06.885+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:06.885+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
     },
     {
       "id": "e894d0dc-621d-4b1d-98f6-6f7120eb0d43",
       "name": "National Agricultural Library subject authority file",
-      "source": "folio"
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-07T14:10:06.904+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:06.904+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
     },
     {
       "id": "e894d0dc-621d-4b1d-98f6-6f7120eb0d44",
       "name": "Source not specified",
-      "source": "folio"
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-07T14:10:06.923+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:06.923+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
     },
     {
       "id": "e894d0dc-621d-4b1d-98f6-6f7120eb0d45",
       "name": "Canadian Subject Headings",
       "code": "cash",
-      "source": "folio"
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-07T14:10:06.941+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:06.941+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
     },
     {
       "id": "e894d0dc-621d-4b1d-98f6-6f7120eb0d46",
       "name": "Répertoire de vedettes-matière",
       "code": "rvm",
-      "source": "folio"
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-07T14:10:06.962+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:06.962+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
     },
     {
       "id": "f9041766-0d1e-45c4-ae3c-cf77b0618c5b",
@@ -46,10 +88,10 @@
       "code": "sao",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-04-23T13:54:57.691+00:00",
-        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-04-23T13:54:57.691+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+        "createdDate": "2026-04-07T14:10:06.973+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:06.973+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -58,10 +100,10 @@
       "code": "kao",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-04-23T14:01:45.375+00:00",
-        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-04-23T14:01:45.375+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+        "createdDate": "2026-04-07T14:10:06.985+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:06.985+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -70,10 +112,10 @@
       "code": "kao//eng",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-04-23T14:02:08.266+00:00",
-        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-04-23T14:02:08.266+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+        "createdDate": "2026-04-07T14:10:06.997+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:06.997+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -82,10 +124,10 @@
       "code": "swemesh",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-04-23T14:02:46.518+00:00",
-        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-04-23T14:02:46.518+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+        "createdDate": "2026-04-07T14:10:07.009+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:07.009+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -94,10 +136,10 @@
       "code": "barn",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-04-23T14:04:41.141+00:00",
-        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-04-23T14:04:41.141+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+        "createdDate": "2026-04-07T14:10:07.021+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:07.021+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -106,10 +148,10 @@
       "code": "gmgpc/swe",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-04-23T13:59:41.682+00:00",
-        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-04-23T14:05:38.894+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+        "createdDate": "2026-04-07T14:10:07.032+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:07.032+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -118,10 +160,10 @@
       "code": "gmgpc",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-04-23T14:00:27.675+00:00",
-        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-04-23T14:05:54.133+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+        "createdDate": "2026-04-07T14:10:07.043+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:07.043+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -130,10 +172,10 @@
       "code": "marc",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-04-23T14:07:49.481+00:00",
-        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-04-23T14:07:49.481+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+        "createdDate": "2026-04-07T14:10:07.054+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:07.054+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -142,22 +184,22 @@
       "code": "barngf",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-04-23T13:49:09.655+00:00",
-        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-04-23T14:09:23.200+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+        "createdDate": "2026-04-07T14:10:07.064+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:07.064+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
       "id": "af636034-403c-474a-96bb-0440021c20c1",
       "name": "SAOGF Genre och form",
-      "code": "SAOGF",
+      "code": "saogf",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-04-23T13:48:37.384+00:00",
-        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-04-23T14:09:42.374+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+        "createdDate": "2026-04-07T14:10:07.075+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:07.075+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     }
   ],

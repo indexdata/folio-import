@@ -5,8 +5,9 @@
       "name": "single unit",
       "source": "rdamodeissue",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.446+00:00",
-        "updatedDate": "2023-03-13T12:10:45.446+00:00"
+        "createdDate": "2026-04-02T09:40:32.953+00:00",
+        "updatedDate": "2026-04-07T14:10:01.509+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -14,8 +15,9 @@
       "name": "unspecified",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.448+00:00",
-        "updatedDate": "2023-03-13T12:10:45.448+00:00"
+        "createdDate": "2026-04-02T09:40:32.953+00:00",
+        "updatedDate": "2026-04-07T14:10:01.527+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -23,8 +25,9 @@
       "name": "multipart monograph",
       "source": "rdamodeissue",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.450+00:00",
-        "updatedDate": "2023-03-13T12:10:45.450+00:00"
+        "createdDate": "2026-04-02T09:40:32.952+00:00",
+        "updatedDate": "2026-04-07T14:10:01.566+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -32,8 +35,9 @@
       "name": "serial",
       "source": "rdamodeissue",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.456+00:00",
-        "updatedDate": "2023-03-13T12:10:45.456+00:00"
+        "createdDate": "2026-04-02T09:40:32.953+00:00",
+        "updatedDate": "2026-04-07T14:10:01.546+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -41,8 +45,9 @@
       "name": "integrating resource",
       "source": "rdamodeissue",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.458+00:00",
-        "updatedDate": "2023-03-13T12:10:45.458+00:00"
+        "createdDate": "2026-04-02T09:40:32.951+00:00",
+        "updatedDate": "2026-04-07T14:10:01.487+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     }
   ],

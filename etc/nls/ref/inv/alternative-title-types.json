@@ -1,12 +1,23 @@
 {
   "alternativeTitleTypes": [
     {
+      "id": "30512027-cdc9-4c79-af75-1565b3bd888d",
+      "name": "Uniform title",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-02T09:40:32.970+00:00",
+        "updatedDate": "2026-04-07T14:09:49.858+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    },
+    {
       "id": "35bbe7f2-1a49-11ed-861d-0242ac120002",
       "name": "Variant title",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.490+00:00",
-        "updatedDate": "2023-03-13T12:10:45.490+00:00"
+        "createdDate": "2026-04-02T09:40:32.970+00:00",
+        "updatedDate": "2026-04-07T14:09:49.798+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -14,8 +25,9 @@
       "name": "Parallel title",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.493+00:00",
-        "updatedDate": "2023-03-13T12:10:45.493+00:00"
+        "createdDate": "2026-04-02T09:40:32.973+00:00",
+        "updatedDate": "2026-04-07T14:09:49.821+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -23,17 +35,9 @@
       "name": "No type specified",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.499+00:00",
-        "updatedDate": "2023-03-13T12:10:45.499+00:00"
-      }
-    },
-    {
-      "id": "30512027-cdc9-4c79-af75-1565b3bd888d",
-      "name": "Uniform title",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2023-03-13T12:10:45.498+00:00",
-        "updatedDate": "2023-03-13T12:10:45.498+00:00"
+        "createdDate": "2026-04-02T09:40:32.973+00:00",
+        "updatedDate": "2026-04-07T14:09:49.840+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -41,8 +45,9 @@
       "name": "Portion of title",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.501+00:00",
-        "updatedDate": "2023-03-13T12:10:45.501+00:00"
+        "createdDate": "2026-04-02T09:40:32.973+00:00",
+        "updatedDate": "2026-04-07T14:09:49.877+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -50,8 +55,9 @@
       "name": "Distinctive title",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.503+00:00",
-        "updatedDate": "2023-03-13T12:10:45.503+00:00"
+        "createdDate": "2026-04-02T09:40:32.976+00:00",
+        "updatedDate": "2026-04-07T14:09:49.897+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -59,8 +65,9 @@
       "name": "Cover title",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.505+00:00",
-        "updatedDate": "2023-03-13T12:10:45.505+00:00"
+        "createdDate": "2026-04-02T09:40:32.977+00:00",
+        "updatedDate": "2026-04-07T14:09:49.922+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -68,8 +75,9 @@
       "name": "Running title",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.507+00:00",
-        "updatedDate": "2023-03-13T12:10:45.507+00:00"
+        "createdDate": "2026-04-02T09:40:32.976+00:00",
+        "updatedDate": "2026-04-07T14:09:49.940+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -77,8 +85,9 @@
       "name": "Spine title",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.507+00:00",
-        "updatedDate": "2023-03-13T12:10:45.507+00:00"
+        "createdDate": "2026-04-02T09:40:32.975+00:00",
+        "updatedDate": "2026-04-07T14:09:49.960+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -86,8 +95,9 @@
       "name": "Added title page title",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.510+00:00",
-        "updatedDate": "2023-03-13T12:10:45.510+00:00"
+        "createdDate": "2026-04-02T09:40:32.977+00:00",
+        "updatedDate": "2026-04-07T14:09:49.980+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -95,8 +105,9 @@
       "name": "Other title",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.513+00:00",
-        "updatedDate": "2023-03-13T12:10:45.513+00:00"
+        "createdDate": "2026-04-02T09:40:32.978+00:00",
+        "updatedDate": "2026-04-07T14:09:50.000+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -104,8 +115,9 @@
       "name": "Caption title",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.516+00:00",
-        "updatedDate": "2023-03-13T12:10:45.516+00:00"
+        "createdDate": "2026-04-02T09:40:32.979+00:00",
+        "updatedDate": "2026-04-07T14:09:50.022+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -113,8 +125,9 @@
       "name": "Former title",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.515+00:00",
-        "updatedDate": "2023-03-13T12:10:45.515+00:00"
+        "createdDate": "2026-04-02T09:40:32.979+00:00",
+        "updatedDate": "2026-04-07T14:09:50.043+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     }
   ],

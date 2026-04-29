@@ -1,0 +1,88 @@
+{
+  "customFields": [
+    {
+      "id": "30a29613-e880-4c46-bd9c-09805dfb3f00",
+      "name": "Ämne",
+      "refId": "amne",
+      "type": "TEXTBOX_SHORT",
+      "entityType": "po_line",
+      "visible": true,
+      "required": false,
+      "isRepeatable": false,
+      "order": 1,
+      "helpText": "T. ex Bokhistoria",
+      "textField": {
+        "fieldFormat": "TEXT"
+      },
+      "metadata": {
+        "createdDate": "2026-04-07T15:20:25.342+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T15:20:25.342+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    },
+    {
+      "id": "190f57af-8aae-4b64-982e-78ef558df131",
+      "name": "Kostnadsställe",
+      "refId": "kostnadsstalle",
+      "type": "TEXTBOX_SHORT",
+      "entityType": "po_line",
+      "visible": true,
+      "required": false,
+      "isRepeatable": false,
+      "order": 2,
+      "helpText": "T. ex SUECANA",
+      "textField": {
+        "fieldFormat": "TEXT"
+      },
+      "metadata": {
+        "createdDate": "2026-04-07T15:20:25.342+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T15:20:25.342+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    },
+    {
+      "id": "90e29722-02f0-4283-bfb8-f204b17535e4",
+      "name": "Flerbandsverk",
+      "refId": "flerbandsverk",
+      "type": "RADIO_BUTTON",
+      "entityType": "po_line",
+      "visible": true,
+      "required": false,
+      "isRepeatable": false,
+      "order": 3,
+      "helpText": "",
+      "selectField": {
+        "multiSelect": false,
+        "options": {
+          "values": [
+            {
+              "id": "opt_0",
+              "value": "Ja",
+              "default": false
+            },
+            {
+              "id": "opt_1",
+              "value": "Nej",
+              "default": false
+            },
+            {
+              "id": "opt_2",
+              "value": "Oklart",
+              "default": false
+            }
+          ],
+          "sortingOrder": "CUSTOM"
+        }
+      },
+      "metadata": {
+        "createdDate": "2026-04-07T15:20:25.342+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T15:20:25.342+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    }
+  ],
+  "totalRecords": 3
+}

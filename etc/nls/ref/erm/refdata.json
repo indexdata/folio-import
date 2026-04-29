@@ -1,566 +1,480 @@
 [
   {
-    "id": "9d6e642ead6879a8391a350daa4c5b4c",
+    "id": "0cde0a2a74819ae0bb15d1d1b70440de",
     "desc": "SubscriptionAgreement.ReasonForClosure",
     "internal": false,
     "values": [
       {
-        "id": "2c91809f86dad8750186dae1bbc00038",
+        "id": "8afc864d9d4d8dff019d4d90c0f60026",
         "value": "cancelled",
         "label": "Cancelled"
       },
       {
-        "id": "618b060a206ef6029e66274e441418ee",
+        "id": "03c916918f0f2ed1d59f6593cf7e9445",
         "value": "rejected",
         "label": "Rejected"
       },
       {
-        "id": "2c91809f86dad8750186dae1bbcb003a",
-        "value": "superseded",
-        "label": "Superseded"
-      },
-      {
-        "id": "2c91809f86dad8750186dae1bbc50039",
+        "id": "8afc864d9d4d8dff019d4d90c0f90027",
         "value": "ceased",
         "label": "Ceased"
-      }
-    ]
-  },
-  {
-    "id": "2c91809f86dad8750186dae1bb0f0014",
-    "desc": "StringTemplate.Context",
-    "internal": true,
-    "values": [
-      {
-        "id": "2c91809f86dad8750186dae1bb150015",
-        "value": "urlproxier",
-        "label": "urlProxier"
       },
       {
-        "id": "2c91809f86dad8750186dae1bb1c0016",
-        "value": "urlcustomiser",
-        "label": "urlCustomiser"
+        "id": "8afc864d9d4d8dff019d4d90c0fc0028",
+        "value": "superseded",
+        "label": "Superseded"
       }
     ]
   },
   {
-    "id": "4d199e1e611732c3dedefc5e5982a6fa",
+    "id": "98d4e804350b53f6572529c0219f99f3",
     "desc": "SubscriptionAgreement.AgreementStatus",
     "internal": true,
     "values": [
       {
-        "id": "2c91809f86dad8750186dae1bbda003c",
-        "value": "requested",
-        "label": "Requested"
-      },
-      {
-        "id": "2c91809f86dad8750186dae1bbe5003e",
+        "id": "8afc864d9d4d8dff019d4d90c10b002c",
         "value": "active",
         "label": "Active"
       },
       {
-        "id": "2c91809f86dad8750186dae1bbd5003b",
-        "value": "draft",
-        "label": "Draft"
-      },
-      {
-        "id": "9507c329d83ccc4072bfb39f8627f729",
+        "id": "bb2119c483659fb9d15327c0fac3b2c7",
         "value": "closed",
         "label": "Closed"
       },
       {
-        "id": "2c91809f86dad8750186dae1bbe0003d",
+        "id": "8afc864d9d4d8dff019d4d90c1010029",
+        "value": "draft",
+        "label": "Draft"
+      },
+      {
+        "id": "8afc864d9d4d8dff019d4d90c108002b",
         "value": "in_negotiation",
         "label": "In negotiation"
+      },
+      {
+        "id": "8afc864d9d4d8dff019d4d90c104002a",
+        "value": "requested",
+        "label": "Requested"
       }
     ]
   },
   {
-    "id": "2c91809f86dad8750186dae1ba780000",
+    "id": "8afc864d9d4d8dff019d4d90c06f0000",
+    "desc": "AgreementRelationship.Type",
+    "internal": true,
+    "values": [
+      {
+        "id": "8afc864d9d4d8dff019d4d90c09b0005",
+        "value": "has_backfile_in",
+        "label": "Has backfile in"
+      },
+      {
+        "id": "8afc864d9d4d8dff019d4d90c0940003",
+        "value": "tracks_demand-driven_acquisitions_for",
+        "label": "Tracks demand-driven acquisitions for"
+      },
+      {
+        "id": "8afc864d9d4d8dff019d4d90c0800001",
+        "value": "supersedes",
+        "label": "Supersedes"
+      },
+      {
+        "id": "8afc864d9d4d8dff019d4d90c08d0002",
+        "value": "provides_post-cancellation_access_for",
+        "label": "Provides post-cancellation access for"
+      },
+      {
+        "id": "8afc864d9d4d8dff019d4d90c0980004",
+        "value": "related_to",
+        "label": "Related to"
+      }
+    ]
+  },
+  {
+    "id": "8afc864d9d4d8dff019d4d90c09f0006",
     "desc": "Pkg.AvailabilityScope",
     "internal": false,
     "values": [
       {
-        "id": "2c91809f86dad8750186dae1ba960001",
+        "id": "8afc864d9d4d8dff019d4d90c0a20007",
         "value": "global",
         "label": "Global"
       }
     ]
   },
   {
-    "id": "2c91809f86dad8750186dae1ba9d0002",
+    "id": "8afc864d9d4d8dff019d4d90c0a50008",
     "desc": "Pkg.LifecycleStatus",
     "internal": false,
     "values": [
       {
-        "id": "2c91809f86dad8750186dae1bab40004",
-        "value": "retired",
-        "label": "Retired"
-      },
-      {
-        "id": "2c91809f86dad8750186dae1bac00005",
-        "value": "expected",
-        "label": "Expected"
-      },
-      {
-        "id": "2c91809f86dad8750186dae1bac60006",
+        "id": "8afc864d9d4d8dff019d4d90c0b1000c",
         "value": "deleted",
         "label": "Deleted"
       },
       {
-        "id": "2c91809f86dad8750186dae1baa10003",
+        "id": "8afc864d9d4d8dff019d4d90c0aa000a",
+        "value": "retired",
+        "label": "Retired"
+      },
+      {
+        "id": "8afc864d9d4d8dff019d4d90c0ae000b",
+        "value": "expected",
+        "label": "Expected"
+      },
+      {
+        "id": "8afc864d9d4d8dff019d4d90c0a60009",
         "value": "current",
         "label": "Current"
       }
     ]
   },
   {
-    "id": "2c91809f86dad8750186dae1baca0007",
+    "id": "8afc864d9d4d8dff019d4d90c0b4000d",
     "desc": "Pkg.Type",
     "internal": false,
     "values": [
       {
-        "id": "2c91809f86dad8750186dae1bacd0008",
+        "id": "8afc864d9d4d8dff019d4d90c0b8000f",
+        "value": "abstracts_and_index",
+        "label": "Abstracts and Index"
+      },
+      {
+        "id": "8afc864d9d4d8dff019d4d90c0b5000e",
         "value": "aggregated_full_text",
         "label": "Aggregated Full Text"
       },
       {
-        "id": "2c91809f86dad8750186dae1bad8000a",
+        "id": "8afc864d9d4d8dff019d4d90c0bb0010",
         "value": "package",
         "label": "Package"
-      },
-      {
-        "id": "2c91809f86dad8750186dae1bad20009",
-        "value": "abstracts_and_index",
-        "label": "Abstracts and Index"
       }
     ]
   },
   {
-    "id": "2c91809f86dad8750186dae1bae0000b",
-    "desc": "PersistentJob.Result",
-    "internal": true,
-    "values": [
-      {
-        "id": "2c91809f86dad8750186dae1baee000e",
-        "value": "failure",
-        "label": "Failure"
-      },
-      {
-        "id": "2c91809f86dad8750186dae1bae2000c",
-        "value": "success",
-        "label": "Success"
-      },
-      {
-        "id": "2c91809f86dad8750186dae1bae8000d",
-        "value": "partial_success",
-        "label": "Partial success"
-      },
-      {
-        "id": "2c91809f86dad8750186dae1baf4000f",
-        "value": "interrupted",
-        "label": "Interrupted"
-      }
-    ]
-  },
-  {
-    "id": "2c91809f86dad8750186dae1baf90010",
-    "desc": "PersistentJob.Status",
-    "internal": true,
-    "values": [
-      {
-        "id": "2c91809f86dad8750186dae1bafc0011",
-        "value": "queued",
-        "label": "Queued"
-      },
-      {
-        "id": "2c91809f86dad8750186dae1bb060013",
-        "value": "ended",
-        "label": "Ended"
-      },
-      {
-        "id": "2c91809f86dad8750186dae1bb010012",
-        "value": "in_progress",
-        "label": "In progress"
-      }
-    ]
-  },
-  {
-    "id": "2c91809f86dad8750186dae1bb210017",
-    "desc": "LicenseAmendmentStatus.Status",
-    "internal": true,
-    "values": [
-      {
-        "id": "2c91809f86dad8750186dae1bb280019",
-        "value": "future",
-        "label": "Future"
-      },
-      {
-        "id": "2c91809f86dad8750186dae1bb33001b",
-        "value": "does_not_apply",
-        "label": "Does not apply"
-      },
-      {
-        "id": "2c91809f86dad8750186dae1bb230018",
-        "value": "current",
-        "label": "Current"
-      },
-      {
-        "id": "2c91809f86dad8750186dae1bb2d001a",
-        "value": "historical",
-        "label": "Historical"
-      }
-    ]
-  },
-  {
-    "id": "2c91809f86dad8750186dae1bb37001c",
+    "id": "8afc864d9d4d8dff019d4d90c0be0011",
     "desc": "SubscriptionAgreementOrg.Role",
     "internal": false,
     "values": [
       {
-        "id": "2c91809f86dad8750186dae1bb39001d",
+        "id": "8afc864d9d4d8dff019d4d90c0bf0012",
         "value": "content_provider",
         "label": "Content provider"
       }
     ]
   },
   {
-    "id": "2c91809f86dad8750186dae1bb3e001e",
-    "desc": "RemoteLicenseLink.Status",
+    "id": "8afc864d9d4d8dff019d4d90c0c20013",
+    "desc": "LicenseAmendmentStatus.Status",
     "internal": true,
     "values": [
       {
-        "id": "2c91809f86dad8750186dae1bb41001f",
-        "value": "controlling",
-        "label": "Controlling"
+        "id": "8afc864d9d4d8dff019d4d90c0c30014",
+        "value": "current",
+        "label": "Current"
       },
       {
-        "id": "2c91809f86dad8750186dae1bb4a0021",
+        "id": "8afc864d9d4d8dff019d4d90c0ca0016",
         "value": "historical",
         "label": "Historical"
       },
       {
-        "id": "2c91809f86dad8750186dae1bb450020",
+        "id": "8afc864d9d4d8dff019d4d90c0c70015",
         "value": "future",
         "label": "Future"
+      },
+      {
+        "id": "8afc864d9d4d8dff019d4d90c0cd0017",
+        "value": "does_not_apply",
+        "label": "Does not apply"
       }
     ]
   },
   {
-    "id": "2c91809f86dad8750186dae1bb520022",
-    "desc": "InternalContact.Role",
-    "internal": false,
-    "values": [
-      {
-        "id": "2c91809f86dad8750186dae1bb600025",
-        "value": "erm_librarian",
-        "label": "ERM librarian"
-      },
-      {
-        "id": "2c91809f86dad8750186dae1bb660026",
-        "value": "subject_specialist",
-        "label": "Subject specialist"
-      },
-      {
-        "id": "2c91809f86dad8750186dae1bb540023",
-        "value": "agreement_owner",
-        "label": "Agreement owner"
-      },
-      {
-        "id": "2c91809f86dad8750186dae1bb5a0024",
-        "value": "authorized_signatory",
-        "label": "Authorized signatory"
-      }
-    ]
-  },
-  {
-    "id": "2c91809f86dad8750186dae1bb6a0027",
-    "desc": "TitleInstance.SubType",
+    "id": "8afc864d9d4d8dff019d4d90c0d00018",
+    "desc": "StringTemplate.Context",
     "internal": true,
     "values": [
       {
-        "id": "2c91809f86dad8750186dae1bb6c0028",
-        "value": "print",
-        "label": "Print"
+        "id": "8afc864d9d4d8dff019d4d90c0d3001a",
+        "value": "urlcustomiser",
+        "label": "urlCustomiser"
       },
       {
-        "id": "2c91809f86dad8750186dae1bb720029",
-        "value": "electronic",
-        "label": "Electronic"
+        "id": "8afc864d9d4d8dff019d4d90c0d10019",
+        "value": "urlproxier",
+        "label": "urlProxier"
       }
     ]
   },
   {
-    "id": "2c91809f86dad8750186dae1bb76002a",
-    "desc": "TitleInstance.Type",
-    "internal": true,
-    "values": [
-      {
-        "id": "2c91809f86dad8750186dae1bb7e002c",
-        "value": "serial",
-        "label": "Serial"
-      },
-      {
-        "id": "2c91809f86dad8750186dae1bb78002b",
-        "value": "monograph",
-        "label": "Monograph"
-      }
-    ]
-  },
-  {
-    "id": "2c91809f86dad8750186dae1bb83002d",
+    "id": "8afc864d9d4d8dff019d4d90c0d6001b",
     "desc": "Global.Yes_No",
     "internal": true,
     "values": [
       {
-        "id": "2c91809f86dad8750186dae1bb85002e",
+        "id": "8afc864d9d4d8dff019d4d90c0d8001c",
         "value": "yes",
         "label": "Yes"
       },
       {
-        "id": "2c91809f86dad8750186dae1bb8c002f",
+        "id": "8afc864d9d4d8dff019d4d90c0db001d",
         "value": "no",
         "label": "No"
       }
     ]
   },
   {
-    "id": "2c91809f86dad8750186dae1bb9a0030",
+    "id": "8afc864d9d4d8dff019d4d90c0e2001e",
     "desc": "SubscriptionAgreement.AgreementType",
     "internal": false,
     "values": [
       {
-        "id": "2c91809f86dad8750186dae1bba20032",
-        "value": "trial",
-        "label": "Trial"
-      },
-      {
-        "id": "2c91809f86dad8750186dae1bb9d0031",
+        "id": "8afc864d9d4d8dff019d4d90c0e3001f",
         "value": "draft",
         "label": "Draft"
       },
       {
-        "id": "2c91809f86dad8750186dae1bba70033",
+        "id": "8afc864d9d4d8dff019d4d90c0e60020",
+        "value": "trial",
+        "label": "Trial"
+      },
+      {
+        "id": "8afc864d9d4d8dff019d4d90c0e80021",
         "value": "current",
         "label": "Current"
       }
     ]
   },
   {
-    "id": "2c91809f86dad8750186dae1bbac0034",
+    "id": "8afc864d9d4d8dff019d4d90c0eb0022",
     "desc": "SubscriptionAgreement.RenewalPriority",
     "internal": false,
     "values": [
       {
-        "id": "2c91809f86dad8750186dae1bbb40036",
-        "value": "for_review",
-        "label": "For review"
-      },
-      {
-        "id": "2c91809f86dad8750186dae1bbaf0035",
+        "id": "8afc864d9d4d8dff019d4d90c0ec0023",
         "value": "definitely_renew",
         "label": "Definitely renew"
       },
       {
-        "id": "2c91809f86dad8750186dae1bbb90037",
+        "id": "8afc864d9d4d8dff019d4d90c0ef0024",
+        "value": "for_review",
+        "label": "For review"
+      },
+      {
+        "id": "8afc864d9d4d8dff019d4d90c0f20025",
         "value": "definitely_cancel",
         "label": "Definitely cancel"
       }
     ]
   },
   {
-    "id": "2c91809f86dad8750186dae1bbed003f",
-    "desc": "DocumentAttachment.AtType",
-    "internal": false,
-    "values": [
-      {
-        "id": "2c91809f86dad8750186dae1bbf50041",
-        "value": "misc",
-        "label": "Misc"
-      },
-      {
-        "id": "2c91809f86dad8750186dae1bbfa0042",
-        "value": "consortium_negotiation_document",
-        "label": "Consortium negotiation document"
-      },
-      {
-        "id": "2c91809f86dad8750186dae1bbef0040",
-        "value": "license",
-        "label": "License"
-      }
-    ]
-  },
-  {
-    "id": "2c91809f86dad8750186dae1bbff0043",
-    "desc": "AgreementRelationship.Type",
+    "id": "8afc864d9d4d8dff019d4d90c110002d",
+    "desc": "PersistentJob.Result",
     "internal": true,
     "values": [
       {
-        "id": "2c91809f86dad8750186dae1bc120047",
-        "value": "related_to",
-        "label": "Related to"
+        "id": "8afc864d9d4d8dff019d4d90c111002e",
+        "value": "success",
+        "label": "Success"
       },
       {
-        "id": "2c91809f86dad8750186dae1bc170048",
-        "value": "has_backfile_in",
-        "label": "Has backfile in"
+        "id": "8afc864d9d4d8dff019d4d90c114002f",
+        "value": "partial_success",
+        "label": "Partial success"
       },
       {
-        "id": "2c91809f86dad8750186dae1bc080045",
-        "value": "provides_post-cancellation_access_for",
-        "label": "Provides post-cancellation access for"
+        "id": "8afc864d9d4d8dff019d4d90c1170030",
+        "value": "failure",
+        "label": "Failure"
       },
       {
-        "id": "2c91809f86dad8750186dae1bc0e0046",
-        "value": "tracks_demand-driven_acquisitions_for",
-        "label": "Tracks demand-driven acquisitions for"
-      },
-      {
-        "id": "2c91809f86dad8750186dae1bc020044",
-        "value": "supersedes",
-        "label": "Supersedes"
+        "id": "8afc864d9d4d8dff019d4d90c1190031",
+        "value": "interrupted",
+        "label": "Interrupted"
       }
     ]
   },
   {
-    "id": "2c91809f86dad8750186dae1bc890049",
-    "desc": "FileStorageEngines",
-    "internal": false,
+    "id": "8afc864d9d4d8dff019d4d90c11c0032",
+    "desc": "PersistentJob.Status",
+    "internal": true,
     "values": [
       {
-        "id": "2c91809f86dad8750186dae1bc9f004b",
-        "value": "s3",
-        "label": "S3"
+        "id": "8afc864d9d4d8dff019d4d90c11f0034",
+        "value": "in_progress",
+        "label": "In progress"
       },
       {
-        "id": "2c91809f86dad8750186dae1bc8e004a",
-        "value": "lob",
-        "label": "LOB"
+        "id": "8afc864d9d4d8dff019d4d90c11d0033",
+        "value": "queued",
+        "label": "Queued"
+      },
+      {
+        "id": "8afc864d9d4d8dff019d4d90c1220035",
+        "value": "ended",
+        "label": "Ended"
       }
     ]
   },
   {
-    "id": "2c91809f86dad8750186dae1bdd90053",
-    "desc": "Yes/No/Other",
-    "internal": false,
+    "id": "8afc864d9d4d8dff019d4d90c1260036",
+    "desc": "RemoteLicenseLink.Status",
+    "internal": true,
     "values": [
       {
-        "id": "2c91809f86dad8750186dae1be130056",
-        "value": "other_(see_notes)",
-        "label": "Other (see notes)"
+        "id": "8afc864d9d4d8dff019d4d90c12a0038",
+        "value": "future",
+        "label": "Future"
       },
       {
-        "id": "2c91809f86dad8750186dae1bdde0054",
-        "value": "yes",
-        "label": "Yes"
+        "id": "8afc864d9d4d8dff019d4d90c1270037",
+        "value": "controlling",
+        "label": "Controlling"
       },
       {
-        "id": "2c91809f86dad8750186dae1bde70055",
-        "value": "no",
-        "label": "No"
+        "id": "8afc864d9d4d8dff019d4d90c12c0039",
+        "value": "historical",
+        "label": "Historical"
       }
     ]
   },
   {
-    "id": "2c91809f86dad8750186dae1be1b0057",
-    "desc": "AuthIdent",
-    "internal": false,
+    "id": "8afc864d9d4d8dff019d4d90c12f003a",
+    "desc": "TitleInstance.SubType",
+    "internal": true,
     "values": [
       {
-        "id": "2c91809f86dad8750186dae1be2b005a",
-        "value": "orcid",
-        "label": "ORCID"
+        "id": "8afc864d9d4d8dff019d4d90c132003c",
+        "value": "electronic",
+        "label": "Electronic"
       },
       {
-        "id": "2c91809f86dad8750186dae1be1f0058",
-        "value": "other",
-        "label": "Other"
-      },
-      {
-        "id": "2c91809f86dad8750186dae1be48005d",
-        "value": "ringgold_id",
-        "label": "Ringgold ID"
-      },
-      {
-        "id": "2c91809f86dad8750186dae1be250059",
-        "value": "email_domain",
-        "label": "Email Domain"
-      },
-      {
-        "id": "2c91809f86dad8750186dae1be34005b",
-        "value": "over_institute",
-        "label": "Over Institute"
-      },
-      {
-        "id": "2c91809f86dad8750186dae1be4c005e",
-        "value": "ror_id",
-        "label": "ROR ID"
-      },
-      {
-        "id": "2c91809f86dad8750186dae1be3f005c",
-        "value": "over_ip_range",
-        "label": "Over IP Range"
+        "id": "8afc864d9d4d8dff019d4d90c130003b",
+        "value": "print",
+        "label": "Print"
       }
     ]
   },
   {
-    "id": "2c9180b0872ca64f0187504133030000",
-    "desc": "TitleInstance.PublicationType",
-    "internal": false,
+    "id": "8afc864d9d4d8dff019d4d90c135003d",
+    "desc": "TitleInstance.Type",
+    "internal": true,
     "values": [
       {
-        "id": "2c91808a87b721e00187bc8f6ae80000",
+        "id": "8afc864d9d4d8dff019d4d90c136003e",
         "value": "monograph",
         "label": "Monograph"
       },
       {
-        "id": "2c9180b0872ca64f01875041330b0001",
+        "id": "8afc864d9d4d8dff019d4d90c139003f",
         "value": "serial",
         "label": "Serial"
       }
     ]
   },
   {
-    "id": "2c9180b0872ca64f0187504133470002",
-    "desc": "IdentifierOccurrence.Status",
-    "internal": true,
+    "id": "8afc864d9d4d8dff019d4d90c13c0040",
+    "desc": "InternalContact.Role",
+    "internal": false,
     "values": [
       {
-        "id": "2c9180b0872ca64f0187504133480003",
-        "value": "approved",
-        "label": "approved"
+        "id": "8afc864d9d4d8dff019d4d90c13d0041",
+        "value": "subject_specialist",
+        "label": "Subject specialist"
       }
     ]
   },
   {
-    "id": "2c9180de8a74141b018a7467c7a80000",
+    "id": "8afc864d9d4d8dff019d4d90c1410042",
+    "desc": "DocumentAttachment.AtType",
+    "internal": false,
+    "values": [
+      {
+        "id": "8afc864d9d4d8dff019d4d90c1450044",
+        "value": "misc",
+        "label": "Misc"
+      },
+      {
+        "id": "8afc864d9d4d8dff019d4d90c1470045",
+        "value": "consortium_negotiation_document",
+        "label": "Consortium negotiation document"
+      },
+      {
+        "id": "8afc864d9d4d8dff019d4d90c1420043",
+        "value": "license",
+        "label": "License"
+      }
+    ]
+  },
+  {
+    "id": "8afc864d9d4d8dff019d4d90c14b0046",
     "desc": "SubscriptionAgreement.ContentType",
     "internal": false,
     "values": [
       {
-        "id": "2c9180de8a74141b018a7467c8060002",
-        "value": "journals",
-        "label": "Journals"
+        "id": "8afc864d9d4d8dff019d4d90c14c0047",
+        "value": "books",
+        "label": "Books"
       },
       {
-        "id": "2c9180de8a74141b018a7467c8120003",
+        "id": "8afc864d9d4d8dff019d4d90c1510049",
         "value": "database",
         "label": "Database"
       },
       {
-        "id": "2c9180de8a74141b018a7467c8280004",
+        "id": "8afc864d9d4d8dff019d4d90c14f0048",
+        "value": "journals",
+        "label": "Journals"
+      },
+      {
+        "id": "8afc864d9d4d8dff019d4d90c154004a",
         "value": "audio",
         "label": "Audio"
       },
       {
-        "id": "2c9180de8a74141b018a7467c82e0005",
+        "id": "8afc864d9d4d8dff019d4d90c157004b",
         "value": "video",
         "label": "Video"
+      }
+    ]
+  },
+  {
+    "id": "8afc864d9d4d8dff019d4d90c168004c",
+    "desc": "FileStorageEngines",
+    "internal": false,
+    "values": [
+      {
+        "id": "8afc864d9d4d8dff019d4d90c16c004e",
+        "value": "s3",
+        "label": "S3"
       },
       {
-        "id": "2c9180de8a74141b018a7467c7e30001",
-        "value": "books",
-        "label": "Books"
+        "id": "8afc864d9d4d8dff019d4d90c16a004d",
+        "value": "lob",
+        "label": "LOB"
+      }
+    ]
+  },
+  {
+    "id": "8afc864d9d4d8dff019d4d90c1c60056",
+    "desc": "Yes/No/Other",
+    "internal": false,
+    "values": [
+      {
+        "id": "8afc864d9d4d8dff019d4d90c1c80057",
+        "value": "yes",
+        "label": "Yes"
+      },
+      {
+        "id": "8afc864d9d4d8dff019d4d90c1cc0059",
+        "value": "other_(see_notes)",
+        "label": "Other (see notes)"
+      },
+      {
+        "id": "8afc864d9d4d8dff019d4d90c1ca0058",
+        "value": "no",
+        "label": "No"
       }
     ]
   }

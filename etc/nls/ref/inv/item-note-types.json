@@ -1,12 +1,63 @@
 {
   "itemNoteTypes": [
     {
+      "id": "1dde7141-ec8a-4dae-9825-49ce14c728e7",
+      "name": "Copy note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-02T09:40:33.134+00:00",
+        "updatedDate": "2026-04-07T14:10:00.713+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    },
+    {
+      "id": "87c450be-2033-41fb-80ba-dd2409883681",
+      "name": "Binding",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-02T09:40:33.136+00:00",
+        "updatedDate": "2026-04-07T14:10:00.672+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    },
+    {
+      "id": "0e40884c-3523-4c6d-8187-d578e3d2794e",
+      "name": "Action note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-02T09:40:33.134+00:00",
+        "updatedDate": "2026-04-07T14:10:00.694+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    },
+    {
+      "id": "f3ae3823-d096-4c65-8734-0c1efd2ffea8",
+      "name": "Electronic bookplate",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-02T09:40:33.133+00:00",
+        "updatedDate": "2026-04-07T14:10:00.733+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    },
+    {
+      "id": "acb3a58f-1d72-461d-97c3-0e7119e8d544",
+      "name": "Reproduction",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2026-04-02T09:40:33.139+00:00",
+        "updatedDate": "2026-04-07T14:10:00.753+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    },
+    {
       "id": "c3a539b9-9576-4e3a-b6de-d910200b2919",
       "name": "Provenance",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.993+00:00",
-        "updatedDate": "2023-03-13T12:10:45.993+00:00"
+        "createdDate": "2026-04-02T09:40:33.137+00:00",
+        "updatedDate": "2026-04-07T14:10:00.771+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -14,10 +65,10 @@
       "name": "Samlingskod",
       "source": "local",
       "metadata": {
-        "createdDate": "2023-11-27T15:58:21.301+00:00",
-        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
-        "updatedDate": "2023-11-27T15:58:21.301+00:00",
-        "updatedByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c"
+        "createdDate": "2026-04-07T14:10:00.782+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:00.782+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -25,9 +76,9 @@
       "name": "Internal note",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.997+00:00",
-        "updatedDate": "2025-02-14T09:09:28.645+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+        "createdDate": "2026-04-02T09:40:33.140+00:00",
+        "updatedDate": "2026-04-07T14:10:00.801+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -35,10 +86,10 @@
       "name": "Public note",
       "source": "local",
       "metadata": {
-        "createdDate": "2023-11-27T16:00:32.122+00:00",
-        "createdByUserId": "87497b7b-344c-5fbb-9131-d108b36c767c",
-        "updatedDate": "2025-02-14T09:09:36.821+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+        "createdDate": "2026-04-07T14:10:00.810+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:00.810+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -46,12 +97,12 @@
       "name": "Aleph check out count",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-04-07T14:08:15.502+00:00",
-        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-04-07T14:08:15.502+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+        "createdDate": "2026-04-07T14:10:00.820+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:10:00.820+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     }
   ],
-  "totalRecords": 5
+  "totalRecords": 10
 }

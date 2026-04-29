@@ -1,43 +1,72 @@
 {
   "owners": [
     {
+      "owner": "Fjärrlån",
+      "servicePointOwner": [],
+      "metadata": {
+        "createdDate": "2026-04-07T14:30:43.233+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:30:49.493+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      },
+      "id": "a83cc351-a6db-46ec-aa67-f0b9fb230399"
+    },
+    {
+      "owner": "Test",
+      "servicePointOwner": [
+        {
+          "value": "fa60af7f-b89f-4a73-87b1-7d123900eb2f",
+          "label": "Specialläsesalen"
+        }
+      ],
+      "metadata": {
+        "createdDate": "2026-04-07T14:30:43.260+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:30:49.537+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      },
+      "id": "6fe39202-8522-4156-9501-36f7f3eb1b0b"
+    },
+    {
       "owner": "Räkningsansvarig",
       "servicePointOwner": [
         {
           "value": "996760f7-e64b-4c8e-b228-41f52fb9fade",
           "label": "Information och lån"
+        },
+        {
+          "value": "ec9ed36f-f5dd-4a32-9b02-64ace39c2699",
+          "label": "Tryckt samling"
         }
       ],
       "metadata": {
-        "createdDate": "2024-09-04T11:29:51.613+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2024-09-04T11:30:04.578+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+        "createdDate": "2026-04-07T14:30:43.278+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:30:49.574+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       },
       "id": "9dd3b798-11d2-45b0-a939-b94c0440fb91"
     },
     {
       "owner": "Repro",
-      "servicePointOwner": [],
+      "servicePointOwner": [
+        {
+          "value": "e6ec10ba-cfdb-4df8-987b-5bc63255ff40",
+          "label": "Repro"
+        },
+        {
+          "value": "f5e36187-86f3-4fe0-9076-9f5daf849d3e",
+          "label": "Fjärrlån"
+        }
+      ],
       "metadata": {
-        "createdDate": "2025-03-07T14:46:05.542+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-03-07T14:46:05.542+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+        "createdDate": "2026-04-07T14:30:43.298+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:30:49.606+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       },
       "id": "5cbf34cb-40a5-41e9-a3fb-ac07c2c98770"
-    },
-    {
-      "owner": "Fjärrlån",
-      "servicePointOwner": [],
-      "metadata": {
-        "createdDate": "2025-03-07T14:46:12.273+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-03-07T14:46:12.273+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
-      },
-      "id": "a83cc351-a6db-46ec-aa67-f0b9fb230399"
     }
   ],
-  "totalRecords": 3
+  "totalRecords": 4
 }

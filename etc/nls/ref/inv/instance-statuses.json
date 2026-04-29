@@ -6,8 +6,9 @@
       "name": "Other",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.230+00:00",
-        "updatedDate": "2023-03-13T12:10:45.230+00:00"
+        "createdDate": "2026-04-02T09:40:32.868+00:00",
+        "updatedDate": "2026-04-07T14:09:59.805+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -16,8 +17,9 @@
       "name": "Cataloged",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.232+00:00",
-        "updatedDate": "2023-03-13T12:10:45.232+00:00"
+        "createdDate": "2026-04-02T09:40:32.868+00:00",
+        "updatedDate": "2026-04-07T14:09:59.829+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -26,8 +28,9 @@
       "name": "Uncataloged",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.237+00:00",
-        "updatedDate": "2023-03-13T12:10:45.237+00:00"
+        "createdDate": "2026-04-02T09:40:32.869+00:00",
+        "updatedDate": "2026-04-07T14:09:59.847+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -36,8 +39,9 @@
       "name": "Temporary",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.237+00:00",
-        "updatedDate": "2023-03-13T12:10:45.237+00:00"
+        "createdDate": "2026-04-02T09:40:32.867+00:00",
+        "updatedDate": "2026-04-07T14:09:59.866+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -46,8 +50,9 @@
       "name": "Batch Loaded",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.244+00:00",
-        "updatedDate": "2023-03-13T12:10:45.244+00:00"
+        "createdDate": "2026-04-02T09:40:32.874+00:00",
+        "updatedDate": "2026-04-07T14:09:59.885+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -56,8 +61,9 @@
       "name": "Not yet assigned",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:45.243+00:00",
-        "updatedDate": "2023-03-13T12:10:45.243+00:00"
+        "createdDate": "2026-04-02T09:40:32.871+00:00",
+        "updatedDate": "2026-04-07T14:09:59.906+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -66,10 +72,10 @@
       "name": "Minipost - vardagstryck",
       "source": "local",
       "metadata": {
-        "createdDate": "2024-09-10T12:18:04.942+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-04-29T07:22:26.811+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+        "createdDate": "2026-04-07T14:09:59.915+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:09:59.915+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -78,10 +84,10 @@
       "name": "Minipost",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-04-29T07:22:39.000+00:00",
-        "createdByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246",
-        "updatedDate": "2025-04-29T07:22:39.000+00:00",
-        "updatedByUserId": "aa2615c9-d171-4a44-86a5-fbdf00c76246"
+        "createdDate": "2026-04-07T14:09:59.924+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:09:59.924+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -90,10 +96,10 @@
       "name": "Riksdagstryck",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-06-17T11:43:14.696+00:00",
-        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-06-17T11:43:14.696+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+        "createdDate": "2026-04-07T14:09:59.933+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:09:59.933+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -102,12 +108,36 @@
       "name": "Förvärvas ej",
       "source": "local",
       "metadata": {
-        "createdDate": "2025-07-01T12:49:04.614+00:00",
-        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-07-01T12:49:04.614+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+        "createdDate": "2026-04-07T14:09:59.944+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:09:59.944+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    },
+    {
+      "id": "7f7095da-aa98-4c49-a64b-eb6cc5d698e5",
+      "code": "rth",
+      "name": "Riksdagstryck huvudpost",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2026-04-07T14:09:59.954+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:09:59.954+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    },
+    {
+      "id": "b5f2af5b-eafa-4020-ae51-87b727018299",
+      "code": "ma",
+      "name": "Minipost - affisch",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2026-04-07T14:09:59.963+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:09:59.963+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     }
   ],
-  "totalRecords": 10
+  "totalRecords": 12
 }

@@ -5,8 +5,10 @@
       "value": "Other",
       "source": "System",
       "metadata": {
-        "createdDate": "2024-10-04T08:20:40.231+00:00",
-        "updatedDate": "2024-10-04T08:20:40.231+00:00"
+        "createdDate": "2026-04-07T14:42:13.961+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:42:13.961+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -14,8 +16,10 @@
       "value": "Purchase",
       "source": "System",
       "metadata": {
-        "createdDate": "2024-10-04T08:20:40.237+00:00",
-        "updatedDate": "2024-10-04T08:20:40.237+00:00"
+        "createdDate": "2026-04-07T14:42:13.982+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:42:13.982+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -23,8 +27,10 @@
       "value": "Purchase At Vendor System",
       "source": "System",
       "metadata": {
-        "createdDate": "2024-10-04T08:20:40.250+00:00",
-        "updatedDate": "2024-10-04T08:20:40.250+00:00"
+        "createdDate": "2026-04-07T14:42:14.002+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:42:14.002+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -32,8 +38,10 @@
       "value": "Gift",
       "source": "System",
       "metadata": {
-        "createdDate": "2024-10-04T08:20:40.259+00:00",
-        "updatedDate": "2024-10-04T08:20:40.259+00:00"
+        "createdDate": "2026-04-07T14:42:14.024+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:42:14.024+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -41,8 +49,10 @@
       "value": "Internal transfer",
       "source": "System",
       "metadata": {
-        "createdDate": "2024-10-04T08:20:40.264+00:00",
-        "updatedDate": "2024-10-04T08:20:40.264+00:00"
+        "createdDate": "2026-04-07T14:42:14.044+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:42:14.044+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -50,8 +60,10 @@
       "value": "Demand Driven Acquisitions (DDA)",
       "source": "System",
       "metadata": {
-        "createdDate": "2024-10-04T08:20:40.261+00:00",
-        "updatedDate": "2024-10-04T08:20:40.261+00:00"
+        "createdDate": "2026-04-07T14:42:14.063+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:42:14.063+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -59,8 +71,10 @@
       "value": "Membership",
       "source": "System",
       "metadata": {
-        "createdDate": "2024-10-04T08:20:40.267+00:00",
-        "updatedDate": "2024-10-04T08:20:40.267+00:00"
+        "createdDate": "2026-04-07T14:42:14.083+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:42:14.083+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -68,8 +82,10 @@
       "value": "Depository",
       "source": "System",
       "metadata": {
-        "createdDate": "2024-10-04T08:20:40.275+00:00",
-        "updatedDate": "2024-10-04T08:20:40.275+00:00"
+        "createdDate": "2026-04-07T14:42:14.105+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:42:14.105+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -77,8 +93,10 @@
       "value": "Free",
       "source": "System",
       "metadata": {
-        "createdDate": "2024-10-04T08:20:40.280+00:00",
-        "updatedDate": "2024-10-04T08:20:40.280+00:00"
+        "createdDate": "2026-04-07T14:42:14.125+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:42:14.125+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -86,8 +104,10 @@
       "value": "Technical",
       "source": "System",
       "metadata": {
-        "createdDate": "2024-10-04T08:20:40.282+00:00",
-        "updatedDate": "2024-10-04T08:20:40.282+00:00"
+        "createdDate": "2026-04-07T14:42:14.145+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:42:14.145+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -95,8 +115,10 @@
       "value": "Exchange",
       "source": "System",
       "metadata": {
-        "createdDate": "2024-10-04T08:20:40.283+00:00",
-        "updatedDate": "2024-10-04T08:20:40.283+00:00"
+        "createdDate": "2026-04-07T14:42:14.167+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:42:14.167+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -104,8 +126,10 @@
       "value": "Evidence Based Acquisitions (EBA)",
       "source": "System",
       "metadata": {
-        "createdDate": "2024-10-04T08:20:40.287+00:00",
-        "updatedDate": "2024-10-04T08:20:40.287+00:00"
+        "createdDate": "2026-04-07T14:42:14.192+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:42:14.192+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -113,8 +137,10 @@
       "value": "Approval Plan",
       "source": "System",
       "metadata": {
-        "createdDate": "2024-10-04T08:20:40.294+00:00",
-        "updatedDate": "2024-10-04T08:20:40.294+00:00"
+        "createdDate": "2026-04-07T14:42:14.266+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:42:14.266+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -122,21 +148,10 @@
       "value": "KB: Donationer och gåvor",
       "source": "User",
       "metadata": {
-        "createdDate": "2025-03-14T09:33:12.226+00:00",
-        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-03-14T09:33:12.226+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
-      }
-    },
-    {
-      "id": "c8d63304-bf94-4412-90b7-f2215928ac59",
-      "value": "KB: Inköp av utländsk monografi (tryckt material, ABON)",
-      "source": "User",
-      "metadata": {
-        "createdDate": "2025-03-14T09:34:37.704+00:00",
-        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-03-14T09:34:37.704+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+        "createdDate": "2026-04-07T14:42:14.288+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:42:14.288+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -144,10 +159,10 @@
       "value": "KB: Förvärv av Suecana",
       "source": "User",
       "metadata": {
-        "createdDate": "2025-03-14T09:35:14.000+00:00",
-        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-03-14T09:35:14.000+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+        "createdDate": "2026-04-07T14:42:14.334+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:42:14.334+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -155,10 +170,10 @@
       "value": "KB: Inköp av licensierad e-resurs",
       "source": "User",
       "metadata": {
-        "createdDate": "2025-03-14T09:41:13.655+00:00",
-        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-03-14T09:41:13.655+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+        "createdDate": "2026-04-07T14:42:14.356+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:42:14.356+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -166,10 +181,10 @@
       "value": "KB: Inköp av utländsk tidskrift (prenumerationer, inkl. e-resurs)",
       "source": "User",
       "metadata": {
-        "createdDate": "2025-03-14T09:42:06.441+00:00",
-        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-03-14T09:42:06.441+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+        "createdDate": "2026-04-07T14:42:14.376+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:42:14.376+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -177,10 +192,10 @@
       "value": "KB: Pliktlevererat",
       "source": "User",
       "metadata": {
-        "createdDate": "2025-03-14T09:44:11.961+00:00",
-        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-03-14T09:44:11.961+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+        "createdDate": "2026-04-07T14:42:14.412+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:42:14.412+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -188,10 +203,10 @@
       "value": "KB: Inköp av utländsk monografi (tryckt material, eget förvärv)",
       "source": "User",
       "metadata": {
-        "createdDate": "2025-03-19T08:22:17.096+00:00",
-        "createdByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6",
-        "updatedDate": "2025-03-19T08:22:17.096+00:00",
-        "updatedByUserId": "f1f8c668-17eb-49c3-b10d-9a3cd8bb0ef6"
+        "createdDate": "2026-04-07T14:42:14.434+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:42:14.434+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -199,10 +214,10 @@
       "value": "KB: Stående order köp (tryckt material)",
       "source": "User",
       "metadata": {
-        "createdDate": "2025-06-09T08:14:51.635+00:00",
-        "createdByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d",
-        "updatedDate": "2025-06-09T08:14:51.635+00:00",
-        "updatedByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d"
+        "createdDate": "2026-04-07T14:42:14.454+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:42:14.454+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -210,10 +225,21 @@
       "value": "KB: Stående order gåva (tryckt material)",
       "source": "User",
       "metadata": {
-        "createdDate": "2025-06-09T08:15:32.854+00:00",
-        "createdByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d",
-        "updatedDate": "2025-06-09T08:15:32.854+00:00",
-        "updatedByUserId": "050932c6-05cf-46c7-8207-dd8f8e99f36d"
+        "createdDate": "2026-04-07T14:42:14.474+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:42:14.474+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+      }
+    },
+    {
+      "id": "c8d63304-bf94-4412-90b7-f2215928ac59",
+      "value": "KB: Inköp av utländsk monografi (tryckt material, ABON)",
+      "source": "User",
+      "metadata": {
+        "createdDate": "2026-04-07T14:42:14.313+00:00",
+        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
+        "updatedDate": "2026-04-07T14:42:14.313+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     }
   ],

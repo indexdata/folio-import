@@ -5,8 +5,9 @@
       "name": "FOLIO",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:46.055+00:00",
-        "updatedDate": "2023-03-13T12:10:46.055+00:00"
+        "createdDate": "2026-04-02T09:40:33.166+00:00",
+        "updatedDate": "2026-04-07T14:09:56.416+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     },
     {
@@ -14,8 +15,9 @@
       "name": "MARC",
       "source": "folio",
       "metadata": {
-        "createdDate": "2023-03-13T12:10:46.054+00:00",
-        "updatedDate": "2023-03-13T12:10:46.054+00:00"
+        "createdDate": "2026-04-02T09:40:33.164+00:00",
+        "updatedDate": "2026-04-07T14:09:56.435+00:00",
+        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
       }
     }
   ],
