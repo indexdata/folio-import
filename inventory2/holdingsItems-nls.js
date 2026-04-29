@@ -172,7 +172,7 @@ try {
       }
     }
   }
-  // throw(refData);
+  // throw(refData.loantypes);
   const refLoc = refData.locations;
   // throw(refLoc);
 
@@ -617,7 +617,7 @@ try {
           pl = 'Begränsad åtkomst';
           i.status.name = 'Available';
         }
-        i.permanentLoanTypeId = refData.loantypes[pl];
+        i.permanentLoanTypeId = refData.loantypes[pl] || refData.loantypes.Unmapped;
         if (tl) { 
           i.temporaryLoanTypeId = refData.loantypes[tl];
           if (!i.temporaryLoanTypeId) console.log(`WARN ITEM temporaryLoanType not found for "${loc}:${st}:${ips} (${tl})"`)

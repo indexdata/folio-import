@@ -1,7 +1,7 @@
 Aleph z30_sub_library	Aleph z30_item_status	Aleph z30_item_process_status	Aleph z30_collection	marc	Folio perm loan type	Folio temp loantype
 						
 RRLEX	1				Läsesalslån	
-RRLEX	1	DB			Läsesalslån	Digital beställning
+RRLEX	1	DB			Läsesalslån	Digital leverans
 RRLEX	1	LA			Läsesalslån	Lagas före lån
 RRLEX	1	LL			Läsesalslån	L-samling - kollas före lån
 RRLEX	1	UL			Läsesalslån	
@@ -9,14 +9,14 @@ RRLEX	2				Hemlån
 RRLEX	2	LA			Hemlån	Lagas före lån
 RRLEX	2	UL			Hemlån	
 RRLEX	3				Bokskåp	
-RRLEX	2	DB			Hemlån	Digital beställning
+RRLEX	2	DB			Hemlån	Digital leverans
 						
 RRLEX	5				Ej utlån	
 RRLEX	6				Läsesalslån	
-RRLEX	6	DB			Läsesalslån	Digital beställning
+RRLEX	6	DB			Läsesalslån	Digital leverans
 						
 RRLEX	71				Läsesalslån	
-RRLEX	71	DB			Läsesalslån	Digital beställning
+RRLEX	71	DB			Läsesalslån	Digital leverans
 RRLEX	71	SN			Hemlån	
 RRLEX	72				Läsesalslån	
 RRLEX	73					
@@ -27,7 +27,7 @@ RRLEX	42				Läsesalslån
 						
 						
 RRSPE	21				Specialläsesalslån	
-RRSPE	21	DB			Specialläsesalslån	Digital beställning
+RRSPE	21	DB			Specialläsesalslån	Digital leverans
 RRSPE	21	DS			Specialläsesalslån	
 RRSPE	21	LA			Specialläsesalslån	Lagas före lån
 RRSPE	21	LL			Specialläsesalslån	L-samling - kollas före lån
@@ -36,7 +36,7 @@ RRSPE	27				Begränsad åtkomst
 RRSPE	71				Specialläsesalslån	
 RRSPE	72				Specialläsesalslån	
 RRSPE	26				Specialläsesalslån	
-RRSPE	26	DB			Specialläsesalslån	Digital beställning
+RRSPE	26	DB			Specialläsesalslån	Digital leverans
 RRSPE	26	LA			Specialläsesalslån	Lagas före lån
 RRSPE	26	LL			Specialläsesalslån	L-samling - kollas före lån
 RRSPE	23				Specialläsesalslån	
@@ -44,7 +44,7 @@ RRSPE	23	LA			Specialläsesalslån	Lagas före lån
 RRSPE	23	LL			Specialläsesalslån	L-samling - kollas före lån
 						
 RRSPE	28				Specialläsesalslån	
-RRSPE	28	DB			Specialläsesalslån	Digital beställning
+RRSPE	28	DB			Specialläsesalslån	Digital leverans
 RRSPE	28	LA			Specialläsesalslån	Lagas före lån
 RRSPE	28	RP			Ej utlån	
 RRSPE	31				Specialläsesalslån	

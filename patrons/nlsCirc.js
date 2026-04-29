@@ -231,6 +231,7 @@ const spTran = {
         ttl.inf++;
         ttl.err++;
       } else {
+        if (item.st !== 'Available') console.log(item);
         item.st = 'Checked out';
         bcodeMap[item.bc] = 'Checked out';
         loan.itemBarcode = item.bc;
