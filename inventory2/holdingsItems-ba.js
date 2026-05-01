@@ -637,23 +637,13 @@ try {
                 if (s.a) subz.push({ _: s.a })
               });
             });
-          }
-          if (subz[0]) {
             subz.push({ _: inst.bibId});
-            if (m['949']) {
-              let dum = JSON.parse(JSON.stringify(m['949'][0]));
-              let subs = [];
-              dum.subfields.forEach(s => {
-                if (s.t || s.s) subs.push(s);
-              });
-              if (subs[0]) dum.subfields = [...subs, ...subz];
-              if (!m['949']) m['949'] = [];
-              m['949'].unshift(dum);
-              // console.log(JSON.stringify(m['949'], null, 2));
-            }
           }
 
           if (m['949']) {
+            subz.forEach(s => {
+              m['949'][0].subfields.push(s);
+            });
             makeItems(m['949'], h, inst, m.leader);
           }
 
