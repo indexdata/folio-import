@@ -47,7 +47,8 @@ const files = {
   holdings: 1,
   items: 1,
   bwp: 1,
-  rel: 1
+  rel: 1,
+  last: 1
 };
 
 const cnTypeMap = {
@@ -486,6 +487,7 @@ try {
       ttl.holdingsErr++;
     }
   }
+  writeOut(outs.last, { hrid: holdingsStart });
 
   let occur = {};
   let bwhseen = {};
