@@ -3,6 +3,7 @@ const superagent = require('superagent');
 const { getAuthToken } = require('./lib/login');
 let refDir = process.argv[2];
 let modName = process.argv[3];
+let allFin = process.env.finance;
 
 (async () => {
   try {
@@ -208,7 +209,17 @@ let modName = process.argv[3];
       'roles',
       'roles__capabilities',
       'roles__capability-sets'
-    ]
+    ];
+
+    if (allFin) {
+      delete skipList['/finance-storage/group-budgets'];
+      delete skipList['/finance-storage/budgets'];
+      delete skipList['/finance-storage/fiscal-years']
+      delete skipList['/finance-storage/funds'];
+      delete skipList['/finance-storage/group-fund-fiscal-years'];
+      delete skipList['/finance-storage/ledgers'];
+    }
+    // console.log(skipList); return;
 
     custMods = {};
     try {
