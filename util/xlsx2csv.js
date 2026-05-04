@@ -16,6 +16,7 @@ try {
   prefix = prefix.replace(/^(.+)\..+$/, '$1');
   prefix = prefix.replace(/\W/g, '_');
 
+  let start = new Date().valueOf();
   // Read the file using pathname
   let i = 0;
   const file = xlsx.readFile(inFile);
@@ -27,6 +28,11 @@ try {
     console.log(`Writing to ${outFile}`);
     stream.pipe(fs.createWriteStream(outFile));
   } 
+  let end = new Date().valueOf();
+  let ttl = (end - start)/1000;
+  console.log('Done');
+  console.log('Time (secs):', ttl);
+
 } catch (e) {
   console.error(e.message);
 }
