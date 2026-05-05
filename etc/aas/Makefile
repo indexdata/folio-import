@@ -27,6 +27,7 @@ mfile=$(idir)/bibs.mrc
 izip=$(in)/*Full*zip
 xlsx=$(in)/*Items*xlsx
 csv=$(in)/*Items*csv
+araw=$(in)/*Author*mrc
 log=$(data)/log
 
 instances: $(izip)
@@ -49,13 +50,18 @@ items: $(xlsx)
 
 
 split-inventory:
-	cd $(idir); split -l 100000 bibs-instances.jsonl in-
-	cd $(idir); split -l 100000 bibs-srs.jsonl sr-
-	cd $(idir); split -l 1500 bibs-presuc.jsonl pr-
-	cd $(idir); split -l 100000 bibs-mfhds-holdings.jsonl ho-
-	cd $(idir); split -l 130000 bibs-mfhds-items.jsonl it-
+	cd $(idir); split -l 120000 bibs-instances.jsonl in-
+	cd $(idir); split -l 120000 bibs-srs.jsonl sr-
+	cd $(idir); split -l 6000 bibs-presuc.jsonl pr-
+	cd $(idir); split -l 125000 bibs-mfhds-holdings.jsonl ho-
+	cd $(idir); split -l 110000 bibs-mfhds-items.jsonl it-
 	cd $(idir); split -l 6500 bibs-mfhds-bwp.jsonl bw-
 	cd $(idir); split -l 6000 bibs-mfhds-rel.jsonl re-
+
+authorities: $(araw)
+	cd $(adir); rm -f auth.mrc; ln -s $(araw) auth.mrc
+	cd $(inv2); node marc2auth $(conf) $(adir)/auth.mrc > $(log)/makeAuth.log &
+	tail -f $(log)/makeAuth.log
 
 setup:
 	cp $(login) $(wd)/config.json
