@@ -63,6 +63,10 @@ authorities: $(araw)
 	cd $(inv2); node marc2auth $(conf) $(adir)/auth.mrc > $(log)/makeAuth.log &
 	tail -f $(log)/makeAuth.log
 
+split-authorities: $(adir)/auth-authorities.jsonl
+	cd $(adir); split -l 60000 auth-authorities.jsonl aut-
+	cd $(adir); split -l 60000 auth-srs.jsonl asr-
+
 setup:
 	cp $(login) $(wd)/config.json
 	jq '. | .logpath="$(log)"' $(wd)/config.json > tmp
