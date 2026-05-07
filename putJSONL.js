@@ -91,7 +91,7 @@ const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
       }
       logger.info(`[${x}] ${lDate} PUT ${id} to ${actionUrl}`);
       let recUrl = (actionUrl.match(/mapping-rules/)) ? actionUrl : `${actionUrl}/${id}`;
-      if (recUrl.match(/instances|holdings|items|authorities/)) {
+      if (recUrl.match(/instances|holdings|items|authorities|finance/)) {
         try {
           let res = await superagent
             .get(recUrl)

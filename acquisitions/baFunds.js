@@ -85,13 +85,15 @@ try {
     let tid = refData.fundTypes[tcode];
     let id = uuid(r.fund_code, ns);
     let o = {
+      _version: 1,
       id: id,
       name: r.fund_name,
       code: r.fund_code,
       ledgerId: lid,
       fundStatus: r.fund_status,
       fundTypeId: tid,
-      description: r.fund_description
+      description: r.fund_description,
+      externalAccountNo: '-'
     }
     if (process.env.DEBUG) console.log(o);
     let valid = reqFields(o, ['name','code','ledgerId','fundStatus'])
