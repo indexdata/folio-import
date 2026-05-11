@@ -39,6 +39,11 @@ split-inventory:
 	cd $(idir); split -l 25000 bibs-holdings.jsonl ho-
 	cd $(idir); split -l 30000 bibs-items.jsonl it-
 
+users: $(in)/*atron*
+	cp $(in)/Patron*csv $(udir)/users.csv
+	cd $(wd)/patrons; node msmUsers $(uref) $(udir)/users.csv > $(log)/makeUsers.log
+	cat $(log)/makeUsers.log
+
 circulation:
 	cd $(cdir); rm -r circ.csv; ln -s $(in)/circ*.csv circ.csv
 	cd $(wd); node downloadJSONL users $(cdir)/users.jsonl
@@ -52,6 +57,16 @@ orders:
 	cd $(odir); rm -r orders.csv; ln -s $(in)/*orders*.csv orders.csv
 	cd $(acq); node msmOrders $(aref) $(idir)/bibs-instances.jsonl $(odir)/orders.csv > $(log)/makeOrders.log
 	cat $(log)/makeOrders.log
+
+authorities: $(in)/NAR*mrc $(in)/SAR*mrc
+	cp $(in)/NAR*mrc $(adir)/raw.mrc
+	cat $(in)/SAR*mrc >> $(adir)/raw.mrc
+	@echo Converting $(mfile) to utf8...
+	yaz-marcdump -f marc8 -t utf8 -l 9=97 -o marc $(adir)/raw.mrc > $(adir)/auth.mrc
+	yaz-marcdump $(adir)/auth.mrc | grep -P '^\d{5}' -c > $(adir)/count.txt
+	cat $(adir)/count.txt
+	cd $(inv2); node marc2auth $(conf) $(adir)/auth.mrc > $(log)/makeAuth.log &
+	tail -f $(log)/makeAuth.log
 
 load-orders:
 	cd $(wd); node postJSONL orders/composite-orders $(odir)/purchase-orders.jsonl
