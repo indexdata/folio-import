@@ -23,7 +23,7 @@ const files = {
   e: 'errors'
 };
 
-gmap = {
+const gmap = {
   "0": "College Student",
   "3": "DMA Student",
   "15": "Precollege Student",
@@ -32,7 +32,8 @@ gmap = {
   "40": "Staff",
   "60": "Artistic Staff",
   "65": "MSM Summer Faculty",
-  "140": "Interlibrary Loan"
+  "140": "Interlibrary Loan",
+  "5": "College Student"
 };
 
 const nfields = ['NOTE', 'MESSAGE', 'WEB NOTE'];
