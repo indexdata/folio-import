@@ -110,10 +110,12 @@ try {
           city: city,
           stateRegion: state
         };
-        if (zip.match(/\d{5}/)) { 
-          ao.zipCode = zip;
-        } else {
-          ao.country = zip;
+        if (zip) {
+          if (zip.match(/\d{5}/)) { 
+            ao.zipCode = zip;
+          } else {
+            ao.country = zip;
+          }
         }
         ao.isPrimary = (el === 0) ? true : false;
         o.addresses.push(ao);
