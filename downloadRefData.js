@@ -140,6 +140,7 @@ let allFin = process.env.finance;
       '/orders-storage/receiving-history': true,
       '/orders-storage/pieces': true,
       '/orders-storage/titles': true,
+      '/orders-storage/wrapper-pieces': true,
       '/organizations-storage/settings': true,
       '/patron-action-session-storage/expired-session-patron-ids': true,
       '/patron-action-session-storage/patron-action-sessions': true,
