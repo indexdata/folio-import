@@ -154,7 +154,8 @@ const fundMap = {
     const inRecs = parse(csv, {
       columns: true,
       skip_empty_lines: true,
-      from: 1
+      from: 1,
+      bom: true
     });
     // throw(inRecs); 
 
