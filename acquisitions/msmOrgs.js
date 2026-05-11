@@ -100,8 +100,8 @@ try {
       } else {
         let l = a.split(/\$/);
         let ll = l.pop();
-        let [ city, sz ] = ll.split(/, /);
-        let [ state, zip] = (sz) ? sz.split(/ /) : ['', ''];
+        let [ city, sz ] = ll.split(/, /, 2);
+        let [ state, zip] = (sz) ? sz.split(/,? /) : ['', ''];
         let a2 = (l[1]) ? l.pop() : '';
         let a1 = l.join(', ');
         let ao = {
