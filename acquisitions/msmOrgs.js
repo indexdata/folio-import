@@ -132,8 +132,13 @@ try {
     }
 
     if (r.phone) {
-      let ph = { phoneNumber: r.phone, isPrimary: true };
-      o.phoneNumbers = [ ph ];
+      o.phoneNumbers = [];
+      let prime = true;
+      r.phone.split(/\$/).forEach(p => {
+        let ph = { phoneNumber: p, isPrimary: prime };
+        o.phoneNumbers.push(ph);
+        prime = false;
+      });
     }
 
     if (r.email) {
