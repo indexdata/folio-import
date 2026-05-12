@@ -115,6 +115,7 @@ const fundMap = {
     for (let k in fundMap) {
       let c = fundMap[k];
       fundMap[c] = refData.funds[k];
+      fundMap[k] = refData.funds[k];
     }
     if (process.env.DEBUG === 'fun') throw(fundMap);
 
