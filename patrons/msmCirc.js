@@ -11,6 +11,7 @@ try {
 }
 
 const ns = '4566df4a-8d63-4317-aacc-1cdf56a2271d';
+const dumBarcode = 'p10317545';
 let inFile = process.argv[2];
 
 const files = {
@@ -99,6 +100,7 @@ const parseDate = (date) => {
       if (process.env.DEBUG) console.log(r);
       let pnum = r['RECORD #(Patron)'];
       let ubc = r['P BARCODE'] || p2bc[pnum];
+      if (!ubc) ubc = dumBarcode;
       let ibc = r['BARCODE'];
       let ld = r['OUT DATE'];
       let dd = r['DUE DATE'];
