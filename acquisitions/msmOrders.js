@@ -283,11 +283,11 @@ const fundMap = {
       let loc = r.LOCATION.replace(/&nbsp;/g, ' ');
       pol.orderFormat = (loc.match(/^(online|audiobooks|digital|eboo|esco|stream|web)/i)) ? 'Electronic Resource' : (loc === 'none') ? 'Other' : 'Physical Resource';
       let price = (r.E_PRICE) ? parseInt(r.E_PRICE, 10)/100 : 0;
-      if (r.RDATE) {
+      if (r.RDATE && r.RDATE !== '  -  -  ') {
         try {
           pol.receiptDate = new Date(r.RDATE).toISOString().substring(0, 10);
         } catch (e) {
-          console.log(`${e}`);
+          console.log(`WARN "${r.RDATE}" is not a valid date format (${pnum})`);
         }
       }
       pol.receiptStatus = (pol.receiptDate) ? 'Fully Received' : 'Pending';
