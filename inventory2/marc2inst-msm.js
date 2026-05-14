@@ -538,20 +538,6 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum
       bwh.instanceId = bid;
       out.h.push(bwh);
 
-      /*
-      let rkey = parentId + ':' + bid;
-      if (!rseen[rkey]) {
-        let rel = {
-          id: uuid(rkey, ns),
-          superInstanceId: parentId,
-          subInstanceId: bid,
-          instanceRelationshipTypeId: refData.instanceRelationshipTypes['bound-with']
-        };
-        out.rel.push(rel);
-        rseen[rkey] = 1;
-      }
-      */
-
       let bkey = bcseen[bc].iid + ':' + bcseen[bc].hr.id;
       if (!bwseen[bkey]) {
         let bwo = {
@@ -573,13 +559,19 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum
         out.bwp.push(bwo);
         bwseen[bkey] = 1;
       }
-
-
     } else {
       let loc = (s.l) ? s.l[0].trim() : ''; 
       let cn = (s.a && s.b) ? s.a[0] + ' ' + s.b[0] : (s.a) ? s.a[0] : (bibCallNum) ? bibCallNum.value : '';
+      let origCn = cn;
+      let cnpre = '';
+      if (loc === 'ovbks') {
+        cnpre = 'OVER';
+      } else if (cn && cn.match(/^Ovrsz/)) {
+        cn = cn.replace(/^[^ ]+ /, '');
+        cnpre = 'Ovrsz.'
+      }
       let locId = tsvMap.locations[loc] || loc;
-      let hkey = bhrid + ':' + locId + ':' + cn;
+      let hkey = bhrid + ':' + locId + ':' + origCn;
       if (!hseen[hkey]) {
         let occStr = occurenceStr(occ, bhrid);
         let hrid = `${bhrid}-${occStr}`;
@@ -590,6 +582,9 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum
           sourceId: refData.holdingsRecordsSources.FOLIO,
           instanceId: bid
         };
+        if (cnpre) {
+          h.callNumberPrefix = cnpre;
+        }
         if (cn) {
           h.callNumber = cn;
           h.callNumberTypeId = bibCallNum.type || refData.callNumberTypes['Other scheme'];
