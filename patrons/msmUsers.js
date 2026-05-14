@@ -168,7 +168,6 @@ try {
     let group = p['P TYPE'];
     let dept = '';
     let edate = p['EXP DATE'];
-    console.log(edate);
     let cdate = p['CREATED'];
     let bdate = '';
     let bc = p['P BARCODE'];
