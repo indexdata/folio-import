@@ -84,7 +84,7 @@ try {
     let dc = 0;
     for (let k in pile) {
       let r = pile[k].m;
-      fs.writeFileSync(outFile, r);
+      fs.writeFileSync(outFile, r, { flag: 'a' });
       dc++;
     }
     console.log('Records in :', ttl.count);
