@@ -14,6 +14,7 @@ ser-circ	serial-circ	Serial (Circulating)	791	0	94	0	Keep	Purge	Serial (Circulat
 ser-nocirc	serial-no circ	Serial (Non-circulating)	88337	0	6006	0	Keep	Purge	Serial (Non-Circulating)	
 tract-ser	tract-ser	Serial (Non-circulating) 	268	1	0	0	Keep	Purge	Serial - Tract	
 special-s	special collections-ser	Special Collections - serial	20760	0	14	0	Keep	Purge	Special Collections - Serial	
+special-ms	special collections-mss						Keep	Purge	Special Collections - Manuscripts	
 realia	special collection-realia	Special Collections - realia					Keep	Purge	Special Collections - Realia	
 tract-book	tract-book	Book	23939	0	1	0	Keep	Purge	Tract	
 video	video	Video	3	0	0	0	Keep	Purge	Video	3 items in rare and tract
