@@ -20,7 +20,7 @@ cdir=$(data)/circ
 odir=$(data)/ord
 vdir=$(data)/org
 in=$(data)/incoming
-raw=$(in)/*full*mrc
+raw=$(in)/*export*mrc
 mfile=$(idir)/bibs.mrc
 mfhds=$(idir)/bibs-mfhds.jsonl
 log=$(data)/log
@@ -43,6 +43,15 @@ split-inventory:
 	cd $(idir); split -l 130000 bibs-mfhds-items.jsonl it-
 	cd $(idir); split -l 6500 bibs-mfhds-bwp.jsonl bw-
 	cd $(idir); split -l 6000 bibs-mfhds-rel.jsonl re-
+
+authorities: $(in)/*auth*mrc
+	cd $(adir); rm -r auth.mrc; ln -s $(in)/*auth*mrc auth.mrc
+	cd $(inv2); node marc2auth $(conf) $(adir)/auth.mrc > $(log)/makeAuth.log &
+	tail -f $(log)/makeAuth.log
+
+split-authorities:
+	cd $(adir); split -l 75000 auth-authorities.jsonl aua-
+	cd $(adir); split -l 75000 auth-srs.jsonl aus-
 
 setup:
 	cp $(login) $(wd)/config.json

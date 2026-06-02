@@ -20,7 +20,7 @@ cdir=$(data)/circ
 odir=$(data)/ord
 vdir=$(data)/org
 in=$(data)/incoming
-raw=$(in)/All_bibs*
+raw=$(in)/bibs*
 mfile=$(idir)/bibs.mrc
 log=$(data)/log
 
@@ -39,8 +39,8 @@ split-inventory:
 	cd $(idir); split -l 25000 bibs-holdings.jsonl ho-
 	cd $(idir); split -l 30000 bibs-items.jsonl it-
 
-users: $(in)/*atron*
-	cp $(in)/Patron*csv $(udir)/users.csv
+users: $(in)/patrons*
+	cp $(in)/patrons*csv $(udir)/users.csv
 	cd $(wd)/patrons; node msmUsers $(uref) $(udir)/users.csv > $(log)/makeUsers.log
 	cat $(log)/makeUsers.log
 
@@ -51,27 +51,35 @@ circulation:
 	cd $(pat); node msmCirc $(cdir)/circ.csv > $(log)/makeCirc.log
 	cat $(log)/makeCirc.log
 
-organizations:
+organizations: $(in)/org*csv
+	cp $(in)/org*csv $(vdir)/orgs.csv
+	cd $(acq); node msmOrgs $(aref) $(vdir)/orgs.csv > $(log)/makeOrgs.log
+	cat $(log)/makeOrgs.log
 
 orders:
 	cd $(odir); rm -r orders.csv; ln -s $(in)/*orders*.csv orders.csv
 	cd $(acq); node msmOrders $(aref) $(idir)/bibs-instances.jsonl $(odir)/orders.csv > $(log)/makeOrders.log
 	cat $(log)/makeOrders.log
 
-authorities: $(in)/NAR*mrc $(in)/SAR*mrc
-	cp $(in)/NAR*mrc $(adir)/raw.mrc
-	cat $(in)/SAR*mrc >> $(adir)/raw.mrc
-	@echo Converting $(mfile) to utf8...
-	yaz-marcdump -f marc8 -t utf8 -l 9=97 -o marc $(adir)/raw.mrc > $(adir)/auth.mrc
-	yaz-marcdump $(adir)/auth.mrc | grep -P '^\d{5}' -c > $(adir)/count.txt
-	cat $(adir)/count.txt
-	cd $(inv2); node marc2auth $(conf) $(adir)/auth.mrc > $(log)/makeAuth.log &
-	tail -f $(log)/makeAuth.log
-
 load-orders:
 	cd $(wd); node postJSONL orders/composite-orders $(odir)/purchase-orders.jsonl
 	cd $(wd); node postJSONL orders-storage/po-lines $(odir)/po-lines.jsonl
 	cd $(wd); node putJSONL orders/composite-orders $(odir)/purchase-orders-open.jsonl
+
+authorities: $(in)/auth*mrc
+	@echo Converting to utf8...
+	yaz-marcdump -f marc8 -t utf8 -l 9=97 -o marc $(in)/auth*mrc > $(adir)/auth.mrc
+	@echo Deduping marc file...
+	cd $(inv2); node --max-old-space-size=4096 dedupeMarc $(adir)/auth.mrc 010a 907a
+	yaz-marcdump $(adir)/auth.mrc | grep -P '^\d{5}' -c > $(adir)/count.txt
+	cat $(adir)/count.txt
+	cd $(inv2); node marc2auth $(conf) $(adir)/auth-deduped.mrc > $(log)/makeAuth.log &
+	tail -f $(log)/makeAuth.log
+
+split-authorities: $(adir)/auth*jsonl
+	cd $(adir); split -l 35000 auth-authorities.jsonl aua-
+	cd $(adir); split -l 35000 auth-srs.jsonl asr-
+	ls -l $(adir)
 
 setup:
 	cp $(login) $(wd)/config.json
