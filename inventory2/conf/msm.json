@@ -10,6 +10,7 @@
         "hridPrefix": "m"
     },
     "makeInstMap": true,
+    "noTitle": "[Unknown title]",
     "catDate": { "tag": "998", "subfield": "c", "pattern": "yymmdd" },
     "suppress": { "tag": "907", "subfield": "c", "value":"n" },
     "callNumbers": {
