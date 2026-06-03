@@ -13,12 +13,14 @@ ref=$(data)/ref
 iref=$(ref)/inv
 uref=$(ref)/usr
 aref=$(ref)/acq
+fref=$(ref)/fin
 idir=$(data)/inv
 udir=$(data)/usr
 adir=$(data)/auth
 cdir=$(data)/circ
 odir=$(data)/ord
 vdir=$(data)/org
+fdir=$(data)/fin
 in=$(data)/incoming
 raw=$(in)/*export*mrc
 mfile=$(idir)/bibs.mrc
@@ -53,6 +55,11 @@ split-authorities:
 	cd $(adir); split -l 75000 auth-authorities.jsonl aua-
 	cd $(adir); split -l 75000 auth-srs.jsonl aus-
 
+finance: $(in)/*funds*.csv
+	cp $(in)/*funds*.csv $(fdir)/funds.csv
+	cd $(acq); node baFunds $(fref) $(fdir)/funds.csv > $(log)/makeFunds.log
+	cat $(log)/makeFunds.log
+	
 setup:
 	cp $(login) $(wd)/config.json
 	jq '. | .logpath="$(log)"' $(wd)/config.json > tmp
@@ -61,6 +68,7 @@ setup:
 	mkdir -p $(log)
 	mkdir -p $(idir)
 	mkdir -p $(adir)
+	mkdir -p $(fdir)
 	mkdir -p $(in)
 	cd $(wd); node migrationRef.js $(ref)
 
