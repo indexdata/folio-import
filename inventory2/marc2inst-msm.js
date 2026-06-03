@@ -1140,7 +1140,7 @@ try {
           let sf = (marc.fields[supp.tag]) ? marc.fields[supp.tag][0] : '';
           if (sf) {
             let val = getSubs(sf, supp.subfield);
-            if (val === supp.value) {
+            if (val && val.match(/^[wns]$/)) {
               inst.discoverySuppress = true;
             }
           }
