@@ -626,7 +626,7 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum
           bcseen[bc] = { iid:i.id, hr: hr };
         }
 
-        let stName = tsvMap.statuses[st];
+        let stName = (mt === '70') ? 'Intellectual item' : tsvMap.statuses[st];
         if (stName) {
           i.status.name = stName;
         } else {
@@ -815,7 +815,7 @@ try {
             if (k && v && refData[prop]) { 
               tsvMap[prop][k] = refData[prop][v];
             } else {
-              if (!k.match(/[!b]/)) v = 'Available';
+              if (k.match(/[!b]/)) v = 'Available';
               tsvMap[prop][k] = v;
             }
           });
