@@ -46,7 +46,8 @@ let allFin = process.env.finance;
       'https://raw.githubusercontent.com/folio-org/mod-di-converter-storage/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-source-record-storage/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-source-record-manager/master/descriptors/ModuleDescriptor-template.json',
-      'https://raw.githubusercontent.com/folio-org/mod-roles-keycloak/refs/heads/master/descriptors/ModuleDescriptor-template.json'
+      'https://raw.githubusercontent.com/folio-org/mod-roles-keycloak/refs/heads/master/descriptors/ModuleDescriptor-template.json',
+      'https://raw.githubusercontent.com/folio-org/mod-login-saml/refs/heads/master/descriptors/ModuleDescriptor-template.json'
     ];
 
     if (modName) {
@@ -150,6 +151,7 @@ let allFin = process.env.finance;
       '/request-preference-storage/request-preference': true,
       '/request-storage/requests': true,
       '/roles/users': true,
+      '/saml/validate': true,
       '/scheduled-notice-storage/scheduled-notices': true,
       '/shelf-locations': true,
       '/service-point-users': true,
