@@ -380,7 +380,7 @@ let allFin = process.env.finance;
             uns.push({username: r.username, userId: r.id});
           });
           let pq = pqs.join('%20OR%20userId=');
-          let ep = `perms/users?query=userId=${pq}`
+          let ep = `perms/users?query=userId=${pq}&limit=100`;
           paths.push({ path: ep, mod: suMod });
           // create credentials objects and POST to authn/credentials
           let creds = [];
