@@ -7,7 +7,7 @@ inv2=$(wd)/inventory2
 acq=$(wd)/acquisitions
 pat=$(wd)/patrons
 conf=$(inv2)/conf/msm.json
-login=$(wd)/configs/json/msmnyc-test.json
+login=$(wd)/configs/json/msmnyc.json
 data=$(home)/$(lib)
 ref=$(data)/ref
 iref=$(ref)/inv
@@ -51,8 +51,8 @@ circulation:
 	cd $(pat); node msmCirc $(cdir)/circ.csv > $(log)/makeCirc.log
 	cat $(log)/makeCirc.log
 
-organizations: $(in)/org*csv
-	cp $(in)/org*csv $(vdir)/orgs.csv
+organizations: $(in)/vend*csv
+	cp $(in)/vend*csv $(vdir)/orgs.csv
 	cd $(acq); node msmOrgs $(aref) $(vdir)/orgs.csv > $(log)/makeOrgs.log
 	cat $(log)/makeOrgs.log
 
@@ -77,8 +77,8 @@ authorities: $(in)/auth*mrc
 	tail -f $(log)/makeAuth.log
 
 split-authorities: $(adir)/auth*jsonl
-	cd $(adir); split -l 35000 auth-authorities.jsonl aua-
-	cd $(adir); split -l 35000 auth-srs.jsonl asr-
+	cd $(adir); split -l 35000 auth-deduped-authorities.jsonl aua-
+	cd $(adir); split -l 35000 auth-deduped-srs.jsonl asr-
 	ls -l $(adir)
 
 setup:
