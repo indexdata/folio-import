@@ -167,7 +167,7 @@ const fundMap = {
       if (filter && !r[filter]) continue;
       ttl.count++;
       if (process.env.DEBUG === 'r') console.log(r);
-      let poNum = r.id;
+      let poNum = 'o' + r.id;
       let ven = r.VENDOR.trim();
       let venId = refData.organizations[ven];
       let otype = r.ORD_TYPE;
@@ -213,9 +213,10 @@ const fundMap = {
         vendor: venId,
         orderType: otypeStr,
         workflowStatus: statStr,
-        notes: []
+        notes: [],
+        customFields: {}
       }
-      if (odate) o.dateOrdered = odate;
+      if (odate) o.customFields.legacyOrderDate = odate;
       nfields.forEach(f => {
         let n = r[f];
         if (n) o.notes.push(n);
