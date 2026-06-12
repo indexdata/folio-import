@@ -28,6 +28,12 @@ const tsvCols = {
   statuses: { k: 1, v: 2}
 };
 
+const inoteCodes = {
+  n: 'General Note',
+  x: 'Reserve Note',
+  p: 'Price'
+};
+
 const tagMap = {
   "1": "January New",
   "2": "February New",
@@ -141,8 +147,6 @@ const reqFields = {
 };
 
 const cnotes = [ 'Check in', 'Check out'];
-
-const inotes = [];
 
 const writeOut = (outStream, data, notJson, newLineChar) => {
   let nl = newLineChar || '';
@@ -608,6 +612,7 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum
         let mt = (s.t) ? s.t[0] : '';
         let nop = (s.m) ? s.m[0] : '';
         let vol = (s.c) ? s.c[0] : '';
+        
         let st = (s.s) ? s.s[0].trim() : '';
         let cidate = (s.h && s.h[0].match(/\d/)) ? s.h[0] : '';
         let i = {
@@ -618,8 +623,9 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum
           permanentLoanTypeId: tsvMap.loantypes[mt] || refData.loantypes.unspecified,
           status: { name: 'Available' },
           discoverySuppress: false,
+          notes: [],
           tags: { tagList: [] }
-        }
+        };
 
         if (bc) {
           i.barcode = bc;
@@ -680,6 +686,22 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum
 
         if (st === '*') {
           i.tags.tagList.push('to_be_withdrawn');
+        }
+
+        for (let k in inoteCodes) {
+          if (s[k]) {
+            if (!i.notes) i.notes = [];
+            let t = inoteCodes[k];
+            s[k].forEach(d => {
+              let o = {
+                itemNoteTypeId: t,
+                note: d,
+                staffOnly: true
+              };
+              // console.log(o);
+              i.notes.push(o);
+            });
+          };
         }
 
 
@@ -795,7 +817,7 @@ try {
       });
     } catch {}
   });
-  // throw(refData.locations);
+  // throw(refData.itemNoteTypes);
 
   // create tsv map
   if (conf.tsvDir) {
@@ -824,6 +846,12 @@ try {
     });
   }
   // throw(tsvMap);
+
+  for (let k in inoteCodes) {
+    let v = inoteCodes[k];
+    inoteCodes[k] = refData.itemNoteTypes[v];
+  }
+  // throw(inoteCodes);
 
   let t;
   let ttl = {
