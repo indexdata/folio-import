@@ -610,7 +610,6 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum
         let fid = (s.z) ? s.z[0] : '';
         let stc = (s.y) ? s.y[0] : '';
         let mt = (s.t) ? s.t[0] : '';
-        let nop = (s.m) ? s.m[0] : '';
         let vol = (s.c) ? s.c[0] : '';
         
         let st = (s.s) ? s.s[0].trim() : '';
@@ -645,17 +644,20 @@ const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea, bibCallNum
 
         if (sup === 's') i.discoverySuppress = true
         if (fid) i.formerIds = [ fid ];
-        if (nop) {
-          i.descriptionOfPieces = nop;
+        if (s.m && s.m[0]) {
+          i.descriptionOfPieces = s.m.join('; ');
           i.circulationNotes = [];
-          cnotes.forEach(t => {
-            let cnid = uuid(i.id + t + nop, ns);
-            let o = {
-              id: cnid,
-              note: nop,
-              noteType: t
-            };
-            i.circulationNotes.push(o);
+          s.m.forEach(nop => {
+            cnotes.forEach(t => {
+              let cnid = uuid(i.id + t + nop, ns);
+              let o = {
+                id: cnid,
+                note: nop,
+                noteType: t,
+                staffOnly: true
+              };
+              i.circulationNotes.push(o);
+            });
           });
         }
         if (vol) i.volume = vol;
