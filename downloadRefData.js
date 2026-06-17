@@ -50,6 +50,8 @@ let allFin = process.env.finance;
       'https://raw.githubusercontent.com/folio-org/mod-login-saml/refs/heads/master/descriptors/ModuleDescriptor-template.json'
     ];
 
+    if (allFin) mdUrls.push('https://raw.githubusercontent.com/folio-org/mod-finance/refs/heads/master/descriptors/ModuleDescriptor-template.json');
+
     if (modName) {
       let tmp = [];
       for (let x = 0; x < mdUrls.length; x++) {
