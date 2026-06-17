@@ -463,7 +463,6 @@ const funcs = {
     return refData.alternativeTitleTypes[param.name];
   },
   set_note_type_id: function (data, param) {
-    console.log(data, param);
     return refData.instanceNoteTypes[param.name];
   },
   set_note_staff_only_via_indicator: function (data, param, ind1) {
