@@ -397,6 +397,7 @@ try {
       path = usrDir + '/' + fn;
       if (fs.existsSync(path)) break;
     }
+    console.log(path);
     let csv = fs.readFileSync(path, {encoding: 'utf8'});
     let zRecs = parse(csv, {
       columns: true,
@@ -534,7 +535,7 @@ try {
       },
       customFields: {}
     };
-    if (snum && !(gnum === '4' || gnum === '5')) u.personal.middleName = `(${snum})`;
+    if (snum && !(gnum === '7' || gnum === '6' || gnum === '5')) u.personal.middleName = `(${snum})`;
 
     /* do not map anything to username (FOLIO-293)
     if (un && !unseen[un]) {
