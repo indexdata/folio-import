@@ -1,23 +1,13 @@
 {
   "alternativeTitleTypes": [
     {
-      "id": "30512027-cdc9-4c79-af75-1565b3bd888d",
-      "name": "Uniform title",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:32.970+00:00",
-        "updatedDate": "2026-04-07T14:09:49.858+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
       "id": "35bbe7f2-1a49-11ed-861d-0242ac120002",
       "name": "Variant title",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:32.970+00:00",
-        "updatedDate": "2026-04-07T14:09:49.798+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:03.414+00:00",
+        "updatedDate": "2025-07-09T19:36:25.810+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -25,9 +15,9 @@
       "name": "Parallel title",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:32.973+00:00",
-        "updatedDate": "2026-04-07T14:09:49.821+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:03.415+00:00",
+        "updatedDate": "2025-07-09T19:36:26.170+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -35,9 +25,19 @@
       "name": "No type specified",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:32.973+00:00",
-        "updatedDate": "2026-04-07T14:09:49.840+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:03.417+00:00",
+        "updatedDate": "2025-07-09T19:36:26.550+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "30512027-cdc9-4c79-af75-1565b3bd888d",
+      "name": "Uniform title",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:03.415+00:00",
+        "updatedDate": "2025-07-09T19:36:26.928+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -45,9 +45,9 @@
       "name": "Portion of title",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:32.973+00:00",
-        "updatedDate": "2026-04-07T14:09:49.877+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:03.417+00:00",
+        "updatedDate": "2025-07-09T19:36:27.297+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -55,9 +55,9 @@
       "name": "Distinctive title",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:32.976+00:00",
-        "updatedDate": "2026-04-07T14:09:49.897+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:03.418+00:00",
+        "updatedDate": "2025-07-09T19:36:27.670+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -65,9 +65,9 @@
       "name": "Cover title",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:32.977+00:00",
-        "updatedDate": "2026-04-07T14:09:49.922+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:03.418+00:00",
+        "updatedDate": "2025-07-09T19:36:28.041+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -75,9 +75,9 @@
       "name": "Running title",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:32.976+00:00",
-        "updatedDate": "2026-04-07T14:09:49.940+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:03.420+00:00",
+        "updatedDate": "2025-07-09T19:36:28.412+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -85,9 +85,9 @@
       "name": "Spine title",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:32.975+00:00",
-        "updatedDate": "2026-04-07T14:09:49.960+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:03.419+00:00",
+        "updatedDate": "2025-07-09T19:36:28.784+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -95,9 +95,9 @@
       "name": "Added title page title",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:32.977+00:00",
-        "updatedDate": "2026-04-07T14:09:49.980+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:03.422+00:00",
+        "updatedDate": "2025-07-09T19:36:29.154+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -105,9 +105,9 @@
       "name": "Other title",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:32.978+00:00",
-        "updatedDate": "2026-04-07T14:09:50.000+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:03.423+00:00",
+        "updatedDate": "2025-07-09T19:36:29.530+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -115,9 +115,9 @@
       "name": "Caption title",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:32.979+00:00",
-        "updatedDate": "2026-04-07T14:09:50.022+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:03.423+00:00",
+        "updatedDate": "2025-07-09T19:36:29.883+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -125,9 +125,9 @@
       "name": "Former title",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:32.979+00:00",
-        "updatedDate": "2026-04-07T14:09:50.043+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:03.422+00:00",
+        "updatedDate": "2025-07-09T19:36:30.238+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     }
   ],

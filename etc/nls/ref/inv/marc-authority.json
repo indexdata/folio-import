@@ -169,37 +169,6 @@
       "description": "Heading uniform title"
     }
   ],
-  "147": [
-    {
-      "rules": [],
-      "target": "namedEvent",
-      "subfield": [
-        "a",
-        "c",
-        "d",
-        "g",
-        "v",
-        "x",
-        "y",
-        "z"
-      ],
-      "description": "Heading named event"
-    }
-  ],
-  "148": [
-    {
-      "rules": [],
-      "target": "chronTerm",
-      "subfield": [
-        "a",
-        "v",
-        "x",
-        "y",
-        "z"
-      ],
-      "description": "Heading chronological term"
-    }
-  ],
   "150": [
     {
       "rules": [],
@@ -242,68 +211,6 @@
         "z"
       ],
       "description": "Heading genre/form term"
-    }
-  ],
-  "162": [
-    {
-      "rules": [],
-      "target": "mediumPerfTerm",
-      "subfield": [
-        "a"
-      ],
-      "description": "Heading medium of performance term"
-    }
-  ],
-  "180": [
-    {
-      "rules": [],
-      "target": "generalSubdivision",
-      "subfield": [
-        "v",
-        "x",
-        "y",
-        "z"
-      ],
-      "description": "Heading general subdivision"
-    }
-  ],
-  "181": [
-    {
-      "rules": [],
-      "target": "geographicSubdivision",
-      "subfield": [
-        "v",
-        "x",
-        "y",
-        "z"
-      ],
-      "description": "Heading geographic subdivision"
-    }
-  ],
-  "182": [
-    {
-      "rules": [],
-      "target": "chronSubdivision",
-      "subfield": [
-        "v",
-        "x",
-        "y",
-        "z"
-      ],
-      "description": "Heading chronological subdivision"
-    }
-  ],
-  "185": [
-    {
-      "rules": [],
-      "target": "formSubdivision",
-      "subfield": [
-        "v",
-        "x",
-        "y",
-        "z"
-      ],
-      "description": "Heading form subdivision"
     }
   ],
   "400": [
@@ -477,37 +384,6 @@
       "description": "See from tracing uniform title"
     }
   ],
-  "447": [
-    {
-      "rules": [],
-      "target": "sftNamedEvent",
-      "subfield": [
-        "a",
-        "c",
-        "d",
-        "g",
-        "v",
-        "x",
-        "y",
-        "z"
-      ],
-      "description": "See from tracing named event"
-    }
-  ],
-  "448": [
-    {
-      "rules": [],
-      "target": "sftChronTerm",
-      "subfield": [
-        "a",
-        "v",
-        "x",
-        "y",
-        "z"
-      ],
-      "description": "See from tracing chronological term"
-    }
-  ],
   "450": [
     {
       "rules": [],
@@ -561,68 +437,6 @@
         "5"
       ],
       "description": "See from tracing genre/form term"
-    }
-  ],
-  "462": [
-    {
-      "rules": [],
-      "target": "sftMediumPerfTerm",
-      "subfield": [
-        "a"
-      ],
-      "description": "See from tracing medium of performance term"
-    }
-  ],
-  "480": [
-    {
-      "rules": [],
-      "target": "sftGeneralSubdivision",
-      "subfield": [
-        "v",
-        "x",
-        "y",
-        "z"
-      ],
-      "description": "See from tracing general subdivision"
-    }
-  ],
-  "481": [
-    {
-      "rules": [],
-      "target": "sftGeographicSubdivision",
-      "subfield": [
-        "v",
-        "x",
-        "y",
-        "z"
-      ],
-      "description": "See from tracing geographic subdivision"
-    }
-  ],
-  "482": [
-    {
-      "rules": [],
-      "target": "sftChronSubdivision",
-      "subfield": [
-        "v",
-        "x",
-        "y",
-        "z"
-      ],
-      "description": "See from tracing chronological subdivision"
-    }
-  ],
-  "485": [
-    {
-      "rules": [],
-      "target": "sftFormSubdivision",
-      "subfield": [
-        "v",
-        "x",
-        "y",
-        "z"
-      ],
-      "description": "See from tracing form subdivision"
     }
   ],
   "500": [
@@ -798,37 +612,6 @@
       "description": "See also from tracing uniform title"
     }
   ],
-  "547": [
-    {
-      "rules": [],
-      "target": "saftNamedEvent",
-      "subfield": [
-        "a",
-        "c",
-        "d",
-        "g",
-        "v",
-        "x",
-        "y",
-        "z"
-      ],
-      "description": "See also from tracing named event"
-    }
-  ],
-  "548": [
-    {
-      "rules": [],
-      "target": "saftChronTerm",
-      "subfield": [
-        "a",
-        "v",
-        "x",
-        "y",
-        "z"
-      ],
-      "description": "See also from tracing chronological term"
-    }
-  ],
   "550": [
     {
       "rules": [],
@@ -882,68 +665,6 @@
         "5"
       ],
       "description": "See also from tracing genre/form term"
-    }
-  ],
-  "562": [
-    {
-      "rules": [],
-      "target": "saftMediumPerfTerm",
-      "subfield": [
-        "a"
-      ],
-      "description": "See also from tracing medium of performance term"
-    }
-  ],
-  "580": [
-    {
-      "rules": [],
-      "target": "saftGeneralSubdivision",
-      "subfield": [
-        "v",
-        "x",
-        "y",
-        "z"
-      ],
-      "description": "See also from tracing general subdivision"
-    }
-  ],
-  "581": [
-    {
-      "rules": [],
-      "target": "saftGeographicSubdivision",
-      "subfield": [
-        "v",
-        "x",
-        "y",
-        "z"
-      ],
-      "description": "See also from tracing geographic subdivision"
-    }
-  ],
-  "582": [
-    {
-      "rules": [],
-      "target": "saftChronSubdivision",
-      "subfield": [
-        "v",
-        "x",
-        "y",
-        "z"
-      ],
-      "description": "See also from tracing chronological subdivision"
-    }
-  ],
-  "585": [
-    {
-      "rules": [],
-      "target": "saftFormSubdivision",
-      "subfield": [
-        "v",
-        "x",
-        "y",
-        "z"
-      ],
-      "description": "See also from tracing form subdivision"
     }
   ],
   "667": [

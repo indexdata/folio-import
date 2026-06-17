@@ -1,53 +1,13 @@
 {
   "holdingsNoteTypes": [
     {
-      "id": "d6510242-5ec3-42ed-b593-3585d2e48fd6",
-      "name": "Action note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:33.113+00:00",
-        "updatedDate": "2026-04-07T14:09:56.318+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "db9b4787-95f0-4e78-becf-26748ce6bdeb",
-      "name": "Provenance",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:33.114+00:00",
-        "updatedDate": "2026-04-07T14:09:56.335+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
       "id": "c4407cc7-d79f-4609-95bd-1cefb2e2b5c5",
       "name": "Copy note",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:33.114+00:00",
-        "updatedDate": "2026-04-07T14:09:56.262+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "e19eabab-a85c-4aef-a7b2-33bd9acef24e",
-      "name": "Binding",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:33.116+00:00",
-        "updatedDate": "2026-04-07T14:09:56.282+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "88914775-f677-4759-b57b-1a33b90b24e0",
-      "name": "Electronic bookplate",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:33.116+00:00",
-        "updatedDate": "2026-04-07T14:09:56.300+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:03.565+00:00",
+        "updatedDate": "2025-07-09T19:38:26.779+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -55,9 +15,19 @@
       "name": "Reproduction",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:33.119+00:00",
-        "updatedDate": "2026-04-07T14:09:56.353+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:03.569+00:00",
+        "updatedDate": "2025-07-09T19:38:28.243+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "d6510242-5ec3-42ed-b593-3585d2e48fd6",
+      "name": "Action note",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:03.566+00:00",
+        "updatedDate": "2025-07-09T19:38:27.135+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -65,9 +35,50 @@
       "name": "Note",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:33.120+00:00",
-        "updatedDate": "2026-04-07T14:09:56.371+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:03.571+00:00",
+        "updatedDate": "2025-07-09T19:38:28.612+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "11b0e5cc-7d3e-4502-8fa0-d922e94acb66",
+      "name": "Sammanfattning av innehåll",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-02-28T11:04:33.801+00:00",
+        "createdByUserId": "6c4efc2a-853a-432c-9785-566416bd0035",
+        "updatedDate": "2025-02-28T11:04:33.801+00:00",
+        "updatedByUserId": "6c4efc2a-853a-432c-9785-566416bd0035"
+      }
+    },
+    {
+      "id": "88914775-f677-4759-b57b-1a33b90b24e0",
+      "name": "Electronic bookplate",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:03.566+00:00",
+        "updatedDate": "2025-07-09T19:38:26.414+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "db9b4787-95f0-4e78-becf-26748ce6bdeb",
+      "name": "Provenance",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:03.569+00:00",
+        "updatedDate": "2025-07-09T19:38:27.494+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "e19eabab-a85c-4aef-a7b2-33bd9acef24e",
+      "name": "Binding",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:03.568+00:00",
+        "updatedDate": "2025-07-09T19:38:27.858+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -75,12 +86,12 @@
       "name": "Libris beståndsinformation",
       "source": "local",
       "metadata": {
-        "createdDate": "2026-04-07T14:09:56.380+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:09:56.380+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-07-09T19:38:28.792+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2025-07-09T19:38:28.792+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     }
   ],
-  "totalRecords": 8
+  "totalRecords": 9
 }

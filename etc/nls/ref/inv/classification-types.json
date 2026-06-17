@@ -1,23 +1,13 @@
 {
   "classificationTypes": [
     {
-      "id": "42471af9-7d25-4f3a-bf78-60d29dcf463b",
-      "name": "Dewey",
+      "id": "e8662436-75a8-4984-bebc-531e38c774a0",
+      "name": "UDC",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:32.839+00:00",
-        "updatedDate": "2026-04-07T14:09:50.491+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "9a60012a-0fcf-4da9-a1d1-148e818c27ad",
-      "name": "National Agricultural Library",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:32.852+00:00",
-        "updatedDate": "2026-04-07T14:09:50.511+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:03.289+00:00",
+        "updatedDate": "2025-07-09T19:36:35.398+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -25,59 +15,9 @@
       "name": "NLM",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:32.838+00:00",
-        "updatedDate": "2026-04-07T14:09:50.453+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "a83699eb-cc23-4307-8043-5a38a8dce335",
-      "name": "LC (local)",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:32.851+00:00",
-        "updatedDate": "2026-04-07T14:09:50.557+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "e8662436-75a8-4984-bebc-531e38c774a0",
-      "name": "UDC",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:32.840+00:00",
-        "updatedDate": "2026-04-07T14:09:50.365+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "ce176ace-a53e-4b4d-aa89-725ed7b2edac",
-      "name": "LC",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:32.852+00:00",
-        "updatedDate": "2026-04-07T14:09:50.389+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "9075b5f8-7d97-49e1-a431-73fdd468d476",
-      "name": "SUDOC",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:32.852+00:00",
-        "updatedDate": "2026-04-07T14:09:50.472+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "ad615f6e-e28c-4343-b4a0-457397c5be3e",
-      "name": "Canadian Classification",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:32.839+00:00",
-        "updatedDate": "2026-04-07T14:09:50.538+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:03.290+00:00",
+        "updatedDate": "2025-07-09T19:36:35.814+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -85,9 +25,59 @@
       "name": "Additional Dewey",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:32.835+00:00",
-        "updatedDate": "2026-04-07T14:09:50.410+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:03.289+00:00",
+        "updatedDate": "2025-07-09T19:36:36.190+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "42471af9-7d25-4f3a-bf78-60d29dcf463b",
+      "name": "Dewey",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:03.290+00:00",
+        "updatedDate": "2025-07-09T19:36:36.583+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "ad615f6e-e28c-4343-b4a0-457397c5be3e",
+      "name": "Canadian Classification",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:03.291+00:00",
+        "updatedDate": "2025-07-09T19:36:36.979+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "a83699eb-cc23-4307-8043-5a38a8dce335",
+      "name": "LC (local)",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:03.301+00:00",
+        "updatedDate": "2025-07-09T19:36:37.388+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "ce176ace-a53e-4b4d-aa89-725ed7b2edac",
+      "name": "LC",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:03.300+00:00",
+        "updatedDate": "2025-07-09T19:36:37.780+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "9075b5f8-7d97-49e1-a431-73fdd468d476",
+      "name": "SUDOC",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:03.301+00:00",
+        "updatedDate": "2025-07-09T19:36:38.168+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -95,9 +85,19 @@
       "name": "GDC",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:32.851+00:00",
-        "updatedDate": "2026-04-07T14:09:50.430+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:03.302+00:00",
+        "updatedDate": "2025-07-09T19:36:38.542+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "9a60012a-0fcf-4da9-a1d1-148e818c27ad",
+      "name": "National Agricultural Library",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:03.302+00:00",
+        "updatedDate": "2025-07-09T19:36:38.937+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -105,10 +105,10 @@
       "name": "SAB",
       "source": "local",
       "metadata": {
-        "createdDate": "2026-04-07T14:09:50.566+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:09:50.566+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-03-27T17:24:14.000+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2025-07-09T19:36:39.290+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -116,10 +116,10 @@
       "name": "Genre/form (saogf)",
       "source": "local",
       "metadata": {
-        "createdDate": "2026-04-07T14:09:50.579+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:09:50.579+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-07-09T19:36:39.463+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2025-07-09T19:36:39.463+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     }
   ],

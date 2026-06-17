@@ -219,6 +219,66 @@ const customRules = {
         }
       ]
     }
+  ],
+  "561": [
+    {
+      "entity": [
+        {
+          "target": "notes.instanceNoteTypeId",
+          "description": "Instance note type id",
+          "subfield": [
+            "a"
+          ],
+          "applyRulesOnConcatenatedData": true,
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_note_type_id",
+                  "parameter": {
+                    "name": "Provenance (local note)"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "target": "notes.note",
+          "description": "Provenance (local note)",
+          "subfield": [
+            "a"
+          ],
+          "applyRulesOnConcatenatedData": true,
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "trim_period"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "target": "notes.staffOnly",
+          "description": "If true, determines that the note should not be visible for others than staff",
+          "applyRulesOnConcatenatedData": true,
+          "subfield": [
+            "a"
+          ],
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_note_staff_only_via_indicator"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
   ]
 }
 
@@ -403,6 +463,7 @@ const funcs = {
     return refData.alternativeTitleTypes[param.name];
   },
   set_note_type_id: function (data, param) {
+    console.log(data, param);
     return refData.instanceNoteTypes[param.name];
   },
   set_note_staff_only_via_indicator: function (data, param, ind1) {
@@ -895,8 +956,9 @@ try {
   };
   let rulesStr = fs.readFileSync(rulesFile, { encoding: 'utf8' });
   const allMappingRules = JSON.parse(rulesStr);
+  delete allMappingRules['561'];
   Object.assign(allMappingRules, customRules);
-  // throw(allMappingRules['041']);
+  // throw(JSON.stringify(allMappingRules, null, 2));
   const mappingRules = {};
   for (let tag in allMappingRules) {
     let map = allMappingRules[tag];
@@ -922,6 +984,7 @@ try {
     mappingRules[tag].erps = erps;
     mappingRules[tag].entities = ents;
   }
+  // throw(JSON.stringify(mappingRules, null, 2));
   rulesStr = '';
 
   // get instance schema
@@ -957,7 +1020,7 @@ try {
       });
     } catch {}
   });
-  // throw(refData.instanceStatuses);
+  // throw(refData.instanceNoteTypes);
 
   // create tsv map
   if (conf.tsvDir) {
@@ -1228,9 +1291,10 @@ try {
       }
 
       let addFields = {};
+      let f866 = [];
       for (let t in marc.fields) {
         let fields = marc.fields[t];
-        if (t.match(/852|866|561|042/)) {
+        if (t.match(/852|866|042/)) {
           fields.forEach(f => {
             let d;
             let str;
@@ -1244,7 +1308,7 @@ try {
               };
               if (d['5'] === 'SRo') makeSroHoldings(instId, hrid, d, str, f, marc.fields['866']);
             } else if (t === '866') {
-              d = getSubsHash(f, true);
+              f866.push(getSubsHash(f, true));
             } else if (t === '042') {
               d = getSubs(f, '9');
             } else {
@@ -1298,6 +1362,7 @@ try {
           inst.statusId = refData.instanceStatuses[d541];
         } else {
           let mr = mappingRules[t];
+          console.log(t);
           if (mr) {
             fields.forEach(f => {
               let actFields = [];
@@ -1419,6 +1484,23 @@ try {
             n.staffOnly = n.staffOnly.replace(/ .*/, '');
           });
         }
+        if (f866) {
+          f866.forEach(f => {
+            if (!inst.notes) inst.notes = [];
+            if (f['5'] === 'S' && f.a) {
+              let n = (f.z) ? `${f.a} (${f.z})` : f.a;
+              if (n) {
+                let t = refData.instanceNoteTypes['Holdins statement (local note)'] || refData.instanceNoteTypes['Holdings statement (local note)'];
+                let o = {
+                  instanceNoteTypeId: t,
+                  note: n,
+                  staffOnly: false
+                }
+                inst.notes.push(o);
+              }
+            }
+          });
+      }
         writeOut(outs.instances, inst);
         ttl.instances++;
         if (!conf.noSrs && instSource === 'MARC') {

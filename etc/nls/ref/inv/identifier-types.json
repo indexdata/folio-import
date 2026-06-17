@@ -1,13 +1,24 @@
 {
   "identifierTypes": [
     {
+      "id": "73d8e6b3-0a40-454a-880b-b67e6a9add67",
+      "name": "Aleph system number",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2026-02-12T17:33:06.671+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2026-02-12T17:33:06.671+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
       "id": "650ef996-35e3-48ec-bf3a-a0d078a0ca37",
       "name": "UkMac",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:31.837+00:00",
-        "updatedDate": "2026-04-07T14:09:56.594+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:02.147+00:00",
+        "updatedDate": "2025-07-09T19:38:33.343+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -15,9 +26,9 @@
       "name": "Other standard identifier",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:31.834+00:00",
-        "updatedDate": "2026-04-07T14:09:56.628+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:02.147+00:00",
+        "updatedDate": "2025-07-09T19:38:33.708+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -25,9 +36,9 @@
       "name": "Control number",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:31.839+00:00",
-        "updatedDate": "2026-04-07T14:09:56.651+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:02.148+00:00",
+        "updatedDate": "2025-07-09T19:38:34.119+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -35,9 +46,9 @@
       "name": "Publisher or distributor number",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:31.838+00:00",
-        "updatedDate": "2026-04-07T14:09:56.670+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:02.150+00:00",
+        "updatedDate": "2025-07-09T19:38:34.488+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -45,9 +56,9 @@
       "name": "System control number",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:31.837+00:00",
-        "updatedDate": "2026-04-07T14:09:56.688+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:02.150+00:00",
+        "updatedDate": "2025-07-09T19:38:34.839+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -55,9 +66,9 @@
       "name": "Cancelled GPO item number",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:31.852+00:00",
-        "updatedDate": "2026-04-07T14:09:56.707+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:02.152+00:00",
+        "updatedDate": "2025-07-09T19:38:35.231+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -65,9 +76,9 @@
       "name": "ISBN",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:31.846+00:00",
-        "updatedDate": "2026-04-07T14:09:56.728+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:02.151+00:00",
+        "updatedDate": "2025-07-09T19:38:35.612+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -75,10 +86,10 @@
       "name": "ISMN",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-07T14:09:56.781+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:09:56.781+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-07-09T19:38:35.987+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2025-07-09T19:38:35.987+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -86,10 +97,10 @@
       "name": "Cancelled system control number",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-07T14:09:56.803+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:09:56.803+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-07-09T19:38:36.355+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2025-07-09T19:38:36.355+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -97,9 +108,9 @@
       "name": "StEdNL",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:31.860+00:00",
-        "updatedDate": "2026-04-07T14:09:56.834+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:02.156+00:00",
+        "updatedDate": "2025-07-09T19:38:36.737+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -107,152 +118,9 @@
       "name": "ASIN",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:31.847+00:00",
-        "updatedDate": "2026-04-07T14:09:56.855+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "593b78cb-32f3-44d1-ba8c-63fd5e6989e6",
-      "name": "CODEN",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:31.865+00:00",
-        "updatedDate": "2026-04-07T14:09:56.894+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "37b65e79-0392-450d-adc6-e2a1f47de452",
-      "name": "Report number",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:31.873+00:00",
-        "updatedDate": "2026-04-07T14:09:56.914+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "b3ea81fb-3324-4c64-9efc-7c0c93d5943c",
-      "name": "Invalid UPC",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-07T14:09:56.932+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:09:56.932+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "27fd35a6-b8f6-41f2-aa0e-9c663ceb250c",
-      "name": "Invalid ISSN",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:31.874+00:00",
-        "updatedDate": "2026-04-07T14:09:56.972+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "39554f54-d0bb-4f0a-89a4-e422f6136316",
-      "name": "DOI",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:31.878+00:00",
-        "updatedDate": "2026-04-07T14:09:56.995+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "439bfbae-75bc-4f74-9fc7-b2a2d47ce3ef",
-      "name": "OCLC",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:31.882+00:00",
-        "updatedDate": "2026-04-07T14:09:57.015+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "eb7b2717-f149-4fec-81a3-deefb8f5ee6b",
-      "name": "URN",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:31.880+00:00",
-        "updatedDate": "2026-04-07T14:09:57.036+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "c858e4f2-2b6b-4385-842b-60532ee34abb",
-      "name": "Canceled LCCN",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-07T14:09:57.098+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:09:57.098+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "fcca2643-406a-482a-b760-7a7f8aec640e",
-      "name": "Invalid ISBN",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:31.885+00:00",
-        "updatedDate": "2026-04-07T14:09:57.128+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "4f07ea37-6c7f-4836-add2-14249e628ed1",
-      "name": "Invalid ISMN",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-07T14:09:57.208+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:09:57.208+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "8e3dd25e-db82-4b06-8311-90d41998c109",
-      "name": "Standard technical report number",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:31.881+00:00",
-        "updatedDate": "2026-04-07T14:09:57.227+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "3187432f-9434-40a8-8782-35a111a1491e",
-      "name": "BNB",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:31.886+00:00",
-        "updatedDate": "2026-04-07T14:09:57.247+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "216b156b-215e-4839-a53e-ade35cb5702a",
-      "name": "Handle",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:31.889+00:00",
-        "updatedDate": "2026-04-07T14:09:57.077+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "5130aed5-1095-4fb6-8f6f-caa3d6cc7aae",
-      "name": "Local identifier",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:31.889+00:00",
-        "updatedDate": "2026-04-07T14:09:57.279+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:02.155+00:00",
+        "updatedDate": "2025-07-09T19:38:37.122+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -260,10 +128,41 @@
       "name": "UPC",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-07T14:09:56.875+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:09:56.875+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-07-09T19:38:37.907+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2025-07-09T19:38:37.907+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "593b78cb-32f3-44d1-ba8c-63fd5e6989e6",
+      "name": "CODEN",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:02.159+00:00",
+        "updatedDate": "2025-07-09T19:38:38.272+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "37b65e79-0392-450d-adc6-e2a1f47de452",
+      "name": "Report number",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:02.161+00:00",
+        "updatedDate": "2025-07-09T19:38:38.656+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "b3ea81fb-3324-4c64-9efc-7c0c93d5943c",
+      "name": "Invalid UPC",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-07-09T19:38:39.350+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2025-07-09T19:38:39.350+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -271,9 +170,49 @@
       "name": "GPO item number",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:31.872+00:00",
-        "updatedDate": "2026-04-07T14:09:56.953+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:02.163+00:00",
+        "updatedDate": "2025-07-09T19:38:39.728+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "27fd35a6-b8f6-41f2-aa0e-9c663ceb250c",
+      "name": "Invalid ISSN",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:02.166+00:00",
+        "updatedDate": "2025-07-09T19:38:40.111+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "39554f54-d0bb-4f0a-89a4-e422f6136316",
+      "name": "DOI",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:02.167+00:00",
+        "updatedDate": "2025-07-09T19:38:40.912+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "439bfbae-75bc-4f74-9fc7-b2a2d47ce3ef",
+      "name": "OCLC",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:02.169+00:00",
+        "updatedDate": "2025-07-09T19:38:41.286+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "eb7b2717-f149-4fec-81a3-deefb8f5ee6b",
+      "name": "URN",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:02.169+00:00",
+        "updatedDate": "2025-07-09T19:38:41.671+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -281,51 +220,71 @@
       "name": "LCCN",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:31.877+00:00",
-        "updatedDate": "2026-04-07T14:09:57.058+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:02.171+00:00",
+        "updatedDate": "2025-07-09T19:38:42.050+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
-      "id": "75af4880-38ff-4358-8e76-2cbef5d91af4",
+      "id": "fcca2643-406a-482a-b760-7a7f8aec640e",
+      "name": "Invalid ISBN",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:02.173+00:00",
+        "updatedDate": "2025-07-09T19:38:42.823+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "c858e4f2-2b6b-4385-842b-60532ee34abb",
+      "name": "Canceled LCCN",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-07-09T19:38:44.687+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2025-07-09T19:38:44.687+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "d47ac802-48ab-42d3-96b4-0a5f75b99089",
       "name": "Libris III number",
       "source": "local",
       "metadata": {
-        "createdDate": "2026-04-07T14:09:57.108+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:09:57.108+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2026-02-12T17:33:56.304+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2026-02-12T17:33:56.304+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
-      "id": "01e62221-f402-4bb4-9787-3e52e923fad5",
-      "name": "Aleph system number",
-      "source": "local",
-      "metadata": {
-        "createdDate": "2026-04-07T14:09:57.138+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:09:57.138+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "913300b2-03ed-469a-8179-c1092c991227",
-      "name": "ISSN",
+      "id": "216b156b-215e-4839-a53e-ade35cb5702a",
+      "name": "Handle",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:31.891+00:00",
-        "updatedDate": "2026-04-07T14:09:57.158+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:02.176+00:00",
+        "updatedDate": "2025-07-09T19:38:43.208+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
-      "id": "5860f255-a27f-4916-a830-262aa900a6b9",
-      "name": "Linking ISSN",
+      "id": "3187432f-9434-40a8-8782-35a111a1491e",
+      "name": "BNB",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:31.863+00:00",
-        "updatedDate": "2026-04-07T14:09:57.177+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:02.173+00:00",
+        "updatedDate": "2025-07-09T19:38:42.445+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "5130aed5-1095-4fb6-8f6f-caa3d6cc7aae",
+      "name": "Local identifier",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:02.177+00:00",
+        "updatedDate": "2025-07-09T19:38:43.963+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -333,23 +292,75 @@
       "name": "KBKATALOG1955",
       "source": "local",
       "metadata": {
-        "createdDate": "2026-04-07T14:09:57.289+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:09:57.289+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-03-27T17:26:04.632+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2025-07-09T19:38:44.334+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
-      "id": "a6d2b6ea-bcca-44cf-b704-3df0a6eff81a",
+      "id": "f4c77d83-634e-41b6-b8a9-7e70840c3bd9",
       "name": "Libris",
       "source": "local",
       "metadata": {
-        "createdDate": "2026-04-07T14:09:57.298+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:09:57.298+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-05-05T07:40:11.484+00:00",
+        "createdByUserId": "e297b7ce-90ef-4e9c-a2d2-36050ebf7765",
+        "updatedDate": "2025-05-05T07:40:11.484+00:00",
+        "updatedByUserId": "e297b7ce-90ef-4e9c-a2d2-36050ebf7765"
+      }
+    },
+    {
+      "id": "5ac34587-a4a4-4167-a9a2-35307731659e",
+      "name": "SE-LIBR",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-03-27T17:25:54.537+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2025-07-09T19:38:32.934+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "5860f255-a27f-4916-a830-262aa900a6b9",
+      "name": "Linking ISSN",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:02.157+00:00",
+        "updatedDate": "2025-07-09T19:38:37.526+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "913300b2-03ed-469a-8179-c1092c991227",
+      "name": "ISSN",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:02.176+00:00",
+        "updatedDate": "2025-07-09T19:38:43.583+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "4f07ea37-6c7f-4836-add2-14249e628ed1",
+      "name": "Invalid ISMN",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-07-09T19:38:39.000+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2025-07-09T19:38:39.000+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "8e3dd25e-db82-4b06-8311-90d41998c109",
+      "name": "Standard technical report number",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:02.167+00:00",
+        "updatedDate": "2025-07-09T19:38:40.497+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     }
   ],
-  "totalRecords": 34
+  "totalRecords": 35
 }

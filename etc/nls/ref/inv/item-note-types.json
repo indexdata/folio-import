@@ -1,53 +1,58 @@
 {
   "itemNoteTypes": [
     {
-      "id": "1dde7141-ec8a-4dae-9825-49ce14c728e7",
-      "name": "Copy note",
-      "source": "folio",
+      "id": "2c8f0b79-78d9-4187-832f-b5d3d96c8546",
+      "name": "Public note",
+      "source": "local",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:33.134+00:00",
-        "updatedDate": "2026-04-07T14:10:00.713+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-02-28T11:04:52.217+00:00",
+        "createdByUserId": "6c4efc2a-853a-432c-9785-566416bd0035",
+        "updatedDate": "2025-02-28T11:04:52.217+00:00",
+        "updatedByUserId": "6c4efc2a-853a-432c-9785-566416bd0035"
       }
     },
     {
-      "id": "87c450be-2033-41fb-80ba-dd2409883681",
-      "name": "Binding",
-      "source": "folio",
+      "id": "1bf2a9ff-f598-4442-8124-19d9b346e98b",
+      "name": "Staff note",
+      "source": "local",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:33.136+00:00",
-        "updatedDate": "2026-04-07T14:10:00.672+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-02-28T11:04:59.655+00:00",
+        "createdByUserId": "6c4efc2a-853a-432c-9785-566416bd0035",
+        "updatedDate": "2025-02-28T11:04:59.655+00:00",
+        "updatedByUserId": "6c4efc2a-853a-432c-9785-566416bd0035"
       }
     },
     {
-      "id": "0e40884c-3523-4c6d-8187-d578e3d2794e",
-      "name": "Action note",
-      "source": "folio",
+      "id": "c97de4ac-0642-4259-800d-6cee892bf16c",
+      "name": "Internal note",
+      "source": "local",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:33.134+00:00",
-        "updatedDate": "2026-04-07T14:10:00.694+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-03-17T17:01:09.453+00:00",
+        "createdByUserId": "8ffac617-2e98-453b-bb2e-0d3d3a6fad7a",
+        "updatedDate": "2025-03-17T17:01:09.453+00:00",
+        "updatedByUserId": "8ffac617-2e98-453b-bb2e-0d3d3a6fad7a"
       }
     },
     {
-      "id": "f3ae3823-d096-4c65-8734-0c1efd2ffea8",
-      "name": "Electronic bookplate",
-      "source": "folio",
+      "id": "3112bd21-0293-433e-96c9-1c53ed9cc42c",
+      "name": "Samlingskod",
+      "source": "local",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:33.133+00:00",
-        "updatedDate": "2026-04-07T14:10:00.733+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-03-17T17:01:36.030+00:00",
+        "createdByUserId": "8ffac617-2e98-453b-bb2e-0d3d3a6fad7a",
+        "updatedDate": "2025-03-17T17:01:36.030+00:00",
+        "updatedByUserId": "8ffac617-2e98-453b-bb2e-0d3d3a6fad7a"
       }
     },
     {
-      "id": "acb3a58f-1d72-461d-97c3-0e7119e8d544",
-      "name": "Reproduction",
-      "source": "folio",
+      "id": "8183827a-ee10-43bb-ac02-2726dff81167",
+      "name": "Aleph check out count",
+      "source": "local",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:33.139+00:00",
-        "updatedDate": "2026-04-07T14:10:00.753+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-04-28T09:18:11.051+00:00",
+        "createdByUserId": "e297b7ce-90ef-4e9c-a2d2-36050ebf7765",
+        "updatedDate": "2025-04-28T09:18:11.051+00:00",
+        "updatedByUserId": "e297b7ce-90ef-4e9c-a2d2-36050ebf7765"
       }
     },
     {
@@ -55,54 +60,11 @@
       "name": "Provenance",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:33.137+00:00",
-        "updatedDate": "2026-04-07T14:10:00.771+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "2fab608b-8018-4ddd-aaf5-6e361cd33ad5",
-      "name": "Samlingskod",
-      "source": "local",
-      "metadata": {
-        "createdDate": "2026-04-07T14:10:00.782+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:10:00.782+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "8d0a5eca-25de-4391-81a9-236eeefdd20b",
-      "name": "Internal note",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:33.140+00:00",
-        "updatedDate": "2026-04-07T14:10:00.801+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "af899254-3037-4bf7-8b2d-0ff385a7b37c",
-      "name": "Public note",
-      "source": "local",
-      "metadata": {
-        "createdDate": "2026-04-07T14:10:00.810+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:10:00.810+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "78478a92-bc5f-4461-88dc-83941a13f9fe",
-      "name": "Aleph check out count",
-      "source": "local",
-      "metadata": {
-        "createdDate": "2026-04-07T14:10:00.820+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:10:00.820+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:03.586+00:00",
+        "updatedDate": "2025-07-09T19:40:00.870+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     }
   ],
-  "totalRecords": 10
+  "totalRecords": 6
 }
