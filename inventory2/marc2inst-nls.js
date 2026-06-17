@@ -1362,7 +1362,6 @@ try {
           inst.statusId = refData.instanceStatuses[d541];
         } else {
           let mr = mappingRules[t];
-          console.log(t);
           if (mr) {
             fields.forEach(f => {
               let actFields = [];
