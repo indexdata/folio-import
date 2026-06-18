@@ -142,10 +142,9 @@ const funcs = {
     return out;
   },
   set_instance_type_id: function (data, param) {
-    data = data.replace(/ .+/, '');
     let [ n, c ] = data.split(/~/);
     let u = param.unspecifiedInstanceTypeCode;
-    let out = refData.instanceTypes[c] || refData.instanceTypes[u];
+    let out = refData.instanceTypes[c] || refData.instanceTypes[n] || refData.instanceTypes[u];
     return out
   },
   set_instance_format_id: function (data) {
