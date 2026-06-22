@@ -24,14 +24,14 @@ in=$(data)/incoming
 raw=$(in)/*Bib*mrc
 mfhds=$(in)/*Holdings*mrc
 mfile=$(idir)/bibs.mrc
-izip=$(in)/*Full*zip
+izip=$(in)/*Bib*zip
 xlsx=$(in)/*Items*xlsx
 csv=$(in)/*Items*csv
 araw=$(in)/*Author*mrc
 log=$(data)/log
 
 instances: $(izip)
-	cd $(in); unzip *Full*zip 
+	cd $(in); unzip $(izip) 
 	cat $(in)/*Manifest*
 	@read -p "Copy highest holdings ID value (hit Enter to continue) " c
 	vi $(conf)
