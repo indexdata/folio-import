@@ -5,6 +5,7 @@ import fs from 'fs';
 import path from 'path';
 import { v5 as uuid } from 'uuid';
 import readline from 'readline';
+import lib from 'pg';
 
 let confFile = process.argv[2];
 let instSource = 'FOLIO';
@@ -714,10 +715,10 @@ let ttl = {
   }
 
 let sro = {};
-const makeSroHoldings = (instId, instHrid, fields, str, f852, f866) => {
+const makeSroHoldings = (instId, instHrid, fields, str, f852, f866, lnum) => {
   if (!sro[instId]) sro[instId] = 0;
   sro[instId]++;
-  let hrid = instHrid + 's' + sro[instId].toString().padStart(2, '0');
+  let hrid = lnum || instHrid + 's' + sro[instId].toString().padStart(2, '0');
   let id = uuid(hrid, ns);
   let cnParts = [];
   let l852 = fields['8'];
@@ -1060,9 +1061,11 @@ try {
     if (k) {
       librisMap[k] = { n: c[1], u: c[2] };
     }
+    if (c[3]) librisMap[k].s = c[3].replace(/^.+?: /, '');
+    if (c[4]) librisMap[k].sro = c[4].replace(/^.+?: /, '');
   }
   console.log(`INFO Map lines parsed: ${lm}`);
-  // throw(librisMap['004826829']);
+  // throw(librisMap);
 
   let t;
 
@@ -1202,7 +1205,14 @@ try {
         marc.updateField('001', prefix + marc.fields['001']);
       }
       let anum = (marc.fields['001']) ? marc.fields['001'][0] : '';
-      let lnum = (librisMap[anum]) ? librisMap[anum].n : '';
+      let lnum = '';
+      let hhrid = '';
+      let sroHrid = '';
+      if (librisMap[anum]) {
+        lnum = librisMap[anum].n;
+        hhrid = librisMap[anum].s;
+        sroHrid = librisMap[anum].sro;
+      }
       let hrid = lnum || anum;
       if (!hrid) {
         ttl.err++;
@@ -1305,7 +1315,7 @@ try {
               } else if (d.z) {
                 str = `(${d.z})`;
               };
-              if (d['5'] === 'SRo') makeSroHoldings(instId, hrid, d, str, f, marc.fields['866']);
+              if (d['5'] === 'SRo') makeSroHoldings(instId, hrid, d, str, f, marc.fields['866'], sroHrid);
             } else if (t === '866') {
               f866.push(getSubsHash(f, true));
             } else if (t === '042') {
@@ -1509,7 +1519,8 @@ try {
         if (idmap) {
           let ea = (inst.electronicAccess) ? JSON.stringify(inst.electronicAccess) : '';
           let af = JSON.stringify(addFields);
-          let instMap = `${anum}\x1E${inst.id}\x1E${bibCallNum.value}\x1E${bibCallNum.type}\x1E${blvl}\x1E${ea}\x1E${itypeCode}\x1E${af}\x1E${inst.hrid}`;
+          console.log(hhrid);
+          let instMap = `${anum}\x1E${inst.id}\x1E${bibCallNum.value}\x1E${bibCallNum.type}\x1E${blvl}\x1E${ea}\x1E${itypeCode}\x1E${af}\x1E${inst.hrid}\x1E${hhrid}`;
           writeOut(outs.idmap, instMap, true, '\n');
         }
         let lkr = (marc && marc.fields && marc.fields['LKR']) ? marc.fields['LKR'] : [];
