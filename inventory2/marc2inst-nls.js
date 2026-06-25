@@ -780,7 +780,7 @@ const makeItem = (holdingsId, holdingsHrid, mtype, ltype, status, callNumber) =>
       id: id,
       hrid: hrid,
       holdingsRecordId: holdingsId,
-      permanentLoanTypeId: refData.loantypes[ltype],
+      permanentLoanTypeId: refData.loantypes[ltype] || '9ab2b57a-2dd5-473a-88ae-c851a8d0b781',
       materialTypeId: refData.mtypes[mtype],
       status: { name: status }
     };
