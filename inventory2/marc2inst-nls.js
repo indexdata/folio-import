@@ -715,7 +715,9 @@ let ttl = {
   }
 
 let sro = {};
+let lnumSeen = {};
 const makeSroHoldings = (instId, instHrid, fields, str, f852, f866, lnum) => {
+  if (lnumSeen[lnum]) lnum = '';
   if (!sro[instId]) sro[instId] = 0;
   sro[instId]++;
   let hrid = lnum || instHrid + 's' + sro[instId].toString().padStart(2, '0');
@@ -768,7 +770,7 @@ const makeSroHoldings = (instId, instHrid, fields, str, f852, f866, lnum) => {
   // Changed mind: make items -- see FOLIO-149
 
   makeItem(h.id, h.hrid, 'Monografi', 'Beställ manuellt')
-  
+  if (lnum) lnumSeen[lnum] = 1;
 }
 
 const makeItem = (holdingsId, holdingsHrid, mtype, ltype, status, callNumber) => {
