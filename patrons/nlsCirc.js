@@ -301,7 +301,7 @@ const spTran = {
               t = 'Page';
               items[key].st = 'Paged'
             } else {
-              t = 'Hold';
+              t = 'Recall';
             }
             let stat = (r.Z37_STATUS === 'S') ? 'Open - Awaiting pickup' : 'Open - Not yet filled';
             let edate = r.Z37_END_REQUEST_DATE;
