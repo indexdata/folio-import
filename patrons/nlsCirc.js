@@ -24,7 +24,8 @@ const outFiles = {
   co: 'checkouts.jsonl',
   ia: 'inactive-users.jsonl',
   rq: 'requests.jsonl',
-  rr: 'reading-room.jsonl'
+  rr: 'reading-room.jsonl',
+  it: 'item-upates.jsonl'
 };
 
 const spTran = {
@@ -102,6 +103,19 @@ const spTran = {
       let o = JSON.parse(line);
       let k = o.hrid;
       items[k] = { bc: o.barcode, st: o.status.name, id: o.id };
+      if (o.status.name.match(/^(Restricted)/)) {
+        o._version = o._version + 1;
+        if (!o.circulationNotes) o.circulationNotes = [];
+        let id = uuid(o.hrid + "Restricted", ns);
+        let cnote = {
+          id: id,
+          note: 'Ändra status till Restricted vid återlämning',
+          noteType: 'Check in',
+          staffOnly: true
+        }
+        o.circulationNotes.push(cnote);
+        items[k].item = o;
+      }
       bcodeMap[o.barcode] = o.status.name;
       if (ic%250000 === 0) console.log(`Items parsed: ${ic}`);
     }
@@ -234,7 +248,7 @@ const spTran = {
         if (item.st !== 'Available') {
           if (item.st !== 'In process') {
             console.log(`INFO item barcode "${item.bc}" has a status of "${item.st}"`);
-            ttl.ina++;
+            writeOut(outFiles.it, item.item);
           }
         }
         item.st = 'Checked out';
