@@ -248,7 +248,7 @@ const spTran = {
         if (item.st !== 'Available') {
           if (item.st !== 'In process') {
             console.log(`INFO item barcode "${item.bc}" has a status of "${item.st}"`);
-            writeOut(outFiles.it, item.item);
+            if (item.item) writeOut(outFiles.it, item.item);
           }
         }
         item.st = 'Checked out';
