@@ -24,7 +24,7 @@ try {
     let total = 0;
     let trec = '';
     rl.on('line', r => {
-      if (r.match(/^\d{3}/)) {
+      if (r.match(/^\w{3}/)) {
         trec += r + "\n";
       } else {
         let raw = txt2raw(trec);

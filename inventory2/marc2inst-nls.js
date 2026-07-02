@@ -735,10 +735,29 @@ const makeSroHoldings = (instId, instHrid, fields, str, f852, f866, lnum) => {
     permanentLocationId: refData.locations['LOC-SRO'] || refData.locations['loc-sro'],
     notes: []
   };
-  if (cn) {
+  if (cn && !f852[1]) {
     h.callNumber = cn;
     h.callNumberTypeId = refData.callNumberTypes['Other scheme'];
   }
+  if (f852) {
+    let x = 0;
+    f852.forEach(f => {
+      let shash = getSubsHash(f);
+      if (shash.z) {
+        shash.z.forEach(n => {
+          let o = {
+            holdingsNoteTypeId: refData.holdingsNoteTypes.Note,
+            note: n
+          };
+          h.notes.push(o);
+        });
+      }
+      x++;
+      makeItem(h.id, h.hrid, 'Monografi', 'Beställ manuellt', 'Available', cn, x);
+    });
+  }
+
+  /* 
   if (fields.z) {
     let shash = getSubsHash(f852);
     shash.z.forEach(n => {
@@ -749,6 +768,8 @@ const makeSroHoldings = (instId, instHrid, fields, str, f852, f866, lnum) => {
       h.notes.push(o);
     });
   }
+  */
+
   if (f866) {
     f866.forEach(f => {
       let subs = getSubsHash(f, true);
@@ -765,18 +786,20 @@ const makeSroHoldings = (instId, instHrid, fields, str, f852, f866, lnum) => {
   }
   writeOut(outs.xholdings, h);
   ttl.xholdings++;
+  if (lnum) lnumSeen[lnum] = 1;
+  return(h.id);
 
   // Don't make SRo items -- see FOLIO-229
   // Changed mind: make items -- see FOLIO-149
 
-  makeItem(h.id, h.hrid, 'Monografi', 'Beställ manuellt')
-  if (lnum) lnumSeen[lnum] = 1;
+  // makeItem(h.id, h.hrid, 'Monografi', 'Beställ manuellt')
 }
 
-const makeItem = (holdingsId, holdingsHrid, mtype, ltype, status, callNumber) => {
+const makeItem = (holdingsId, holdingsHrid, mtype, ltype, status, callNumber, x) => {
+  let occStr = x.toString().padStart(3, '0');
   if (!status) status = 'Available';
   if (holdingsId && mtype && ltype) {
-    let hrid = holdingsHrid;
+    let hrid = holdingsHrid + occStr;;
     let id = uuid(hrid + 'item', ns);
     let i = {
       id: id,
@@ -1215,6 +1238,7 @@ try {
         hhrid = librisMap[anum].s;
         sroHrid = librisMap[anum].sro;
       }
+      // console.log(librisMap[anum]);
       let hrid = lnum || anum;
       if (!hrid) {
         ttl.err++;
@@ -1303,6 +1327,8 @@ try {
 
       let addFields = {};
       let f866 = [];
+      let sroSeen = false;
+      let sroHid = '';
       for (let t in marc.fields) {
         let fields = marc.fields[t];
         if (t.match(/852|866|042/)) {
@@ -1317,7 +1343,12 @@ try {
               } else if (d.z) {
                 str = `(${d.z})`;
               };
-              if (d['5'] === 'SRo') makeSroHoldings(instId, hrid, d, str, f, marc.fields['866'], sroHrid);
+              if (d['5'] === 'SRo') {
+                if (!sroSeen) { 
+                  makeSroHoldings(instId, hrid, d, str, marc.fields['852'], marc.fields['866'], sroHrid);
+                  sroSeen = true;
+                }
+              }
             } else if (t === '866') {
               f866.push(getSubsHash(f, true));
             } else if (t === '042') {
