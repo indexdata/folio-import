@@ -608,7 +608,7 @@ try {
         fulfillment: 'Hold Shelf',
         defaultServicePointId: refData.servicepoints['SP-INFO']
       };
-      if (gnum === '5' || gnum === '7') {
+      if (gnum === '5' || gnum === '7' || gnum === '6') {
         pref.holdShelf = false;
         pref.delivery = true;
         pref.fulfillment = 'Delivery';
