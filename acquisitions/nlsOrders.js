@@ -239,8 +239,7 @@ const parseInst = (pol, inst, refData) => {
             k = l['adm. systemID']; 
             d[f][k] = l;
           } else if (f === 'so') {
-            k = l['Sysnr Aleph (HRID)'];
-            delete l['Sysnr Aleph (HRID)'];
+            k = l['Sysnr Aleph (HRID)'] || l['Sysnr Aleph'];
             d[f][k] = l;
             linkMapRev[k] = 1; 
           } else {
@@ -260,7 +259,7 @@ const parseInst = (pol, inst, refData) => {
       }
     }
     console.log(dcount);
-    // throw(d.z16);
+    // throw(d.oo);
 
     d.z68.forEach(r => {
       let k = r.Z68_REC_KEY.substring(0, 9);
