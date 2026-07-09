@@ -307,6 +307,7 @@ try {
   const hseen = {};
   const dseen = {};
   const bcseen = {};
+  const libseen = {};
   const occ = {};
 
   const makeHoldingsItems = (r) => {
@@ -348,7 +349,7 @@ try {
     }
     
     if (inst) {
-      let hkey = inst.l || bid + ':' + locId;
+      let hkey = bid + ':' + locId;
       if ((loc === 'ENHET' && st === '73') || (loc === 'RRLEX' && (st === '31' || st === '32')) || cn === 'AVM') {
         if (!suppMap[bid]) {
           suppMap[bid] = 1;
@@ -398,9 +399,15 @@ try {
 
       // let xholding = xholdings[inst.id];
       if (!hseen[hkey]) {
-        occ[bid] = (!occ[bid]) ? 1 : occ[bid] + 1;
-        let occStr = occ[bid].toString().padStart(3, '0');
-        let hhrid = inst.l || bid + '-' + occStr;
+        let hhrid;
+        if (inst.l && !libseen[inst.l]) {
+          hhrid = inst.l
+          libseen[inst.l] = 1;
+        } else {
+          occ[bid] = (!occ[bid]) ? 1 : occ[bid] + 1;
+          let occStr = occ[bid].toString().padStart(3, '0');
+          hhrid = bid + '-' + occStr;
+        }
         let hid = uuid(hhrid, ns);
         let htypeId = (inst.blvl === 's') ? refData.holdingsTypes['Serial'] : refData.holdingsTypes['Monograph'];
         let h = {

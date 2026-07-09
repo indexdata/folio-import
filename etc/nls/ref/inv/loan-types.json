@@ -41,6 +41,16 @@
       }
     },
     {
+      "id": "e06cdd32-2472-499f-8214-d2416b400afa",
+      "name": "Läsesalslån",
+      "metadata": {
+        "createdDate": "2026-07-09T19:37:20.325+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2026-07-09T19:37:20.325+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
       "id": "8822bad5-1f72-431d-ad8b-75a38eb656c9",
       "name": "Bokskåp/Book locker",
       "metadata": {
@@ -329,5 +339,5 @@
       }
     }
   ],
-  "totalRecords": 33
+  "totalRecords": 34
 }
