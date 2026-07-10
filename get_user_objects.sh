@@ -27,11 +27,11 @@ fi
 echo $L
 node downloadJSONL "users${Q}" $U 
 echo $L
-# node downloadJSONL perms/users $P
+node downloadJSONL perms/users $P
 echo $L
 node downloadJSONL service-points-users $S
 echo $L
-# node downloadJSONL request-preference-storage/request-preference $R
+node downloadJSONL request-preference-storage/request-preference $R
 
 for x in $F; do
 	FN="${!x}"
