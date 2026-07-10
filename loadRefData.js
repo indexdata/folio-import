@@ -70,6 +70,13 @@ console.log = (msg, path) => {
 	     });
 	     data = tmp;
       }
+      if (collKeys[0] === 'marcFieldProtectionSettings') {
+        let tmp = [];
+        data.forEach(d => {
+          if (d.source === 'USER') tmp.push(d);
+        });
+        data = tmp;
+      }
       for (d = 0; d < data.length; d++) {
         if (path.match(/data-import-profiles.+Profiles$/ && !path.match(/_UPDATE/))) {
           let upPath = fileNames[x] + '_UPDATE';
