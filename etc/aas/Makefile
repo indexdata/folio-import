@@ -18,16 +18,16 @@ idir=$(data)/inv
 udir=$(data)/usr
 adir=$(data)/auth
 cdir=$(data)/circ
-odir=$(data)/ord
 vdir=$(data)/org
 in=$(data)/incoming
 raw=$(in)/*Bib*mrc
 mfhds=$(in)/*Holdings*mrc
 mfile=$(idir)/bibs.mrc
-izip=$(in)/*Bib*zip
+izip=$(in)/*Records*zip
 xlsx=$(in)/*Items*xlsx
 csv=$(in)/*Items*csv
 araw=$(in)/*Author*mrc
+vzip=$(in)/*Vendor*zip
 log=$(data)/log
 
 instances: $(izip)
@@ -67,6 +67,13 @@ split-authorities: $(adir)/auth-authorities.jsonl
 	cd $(adir); split -l 60000 auth-authorities.jsonl aut-
 	cd $(adir); split -l 60000 auth-srs.jsonl asr-
 
+organizations: $(vzip)
+	cd $(vdir); rm -f vendors.sh; ln -s $(etc)/bin/vendors.sh .
+	cp $(vzip) $(vdir)
+	cd $(vdir); unzip *.zip
+	cd $(acq); node aasOrgs $(aref) $(vdir) > $(log)/makeOrgs.log
+	cat $(log)/makeOrgs.log
+
 setup:
 	cp $(login) $(wd)/config.json
 	jq '. | .logpath="$(log)"' $(wd)/config.json > tmp
@@ -75,6 +82,7 @@ setup:
 	mkdir -p $(log)
 	mkdir -p $(idir)
 	mkdir -p $(adir)
+	mkdir -p $(vdir)
 	mkdir -p $(in)
 	cd $(wd); node migrationRef.js $(ref)
 
