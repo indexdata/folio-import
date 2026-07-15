@@ -3,7 +3,6 @@ const superagent = require('superagent');
 const { getAuthToken } = require('./lib/login');
 let refDir = process.argv[2];
 let modName = process.argv[3];
-let allFin = process.env.finance;
 
 (async () => {
   try {
@@ -50,7 +49,7 @@ let allFin = process.env.finance;
       'https://raw.githubusercontent.com/folio-org/mod-login-saml/refs/heads/master/descriptors/ModuleDescriptor-template.json'
     ];
 
-    if (allFin) mdUrls.push('https://raw.githubusercontent.com/folio-org/mod-finance/refs/heads/master/descriptors/ModuleDescriptor-template.json');
+    mdUrls.push('https://raw.githubusercontent.com/folio-org/mod-finance/refs/heads/master/descriptors/ModuleDescriptor-template.json');
 
     if (modName) {
       let tmp = [];
@@ -91,16 +90,16 @@ let allFin = process.env.finance;
       '/finance-storage/ledger-rollovers': true,
       '/finance-storage/ledger-rollovers-progress': true,
       '/finance-storage/ledger-rollovers-errors': true,
-      '/finance-storage/group-budgets': true,
-      '/finance-storage/budgets': true,
-      '/finance-storage/fiscal-years': true,
-      '/finance-storage/funds': true,
-      '/finance-storage/group-fund-fiscal-years': true,
-      '/finance-storage/ledgers': true,
+      '/finance-storage/group-budgets': false,
+      '/finance-storage/budgets': false,
+      '/finance-storage/fiscal-years': false,
+      '/finance-storage/funds': false,
+      '/finance-storage/group-fund-fiscal-years': false,
+      '/finance-storage/ledgers': false,
       '/export': true,
       '/export/*': true,
       '/holdings-storage/holdings': true,
-      '/hrid-settings-storage/hrid-settings': true,
+      '/hrid-settings-storage/hrid-settings': false,
       '/instance-date-types': true,
       '/instance-bulk/ids': true,
       '/instance-storage/instance-relationships': true,
@@ -215,16 +214,6 @@ let allFin = process.env.finance;
       'roles__capabilities',
       'roles__capability-sets'
     ];
-
-    if (allFin) {
-      delete skipList['/finance-storage/group-budgets'];
-      delete skipList['/finance-storage/budgets'];
-      delete skipList['/finance-storage/fiscal-years']
-      delete skipList['/finance-storage/funds'];
-      delete skipList['/finance-storage/group-fund-fiscal-years'];
-      delete skipList['/finance-storage/ledgers'];
-    }
-    // console.log(skipList); return;
 
     custMods = {};
     try {
@@ -353,9 +342,10 @@ let allFin = process.env.finance;
         if (save) {
           let jsonStr = JSON.stringify(res.body, null, 2);
           let fullSaveDir = refDir + '/' + saveDir;
+          if (url.match(/(hrid-settings|budgets|fiscal-years|funds|ledgers|organizations|contacts)\?/)) fullSaveDir += '/xtra';
           if (!fs.existsSync(fullSaveDir)) {
-            console.log(`\x1b[32m(Creating directory: ${saveDir})\x1b[0m`);
-            fs.mkdirSync(fullSaveDir);
+            console.log(`\x1b[32m(Creating directory: ${fullSaveDir})\x1b[0m`);
+            fs.mkdirSync(fullSaveDir, { recursive: true });
           }
           let p = priority.indexOf(fileName);
           if (p > -1) {

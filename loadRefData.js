@@ -118,6 +118,7 @@ console.log = (msg, path) => {
         }
         try {
           url = url.replace(/\.json_UPDATE/, '');
+          if (url.match(/hrid-settings|circulation-rules|mapping-rules/)) throw(`INFO "${path}" is PUT only, skipping POST request...`);
           console.log(`POST ${url}...`, logPath);
           let res = await superagent
             .post(url)
@@ -139,7 +140,7 @@ console.log = (msg, path) => {
           try {
             console.log(`  Trying PUT...`, logPath);
             let purl = url;
-            if (!purl.match(/circulation-rules-storage|mapping-rules/)) {
+            if (!purl.match(/circulation-rules-storage|mapping-rules|hrid-settings/)) {
               purl += '/' + data[d].id;
             }
             console.log(`  PUT ${purl}...`, logPath);
