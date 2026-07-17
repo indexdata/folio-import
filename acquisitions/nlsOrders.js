@@ -494,7 +494,8 @@ const parseInst = (pol, inst, refData) => {
         template: tid,
         vendor: vid,
         workflowStatus: wfs,
-        tags: { tagList: [ "Aleph" ] }
+        tags: { tagList: [ "Aleph" ] },
+        poLines: []
       }
       if (cnote) o.notes = [ cnote ];
       if (o.orderType === 'Ongoing') {
@@ -506,11 +507,15 @@ const parseInst = (pol, inst, refData) => {
         };
       }
       // console.log(o);
+
+      coCache[instId] = o;
+      /*
       writeOut(files.p, o);
       o.workflowStatus = 'Pending';
       writeOut(files.c, o);
       o.workflowStatus = 'Open';
       ttl.p++;
+      */
 
       let amStr = 'KB: Inköp av utländsk tidskrift (prenumerationer, inkl. e-resurs)';
       let am = refData.acquisitionMethods[amStr];
@@ -575,19 +580,25 @@ const parseInst = (pol, inst, refData) => {
       if (z104) {
         z104.forEach(n => {
           let o = makePolNote(n.Z104_TEXT, n.Z104_TRIGGER_DATE, 'Förvärvsanteckning', pol.id, refData);
+          if (!noteCache[instId]) noteCache[instId] = [];
+          noteCache[instId].push(o);
+          /*
           writeOut(files.n, o);
           ttl.n++
+          */
         });
       }
       
       if (checkPol(pol)) {
+        coCache[instId].poLines.push(pol);
+        /* 
         writeOut(files.l, pol);
         ttl.l++;
 
         o.poLines = [ pol ];
         writeOut(files.o, o);
         ttl.o++;
-      
+        */
         adm2pol[akey] = pol.id;      
         let apMap = {
           adm: akey,
