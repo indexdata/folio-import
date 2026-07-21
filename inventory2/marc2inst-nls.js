@@ -1559,7 +1559,7 @@ try {
         lkr.forEach(f => {
           let b = getSubs(f, 'b');
           let a = getSubs(f, 'a');
-          if (b && a === UP) {
+          if (b && a === 'UP') {
             b = b.padStart(9, '0');
             let superHrid = (librisMap[b]) ? librisMap[b].n : b;
             let key = superHrid + '::' + inst.id;
