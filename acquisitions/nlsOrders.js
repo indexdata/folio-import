@@ -735,7 +735,7 @@ const parseInst = (pol, inst, refData) => {
       for (let x in d.so) {
         if (hridSeen[x]) continue;
         let r = d.so[x];
-        let poNum = 'SO' + x;
+        let poNum = (coCache[x]) ? coCache[x].poNumber : 'SO' + x;
         let id = uuid(poNum, ns);
         let v = r['Material supplier (Vendor, in Organizations)'];
         let vid = refData.organizations[v];
