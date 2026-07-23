@@ -497,7 +497,7 @@ const parseInst = (pol, inst, refData) => {
         tags: { tagList: [ "Aleph" ] },
         poLines: []
       }
-      if (puNum.match(/^J/)) o.poNumberPrefix = 'J';
+      o.poNumberPrefix = puNum.replace(/^([A-Z]+).+/, '$1');
       if (cnote) o.notes = [ cnote ];
       if (o.orderType === 'Ongoing') {
         o.ongoing = {
