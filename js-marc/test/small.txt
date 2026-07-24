@@ -1,0 +1,7 @@
+00993cam a2200289 i 4500
+001 123456789
+005 20141115143056.0
+008 801006s1904    mau           001 0 eng  
+245 14 $a The small record / $c by Charles Ledvina.
+264  1 $a Boston : $b Little, Brown, $c 1904.
+300    $a 2 v. ; $c 25 cm.
