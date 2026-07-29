@@ -41,7 +41,7 @@ const extraMatch = process.argv[4];
     });
 
     c = 0
-    console.log('Reading file:', folFile);
+    console.log('Reading file:', inFile);
     for await (const line of rl) {
       c++;
       let j = JSON.parse(line);
