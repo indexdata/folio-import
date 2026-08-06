@@ -1,4 +1,4 @@
-import { txt2raw } from '../js-marc.mjs';
+import { txt2raw } from '../js-marc2.mjs';
 import fs from 'fs';
 import path from 'path';
 import readline from 'readline';
@@ -15,6 +15,11 @@ try {
   let outFile = `${dir}/${fn}.mrc`;
   if (fs.existsSync(outFile)) fs.unlinkSync(outFile);
 
+  let createSave = (trec) => {
+    let raw = txt2raw(trec);
+    fs.writeFileSync(outFile, raw, {flag: 'a'});
+  }
+
 
   let fileStream = fs.createReadStream(textFile);
     let rl = readline.createInterface({
@@ -24,16 +29,19 @@ try {
     let total = 0;
     let trec = '';
     rl.on('line', r => {
-      if (r.match(/^\d{3}/)) {
+      if (r.match(/^\w{3}/)) {
         trec += r + "\n";
       } else {
-        let raw = txt2raw(trec);
-        fs.writeFileSync(outFile, raw, {flag: 'a'});
+        createSave(trec);
         trec = '';
         total++;
       }
     });
     rl.on('close', () => {
+      if (trec) {
+        createSave(trec);
+        total++;
+      }
       console.log('Done!');
       console.log('Records created:', total);
     });

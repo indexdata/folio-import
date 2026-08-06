@@ -1,14 +1,38 @@
 {
   "instanceStatuses": [
     {
+      "id": "52a2fc42-0b93-4844-8c83-9d29000469fb",
+      "code": "mv",
+      "name": "Minipost - vardagstryck",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-03-17T17:03:35.414+00:00",
+        "createdByUserId": "8ffac617-2e98-453b-bb2e-0d3d3a6fad7a",
+        "updatedDate": "2025-05-02T09:27:41.349+00:00",
+        "updatedByUserId": "16b8d697-bf25-4316-9765-4319aae7ac1b"
+      }
+    },
+    {
+      "id": "74ab4c8f-e44a-49b0-9065-3b8415872c3b",
+      "code": "mp",
+      "name": "Minipost",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-05-02T09:27:58.988+00:00",
+        "createdByUserId": "16b8d697-bf25-4316-9765-4319aae7ac1b",
+        "updatedDate": "2025-05-02T09:27:58.988+00:00",
+        "updatedByUserId": "16b8d697-bf25-4316-9765-4319aae7ac1b"
+      }
+    },
+    {
       "id": "2a340d34-6b70-443a-bb1b-1b8d1c65d862",
       "code": "other",
       "name": "Other",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:32.868+00:00",
-        "updatedDate": "2026-04-07T14:09:59.805+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:03.315+00:00",
+        "updatedDate": "2025-07-09T19:39:40.325+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -17,9 +41,9 @@
       "name": "Cataloged",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:32.868+00:00",
-        "updatedDate": "2026-04-07T14:09:59.829+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:03.315+00:00",
+        "updatedDate": "2025-07-09T19:39:40.680+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -28,9 +52,9 @@
       "name": "Uncataloged",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:32.869+00:00",
-        "updatedDate": "2026-04-07T14:09:59.847+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:03.316+00:00",
+        "updatedDate": "2025-07-09T19:39:41.120+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -39,9 +63,9 @@
       "name": "Temporary",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:32.867+00:00",
-        "updatedDate": "2026-04-07T14:09:59.866+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:03.316+00:00",
+        "updatedDate": "2025-07-09T19:39:41.495+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -50,9 +74,9 @@
       "name": "Batch Loaded",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:32.874+00:00",
-        "updatedDate": "2026-04-07T14:09:59.885+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:03.319+00:00",
+        "updatedDate": "2025-07-09T19:39:41.956+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -61,33 +85,9 @@
       "name": "Not yet assigned",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:32.871+00:00",
-        "updatedDate": "2026-04-07T14:09:59.906+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "a2d084c1-b563-47bf-b1c3-7735006a3a4a",
-      "code": "mv",
-      "name": "Minipost - vardagstryck",
-      "source": "local",
-      "metadata": {
-        "createdDate": "2026-04-07T14:09:59.915+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:09:59.915+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "e2e2822a-485f-4d0c-afa9-b589ebbbeb5f",
-      "code": "mp",
-      "name": "Minipost",
-      "source": "local",
-      "metadata": {
-        "createdDate": "2026-04-07T14:09:59.924+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:09:59.924+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:03.318+00:00",
+        "updatedDate": "2025-07-09T19:39:42.316+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -96,10 +96,10 @@
       "name": "Riksdagstryck",
       "source": "local",
       "metadata": {
-        "createdDate": "2026-04-07T14:09:59.933+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:09:59.933+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-07-09T19:39:43.246+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2025-07-09T19:39:43.246+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -108,10 +108,10 @@
       "name": "Förvärvas ej",
       "source": "local",
       "metadata": {
-        "createdDate": "2026-04-07T14:09:59.944+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:09:59.944+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-07-09T19:39:43.439+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2025-07-09T19:39:43.439+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -120,22 +120,22 @@
       "name": "Riksdagstryck huvudpost",
       "source": "local",
       "metadata": {
-        "createdDate": "2026-04-07T14:09:59.954+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:09:59.954+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-10-14T20:53:13.067+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2025-10-14T20:54:08.095+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
-      "id": "b5f2af5b-eafa-4020-ae51-87b727018299",
+      "id": "75179d34-c13b-41d3-8755-aff1d44854f8",
       "code": "ma",
       "name": "Minipost - affisch",
       "source": "local",
       "metadata": {
-        "createdDate": "2026-04-07T14:09:59.963+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:09:59.963+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-12-09T13:32:41.771+00:00",
+        "createdByUserId": "d6c04653-bd47-5b32-8319-a4d44e3bf3b4",
+        "updatedDate": "2025-12-09T13:35:48.365+00:00",
+        "updatedByUserId": "d6c04653-bd47-5b32-8319-a4d44e3bf3b4"
       }
     }
   ],

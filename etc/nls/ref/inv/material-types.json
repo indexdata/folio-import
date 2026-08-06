@@ -1,24 +1,14 @@
 {
   "mtypes": [
     {
-      "id": "71fbd940-1027-40a6-8a48-49b44d795e46",
-      "name": "_unspecified",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:31.728+00:00",
-        "updatedDate": "2026-04-07T14:10:01.148+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "6f57adcb-862e-4b6a-b1c1-ab9470b079ee",
+      "id": "8af65697-de0b-42df-8e1c-2911a071a215",
       "name": "Häfte/Volym Standing order",
       "source": "local",
       "metadata": {
-        "createdDate": "2026-04-07T14:10:01.158+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:10:01.158+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-07-25T14:32:18.368+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2025-07-25T14:32:18.368+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -26,21 +16,10 @@
       "name": "Musiktryck",
       "source": "local",
       "metadata": {
-        "createdDate": "2026-04-07T14:10:01.182+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:10:01.182+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "51520bb0-5748-4b00-94e4-9a5c2b708451",
-      "name": "Bunden volym",
-      "source": "local",
-      "metadata": {
-        "createdDate": "2026-04-07T14:10:01.198+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:10:01.198+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-12-05T17:13:54.450+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2026-02-05T21:23:51.021+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -48,9 +27,9 @@
       "name": "Monografi",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:31.714+00:00",
-        "updatedDate": "2026-04-07T14:10:01.217+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:02.091+00:00",
+        "updatedDate": "2026-02-05T21:23:51.717+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -58,10 +37,10 @@
       "name": "Häfte - periodika",
       "source": "local",
       "metadata": {
-        "createdDate": "2026-04-07T14:10:01.226+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:10:01.226+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-03-27T17:27:04.349+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2026-02-05T21:23:52.078+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -69,10 +48,10 @@
       "name": "Bild",
       "source": "local",
       "metadata": {
-        "createdDate": "2026-04-07T14:10:01.235+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:10:01.235+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-03-27T17:27:04.516+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2026-02-05T21:23:52.447+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -80,10 +59,10 @@
       "name": "Kartblad",
       "source": "local",
       "metadata": {
-        "createdDate": "2026-04-07T14:10:01.244+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:10:01.244+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-03-27T17:27:04.688+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2026-02-05T21:23:52.805+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -91,10 +70,10 @@
       "name": "Digitalt medium",
       "source": "local",
       "metadata": {
-        "createdDate": "2026-04-07T14:10:01.273+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:10:01.273+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-03-27T17:27:04.867+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2026-02-05T21:23:53.185+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -102,9 +81,9 @@
       "name": "Mikrofilm/fiche",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:31.731+00:00",
-        "updatedDate": "2026-04-07T14:10:01.292+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:02.097+00:00",
+        "updatedDate": "2026-02-05T21:23:53.565+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -112,10 +91,10 @@
       "name": "Unmapped",
       "source": "local",
       "metadata": {
-        "createdDate": "2026-04-07T14:10:01.301+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:10:01.301+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-03-27T17:27:05.364+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2026-02-05T21:23:53.927+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -123,9 +102,9 @@
       "name": "Video",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:31.715+00:00",
-        "updatedDate": "2026-04-07T14:10:01.320+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:02.089+00:00",
+        "updatedDate": "2026-02-05T21:23:54.281+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -133,10 +112,10 @@
       "name": "Bokskåp",
       "source": "local",
       "metadata": {
-        "createdDate": "2026-04-07T14:10:01.328+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:10:01.328+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-03-27T17:27:05.859+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2026-02-05T21:23:54.653+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -144,50 +123,10 @@
       "name": "Blandat",
       "source": "local",
       "metadata": {
-        "createdDate": "2026-04-07T14:10:01.337+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:10:01.337+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "5ee11d91-f7e8-481d-b079-65d708582ccc",
-      "name": "_dvd",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:31.732+00:00",
-        "updatedDate": "2026-04-07T14:10:01.357+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "615b8413-82d5-4203-aa6e-e37984cb5ac3",
-      "name": "_electronic resource",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:31.735+00:00",
-        "updatedDate": "2026-04-07T14:10:01.376+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "dd0bf600-dbd9-44ab-9ff2-e2a61a6539f1",
-      "name": "_sound recording",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:31.727+00:00",
-        "updatedDate": "2026-04-07T14:10:01.396+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "d9acad2f-2aac-4b48-9097-e6ab85906b25",
-      "name": "_text",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:31.726+00:00",
-        "updatedDate": "2026-04-07T14:10:01.415+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-03-27T17:27:06.028+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2026-02-05T21:23:55.015+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -195,10 +134,71 @@
       "name": "Handskrift",
       "source": "local",
       "metadata": {
-        "createdDate": "2026-04-07T14:10:01.424+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:10:01.424+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-03-27T17:27:06.184+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2026-02-05T21:23:55.374+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "5ee11d91-f7e8-481d-b079-65d708582ccc",
+      "name": "_dvd",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:02.099+00:00",
+        "updatedDate": "2026-02-05T21:23:56.060+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "615b8413-82d5-4203-aa6e-e37984cb5ac3",
+      "name": "_electronic resource",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:02.100+00:00",
+        "updatedDate": "2026-02-05T21:23:56.401+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "dd0bf600-dbd9-44ab-9ff2-e2a61a6539f1",
+      "name": "_sound recording",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:02.091+00:00",
+        "updatedDate": "2026-02-05T21:23:56.757+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "d9acad2f-2aac-4b48-9097-e6ab85906b25",
+      "name": "_text",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:02.089+00:00",
+        "updatedDate": "2026-02-05T21:23:57.110+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "71fbd940-1027-40a6-8a48-49b44d795e46",
+      "name": "_unspecified",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:02.088+00:00",
+        "updatedDate": "2026-02-05T21:23:57.446+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "51520bb0-5748-4b00-94e4-9a5c2b708451",
+      "name": "Bunden volym",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-03-27T17:27:03.821+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2026-02-05T21:23:51.371+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -206,10 +206,10 @@
       "name": "Ljudupptagning",
       "source": "local",
       "metadata": {
-        "createdDate": "2026-04-07T14:10:01.435+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:10:01.435+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-03-27T17:27:06.353+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2026-02-05T21:23:55.719+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     }
   ],

@@ -1,13 +1,13 @@
 {
   "holdingsTypes": [
     {
-      "id": "dc35d0ae-e877-488b-8e97-6e41444e6d0a",
-      "name": "Multi-part monograph",
+      "id": "996f93e2-5b5e-4cf2-9168-33ced1f95eed",
+      "name": "Electronic",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:33.028+00:00",
-        "updatedDate": "2026-04-07T14:09:56.528+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:03.463+00:00",
+        "updatedDate": "2025-07-09T19:38:30.097+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -15,29 +15,9 @@
       "name": "Monograph",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:33.028+00:00",
-        "updatedDate": "2026-04-07T14:09:56.493+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "0c422f92-0f4d-4d32-8cbe-390ebc33a3e5",
-      "name": "Physical",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:33.028+00:00",
-        "updatedDate": "2026-04-07T14:09:56.472+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "996f93e2-5b5e-4cf2-9168-33ced1f95eed",
-      "name": "Electronic",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:33.027+00:00",
-        "updatedDate": "2026-04-07T14:09:56.546+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:03.463+00:00",
+        "updatedDate": "2025-07-09T19:38:30.472+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -45,9 +25,29 @@
       "name": "Serial",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:33.026+00:00",
-        "updatedDate": "2026-04-07T14:09:56.511+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:03.464+00:00",
+        "updatedDate": "2025-07-09T19:38:30.860+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "dc35d0ae-e877-488b-8e97-6e41444e6d0a",
+      "name": "Multi-part monograph",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:03.464+00:00",
+        "updatedDate": "2025-07-09T19:38:31.260+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "0c422f92-0f4d-4d32-8cbe-390ebc33a3e5",
+      "name": "Physical",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:03.464+00:00",
+        "updatedDate": "2025-07-09T19:38:31.687+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -55,10 +55,10 @@
       "name": "Sammanbundna verk",
       "source": "local",
       "metadata": {
-        "createdDate": "2026-04-07T14:09:56.557+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:09:56.557+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-03-27T17:25:53.847+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2025-07-09T19:38:32.072+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     }
   ],

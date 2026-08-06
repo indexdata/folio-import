@@ -67,6 +67,7 @@ export function parseMarc(raw, txt = false) {
   }
 
   function addField(tag, data) {
+    if (typeof(data) === 'string') data = { data: data };
     let addr = 0;
     if (!fields[tag]) {
       let preTag = '000';

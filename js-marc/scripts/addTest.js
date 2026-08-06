@@ -35,12 +35,12 @@ try {
       let f001 = (m.fields['001']) ? m.fields['001'][0].data : '';
       if (f001) {
         m.deleteField('001', 0);
-        m.addField('035', { ind1: ' ', ind2: ' ', subfields: [{a: f001}]});
+        m.addField('035', { ind1: '9', ind2: '9', subfields: [{a: f001}]});
         m.addField('001', { data: '88888888' });
       }
       // m.deleteField('992', 1);
       let mij = fields2mij(m.fields)
-      // console.log(JSON.stringify(mij, null, 2));
+      console.log(JSON.stringify(mij, null, 2));
     });
   });
   fileStream.on('close', () => {

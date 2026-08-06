@@ -5,6 +5,7 @@ import fs from 'fs';
 import path from 'path';
 import { v5 as uuid } from 'uuid';
 import readline from 'readline';
+import lib from 'pg';
 
 let confFile = process.argv[2];
 let instSource = 'FOLIO';
@@ -216,6 +217,66 @@ const customRules = {
           ],
           "description": "SAB classification",
           "applyRulesOnConcatenatedData": true
+        }
+      ]
+    }
+  ],
+  "561": [
+    {
+      "entity": [
+        {
+          "target": "notes.instanceNoteTypeId",
+          "description": "Instance note type id",
+          "subfield": [
+            "a"
+          ],
+          "applyRulesOnConcatenatedData": true,
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_note_type_id",
+                  "parameter": {
+                    "name": "Provenance (local note)"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "target": "notes.note",
+          "description": "Provenance (local note)",
+          "subfield": [
+            "a"
+          ],
+          "applyRulesOnConcatenatedData": true,
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "trim_period"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "target": "notes.staffOnly",
+          "description": "If true, determines that the note should not be visible for others than staff",
+          "applyRulesOnConcatenatedData": true,
+          "subfield": [
+            "a"
+          ],
+          "rules": [
+            {
+              "conditions": [
+                {
+                  "type": "set_note_staff_only_via_indicator"
+                }
+              ]
+            }
+          ]
         }
       ]
     }
@@ -654,10 +715,12 @@ let ttl = {
   }
 
 let sro = {};
-const makeSroHoldings = (instId, instHrid, fields, str, f852, f866) => {
+let lnumSeen = {};
+const makeSroHoldings = (instId, instHrid, fields, str, f852, f866, lnum) => {
+  if (lnumSeen[lnum]) lnum = '';
   if (!sro[instId]) sro[instId] = 0;
   sro[instId]++;
-  let hrid = instHrid + 's' + sro[instId].toString().padStart(2, '0');
+  let hrid = lnum || instHrid + 's' + sro[instId].toString().padStart(2, '0');
   let id = uuid(hrid, ns);
   let cnParts = [];
   let l852 = fields['8'];
@@ -672,10 +735,29 @@ const makeSroHoldings = (instId, instHrid, fields, str, f852, f866) => {
     permanentLocationId: refData.locations['LOC-SRO'] || refData.locations['loc-sro'],
     notes: []
   };
-  if (cn) {
+  if (cn && !f852[1]) {
     h.callNumber = cn;
     h.callNumberTypeId = refData.callNumberTypes['Other scheme'];
   }
+  if (f852) {
+    let x = 0;
+    f852.forEach(f => {
+      let shash = getSubsHash(f);
+      if (shash.z) {
+        shash.z.forEach(n => {
+          let o = {
+            holdingsNoteTypeId: refData.holdingsNoteTypes.Note,
+            note: n
+          };
+          h.notes.push(o);
+        });
+      }
+      x++;
+      makeItem(h.id, h.hrid, 'Monografi', 'Beställ manuellt', 'Available', cn, x);
+    });
+  }
+
+  /* 
   if (fields.z) {
     let shash = getSubsHash(f852);
     shash.z.forEach(n => {
@@ -686,6 +768,8 @@ const makeSroHoldings = (instId, instHrid, fields, str, f852, f866) => {
       h.notes.push(o);
     });
   }
+  */
+
   if (f866) {
     f866.forEach(f => {
       let subs = getSubsHash(f, true);
@@ -702,24 +786,26 @@ const makeSroHoldings = (instId, instHrid, fields, str, f852, f866) => {
   }
   writeOut(outs.xholdings, h);
   ttl.xholdings++;
+  if (lnum) lnumSeen[lnum] = 1;
+  return(h.id);
 
   // Don't make SRo items -- see FOLIO-229
   // Changed mind: make items -- see FOLIO-149
 
-  makeItem(h.id, h.hrid, 'Monografi', 'Beställ manuellt')
-  
+  // makeItem(h.id, h.hrid, 'Monografi', 'Beställ manuellt')
 }
 
-const makeItem = (holdingsId, holdingsHrid, mtype, ltype, status, callNumber) => {
+const makeItem = (holdingsId, holdingsHrid, mtype, ltype, status, callNumber, x) => {
+  let occStr = x.toString().padStart(3, '0');
   if (!status) status = 'Available';
   if (holdingsId && mtype && ltype) {
-    let hrid = holdingsHrid;
+    let hrid = holdingsHrid + occStr;;
     let id = uuid(hrid + 'item', ns);
     let i = {
       id: id,
       hrid: hrid,
       holdingsRecordId: holdingsId,
-      permanentLoanTypeId: refData.loantypes[ltype],
+      permanentLoanTypeId: refData.loantypes[ltype] || '9ab2b57a-2dd5-473a-88ae-c851a8d0b781',
       materialTypeId: refData.mtypes[mtype],
       status: { name: status }
     };
@@ -895,8 +981,9 @@ try {
   };
   let rulesStr = fs.readFileSync(rulesFile, { encoding: 'utf8' });
   const allMappingRules = JSON.parse(rulesStr);
+  delete allMappingRules['561'];
   Object.assign(allMappingRules, customRules);
-  // throw(allMappingRules['041']);
+  // throw(JSON.stringify(allMappingRules, null, 2));
   const mappingRules = {};
   for (let tag in allMappingRules) {
     let map = allMappingRules[tag];
@@ -922,6 +1009,7 @@ try {
     mappingRules[tag].erps = erps;
     mappingRules[tag].entities = ents;
   }
+  // throw(JSON.stringify(mappingRules, null, 2));
   rulesStr = '';
 
   // get instance schema
@@ -957,7 +1045,7 @@ try {
       });
     } catch {}
   });
-  // throw(refData.instanceStatuses);
+  // throw(refData.instanceNoteTypes);
 
   // create tsv map
   if (conf.tsvDir) {
@@ -998,9 +1086,11 @@ try {
     if (k) {
       librisMap[k] = { n: c[1], u: c[2] };
     }
+    if (c[3]) librisMap[k].s = c[3].replace(/^.+?: /, '');
+    if (c[4]) librisMap[k].sro = c[4].replace(/^.+?: /, '');
   }
   console.log(`INFO Map lines parsed: ${lm}`);
-  // throw(librisMap['004826829']);
+  // throw(librisMap);
 
   let t;
 
@@ -1140,7 +1230,15 @@ try {
         marc.updateField('001', prefix + marc.fields['001']);
       }
       let anum = (marc.fields['001']) ? marc.fields['001'][0] : '';
-      let lnum = (librisMap[anum]) ? librisMap[anum].n : '';
+      let lnum = '';
+      let hhrid = '';
+      let sroHrid = '';
+      if (librisMap[anum]) {
+        lnum = librisMap[anum].n;
+        hhrid = librisMap[anum].s;
+        sroHrid = librisMap[anum].sro;
+      }
+      // console.log(librisMap[anum]);
       let hrid = lnum || anum;
       if (!hrid) {
         ttl.err++;
@@ -1228,9 +1326,12 @@ try {
       }
 
       let addFields = {};
+      let f866 = [];
+      let sroSeen = false;
+      let sroHid = '';
       for (let t in marc.fields) {
         let fields = marc.fields[t];
-        if (t.match(/852|866|561|042/)) {
+        if (t.match(/852|866|042/)) {
           fields.forEach(f => {
             let d;
             let str;
@@ -1242,9 +1343,14 @@ try {
               } else if (d.z) {
                 str = `(${d.z})`;
               };
-              if (d['5'] === 'SRo') makeSroHoldings(instId, hrid, d, str, f, marc.fields['866']);
+              if (d['5'] === 'SRo') {
+                if (!sroSeen) { 
+                  makeSroHoldings(instId, hrid, d, str, marc.fields['852'], marc.fields['866'], sroHrid);
+                  sroSeen = true;
+                }
+              }
             } else if (t === '866') {
-              d = getSubsHash(f, true);
+              f866.push(getSubsHash(f, true));
             } else if (t === '042') {
               d = getSubs(f, '9');
             } else {
@@ -1419,6 +1525,23 @@ try {
             n.staffOnly = n.staffOnly.replace(/ .*/, '');
           });
         }
+        if (f866) {
+          f866.forEach(f => {
+            if (!inst.notes) inst.notes = [];
+            if (f['5'] === 'S' && f.a) {
+              let n = (f.z) ? `${f.a} (${f.z})` : f.a;
+              if (n) {
+                let t = refData.instanceNoteTypes['Holdins statement (local note)'] || refData.instanceNoteTypes['Holdings statement (local note)'];
+                let o = {
+                  instanceNoteTypeId: t,
+                  note: n,
+                  staffOnly: false
+                }
+                inst.notes.push(o);
+              }
+            }
+          });
+      }
         writeOut(outs.instances, inst);
         ttl.instances++;
         if (!conf.noSrs && instSource === 'MARC') {
@@ -1429,13 +1552,14 @@ try {
         if (idmap) {
           let ea = (inst.electronicAccess) ? JSON.stringify(inst.electronicAccess) : '';
           let af = JSON.stringify(addFields);
-          let instMap = `${anum}\x1E${inst.id}\x1E${bibCallNum.value}\x1E${bibCallNum.type}\x1E${blvl}\x1E${ea}\x1E${itypeCode}\x1E${af}\x1E${inst.hrid}`;
+          let instMap = `${anum}\x1E${inst.id}\x1E${bibCallNum.value}\x1E${bibCallNum.type}\x1E${blvl}\x1E${ea}\x1E${itypeCode}\x1E${af}\x1E${inst.hrid}\x1E${hhrid}`;
           writeOut(outs.idmap, instMap, true, '\n');
         }
         let lkr = (marc && marc.fields && marc.fields['LKR']) ? marc.fields['LKR'] : [];
         lkr.forEach(f => {
           let b = getSubs(f, 'b');
-          if (b) {
+          let a = getSubs(f, 'a');
+          if (b && a === 'UP') {
             b = b.padStart(9, '0');
             let superHrid = (librisMap[b]) ? librisMap[b].n : b;
             let key = superHrid + '::' + inst.id;

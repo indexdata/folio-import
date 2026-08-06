@@ -151,6 +151,7 @@ const wait = (ms) => {
       ttl++;
       let json = JSON.parse(line);
       if (json.__) delete json.__;
+      if (json._errMessage) delete json._errMessage;
       if (json.jobExecutionId || json.snapshotId || json.succeedingInstanceId) {
         let ep = (json.jobExecutionId) ? 'source-storage/snapshots' : (json.snapshotId) ? 'source-storage/records' : 'preceding-succeeding-titles';
         let xid = (json.jobExecutionId) ? json.jobExecutionId : json.id;

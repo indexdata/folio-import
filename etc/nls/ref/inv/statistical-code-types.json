@@ -1,21 +1,21 @@
 {
   "statisticalCodeTypes": [
     {
-      "id": "d816175b-578f-4056-af61-689f449c3c45",
-      "name": "DISC (Discovery)",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:32.889+00:00",
-        "updatedDate": "2026-04-02T09:40:32.889+00:00"
-      }
-    },
-    {
       "id": "0d3ec58e-dc3c-4aa1-9eba-180fca95c544",
       "name": "RECM (Record management)",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:32.887+00:00",
-        "updatedDate": "2026-04-02T09:40:32.887+00:00"
+        "createdDate": "2025-01-19T22:09:03.331+00:00",
+        "updatedDate": "2025-01-19T22:09:03.331+00:00"
+      }
+    },
+    {
+      "id": "d816175b-578f-4056-af61-689f449c3c45",
+      "name": "DISC (Discovery)",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:03.331+00:00",
+        "updatedDate": "2025-01-19T22:09:03.331+00:00"
       }
     },
     {
@@ -23,8 +23,8 @@
       "name": "ARL (Collection stats)",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:32.887+00:00",
-        "updatedDate": "2026-04-02T09:40:32.887+00:00"
+        "createdDate": "2025-01-19T22:09:03.332+00:00",
+        "updatedDate": "2025-01-19T22:09:03.332+00:00"
       }
     },
     {
@@ -32,8 +32,8 @@
       "name": "SERM (Serial management)",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:32.889+00:00",
-        "updatedDate": "2026-04-02T09:40:32.889+00:00"
+        "createdDate": "2025-01-19T22:09:03.332+00:00",
+        "updatedDate": "2025-01-19T22:09:03.332+00:00"
       }
     },
     {
@@ -41,12 +41,23 @@
       "name": "Samling",
       "source": "local",
       "metadata": {
-        "createdDate": "2026-04-07T14:09:48.481+00:00",
-        "createdByUserId": "d2641676-7c58-4b29-b714-7f6436210f96",
-        "updatedDate": "2026-04-07T14:09:48.481+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-03-27T17:29:26.317+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2025-07-09T19:43:03.691+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "4413d64b-22a2-438f-8fce-2c6805c8d2db",
+      "name": "RFID",
+      "source": "local",
+      "metadata": {
+        "createdDate": "2025-03-27T17:29:26.492+00:00",
+        "createdByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e",
+        "updatedDate": "2025-07-09T19:43:04.113+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     }
   ],
-  "totalRecords": 5
+  "totalRecords": 6
 }

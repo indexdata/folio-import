@@ -1,23 +1,13 @@
 {
   "electronicAccessRelationships": [
     {
-      "id": "5bfe1b7b-f151-4501-8cfa-23b321d5cd1e",
-      "name": "Related resource",
+      "id": "f5d0068e-6272-458e-8a81-b85e7b9a14aa",
+      "name": "Resource",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:32.994+00:00",
-        "updatedDate": "2026-04-07T14:09:56.225+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "ef03d582-219c-4221-8635-bc92f1107021",
-      "name": "No display constant generated",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:32.994+00:00",
-        "updatedDate": "2026-04-07T14:09:56.207+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:03.435+00:00",
+        "updatedDate": "2025-07-09T19:38:24.414+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -25,19 +15,9 @@
       "name": "No information provided",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:32.994+00:00",
-        "updatedDate": "2026-04-07T14:09:56.170+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
-      }
-    },
-    {
-      "id": "f5d0068e-6272-458e-8a81-b85e7b9a14aa",
-      "name": "Resource",
-      "source": "folio",
-      "metadata": {
-        "createdDate": "2026-04-02T09:40:32.992+00:00",
-        "updatedDate": "2026-04-07T14:09:56.147+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:03.434+00:00",
+        "updatedDate": "2025-07-09T19:38:24.776+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     },
     {
@@ -45,9 +25,29 @@
       "name": "Version of resource",
       "source": "folio",
       "metadata": {
-        "createdDate": "2026-04-02T09:40:32.994+00:00",
-        "updatedDate": "2026-04-07T14:09:56.189+00:00",
-        "updatedByUserId": "d2641676-7c58-4b29-b714-7f6436210f96"
+        "createdDate": "2025-01-19T22:09:03.435+00:00",
+        "updatedDate": "2025-07-09T19:38:25.165+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "ef03d582-219c-4221-8635-bc92f1107021",
+      "name": "No display constant generated",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:03.436+00:00",
+        "updatedDate": "2025-07-09T19:38:25.559+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
+      }
+    },
+    {
+      "id": "5bfe1b7b-f151-4501-8cfa-23b321d5cd1e",
+      "name": "Related resource",
+      "source": "folio",
+      "metadata": {
+        "createdDate": "2025-01-19T22:09:03.436+00:00",
+        "updatedDate": "2025-07-09T19:38:25.938+00:00",
+        "updatedByUserId": "bdef7300-93a0-5f81-9b90-13bc1cfe9c5e"
       }
     }
   ],

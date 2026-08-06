@@ -239,8 +239,7 @@ const parseInst = (pol, inst, refData) => {
             k = l['adm. systemID']; 
             d[f][k] = l;
           } else if (f === 'so') {
-            k = l['Sysnr Aleph (HRID)'];
-            delete l['Sysnr Aleph (HRID)'];
+            k = l['Sysnr Aleph (HRID)'] || l['Sysnr Aleph'];
             d[f][k] = l;
             linkMapRev[k] = 1; 
           } else {
@@ -260,7 +259,7 @@ const parseInst = (pol, inst, refData) => {
       }
     }
     console.log(dcount);
-    // throw(d.z16);
+    // throw(d.so);
 
     d.z68.forEach(r => {
       let k = r.Z68_REC_KEY.substring(0, 9);
@@ -270,7 +269,7 @@ const parseInst = (pol, inst, refData) => {
       let ak = d.z16[k].Z16_REC_KEY.substring(0, 9);
       adminMap[ak] = 1;
     };
-    // throw(adminMap['002241188']);
+    // throw(adminMap);
 
     // map link files;
     console.log(`INFO Reading linker data from ${z103file}`);
@@ -288,7 +287,6 @@ const parseInst = (pol, inst, refData) => {
       let k = c[0].substring(5, 14); 
       let t = c[2];
       let bid = c[3];
-      if (k === '002241188') console.log(c);
       if (t === 'KBS01' && adminMap[k]) {
         linkMap[k] = bid;
         linkMapRev[bid] = k;
@@ -300,7 +298,7 @@ const parseInst = (pol, inst, refData) => {
     }
     console.log('Linker lines read:', lc, `(${mc})`);
     console.log('Links mapped:', mc);
-    // throw(linkMap);
+    // throw(linkMap['001620712']);
     // throw(linkMapRev);
 
     // create instance map
@@ -340,7 +338,7 @@ const parseInst = (pol, inst, refData) => {
     }
     console.log('Instance lines read:', lc);
     console.log('Instances mapped:', Object.keys(instMap).length);
-    // throw(instMap['004351406']);
+    // throw(instMap);
 
     const ttl = {
       o: 0,
@@ -353,6 +351,8 @@ const parseInst = (pol, inst, refData) => {
     }
     const tid = refData.orderTemplates[tstr];
     const hridSeen = {};
+    const coCache = {};
+    const noteCache = {};
     d.z68.forEach(r => {
       if (r.Z68_ORDER_TYPE === 'O') {
         let key = r.Z68_REC_KEY.substring(2, 9);
@@ -380,7 +380,8 @@ const parseInst = (pol, inst, refData) => {
           template: tid,
           workflowStatus: 'Open',
           dateOrdered: odate,
-          tags: { tagList: [ "Aleph" ] }
+          tags: { tagList: [ "Aleph" ] },
+          poLines: []
         };
         if (nt) o.notes = [ nt ];
         if (o.orderType === 'Ongoing') {
@@ -393,11 +394,14 @@ const parseInst = (pol, inst, refData) => {
         }
         // console.log(o);
         if (checkPo(o)) {
+          coCache[instId] = o;
+          /*
           writeOut(files.p, o);
           o.workflowStatus = 'Pending';
           writeOut(files.c, o);
           o.workflowStatus = 'Open';
           ttl.p++;
+          */
         }
 
         let amStr = 'KB: Stående order köp (tryckt material)';
@@ -427,28 +431,33 @@ const parseInst = (pol, inst, refData) => {
         pol.orderFormat = 'Physical Resource';
 
         if (checkPol(pol, r)) {
+          coCache[instId].poLines.push(pol);
+          /*
           writeOut(files.l, pol);
           ttl.l++;
 
           o.poLines = [ pol ]
           writeOut(files.o, o);
           ttl.o++;
+          */
 
         } else {
           ttl.le++;
-
         }
         
         let z78 = d.z78[key];
         if (z78) {
           z78.forEach(n => {
             let o = makePolNote(n.Z78_ARRIVAL_NOTE, n.Z78_ARRIVAL_DATE, 'Mottagning', pol.id, refData);
-            writeOut(files.n, o);
-            ttl.n++
+            if (!noteCache[instId]) noteCache[instId] = [];
+            noteCache[instId].push(o);
+            // writeOut(files.n, o);
+            // ttl.n++
           });
         }
       }
     });
+    // throw(noteCache);
 
     for (let k in d.oo) {
       let akey = k;
@@ -485,8 +494,10 @@ const parseInst = (pol, inst, refData) => {
         template: tid,
         vendor: vid,
         workflowStatus: wfs,
-        tags: { tagList: [ "Aleph" ] }
+        tags: { tagList: [ "Aleph" ] },
+        poLines: []
       }
+      o.poNumberPrefix = puNum.replace(/^([A-Z]+).+/, '$1');
       if (cnote) o.notes = [ cnote ];
       if (o.orderType === 'Ongoing') {
         o.ongoing = {
@@ -497,11 +508,15 @@ const parseInst = (pol, inst, refData) => {
         };
       }
       // console.log(o);
+
+      coCache[instId] = o;
+      /*
       writeOut(files.p, o);
       o.workflowStatus = 'Pending';
       writeOut(files.c, o);
       o.workflowStatus = 'Open';
       ttl.p++;
+      */
 
       let amStr = 'KB: Inköp av utländsk tidskrift (prenumerationer, inkl. e-resurs)';
       let am = refData.acquisitionMethods[amStr];
@@ -566,25 +581,32 @@ const parseInst = (pol, inst, refData) => {
       if (z104) {
         z104.forEach(n => {
           let o = makePolNote(n.Z104_TEXT, n.Z104_TRIGGER_DATE, 'Förvärvsanteckning', pol.id, refData);
+          if (!noteCache[instId]) noteCache[instId] = [];
+          noteCache[instId].push(o);
+          /*
           writeOut(files.n, o);
           ttl.n++
+          */
         });
       }
       
-      writeOut(files.l, pol);
-      
-      ttl.l++;
+      if (checkPol(pol)) {
+        coCache[instId].poLines.push(pol);
+        /* 
+        writeOut(files.l, pol);
+        ttl.l++;
 
-      o.poLines = [ pol ];
-      writeOut(files.o, o);
-      ttl.o++;
-
-      adm2pol[akey] = pol.id;      
-      let apMap = {
-        adm: akey,
-        polId: pol.id
+        o.poLines = [ pol ];
+        writeOut(files.o, o);
+        ttl.o++;
+        */
+        adm2pol[akey] = pol.id;      
+        let apMap = {
+          adm: akey,
+          polId: pol.id
+        }
+        writeOut(files.s, apMap);
       }
-      writeOut(files.s, apMap);
     }
 
     /*
@@ -714,7 +736,7 @@ const parseInst = (pol, inst, refData) => {
       for (let x in d.so) {
         if (hridSeen[x]) continue;
         let r = d.so[x];
-        let poNum = 'SO' + x;
+        let poNum = (coCache[x]) ? coCache[x].poNumber : 'SO' + x;
         let id = uuid(poNum, ns);
         let v = r['Material supplier (Vendor, in Organizations)'];
         let vid = refData.organizations[v];
@@ -723,12 +745,14 @@ const parseInst = (pol, inst, refData) => {
           id: id,
           manualPo: true,
           poNumber: poNum,
+          poNumberPrefix: 'SO',
           orderType: 'Ongoing',
           reEncumber: true,
           template: tid,
           vendor: vid,
           workflowStatus: 'Open',
-          tags: { tagList: [ "Aleph" ] }
+          tags: { tagList: [ "Aleph" ] },
+          poLines: []
         };
         if (o.orderType === 'Ongoing') {
           o.ongoing = {
@@ -738,9 +762,12 @@ const parseInst = (pol, inst, refData) => {
             reviewPeriod: 90
           };
         }
+
+        coCache[x] = o;
+        /*
         writeOut(files.p, o);
         ttl.p++;
-        o.poLines = [];
+        */
         let inst = instMap[x];
         let ti = r['Title'];
         let flerb = r.Flerbandsverk;
@@ -787,20 +814,47 @@ const parseInst = (pol, inst, refData) => {
         }
         // console.log(pol);
         if (checkPol(pol)) {
+          coCache[x].poLines.push(pol);
+          /*
           o.poLines.push(pol);
           writeOut(files.o, o);
           ttl.o++;
 
           writeOut(files.l, pol);
           ttl.l++;
+          */
 
         } else {
           ttl.le++;  
         }
 
-        delete o.poLines;
-        o.workflowStatus = 'Pending';
-        writeOut(files.c, o)
+        // delete o.poLines;
+        // o.workflowStatus = 'Pending';
+        // writeOut(files.c, o)
+      }
+    }
+    for (let k in coCache) {
+      let co = coCache[k];
+      writeOut(files.o, co);
+      ttl.o++;
+      let polId = '';
+      if (co.poLines && co.poLines[0]) {
+        writeOut(files.l, co.poLines[0]);
+        ttl.l++;
+        polId = co.poLines[0].id;
+      }
+      delete co.poLines;
+      writeOut(files.p, co)
+      ttl.p++;
+      co.workflowStatus = 'Pending';
+      writeOut(files.c, co);
+      ttl.c++;
+      if (noteCache[k] && polId) {
+        noteCache[k].forEach(n => {
+          n.links[0].id = polId;
+          writeOut(files.n, n);
+          ttl.n++;
+        });
       }
     }
 

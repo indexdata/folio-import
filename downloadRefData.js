@@ -3,7 +3,6 @@ const superagent = require('superagent');
 const { getAuthToken } = require('./lib/login');
 let refDir = process.argv[2];
 let modName = process.argv[3];
-let allFin = process.env.finance;
 
 (async () => {
   try {
@@ -46,8 +45,11 @@ let allFin = process.env.finance;
       'https://raw.githubusercontent.com/folio-org/mod-di-converter-storage/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-source-record-storage/master/descriptors/ModuleDescriptor-template.json',
       'https://raw.githubusercontent.com/folio-org/mod-source-record-manager/master/descriptors/ModuleDescriptor-template.json',
-      'https://raw.githubusercontent.com/folio-org/mod-roles-keycloak/refs/heads/master/descriptors/ModuleDescriptor-template.json'
+      'https://raw.githubusercontent.com/folio-org/mod-roles-keycloak/refs/heads/master/descriptors/ModuleDescriptor-template.json',
+      'https://raw.githubusercontent.com/folio-org/mod-login-saml/refs/heads/master/descriptors/ModuleDescriptor-template.json'
     ];
+
+    mdUrls.push('https://raw.githubusercontent.com/folio-org/mod-finance/refs/heads/master/descriptors/ModuleDescriptor-template.json');
 
     if (modName) {
       let tmp = [];
@@ -88,16 +90,16 @@ let allFin = process.env.finance;
       '/finance-storage/ledger-rollovers': true,
       '/finance-storage/ledger-rollovers-progress': true,
       '/finance-storage/ledger-rollovers-errors': true,
-      '/finance-storage/group-budgets': true,
-      '/finance-storage/budgets': true,
-      '/finance-storage/fiscal-years': true,
-      '/finance-storage/funds': true,
-      '/finance-storage/group-fund-fiscal-years': true,
-      '/finance-storage/ledgers': true,
+      '/finance-storage/group-budgets': false,
+      '/finance-storage/budgets': false,
+      '/finance-storage/fiscal-years': false,
+      '/finance-storage/funds': false,
+      '/finance-storage/group-fund-fiscal-years': false,
+      '/finance-storage/ledgers': false,
       '/export': true,
       '/export/*': true,
       '/holdings-storage/holdings': true,
-      '/hrid-settings-storage/hrid-settings': true,
+      '/hrid-settings-storage/hrid-settings': false,
       '/instance-date-types': true,
       '/instance-bulk/ids': true,
       '/instance-storage/instance-relationships': true,
@@ -140,6 +142,7 @@ let allFin = process.env.finance;
       '/orders-storage/receiving-history': true,
       '/orders-storage/pieces': true,
       '/orders-storage/titles': true,
+      '/orders-storage/wrapper-pieces': true,
       '/organizations-storage/settings': true,
       '/patron-action-session-storage/expired-session-patron-ids': true,
       '/patron-action-session-storage/patron-action-sessions': true,
@@ -149,6 +152,7 @@ let allFin = process.env.finance;
       '/request-preference-storage/request-preference': true,
       '/request-storage/requests': true,
       '/roles/users': true,
+      '/saml/validate': true,
       '/scheduled-notice-storage/scheduled-notices': true,
       '/shelf-locations': true,
       '/service-point-users': true,
@@ -211,16 +215,6 @@ let allFin = process.env.finance;
       'roles__capability-sets'
     ];
 
-    if (allFin) {
-      delete skipList['/finance-storage/group-budgets'];
-      delete skipList['/finance-storage/budgets'];
-      delete skipList['/finance-storage/fiscal-years']
-      delete skipList['/finance-storage/funds'];
-      delete skipList['/finance-storage/group-fund-fiscal-years'];
-      delete skipList['/finance-storage/ledgers'];
-    }
-    // console.log(skipList); return;
-
     custMods = {};
     try {
       console.log('Getting modules list...');
@@ -273,7 +267,7 @@ let allFin = process.env.finance;
         console.error(e.message);
       }
     }
-    paths.push({mod: 'system_users', path: 'users?query=personal.lastName==system%20OR%20username==canary-svc%20OR%20username==system-z3950&limit=100'});
+    paths.push({mod: 'system_users', path: 'users?query=personal.lastName==system*%20OR%20username==canary-svc%20OR%20username==system-z3950&limit=100'});
 
     for (let x = 0; x < paths.length; x++) {
       if (paths[x].path === 'mapping-rules/') {
@@ -348,9 +342,10 @@ let allFin = process.env.finance;
         if (save) {
           let jsonStr = JSON.stringify(res.body, null, 2);
           let fullSaveDir = refDir + '/' + saveDir;
+          if (url.match(/(hrid-settings|budgets|fiscal-years|funds|ledgers|organizations|contacts)\?/)) fullSaveDir += '/xtra';
           if (!fs.existsSync(fullSaveDir)) {
-            console.log(`\x1b[32m(Creating directory: ${saveDir})\x1b[0m`);
-            fs.mkdirSync(fullSaveDir);
+            console.log(`\x1b[32m(Creating directory: ${fullSaveDir})\x1b[0m`);
+            fs.mkdirSync(fullSaveDir, { recursive: true });
           }
           let p = priority.indexOf(fileName);
           if (p > -1) {
@@ -377,7 +372,7 @@ let allFin = process.env.finance;
             uns.push({username: r.username, userId: r.id});
           });
           let pq = pqs.join('%20OR%20userId=');
-          let ep = `perms/users?query=userId=${pq}`
+          let ep = `perms/users?query=userId=${pq}&limit=100`;
           paths.push({ path: ep, mod: suMod });
           // create credentials objects and POST to authn/credentials
           let creds = [];

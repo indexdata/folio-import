@@ -1,5 +1,6 @@
 wd=/home/konchaled/folio-import
 data=/data/konchaled
+in=$(data)/dryrun3-data
 ref=$(data)/ref
 uref=$(ref)/usr
 iref=$(ref)/inv
@@ -49,7 +50,7 @@ split-users: $(udir)/users-users.jsonl
 	ls -l $(udir)
 
 circ:
-	cd $(cdir); mv -f z36.seqaa z36.dsv; true; mv -f z37.seqaa z37.dsv; true; mv -f z310.seqaa z310.dsv
+	# cd $(cdir); mv -f z36.seqaa z36.dsv; true; mv -f z37.seqaa z37.dsv; true; mv -f z310.seqaa z310.dsv
 	cd $(wd); [ -f $(cdir)/users.jsonl ] || node downloadJSONL 'users?limit=5000&query=barcode==* sortBy id' $(cdir)/users.jsonl
 	cd $(wd)/patrons; node --max-old-space-size=5120 nlsCirc $(iref)/service-points.json $(cdir)/users.jsonl $(idir)/bibs-items.jsonl $(cdir)/z36.dsv $(cdir)/z310.dsv $(cdir)/z37.dsv > $(ldir)/makeCirc.log 2>$(ldir)/makeCirc.err &
 	tail -f $(ldir)/makeCirc.log
@@ -64,11 +65,25 @@ clean-circ: $(cdir)/*.dsv
 	cd $(cdir); mv z37.dsv z37.seqaa
 	cd $(cdir); mv z310.dsv z310.seqaa
 
+orders-prep: $(odir)/*.xlsx
+	mkdir -p $(odir)/tmp
+	cd $(odir); rm *.tsv || true; rm *.dsv || true;
+	cd $(wd)/util; node xlsx2csv $(odir)/L?pande?SO*xlsx tsv
+	cd $(odir); mv *.tsv tmp/standing-orders.tsv
+	cd $(wd)/util; node xlsx2csv $(odir)/NLS*orders*xlsx tsv
+	cd $(odir); mv NLS*open_orders.tsv tmp/open-orders.tsv; rm *.tsv
+	cd $(odir); mv tmp/*.tsv .; rm -rf tmp
+	cd $(odir); ln -s $(in)/z104.dsv .
+	cd $(odir); ln -s $(in)/z16.dsv .
+	cd $(odir); ln -s $(in)/z68.dsv .
+	cd $(odir); ln -s $(in)/z78.dsv .
+
 orders:
 	cd $(acq); node --max-old-space-size=4096 nlsOrders $(oref) $(z103) $(idir)/bibs-instances.jsonl $(odir) > $(ldir)/makeOrders.log 2>$(ldir)/makeOrders.err &
 	tail -f $(ldir)/makeOrders.log
 
-serials:
+serials: $(in)/z08.dsv
+	cd $(odir); rm z08.dsv || true; ln -s $(in)/z08.dsv .
 	cd $(wd); node downloadJSONL orders-storage/titles $(odir)/titles.jsonl
 	cd $(acq); node nlsSerials $(odir)/z08.dsv > $(ldir)/makeSerials.log 2>$(ldir)/makeSerials.err
 	cat $(ldir)/makeSerials.log

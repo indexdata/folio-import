@@ -231,7 +231,8 @@ try {
       mc++;
       let c = line.split(/\x1E/);
       let k = c[0];
-      instMap[k] = { id: c[1], blvl: c[4], type: c[6], ea: c[5], af: c[7] };
+      let hhrid = (c[9] === 'undefined') ? '' : c[9];
+      instMap[k] = { id: c[1], blvl: c[4], type: c[6], ea: c[5], af: c[7], l: hhrid };
       if (mc % 1000000 === 0) console.log('Map lines read:', mc);
     }
     console.log('Instances mapped:', mc);
@@ -306,6 +307,7 @@ try {
   const hseen = {};
   const dseen = {};
   const bcseen = {};
+  const libseen = {};
   const occ = {};
 
   const makeHoldingsItems = (r) => {
@@ -397,9 +399,15 @@ try {
 
       // let xholding = xholdings[inst.id];
       if (!hseen[hkey]) {
-        occ[bid] = (!occ[bid]) ? 1 : occ[bid] + 1;
-        let occStr = occ[bid].toString().padStart(3, '0');
-        let hhrid = bid + '-' + occStr;
+        let hhrid;
+        if (inst.l && !libseen[inst.l]) {
+          hhrid = inst.l
+          libseen[inst.l] = 1;
+        } else {
+          occ[bid] = (!occ[bid]) ? 1 : occ[bid] + 1;
+          let occStr = occ[bid].toString().padStart(3, '0');
+          hhrid = bid + '-' + occStr;
+        }
         let hid = uuid(hhrid, ns);
         let htypeId = (inst.blvl === 's') ? refData.holdingsTypes['Serial'] : refData.holdingsTypes['Monograph'];
         let h = {
