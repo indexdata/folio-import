@@ -7,7 +7,7 @@
     "ajv": "^8.18.0",
     "csv-parse": "^4.15.3",
     "jsonpath": "^1.2.1",
-    "uuid": "^3.3.3",
+    "uuid": "^14.0.0",
     "uuid4": "^1.1.4",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
   }
