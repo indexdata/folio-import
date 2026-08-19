@@ -5,7 +5,6 @@ const argv = require('minimist')(process.argv.slice(2));
 const { Buffer } = require('node:buffer');
 
 let refDir = argv._[0];
-let size = parseInt(argv.s, 10) || 10000;
 let offset = parseInt(argv.o, 10) || 0;
 
 const mij2raw = (mij, sortFieldsByTag) => {
@@ -51,13 +50,14 @@ const mij2raw = (mij, sortFieldsByTag) => {
 (async () => {
   try {
     if (!refDir) {
-      throw new Error('Usage: node downloadSourceRecords.js [ -s collection size, -l jsonl output, -m marc output, -o offset ] <download_dir>');
+      throw new Error('Usage: node downloadSourceRecords.js [ -m marc output, -o offset ] <download_dir>');
     } else if (!fs.existsSync(refDir)) {
       throw new Error('Download directory does\'t exist!');
     } else if (!fs.lstatSync(refDir).isDirectory()) {
       throw new Error(`${refDir} is not a directory!`)
     }
     let config = await getAuthToken(superagent);
+    console.log(config);
 
     refDir = refDir.replace(/\/$/,'');
     const jsonlFile = `${refDir}/records.jsonl`;
@@ -71,8 +71,12 @@ const mij2raw = (mij, sortFieldsByTag) => {
     let perPage = 1000;
     let part = 0;
     const coll = { records: [] };
-    if (argv.l && fs.existsSync(jsonlFile)) fs.unlinkSync(jsonlFile);
-    if (argv.m && fs.existsSync(mrcFile)) fs.unlinkSync(mrcFile);
+    if (argv.m && fs.existsSync(mrcFile)) {
+      fs.unlinkSync(mrcFile);
+    } else if (fs.existsSync(jsonlFile)) {
+      fs.unlinkSync(jsonlFile);
+    }
+    let fn = (argv.m) ? mrcFile : jsonlFile;
     while (totFetch < totRecs) {
       let url = `${actionUrl}?state=ACTUAL&limit=${perPage}&offset=${offset}&orderBy=updatedDate,DESC`;
       console.log(url);
@@ -83,22 +87,19 @@ const mij2raw = (mij, sortFieldsByTag) => {
           .timeout({response: 120000})
           .set('User-Agent', config.agent)
           .set('accept', 'application/json')
-          .set('x-okapi-token', config.token);
-        if (argv.l || argv.m) {
-          let recs = res.body[recObj];
-          let fn = jsonlFile || mrcFile;
-          console.log(`Writing ${recs.length} records to ${fn}`)
-          for (let x = 0; x < recs.length; x++) {
-            if (argv.l) {
-              let rec = JSON.stringify(recs[x]) + '\n';
-              fs.writeFileSync(jsonlFile, rec, { flag: 'a'});
-            } else {
-              let raw = mij2raw(recs[x].parsedRecord.content, true);
-              fs.writeFileSync(mrcFile, raw, {flag: 'a'});
-            }
+          .set('x-okapi-token', config.token)
+          .set('x-okapi-tenant', config.tenant)
+          .set('cookies', config.cookie);
+        let recs = res.body[recObj];
+        console.log(`Writing ${recs.length} records to ${fn}`)
+        for (let x = 0; x < recs.length; x++) {
+          if (argv.m) {
+            let raw = mij2raw(recs[x].parsedRecord.content, true);
+            fs.writeFileSync(mrcFile, raw, {flag: 'a'});
+          } else {
+            let rec = JSON.stringify(recs[x]) + '\n';
+            fs.writeFileSync(jsonlFile, rec, { flag: 'a'});
           }
-        } else {
-          coll.records = coll.records.concat(res.body[recObj]);
         }
         totFetch += res.body[recObj].length;
         totRecs = res.body.totalRecords; 
@@ -113,16 +114,6 @@ const mij2raw = (mij, sortFieldsByTag) => {
       let sec = (endTime - startTime) / 1000;
       offset += perPage;
       console.log(`Received ${totFetch} of ${totRecs} records in ${sec} sec`);
-      if ((totFetch % size == 0 || totFetch >= totRecs) && ! argv.l) {
-        let saveSize = coll.records.length;
-        let partPadded = part.toString().padStart(5, '0');
-        let fn = `${refDir}/records${partPadded}.json`
-        console.log(`Writing ${saveSize} records to ${fn}...`);
-        const jsonStr = JSON.stringify(coll, null, 2);
-        fs.writeFileSync(fn, jsonStr);
-        coll.records = [];
-        part++;
-      }
     }
   } catch (e) {
     console.error(e.message);
