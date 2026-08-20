@@ -57,7 +57,6 @@ const mij2raw = (mij, sortFieldsByTag) => {
       throw new Error(`${refDir} is not a directory!`)
     }
     let config = await getAuthToken(superagent);
-    console.log(config);
 
     refDir = refDir.replace(/\/$/,'');
     const jsonlFile = `${refDir}/records.jsonl`;
@@ -94,8 +93,11 @@ const mij2raw = (mij, sortFieldsByTag) => {
         console.log(`Writing ${recs.length} records to ${fn}`)
         for (let x = 0; x < recs.length; x++) {
           if (argv.m) {
-            let raw = mij2raw(recs[x].parsedRecord.content, true);
-            fs.writeFileSync(mrcFile, raw, {flag: 'a'});
+            let raw; 
+            if (recs[x].parsedRecord) { 
+              raw = mij2raw(recs[x].parsedRecord.content, true);
+            }
+            if (raw) fs.writeFileSync(mrcFile, raw, {flag: 'a'});
           } else {
             let rec = JSON.stringify(recs[x]) + '\n';
             fs.writeFileSync(jsonlFile, rec, { flag: 'a'});
