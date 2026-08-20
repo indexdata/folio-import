@@ -14,7 +14,7 @@ acq=$(wd)/acquisitions
 con=$(inv2)/conf/nls-kb.json
 ldir=$(data)/log
 etc=$(wd)/etc/nls
-z103=$(data)/z103.seqaa
+z103=$(in)/z103.seqaa
 
 setup:
 	cd $(wd); git pull
@@ -81,6 +81,9 @@ orders-prep: $(odir)/*.xlsx
 orders:
 	cd $(acq); node --max-old-space-size=4096 nlsOrders $(oref) $(z103) $(idir)/bibs-instances.jsonl $(odir) > $(ldir)/makeOrders.log 2>$(ldir)/makeOrders.err &
 	tail -f $(ldir)/makeOrders.log
+
+split-orders:
+	cd $(odir); split -l 2000 pol-notes.jsonl pn-; ls -ltr
 
 serials: $(in)/z08.dsv
 	cd $(odir); rm z08.dsv || true; ln -s $(in)/z08.dsv .
