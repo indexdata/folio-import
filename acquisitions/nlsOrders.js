@@ -30,7 +30,7 @@ const files = {
 const zfiles = {
   oo: 'open-orders.tsv',
   so: 'standing-orders.tsv',
-  z68: 'z68.dsv',
+  // z68: 'z68.dsv',
   z16: 'z16.dsv',
   z104: 'z104.dsv',
   z78: 'z78.dsv'
@@ -261,10 +261,13 @@ const parseInst = (pol, inst, refData) => {
     console.log(dcount);
     // throw(d.so);
 
+    /* do not do z68
     d.z68.forEach(r => {
       let k = r.Z68_REC_KEY.substring(0, 9);
       adminMap[k] = 1;
     });
+    */
+
     for (let k in d.z16) {
       let ak = d.z16[k].Z16_REC_KEY.substring(0, 9);
       adminMap[ak] = 1;
@@ -353,6 +356,7 @@ const parseInst = (pol, inst, refData) => {
     const hridSeen = {};
     const coCache = {};
     const noteCache = {};
+    d.z68 = [];
     d.z68.forEach(r => {
       if (r.Z68_ORDER_TYPE === 'O') {
         let key = r.Z68_REC_KEY.substring(2, 9);
