@@ -14,12 +14,22 @@ while true; do
     esac
 done
 
-options=$(ls configs/json)
-select opt in $options
-do
-	cp configs/json/$opt config.json
-	break
-done
+cdir=configs/json
+
+function sel() {
+    options=$(ls $1)
+    select opt in $options
+    do
+        if [ -d $opt ]
+        then
+            sel $cdir/$opt
+        fi
+        cp configs/json/$opt config.json
+        break
+    done
+}
+
+sel $cdir
 
 echo "Config set to:"
 grep okapi.: config.json
