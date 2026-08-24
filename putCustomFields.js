@@ -11,7 +11,7 @@ const ent = process.argv[4] || 'user';
   let errors = 0;
   try {
     if (!fn) {
-      throw new Error('Usage: node putCustomFields.js <mod-users version> <file> [ entityType: (user | order) ] \nNOTE: Module set to ' + mod);
+      throw new Error('Usage: node putCustomFields.js <mod and version> <file> [ entityType: (user | order | po_line) ] \nNOTE: Module set to ' + mod);
     }
 
     let config = await getAuthToken(superagent);
