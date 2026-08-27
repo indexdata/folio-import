@@ -132,7 +132,8 @@ try {
         delete u.id;
         mui.users.push(u);
       } else {
-        console.log('ERROR no lastName:', u.id, `"${u.username}"`);
+        let et = (!u.username) ? 'username' : 'lastName';
+	console.log(`ERROR No ${et} found in line ${count} (${l})`);
         err++;
       }
       bcSeen[u.barcode] = 1;
