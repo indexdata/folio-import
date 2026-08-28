@@ -4,6 +4,25 @@ const path = require('path');
 
 const patronFile = process.argv[2];
 
+const headers = [ 'username', 'externalSystemId', 'barcode', 'active', 'patronGroup', 'department_1', 'firstName', 'lastName', 
+  'middleName','email','phone','mobilePhone','preferredContactType', 'cust_tapid', 'cust_expectedGraduationDate'
+];
+
+const hpos = {};
+headers.forEach((h,el) => {
+  hpos[h] = el
+});
+
+const fmap = {
+  Active: 'active',
+  Barcode: 'barcode',
+  createdDate: 'enrollmentDate',
+  tapid: 'cust_tapid',
+  graduation: 'cust_expectedGraduationDate',
+  preferredContactTypeId: 'preferredContactType',
+  departments: 'department_1'
+}
+
 const parseAddress = (saddr, type, primary) => {
   let addresses = [];
   for (let x = 0; x < saddr.length; x++) {
@@ -22,8 +41,29 @@ const parseAddress = (saddr, type, primary) => {
     break;
   }
   return addresses;
-}
+};
 
+const parseDate = (text) => {
+  let out; 
+  try { 
+    out = new Date(text).toISOString();
+    return out;
+  } catch(e) {
+    console.log(`WARN ${e} (${text})`);
+    return '';
+  }
+};
+
+const makeCsvLine = (obj) => {
+  let arr = [];
+  for (let h in hpos) {
+    let pos = hpos[h];
+    arr[pos] = obj[h];
+  }
+  return arr.join(',');
+};
+let head = headers.join(',');
+console.log(head);
 try {
   if (!patronFile) throw 'Usage: node hcUsersOngoing2 <sierra_patron_file>';
   if (!fs.existsSync(patronFile)) throw `Can't find patron file: ${patronFile}!`;
@@ -46,9 +86,19 @@ try {
       uc++;
       let r = {};
       for (let x = 0; x <= cols.length; x++) {
-        if (cols[x] && c[x]) r[cols[x]] = c[x];
-        console.log(r);
+        let prop = fmap[cols[x]] || cols[x];
+        if (prop && c[x]) r[prop] = c[x];
       }
+      r.username = r.email || r.barcode;
+      if (r.expirationDate) r.expirationDate = parseDate(r.expirationDate);
+      if (r.preferredContactType) r.preferredContactType = r.preferredContactType.toLowerCase();
+      delete r.enrollmentDate;
+      delete r.updateDate;
+      r.active = (r.active === 'Active') ? 'true' : 'false'; 
+      if (r.department_1 === 'No') delete r.department_1;
+      console.log(r);
+      let row = makeCsvLine(r);
+      console.log(row);
     }
   });
   rl.on('close', () => {
