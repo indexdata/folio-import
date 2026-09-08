@@ -1336,7 +1336,7 @@ try {
             let d;
             let str;
             if (t === '852') {
-              str = getSubs(f, '3chijlmt');
+              str = getSubs(f, '3chijlpm');
               d = getSubsHash(f, true);
               if (d.z && str) { 
                 str = `${str} (${d.z})`;
@@ -1597,7 +1597,7 @@ try {
       let n = ttl[x].toString().padStart(8);
       console.log(l, ':', n);
       let fn = files[x];
-      if (ttl[x] === 0 && fs.existsSync(fn)) fs.unlinkSync(fn);
+      if (fn && ttl[x] === 0 && fs.existsSync(fn)) fs.unlinkSync(fn);
     }
   });
 } catch (e) {
