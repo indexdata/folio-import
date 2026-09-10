@@ -7,7 +7,7 @@ let dir = process.argv[2];
 
 const postThing = async (config, ep, obj) => {
   let url = `${config.okapi}/${ep}`;
-  console.log(url);
+  console.log('POST ' + url);
   try {
     let res = await superagent
       .post(url)
@@ -16,7 +16,22 @@ const postThing = async (config, ep, obj) => {
       .set('cookie', config.cookie);
     return res.body
   } catch (e) {
-    throw new Error(e);
+    console.log(e);
+  }
+}
+
+const putThing = async (config, ep, obj) => {
+  let url = `${config.okapi}/${ep}`;
+  console.log('PUT ' + url);
+  try {
+    let res = await superagent
+      .put(url)
+      .send(obj)
+      .set('x-okapi-tenant', config.tenant)
+      .set('cookie', config.cookie);
+    return res.body
+  } catch (e) {
+    console.log(e);
   }
 }
 
@@ -39,20 +54,24 @@ const postThing = async (config, ep, obj) => {
         let obj = JSON.parse(lines[y]);
         if (fn.match(/roles.jsonl$/)) {
           let newObj = await postThing(config, ep, obj);
-          rmap[newObj.name] = newObj.id;
+          rmap[newObj.name] = { id: newObj.id, capabilitySetIds: [] }
         } else if (fn.match(/capability-sets.jsonl$/)) {
           let rname = obj.roleId || '';
-          let rid = rmap[rname];
-          if (rid) {
-            obj.roleId = rid;
-            console.log(obj);
+          let role = rmap[rname];
+          if (role) {
+            role.capabilitySetIds.push(obj.capabilitySetId);
+            // let ep = `roles/rid/capbility-sets`
           }
         }
       }
     }
     console.log(rmap);
-
-      
+    for (let k in rmap) {
+      let id = rmap[k].id;
+      delete rmap[k].id;
+      let ep = `roles/${id}/capability-sets`
+      await putThing(config, ep, rmap[k]);
+    }
   } catch (e) {
     console.log(e);
   }
