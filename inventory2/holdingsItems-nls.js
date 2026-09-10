@@ -205,6 +205,7 @@ try {
             if (cb && !tsvMap[prop][k][cb]) tsvMap[prop][k][cb] = {};
             if (cc && !tsvMap[prop][k][cc]) tsvMap[prop][k][cb][cc] = {};
             if (cb && cc) {
+              if (p === 'Ej utlån') p = 'Framtages ej';
               if (p) tsvMap[prop][k][cb][cc].p = p;
               if (t) tsvMap[prop][k][cb][cc].t = t;
             }
@@ -216,7 +217,7 @@ try {
       }
     });
   }
-  // throw(JSON.stringify(tsvMap.locations, null, 2));
+  // throw(JSON.stringify(tsvMap.loantypes, null, 2));
 
   console.log(`INFO Parsing instance map at ${mapFile}`);
   const instMap = {};
