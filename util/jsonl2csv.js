@@ -32,7 +32,9 @@ try {
       let cols = [];
       head.forEach(h => {
         let d = j[h] || '';
-        if (d.match(/,/)) d = `"${d}"`;
+        if (typeof(d) !== 'string') d = JSON.stringify(d);
+        d = d.replace(/"/g,'""');
+        if (d.match(/[,"]/)) d = `"${d}"`;
         cols.push(d);
       });
       str += cols.join(',') + '\n';
