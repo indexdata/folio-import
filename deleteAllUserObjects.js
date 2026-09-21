@@ -55,8 +55,10 @@ const delId = async (config, id, ep) => {
       .set('x-okapi-tenant', config.tenant)
       .set('x-okapi-token', config.token)
     out = res.body
+    return out;
   } catch (e) {
     console.log(`${e}`);
+    return out;
   }
 }
 
@@ -76,22 +78,31 @@ const delId = async (config, id, ep) => {
       crlfDelay: Infinity
     });
     let c = 0;
+    let uc = 0;
+    let nf = 0;
     for await (const line of rl) {
       c++
       console.log(`-------------------- [${c}] --------------------`)
       let user = JSON.parse(line);
-      await delId(config, user.id, 'users');
-      for (let ep in epMap) {
-        let prop = epMap[ep];
-        let id = await getId(config, user.id, ep, prop);
-        if (id) await delId(config, id, ep);
+      let res = await delId(config, user.id, 'users');
+      if (res) {
+        uc++;
+        for (let ep in epMap) {
+          let prop = epMap[ep];
+          let id = await getId(config, user.id, ep, prop);
+          if (id) await delId(config, id, ep);
+        }
+      } else {
+        nf++;
       }
     }
 
     let end = new Date().valueOf();
     let tt = (end - start)/1000;
     console.log('Done!');
-    console.log('Users deleted:', c);
+    console.log('Users deleted:', uc);
+    console.log('Not found:', nf);
+    console.log('Lines read:', c);
     console.log('Time:', tt);
 
   } catch (e) {
