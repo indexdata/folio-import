@@ -30,7 +30,6 @@ const files = {
 const zfiles = {
   oo: 'open-orders.tsv',
   so: 'standing-orders.tsv',
-  // z68: 'z68.dsv',
   z16: 'z16.dsv',
   z104: 'z104.dsv',
   z78: 'z78.dsv'
@@ -182,7 +181,7 @@ const parseInst = (pol, inst, refData) => {
         });
       }
     });
-    // throw(refData.customFields);
+    // throw(refData.locations['LOC-TLS']);
 
     const linkMap = {};
     const linkMapRev = {};
@@ -307,16 +306,24 @@ const parseInst = (pol, inst, refData) => {
     // create instance map
     console.log(`INFO Reading instance data from ${instFile}`);
     const instMap = {};
-    fileStream = fs.createReadStream(instFile);
+    fileStream = fs.createReadStream(instFile, { encoding: 'utf8' });
     rl = readline.createInterface({
       input: fileStream,
       crlfDelay: Infinity
     });
     lc = 0;
     mc = 0;
+    rp = 0;
     for await (let line of rl) {
       lc++
-      let inst = JSON.parse(line);
+      let inst; 
+      try {
+        inst = JSON.parse(line);
+        rp++;
+      } catch (e) {
+        console.log(`WARN Line ${lc} contains HEX 2028`); 
+        continue
+      }
       if (inst && inst.identifiers) {
         for (let x = 0; x < inst.identifiers.length; x++) {
           let p = inst.identifiers[x];
@@ -340,6 +347,7 @@ const parseInst = (pol, inst, refData) => {
       if (lc % 100000 === 0) console.log('Instance lines read:', lc);
     }
     console.log('Instance lines read:', lc);
+    console.log('Instance lines parsed:', rp);
     console.log('Instances mapped:', Object.keys(instMap).length);
     // throw(instMap);
 
@@ -534,17 +542,24 @@ const parseInst = (pol, inst, refData) => {
         source: 'User',
         cost: cost,
         poLineNumber: o.poNumber + '-1',
-        customFields: {}
+        customFields: {},
+        details: { isBinderyActive: true },
+        locations: {
+          locationId: refData.locations['LOC-TLS'],
+          quantityPhysical: 0
+        }
       }
 
+      if (!pol.locations.locationId) { 
+        console.log(`WARN Location not found for "LOC-TLS"`);
+        delete pol.locations;
+      }
       if (inst) {
-        pol.details = {};
         parseInst(pol, inst, refData);
       } else {
         pol.titleOrPackage = oo.Title;
         let issn = oo['ISSN or other identifier'];
         if (issn) {
-          pol.details = {};
           let t = '';
           if (issn.match(/^....-....$/)) {
             t = 'ISSN'
