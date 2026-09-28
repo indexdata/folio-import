@@ -544,13 +544,13 @@ const parseInst = (pol, inst, refData) => {
         poLineNumber: o.poNumber + '-1',
         customFields: {},
         details: { isBinderyActive: true },
-        locations: {
+        locations: [ {
           locationId: refData.locations['LOC-TLS'],
           quantityPhysical: 0
-        }
+        } ]
       }
 
-      if (!pol.locations.locationId) { 
+      if (!pol.locations[0].locationId) { 
         console.log(`WARN Location not found for "LOC-TLS"`);
         delete pol.locations;
       }
