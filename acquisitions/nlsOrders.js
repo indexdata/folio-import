@@ -141,6 +141,7 @@ const parseInst = (pol, inst, refData) => {
     // throw(files);
 
     const refData = {};
+    const ot = {};
     let alephTypeId = '';
     let rfiles = fs.readdirSync(refDir);
     rfiles.forEach(f => {
@@ -155,17 +156,13 @@ const parseInst = (pol, inst, refData) => {
         }
         refData[prop] = {};
         if (prop === 'identifierTypes') refData.productIdentifiers = {};
-        
         j[prop].forEach(d => {
-
           let n = d.name || d.templateName || d.value;
           let c = d.code || d.templateCode;
-
           if (prop === 'identifierTypes') {
             if (!d.name.match(/control|OCLC|LCCN|local|libris|LIBR|katalog|Aleph/i)) refData.productIdentifiers[d.id] = d.name;
             if (d.name.match(/Aleph/)) alephTypeId = d.id;
-          }
-          if (prop === 'customFields') {
+          } else if (prop === 'customFields') {
             let o = { refId: d.refId };
             if (d.selectField) {
               o.opts = {};
@@ -175,13 +172,19 @@ const parseInst = (pol, inst, refData) => {
             }
             d.id = o;
             c = d.refId;
+          } else if (prop === 'orderTemplates') {
+            let tc = d.templateCode;
+            let tn = d.templateName;
+            if (tc) ot[tc] = d;
+            if (tn) ot[tn] = d;
+
           }
           if (n) refData[prop][n] = d.id;
           if (c) refData[prop][c] = d.id;
         });
       }
     });
-    // throw(refData.locations['LOC-TLS']);
+    // throw(refData.orderTemplates.PREN);
 
     const linkMap = {};
     const linkMapRev = {};
@@ -479,9 +482,11 @@ const parseInst = (pol, inst, refData) => {
       let odate = (r) ? r.Z16_COPY_FROM_DATE.replace(/^(....)(..)(..)/, '$1-$2-$3') : '2000-01-01';
       let cnote = (r) ? r.Z16_CHECK_IN_NOTE : '';
       let tstr = 'KB prenumeration';
-      let tid = refData.orderTemplates[tstr];
+      let temp = ot[tstr] || {};
+      let tid = temp.id;
+      let otype = temp.orderType || 'Ongoing';
       let vstr = 'SREBSCO';
-      let vid = refData.organizations[vstr];
+      let vid = temp.vendor || refData.organizations[vstr];
       let wfs = (oo) ? 'Open' : 'Closed';
       let vrf = oo['POL Vendor reference number'];
       let kos = oo['Kostnadsställe'];
@@ -501,7 +506,7 @@ const parseInst = (pol, inst, refData) => {
         dateOrdered: odate,
         manualPo: true,
         poNumber: puNum,
-        orderType: 'Ongoing',
+        orderType: otype,
         reEncumber: true,
         template: tid,
         vendor: vid,
@@ -519,16 +524,8 @@ const parseInst = (pol, inst, refData) => {
           reviewPeriod: 90
         };
       }
-      // console.log(o);
 
       coCache[instId] = o;
-      /*
-      writeOut(files.p, o);
-      o.workflowStatus = 'Pending';
-      writeOut(files.c, o);
-      o.workflowStatus = 'Open';
-      ttl.p++;
-      */
 
       let amStr = 'KB: Inköp av utländsk tidskrift (prenumerationer, inkl. e-resurs)';
       let am = refData.acquisitionMethods[amStr];
@@ -549,6 +546,15 @@ const parseInst = (pol, inst, refData) => {
           quantityPhysical: 0
         } ]
       }
+      if (temp.claimingInterval) pol.claimingInterval = temp.claimingInterval;
+      if (temp.claimingActive !== 'undefined') pol.claimingActive = temp.claimingActive;
+      if (temp.details) pol.details = temp.details;
+      if (temp.orderFormat) pol.orderFormat = temp.orderFormat;
+      if (temp.checkinItems !== 'undefined') pol.checkinItems = temp.checkinItems;
+      if (temp.donorOrganizationIds && temp.donorOrganizationIds[0]) pol.donorOrganizationIds = temp.donorOrganizationIds;
+      if (temp.isPackage !== 'undefine') pol.isPackage == temp.isPackage;
+      if (temp.cost) pol.cost = temp.cost;
+      if (temp.locations) pol.locations = temp.locations;
 
       if (!pol.locations[0].locationId) { 
         console.log(`WARN Location not found for "LOC-TLS"`);
@@ -594,6 +600,7 @@ const parseInst = (pol, inst, refData) => {
           materialType: refData.mtypes['Häfte/Volym Standing order'] || refData.mtypes.unspecified || refData.mtypes._unspecified,
           volumes: []
         };
+        if (temp.physical) pol.physical = temp.physical;
       }
 
       let z104 = d.z104[akey];
