@@ -5,7 +5,8 @@ const argv = require('minimist')(process.argv.slice(2));
 
 let dir = argv._[0];
 let lim = (argv.l !== undefined) ? argv.l : 100000;
-let stype = (argv.t && argv.t === 'bib') ? 'bibliographic' : (argv.t && argv.t === 'auth') ? 'authority' : '';
+let stype = (argv.p === 'bib') ? 'bibliographic' : (argv.p === 'auth') ? 'authority' : '';
+
 let base = 'specification-storage';
 
 const files = {
@@ -43,9 +44,15 @@ const get = async (config, ep) => {
 
 const arr = (obj, prop, filename) => {
   let rec = [];
+  let c = 0;
   for (let x = 0; x < obj[prop].length; x++) {
-    if (prop === 'specification' && stype && obj[prop][x].profile !== stype) continue
-    if (x === lim) break;
+    if (stype && prop === 'specifications') {
+      if (obj[prop][x].profile !== stype) {
+        continue;
+      }
+    }
+    c++;
+    if (c > lim) break;
     delete obj[prop][x].metadata;
     rec.push(obj[prop][x]);
     if (filename) writeJSONL(filename, obj[prop][x]);
@@ -55,7 +62,8 @@ const arr = (obj, prop, filename) => {
 
 (async () => {
   try {
-    if (!dir) throw('Usage: marcSpecSaver <save_dir> [ -l <limit>, -t <spec_type: bib|auth> ]');
+    if (!dir) throw('Usage: marcSpecSaver <save_dir> [ -l <limit>, -t <profile: bib|auth> ]');
+    if (argv.p && !(argv.p === 'bib' || argv.p === 'auth')) throw(`Incorrect profile type: "${argv.p}" (must be "bib" or "auth")`);
     dir = dir.replace(/\/$/, '');
     for (let k in files) {
       files[k] = dir + '/' + files[k];
