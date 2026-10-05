@@ -565,6 +565,9 @@ const parseInst = (pol, inst, refData) => {
         pol.cost.listUnitPrice = 0;
         pol.cost.quantityPhysical = 1;
       }
+      if (pol.locations) {
+        pol.locations[0].quantity = 1;
+      }
 
       if (!pol.locations[0].locationId) { 
         console.log(`WARN Location not found for "LOC-TLS"`);
