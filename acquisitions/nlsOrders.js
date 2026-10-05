@@ -512,6 +512,12 @@ const parseInst = (pol, inst, refData) => {
         vendor: vid,
         workflowStatus: wfs,
         tags: { tagList: [ "Aleph" ] },
+        totalCredited: 0,
+        totalEncumbered: 0,
+        totalExpended: 0,
+        totalItems: 1,
+        nextPolNumber: 2,
+        needReEncumber: false,
         poLines: []
       }
       o.poNumberPrefix = puNum.replace(/^([A-Z]+).+/, '$1');
@@ -877,6 +883,13 @@ const parseInst = (pol, inst, refData) => {
       writeOut(files.p, co)
       ttl.p++;
       co.workflowStatus = 'Pending';
+      delete co.totalCredited;
+      delete co.totalEncumbered;
+      delete co.totalExpended;
+      delete co.totalItems;
+      delete co.needReEncumber;
+      delete co.nextPolNumber;
+      if (co.orderType === "Ongoing") co.ongoing = {};
       writeOut(files.c, co);
       ttl.c++;
       if (noteCache[k] && polId) {
