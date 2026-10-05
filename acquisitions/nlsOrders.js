@@ -548,13 +548,17 @@ const parseInst = (pol, inst, refData) => {
       }
       if (temp.claimingInterval) pol.claimingInterval = temp.claimingInterval;
       if (temp.claimingActive !== 'undefined') pol.claimingActive = temp.claimingActive;
-      if (temp.details) pol.details = temp.details;
+      if (temp.details) pol.details = structuredClone(temp.details);
       if (temp.orderFormat) pol.orderFormat = temp.orderFormat;
       if (temp.checkinItems !== 'undefined') pol.checkinItems = temp.checkinItems;
-      if (temp.donorOrganizationIds && temp.donorOrganizationIds[0]) pol.donorOrganizationIds = temp.donorOrganizationIds;
-      if (temp.isPackage !== 'undefine') pol.isPackage == temp.isPackage;
-      if (temp.cost) pol.cost = temp.cost;
-      if (temp.locations) pol.locations = temp.locations;
+      if (temp.donorOrganizationIds) pol.donorOrganizationIds = temp.donorOrganizationIds;
+      if (temp.isPackage !== 'undefined') pol.isPackage == temp.isPackage;
+      if (temp.cost) pol.cost = structuredClone(temp.cost);
+      if (temp.locations) pol.locations = structuredClone(temp.locations);
+      if (pol.cost) {
+        pol.cost.listUnitPrice = 0;
+        pol.cost.quantityPhysical = 1;
+      }
 
       if (!pol.locations[0].locationId) { 
         console.log(`WARN Location not found for "LOC-TLS"`);
