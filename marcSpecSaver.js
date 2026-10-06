@@ -6,6 +6,7 @@ const argv = require('minimist')(process.argv.slice(2));
 let dir = argv._[0];
 let lim = (argv.l !== undefined) ? argv.l : 100000;
 let stype = (argv.p === 'bib') ? 'bibliographic' : (argv.p === 'auth') ? 'authority' : '';
+let scope = argv.s || 'local';
 
 let base = 'specification-storage';
 
@@ -49,8 +50,9 @@ const arr = (obj, prop, filename) => {
     if (stype && prop === 'specifications') {
       if (obj[prop][x].profile !== stype) {
         continue;
-      }
+      } 
     }
+    if (prop === 'fields' && obj[prop][x].scope !== scope) continue;
     c++;
     if (c > lim) break;
     delete obj[prop][x].metadata;
@@ -62,7 +64,7 @@ const arr = (obj, prop, filename) => {
 
 (async () => {
   try {
-    if (!dir) throw('Usage: marcSpecSaver <save_dir> [ -l <limit>, -t <profile: bib|auth> ]');
+    if (!dir) throw('Usage: marcSpecSaver <save_dir> [ -l <limit>, -p <profile: bib|auth> ]');
     if (argv.p && !(argv.p === 'bib' || argv.p === 'auth')) throw(`Incorrect profile type: "${argv.p}" (must be "bib" or "auth")`);
     dir = dir.replace(/\/$/, '');
     for (let k in files) {
