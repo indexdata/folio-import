@@ -10,6 +10,10 @@ let scope = argv.s || 'local';
 
 let base = 'specification-storage';
 
+const specMap = {};
+const fieldMap = {};
+const indMap = {};
+
 const files = {
   c: 'comp-specs.json',
   s: 'specs.jsonl',
@@ -47,17 +51,29 @@ const arr = (obj, prop, filename) => {
   let rec = [];
   let c = 0;
   for (let x = 0; x < obj[prop].length; x++) {
+    let r = obj[prop][x];
     if (stype && prop === 'specifications') {
-      if (obj[prop][x].profile !== stype) {
+      if (r.profile !== stype) {
         continue;
       } 
     }
-    if (prop === 'fields' && obj[prop][x].scope !== scope) continue;
+    if (prop === 'fields' && r.scope !== scope) continue;
     c++;
     if (c > lim) break;
-    delete obj[prop][x].metadata;
-    rec.push(obj[prop][x]);
-    if (filename) writeJSONL(filename, obj[prop][x]);
+    delete r.metadata;
+    let objId = r.id;
+    if (prop === 'specifications') { specMap[objId] = r.profile };
+    if (r.specificationId) r.specificationId = specMap[r.specificationId];
+    if (prop === 'fields') fieldMap[objId] = r.tag;
+    if (r.fieldId) r.fieldId = fieldMap[r.fieldId];
+    if (prop === 'indicators') {
+      let ikey = r.fieldId + ':' + r.order;
+      indMap[objId] = ikey;
+    }
+    if (r.indicatorId) r.indicatorId = indMap[r.indicatorId];
+    
+    rec.push(r);
+    if (filename) writeJSONL(filename, r);
   }
   return(rec);
 }
@@ -76,6 +92,7 @@ const arr = (obj, prop, filename) => {
 
     let res = await get(config, `${base}/specifications`)
     let spec = arr(res, 'specifications', files.s);
+
     for (let x = 0; x < spec.length; x++) {
       let sid = spec[x].id;
       let res = await get(config, `${base}/specifications/${sid}/rules`);
