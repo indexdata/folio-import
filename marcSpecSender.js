@@ -7,7 +7,7 @@ let compFile = argv._[0];
 
 let base = 'specification-storage';
 
-let tmap = {};
+let tmap = { s: {}, f: {}, u: {}, i: {} };
 
 const files = {
   s: 'specs.jsonl',
@@ -78,19 +78,35 @@ const put = async (config, ep, pl) => {
   }
 }
 
+const delSpec = async (config, ep) => {
+  let url = `${config.okapi}/${ep}`;
+  console.log(`DELETE ${url}`);
+  try {
+    let res = await superagent
+      .delete(url)
+      .set('User-Agent', config.agent)
+      .set('cookie', config.cookie)
+      .set('x-okapi-tenant', config.tenant)
+      .set('x-okapi-token', config.token)
+      .set('accept', '*/*');
+    return res.body;
+  } catch(e) {
+    console.log(e);
+  }
+}
+
 const postPut = async (config, ep, pl) => {
   let prop = ep.replace(/^.+\//, '');
-  let mprop = prop.substring(0, 1);
-  let k = (mprop === 'f') ? pl.tag : 'xxxx';
+  let mprop = (prop === 'subfields') ? 'u' : prop.substring(0, 1);
+  let k = (mprop === 'f') ? pl.tag : 'xxx';
   let xid = tmap[mprop][k];
-  if (xid) {
-    let url = (mprop === 'f') ? `${base}/fields/${xid}` : '';
-    let res = await put(config, url, pl);
-    return xid;
-  } else {
+  if (xid && mprop === 'f') {
+    await delSpec(config, `${base}/fields/${xid}`);
     let res = await post(config, ep, pl);
     return res.id;
-  }
+  } 
+  let res = await post(config, ep, pl);
+  return res.id;
 }
 
 const makeMap = async (config, ep, prop) => {
@@ -118,11 +134,8 @@ const makeMap = async (config, ep, prop) => {
       for (let y = 0; y < comp[x].fields.length; y++) {
         let f = comp[x].fields[y];
         let specId = tmap.s[f.specificationId];
-        let ep
-        if (!tmap.f) {
-          ep = `${base}/specifications/${specId}/fields`;
-          await makeMap(config, ep, 'fields');
-        }
+        let ep = `${base}/specifications/${specId}/fields`;
+        await makeMap(config, ep, 'fields');
         let subs = structuredClone(f.subfields);
         delete f.subfields;
         let inds = structuredClone(f.indicators);
@@ -130,7 +143,16 @@ const makeMap = async (config, ep, prop) => {
         let fid = await postPut(config, ep, f);
         for (let z = 0; z < subs.length; z++) {
           let sub = subs[z];
-          await postPut(config, `${base}/fields/${fid}/subfields`);
+          await postPut(config, `${base}/fields/${fid}/subfields`, sub);
+        }
+        for (let z = 0; z < inds.length; z++) {
+          let ind = inds[z];
+          let iid = await postPut(config, `${base}/fields/${fid}/indicators`, ind);
+          for (let a = 0; a < ind.codes.length; a++) {
+            let code = ind.codes[a];
+            code.indicatorId = iid;
+            await postPut(config, `${base}/indicators/${iid}/indicator-codes`, code);
+          }
         }
       }
     }
