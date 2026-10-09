@@ -102,11 +102,13 @@ const postPut = async (config, ep, pl) => {
   let xid = tmap[mprop][k];
   if (xid && mprop === 'f') {
     await delSpec(config, `${base}/fields/${xid}`);
-    let res = await post(config, ep, pl);
-    return res.id;
   } 
   let res = await post(config, ep, pl);
-  return res.id;
+  if (res) {
+    return res.id;
+  } else {
+    return '';
+  }
 }
 
 const makeMap = async (config, ep, prop) => {
