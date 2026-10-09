@@ -19,7 +19,7 @@ T=$DIR/tmp
 
 F="P S R"
 
-if [ $2 ]
+if [ "$2" ]
 then
 	Q="?query=$2&limit=500"
 fi
