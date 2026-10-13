@@ -1,0 +1,16 @@
+{
+    "nameSpace": "5bf23cff-0f0b-433f-bfb4-614a1552efc7",
+    "refDir": "/Users/charles/Folio/morgan/ref/inv",
+    "tsvDir": "/Users/charles/Folio/folio-import/etc/morgan",
+    "addCsv": "/Users/charles/Folio/morgan/inv/sup.csv",
+    "mapFile": "",
+    "controlNum": "",
+    "hridPrefix": "",
+    "makeInstMap": true,
+    "hasMfhd": false,
+    "noTitle": "[Unknown title]",
+    "catDate": { "tag": "", "subfield": "" },
+    "suppress": { "tag": "" },
+    "deleteTags": [],
+    "callNumbers": {}
+}
