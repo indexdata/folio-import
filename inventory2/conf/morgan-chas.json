@@ -7,7 +7,7 @@
     "controlNum": "",
     "hridPrefix": "",
     "makeInstMap": true,
-    "hasMfhd": false,
+    "hasMfhd": true,
     "noTitle": "[Unknown title]",
     "catDate": { "tag": "", "subfield": "" },
     "suppress": { "tag": "" },

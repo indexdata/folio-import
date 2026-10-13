@@ -1,0 +1,190 @@
+Legacy location id	Legacy location code	Legacy location name	Folio service point	Folio location code	Folio label	Folio Campus	Folio Library	added to folio	
+70	DRAWINGS	Dept. of Drawings and Prints	Drawings Study Center	70	Dept. of Drawings and Prints (DRAWINGS)	Morgan Library & Museum	Drawings and Prints	TRUE	
+75	OBJECTS	Objects (OBJECTS)	Drawings Study Center	75	Objects (OBJECTS)	Morgan Library & Museum	Drawings and Prints	TRUE	
+90	PEEL	Peel Collection (PEEL)	Drawings Study Center	90	Peel Collection (PEEL)	Morgan Library & Museum	Drawings and Prints	TRUE	
+115	DRAWGRAPH	Dept. of Drawings and Prints	Drawings Study Center	115	Dept. of Drawings and Prints (DRAWGRAPH)	Morgan Library & Museum	Drawings and Prints	TRUE	
+119	THAW	Dept. of Drawings and Prints	Drawings Study Center	119	Dept. of Drawings and Prints (THAW)	Morgan Library & Museum	Drawings and Prints	TRUE	
+184	EEP	Engraved English Portraits (EEP)	Drawings Study Center	184	Engraved English Portraits (EEP)	Morgan Library & Museum	Drawings and Prints	TRUE	
+173	DRAWMOD	Dept. of Modern and Contemporary Drawings	Drawings Study Center	173	Dept. of Modern and Contemporary Drawings (DRAWMOD)	Morgan Library & Museum	Drawings and Prints	TRUE	
+175	THAWMOD	Dept. of Modern and Contemporary Drawings	Drawings Study Center	175	Dept. of Modern and Contemporary Drawings (THAWMOD)	Morgan Library & Museum	Drawings and Prints	TRUE	
+36	GSC	Gilbert and Sullivan Collection (GSC)	Reading Room	36	Gilbert and Sullivan Collection (GSC)	Curatorial Collections	Gilbert and Sullivan Collection	TRUE	
+37	GSLET	Gilbert and Sullivan Collection--Letters (GSLET)	Reading Room	37	Gilbert and Sullivan Collection--Letters (GSLET)	Curatorial Collections	Gilbert and Sullivan Collection	TRUE	
+84	GSMSS	Gilbert and Sullivan Collection--Manuscripts (GSMSS)	Reading Room	84	Gilbert and Sullivan Collection--Manuscripts (GSMSS)	Curatorial Collections	Gilbert and Sullivan Collection	TRUE	
+23	LHMS	Literary and Historical Manuscripts (LHMS)	Reading Room	23	Literary and Historical Manuscripts (LHMS)	Morgan Library & Museum	Historical and Literary Manuscripts	TRUE	
+152	LHMSBDABC	Literary and Historical Manuscripts--Bound	Reading Room	152	Literary and Historical Manuscripts--Bound (LHMSBDABC)	Morgan Library & Museum	Historical and Literary Manuscripts	TRUE	
+153	LHMSBD123	Literary and Historical Manuscripts--Bound	Reading Room	153	Literary and Historical Manuscripts--Bound (LHMSBD123)	Morgan Library & Museum	Historical and Literary Manuscripts	TRUE	
+154	LHMSBDOS	Literary and Historical Manuscripts--Bound Oversize	Reading Room	154	Literary and Historical Manuscripts--Bound Oversize	Morgan Library & Museum	Historical and Literary Manuscripts	TRUE	
+169	LHMSOS	Literary and Historical Manuscripts--Shelved Flat (LHMSOS)	Reading Room	169	Literary and Historical Manuscripts--Shelved Flat (LHMSOS)	Morgan Library & Museum	Historical and Literary Manuscripts	TRUE	
+177	LHMSBDBUR	Literary and Historical Manuscripts--Bound Burden Coll.	Reading Room	177	Literary and Historical Manuscripts--Bound Burden Coll.	Morgan Library & Museum	Historical and Literary Manuscripts	TRUE	
+31	MRMSS	Medieval and Renaissance Manuscripts (MRMSS)	Reading Room	31	Medieval and Renaissance Manuscripts (MRMSS)	Morgan Library & Museum	Medieval and Renaissance Manuscripts	TRUE	
+171	MICROPR	Microform Collection (MICROPR)	Reading Room	171	Microform Collection (MICROPR)	Morgan Library & Museum	Medieval and Renaissance Manuscripts	TRUE	
+176	ZMICROPR	Microform Collection (MICROPR)	Reading Room	176	Microform Collection (ZMICROPR)	Morgan Library & Museum	Medieval and Renaissance Manuscripts	TRUE	
+114	MRMSSFOL	Medieval Manuscript Folio Records (non-circulating)	Reading Room	114	Medieval Manuscript Folio Records (non-circulating)	Morgan Library & Museum	Medieval and Renaissance Manuscripts	TRUE	
+24	ARV	Archives--Papers (ARV)	Reading Room	24	Archives--Papers (ARV)	Morgan Library & Museum	Morgan Archives	TRUE	
+91	ARVEBC	Morgan Collections Correspondence, 1887-1948 (ARC 1310)	Reading Room	91	Morgan Collections Correspondence, 1887-1948 (ARC 1310)	Morgan Library & Museum	Morgan Archives	TRUE	
+92	ARVBOUND	Archives--Bound Volumes (ARVBD)	Reading Room	92	Archives--Bound Volumes (ARVBD)	Morgan Library & Museum	Morgan Archives	TRUE	
+102	ARVOS1	Archives Bound--Oversize (ARVOS1)	Reading Room	102	Archives Bound--Oversize (ARVOS1)	Morgan Library & Museum	Morgan Archives	TRUE	
+110	ARV3D	Archives (ARV3D)	Reading Room	110	Archives (ARV3D)	Morgan Library & Museum	Morgan Archives	TRUE	
+125	ARVF	Archives Flat Storage (ARVF)	Reading Room	125	Archives Flat Storage (ARVF)	Morgan Library & Museum	Morgan Archives	TRUE	
+26	PMC	Mary Flagler Cary Music Collection--Printed Music (PMC)	Reading Room	26	Mary Flagler Cary Music Collection--Printed Music (PMC)	Morgan Library & Museum	Music Manuscripts and Printed Music	TRUE	
+27	MARTIN	George W. Martin Collection (MARTIN)	Reading Room	27	George W. Martin Collection (MARTIN)	Morgan Library & Museum	Music Manuscripts and Printed Music	TRUE	
+28	FEND	Sarah C. Fenderson Collection (FEND)	Reading Room	28	Sarah C. Fenderson Collection (FEND)	Morgan Library & Museum	Music Manuscripts and Printed Music	TRUE	
+29	PMM	Morgan Collection--Printed Music (PMM)	Reading Room	29	Morgan Collection--Printed Music (PMM)	Morgan Library & Museum	Music Manuscripts and Printed Music	TRUE	
+30	FULD	James Fuld Collection (FULD)	Reading Room	30	James Fuld Collection (FULD)	Morgan Library & Museum	Music Manuscripts and Printed Music	TRUE	
+32	MUSMORG	Morgan Collection--Musicians Letters (Unbound)	Reading Room	32	Morgan Collection--Musicians Letters (Unbound)	Morgan Library & Museum	Music Manuscripts and Printed Music	TRUE	
+33	HEINMUS	Heineman Music Collection (Unbound)	Reading Room	33	Heineman Music Collection (Unbound)	Morgan Library & Museum	Music Manuscripts and Printed Music	TRUE	
+34	MFCMS	Mary Flagler Cary Music Coll.--Letters (Unbound)	Reading Room	34	Mary Flagler Cary Music Coll.--Letters (Unbound)	Morgan Library & Museum	Music Manuscripts and Printed Music	TRUE	
+35	HARDING	Charles Alvar Harding Music Collection (HARDING)	Reading Room	35	Charles Alvar Harding Music Collection (HARDING)	Morgan Library & Museum	Music Manuscripts and Printed Music	TRUE	
+78	MUSMISC	Special Music Collections	Reading Room	78	Special Music Collections	Morgan Library & Museum	Music Manuscripts and Printed Music	TRUE	
+79	LEHMAN	Robert Owen Lehman Collection (Bound)	Reading Room	79	Robert Owen Lehman Collection (Bound)	Morgan Library & Museum	Music Manuscripts and Printed Music	TRUE	
+80	LEHMANDEP	Robert Owen Lehman Collection, on Deposit (Bound)	Reading Room	80	Robert Owen Lehman Collection, on Deposit (Bound)	Morgan Library & Museum	Music Manuscripts and Printed Music	TRUE	
+82	PMCOS1	Mary Flagler Cary Music Coll.--Ptd. Music Oversize (PMCOS1)	Reading Room	82	Mary Flagler Cary Music Coll.--Ptd. Music Oversize (PMCOS1)	Morgan Library & Museum	Music Manuscripts and Printed Music	TRUE	
+86	PMCOS2	Mary Flagler Cary Music Coll.--Ptd. Dbl. Oversize (PMCOS2)	Reading Room	86	Mary Flagler Cary Music Coll.--Ptd. Dbl. Oversize (PMCOS2)	Morgan Library & Museum	Music Manuscripts and Printed Music	TRUE	
+105	PMMOS1	Morgan Collection--Printed Music Oversize (PMMOS1)	Reading Room	105	Morgan Collection--Printed Music Oversize (PMMOS1)	Morgan Library & Museum	Music Manuscripts and Printed Music	TRUE	
+106	PMMOS2	Morgan Collection--Printed Music Double Oversize (PMMOS2)	Reading Room	106	Morgan Collection--Printed Music Double Oversize (PMMOS2)	Morgan Library & Museum	Music Manuscripts and Printed Music	TRUE	
+108	MOG	Metropolitan Opera Guild Deposit	Reading Room	108	Metropolitan Opera Guild Deposit	Morgan Library & Museum	Music Manuscripts and Printed Music	TRUE	
+123	PEYSER	Joan Peyser Collection (PEYSER)	Reading Room	123	Joan Peyser Collection (PEYSER)	Morgan Library & Museum	Music Manuscripts and Printed Music	TRUE	
+136	MFCMSBD	Mary Flagler Cary Music Coll.--Letters (Bound)	Reading Room	136	Mary Flagler Cary Music Coll.--Letters (Bound)	Morgan Library & Museum	Music Manuscripts and Printed Music	TRUE	
+137	MFCMUMSBD	Mary Flagler Cary Music Coll.--Music Mss (Bound)	Reading Room	137	Mary Flagler Cary Music Coll.--Music Mss (Bound)	Morgan Library & Museum	Music Manuscripts and Printed Music	TRUE	
+138	MFCMUMSNBD	Mary Flagler Cary Music Coll.--Music Mss (Unbound)	Reading Room	138	Mary Flagler Cary Music Coll.--Music Mss (Unbound)	Morgan Library & Museum	Music Manuscripts and Printed Music	TRUE	
+139	HEINMUSBD	Heineman Music Collection (Bound)	Reading Room	139	Heineman Music Collection (Bound)	Morgan Library & Museum	Music Manuscripts and Printed Music	TRUE	
+140	MUSMORGBD	Morgan Collection--Music Mss. (Bound)	Reading Room	140	Morgan Collection--Music Mss. (Bound)	Morgan Library & Museum	Music Manuscripts and Printed Music	TRUE	
+141	MUMSOS	Music Mss and Letters Oversize (Flat Storage)	Reading Room	141	Music Mss and Letters Oversize (Flat Storage)	Morgan Library & Museum	Music Manuscripts and Printed Music	TRUE	
+142	LEHMANDEPU	Robert Owen Lehman Collection, on Deposit (Unbound)	Reading Room	142	Robert Owen Lehman Collection, on Deposit (Unbound)	Morgan Library & Museum	Music Manuscripts and Printed Music	TRUE	
+143	MUSMORGLET	Morgan Collection--Musicians Letters (MUSMORGLET)	Reading Room	143	Morgan Collection--Musicians Letters (MUSMORGLET)	Morgan Library & Museum	Music Manuscripts and Printed Music	TRUE	
+144	LEHMANUNB	Robert Owen Lehman Collection (Unbound)	Reading Room	144	Robert Owen Lehman Collection (Unbound)	Morgan Library & Museum	Music Manuscripts and Printed Music	TRUE	
+145	MUMSMORGU	Morgan Collection--Music Mss. (Unbound)	Reading Room	145	Morgan Collection--Music Mss. (Unbound)	Morgan Library & Museum	Music Manuscripts and Printed Music	TRUE	
+146	MUMSOS2	Music Manuscripts Double Oversize	Reading Room	146	Music Manuscripts Double Oversize	Morgan Library & Museum	Music Manuscripts and Printed Music	TRUE	
+185	HALL	Hall Collection	Reading Room	185	Hall Collection	Morgan Library & Museum	Music Manuscripts and Printed Music	TRUE	
+188	MIMG	Music Image Collection (MIMG)	Reading Room	188	Music Image Collection (MIMG)	Morgan Library & Museum	Music Manuscripts and Printed Music	TRUE	
+174	PHOTO	Photography	Reading Room	174	Photography	Morgan Library & Museum	Photography	TRUE	
+186	PHOTOSERIT	Photo Series Item	Reading Room	186	Photo Series Item	Morgan Library & Museum	Photography	TRUE	
+38	ER	Printed Books (ER)	Reading Room	38	Printed Books (ER)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+39	ERCUB	Printed Books Collection (ERCUB)	Reading Room	39	Printed Books Collection (ERCUB)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+40	WR	Printed Books (WR)	Reading Room	40	Printed Books (WR)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+41	HEIN	Heineman Coll. (HEIN)	Reading Room	41	Heineman Coll. (HEIN)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+42	ECB	Early Children's Books (ECB)	Reading Room	42	Early Children's Books (ECB)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+43	ECBOS1	Early Children's Books--Oversize (ECBOS1)	Reading Room	43	Early Children's Books--Oversize (ECBOS1)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+44	ECBOS2	Early Children's Books--Double Oversize (ECBOS2)	Reading Room	44	Early Children's Books--Double Oversize (ECBOS2)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+45	ECBER	ECBER	Reading Room	45	ECBER	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+46	ECBCB	ECB Chapbooks (ECBCB)	Reading Room	46	ECB Chapbooks (ECBCB)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+47	ECBMB	ECB Miniature Books (ECBMB)	Reading Room	47	ECB Miniature Books (ECBMB)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+48	RB1	Printed Books Collection (RB1)	Reading Room	48	Printed Books Collection (RB1)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+49	RBOS1	Printed Books Collection--Oversize (RBOS1)	Reading Room	49	Printed Books Collection--Oversize (RBOS1)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+50	RBOS2	Printed Books Collection--Double Oversize (RBOS2)	Reading Room	50	Printed Books Collection--Double Oversize (RBOS2)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+51	RBOS3	Printed Books Collection--Triple Oversize (RBOS3)	Reading Room	51	Printed Books Collection--Triple Oversize (RBOS3)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+52	BDG	Bindings Collection (BDG)	Reading Room	52	Bindings Collection (BDG)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+53	BDGOS1	Bindings Collection--Oversize (BDGOS1)	Reading Room	53	Bindings Collection--Oversize (BDGOS1)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+54	BDGOS2	Bindings Collection--Double Oversize (BDGOS2)	Reading Room	54	Bindings Collection--Double Oversize (BDGOS2)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+55	MORRIS	William Morris Collection (MORRIS)	Reading Room	55	William Morris Collection (MORRIS)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+56	MORRISOS1	William Morris Collection--Oversize (MORRISOS1)	Reading Room	56	William Morris Collection--Oversize (MORRISOS1)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+57	MORRISOS2	William Morris Collection--Double Oversize (MORRISOS2)	Reading Room	57	William Morris Collection--Double Oversize (MORRISOS2)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+58	RBASE	R-Base (RBASE)	Reading Room	58	R-Base (RBASE)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+59	BLAKE	Blake Collection (BLAKE)	Reading Room	59	Blake Collection (BLAKE)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+60	INCUN	Incunable Collection (INCUN)	Reading Room	60	Incunable Collection (INCUN)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+61	INCUNOS1	Incunable Collection--Oversize (INCUNOS1)	Reading Room	61	Incunable Collection--Oversize (INCUNOS1)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+62	HOUGHTON	Houghton Collection (HOUGHTON)	Reading Room	62	Houghton Collection (HOUGHTON)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+63	RAMEY	Ramey Collection (RAMEY)	Reading Room	63	Ramey Collection (RAMEY)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+64	RAMEYOS1	Ramey Collection--Oversize (RAMEYOS1)	Reading Room	64	Ramey Collection--Oversize (RAMEYOS1)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+65	JPW	Julia P. Wightman Collection (JPW)	Reading Room	65	Julia P. Wightman Collection (JPW)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+66	GNR	Gordon N. Ray Collection (GNR)	Reading Room	66	Gordon N. Ray Collection (GNR)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+67	GNROS1	Gordon N. Ray Collection--Oversize (GNROS1)	Reading Room	67	Gordon N. Ray Collection--Oversize (GNROS1)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+68	GNROS2	Gordon N. Ray Collection--Double Oversize (GNROS2)	Reading Room	68	Gordon N. Ray Collection--Double Oversize (GNROS2)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+69	GNROS3	Gordon N. Ray Collection--Triple Oversize (GNROS3)	Reading Room	69	Gordon N. Ray Collection--Triple Oversize (GNROS3)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+71	BURDT	Carter Burden Collection--In Process	Reading Room	71	Carter Burden Collection--In Process	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+74	BURD	Carter Burden Collection (BURD)	Reading Room	74	Carter Burden Collection (BURD)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+76	RBDPROC	Printed Books Collection--In Process (RBDPROC)	Reading Room	76	Printed Books Collection--In Process (RBDPROC)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+81	NORTH	NORTH	Reading Room	81	NORTH	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+83	BURDE	Carter Burden Collection--Ephemera (BURDE)	Reading Room	83	Carter Burden Collection--Ephemera (BURDE)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+85	INCUNOS2	Incunable Coll.--Double Oversize (INCUNOS2)	Reading Room	85	Incunable Coll.--Double Oversize (INCUNOS2)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+87	INCUNBB1	Incunable Collection--Single leaves, etc. 1 (INCUNBB1)	Reading Room	87	Incunable Collection--Single leaves, etc. 1 (INCUNBB1)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+88	INCUNBB2	Incunable Collection--Single leaves, etc. 2 (INCUNBB2)	Reading Room	88	Incunable Collection--Single leaves, etc. 2 (INCUNBB2)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+97	ECUB	ECUB	Reading Room	97	ECUB	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+98	JPWCB	Julia P. Wightman Coll.--Children's Books (JPWCB)	Reading Room	98	Julia P. Wightman Coll.--Children's Books (JPWCB)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+99	JPWCBOS1	J.P. Wightman Coll.--Children's Books, Oversize (JPWCBOS1)	Reading Room	99	J.P. Wightman Coll.--Children's Books, Oversize (JPWCBOS1)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+100	JPWOS1	Julia P. Wightman Collection--Oversize (JPWOS1)	Reading Room	100	Julia P. Wightman Collection--Oversize (JPWOS1)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+101	JPWOS2	Julia P. Wightman Coll.--Double Oversize (JPWOS2)	Reading Room	101	Julia P. Wightman Coll.--Double Oversize (JPWOS2)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+104	JPWMB	Julia P. Wightman Coll.--Miniature Books (JPWMB)	Reading Room	104	Julia P. Wightman Coll.--Miniature Books (JPWMB)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+109	HEINOS	Heineman Oversize (HEINOS)	Reading Room	109	Heineman Oversize (HEINOS)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+111	BDGOS3	Bindings Collection--Triple Oversize (BDGOS3)	Reading Room	111	Bindings Collection--Triple Oversize (BDGOS3)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+118	ECBOS3	Early Children's Books--Triple Oversize (ECBOS3)	Reading Room	118	Early Children's Books--Triple Oversize (ECBOS3)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+120	HOUGHTONO1	Houghton Collection Oversize (HOUGHTONO1)	Reading Room	120	Houghton Collection Oversize (HOUGHTONO1)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+122	BLAKEOS1	Blake Collection Oversize 1 (BLAKEOS1)	Reading Room	122	Blake Collection Oversize 1 (BLAKEOS1)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+129	INCUNOS3	Incunable Coll.--Triple Oversize (INCUNOS3)	Reading Room	129	Incunable Coll.--Triple Oversize (INCUNOS3)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+150	RBOBJ	Printed Books Collection--Objects (RBOBJ)	Reading Room	150	Printed Books Collection--Objects (RBOBJ)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+156	RBFLAT	Printed Books Collection--Flat Storage (RBFLAT)	Reading Room	156	Printed Books Collection--Flat Storage (RBFLAT)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+157	RBFF	Printed Books Collection--Flat Files (RBFF)	Reading Room	157	Printed Books Collection--Flat Files (RBFF)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+158	RBSC	Printed Books Collection--Solander Cases (RBSC)	Reading Room	158	Printed Books Collection--Solander Cases (RBSC)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+161	RBLOHF	Lohf Collection (RBLOHF)	Reading Room	161	Lohf Collection (RBLOHF)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+162	RBLOHFOS1	Lohf Collection--Oversize (RBLOHFOS1)	Reading Room	162	Lohf Collection--Oversize (RBLOHFOS1)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+163	GNR2	Gordon N. Ray Collection 2 (GNR2)	Reading Room	163	Gordon N. Ray Collection 2 (GNR2)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+164	RB2OS1	Printed Books Collection 2--Oversize (RB2OS1)	Reading Room	164	Printed Books Collection 2--Oversize (RB2OS1)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+165	RB2	Printed Books Collection 2 (RB2)	Reading Room	165	Printed Books Collection 2 (RB2)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+166	RBBOOKER	Man Booker Prize Offsite (RBBOOKER)	Reading Room	166	Man Booker Prize Offsite (RBBOOKER)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+167	NRM	North Room Mezzanine (NRM)	Reading Room	167	North Room Mezzanine (NRM)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+168	NRMOS1	North Room Mezzanine--Oversize (NRMOS1)	Reading Room	168	North Room Mezzanine--Oversize (NRMOS1)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+172	WRV	Printed Books (WRV Lower Level)	Reading Room	172	Printed Books (WRV Lower Level)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+178	WRVUP	Printed Books (WRV Upper Level)	Reading Room	178	Printed Books (WRV Upper Level)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+180	BURDOS1	Carter Burden Collection--Oversize (BURDOS1)	Reading Room	180	Carter Burden Collection--Oversize (BURDOS1)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+182	HOUGHTON3D	Houghton Collection Oversize (HOUGHTON3D)	Reading Room	182	Houghton Collection Oversize (HOUGHTON3D)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+183	BURD2	Carter Burden Offsite (BURD2)	Reading Room	183	Carter Burden Offsite (BURD2)	Morgan Library & Museum	Printed Books and Bindings	TRUE	
+2	REF	Reference Collection (REF)	Reference Collection Circulation	2	Reference Collection (REF)	Morgan Library & Museum	Reference Collection	TRUE	
+3	REFOS1	Reference Collection--Oversize (REFOS1)	Reference Collection Circulation	3	Reference Collection--Oversize (REFOS1)	Morgan Library & Museum	Reference Collection	TRUE	
+4	REFOS2	Reference Collection--Double Oversize (REFOS2)	Reference Collection Circulation	4	Reference Collection--Double Oversize (REFOS2)	Morgan Library & Museum	Reference Collection	TRUE	
+5	REFOS3	Reference Collection--Triple Oversize (REFOS3)	Reference Collection Circulation	5	Reference Collection--Triple Oversize (REFOS3)	Morgan Library & Museum	Reference Collection	TRUE	
+6	REFCSEC	Reference Collection--Cataloging Section (REFCSEC)	Reference Collection Circulation	6	Reference Collection--Cataloging Section (REFCSEC)	Morgan Library & Museum	Reference Collection	TRUE	
+7	REFCSECOS1	Reference Coll.--Cataloging Section, Oversize (REFCSECOS1)	Reference Collection Circulation	7	Reference Coll.--Cataloging Section, Oversize (REFCSECOS1)	Morgan Library & Museum	Reference Collection	TRUE	
+8	REFRR	Reference Collection--Reading Room Ready Reference (REFRR)	Reference Collection Circulation	8	Reference Collection--Reading Room Ready Reference (REFRR)	Morgan Library & Museum	Reference Collection	TRUE	
+9	REFRROS1	Reference Collection--Reading Room Ready Reference Oversize	Reference Collection Circulation	9	Reference Collection--Reading Room Ready Reference Oversize	Morgan Library & Museum	Reference Collection	TRUE	
+10	PAM	Reference Collection--Pamphlet File (PAM)	Reference Collection Circulation	10	Reference Collection--Pamphlet File (PAM)	Morgan Library & Museum	Reference Collection	TRUE	
+11	PAMOS1	Reference Coll.--Pamphlet File, Oversize (PAMOS1)	Reference Collection Circulation	11	Reference Coll.--Pamphlet File, Oversize (PAMOS1)	Morgan Library & Museum	Reference Collection	TRUE	
+12	PAMOS2	Reference Coll.--Pamphlet File, Double Oversize (PAMOS2)	Reference Collection Circulation	12	Reference Coll.--Pamphlet File, Double Oversize (PAMOS2)	Morgan Library & Museum	Reference Collection	TRUE	
+13	MML	Reference Collection--Mr. Morgan's Library (MML)	Reference Collection Circulation	13	Reference Collection--Mr. Morgan's Library (MML)	Morgan Library & Museum	Reference Collection	TRUE	
+14	MMLOS1	Reference Coll.--Mr. Morgan's Library, Oversize (MMLOS1)	Reference Collection Circulation	14	Reference Coll.--Mr. Morgan's Library, Oversize (MMLOS1)	Morgan Library & Museum	Reference Collection	TRUE	
+15	LOWE	Reference Collection--E.A. Lowe Collection (LOWE)	Reference Collection Circulation	15	Reference Collection--E.A. Lowe Collection (LOWE)	Morgan Library & Museum	Reference Collection	TRUE	
+16	LOWEOS1	Reference Coll.--E.A. Lowe Coll., Oversize (LOWEOS1)	Reference Collection Circulation	16	Reference Coll.--E.A. Lowe Coll., Oversize (LOWEOS1)	Morgan Library & Museum	Reference Collection	TRUE	
+17	LOWEOS2	Reference Coll.--E.A. Lowe Coll., Double Oversize (LOWEOS2)	Reference Collection Circulation	17	Reference Coll.--E.A. Lowe Coll., Double Oversize (LOWEOS2)	Morgan Library & Museum	Reference Collection	TRUE	
+18	MICRO	Reference Collection--Microfilm (MICRO)	Reference Collection Circulation	18	Reference Collection--Microfilm (MICRO)	Morgan Library & Museum	Reference Collection	TRUE	
+19	PER	Reference Collection--Periodicals (PER)	Reference Collection Circulation	19	Reference Collection--Periodicals (PER)	Morgan Library & Museum	Reference Collection	TRUE	
+20	BACKLOG	Reference Collection--Backlog (BACKLOG)	Reference Collection Circulation	20	Reference Collection--Backlog (BACKLOG)	Morgan Library & Museum	Reference Collection	TRUE	
+21	REC	Reference Collection--Recordings (REC)	Reference Collection Circulation	21	Reference Collection--Recordings (REC)	Morgan Library & Museum	Reference Collection	TRUE	
+22	PORPAM	Reference Collection--Edith Porada Offprint Coll. (PORPAM)	Reference Collection Circulation	22	Reference Collection--Edith Porada Offprint Coll. (PORPAM)	Morgan Library & Museum	Reference Collection	TRUE	
+72	REFPR	Reference Collection--Print Room (REFPR)	Reference Collection Circulation	72	Reference Collection--Print Room (REFPR)	Morgan Library & Museum	Reference Collection	TRUE	
+73	REFPROS1	Reference Collection--Print Room, Oversize (REFPROS1)	Reference Collection Circulation	73	Reference Collection--Print Room, Oversize (REFPROS1)	Morgan Library & Museum	Reference Collection	TRUE	
+77	ORDER	Reference Collection--On Order (ORDER)	Reference Collection Circulation	77	Reference Collection--On Order (ORDER)	Morgan Library & Museum	Reference Collection	TRUE	
+93	LOWEOFF	Reference Collection--E.A. Lowe Offprints	Reference Collection Circulation	93	Reference Collection--E.A. Lowe Offprints	Morgan Library & Museum	Reference Collection	TRUE	
+94	MMLOS2	Reference Collection--Mr. Morgan's Library Double Oversize	Reference Collection Circulation	94	Reference Collection--Mr. Morgan's Library Double Oversize	Morgan Library & Museum	Reference Collection	TRUE	
+103	ADC	Reference Collection--Auction & Dealer Catalogs	Reference Collection Circulation	103	Reference Collection--Auction & Dealer Catalogs	Morgan Library & Museum	Reference Collection	TRUE	
+117	RBASEREF	R-Base--Reference Collection (RBASEREF)	Reference Collection Circulation	117	R-Base--Reference Collection (RBASEREF)	Morgan Library & Museum	Reference Collection	TRUE	
+124	REFRRG	Reference Collection--Reading Room Gallery (REFRRG)	Reference Collection Circulation	124	Reference Collection--Reading Room Gallery (REFRRG)	Morgan Library & Museum	Reference Collection	TRUE	
+126	REFPRM	Reference Collection--Print Room Mezzanine (REFPRM)	Reference Collection Circulation	126	Reference Collection--Print Room Mezzanine (REFPRM)	Morgan Library & Museum	Reference Collection	TRUE	
+127	REFPRMOS1	Reference Coll.--Print Room Mezzanine Oversize (REFPRMOS1)	Reference Collection Circulation	127	Reference Coll.--Print Room Mezzanine Oversize (REFPRMOS1)	Morgan Library & Museum	Reference Collection	TRUE	
+135	PORPER	Reference Collection--Edith Porada Periodical Coll. (PORPER)	Reference Collection Circulation	135	Reference Collection--Edith Porada Periodical Coll. (PORPER)	Morgan Library & Museum	Reference Collection	TRUE	
+148	HPKPA	Reference Collection--H.P. Kraus Photo Archive (HPKPA)	Reference Collection Circulation	148	Reference Collection--H.P. Kraus Photo Archive (HPKPA)	Morgan Library & Museum	Reference Collection	TRUE	
+149	HPKIC	Reference Collection--H.P. Kraus Image Collection (HPKIC)	Reference Collection Circulation	149	Reference Collection--H.P. Kraus Image Collection (HPKIC)	Morgan Library & Museum	Reference Collection	TRUE	
+155	REFTCC	Reference Collection--Thaw Conservation Center	Reference Collection Circulation	155	Reference Collection--Thaw Conservation Center	Morgan Library & Museum	Reference Collection	TRUE	
+179	REFFPA	Reference Coll.--Frick Photoarchive Boxes (REFFPA)	Reference Collection Circulation	179	Reference Coll.--Frick Photoarchive Boxes (REFFPA)	Morgan Library & Museum	Reference Collection	TRUE	
+181	REFRRGOS1	Reference Coll.--Reading Room Gallery Oversize (REFRRGOS1)	Reference Collection Circulation	181	Reference Coll.--Reading Room Gallery Oversize (REFRRGOS1)	Morgan Library & Museum	Reference Collection	TRUE	
+187	REFPHOTO	Reference Coll.--Photography (REFPHOTO)	Reference Collection Circulation	187	Reference Coll.--Photography (REFPHOTO)	Morgan Library & Museum	Reference Collection	TRUE	
+189	REFRRGR	Reference Collection--Reading Room Ground Floor (REFRRGR)	Reference Collection Circulation	189	Reference Collection--Reading Room Ground Floor (REFRRGR)	Morgan Library & Museum	Reference Collection	TRUE	
+190	REFRRGROS	Reference Collection--Reading Room Ground Floor Oversize	Reference Collection Circulation	190	Reference Collection--Reading Room Ground Floor Oversize	Morgan Library & Museum	Reference Collection	TRUE	
+25	SEALS	Cylinder Seals and Tablets (SEALS)	Reading Room	25	Cylinder Seals and Tablets (SEALS)	Morgan Library & Museum	Seals and Tablets	TRUE	
+107	SISC	Seal Impression Study Collection	Reading Room	107	Seal Impression Study Collection	Morgan Library & Museum	Seals and Tablets	TRUE	
+1	default	default		1	default	Morgan Library & Museum	Legacy	TRUE	Status = inactive
+89	CIRCDESK	Circulation Desk		89	Circulation Desk	Morgan Library & Museum	Legacy	TRUE	Status = inactive
+95	NYPR	NYPR		95	NYPR	Morgan Library & Museum	Legacy	TRUE	Status = inactive
+96	MISC	MISC		96	MISC	Morgan Library & Museum	Legacy	TRUE	Status = inactive
+112	KIMBELL	On view at Kimbell Art Museum, Fort Worth, until Jan. 18, 20		112	On view at Kimbell Art Museum, Fort Worth, until Jan. 18, 20	Morgan Library & Museum	Legacy	TRUE	Status = inactive
+113	CATDESK	Cataloging Desk		113	Cataloging Desk	Morgan Library & Museum	Legacy	TRUE	Status = inactive
+116	EXH1	Exhibtion Venue 1		116	Exhibtion Venue 1	Morgan Library & Museum	Legacy	TRUE	Status = inactive
+121	DM1	CIRCTESTLOC		121	CIRCTESTLOC	Morgan Library & Museum	Legacy	TRUE	Status = inactive
+128	TCC	Reference Collection--Thaw Conservation Center (TCC)		128	Reference Collection--Thaw Conservation Center (TCC)	Morgan Library & Museum	Legacy	TRUE	Status = inactive
+130	PHTHOLD	Photo Hold Shelf		130	Photo Hold Shelf	Morgan Library & Museum	Legacy	TRUE	Status = inactive
+131	REGHOLD	REGHOLD		131	REGHOLD	Morgan Library & Museum	Legacy	TRUE	Status = inactive
+132	AUDLOBBY	Gilder Lehrman Auditorium Lobby		132	Gilder Lehrman Auditorium Lobby	Morgan Library & Museum	Legacy	TRUE	Status = inactive
+133	DSC	Drawing Study Center		133	Drawing Study Center	Morgan Library & Museum	Legacy	TRUE	Status = inactive
+134	RR	Reading Room		134	Reading Room	Morgan Library & Museum	Legacy	TRUE	Status = inactive
+151	PHTSTUD	Photography Studio		151	Photography Studio	Morgan Library & Museum	Legacy	TRUE	Status = inactive
+159	NONMORGAN	NONMORGAN		159	NONMORGAN	Morgan Library & Museum	Legacy	TRUE	Status = inactive
+160	FURNITURE	Furniture (Non-Art Objects)		160	Furniture (Non-Art Objects)	Morgan Library & Museum	Legacy	FALSE	Status = inactive
+								FALSE	
