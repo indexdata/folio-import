@@ -46,6 +46,7 @@ const illMap = {
 const files = {
   holdings: 1,
   items: 1,
+  rel: 1
 };
 
 const cnTypeMap = {
@@ -315,15 +316,25 @@ try {
         let bid = s.a;
         if (instMap[bid] && bid !== f004) {
           let childId = uuid(bid, ns);
-          // console.log(parentId, childId);
+          let rid = uuid(parentId + childId, ns);
+          let robj = {
+            id: rid,
+            superInstanceId: parentId,
+            subInstanceId: childId,
+            instanceRelationshipTypeId: refData.instanceRelationshipTypes['bound-with']
+          };
+          if (!relSeen[rid]) {
+            writeOut(outs.rel, robj);
+            ttl.relationships++;
+            relSeen[rid] = 1;
+          }
         }
       });
     });
   }
 
   const hseen = {};
-  const bwseen = {};
-  const relMap = {};
+  const relSeen = {};
 
   let fileStream = fs.createReadStream(mfhdFile);
   rl = readline.createInterface({
