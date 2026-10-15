@@ -295,8 +295,7 @@ try {
         if (i.permanentLoanTypeId) {
           writeOut(outs.items, i);
           ttl.items++;
-          let hid = holdings.hrid.substring(2);
-          holdItemMap[hid] = i.id;
+          return i.id;
         } else {
           console.log(`ERROR item loantype not found for "${lt}`);
           ttl.itemErr++;
@@ -308,11 +307,16 @@ try {
     }
   }
 
-  const makeBoundWiths = (f014) => {
+  const makeBoundWiths = (f014, f004, itemId, holdings) => {
+    let hid = holdings.id;
+    let parentId = holdings.instanceId;
     f014.forEach(f => {
       f.subfields.forEach(s => {
         let bid = s.a;
-        // console.log(bid);
+        if (instMap[bid] && bid !== f004) {
+          let childId = uuid(bid, ns);
+          // console.log(parentId, childId);
+        }
       });
     });
   }
@@ -320,7 +324,6 @@ try {
   const hseen = {};
   const bwseen = {};
   const relMap = {};
-  const holdItemMap = {};
 
   let fileStream = fs.createReadStream(mfhdFile);
   rl = readline.createInterface({
@@ -487,8 +490,8 @@ try {
           let itemRecs = items[ctrl];
           if (itemRecs) {
             itemRecs.forEach(item => {
-              makeItems(item, h, inst, m.leader);
-              if (m['014']) makeBoundWiths(m['014']);
+              let iid = makeItems(item, h, inst, m.leader);
+              if (m['014']) makeBoundWiths(m['014'], f004, iid, h);
             });
           }
 
