@@ -186,5 +186,5 @@ Legacy location id	Legacy location code	Legacy location name	Folio service point
 134	RR	Reading Room		134	Reading Room	Morgan Library & Museum	Legacy	TRUE	Status = inactive
 151	PHTSTUD	Photography Studio		151	Photography Studio	Morgan Library & Museum	Legacy	TRUE	Status = inactive
 159	NONMORGAN	NONMORGAN		159	NONMORGAN	Morgan Library & Museum	Legacy	TRUE	Status = inactive
-160	FURNITURE	Furniture (Non-Art Objects)		160	Furniture (Non-Art Objects)	Morgan Library & Museum	Legacy	FALSE	Status = inactive
+160	FURN	Furniture (Non-Art Objects)		160	Furniture (Non-Art Objects)	Morgan Library & Museum	Legacy	FALSE	Status = inactive
 								FALSE	

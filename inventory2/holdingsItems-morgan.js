@@ -46,9 +46,6 @@ const illMap = {
 const files = {
   holdings: 1,
   items: 1,
-  bwp: 1,
-  rel: 1,
-  last: 1
 };
 
 const cnTypeMap = {
@@ -98,11 +95,11 @@ try {
   let confData = fs.readFileSync(confFile, { encoding: 'utf8' });
   let conf = JSON.parse(confData);
   ns = conf.nameSpace;
-  let holdingsStart = conf.holdingsStart;
+  const csvFile = conf.addCsv;
   refDir = conf.refDir.replace(/^\./, confDir);
   let prefix = '';
-  let hprefix = 'ho';
-  let iprefix = 'it';
+  let hprefix = '';
+  let iprefix = '';
   let wdir = path.dirname(mfhdFile);
   let fn = path.basename(mfhdFile, '.jsonl');
   let outBase = wdir + '/' + fn;
@@ -180,6 +177,40 @@ try {
   }
   // throw(instMap);
 
+  const fstream = fs.createReadStream(csvFile);
+  let rl = readline.createInterface({
+    input: fstream,
+    crlfDelay: Infinity
+  });
+  const suppMap = {};
+  let clc = 0;
+  let head;
+  for await (let line of rl) {
+    clc++;
+    line = line.replace(/\uFEFF/, '');
+    let c = line.split(/, */);
+    if (clc === 1) {
+      head = c;
+    } else {
+      let obj = {};
+      c.forEach((d, e) => {
+        let k = head[e];
+        obj[k] = d;
+      });
+      let su = (obj['MFHD_MASTER.SUPPRESS_IN_OPAC'] === 'Y') ? true : false;
+      suppMap[obj['MFHD_ID']] = su ;
+    }
+  }
+  // throw(suppMap);
+
+  for (let k in cnTypeMap) {
+    let t = cnTypeMap[k];
+    let e = refData.callNumberTypes;
+    if (!e) {
+      throw new Error(`Call number type not found in RefData for id ${t}`);
+    }
+  }
+
   const items = {};
   const itemFile = wdir + '/items.csv';
   let csv = fs.readFileSync(itemFile, { encoding: 'utf8' });
@@ -225,7 +256,8 @@ try {
   const occ = {};
 
   const makeItems = (r, holdings, inst, leader) => {
-    let ihrid = iprefix + r.Item_ID;
+    if (dbug === 'i') console.log(r);
+    let ihrid = r.ITEM_ID;
     if (ihrid) {
       let i = {
         _version: 1,
@@ -250,6 +282,7 @@ try {
         console.log(`WARN barcode "${bc}" already used by ${i.hrid}`);
       }
 
+      if (dbug === 'i') console.log(i);
       if (i.materialTypeId) {
         if (i.permanentLoanTypeId) {
           writeOut(outs.items, i);
@@ -273,7 +306,7 @@ try {
   const holdItemMap = {};
 
   let fileStream = fs.createReadStream(mfhdFile);
-  let rl = readline.createInterface({
+  rl = readline.createInterface({
     input: fileStream,
     crlfDelay: Infinity
   });
@@ -282,9 +315,8 @@ try {
     let m = JSON.parse(line);
     let ctrl = (m['001']) ? m['001'][0] : '';
     let f004 = (m['004']) ? m['004'][0] : '';
-    let bhrid = prefix + f004;
+    let bhrid = f004;
     let mh = {};
-    let iid = '';
     if (m['852']) {
       m['852'].forEach(f => {
         f.subfields.forEach(s => {
@@ -307,7 +339,7 @@ try {
     let inst = instMap[bhrid];
     let hhrid;
     if (ctrl) {
-      hhrid = hprefix + ctrl;
+      hhrid = ctrl;
     }
     let hid = uuid(hhrid, ns);
 
@@ -318,8 +350,7 @@ try {
         hrid: hhrid,
         sourceId: refData.holdingsRecordsSources.FOLIO,
         holdingsTypeId: typeId,
-        formerIds: [ ctrl ],
-        discoverySuppress: false
+        discoverySuppress: suppMap[hhrid] || false
       }
       h.instanceId = inst.id;
       h.permanentLocationId = tsvMap.locations[loc] || '';
@@ -342,6 +373,18 @@ try {
         mh.z.forEach(n => {
           let o = makeNote(n, ntype, false);
           h.notes.push(o);
+        });
+      }
+      let anotes = m['583'];
+      if (anotes) {
+        let ntype = refData.holdingsNoteTypes['Action note'];
+        anotes.forEach(f => {
+          let nparts = []
+          f.subfields.forEach(s => {
+            let n = Object.values(s)[0];
+            let o = makeNote(n, ntype, true);
+            h.notes.push(o);
+          });
         });
       }
 
@@ -416,7 +459,7 @@ try {
 
       let lchar = (m['008'] && m['008'][0]) ? m['008'][0].substring(20, 21) : 'u';
       let lstr = illMap[lchar];
-      h.illPolicyId = refData.illPolicies['Will not lend'];
+      h.illPolicyId = refData.illPolicies[lstr];
       
       if (h.permanentLocationId) {
         if (!hseen[ctrl]) {
@@ -424,52 +467,11 @@ try {
           writeOut(outs.holdings, h);
           hseen[ctrl] = h.id;
 
-          let lnk = m['014'];
-          if (lnk) {
-            lnk.forEach(l => {
-              l.subfields.forEach(s => {
-                if (s.a) {
-                  let bhrid = prefix + s.a;
-                  let inst = instMap[bhrid];
-                  if (inst) {
-                    let bwh = JSON.parse(JSON.stringify(h));
-                    bwh.instanceId = inst.id;
-                    holdingsStart++;
-                    bwh.hrid = hprefix + holdingsStart;
-                    bwh.id = uuid(bwh.hrid, ns);
-                    delete bwh.formerIds;
-                    let ro = {
-                      superInstanceId: h.instanceId,
-                      subInstanceId: inst.id,
-                      instanceRelationshipTypeId: refData.instanceRelationshipTypes['bound-with']
-                    };
-                    ro.id = uuid(ro.superInstanceId + ro.subInstanceId, ns);
-                    writeOut(outs.rel, ro);
-                    ttl.relationships++;
-
-                    writeOut(outs.holdings, bwh);
-                    ttl.holdings++;
-
-                    bwh.hlink = ctrl;
-                    if (!relMap[inst.bibId]) relMap[inst.bibId] = [];
-                    relMap[inst.bibId].push(bwh);
-                  }
-                }
-              });
-            });
-            bwseen[h.id] = 1;
-            h.hlink = ctrl;
-            if (!relMap[inst.bibId]) relMap[inst.bibId] = [];
-            relMap[inst.bibId].push(h);
-          }
-
           let itemRecs = items[ctrl];
           if (itemRecs) {
             itemRecs.forEach(item => {
-              makeItems(item, h, inst, m.leader);
+              // makeItems(item, h, inst, m.leader);
             });
-          } else {
-            // console.log(ctrl);
           }
 
         } else {
@@ -480,40 +482,11 @@ try {
         console.log(`ERROR location not found for "${loc}" (${hhrid})`);
         ttl.holdingsErr++;
       }
-      if (dbug.match(/h/)) console.log(h);
+      if (dbug === 'h') console.log(h);
     } else {
       console.log(`ERROR instance "${bhrid}" not found for ${hhrid}`);
       ttl.holdingsErr++;
     }
-  }
-  writeOut(outs.last, { hrid: holdingsStart });
-
-  let occur = {};
-  let bwhseen = {};
-  let bwpseen = {};
-
-  // console.log(relMap);
-  // console.log(holdItemMap);
-  for (let bid in relMap) {
-    relMap[bid].forEach(h => {
-      let hid = h.id;
-      let hctrl = h.hlink;
-      let iid = holdItemMap[hctrl]
-      let bwpKey = hid + iid;
-      if (hid && iid && !bwpseen[bwpKey]) {
-        let o = {
-          id: uuid(bwpKey, ns),
-          holdingsRecordId: hid,
-          itemId: iid
-        }
-        // console.log(bid, hid, iid);
-        writeOut(outs.bwp, o);
-        ttl.boundwiths++;
-        bwpseen[bwpKey] = 1;
-      } else {
-       console.log(bid, hid, iid);
-      }
-    });
   }
 
   showStats();
