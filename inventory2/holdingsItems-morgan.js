@@ -158,7 +158,7 @@ try {
       }
     });
   }
-  // throw(tsvMap);
+  // throw(tsvMap.mtypes);
   
   const instMap = {};
   if (conf.makeInstMap) {
@@ -258,28 +258,36 @@ try {
   const makeItems = (r, holdings, inst, leader) => {
     if (dbug === 'i') console.log(r);
     let ihrid = r.ITEM_ID;
+    let lt = 'Available';
     if (ihrid) {
       let i = {
         _version: 1,
         id: uuid(ihrid, ns),
         hrid: ihrid,
-        permanentLoanTypeId: refData.loantypes['Can circulate'],
+        permanentLoanTypeId: refData.loantypes[lt],
         holdingsRecordId: holdings.id,
         status: { name: 'Available' }
       }
-      let mt = r.MatType;
+      let mt = r.ITEM_TYPE_NAME;
       i.materialTypeId = tsvMap.mtypes[mt];
-      let lt = r.PermLoan;
-      i.permanentLoanTypeId = refData.loantypes[lt];
-      if (r.Status === 'Missing') i.status.name = 'Missing';
-      if (r.Volume) i.volume = r.Volume;
-      if (r.Copy) i.copyNumber = r.Copy;
-      let bc = r.Barcode;
+      let eparts = [];
+      if (r.ITEM_ENUM) eparts.push(r.ITEM_ENUM);
+      if (r.CHRON) eparts.push(r.CHRON);
+      if (r.YEAR) eparts.push(r.YEAR);
+      let estr = (eparts[0]) ? eparts.join(' ') : '';
+      if (estr) i.enumeration = estr;
+      let bc = r.ITEM_BARCODE;
       if (bc && !bcseen[bc]) {
         i.barcode = bc;
         bcseen[bc] = i.hrid;
       } else if (bc) {
         console.log(`WARN barcode "${bc}" already used by ${i.hrid}`);
+      }
+      let nt = r.ITEM_NOTE;
+      if (nt) {
+        let t = refData.itemNoteTypes['Note'];
+        let o = makeItemNote(nt, t, true);
+        i.notes = [ o ];
       }
 
       if (dbug === 'i') console.log(i);
@@ -290,14 +298,23 @@ try {
           let hid = holdings.hrid.substring(2);
           holdItemMap[hid] = i.id;
         } else {
-          console.log(`ERROR item loantype not found for "Can circulate"`);
+          console.log(`ERROR item loantype not found for "${lt}`);
           ttl.itemErr++;
         }
       } else {
-        console.log(`ERROR item material type not found for "" (${i.hrid})`);
+        console.log(`ERROR item material type not found for "${mt}" (${i.hrid})`);
         ttl.itemErr++;
       }
     }
+  }
+
+  const makeBoundWiths = (f014) => {
+    f014.forEach(f => {
+      f.subfields.forEach(s => {
+        let bid = s.a;
+        // console.log(bid);
+      });
+    });
   }
 
   const hseen = {};
@@ -470,12 +487,13 @@ try {
           let itemRecs = items[ctrl];
           if (itemRecs) {
             itemRecs.forEach(item => {
-              // makeItems(item, h, inst, m.leader);
+              makeItems(item, h, inst, m.leader);
+              if (m['014']) makeBoundWiths(m['014']);
             });
           }
 
         } else {
-          console.log(`ERROR hrid ${hhrid} already used!`);
+          console.log(`ERROR holdings hrid ${hhrid} already used!`);
           ttl.holdingsErr++;
         }
       } else {

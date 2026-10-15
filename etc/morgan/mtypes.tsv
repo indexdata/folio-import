@@ -1,26 +1,27 @@
 Legacy material type code (from item record)	Folio material type name or ID
 Analytic	Analytic
-Archival Collection	Archival Collection
+ArcColl	Archival Collection
 Article	Article
 Binding	Binding
 Book	Book
 Box or Folder	Box or Folder
 Collage	Collage
 Component	Component
-Computer File	Computer File
+ComputFile	Computer File
 Contact Sheet	Contact Sheet
 default	default
+DM1Coll	DM1Coll
 Drawing	Drawing
+Folio	Manuscript Folio
 Lantern Slide	Lantern Slide
 Manuscript	Manuscript
-Manuscript Folio	Manuscript Folio
 Map	Map
 Microform	Microform
-Miniature Book	Miniature Book
-Mixed Material	Mixed Material
-Music Manuscript	Music Manuscript
-Music Manuscript in Larger Item	Music Manuscript in Larger Item
-Non-circulating	Non-circulating
+MiniBook	Miniature Book
+MixedMat	Mixed Material
+MusicMs	Music Manuscript
+MusicMsIn	Music Manuscript in Larger Item
+NonCirc	Non-circulating
 Object	Object
 Offprint	Offprint
 Painting	Painting
@@ -28,12 +29,12 @@ Periodical	Periodical
 Photograph	Photograph
 Print	Print
 Printed Book Collection	Printed Book Collection
-Printed Music	Printed Music
-Recorded Music	Recorded Music
+MusicPrtd	Printed Music
+MusicRcrd	Recorded Music
 Seal	Seal
 Seal Impression	Seal Impression
-Short Term	Short Term
+SHORTTERM	Short Term
 Slide	Slide
-Sound Recording	Sound Recording
+SoundRcrd	Sound Recording
 Unpublished	Unpublished
-Visual Material	Visual Material
+VisMat	Visual Material
