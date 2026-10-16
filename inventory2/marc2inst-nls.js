@@ -753,7 +753,7 @@ const makeSroHoldings = (instId, instHrid, fields, str, f852, f866, lnum) => {
         });
       }
       x++;
-      makeItem(h.id, h.hrid, 'Monografi', 'Beställ manuellt', 'Available', cn, x);
+      makeItem(h.id, h.hrid, 'Monografi', 'Beställ manuellt', 'Available', cn, x, h.permanentLocationId);
     });
   }
 
@@ -795,7 +795,7 @@ const makeSroHoldings = (instId, instHrid, fields, str, f852, f866, lnum) => {
   // makeItem(h.id, h.hrid, 'Monografi', 'Beställ manuellt')
 }
 
-const makeItem = (holdingsId, holdingsHrid, mtype, ltype, status, callNumber, x) => {
+const makeItem = (holdingsId, holdingsHrid, mtype, ltype, status, callNumber, x, locId) => {
   let occStr = x.toString().padStart(3, '0');
   if (!status) status = 'Available';
   if (holdingsId && mtype && ltype) {
@@ -806,6 +806,7 @@ const makeItem = (holdingsId, holdingsHrid, mtype, ltype, status, callNumber, x)
       hrid: hrid,
       holdingsRecordId: holdingsId,
       permanentLoanTypeId: refData.loantypes[ltype] || '9ab2b57a-2dd5-473a-88ae-c851a8d0b781',
+      permanentLocationId: locId,
       materialTypeId: refData.mtypes[mtype],
       status: { name: status }
     };

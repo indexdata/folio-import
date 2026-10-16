@@ -465,7 +465,7 @@ try {
           if (misc) h.__ = misc;
           writeOut(outs.holdings, h);
           ttl.holdings++;
-          hseen[hkey] = { id: hid, cn: cn };
+          hseen[hkey] = { id: hid, cn: cn, loc: h.permanentLocationId };
           if (h.permanentLocationId === refData.locations['loc-des']) {
             dseen[bid] = 1;
           }
@@ -493,6 +493,7 @@ try {
           id: uuid(iid, ns),
           hrid: iid,
           holdingsRecordId: hr.id,
+          permanentLocationId: hr.loc,
           discoverySuppress: false,
           notes: [],
           status: { name: 'Available' }
