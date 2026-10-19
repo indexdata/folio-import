@@ -4,10 +4,18 @@ import { v5 as uuid } from 'uuid';
 import readline from 'readline';
 import { parse } from 'csv-parse/sync';
 
+let sl = false;
+for (let x = 0; x < process.argv.length; x++) {
+  let a = process.argv[x];
+  if (a === '-s') {
+    sl = true;
+    process.argv.splice(x, 1);
+    x++;
+  }
+}
 let confFile = process.argv[2];
-
-let refDir;
 let mfhdFile = process.argv[3];
+let refDir;
 let ns;
 const refData = {};
 const tsvMap = {};
@@ -20,11 +28,6 @@ const tsvCols = {
   mtypes: [0, 1],
   statuses: [1, 4],
   statisticalCodes: [1, 4]
-};
-
-const typeMap = {
-  DigiRes: 'Electronic',
-  NotAAS: 'Not at AAS'
 };
 
 const elRelMap = {
@@ -46,7 +49,8 @@ const illMap = {
 const files = {
   holdings: 1,
   items: 1,
-  rel: 1
+  rel: 1,
+  bwp: 1
 };
 
 const cnTypeMap = {
@@ -282,7 +286,7 @@ try {
         i.barcode = bc;
         bcseen[bc] = i.hrid;
       } else if (bc) {
-        console.log(`WARN barcode "${bc}" already used by ${i.hrid}`);
+        if (!sl) console.log(`WARN barcode "${bc}" already used by ${i.hrid}`);
       }
       let nt = r.ITEM_NOTE;
       if (nt) {
@@ -298,17 +302,34 @@ try {
           ttl.items++;
           return i.id;
         } else {
-          console.log(`ERROR item loantype not found for "${lt}`);
+          if (!sl) console.log(`ERROR item loantype not found for "${lt}`);
           ttl.itemErr++;
         }
       } else {
-        console.log(`ERROR item material type not found for "${mt}" (${i.hrid})`);
+        if (!sl) console.log(`ERROR item material type not found for "${mt}" (${i.hrid})`);
         ttl.itemErr++;
       }
     }
   }
 
-  const makeBoundWiths = (f014, f004, itemId, holdings) => {
+  const makeBoundWith = (childInstId, itemId, parentHoldingsId) => {
+    let hid = (parentHoldingsId) ? parentHoldingsId : i2hMap[childInstId];
+    if (hid) {
+      let id = uuid(hid + itemId, ns);
+      let o = {
+        id: id,
+        holdingsRecordId: hid,
+        itemId: itemId
+      }
+      if (!bwpSeen[id]) {
+        writeOut(outs.bwp, o);
+        ttl.boundwiths++;
+        bwpSeen[id] = 1;
+      }
+    }
+  }
+
+  const makeInstRel = (f014, f004, itemId, holdings) => {
     let hid = holdings.id;
     let parentId = holdings.instanceId;
     f014.forEach(f => {
@@ -328,13 +349,18 @@ try {
             ttl.relationships++;
             relSeen[rid] = 1;
           }
+          makeBoundWith(childId, itemId);
+          makeBoundWith('', itemId, hid);
         }
       });
     });
   }
 
   const hseen = {};
+  const i2hMap = {};
   const relSeen = {};
+  const bwpSeen = {};
+  const bw = [];
 
   let fileStream = fs.createReadStream(mfhdFile);
   rl = readline.createInterface({
@@ -365,8 +391,7 @@ try {
     let loc = (mh.b) ? mh.b[0] : '';
     let cpn = (mh.t) ? mh.t[0] : '';
     let cn = (mh.h && mh.i) ? mh.h[0] + ' ' + mh.i : (mh.h) ? mh.h[0] : '';
-    let tcodeStr = typeMap[loc] || 'Physical';
-    let typeId = refData.holdingsTypes[tcodeStr];
+    let typeId = refData.holdingsTypes.Physical;
     let inst = instMap[bhrid];
     let hhrid;
     if (ctrl) {
@@ -497,29 +522,37 @@ try {
           ttl.holdings++;
           writeOut(outs.holdings, h);
           hseen[ctrl] = h.id;
+          i2hMap[h.instanceId] = h.id;
 
           let itemRecs = items[ctrl];
           if (itemRecs) {
             itemRecs.forEach(item => {
               let iid = makeItems(item, h, inst, m.leader);
-              if (m['014']) makeBoundWiths(m['014'], f004, iid, h);
+              if (m['014']) {
+                let o = { f014: m['014'], f004: f004, iid: iid, h: h };
+                bw.push(o);
+              }
             });
           }
 
         } else {
-          console.log(`ERROR holdings hrid ${hhrid} already used!`);
+          if (!sl) console.log(`ERROR holdings hrid ${hhrid} already used!`);
           ttl.holdingsErr++;
         }
       } else {
-        console.log(`ERROR location not found for "${loc}" (${hhrid})`);
+        if (!sl) console.log(`ERROR location not found for "${loc}" (${hhrid})`);
         ttl.holdingsErr++;
       }
       if (dbug === 'h') console.log(h);
     } else {
-      console.log(`ERROR instance "${bhrid}" not found for ${hhrid}`);
+      if (!sl) console.log(`ERROR instance "${bhrid}" not found for ${hhrid}`);
       ttl.holdingsErr++;
     }
   }
+  
+  bw.forEach(p => {
+    makeInstRel(p.f014, p.f004, p.iid, p.h);
+  });
 
   showStats();
 
