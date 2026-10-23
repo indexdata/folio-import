@@ -337,6 +337,7 @@ try {
         let bid = s.a;
         if (instMap[bid] && bid !== f004) {
           let childId = uuid(bid, ns);
+          /*
           let rid = uuid(parentId + childId, ns);
           let robj = {
             id: rid,
@@ -349,6 +350,7 @@ try {
             ttl.relationships++;
             relSeen[rid] = 1;
           }
+          */
           makeBoundWith(childId, itemId);
           makeBoundWith('', itemId, hid);
         }
