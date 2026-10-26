@@ -19,6 +19,14 @@ const outs = {};
 const bcseen = {};
 const iseen = {};
 const seen = {};
+const parentMap = {};
+const relSeen = {};
+
+const relTags = [
+  { p: ['024','a'], c: ['027','z'] },
+  { p: ['772','a'], c: ['773','a'] },
+  { p: ['772','t'], c: ['773','t'] }
+]
 
 const typeMap = {
   'a': 'text',
@@ -60,6 +68,7 @@ const files = {
   srs: 1,
   snapshot: 1,
   presuc: 1,
+  relationships: 1,
   err: 1
 };
 
@@ -427,6 +436,33 @@ const dedupe = function (arr, props) {
   return newArr;
 }
 
+const makeParentMap = (parentMap, field, code, type, instId) => {
+  field.forEach(p => {
+    let d = getSubs(p, code);
+    if (d) {
+      if (!parentMap[d]) parentMap[d] = { p: [], c: []}
+      parentMap[d][type].push(instId);
+    }
+  });
+}
+
+const makeRel = (pmap, ttl) => {
+  if (!pmap.p[0]) return
+  pmap.c.forEach(p => {
+    let o = {
+      superInstanceId: pmap.p[0],
+      subInstanceId: p,
+      instanceRelationshipTypeId: refData.instanceRelationshipTypes['bound-with']
+    }
+    o.id = uuid(o.superInstanceId + p, ns);
+    if (!relSeen[o.id]) {
+      writeOut(outs.relationships, o);
+      ttl.relations++;
+      relSeen[o.id] = 1;
+    }
+  });
+}
+
 const makeHoldingsItems = function (fields, bid, bhrid, suppress, ea) {
   let out = { h: [], i: []};
   fields.forEach(f => {
@@ -593,6 +629,7 @@ try {
     snapshots: 0,
     srs: 0,
     presuc: 0,
+    relations: 0,
     errors: 0
   }
   if (iconf) {
@@ -891,13 +928,6 @@ try {
             }
           }
         }
-        /*
-        if (inst.instanceTypeId === refData.instanceTypes.unspecified) {
-          let itype = typeMap[itypeCode];
-          if (itype) inst.instanceTypeId = refData.instanceTypes[itype] || refData.instanceTypes.unspecified;
-        }
-        */
-        // inst.discoverySuppress = false;
         let cdat = csvMap[inst.hrid];
         if (cdat) {
           if (cdat.s) inst.discoverySuppress = cdat.s;
@@ -943,6 +973,18 @@ try {
         let srsObj = makeSrs(raw, jobId, inst.id, inst.hrid, inst.discoverySuppress);
         writeOut(outs.srs, srsObj);
         ttl.srs++;
+
+        relTags.forEach(r => {
+          let ptag = r.p[0];
+          let pcode = r.p[1];
+          let ctag = r.c[0];
+          let ccode = r.c[1];
+          let pf = marc.fields[ptag];
+          let cf = marc.fields[ctag];
+          if (pf) makeParentMap(parentMap, pf, pcode, 'p', instId);
+          if (cf) makeParentMap(parentMap, cf, ccode, 'c', instId);
+        });
+
         if (idmap) {
           let ea = (inst.electronicAccess) ? JSON.stringify(inst.electronicAccess) : '';
           if (bibCallNum.value) bibCallNum.value = bibCallNum.value.replace(/\|/g, '%%');
@@ -985,6 +1027,13 @@ try {
     };
   });
   fileStream.on('close', () => {
+    for (let k in parentMap) {
+      let pm = parentMap[k];
+      if (pm.c[0]) {
+        makeRel(pm, ttl);
+      };
+    }
+
     let now = new Date().valueOf();
     let t = (now - start) / 1000;
     console.log('--------------------');
