@@ -84,7 +84,12 @@ const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
       if (rec._errMessage) delete rec._errMessage;
       if (rec.__) delete rec.__;
       let id = rec.id;
-      if (rec.fund && rec.fund.id) id = rec.fund.id;
+      if (rec.fund && rec.fund.id) {
+        id = rec.fund.id;
+      } else if (rec.parsedRecordId) {
+        id = rec.parsedRecordId;
+        rec._actionType = 'edit';
+      }
       let lDate = new Date();
       if (config.expiry && config.expiry <= lDate.valueOf()) {
         config = await getAuthToken(superagent);

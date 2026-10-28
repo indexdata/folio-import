@@ -1542,7 +1542,15 @@ try {
               }
             }
           });
-      }
+        }
+        if (inst.dates) {
+          for (let x = 1; x < 3; x++) {
+            let k = 'date' + x;
+            if (inst.dates[k] && !inst.dates[k].match(/\d/)) {
+              inst.dates[k] = '';
+            }
+          }
+        }
         writeOut(outs.instances, inst);
         ttl.instances++;
         if (!conf.noSrs && instSource === 'MARC') {
