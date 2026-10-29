@@ -268,7 +268,7 @@ async function viewCrud(ep, back, func) {
   let ch = [new inquirer.Separator(), 'Edit', 'Delete', goBack];
   inquirer
   .prompt([
-    {type: 'list', name: 'act', message: 'Choose one', choices: ch, pageSize: pageSize},
+    {type: 'rawlist', name: 'act', message: 'Choose one', choices: ch, pageSize: pageSize},
   ])
   .then((a) => {
     if (a.act === goBack) {
@@ -319,7 +319,7 @@ async function listCrud(ep, func) {
   brief.push(new inquirer.Separator(), 'New', goBack);
   inquirer
   .prompt([
-    {type: 'list', name: 'ep', message: `Settings ${propName}`, choices: brief, pageSize: pageSize},
+    {type: 'rawlist', name: 'ep', message: `Settings ${propName}`, choices: brief, pageSize: pageSize},
   ])
   .then((a) => {
     if (a.ep === goBack) {
@@ -346,7 +346,7 @@ function invSet() {
   menu.push(goBack);
   inquirer
   .prompt([
-    {type: 'list', name: 'set', message: 'Inventory settings', choices: menu, pageSize: pageSize},
+    {type: 'rawlist', name: 'set', message: 'Inventory settings', choices: menu, pageSize: pageSize},
   ])
   .then(async (a) => {
     if (a.set === goBack) {
@@ -372,7 +372,7 @@ function impSet() {
   menu.push(goBack);
   inquirer
   .prompt([
-    {type: 'list', name: 'set', message: 'Inventory settings', choices: menu, pageSize: pageSize},
+    {type: 'rawlist', name: 'set', message: 'Inventory settings', choices: menu, pageSize: pageSize},
   ])
   .then(async (a) => {
     if (a.set === goBack) {
@@ -398,7 +398,7 @@ function userSet() {
   menu.push(goBack);
   inquirer
   .prompt([
-    {type: 'list', name: 'set', message: 'User settings', choices: menu, pageSize: pageSize},
+    {type: 'rawlist', name: 'set', message: 'User settings', choices: menu, pageSize: pageSize},
   ])
   .then(async (a) => {
     if (a.set === goBack) {
@@ -466,7 +466,7 @@ async function viewFull(type, id) {
   let menu = [ new inquirer.Separator(), 'View JSON', 'View Source', goBack, 'Quit' ];
   inquirer
   .prompt([
-    {type: 'list', name: 'sel', message: 'Choose one:', choices: menu, pageSize: pageSize},
+    {type: 'rawlist', name: 'sel', message: 'Choose one:', choices: menu, pageSize: pageSize},
   ])
   .then((a) => {
     if (a.sel === goBack) {
@@ -506,7 +506,7 @@ async function iquery(type, term) {
   let menu = [...list, new inquirer.Separator(), goBack, 'Quit'];
   inquirer
   .prompt([
-    {type: 'list', name: 'sel', message: 'Results:', choices: menu, pageSize: pageSize},
+    {type: 'rawlist', name: 'sel', message: 'Results:', choices: menu, pageSize: pageSize},
   ])
   .then((a) => {
     if (a.sel === goBack) {
@@ -531,7 +531,7 @@ function isearch(type) {
   inquirer
   .prompt([
     {type: 'input', name: 'query', message: `Query (${lcType}):`},
-    // {type: 'list', name: 'sel', message: 'Choose:', choices: menu, pageSize: pageSize},
+    // {type: 'rawlist', name: 'sel', message: 'Choose:', choices: menu, pageSize: pageSize},
   ])
   .then((a) => {
    if (a.sel === 'Quit') {
@@ -554,7 +554,7 @@ function invMenu() {
   let menu = ['Instances', 'Holdings', 'Items', new inquirer.Separator(), goBack, 'Quit'];
   inquirer
   .prompt([
-    {type: 'list', name: 'sel', message: 'Search...', choices: menu, pageSize: pageSize},
+    {type: 'rawlist', name: 'sel', message: 'Search...', choices: menu, pageSize: pageSize},
   ])
   .then((a) => {
     if (a.sel === goBack) {
@@ -576,7 +576,7 @@ function settings() {
   let allMods = [...mods, goBack];
   inquirer
   .prompt([
-    {type: 'list', name: 'mod', message: 'Settings', choices: allMods, pageSize: pageSize},
+    {type: 'rawlist', name: 'mod', message: 'Settings', choices: allMods, pageSize: pageSize},
   ])
   .then((a) => {
     if (a.mod === goBack) {
@@ -602,7 +602,7 @@ function chooseMods() {
   let allMods = [...mods, 'Settings', goBack];
   inquirer
   .prompt([
-    {type: 'list', name: 'mod', message: 'Choose a module', choices: allMods, pageSize: pageSize},
+    {type: 'rawlist', name: 'mod', message: 'Choose a module', choices: allMods, pageSize: pageSize},
   ])
   .then((a) => {
     if (a.mod === goBack) {
@@ -626,7 +626,7 @@ function chooseConfig() {
   let menu = [...confs, 'Exit'];
   inquirer
     .prompt([
-      {type: 'list', name: 'config', message: 'Choose a config', choices: menu, pageSize: pageSize, default: def.chooseConfig},
+      {type: 'rawlist', name: 'config', message: 'Choose a config', choices: menu, pageSize: pageSize, default: def.chooseConfig},
     ])
     .then((answers) => {
       if (answers.config === 'Exit') {
