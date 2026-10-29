@@ -1,7 +1,11 @@
 const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
-const jp = require('jsonpath');
+const jp = {};
+
+jp.query = (obj, prop) => {
+  return obj[prop];
+}
 
 let inFile = process.argv[2];
 let folFile = process.argv[3];
