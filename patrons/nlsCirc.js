@@ -258,9 +258,11 @@ const spTran = {
         let ld = r.Z36_LOAN_DATE;
         let ldate = parseDate(ld, 'loan');
         if (ldate) loan.loanDate = ldate;
+        /*
         let dd = r.Z36_DUE_DATE;
         let ddate = parseDate(dd, 'due');
         if (ddate) loan.dueDate = ddate;
+        */
         loan.servicePointId = spMap['SP-INFO'];
         if (r.RENEWAL_COUNT) loan.renewalCount = parseInt(r.RENEWAL_COUNT, 10);
         if (user.ex) loan.expirationDate = user.ex;
