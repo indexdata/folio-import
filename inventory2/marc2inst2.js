@@ -888,7 +888,7 @@ try {
           if (t > '009') {
             v = getSubs(f, s) || '';
           } else {
-            v = f || '';
+            v = f.data || '';
           }
           let d = v;
           if (t === '008' || p === 'yymmdd') {
