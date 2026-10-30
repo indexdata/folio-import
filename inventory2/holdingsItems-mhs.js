@@ -50,8 +50,14 @@ const cnTypeMap = {
 
 const cnSubs = [ 'h', 'j', 'i'];
 const sufSubs = [ 'p', 'm', 'l' ];
+const inotes = {
+  i: "Carton Number",
+  b: "Voyager Create Date",
+  c: "Voyager Create Operator",
+  d: "Voyager Modify Date",
+  e: "Voyager Modify Operator"
+};
 
-const inotes = [];
 
 const writeOut = (outStream, data, notJson, newLineChar) => {
   let nl = newLineChar || '';
@@ -234,7 +240,12 @@ try {
       let bwFlag = false;
       r.subfields.forEach(s => {
         let code = Object.keys(s)[0]
-        ih[code] = s[code];
+        if (inotes[code]) {
+          if (!ih[code]) ih[code] = [];
+          ih[code].push(s[code]);
+        } else {
+          ih[code] = s[code];
+        }
       });
       let iid = holdings.hrid.replace(/^[a-z]+/, iprefix);
       if (occ[iid] === undefined) {
@@ -295,6 +306,7 @@ try {
           i.itemLevelCallNumberTypeId = refData.callNumberTypes['Other scheme'];
         }
       }
+      /*
       if (ih.i && !bcseen[ih.i]) {
         i.barcode = ih.i;
         bcseen[ih.i] = i.id;
@@ -306,40 +318,20 @@ try {
         let mainHoldingsId = bcHoldMap[ih.i];
         if (!bwseen[mainHoldingsId]) makeBoundWiths(bcseen[ih.i], bcHoldMap[ih.i], ih.i);
       }
-      if (ih.c) {
-        if (htype === 'y') {
-          i.enumeration = ih.c;
-        } else {
-          i.volume = ih.c;
-        }
+      */
+      if (ih.m) i.numberOfPieces = ih.f;
+      if (ih.s === 'Missing') {
+        i.missingPieces = "All pieces";
+        if (i.status.date) i.missingPiecesDate = i.status.date;
       }
-      if (ih.k) i.chronology = ih.k;
-      if (ih.d || ih.o) {
-        i.yearCaption = [];
-        if (ih.d) i.yearCaption.push(ih.d);
-        if (ih.o) i.yearCaption.push(ih.o);
-      }
-      if (ih.m) i.numberOfPieces = ih.m;
-      if (ih.n) i.descriptionOfPieces = ih.n;
-      if (ih.q) {
-        let t = refData.itemNoteTypes.General;
-        if (t) {
-          let o = makeItemNote(ih.q, t, true);
-          i.notes.push(o);
-        }
-      }
-      if (ih.f) {
-        let t = refData.itemNoteTypes['Voyager Historical Charges'];
-        if (t) {
-          let o = makeItemNote(ih.f, t, true);
-          i.notes.push(o);
-        }
-      }
-      if (ih.e) {
-        let t = refData.itemNoteTypes['Voyager Historical Browses'];
-        if (t) {
-          let o = makeItemNote(ih.e, t, true);
-          i.notes.push(o);
+      for (let c in inotes) {
+        if (ih[c]) {
+          let tstr = inotes[c];
+          let tid = refData.itemNoteTypes[tstr];
+          ih[c].forEach(n => {
+            let o = makeItemNote(n, tid, true);
+            i.notes.push(o);
+          });
         }
       }
 
@@ -472,7 +464,6 @@ try {
         h.notes.push(o);
       }
       
-
       let eaf = m['856'];
       if (eaf) {
         h.electronicAccess = [];
