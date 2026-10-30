@@ -1,0 +1,13 @@
+Voyager Location Code	Voyager Location Name	MFHD Perm Loc (Unsuppressed)	Item Perm Loc (Unsuppressed)	Item Temp Loc (Unsuppressed)	MFHD Perm Loc (Suppressed)	Item Perm Loc (Suppressed)	Item Temp Loc (Suppressed)	Unsuppressed	Suppressed	FOLIO Location Name	FOLIO Display Name	FOLIO Location Code
+graphics	graphics	9883	9973	0	6	8	0	Keep	Keep	graphics	Graphics & Artwork	MAHY
+manuscript	manuscript	8658	8584	4577	56	55	48	Keep	Keep	manuscript	Manuscripts	MAHM
+maps	maps	1985	1990	0	1	1	0	Keep	Keep	maps	Maps	MAPS
+microforms	microforms	77623	77636	177	7	7	0	Keep	Keep	microforms	Microforms	MAHQ
+photo arch	photo arch	4966	5051	294	15	15	11	Keep	Keep	photo arch	Photographs	MAHP
+printed	printed	132522	134907	312	168	3	1	Keep	Keep	printed	Printed Materials	MAHH
+realia	realia	8611	8728	106	197	198	2	Keep	Keep	realia	Artifacts	MAHZ
+reference	reference	2063	2059	0	9	13	0	Keep	Keep	reference	Reference	MAHR
+serials	serials	2245	2351	0	4	4	0	Keep	Keep	serials	Serials	MAHS
+digital	digital							New Location	New Location	digital	Digital	MAHD
+A/V	A/V							New Location	New Location	A/V	Audio/Visual	MAHA
+	Totals	248556	251279	5466	463	304	62					(maybe use 4 letter codes from bib 852 $a)

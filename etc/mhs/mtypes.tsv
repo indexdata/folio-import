@@ -1,0 +1,19 @@
+Legacy Code	Legacy Name	Count Perm (Unsuppressed)	Count Temp (Unsuppressed)	Count Perm (Suppressed)	Count Temp (Suppressed)	Perm Type (Unsuppressed)	Perm Type (Suppressed)	FOLIO Name	Notes
+analytic	analytic	704	0	2	0	Keep	Keep	analytic	Record for articles in periodicals
+comp file	comp file	14	0	0	0	Keep	Keep	digital	
+fiche/film	fiche/film	76062	0	2	0	Keep	Keep	microforms	
+graphics	graphics	6821	0	2	0	Keep	Keep	graphics	
+manuscript	manuscript	8199	4022	58	11	Keep	Keep	manuscript	
+maps	maps	222	0	1	0	Keep	Keep	maps	
+microfilm	microfilm	1100	177	1	0	Merge	Merge	microforms	
+mss. map	mss. map	0	0	0	0	Purge	Purge		
+photos	photos	5058	295	15	11	Keep	Keep	photos	
+printed	printed	143753	313	178	1	Keep	Keep	printed	
+realia	realia	8681	106	198	2	Keep	Keep	realia	
+serials	serials	654	2	9	0	Keep	Keep	serials	
+A/V						New Type	New Type	A/V	
+	Totals	251,268	4,915	466	25				
+									
+Note: FOLIO does not have temporary item types (MHS will purge those)									
+Note: Many temp item types match the permanent item type (user error?)									
+Digital/A/V cataloged as manuscripts									
