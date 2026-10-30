@@ -1,0 +1,14 @@
+{
+    "nameSpace": "e40c9a83-4378-48c7-89ef-0364d492e1d6",
+    "refDir": "/Users/charles/Folio/mhs/ref/inv",
+    "tsvDir": "/Users/charles/Folio/folio-import/etc/mhs",
+    "mapFile": "",
+    "controlNum": "",
+    "hridPrefix": "h",
+    "makeInstMap": true,
+    "hasMfhd": true,
+    "noTitle": "[Unknown title]",
+    "catDate": { "tag": "008" },
+    "suppress": { "tag": "908", "subfield": "x", "value":"Y" },
+    "callNumbers": {}
+}
