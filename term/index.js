@@ -35,9 +35,11 @@ const temp = {
   instances: {
     title: { l: 'Title', t: 's' },
     'contributors.name': { l: 'Author', t: 'a' },
+    'identifiers.value': { l: 'Identifiers', t: 'a' },
     'publication.publisher': { l: 'Publisher', t: 'a' },
     'publication.dateOfPublication': { l: 'Date', t: 'a' },
-    'subjects.value': { l: 'Subjects', t: 'a'}
+    'subjects.value': { l: 'Subjects', t: 'a'},
+    hrid: { l: 'HRID', t: 's' }
   }
 }
 
@@ -49,6 +51,7 @@ let goBack = '<--';
 let token = '';
 let okapi;
 let tenant;
+let dline = '----------------------------------------------------------------------------------------------------------------------------';
 
 function main() {
   clear();
@@ -125,7 +128,9 @@ async function post(ep, payload, rtype) {
 async function get(ep) {
   ep = ep.replace(/^\//, '');
   let url = okapi + '/' + ep;
+  console.log(dline);
   console.log(`GET ${url}`);
+  console.log(dline);
   try {
     let res = await superagent
     .get(url)
@@ -442,25 +447,29 @@ async function viewFull(type, id) {
     let url = `inventory/instances/${id}`;
     let res = await get(url);
     let tp = temp[type];
+    let tb = {};
     for (let k in tp) {
       let l = tp[k].l;
       let t = tp[k].t;
       if (t === 's' && res[k]) {
-        console.log(l);
-        console.log(indent, res[k]);
+        // console.log(l);
+        // console.log(indent, res[k]);
+        if (res[k]) tb[l] = res[k];
       }
       if (t === 'a') {
         let [ root, prop ] = k.split(/\./);
         if (res[root]) {
-          console.log(l);
+          // console.log(l);
           for (let x = 0; x < res[root].length; x++) {
             let el = res[root][x];
             let data = el[prop];
-            console.log(indent, data);
+            // console.log(indent, data);
+            if (data) tb[l + x] = data;
           }
         }
       }
     }
+    console.table(tb);
   }
 
   let menu = [ new inquirer.Separator(), 'View JSON', 'View Source', goBack, 'Quit' ];
@@ -475,6 +484,8 @@ async function viewFull(type, id) {
       exit();
     } else if (a.sel === 'View Source') {
       viewSource(type, id);
+    } else if (a.sel === 'View JSON') {
+      console.log('Function not available');
     }
   })
   .catch((e) => {
@@ -490,10 +501,10 @@ async function iquery(type, term) {
   let res = await get(ep);
   let tr = res.totalRecords;
   console.log('Found:', tr);
+  console.log(dline);
   let list = [];
   for (let x = 0; x < res[type].length; x++) {
     let r = res[type][x];
-    console.log(r);
     let ti = r.title.substring(0, 35).padEnd(40, ' ');
     let dt = (r.publication && r.publication[0]) ? r.publication[0].dateOfPublication : 'uuuu';
     let o = {
