@@ -4,6 +4,7 @@ import fs from 'fs';
 
 const confDir = '../configs/json';
 let pageSize = 24;
+let colWidth = 60;
 const indent = '          ';
 const schemaDir = './schemas';
 
@@ -51,7 +52,7 @@ let goBack = '<--';
 let token = '';
 let okapi;
 let tenant;
-let dline = '----------------------------------------------------------------------------------------------------------------------------';
+let dline = '-'.repeat(colWidth);
 
 function main() {
   clear();
@@ -423,7 +424,7 @@ async function viewSource(type, id) {
   clear();
   let ep = `source-storage/records/${id}/formatted?idType=INSTANCE`;
   let res = await get(ep);
-  if (res) {
+  if (res && res.parsedRecord) {
     let data = res.parsedRecord.formattedContent.replace(/(\$.)/gs, ' $1 ');
     console.log(data);
   }
@@ -441,10 +442,12 @@ async function viewSource(type, id) {
   }); 
 }
 
-async function viewFull(type, id) {
+async function viewFull(type, id, term) {
   clear();
+  let crudEp;
   if (type === 'instances') {
     let url = `inventory/instances/${id}`;
+    crudEp = url;
     let res = await get(url);
     let tp = temp[type];
     let tb = {};
@@ -452,19 +455,17 @@ async function viewFull(type, id) {
       let l = tp[k].l;
       let t = tp[k].t;
       if (t === 's' && res[k]) {
-        // console.log(l);
-        // console.log(indent, res[k]);
-        if (res[k]) tb[l] = res[k];
+        tb[l] = res[k].substring(0, colWidth);
       }
       if (t === 'a') {
         let [ root, prop ] = k.split(/\./);
         if (res[root]) {
-          // console.log(l);
           for (let x = 0; x < res[root].length; x++) {
             let el = res[root][x];
-            let data = el[prop];
-            // console.log(indent, data);
-            if (data) tb[l + x] = data;
+            if (el[prop]) {
+              let data = el[prop].substring(0, colWidth);
+              if (data) tb[l + x] = data;
+            }
           }
         }
       }
@@ -479,13 +480,13 @@ async function viewFull(type, id) {
   ])
   .then((a) => {
     if (a.sel === goBack) {
-      isearch(type);
+      isearch(type, term);
     } else if (a.sel === 'Quit') {
       exit();
     } else if (a.sel === 'View Source') {
       viewSource(type, id);
     } else if (a.sel === 'View JSON') {
-      console.log('Function not available');
+      viewCrud(crudEp);
     }
   })
   .catch((e) => {
@@ -521,11 +522,11 @@ async function iquery(type, term) {
   ])
   .then((a) => {
     if (a.sel === goBack) {
-      isearch(type);
+      isearch(type, term);
     } else if (a.sel === 'Quit') {
       exit();
     } else {
-      viewFull(type, a.sel);
+      viewFull(type, a.sel, term);
     }
   })
   .catch((e) => {
@@ -534,14 +535,14 @@ async function iquery(type, term) {
   }); 
 }
 
-function isearch(type) {
+function isearch(type, dq) {
   clear();
   let lcType = type.toLowerCase();
 
   let menu = [new inquirer.Separator(), 'Another search', goBack, 'Quit'];
   inquirer
   .prompt([
-    {type: 'input', name: 'query', message: `Query (${lcType}):`},
+    {type: 'input', name: 'query', message: `Query (${lcType}):`, default: dq},
     // {type: 'rawlist', name: 'sel', message: 'Choose:', choices: menu, pageSize: pageSize},
   ])
   .then((a) => {
