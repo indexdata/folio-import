@@ -31,7 +31,21 @@ const ntMap = {
   OtherEmails: 'Additional Contact Information',
   OtherPermAddresses: 'Additional Contact Information',
   'Other Phones': 'Additional Contact Information',
-}
+};
+
+const custMap = {
+  Organization: 'Organization',
+  Occupation: 'Occupation',
+  'Job Title': 'Academic Summary',
+  Credential: 'Academic Summary',
+  Education: 'Academic Summary',
+  DeptsConsulted: 'Research',
+  FYVisited: 'Visited',
+  YearsVisited: 'Visited',
+  FirstVisit: 'First Visit',
+  'First Visit Recorded': 'First Visit',
+  FellowTrustee: 'Relationship Status'
+};
 
 const makeNote = (mesg, userId, noteTypeId, popCo, popUser, ltype) => {
   const note = {
@@ -126,7 +140,13 @@ try {
   cfields.customFields.forEach(n => {
     cmap[n.name] = n.refId;
   });
+
   // throw(cmap);
+  for (let k in custMap) {
+    let v = custMap[k];
+    custMap[k] = cmap[v];
+  }
+  // throw(custMap);
 
   let csv = fs.readFileSync(inFile, {encoding: 'utf8'});
   inRecs = parse(csv, {
@@ -190,7 +210,6 @@ try {
       };
       if (un) u.username = un;
       if (ext) u.externalSystemId = ext;
-      // if (uid) u.customFields[cmap['Legacy Record Number']] = uid;
       if (cdate) {
         try {
           let dstr = new Date(cdate).toISOString().substring(0, 10);
@@ -246,9 +265,7 @@ try {
       }
       if (process.env.DEBUG) console.log(JSON.stringify(u, null, 2));
       if (u.patronGroup) {
-        writeOut(files.u, u);
-        if (process.env.DEBUG) console.log(JSON.stringify(u, null, 2));
-        success++
+        
         let perm = {
           id: uuid(u.id, ns),
           userId: u.id,
@@ -265,7 +282,7 @@ try {
         writeOut(files.r, pref);
         
         let comNotes = {};
-        for (f in ntMap) { 
+        for (let f in ntMap) { 
           let d = p[f];
           if (d) {
             let t = ntMap[f];
@@ -281,6 +298,22 @@ try {
           ncount++;
         }
 
+        let cvals = {};
+        for (let l in custMap) {
+          let id = custMap[l];
+          let d = p[l];
+          if (d) {
+            if (!cvals[l]) cvals[l] = [];
+            cvals[l].push(d);
+          }
+        }
+        for (let id in cvals) {
+          u.customFields[id] = cvals[id].join('; ');
+        }
+
+        writeOut(files.u, u);
+        if (process.env.DEBUG) console.log(JSON.stringify(u, null, 2));
+        success++
         useen[uid] = 1;
       } else {
         console.log(`ERROR No patronGroup found for ${group} (username: ${un})`);
@@ -288,7 +321,7 @@ try {
         ecount++;
       }
     } else {
-      console.log(`ERROR membership id "${un}" already used!`)
+      console.log(`ERROR id "${p}" already used!`)
       writeOut(files.e, p);
       ecount++;
     }
