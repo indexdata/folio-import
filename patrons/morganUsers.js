@@ -162,7 +162,6 @@ try {
     let groupId = refData.usergroups[group] || refData.usergroups.Staff;
     let dept = '';
     let edate = p.ExpireDate;
-    console.log(edate);
     let cdate = p['CREATED'];
     let bdate = '';
     let bc = p.PatronBarcode;
@@ -265,19 +264,21 @@ try {
         }
         writeOut(files.r, pref);
         
+        let comNotes = {};
         for (f in ntMap) { 
           let d = p[f];
           if (d) {
             let t = ntMap[f];
-            d.split(/;/).forEach(n => {
-              // n = n.replace(/%%/g, '$');
-              let popCo = (f === 'MESSAGE') ? true : false;
-              let popUser = (f === 'WEB NOTE') ? true : false;
-              let o = makeNote(n, u.id, t, popCo, popUser, f);
-              writeOut(files.n, o);
-              ncount++;
-            });
+            if (!comNotes[t]) comNotes[t] = [];
+            comNotes[t].push(d);
+            
           }
+        }
+        for (let t in comNotes) {
+          let d = comNotes[t].join('; ');
+          let o = makeNote(d, u.id, t, false, false, '');
+          writeOut(files.n, o);
+          ncount++;
         }
 
         useen[uid] = 1;
