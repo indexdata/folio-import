@@ -18,7 +18,8 @@ export function parseMarc(raw, txt = false) {
   const dirEnd = parseInt(leader.substring(12, 17), 10);
   const dir = raw.substring(24, dirEnd);
   const dirParts = dir.match(/.{12}/g) || [];
-  const fields = { leader };
+  const fields = {};
+  fields.leader = leader;
   const lines = txt ? [leader] : [];
   const buf = Buffer.from(raw);
 
@@ -145,8 +146,8 @@ export function getSubsHash(field, returnString) {
 
 export function fields2mij(fields) {
   const mij = { leader: fields.leader, fields: [] };
-  delete fields.leader;
   for (let tag in fields) {
+    if (tag === 'leader') continue;
     fields[tag].forEach(f => {
       let el = f._;
       delete f._;
