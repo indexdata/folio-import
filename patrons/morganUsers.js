@@ -138,10 +138,10 @@ try {
   const cfields = require(`${refDir}/custom-fields.json`);
   cmap = {};
   cfields.customFields.forEach(n => {
-    cmap[n.name] = n.refId;
+    cmap[n.name] = { i: n.refId, t: n.type }
   });
-
   // throw(cmap);
+
   for (let k in custMap) {
     let v = custMap[k];
     custMap[k] = cmap[v];
@@ -300,11 +300,21 @@ try {
 
         let cvals = {};
         for (let l in custMap) {
-          let id = custMap[l];
+          let id = custMap[l].i;
+          let t = custMap[l].t;
           let d = p[l];
           if (d) {
-            if (!cvals[l]) cvals[l] = [];
-            cvals[l].push(d);
+            if (t.match(/DATE/)) {
+              try {
+                d = d;
+                d = new Date(d).toISOString().substring(0, 10);
+              } catch(e) {
+                console.log(`WARN "${d}" is not a valid date for "${l}"`);
+                d = ''
+              }
+            }
+            if (!cvals[id]) cvals[id] = [];
+            cvals[id].push(d);
           }
         }
         for (let id in cvals) {
@@ -340,14 +350,6 @@ try {
     time: t
   };
   console.table(stats);
-  /*
-  console.log('Users created:', success, '-->', files.u);
-  console.log('Perms created:', success, '-->', files.p);
-  console.log('Prefs created:', success, '-->', files.r);
-  console.log('Notes created:', ncount, '-->', files.n);
-  console.log('Errors:', ecount, '-->', files.e);
-  console.log('Time (secs):', t);
-  */
 } catch (e) {
   console.log(e);
 }
