@@ -1,6 +1,6 @@
 wd=/home/konchaled/folio-import
 data=/data/konchaled
-in=$(data)/dryrun4-data
+in=$(data)/dryrun5-data
 ref=$(data)/ref
 uref=$(ref)/usr
 iref=$(ref)/inv
