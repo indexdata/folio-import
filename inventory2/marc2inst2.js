@@ -449,7 +449,7 @@ try {
   const idmap = conf.makeInstMap;
   const mapcn = conf.callNumbers;
   const addMap = conf.additionalMapTags;
-  const supp = (conf.suppress.tag) ? conf.suppress : '';
+  const supp = (conf.suppress && conf.suppress.tag) ? conf.suppress : '';
   let prefix = conf.hridPrefix;
   iprefix = (iconf) ? iconf.hridPrefix : '';
   let wdir = path.dirname(rawFile);
@@ -961,15 +961,18 @@ try {
   fileStream.on('close', () => {
     let now = new Date().valueOf();
     let t = (now - start) / 1000;
-    console.log('--------------------');
+    // console.log('--------------------');
     ttl['time (secs)'] = t;
     if (t > 60) ttl['time (mins)'] = t / 60;
+    console.table(ttl);
+    /*
     for (let x in ttl) {
       let l = x.substring(0,1).toUpperCase() + x.substring(1);
       l = l.padEnd(12);
       let n = ttl[x].toString().padStart(8);
       console.log(l, ':', n);
     }
+    */
   });
 } catch (e) {
   console.log(e);
