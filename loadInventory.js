@@ -152,11 +152,11 @@ const wait = (ms) => {
       let json = JSON.parse(line);
       if (json.__) delete json.__;
       if (json._errMessage) delete json._errMessage;
-      if (json.jobExecutionId || json.snapshotId || json.succeedingInstanceId) {
+      if (json.jobExecutionId || json.snapshotId || json.succeedingInstanceId || json.precedingInstanceId) {
         let ep = (json.jobExecutionId) ? 'source-storage/snapshots' : (json.snapshotId) ? 'source-storage/records' : 'preceding-succeeding-titles';
         let xid = (json.jobExecutionId) ? json.jobExecutionId : json.id;
         let url = `${config.okapi}/${ep}`;
-        console.log(`POST ${url}`);
+        console.log(`POST [${ttl}] ${url}`);
         try {
           await superagent
             .post(url)
