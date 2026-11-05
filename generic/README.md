@@ -1,7 +1,7 @@
 # Generic FOLIO objects
 
 
-## `generic-inventor.tar.gz` 
+## `generic-inventory.tar.gz` 
 
 1) bibs-instances.jsonl -- 3000 instances of various types (text, performed music, notated music, images, serials, etc.)
 2) bibs-holdings.jsonl -- 3000 dummy holdings with the location "Annex" or "Main Library", call number from MARC 050
