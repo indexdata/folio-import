@@ -22,6 +22,8 @@ const seen = {};
 const parentMap = {};
 const relSeen = {};
 
+const relType = 'multipart monograph';
+
 const relTags = [
   { p: ['024','a'], c: ['027','z'] },
   { p: ['772','a'], c: ['773','a'] },
@@ -452,7 +454,7 @@ const makeRel = (pmap, ttl) => {
     let o = {
       superInstanceId: pmap.p[0],
       subInstanceId: p,
-      instanceRelationshipTypeId: refData.instanceRelationshipTypes['bound-with']
+      instanceRelationshipTypeId: refData.instanceRelationshipTypes[relType]
     }
     o.id = uuid(o.superInstanceId + p, ns);
     if (!relSeen[o.id]) {
