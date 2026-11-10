@@ -1,6 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
+  "javaType": "org.folio.rest.jaxrs.model.LocationInstitution",
   "description": "highest-level location unit",
   "properties": {
     "id": {
@@ -21,7 +22,7 @@
     },
     "metadata": {
       "type": "object",
-      "$ref": "raml-util/schemas/metadata.schema",
+      "$ref": "../../raml-util/schemas/metadata.schema",
       "readonly": true
     }
   },

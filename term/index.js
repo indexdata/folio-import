@@ -24,7 +24,8 @@ const invSettings = {
       institutionId: 'location-units/institutions',
       campusId: 'location-units/campuses'
     }
-  }
+  },
+  'Instance relationship types': { ep: 'instance-relationship-types' }
 };
 const impSettings = {
   Steps: { ep: 'inventory-import/steps' },
@@ -227,7 +228,7 @@ function delConfirm(ep, back) {
 }
 
 function newCrud(ep, func) {
-  let sfile = schemaDir + '/' + ep + '.json';
+  let sfile = schemaDir + '/' + ep[ep] + '.json';
   try {
     let prs = [];
     let schema = fs.readFileSync(sfile, { encoding: 'utf8'});

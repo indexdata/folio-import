@@ -299,6 +299,8 @@ try {
         }
       }
       if (ih.g) i.copyNumber = ih.g;
+      if (ih.a) i.formerIds[]
+      /* 
       if (ih.a) {
         let cn = (ih.b) ? ih.a + ' ' + ih.b : ih.a;
         if (cn !== holdings.callNumber) {
@@ -306,6 +308,7 @@ try {
           i.itemLevelCallNumberTypeId = refData.callNumberTypes['Other scheme'];
         }
       }
+      */
       /*
       if (ih.i && !bcseen[ih.i]) {
         i.barcode = ih.i;
@@ -390,7 +393,7 @@ try {
       m['852'].forEach(f => {
         f.subfields.forEach(s => {
           let k = Object.keys(s)[0];
-          if (k.match(/[zxi]/)) {
+          if (k.match(/[zxikpmlq]/)) {
             if (!mh[k]) mh[k] = [];
             mh[k].push(s[k]);
           } else {
@@ -438,10 +441,10 @@ try {
         h.callNumber = cn;
         h.callNumberTypeId = cnTypeMap[mh.ind1] || cnTypeMap['8'];
       }
-      if (mh.k) h.callNumberPrefix = mh.k;
+      if (mh.k) h.callNumberPrefix = mh.k.join(' ');
       let sufParts = [];
       sufSubs.forEach(s => {
-        if (mh[s]) sufParts.push(mh[s]);
+        if (mh[s]) sufParts.push(mh[s].join(' '));
       });
       if (sufParts[0]) h.callNumberSuffix = sufParts.join(' ');
       h.notes = [];

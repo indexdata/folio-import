@@ -249,7 +249,9 @@ const parseInst = (pol, inst, refData) => {
             if (f === 'z104') {
               k = l.Z104_REC_KEY.substring(0, 9);
             } else if (f === 'z78') {
-              k = l.Z78_REC_KEY.substring(2, 9);
+              // k = l.Z78_REC_KEY.substring(2, 9);
+              k = l.Z78_REC_KEY.substring(0, 9);
+              adminMap[k] = 1;
             } else if (f === 'z08') {
               k = l.Z08_REC_KEY;
               adminMap[k] = 1;
@@ -261,7 +263,7 @@ const parseInst = (pol, inst, refData) => {
       }
     }
     console.log(dcount);
-    // throw(d.so);
+    // throw(d.z78);
 
     /* do not do z68
     d.z68.forEach(r => {
@@ -304,7 +306,7 @@ const parseInst = (pol, inst, refData) => {
     console.log('Linker lines read:', lc, `(${mc})`);
     console.log('Links mapped:', mc);
     // throw(linkMap['001620712']);
-    // throw(linkMapRev);
+    // throw(linkMapRev['000001431']);
 
     // create instance map
     console.log(`INFO Reading instance data from ${instFile}`);
@@ -467,7 +469,7 @@ const parseInst = (pol, inst, refData) => {
             if (!noteCache[instId]) noteCache[instId] = [];
             noteCache[instId].push(o);
             // writeOut(files.n, o);
-            // ttl.n++
+            ttl.n++
           });
         }
       }
@@ -872,8 +874,10 @@ const parseInst = (pol, inst, refData) => {
         // writeOut(files.c, o)
       }
     }
+    // throw(coCache);
     for (let k in coCache) {
       let co = coCache[k];
+      let z78key = linkMapRev[k];
       writeOut(files.o, co);
       ttl.o++;
       let polId = '';
@@ -901,6 +905,14 @@ const parseInst = (pol, inst, refData) => {
           writeOut(files.n, n);
           ttl.n++;
         });
+      }
+      let anotes = d.z78[z78key];
+      if (anotes) {
+          anotes.forEach(n => {
+            let o = makePolNote(n.Z78_ARRIVAL_NOTE, n.Z78_ARRIVAL_DATE, 'Mottagning', polId, refData);
+            writeOut(files.n, o);
+            ttl.n++
+          });
       }
     }
 

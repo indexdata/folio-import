@@ -36,6 +36,7 @@
       "description": "The institution, the first-level location unit, this (shelf) location belongs to.",
       "type": "object",
       "folio:$ref": "locinst.json",
+      "javaType": "org.folio.rest.jaxrs.model.InstitutionVirtual",
       "readonly": true,
       "folio:isVirtual": true,
       "folio:linkBase": "location-units/institutions",
@@ -50,6 +51,7 @@
     "campus": {
       "description": "The campus, the second-level location unit, this (shelf) location belongs to",
       "type": "object",
+      "javaType": "org.folio.rest.jaxrs.model.CampusVirtual",
       "folio:$ref": "loccamp.json",
       "readonly": true,
       "folio:isVirtual": true,
@@ -65,6 +67,7 @@
     "library": {
       "description": "The library, the third-level location unit, this (shelf) location belongs to.",
       "type": "object",
+      "javaType": "org.folio.rest.jaxrs.model.LibraryVirtual",
       "folio:$ref": "locinst.json",
       "readonly": true,
       "folio:isVirtual": true,
@@ -75,7 +78,8 @@
     },
     "details": {
       "description": "Details about this (shelf) location.",
-      "type": "object"
+      "type": "object",
+      "javaType": "org.folio.rest.jaxrs.model.LocationDetails"
     },
     "primaryServicePoint": {
       "description": "The UUID of the primary service point of this (shelf) location.",
@@ -85,7 +89,8 @@
     "primaryServicePointObject": {
       "type": "object",
       "description": "Dereferenced object for primary service point. This should really just be called 'primaryServicePoint', but the field containing the ID of this object has that name -- it should really be called 'primaryServicePointId' -- so we need something different for this one.",
-      "$ref": "../servicepoint.json",
+      "$ref": "../service-points/servicepoint.json",
+      "javaType": "org.folio.rest.jaxrs.model.ServicePointVirtual",
       "readonly": true,
       "folio:isVirtual": true,
       "folio:linkBase": "service-points",
@@ -114,7 +119,7 @@
       "description": "List of dereferenced service points",
       "items": {
         "type": "object",
-        "$ref": "../servicepoint.json"
+        "$ref": "../service-points/servicepoint.json"
       },
       "readonly": true,
       "folio:isVirtual": true,
@@ -130,7 +135,7 @@
     },
     "metadata": {
       "type": "object",
-      "$ref": "../raml-util/schemas/metadata.schema",
+      "$ref": "../../raml-util/schemas/metadata.schema",
       "readonly": true
     }
   },
