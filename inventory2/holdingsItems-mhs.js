@@ -19,7 +19,7 @@ const typeMap = {
   v: 'Multi-part monograph',
   x: 'Monograph',
   y: 'Serial'
-}
+};
 
 const elRelMap = {
   '0':'Resource',
@@ -27,7 +27,18 @@ const elRelMap = {
   '2':'Related resource',
   '3':'No information provided',
   '8':'No display constant generated'
-}
+};
+
+const policyMap = {
+  "l": "Limited lending policy",
+  "u": "Unknown lending policy",
+  "a": "Will lend",
+  "xx": "Will not reproduce",
+  "yy": "Unknown reproduction policy",
+  "zz": "Will reproduce",
+  "b": "Will not lend",
+  "c": "Will lend hard copy only"
+};
 
 const files = {
   holdings: 1,
@@ -128,6 +139,12 @@ try {
     } catch {}
   });
   // throw(refData.locations);
+
+  for (let k in policyMap) {
+    let v = policyMap[k];
+    policyMap[k] = refData.illPolicies[v];
+  }
+  // åthrow(policyMap);
 
   // create tsv map
   let tsvDir = conf.tsvDir || conf.refDir;
@@ -388,6 +405,8 @@ try {
     let m = JSON.parse(line);
     let ctrl = (m['001']) ? m['001'][0] : '';
     let bhrid = (m['004']) ? m['004'][0] : '';
+    let f008 = (m['008']) ? m['008'][0] : '';
+    let pcode = f008.substring(20, 21);
     let mh = {};
     let iid = '';
     if (m['852']) {
@@ -536,6 +555,8 @@ try {
           }
         });
       }
+
+      if (pcode) h.illPolicyId = policyMap[pcode] || policyMap.u;
 
       if (h.permanentLocationId) {
         if (!hseen[ctrl]) {
