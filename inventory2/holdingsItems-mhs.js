@@ -47,7 +47,8 @@ const files = {
   rel: 1
 };
 
-const cnTypeMap = {
+
+let cnTypeMap = {
   '0': '95467209-6d7b-468b-94df-0f5d7ad2747d',
   '1': '03dd64d0-5626-4ecd-8ece-4531e0069f35',
   '2': '054d460d-d6b9-4469-9e37-7a78a2266655',
@@ -57,6 +58,11 @@ const cnTypeMap = {
   '6': 'cd70562c-dd0b-42f6-aa80-ce803d24d4a1',
   '7': '827a2b64-cbf5-4296-8545-130876e4dfc0',
   '8': '6caca63e-5651-4db6-9247-3205156e9699'
+};
+
+cnTypeMap = {
+  'lc': '95467209-6d7b-468b-94df-0f5d7ad2747d',
+  'other': '6caca63e-5651-4db6-9247-3205156e9699'
 };
 
 const cnSubs = [ 'h', 'j', 'i'];
@@ -459,7 +465,7 @@ try {
       h.permanentLocationId = tsvMap.locations[loc] || '';
       if (cn) {
         h.callNumber = cn;
-        h.callNumberTypeId = cnTypeMap[mh.ind1] || cnTypeMap['8'];
+        h.callNumberTypeId = cnTypeMap[mh.t] || cnTypeMap.other;
       }
       if (mh.k) h.callNumberPrefix = mh.k.join(' ');
       let sufParts = [];
