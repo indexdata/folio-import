@@ -254,7 +254,8 @@ try {
         occ[iid]++;
       }
       let occStr = occ[iid].toString().padStart(3, 0);
-      let ihrid = iid + '-' + occStr;
+      let altHrid = iid + '-' + occStr;
+      let ihrid = (ih.a) ? iprefix + ih.a : altHrid;
       let i = {
         _version: 1,
         id: uuid(ihrid, ns),
@@ -299,7 +300,7 @@ try {
         }
       }
       if (ih.g) i.copyNumber = ih.g;
-      if (ih.a) i.formerIds[]
+      if (ih.a) i.formerIds = [ ih.a ]
       /* 
       if (ih.a) {
         let cn = (ih.b) ? ih.a + ' ' + ih.b : ih.a;
@@ -322,7 +323,7 @@ try {
         if (!bwseen[mainHoldingsId]) makeBoundWiths(bcseen[ih.i], bcHoldMap[ih.i], ih.i);
       }
       */
-      if (ih.m) i.numberOfPieces = ih.f;
+      if (ih.f) i.numberOfPieces = ih.f;
       if (ih.s === 'Missing') {
         i.missingPieces = "All pieces";
         if (i.status.date) i.missingPiecesDate = i.status.date;
@@ -457,13 +458,13 @@ try {
       }
       if (mh.z) {
         mh.z.forEach(n => {
-          let o = makeNote(n, ntype, false);
+          let o = makeNote(n, ntype, true);
           h.notes.push(o);
         });
       }
       if (mh.a) {
         let ntype = refData.holdingsNoteTypes['Voyager Holdings Code'];
-        let o = makeNote(mh.a, ntype, false);
+        let o = makeNote(mh.a, ntype, true);
         h.notes.push(o);
       }
       
