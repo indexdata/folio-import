@@ -880,7 +880,7 @@ const makeAleph = (fields) => {
       cdate = cdates[0];
     }
     statCode = refData.statisticalCodes['999'];
-    istat = refData.instanceStatuses.Minipost;
+    istat = refData.instanceStatuses.mp;
     locId = refData.locations['LOC-TS'];
   } else if (mti === 'OKAT' || mti === 'Vardagstryck') {
     ti = (fields.PUB) ? getSubs(fields.PUB[0], 'a') : '[okänd titel]';

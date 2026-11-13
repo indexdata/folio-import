@@ -579,7 +579,7 @@ try {
       u.personal.preferredContactTypeId = '001'
     }
 
-    if (gnum === '5') {
+    if (gnum === '6' || gnum === '7') {
       u.personal.addresses = [
           {
             addressLine1: 'Fjärrlån',
@@ -608,7 +608,7 @@ try {
         fulfillment: 'Hold Shelf',
         defaultServicePointId: refData.servicepoints['SP-INFO']
       };
-      if (gnum === '5' || gnum === '7' || gnum === '6') {
+      if (gnum === '7' || gnum === '6') {
         pref.holdShelf = false;
         pref.delivery = true;
         pref.fulfillment = 'Delivery';
