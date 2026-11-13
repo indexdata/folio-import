@@ -31,13 +31,15 @@ const ntMap = {
   OtherEmails: 'Additional Contact Information',
   OtherPermAddresses: 'Additional Contact Information',
   'Other Phones': 'Additional Contact Information',
+  Consulted: 'Consulted',
+  DeptsConsulted: 'Consulted'
 };
 
 const custMap = {
   Organization: 'Organization',
   Occupation: 'Occupation',
   'Job Title': 'Academic Summary',
-  Credential: 'Academic Summary',
+  Credentials: 'Academic Summary',
   Education: 'Academic Summary',
   DeptsConsulted: 'Research',
   FYVisited: 'Visited',
@@ -52,7 +54,7 @@ const makeNote = (mesg, userId, noteTypeId, popCo, popUser, ltype) => {
     id: uuid(userId + mesg, ns),
     content: mesg,
     domain: 'users',
-    title:  'Migrated note',
+    title:  ltype,
     typeId: noteTypeId,
     popUpOnCheckOut: popCo,
     popUpOnUser: popUser,
@@ -63,7 +65,6 @@ const makeNote = (mesg, userId, noteTypeId, popCo, popUser, ltype) => {
       }
     ]
   }
-  if (ltype) note.title += ` (${ltype})`;
   return note;
 }
 
@@ -131,7 +132,7 @@ try {
 
   for (let k in ntMap) {
     let ntype = ntMap[k];
-    ntMap[k] = refData.noteTypes[ntype];
+    ntMap[k] = { id: refData.noteTypes[ntype], name: ntMap[k] };
   }
   // throw(ntMap);
   
@@ -285,15 +286,17 @@ try {
         for (let f in ntMap) { 
           let d = p[f];
           if (d) {
-            let t = ntMap[f];
-            if (!comNotes[t]) comNotes[t] = [];
-            comNotes[t].push(d);
+            let t = ntMap[f].id;
+            let name = ntMap[f].name;
+            if (!comNotes[t]) comNotes[t] = { l: name, d: [] };
+            comNotes[t].d.push(d);
             
           }
         }
         for (let t in comNotes) {
-          let d = comNotes[t].join('; ');
-          let o = makeNote(d, u.id, t, false, false, '');
+          let d = comNotes[t].d.join('; ');
+          let l = comNotes[t].l;
+          let o = makeNote(d, u.id, t, false, false, l);
           writeOut(files.n, o);
           ncount++;
         }
