@@ -22,7 +22,7 @@ vdir=$(data)/org
 in=$(data)/incoming
 raw=$(in)/mhs*mrc
 mfile=$(idir)/bibs.mrc
-araw=$(in)/Author*mrc
+araw=$(in)/mhs-auth*mrc
 log=$(data)/log
 
 instances: $(raw)
@@ -51,8 +51,8 @@ authorities: $(araw)
 	tail -f $(log)/makeAuth.log
 
 split-authorities: $(adir)/auth-authorities.jsonl
-	cd $(adir); split -l 60000 auth-authorities.jsonl aut-
-	cd $(adir); split -l 60000 auth-srs.jsonl asr-
+	cd $(adir); split -l 20000 auth-authorities.jsonl aut-
+	cd $(adir); split -l 20000 auth-srs.jsonl asr-
 
 organizations: $(vzip)
 	cd $(vdir); rm -f vendors.sh; ln -s $(etc)/bin/vendors.sh .
