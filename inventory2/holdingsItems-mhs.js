@@ -66,7 +66,7 @@ cnTypeMap = {
 };
 
 const cnSubs = [ 'h', 'j', 'i'];
-const sufSubs = [ 'p', 'm', 'l' ];
+const sufSubs = [ 'p', 'm', 'l', 'q', 'z' ];
 const inotes = {
   i: "Carton Number",
   b: "Voyager Create Date",
@@ -481,12 +481,14 @@ try {
           h.notes.push(o);
         });
       }
+      /*
       if (mh.z) {
         mh.z.forEach(n => {
           let o = makeNote(n, ntype, true);
           h.notes.push(o);
         });
       }
+      */
       if (mh.a) {
         let ntype = refData.holdingsNoteTypes['Voyager Holdings Code'];
         let o = makeNote(mh.a, ntype, true);
