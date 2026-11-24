@@ -49,6 +49,11 @@ const custMap = {
   FellowTrustee: 'Relationship Status'
 };
 
+const countryMap = {
+  USA: 'US',
+  JAPAN: 'JP'
+}
+
 const makeNote = (mesg, userId, noteTypeId, popCo, popUser, ltype) => {
   const note = {
     id: uuid(userId + mesg, ns),
@@ -195,7 +200,11 @@ try {
     let city = p.PermAddressCity;
     let state = p.PermAddressState;
     let zip = p.PermAddressZip;
-    let ccode = p.PermAddressCountry;
+    let country = p.PermAddressCountry;
+    let ccode = countryMap[country];
+    if (country && ! ccode) {
+      console.log(`WARN Country code not found for ${country}`);
+    }
     if (!useen[uid]) {
       u = {
         id: uuid(uid, ns),
