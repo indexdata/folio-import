@@ -20,7 +20,7 @@ adir=$(data)/auth
 cdir=$(data)/circ
 vdir=$(data)/org
 in=$(data)/incoming
-raw=$(in)/mhs*mrc
+raw=$(in)/mhs-inv*mrc
 mfile=$(idir)/bibs.mrc
 araw=$(in)/mhs-auth*mrc
 log=$(data)/log
@@ -37,13 +37,11 @@ items: $(idir)/bibs-mfhds.jsonl
 
 
 split-inventory:
-	cd $(idir); split -l 120000 bibs-instances.jsonl in-
-	cd $(idir); split -l 120000 bibs-srs.jsonl sr-
-	cd $(idir); split -l 6000 bibs-presuc.jsonl pr-
-	cd $(idir); split -l 125000 bibs-mfhds-holdings.jsonl ho-
-	cd $(idir); split -l 110000 bibs-mfhds-items.jsonl it-
-	cd $(idir); split -l 6500 bibs-mfhds-bwp.jsonl bw-
-	cd $(idir); split -l 6000 bibs-mfhds-rel.jsonl re-
+	cd $(idir); split -l 50000 bibs-instances.jsonl in-
+	cd $(idir); split -l 50000 bibs-srs.jsonl sr-
+	cd $(idir); split -l 500 bibs-presuc.jsonl pr-
+	cd $(idir); split -l 50000 bibs-mfhds-holdings.jsonl ho-
+	cd $(idir); split -l 50000 bibs-mfhds-items.jsonl it-
 
 authorities: $(araw)
 	cd $(adir); rm -f auth.mrc; ln -s $(araw) auth.mrc
