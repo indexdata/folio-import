@@ -240,6 +240,7 @@ const applyRules = function (ent, field, allFields, tag) {
   let rule = (ent.rules) ? ent.rules[0] : ''; 
   let funcNames = [];
   let param = '';
+  let altTarg = '';
   if (rule && rule.conditions[0]) {
     let con = rule.conditions[0];
     let ctype = con.type;
@@ -272,7 +273,7 @@ const applyRules = function (ent, field, allFields, tag) {
             let am = ent.alternativeMapping;
             let c = (am.subfield) ? am.subfield[0] : ''; 
             data = getSubs(field, c);
-            ent.target = am.target;
+            altTarg = am.target;
           }
         } else {
           throw new Error(`Function not found: "${c}`);
@@ -326,8 +327,10 @@ const applyRules = function (ent, field, allFields, tag) {
     });
   }
   if (rule && rule.value) data = rule.value;
+
+  let targ = (altTarg) ? altTarg : ent.target;
   const out = {
-    prop: ent.target,
+    prop: targ,
     data: data
   }
   return out;
