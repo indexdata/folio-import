@@ -268,6 +268,12 @@ const applyRules = function (ent, field, allFields, tag) {
       funcNames.forEach(c => {
         if (funcs[c]) {
           data = funcs[c](data, param, field.ind1, field.ind2, allFields);
+          if (!data && ent.alternativeMapping) {
+            let am = ent.alternativeMapping;
+            let c = (am.subfield) ? am.subfield[0] : ''; 
+            data = getSubs(field, c);
+            ent.target = am.target;
+          }
         } else {
           throw new Error(`Function not found: "${c}`);
         }
